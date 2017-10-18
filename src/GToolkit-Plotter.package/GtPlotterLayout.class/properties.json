@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "",
+	"super" : "BlLayout",
+	"category" : "GToolkit-Plotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"verticalAxisElement",
+		"horizontalAxis",
+		"verticalAxis",
+		"horizontalAxisElement",
+		"domainElements",
+		"horizontalRange",
+		"verticalRange"
+	],
+	"name" : "GtPlotterLayout",
+	"type" : "normal"
+}

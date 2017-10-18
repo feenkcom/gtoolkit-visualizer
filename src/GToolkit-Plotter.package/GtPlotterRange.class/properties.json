@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "AliakseiSyrel 10/18/2017 18:44",
+	"super" : "Object",
+	"category" : "GToolkit-Plotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtPlotterRange",
+	"type" : "normal"
+}

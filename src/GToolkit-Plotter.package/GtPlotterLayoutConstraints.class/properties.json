@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "BlLayoutConstraints",
+	"category" : "GToolkit-Plotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"domainObject"
+	],
+	"name" : "GtPlotterLayoutConstraints",
+	"type" : "normal"
+}

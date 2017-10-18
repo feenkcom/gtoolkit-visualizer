@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtPlotterRange",
+	"category" : "GToolkit-Plotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"min"
+	],
+	"name" : "GtPlotterMinRange",
+	"type" : "normal"
+}
