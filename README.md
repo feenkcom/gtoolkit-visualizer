@@ -8,6 +8,6 @@ Iceberg enableMetacelloIntegration: true.
 Metacello new
    baseline: 'GToolkitMondrian';
    repository: 'github://feenkcom/gtoolkit/src';
-	 load.
+   load.
 
 ```
