@@ -7,6 +7,6 @@ A set of visualization engines that are part of the Glamorous Toolkit and are ba
 Iceberg enableMetacelloIntegration: true.
 Metacello new
    baseline: 'GToolkitMondrian';
-   repository: 'github://feenkcom/gtoolkit/src';
+   repository: 'github://feenkcom/gtoolkit-visualizer/src';
    load.
 ```
