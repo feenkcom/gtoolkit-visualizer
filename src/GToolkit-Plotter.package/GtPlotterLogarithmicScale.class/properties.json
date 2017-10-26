@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtPlotterScale",
+	"category" : "GToolkit-Plotter-Function",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"base"
+	],
+	"name" : "GtPlotterLogarithmicScale",
+	"type" : "normal"
+}

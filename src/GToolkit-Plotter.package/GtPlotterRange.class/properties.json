@@ -1,11 +1,13 @@
 {
-	"commentStamp" : "AliakseiSyrel 10/18/2017 18:44",
+	"commentStamp" : "AliakseiSyrel 10/19/2017 21:28",
 	"super" : "Object",
-	"category" : "GToolkit-Plotter",
+	"category" : "GToolkit-Plotter-Function",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
+	"instvars" : [
+		"interval"
+	],
 	"name" : "GtPlotterRange",
 	"type" : "normal"
 }

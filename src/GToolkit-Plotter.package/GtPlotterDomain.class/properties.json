@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "AliakseiSyrel 10/19/2017 21:28",
+	"super" : "Object",
+	"category" : "GToolkit-Plotter-Function",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"interval"
+	],
+	"name" : "GtPlotterDomain",
+	"type" : "normal"
+}

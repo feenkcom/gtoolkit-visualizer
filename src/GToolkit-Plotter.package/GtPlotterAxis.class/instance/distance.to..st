@@ -1,7 +1,6 @@
-testing
-distance: anAxisDomainObject to: anotherAxisDomainObject
-	"Return a value representing an euclidian distance between domain objects.
-	https://en.wikipedia.org/wiki/Euclidean_distance"
-	<return: #Boolean>
-	
-	^ (anAxisDomainObject - anotherAxisDomainObject) abs
+computation
+distance: anAxisProjection to: anotherAxisProjection
+	"Return a distance between given projections of domain objects on this axis"
+	<return: #GtPlotterAxisDistance>
+
+	^ anAxisProjection - anotherAxisProjection

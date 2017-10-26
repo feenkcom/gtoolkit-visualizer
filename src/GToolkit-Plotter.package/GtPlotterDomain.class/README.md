@@ -1,0 +1,3 @@
+In mathematics, and more specifically in naive set theory, the domain of definition (or simply the domain) of a function is the set of "input" or argument values for which the function is defined. That is, the function provides an "output" or value for each member of the domain.[1] Conversely, the set of values the function takes on as output is termed the image of the function, which is sometimes also referred to as the range of the function.
+
+https://en.wikipedia.org/wiki/Domain_of_a_function

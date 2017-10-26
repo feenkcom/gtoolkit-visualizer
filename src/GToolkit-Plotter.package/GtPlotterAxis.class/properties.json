@@ -6,7 +6,7 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"valueSelector"
+		"scale"
 	],
 	"name" : "GtPlotterAxis",
 	"type" : "normal"

@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "GtPlotterRange",
+	"super" : "GtPlotterInterval",
 	"category" : "GToolkit-Plotter",
 	"classinstvars" : [ ],
 	"pools" : [ ],
