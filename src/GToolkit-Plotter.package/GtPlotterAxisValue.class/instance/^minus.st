@@ -2,4 +2,4 @@ arithmetic
 - anotherAxisValue
 	<return: #GtPlotterAxisDistance>
 
-	^ GtPlotterAxisDistance from: self to: anotherAxisValue
+	^ GtPlotterAxisDistance from: anotherAxisValue to: self

@@ -1,5 +1,5 @@
-computation
-projections: aCollectionOfDomainObjects
+initialization
+computeProjections: aCollectionOfDomainObjects
 	<return: #GtPlotterAxisProjections>
 
 	^ (GtPlotterAxisProjections streamContents: [ :aStream | 

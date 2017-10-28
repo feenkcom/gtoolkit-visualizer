@@ -6,7 +6,7 @@ layoutDomainChild: anElement
 		
 	normalizedHorizontal := horizontalAxis normalize: aDomainObject.
 	normalizedVertical := verticalAxis normalize: aDomainObject.
-	
+		
 	horizontalPosition := (horizontalAxisElement measuredWidth - verticalAxisElement measuredWidth) * normalizedHorizontal.
 	verticalPosition := (verticalAxisElement measuredHeight - horizontalAxisElement measuredHeight) * (1 - normalizedVertical).
 	
