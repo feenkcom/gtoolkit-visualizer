@@ -1,0 +1,1 @@
+I represent some abstract value on the axis, for example it can be a projection of a domain object, a tick value or range/domain of the scale

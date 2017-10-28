@@ -1,4 +1,4 @@
 initialization
-from: aFromProjection to: aToProjection
-	from := aFromProjection.
-	to := aToProjection
+from: aFromAxisValue to: aToAxisValue
+	from := aFromAxisValue.
+	to := aToAxisValue

@@ -1,6 +1,6 @@
 accessing
 from
-	"Return a projection from which we should measure distance"
-	<return: #GtPlotterAxisProjection>
+	"Return an axis value from which we should measure distance"
+	<return: #GtPlotterAxisValue>
 
 	^ from

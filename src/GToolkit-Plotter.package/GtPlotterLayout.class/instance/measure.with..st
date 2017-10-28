@@ -14,6 +14,12 @@ measure: anElement with: anExtentSpec
 
 	domainElements := anElement children
 		select: [ :aChildElement | aChildElement constraints plotter hasDomainObject ].
+		
+	domainObjects := domainElements
+		collect: [ :aChildElement | aChildElement constraints plotter domainObject ].
+		
+	horizontalProjections := horizontalAxis projections: domainObjects.
+	verticalProjections := verticalAxis projections: domainElements.
 	
 	self
 		measuredChildren: anElement

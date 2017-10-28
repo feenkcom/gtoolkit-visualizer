@@ -1,7 +1,7 @@
 {
-	"commentStamp" : "AliakseiSyrel 10/26/2017 14:36",
+	"commentStamp" : "AliakseiSyrel 10/27/2017 15:56",
 	"super" : "Object",
-	"category" : "GToolkit-Plotter",
+	"category" : "GToolkit-Plotter-Axis",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

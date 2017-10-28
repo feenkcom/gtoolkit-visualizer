@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "BlLayoutConstraints",
-	"category" : "GToolkit-Plotter",
+	"category" : "GToolkit-Plotter-Layout",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

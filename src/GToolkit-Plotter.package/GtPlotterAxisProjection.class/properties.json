@@ -1,12 +1,12 @@
 {
 	"commentStamp" : "AliakseiSyrel 10/26/2017 14:29",
-	"super" : "Magnitude",
-	"category" : "GToolkit-Plotter",
+	"super" : "GtPlotterAxisValue",
+	"category" : "GToolkit-Plotter-Axis",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"value"
+		"source"
 	],
 	"name" : "GtPlotterAxisProjection",
 	"type" : "normal"

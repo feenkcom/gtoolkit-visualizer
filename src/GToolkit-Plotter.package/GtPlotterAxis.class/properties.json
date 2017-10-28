@@ -1,11 +1,12 @@
 {
 	"commentStamp" : "",
 	"super" : "Object",
-	"category" : "GToolkit-Plotter",
+	"category" : "GToolkit-Plotter-Axis",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
+		"name",
 		"scale"
 	],
 	"name" : "GtPlotterAxis",

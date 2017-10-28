@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "BlLayout",
-	"category" : "GToolkit-Plotter",
+	"category" : "GToolkit-Plotter-Layout",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
@@ -12,7 +12,10 @@
 		"horizontalAxisElement",
 		"domainElements",
 		"horizontalRange",
-		"verticalRange"
+		"verticalRange",
+		"domainObjects",
+		"horizontalProjections",
+		"verticalProjections"
 	],
 	"name" : "GtPlotterLayout",
 	"type" : "normal"

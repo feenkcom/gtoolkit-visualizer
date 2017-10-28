@@ -1,6 +1,14 @@
 computation
-projections: aCollectionOfDomainValues
-	<return: #SequenceableCollection of: #GtPlotterAxisProjection>
+projections: aCollectionOfDomainObjects
+	<return: #GtPlotterAxisProjections>
 
-	^ aCollectionOfDomainValues
-		collectWithIndex: [ :aDomainObject :anIndex | self projection: aDomainObject at: anIndex ]
+	^ (GtPlotterAxisProjections streamContents: [ :aStream | 
+		aCollectionOfDomainObjects
+			doWithIndex: [ :aDomainObject :anIndex |
+				| aProjection |
+				aProjection := self projection: aDomainObject at: anIndex.
+				aProjection source: aDomainObject.
+				aProjection axis: self.
+				aDomainObject addProjection: aProjection.
+				aStream nextPut: aProjection ] ])
+			axis: self

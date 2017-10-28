@@ -1,1 +1,1 @@
-I am a distance between two projections of domain objects on the same axis
+I am a distance between two axis values or projections

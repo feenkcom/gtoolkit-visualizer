@@ -2,5 +2,5 @@ initialization
 initialize
 	super initialize.
 	
-	valueSelector := #yourself.
+	name := 'Axis'.
 	scale := GtPlotterIdentityScale new
