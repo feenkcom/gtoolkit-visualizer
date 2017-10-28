@@ -1,0 +1,3 @@
+scripting
+horizontalDominanceTree
+	^ self custom: GtGraphHorizontalDominanceTreeLayout new
