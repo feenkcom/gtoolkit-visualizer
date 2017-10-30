@@ -4,7 +4,7 @@ radialDraw: aNode
 
 	| children r max |
 	r := (self rOf: aNode).
-	translator translateTopLeftOf: aNode to: (Point r: r theta: (self thetaOf: aNode)).
+	translator translateTopLeftOf: aNode to: (Point gtR: r theta: (self thetaOf: aNode)).
 	"aNode translateTo: (Point radius: (aNode r) theta: (aNode theta))."
 	children := self childrenFor: aNode.
 	max := 0.

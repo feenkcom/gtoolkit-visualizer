@@ -1,3 +1,3 @@
 *GToolkit-Mondrian-Layouts
-halfPerimeter
+gtHalfPerimeter
 	^ self width + self height

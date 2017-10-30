@@ -14,6 +14,6 @@ bestSpaceFor: anElement
 			((currentExt := self extentByInserting: elementsPadedBox into: current) <
 			(bestExt := self extentByInserting: elementsPadedBox  into: best) or: [ 
 				currentExt = bestExt and: [
-					current halfPerimeter < best halfPerimeter ] ])
+					current gtHalfPerimeter < best gtHalfPerimeter ] ])
 						ifTrue: [ current ]
 						ifFalse: [ best ] ]

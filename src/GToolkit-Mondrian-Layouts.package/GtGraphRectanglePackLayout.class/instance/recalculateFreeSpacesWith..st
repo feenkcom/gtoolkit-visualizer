@@ -2,7 +2,7 @@ space-calculation
 recalculateFreeSpacesWith: anElement
 	freeSpace := freeSpace inject: Set new into: [ :set :space |
 		 set
-			addAll: (space areasOverlapingOutside:
+			addAll: (self areasFrom: space overlapingOutside:
 				(anElement measuredBounds asRectangle expandBy: padding)); 
 			yourself ].
 		

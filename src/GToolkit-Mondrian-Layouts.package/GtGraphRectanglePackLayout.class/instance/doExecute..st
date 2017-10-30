@@ -14,8 +14,8 @@ doExecute: elements
 	freeSpace add: (0@0 corner: maxSpace).
 	
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
-		larger  boundsInLocal halfPerimeter >
-		smaller boundsInLocal halfPerimeter ].
+		larger  boundsInLocal gtHalfPerimeter >
+		smaller boundsInLocal gtHalfPerimeter ].
 	sortedElements addAll: elements.
 	
 	sortedElements

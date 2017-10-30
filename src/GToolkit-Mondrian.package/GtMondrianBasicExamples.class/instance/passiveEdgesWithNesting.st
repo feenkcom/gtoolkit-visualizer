@@ -2,7 +2,7 @@ tutorial - advanced
 passiveEdgesWithNesting
 	<gtExample>
 	| view |
-	view := GtMondrian new.
+	view := self emptyView.
 	view nodes
 		shape: [ :x | 
 			BlElement new 

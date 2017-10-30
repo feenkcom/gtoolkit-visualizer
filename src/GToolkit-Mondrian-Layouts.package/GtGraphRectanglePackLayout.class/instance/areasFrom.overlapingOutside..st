@@ -1,13 +1,12 @@
-*GToolkit-Mondrian-Layouts
-areasOverlapingOutside: aRectangle 
+space-calculation
+areasFrom: space overlapingOutside: aRectangle
 	"Answer an Array of maximized Rectangles comprising (overlaped by each other) the parts of the receiver not 
-	intersecting aRectangle."
-	"Make sure the intersection is non-empty"
+	intersecting aRectangle. Make sure the intersection is non-empty"
 	| areas o c |
-	(self intersects: aRectangle) ifFalse: [ ^ Array with: self ].
+	(space intersects: aRectangle) ifFalse: [ ^ Array with: space ].
 	areas := OrderedCollection new.
-	o := self topLeft.
-	c := self bottomRight.
+	o := space topLeft.
+	c := space bottomRight.
 	aRectangle topLeft y > o y 
 		ifTrue: 
 			[ areas addLast: (o corner: c x @ aRectangle topLeft y) ].

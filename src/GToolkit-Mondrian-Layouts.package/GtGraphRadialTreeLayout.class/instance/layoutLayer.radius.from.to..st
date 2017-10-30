@@ -21,7 +21,7 @@ layoutLayer: aCollection radius: oldRadius from: aFromAngle to: aToAngle
 				do:
 					[:child | 
 					translator translateTopLeftOf: child to: (Point
-								r: myRadius
+								gtR: myRadius
 								theta: toAngle - (delta / 2.0)).
 					"child
 						translateTo:

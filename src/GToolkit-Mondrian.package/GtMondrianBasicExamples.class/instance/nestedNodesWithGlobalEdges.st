@@ -2,7 +2,7 @@ tutorial - advanced
 nestedNodesWithGlobalEdges
 	<gtExample>
 	| view |
-	view := GtMondrian new.
+	view := self emptyView.
 	view nodes
 		shape: [ :each | 
 			BlElement new
