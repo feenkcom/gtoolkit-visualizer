@@ -7,7 +7,7 @@ baseline: spec
 				baseline: 'Bloc'
 					with: [ spec
 						repository: 'github://pharo-graphics/Bloc/src';
-						loads: #development ];
+						loads: #core ];
 				package: 'GToolkit-Plotter' with: [ spec requires: #(#Bloc) ];
 				package: 'GToolkit-Mondrian' with: [ spec requires: #(#Bloc) ];
 				package: 'GToolkit-Mondrian-Layouts' with: [ spec requires: #(#'GToolkit-Mondrian') ];
