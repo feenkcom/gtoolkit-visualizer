@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "BlEvent",
+	"category" : "GToolkit-Connector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newButtons",
+		"oldButtons"
+	],
+	"name" : "GtConnectorButtonsChanged",
+	"type" : "normal"
+}

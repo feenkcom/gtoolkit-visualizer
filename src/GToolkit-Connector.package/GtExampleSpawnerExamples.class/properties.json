@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "BrRBTextStyler",
+	"category" : "GToolkit-Connector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtExampleSpawnerExamples",
+	"type" : "normal"
+}

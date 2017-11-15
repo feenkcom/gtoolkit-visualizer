@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "BrTextAdornmentAttribute",
+	"category" : "GToolkit-Connector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"actionBlock",
+		"button",
+		"target",
+		"source"
+	],
+	"name" : "GtConnectorTextButtonAttribute",
+	"type" : "normal"
+}

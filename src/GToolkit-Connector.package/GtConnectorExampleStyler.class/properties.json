@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "BrRBTextStyler",
+	"category" : "GToolkit-Connector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"exampleAction",
+		"buttonAttributes"
+	],
+	"name" : "GtConnectorExampleStyler",
+	"type" : "normal"
+}
