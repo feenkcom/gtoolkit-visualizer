@@ -1,14 +1,14 @@
 {
-	"commentStamp" : "",
-	"super" : "BrRBTextStyler",
+	"commentStamp" : "AliakseiSyrel 11/16/2017 17:38",
+	"super" : "Object",
 	"category" : "GToolkit-Connector",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"exampleAction",
-		"previousLinks"
+		"source",
+		"target"
 	],
-	"name" : "GtConnectorExampleStyler",
+	"name" : "GtConnectorLink",
 	"type" : "normal"
 }

@@ -1,0 +1,1 @@
+Is sent by styler when it detects a new logical link between methods since previous styling operation

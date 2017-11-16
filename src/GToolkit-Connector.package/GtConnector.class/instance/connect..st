@@ -1,6 +1,6 @@
 private - adding / removing
 connect: anElement
-	"Connect a given element with other elements depending on wether anElement is source or target"
+	"I create a visual edge between elements (not used by layouts)"
 
 	self
 		assert: [ anElement isConnectorSource or: [ anElement isConnectorTarget ] ]

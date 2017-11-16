@@ -6,9 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"buttonCreatedListener",
-		"buttonAddedListener",
-		"buttonRemovedListener"
+		"stylerDoneListener",
+		"stylerListener"
 	],
 	"name" : "GtConnector",
 	"type" : "normal"

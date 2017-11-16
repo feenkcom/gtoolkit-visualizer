@@ -6,7 +6,7 @@ addEdgeFrom: aSourceElement to: aTargetElement
 	self
 		assert: [ aSourceElement isNotNil ]
 		description: [ 'Source element must not be nil' ].
-		
+
 	self
 		assert: [ aTargetElement isNotNil ]
 		description: [ 'Target element must not be nil' ].

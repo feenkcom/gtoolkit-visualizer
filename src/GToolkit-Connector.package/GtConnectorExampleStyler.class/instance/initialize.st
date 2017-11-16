@@ -1,4 +1,5 @@
 initialization
 initialize
 	super initialize.
-	buttonAttributes := OrderedCollection new
+
+	previousLinks := OrderedCollection new

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "AliakseiSyrel 11/16/2017 17:37",
+	"super" : "GtConnectorStylerEvent",
+	"category" : "GToolkit-Connector-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"link"
+	],
+	"name" : "GtConnectorLinkDeletedEvent",
+	"type" : "normal"
+}

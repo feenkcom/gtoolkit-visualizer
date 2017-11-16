@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "AliakseiSyrel 11/16/2017 18:00",
+	"super" : "BlBasicEventHandler",
+	"category" : "GToolkit-Connector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"connector",
+		"buttonCreatedListener",
+		"buttonAddedListener"
+	],
+	"name" : "GtConnectorStylerListener",
+	"type" : "normal"
+}

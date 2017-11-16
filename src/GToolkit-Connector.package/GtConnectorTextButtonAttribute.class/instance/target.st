@@ -1,3 +1,3 @@
 accessing
 target
-	^ target
+	^ self link target

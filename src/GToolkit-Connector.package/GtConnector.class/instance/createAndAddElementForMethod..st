@@ -14,19 +14,9 @@ createAndAddElementForMethod: method
 		effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
 
 	styler := GtConnectorExampleStyler new.
-	"What happens when we click on a button"
-	styler exampleAction: [ :exampleMethod :messageNode :buttonElement |
-			(self hasOpenedMethod: exampleMethod)
-				"method is not yet opened"
-				ifFalse: [ self openMethod: exampleMethod relativeTo: editorElement linkedTo: buttonElement ]
-				"method is already opened"
-				ifTrue: [ self closeMethod: exampleMethod ] ];
-		classOrMetaClass: method methodClass.
-	styler
-		addEventHandlerOn: BrTextStyledEvent
-		do: [ :aStyledEvent |
-			aStyledEvent currentTarget buttonAttributes
-				do: [ :aButtonAttribute | aButtonAttribute addEventHandler: buttonCreatedListener ] ].
+	styler exampleAction: [ :anExampleMethod | self addMethod: anExampleMethod ].
+	styler classOrMetaClass: method methodClass.
+	styler addEventHandler: stylerListener.
 
 	editor := BrTextEditor new.
 	editor styler: styler.
