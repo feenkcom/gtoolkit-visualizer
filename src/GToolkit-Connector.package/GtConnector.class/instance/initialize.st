@@ -7,4 +7,6 @@ initialize
 		c vertical matchParent.
 		c padding: (BlInsets all: 40) ].
 
-	self layout: (GtGraphHorizontalDominanceTreeLayout new horizontalGap: 100; verticalGap: 40)
+	self layout: (GtGraphHorizontalDominanceTreeLayout new horizontalGap: 100; verticalGap: 40).
+	
+	self initializeListeners

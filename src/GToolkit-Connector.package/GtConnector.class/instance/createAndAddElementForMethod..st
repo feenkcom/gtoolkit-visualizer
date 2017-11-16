@@ -25,10 +25,7 @@ createAndAddElementForMethod: method
 		addEventHandlerOn: BrTextStyledEvent
 		do: [ :aStyledEvent |
 			aStyledEvent currentTarget buttonAttributes
-				do: [ :aButtonAttribute |
-					aButtonAttribute
-						addEventHandlerOn: GtConnectorButtonCreatedEvent
-						do: [ :anEvent | self addButton: anEvent button ] ] ].
+				do: [ :aButtonAttribute | aButtonAttribute addEventHandler: buttonCreatedListener ] ].
 
 	editor := BrTextEditor new.
 	editor styler: styler.

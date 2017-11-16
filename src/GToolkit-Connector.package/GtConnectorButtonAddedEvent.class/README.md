@@ -1,0 +1,1 @@
+Is sent after button is added to the scene graph

@@ -2,4 +2,4 @@ children hooks
 onAddedToSceneGraph
 	super onAddedToSceneGraph.
 
-	self dispatchEvent: (GtConnectorButtonAddedToSceneGraph new target: self)
+	self dispatchEvent: (GtConnectorButtonAddedEvent new target: self)

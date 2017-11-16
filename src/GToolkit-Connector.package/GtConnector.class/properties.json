@@ -5,7 +5,11 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
+	"instvars" : [
+		"buttonCreatedListener",
+		"buttonAddedListener",
+		"buttonRemovedListener"
+	],
 	"name" : "GtConnector",
 	"type" : "normal"
 }
