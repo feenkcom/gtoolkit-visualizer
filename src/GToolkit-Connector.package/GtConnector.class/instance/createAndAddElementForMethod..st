@@ -6,7 +6,8 @@ createAndAddElementForMethod: method
 	editorElement
 		constraintsDo: [ :c | 
 			c horizontal fitContent.
-			c vertical exact: 200.
+			c vertical fitContent.
+			c maxHeight: 200.
 			c padding: (BlInsets all: 10) ].
 	editorElement
 		background: Color white;
