@@ -17,11 +17,11 @@ extraStyle: aText ast: ast
 			target: targetExampleMethod.
 		newButtonAttributes add: buttonAttribute.
 		buttonAttribute
-				actionBlock: [ :ev | 
+				actionBlock: [ :anEvent | 
 					exampleAction 
 						value: targetExampleMethod
 						value: each
-						value: buttonAttribute ].
+						value: anEvent currentTarget ].
 		aText 
 			attributes: { buttonAttribute } 
 			from: each stop - 1

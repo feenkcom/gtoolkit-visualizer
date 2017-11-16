@@ -1,6 +1,6 @@
 children hooks
 onRemovedFromSceneGraph
-	super onRemovedFromSceneGraph.
+	super onRemovedFromSceneGraph.	
 	
-	self fireEvent: GtConnectorButtonRemovedFromSceneGraph new.
+	self dispatchEvent: GtConnectorButtonRemovedFromSceneGraph new.
 	self dispatchEvent: (BlElementRemovedEvent target: self).

@@ -1,3 +1,7 @@
 initialization
 affect: aBrText in: anEditorElement
-	^ self button
+	| aButton |
+	
+	aButton := self newButton.
+	self fireEvent: (GtConnectorButtonCreatedEvent button: aButton).
+	^ aButton

@@ -1,16 +1,18 @@
 {
-	"commentStamp" : "",
-	"super" : "BrTextAdornmentAttribute",
-	"category" : "GToolkit-Connector",
-	"classinstvars" : [ ],
-	"pools" : [ ],
+	"classtraitcomposition" : "TBlEventTarget classTrait",
 	"classvars" : [ ],
 	"instvars" : [
 		"actionBlock",
-		"button",
 		"target",
-		"source"
+		"source",
+		"eventDispatcher"
 	],
 	"name" : "GtConnectorTextButtonAttribute",
-	"type" : "normal"
+	"commentStamp" : "",
+	"super" : "BrTextAdornmentAttribute",
+	"traitcomposition" : "TBlEventTarget",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "GToolkit-Connector"
 }

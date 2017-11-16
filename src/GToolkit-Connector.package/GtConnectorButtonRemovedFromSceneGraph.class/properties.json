@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "BlEvent",
-	"category" : "GToolkit-Connector",
+	"category" : "GToolkit-Connector-Events",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

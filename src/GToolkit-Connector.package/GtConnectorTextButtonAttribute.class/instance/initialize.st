@@ -1,5 +1,8 @@
 initialization
 initialize
 	super initialize.
+	
+	eventDispatcher := BlBubblingEventDispatcher on: self.
 	actionBlock := [  ].
-	self beAppend.
+	
+	self beAppend

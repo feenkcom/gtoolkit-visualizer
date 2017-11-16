@@ -1,11 +1,13 @@
 {
-	"commentStamp" : "",
+	"commentStamp" : "AliakseiSyrel 11/16/2017 12:53",
 	"super" : "BlEvent",
 	"category" : "GToolkit-Connector-Events",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
-	"name" : "GtConnectorButtonAddedToSceneGraph",
+	"instvars" : [
+		"button"
+	],
+	"name" : "GtConnectorButtonCreatedEvent",
 	"type" : "normal"
 }

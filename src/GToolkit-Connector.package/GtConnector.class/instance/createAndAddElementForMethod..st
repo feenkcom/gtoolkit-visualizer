@@ -6,7 +6,7 @@ createAndAddElementForMethod: method
 	editorElement
 		constraintsDo: [ :c | 
 			c horizontal fitContent.
-			c vertical fitContent.
+			c vertical exact: 200.
 			c padding: (BlInsets all: 10) ].
 	editorElement
 		background: Color white;
@@ -14,22 +14,21 @@ createAndAddElementForMethod: method
 
 	styler := GtConnectorExampleStyler new.
 	"What happens when we click on a button"
-	styler exampleAction: [ :exampleMethod :messageNode :buttonAttribute |
+	styler exampleAction: [ :exampleMethod :messageNode :buttonElement |
 			(self hasOpenedMethod: exampleMethod)
 				"method is not yet opened"
-				ifFalse: [ self openMethod: exampleMethod relativeTo: editorElement linkedTo: buttonAttribute button ]
+				ifFalse: [ self openMethod: exampleMethod relativeTo: editorElement linkedTo: buttonElement ]
 				"method is already opened"
 				ifTrue: [ self closeMethod: exampleMethod ] ];
 		classOrMetaClass: method methodClass.
 	styler
 		addEventHandlerOn: BrTextStyledEvent
-		do: [ :aStyledEvent | aStyledEvent currentTarget buttons
-			do: [ :aSourceElement |
-				(self doesExist: aSourceElement)
-					ifTrue: [ self connect: aSourceElement ]
-					ifFalse: [ aSourceElement
-						addEventHandlerOn: GtConnectorButtonAddedToSceneGraph
-						do: [ self connect: aSourceElement ] ] ] ].
+		do: [ :aStyledEvent |
+			aStyledEvent currentTarget buttonAttributes
+				do: [ :aButtonAttribute |
+					aButtonAttribute
+						addEventHandlerOn: GtConnectorButtonCreatedEvent
+						do: [ :anEvent | self addButton: anEvent button ] ] ].
 
 	editor := BrTextEditor new.
 	editor styler: styler.
