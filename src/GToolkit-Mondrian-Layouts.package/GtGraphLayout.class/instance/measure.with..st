@@ -8,5 +8,6 @@ measure: anElement with: anExtentSpec
 	
 	self measureIgnored: anElement with: anExtentSpec.
 
-	self applyOn: anElement managedChildren .
+	self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ]).
+
 	self fit: anElement with: anExtentSpec
