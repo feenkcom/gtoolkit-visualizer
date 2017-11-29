@@ -4,14 +4,14 @@ newButton
 	| aButton |
 
 	aButton := GtConnectorTextButtonElement new
-		size: 8 @ 8;
+		size: 6 @ 6;
 		margin:
 			(BlInsets
-				top: 2
-				right: 5
+				top: 6
+				right: 2
 				bottom: 0
-				left: 5);
-		background: Color gray;
+				left: 2);
+		background: (Color gray alpha: 0.5);
 		geometry: BlEllipse new;
 		addEventHandlerOn: BlClickEvent
 			do: [ :anEvent | actionBlock value: anEvent ];
