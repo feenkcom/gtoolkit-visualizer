@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "BlTextElement",
+	"category" : "GToolkit-Mondrian",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"originalText"
+	],
+	"name" : "GtShrinkingLabel",
+	"type" : "normal"
+}
