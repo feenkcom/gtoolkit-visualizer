@@ -1,4 +1,4 @@
-uml
+examples
 packageDependencies
 	<gtExample>
 	| view packages dependencies |

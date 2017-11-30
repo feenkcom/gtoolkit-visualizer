@@ -1,4 +1,4 @@
-uml
+examples
 umlClasses
 	<gtExample>
 	| view |
