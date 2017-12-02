@@ -3,8 +3,8 @@ edgeElementFor: anObject from: fromElement to: toElement
 	| edgeElement |
 	edgeElement := self edgeElementFor: anObject.
 	edgeElement
-		fromAnchor: (fromAnchorClass element: fromElement);
-		toAnchor: (toAnchorClass element: toElement).
+		fromAnchor: (fromAnchorClass referenceElement: fromElement relatedTo: toElement);
+		toAnchor: (toAnchorClass referenceElement: toElement relatedTo: fromElement).
 	edgeElement constraints ignoreByLayout.
 	edgeElement mondrianModel: anObject.
 	edgeElement beMondrianEdge.

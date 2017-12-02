@@ -37,7 +37,9 @@ packageDependencies
 						background: Color gray];
 				with: each definedClasses.
 			view layout rectanglePack ].
-	view edges 
+	view edges
+		fromNearestCircle;
+		toNearestCircle;
 		shape: [ :dep | BlParabollaArcElement new curvatureFraction: 0.2; border: (BlBorder paint: (Color gray alpha: 0.2) width: dep third size)];
 		connect: dependencies
 		from: #first
