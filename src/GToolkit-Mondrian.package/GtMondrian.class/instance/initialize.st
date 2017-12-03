@@ -3,6 +3,7 @@ initialize
 	stack := Stack new.
 	stack push: (GtMondrianStep new 
 		root: ((BlElement new
+		clipChildren: false;
 		constraintsDo: [ :constraints |
 			constraints horizontal fitContent.
 			constraints vertical fitContent.
