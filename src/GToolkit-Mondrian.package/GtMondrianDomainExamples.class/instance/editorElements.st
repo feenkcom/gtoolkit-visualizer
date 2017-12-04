@@ -20,7 +20,9 @@ editorElements
 					c horizontal fitContent.
 					c padding: (BlInsets top: 5 bottom: 5)];
 				layout: (BlGridLayout vertical cellSpacing: 1).
-			labelText := (((each class name withoutPrefix: 'Br') withoutPrefix: 'Bl') withoutSuffix: 'Element') asRopedText.
+			labelText := (((each class name withoutPrefix: 'Br') withoutPrefix: 'Bl') withoutSuffix: 'Element').
+			labelText ifEmpty: [ labelText := 'Element' ].
+			labelText := labelText asRopedText.
 			labelText attributes: { BrFontSizeAttribute size: 9 . BrTextForegroundAttribute paint: Color lightGray }.
 			label := BlTextElement new text: labelText. 
 			label constraintsDo: [ :c | c grid horizontal alignCenter ].

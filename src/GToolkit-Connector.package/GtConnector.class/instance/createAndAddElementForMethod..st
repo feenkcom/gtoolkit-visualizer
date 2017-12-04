@@ -9,7 +9,7 @@ createAndAddElementForMethod: method
 			c vertical fitContent.
 			c maxWidth: 400.
 			self editorElements
-				ifEmpty: [ c maxHeight: 600 ]
+				ifEmpty: [ c maxHeight: 400 ]
 				ifNotEmpty: [ c maxHeight: 200 ].
 			c padding: (BlInsets all: 10) ].
 	editorElement
