@@ -28,7 +28,8 @@ editorElements
 			form := each asSpartaForm.
 			content := BlElement new
 				size: form extent;
-				background: (BlBackground image: form).
+				background: (BlBackground image: form);
+				constraintsDo: [ :c | c grid horizontal alignCenter ].
 			container addChild: content.
 			container ];
 		with: element withAllChildrenBreadthFirst.
