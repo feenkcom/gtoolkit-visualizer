@@ -4,8 +4,10 @@ packageDependencies
 	| view packages dependencies |
 	view := self emptyView.
 	packages := {'Glamour-Core' . 'Glamour-Presentations' . 'Glamour-Morphic-Renderer' . 'Glamour-Browsers'} collect: #asPackage.
-	dependencies := (packages flatCollect: [:p | 
-		((p definedClasses flatCollect: #subclasses) groupedBy: #package) associations collect: [ :each | { p . each key . each value} ] ]).
+	dependencies := packages flatCollect: [:p | 
+		((p definedClasses flatCollect: #subclasses) groupedBy: #package) associations 
+			collect: [ :each | { p . each key . each value} ]
+			thenSelect: [ :tuple | tuple first ~= tuple second ] ].
 	view nodes 
 		shape: [ :p | 
 			| shape text label |
