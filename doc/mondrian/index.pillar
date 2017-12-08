@@ -4,6 +4,7 @@ Mondrian is an engine for graph-based visualization. While its roots date back t
 
 But enough talk. To get an idea of what Mondrian is about, let's consider some examples. 
 
+
 !!A few examples
 
 The first example shows a tree made of nodes and interconnecting edges that are organized as a radial tree. Except that there are also two red edges that do not affect the layout.
@@ -19,7 +20,9 @@ Each of these examples are similar in that they are constructed as transformatio
 - One shows only simple nodes. Another one also shows nested nodes.
 - Most drawn edges affect the visualization, except for two red ones that even if thicker they are passive ones.
 
+
 !!A tutorial
+
 
 !!!Nodes, edges and layouts
 
@@ -39,6 +42,7 @@ Given those nodes, we can build edges.
 And finally, we lay them out.
 
 [[[example=GtMondrianBasicExamples>>#layoutOnOneEdgeBetweenTwoNodes|expanded=true|show=gtLiveIn:]]]
+
 
 !!!Shapes
 
@@ -63,13 +67,28 @@ Nested nodes behave like leaf nodes in that they can be connected through edges 
 
 [[[example=GtMondrianBasicExamples>>#nestedWithEdges|expanded=true|show=gtLiveIn:]]]
 
+
+!!Differences to previous incarnations of Mondrian
+
+The API has changed in comparison with the Roassal version because of the constraints and opportunities offered by Bloc:
+- Nodes are defined through ==view nodes with: { ... }==, instead of ==view nodes: { ... }==. One reason is to make the definition more similar to the one of edges.
+- Shapes are defined within the scope of a ==view nodes== or ==view edges== definition.
+- Shapes are mainly defined explicitly by instantiating of ==BlElement== and its subclasses.
+- The ==forEach:== clause can be cascaded after ==view nodes with: {...}==. This allows us to have multiple ==forEach:== statements per one nodes definition.
+- The new ==forEach:in:== allows the user to define the id of the container for the children. In this way, we can define children in different parts of the parent node.
+
+
 !!Domain-specific examples
 
 Mondrian is useful for creating custom views that are specific to a given domain.
 
+
 !!!Package dependencies
 
+
+
 [[[example=GtMondrianDomainExamples>>#packageDependencies|expanded=true|show=gtLiveIn:]]]
+
 
 !!!Examples dependencies
 
