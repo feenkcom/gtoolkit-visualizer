@@ -92,6 +92,13 @@ In this example, we see a list of packages arranged in a circle, with nested cla
 
 !!!Examples dependencies
 
-The examples dependencies shows the tree of children of an editor element.
+This examples shows a tree of dependencies between example methods. We can see here that the visualization can embed arbitrary elements, such as an editor element with syntax highlighting.
 
 [[[example=GtMondrianDomainExamples>>#exampleDependencies|noCode=true|expanded=true|show=gtLiveIn:]]]
+
+
+!!The inner structure of an element editor
+
+Visualization can be applied to any object or set objects. For example, the following visualization helps us understand how the editor element is composed out of smaller elements by showing the tree of the elements, each depicted with a label and a picture of the actual element.
+
+[[[example=GtMondrianDomainExamples>>#editorElements|noCode=true|expanded=true|show=gtLiveIn:]]]
