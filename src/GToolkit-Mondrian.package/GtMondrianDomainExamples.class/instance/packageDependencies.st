@@ -46,7 +46,7 @@ packageDependencies
 			BlParabollaArcElement new 
 				curvatureFraction: 0.2; 
 				border: (BlBorder paint: (Color gray alpha: 0.2) width: dep third size);
-				toHead: (BlArrowheadSimpleArrow new
+				fromHead: (BlArrowheadSimpleArrow new
 					arrowLengthFraction: 5;
 					arrowNoseAngle: 60;
 					border: (BlBorder builder paint: (Color gray alpha: 0.2); width: dep third size; build))];
