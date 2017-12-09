@@ -2,7 +2,7 @@
 
 Mondrian is an engine for graph-based visualization. While its roots date back to 2005, there have been multiple incarnations since then, including the ones from Roassal. The current version is based on Bloc, the new graphical engine for Pharo. The current version makes extensive use of Bloc and its mechanisms. As a result it requires a very short implementation that is specific to visualizing graphs. It turns out that most of the things we need for graphs are actually generic concepts that can be used for all sorts of other graphical needs.
 
-But enough talk. To get an idea of what Mondrian is about, let's consider some examples. 
+To get a more concrete idea of what Mondrian is about, let's consider some examples. 
 
 
 !!A few examples
@@ -85,11 +85,13 @@ Mondrian is useful for creating custom views that are specific to a given domain
 
 !!!Package dependencies
 
+In this example, we see a list of packages arranged in a circle, with nested classes and the inheritance dependencies between the classes grouped at package level. One interesting thing is that the label of the packages shrinks to the available space offered by the size of the boxes. Another particularity is the use of parabolla arcs and heads.
 
-
-[[[example=GtMondrianDomainExamples>>#packageDependencies|expanded=true|show=gtLiveIn:]]]
+[[[example=GtMondrianDomainExamples>>#packageDependencies|noCode=true|expanded=true|show=gtLiveIn:]]]
 
 
 !!!Examples dependencies
 
-[[[example=GtMondrianDomainExamples>>#exampleDependencies|expanded=true|show=gtLiveIn:]]]
+The examples dependencies shows the tree of children of an editor element.
+
+[[[example=GtMondrianDomainExamples>>#exampleDependencies|noCode=true|expanded=true|show=gtLiveIn:]]]
