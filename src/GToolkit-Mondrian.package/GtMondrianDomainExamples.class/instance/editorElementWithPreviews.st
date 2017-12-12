@@ -5,6 +5,7 @@ editorElementWithPreviews
 	block := [
 		| view toAdd |
 		view := GtMondrian new. 
+		element forceLayout.
 		element editor text rope viewBlocTreeOn: view.
 		toAdd := view asScalableElement.
 		ropeMondrian removeChildren.
