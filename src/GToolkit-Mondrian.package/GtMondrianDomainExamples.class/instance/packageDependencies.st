@@ -17,7 +17,7 @@ packageDependencies
 				c vertical fitContent.
 				c horizontal fitContent ].
 			text := BrRopedText string: p name.
-			label := GtShrinkingLabel new text: text.
+			label := BlShrinkingTextElement new text: text.
 			label constraintsDo: [ :c |
 					c vertical fitContent.
 					c horizontal matchParent ].
