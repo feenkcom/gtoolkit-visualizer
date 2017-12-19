@@ -3,12 +3,11 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"affectedNodes",
-		"translator",
-		"isStopped"
+		"translator"
 	],
 	"name" : "GtGraphLayout",
 	"commentStamp" : "AliakseiSyrel 8/28/2016 16:11",
-	"super" : "BlLayout",
+	"super" : "BlFitLayout",
 	"traitcomposition" : "TGtGraphLayoutUtils",
 	"type" : "normal",
 	"classinstvars" : [ ],
