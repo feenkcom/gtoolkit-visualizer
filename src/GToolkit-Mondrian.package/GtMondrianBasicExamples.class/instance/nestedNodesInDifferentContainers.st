@@ -46,5 +46,5 @@ nestedNodesInDifferentContainers
 		with: { 1 . 2 };
 		forEach: [ :each | view nodes with: { 10 . 11 . 12 } ] in: #one;
 		forEach: [ :each | view nodes with: { 20 . 21 } ] in: #two.
-	view layout grid.
+	view layout tree.
 	^ view
