@@ -5,22 +5,12 @@ A set of visualization engines that are part of the [Glamorous Toolkit](https://
 
 ## Installation
 
-You can load Mondrian through:
+You can load the code through:
 
 ```
 Iceberg enableMetacelloIntegration: true.
 Metacello new
-   baseline: 'GToolkitMondrian';
-   repository: 'github://feenkcom/gtoolkit-visualizer/src';
-   load.
-```
-
-You can load Connector through:
-
-```
-Iceberg enableMetacelloIntegration: true.
-Metacello new
-   baseline: 'GToolkitConnector';
+   baseline: 'GToolkitVisualizer';
    repository: 'github://feenkcom/gtoolkit-visualizer/src';
    load.
 ```
