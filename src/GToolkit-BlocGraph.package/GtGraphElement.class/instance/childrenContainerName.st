@@ -1,3 +1,3 @@
-*GToolkit-Mondrian
-mondrianChildrenContainerName
+api
+childrenContainerName
 	^ self userData at: #isMondrianChildrenContainer

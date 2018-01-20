@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "TudorGirba 1/20/2018 18:19",
+	"super" : "Object",
+	"category" : "GToolkit-BlocGraph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"element"
+	],
+	"name" : "GtGraphElement",
+	"type" : "normal"
+}

@@ -12,6 +12,6 @@ twoNodesWithNodesInForEach
 	self assert: view topStep root children first children size equals: 3.
 	self assert: view topStep root children last children size equals: 1.
 	self
-		assert: view topStep root children last children first mondrianModel
+		assert: view topStep root children last children first graph model
 		equals: 4.
 	^ view

@@ -6,6 +6,6 @@ edgeElementFor: anObject from: fromElement to: toElement
 		fromAnchor: (fromAnchorClass referenceElement: fromElement relatedTo: toElement);
 		toAnchor: (toAnchorClass referenceElement: toElement relatedTo: fromElement).
 	edgeElement constraints ignoreByLayout.
-	edgeElement mondrianModel: anObject.
-	edgeElement beMondrianEdge.
+	edgeElement graph model: anObject.
+	edgeElement graph beEdge.
 	^ edgeElement

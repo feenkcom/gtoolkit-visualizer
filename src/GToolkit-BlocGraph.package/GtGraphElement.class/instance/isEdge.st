@@ -1,3 +1,3 @@
-*GToolkit-Mondrian
-isMondrianEdge
+api
+isEdge
 	^ self userData at: #isMondrianEdge ifAbsent: [ false ]

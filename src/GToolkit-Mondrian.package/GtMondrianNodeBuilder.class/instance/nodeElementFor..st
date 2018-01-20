@@ -4,6 +4,6 @@ nodeElementFor: anObject
 	nodeElement := elementBlock 
 		ifNotNil: [ elementBlock cull: anObject cull: self defaultNodeElement ]
 		ifNil: [ self defaultNodeElement ].
-	nodeElement mondrianModel: anObject.
-	nodeElement beMondrianNode.
+	nodeElement graph model: anObject.
+	nodeElement graph beNode.
 	^ nodeElement 

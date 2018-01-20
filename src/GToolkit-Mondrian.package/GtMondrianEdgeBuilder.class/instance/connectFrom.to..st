@@ -1,6 +1,8 @@
 scripting
 connectFrom: aFromBlock to: aToBlock
 	^ self
-		connect: (self topStep root mondrianNodeChildren collect: [ :each | each mondrianModel ])
-		from: aFromBlock 
-		to: aToBlock 
+		connect:
+			(self topStep root graph nodeChildren
+				collect: [ :each | each graph model ])
+		from: aFromBlock
+		to: aToBlock

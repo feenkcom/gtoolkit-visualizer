@@ -1,3 +1,3 @@
-*GToolkit-Mondrian
-beMondrianChildrenContainer: aSymbol
+api
+beChildrenContainer: aSymbol
 	self userData at: #isMondrianChildrenContainer put: aSymbol
