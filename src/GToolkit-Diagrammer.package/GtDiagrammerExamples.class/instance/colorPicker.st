@@ -18,8 +18,8 @@ colorPicker
 		c linear vertical alignCenter ].
 
 	picker
-		when: GtDiagrammerColorPickerSelected
-		do: [ :anEvent | presenter color: anEvent color ].
+		when: GtDiagrammerPickerSelected
+		do: [ :anEvent | presenter color: anEvent entity ].
 
 	container addChildren: { presenter . picker }.
 

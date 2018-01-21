@@ -6,8 +6,10 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"entities",
-		"shapeBlock"
+		"shapeBlock",
+		"displayBlock",
+		"selectedBlock",
+		"deselectedBlock"
 	],
 	"name" : "GtDiagrammerPicker",
 	"type" : "normal"

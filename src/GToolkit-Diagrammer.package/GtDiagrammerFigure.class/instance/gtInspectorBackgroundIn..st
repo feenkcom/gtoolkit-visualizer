@@ -23,11 +23,11 @@ gtInspectorBackgroundIn: aComposite
 				c linear vertical alignCenter ].
 
 			picker
-				when: GtDiagrammerColorPickerSelected
-				do: [ :anEvent | presenter color: anEvent color ].
+				when: GtDiagrammerPickerSelected
+				do: [ :anEvent | presenter color: anEvent entity ].
 			
 			picker
-				when: GtDiagrammerColorPickerSelected
-				do: [ :anEvent | self background: (BlBackground paint: anEvent color) ].
+				when: GtDiagrammerPickerSelected
+				do: [ :anEvent | self background: (BlBackground paint: anEvent entity) ].
 
 			container addChildren: { presenter . picker } ]

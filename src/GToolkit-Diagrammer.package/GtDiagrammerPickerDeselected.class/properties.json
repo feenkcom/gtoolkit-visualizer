@@ -6,8 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"color"
+		"entity",
+		"shape"
 	],
-	"name" : "GtDiagrammerColorPickerSelected",
+	"name" : "GtDiagrammerPickerDeselected",
 	"type" : "normal"
 }

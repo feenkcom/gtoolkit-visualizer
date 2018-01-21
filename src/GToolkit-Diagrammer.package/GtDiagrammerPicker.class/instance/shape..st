@@ -1,3 +1,5 @@
 scripting
 shape: aShapeBlock
-	shapeBlock := aShapeBlock
+	shapeBlock := aShapeBlock.
+	
+	self initializeEntities

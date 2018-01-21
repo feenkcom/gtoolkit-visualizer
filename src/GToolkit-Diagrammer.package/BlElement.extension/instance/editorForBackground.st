@@ -11,14 +11,15 @@ editorForBackground
 			c vertical fitContent ].
 	presenter := GtDiagrammerColorPresenter new.
 	presenter constraintsDo: [ :c | c linear vertical alignCenter ].
+	
 	picker := GtDiagrammerColorPicker new.
 	picker margin: (BlInsets left: 7).
 	picker constraintsDo: [ :c | c linear vertical alignCenter ].
 	picker
-		when: GtDiagrammerColorPickerSelected
-		do: [ :anEvent | presenter color: anEvent color ].
+		when: GtDiagrammerPickerSelected
+		do: [ :anEvent | presenter color: anEvent entity ].
 	picker
-		when: GtDiagrammerColorPickerSelected
-		do: [ :anEvent | self background: (BlBackground paint: anEvent color) ].
+		when: GtDiagrammerPickerSelected
+		do: [ :anEvent | self background: (BlBackground paint: anEvent entity) ].
 		
 	^ container addChildren: { presenter. picker }
