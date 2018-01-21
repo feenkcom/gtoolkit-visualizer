@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "GToolkit-Diagrammer-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"editorBlock",
+		"title"
+	],
+	"name" : "GtDiagrammerFigureEditor",
+	"type" : "normal"
+}

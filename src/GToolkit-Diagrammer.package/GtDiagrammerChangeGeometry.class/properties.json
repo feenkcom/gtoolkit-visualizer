@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtDiagrammerCommand",
+	"category" : "GToolkit-Diagrammer-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"geometry"
+	],
+	"name" : "GtDiagrammerChangeGeometry",
+	"type" : "normal"
+}
