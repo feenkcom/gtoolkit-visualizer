@@ -15,18 +15,21 @@ gtInspectorTraversedTargetsOnTreeIn: composite
 						padding: (BlInsets all: 5) ];
 				with: (self traversedTargets first target topMostParent withAllChildrenBreadthFirst).
 			
-			view edges connectFrom: #parent.
+			view edges 
+				fromCenterBottom;
+				toCenterTop;				
+				connectFrom: #parent.
 			
 			thePairs pairsDo: [ :from :to |
 				view edges
 					shape: [ :x |
 						BlParabollaArcElement new 
-							border: (BlBorder paint: (Color red alpha: 0.2) width: 10);
+							border: (BlBorder paint: (Color red alpha: 0.2) width: 2);
 							curvatureFraction: 0.4;
 							toHead: (BlArrowheadSimpleArrow new
 								arrowLengthFraction: 1;
 								arrowNoseAngle: 60;
-								border: (BlBorder builder paint: (Color red alpha: 0.2); width: 10; build)) ];
+								border: (BlBorder builder paint: (Color red alpha: 0.2); width: 4; build)) ];
 					passive;
 					connectFrom: [ :x | from target ]
 					to: [ :x | to target] ].
