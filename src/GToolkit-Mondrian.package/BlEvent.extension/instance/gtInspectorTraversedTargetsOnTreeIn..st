@@ -10,14 +10,15 @@ gtInspectorTraversedTargetsOnTreeIn: composite
 				shape: [ :aTarget |
 					| text |
 					text := aTarget gtDisplayString asRopedText.
-					text attributes: {BrTextForegroundAttribute paint: Color gray}.
+					text attributes: {BrTextForegroundAttribute paint: Color lightGray}.
 					BlTextEditElement new
 						text: text;
 						padding: (BlInsets all: 5) ];
 				with: (self traversedTargets first target topMostParent withAllChildrenBreadthFirst).
 			view edges 
-				fromCenterBottom;
-				toCenterTop;				
+				fromRightCenter;
+				toLeftCenter;
+				shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4)) ];
 				connectFrom: #parent.
 			view edges
 				shape: [ :x |
@@ -34,4 +35,4 @@ gtInspectorTraversedTargetsOnTreeIn: composite
 				passive;
 				connect: thePairs from: [ :x | x key target ]
 				to: [ :x | x value target].
-			view layout tree verticalGap: 40 ]
+			view layout horizontalTree horizontalGap: 40 ]
