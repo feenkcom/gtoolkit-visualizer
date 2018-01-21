@@ -20,6 +20,8 @@ initialize
 		c vertical matchParent ].
 	canvas background: Color white.
 	
+	connector := GtDiagrammerConnector on: canvas.
+	
 	editor := BlElement new.
 	editor constraintsDo: [ :c |
 		c horizontal exact: 200.
@@ -28,10 +30,6 @@ initialize
 	
 	picker
 		addEventHandlerOn: GtDiagrammerPickerSelected
-		do: [ :anEvent |
-			| anElement |
-			anElement := anEvent entity create.
-			anElement addEventHandler: BlPullHandler new.
-			canvas addChild: anElement ].
+		do: [ :anEvent | self instantiate: anEvent entity ].
 	
 	self addChildren: { picker . canvas . editor }

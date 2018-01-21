@@ -1,16 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "BlElement",
+	"super" : "BlElementEventListener",
 	"category" : "GToolkit-Diagrammer-UI",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"canvas",
-		"editor",
-		"picker",
-		"connector"
+		"fromFigure",
+		"canvas"
 	],
-	"name" : "GtDiagrammerElement",
+	"name" : "GtDiagrammerConnector",
 	"type" : "normal"
 }
