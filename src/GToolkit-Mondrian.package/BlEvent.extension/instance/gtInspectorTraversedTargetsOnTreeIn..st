@@ -1,26 +1,22 @@
 *Gtoolkit-Mondrian
 gtInspectorTraversedTargetsOnTreeIn: composite
 	<gtInspectorPresentationOrder: 15>
-	
 	composite blocMondrian
 		title: 'Tree';
 		painting: [ :view |
 			| thePairs |
-			
-			thePairs := Array streamContents: [ :aStream | self traversedTargets overlappingPairsDo: [ :from :to | aStream nextPutAll: { from . to } ] ].
+			thePairs := Array streamContents: [ :aStream | self traversedTargets overlappingPairsDo: [ :from :to | aStream nextPut: from -> to ] ].
 			view nodes
 				shape: [ :aTarget |
 					BlTextEditElement new
 						text: (aTarget gtDisplayString asRopedText);
 						padding: (BlInsets all: 5) ];
 				with: (self traversedTargets first target topMostParent withAllChildrenBreadthFirst).
-			
 			view edges 
 				fromCenterBottom;
 				toCenterTop;				
 				connectFrom: #parent.
-			
-			thePairs pairsDo: [ :from :to |
+			thePairs do: [ :association |
 				view edges
 					shape: [ :x |
 						BlParabollaArcElement new 
@@ -31,6 +27,6 @@ gtInspectorTraversedTargetsOnTreeIn: composite
 								arrowNoseAngle: 60;
 								border: (BlBorder builder paint: (Color red alpha: 0.2); width: 4; build)) ];
 					passive;
-					connectFrom: [ :x | from target ]
-					to: [ :x | to target] ].
+					connectFrom: [ :x | association key target ]
+					to: [ :x | association value target] ].
 			view layout tree ]
