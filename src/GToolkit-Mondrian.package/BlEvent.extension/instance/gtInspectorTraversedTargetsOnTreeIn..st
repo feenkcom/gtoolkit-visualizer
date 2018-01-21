@@ -16,17 +16,16 @@ gtInspectorTraversedTargetsOnTreeIn: composite
 				fromCenterBottom;
 				toCenterTop;				
 				connectFrom: #parent.
-			thePairs do: [ :association |
-				view edges
-					shape: [ :x |
-						BlParabollaArcElement new 
-							border: (BlBorder paint: (Color red alpha: 0.2) width: 2);
-							curvatureFraction: 0.4;
-							toHead: (BlArrowheadSimpleArrow new
-								arrowLengthFraction: 1;
-								arrowNoseAngle: 60;
-								border: (BlBorder builder paint: (Color red alpha: 0.2); width: 4; build)) ];
-					passive;
-					connectFrom: [ :x | association key target ]
-					to: [ :x | association value target] ].
+			view edges
+				shape: [ :x |
+					BlParabollaArcElement new 
+						border: (BlBorder paint: (Color red alpha: 0.2) width: 10);
+						curvatureFraction: 0.4;
+						toHead: (BlArrowheadSimpleArrow new
+							arrowLengthFraction: 1;
+							arrowNoseAngle: 60;
+							border: (BlBorder builder paint: (Color red alpha: 0.2); width: 10; build)) ];
+				passive;
+				connect: thePairs from: [ :x | x key target ]
+				to: [ :x | x value target].
 			view layout tree ]
