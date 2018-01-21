@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "BlEvent",
+	"category" : "GToolkit-Diagrammer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"color"
+	],
+	"name" : "GtDiagrammerColorPickerSelected",
+	"type" : "normal"
+}

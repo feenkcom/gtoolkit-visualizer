@@ -1,0 +1,3 @@
+initialization
+defaultGeometry
+	^ BlRectangle new

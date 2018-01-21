@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "BlEvent",
+	"category" : "GToolkit-Diagrammer-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtDiagrammerCommand",
+	"type" : "normal"
+}
