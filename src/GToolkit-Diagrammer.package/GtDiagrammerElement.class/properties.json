@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "BlElement",
+	"category" : "GToolkit-Diagrammer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"canvas",
+		"editor",
+		"picker"
+	],
+	"name" : "GtDiagrammerElement",
+	"type" : "normal"
+}

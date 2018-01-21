@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtDiagrammerPicker",
+	"category" : "GToolkit-Diagrammer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtDiagrammerStencilPicker",
+	"type" : "normal"
+}
