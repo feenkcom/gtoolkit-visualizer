@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "BlBasicEventHandler",
+	"category" : "GToolkit-Diagrammer-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"element"
+	],
+	"name" : "GtDiagrammerFigureUpdater",
+	"type" : "normal"
+}
