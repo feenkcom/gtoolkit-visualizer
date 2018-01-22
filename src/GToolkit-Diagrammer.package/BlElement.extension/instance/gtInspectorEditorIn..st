@@ -4,15 +4,7 @@ gtInspectorEditorIn: aComposite
 	^ aComposite bloc
 		title: 'Editor';
 		element: [ | theEditors container |
-			theEditors := ((Pragma
-				allNamed: #diagrammerEditor:
-				in: self class)
-				sorted: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
-				collect: [ :aPragma | 
-					| anEditor |
-					anEditor := GtDiagrammerFigureEditor new.
-					self perform: aPragma methodSelector with: anEditor.
-					anEditor ].
+			theEditors := GtDiagrammerFigureEditor editorsOf: self.
 			
 			container := BlElement new.
 			container layout: BlLinearLayout vertical.

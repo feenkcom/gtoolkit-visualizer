@@ -4,15 +4,7 @@ edit: anElement
 	
 	editor removeChildren.
 	
-	theEditors := ((Pragma
-		allNamed: #diagrammerEditor:
-		in: anElement class)
-		sorted: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
-		collect: [ :aPragma | 
-			| anEditor |
-			anEditor := GtDiagrammerFigureEditor new.
-			anElement perform: aPragma methodSelector with: anEditor.
-			anEditor ].
+	theEditors := GtDiagrammerFigureEditor editorsOf: anElement.
 		
 	theEditors do: [ :anEditor |
 		| aTitle |

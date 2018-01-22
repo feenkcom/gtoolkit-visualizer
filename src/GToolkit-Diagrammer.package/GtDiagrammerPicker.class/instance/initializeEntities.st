@@ -3,6 +3,7 @@ initializeEntities
 	self removeChildren.
 	
 	entities := displayBlock value.
+	selected := nil.
 	
 	self addChildren: (entities collect: [ :anEntity |
 		| anElement |
