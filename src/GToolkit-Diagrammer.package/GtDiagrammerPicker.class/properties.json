@@ -9,7 +9,9 @@
 		"shapeBlock",
 		"displayBlock",
 		"selectedBlock",
-		"deselectedBlock"
+		"deselectedBlock",
+		"selected",
+		"entities"
 	],
 	"name" : "GtDiagrammerPicker",
 	"type" : "normal"

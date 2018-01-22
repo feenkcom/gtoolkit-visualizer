@@ -1,0 +1,2 @@
+api - hooks
+onInstalledIn: aDiagrammerElement

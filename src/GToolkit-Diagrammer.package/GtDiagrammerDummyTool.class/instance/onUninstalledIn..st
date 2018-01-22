@@ -1,0 +1,2 @@
+api - hooks
+onUninstalledIn: aDiagrammerElement

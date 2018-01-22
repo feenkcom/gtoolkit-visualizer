@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtDiagrammerTool",
+	"category" : "GToolkit-Diagrammer-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"writer"
+	],
+	"name" : "GtDiagrammerTextTool",
+	"type" : "normal"
+}

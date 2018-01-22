@@ -8,8 +8,11 @@
 	"instvars" : [
 		"canvas",
 		"editor",
-		"picker",
-		"connector"
+		"tool",
+		"tools",
+		"header",
+		"availableTools",
+		"styles"
 	],
 	"name" : "GtDiagrammerElement",
 	"type" : "normal"

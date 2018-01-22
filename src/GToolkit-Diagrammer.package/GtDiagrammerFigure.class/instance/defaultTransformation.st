@@ -1,3 +1,0 @@
-initialization
-defaultTransformation
-	^ BlElementLocalTransformation new 

@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "GtDiagrammerGeometryPicker",
+	"name" : "GtDiagrammerToolPicker",
 	"type" : "normal"
 }

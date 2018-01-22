@@ -3,6 +3,7 @@ initialize
 	super initialize.
 	
 	displayBlock := [ #() ].
+	entities := #().
 	shapeBlock := [ BlElement new ].
 	selectedBlock := [  ].
 	deselectedBlock := [  ].

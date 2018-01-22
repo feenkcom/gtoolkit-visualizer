@@ -2,7 +2,9 @@ initialization
 initializeEntities
 	self removeChildren.
 	
-	self addChildren: (displayBlock value collect: [ :anEntity |
+	entities := displayBlock value.
+	
+	self addChildren: (entities collect: [ :anEntity |
 		| anElement |
 		
 		anElement := shapeBlock cull: anEntity.

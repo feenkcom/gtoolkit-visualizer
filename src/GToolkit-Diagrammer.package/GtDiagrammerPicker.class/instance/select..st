@@ -1,6 +1,11 @@
 actions
 select: anEntity
 	
+	selected = anEntity
+		ifTrue: [ ^ self ].
+		
+	selected := anEntity.
+
 	self deselectAll.
 	
 	self entity: anEntity do: [ :anElement |
