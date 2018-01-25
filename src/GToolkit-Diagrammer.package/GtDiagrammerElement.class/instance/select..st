@@ -1,6 +1,6 @@
 actions
 select: anElement
-
+	
+	self deselect.
 	resizer attachTo: anElement.
-	(self canvas hasChild: resizer)
-		ifFalse: [ self canvas addChild: resizer ].
+	self canvas addChild: resizer
