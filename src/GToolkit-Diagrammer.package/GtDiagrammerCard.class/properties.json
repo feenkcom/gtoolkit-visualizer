@@ -6,14 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"tool",
-		"canvas",
-		"tools",
-		"availableTools",
-		"styles",
-		"resizer",
-		"sidebar"
+		"titleElement",
+		"contentElement"
 	],
-	"name" : "GtDiagrammerElement",
+	"name" : "GtDiagrammerCard",
 	"type" : "normal"
 }

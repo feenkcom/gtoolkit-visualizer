@@ -13,10 +13,15 @@ instantiate: aStencil at: aPoint
 	anElement
 		addEventHandlerOn: BlElementSelectionLostEvent
 		do: [ :anEvent | aSelection ifNotNil: [ aSelection close. aSelection := nil ] ].
-	anElement
+
+	"anElement
 		addEventHandlerOn: BlClickEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
-			self edit: anEvent currentTarget ].
+			
+			resizer attachTo: anEvent currentTarget.
+			self canvas addChild: resizer.
+
+			self edit: anEvent currentTarget ]."
 
 	canvas addChild: anElement

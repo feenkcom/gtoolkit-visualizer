@@ -7,12 +7,16 @@ editorForBackground
 	container layout: BlLinearLayout horizontal.
 	container
 		constraintsDo: [ :c | 
-			c horizontal fitContent.
+			c horizontal matchParent.
 			c vertical fitContent ].
 	presenter := GtDiagrammerColorPresenter new.
 	presenter constraintsDo: [ :c | c linear vertical alignCenter ].
 	
 	picker := GtDiagrammerColorPicker new.
+	picker layout: BlFlowLayout horizontal.
+	picker constraintsDo: [ :c | 
+		c horizontal matchParent.
+		c vertical fitContent ].
 	picker margin: (BlInsets left: 7).
 	picker constraintsDo: [ :c | c linear vertical alignCenter ].
 	picker

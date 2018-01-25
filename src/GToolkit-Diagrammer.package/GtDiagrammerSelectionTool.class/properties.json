@@ -6,7 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"selector"
+		"selector",
+		"chooser",
+		"editor"
 	],
 	"name" : "GtDiagrammerSelectionTool",
 	"type" : "normal"

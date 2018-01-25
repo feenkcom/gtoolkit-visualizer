@@ -1,0 +1,20 @@
+{
+	"commentStamp" : "",
+	"super" : "BlOverlayElement",
+	"category" : "GToolkit-Diagrammer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"topLeft",
+		"topCenter",
+		"topRight",
+		"middleLeft",
+		"middleRight",
+		"bottomLeft",
+		"bottomCenter",
+		"bottomRight"
+	],
+	"name" : "GtDiagrammerResizer",
+	"type" : "normal"
+}

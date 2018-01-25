@@ -4,48 +4,17 @@ initialize
 
 	tool := GtDiagrammerDummyTool new.
 	
-	self layout: (BlGridLayout new columnCount: 2; cellSpacing: 2).
+	self layout: (BlFrameLayout new).
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-	
-	header := BlElement new.
-	header layout: BlLinearLayout vertical.
-	header constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical fitContent.
-		c grid horizontal span: 2 ].
-	header background: (Color gray alpha: 0.2).
-	
-	tools := GtDiagrammerToolPicker new.
-	tools display: [ self availableTools ].
-	tools constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical fitContent ].
-	tools when: GtDiagrammerPickerSelected do: [ :anEvent | self tool: anEvent entity ].
 
-	styles := GtDiagrammerPicker new.
-	styles shape: [ :aStyle | BlElement new size: 20@20; background: Color random ].
-	styles constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical fitContent ].
-	styles when: GtDiagrammerPickerSelected do: [ :anEvent | self tool style: anEvent entity ].
-
-	header addChildren: { tools . styles }.	
-
-	canvas := BlElement new.
-	canvas constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-	canvas background: Color white.
-	
-	editor := BlElement new.
-	editor layout: BlLinearLayout vertical.
-	editor constraintsDo: [ :c |
-		c horizontal fitContent.
-		c vertical matchParent ].
-	editor background: (Color gray alpha: 0.2).
+	self initializeCanvas.
+	self initializeResizer.
+	self initializeSidebar.
+	self initializeTools.
 		
-	self addChildren: { header . canvas . editor }.
+	self addChildren: { canvas . sidebar }.
 	
-	self initializeTool
+	"select a tool by default"
+	self tool: self availableTools anyOne
