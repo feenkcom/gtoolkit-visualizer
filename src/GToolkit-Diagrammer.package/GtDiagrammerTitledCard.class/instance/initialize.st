@@ -3,6 +3,7 @@ initialize
 	super initialize.
 	
 	self margin: (BlInsets top: 0 left: 0 bottom: 20 right: 0).
+	self padding: (BlInsets all: 3).
 	self layout: BlLinearLayout vertical.
 	
 	titleElement := BlTextElement new.

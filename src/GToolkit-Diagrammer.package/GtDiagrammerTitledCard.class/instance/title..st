@@ -1,3 +1,10 @@
 api - accessing
 title: aString
-	titleElement text: aString asString asRopedText
+	| aText |
+	
+	aText := aString asString asRopedText.
+	aText attributes: {
+		BrTextForegroundAttribute paint: Color gray.
+		BrFontWeightAttribute thin }.
+	
+	titleElement text: aText
