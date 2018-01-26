@@ -4,7 +4,7 @@ initialize
 
 	tool := GtDiagrammerDummyTool new.
 	
-	self layout: (BlFrameLayout new).
+	self layout: (BlGridLayout horizontal cellSpacing: 20).
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].

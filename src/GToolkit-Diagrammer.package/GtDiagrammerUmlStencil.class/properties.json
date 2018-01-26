@@ -1,13 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "GtDiagrammerTool",
+	"super" : "GtDiagrammerStencil",
 	"category" : "GToolkit-Diagrammer-Model",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"writer"
-	],
-	"name" : "GtDiagrammerTextTool",
+	"instvars" : [ ],
+	"name" : "GtDiagrammerUmlStencil",
 	"type" : "normal"
 }

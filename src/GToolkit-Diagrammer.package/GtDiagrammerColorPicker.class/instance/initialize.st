@@ -7,6 +7,7 @@ initialize
 		BlElement new
 			size: 20@20;
 			background: aColor;
+			margin: (BlInsets all: 1);
 			geometry: (BlRectangle cornerRadius: 3) ].
 	self selected: [ :anElement | anElement border: (BlBorder paint: Color blue width: 1.5) ].
 	self deselected: [ :anElement :aColor | anElement border: (BlBorder paint: aColor darker width: 1) ]

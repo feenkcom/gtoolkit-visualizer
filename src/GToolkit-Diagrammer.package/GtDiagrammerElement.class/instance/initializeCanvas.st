@@ -1,6 +1,6 @@
 initialization
 initializeCanvas
-	canvas := BlElement new.
+	canvas := GtDiagrammerCard new.
 	canvas constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].

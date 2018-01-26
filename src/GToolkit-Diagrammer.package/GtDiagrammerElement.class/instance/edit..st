@@ -8,7 +8,7 @@ edit: anElement
 	
 	theCards := theEditors collect: [ :anEditor |
 		| aCard |
-		aCard := GtDiagrammerCard new.
+		aCard := GtDiagrammerTitledCard new.
 		aCard title: anEditor title.
 		aCard content: anEditor editor.
 		aCard constraintsDo: [ :c | c horizontal matchParent ].		

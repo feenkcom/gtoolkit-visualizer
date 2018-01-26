@@ -2,7 +2,7 @@ initialization
 initializeTools
 	| aToolsCard |
 
-	aToolsCard := GtDiagrammerCard new.
+	aToolsCard := GtDiagrammerTitledCard new.
 	aToolsCard title: 'Tools'.
 	aToolsCard constraintsDo: [ :c | c horizontal matchParent ].
 	aToolsCard content

@@ -1,11 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "BlElement",
+	"super" : "GtDiagrammerCard",
 	"category" : "GToolkit-Diagrammer-UI",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
-	"name" : "GtDiagrammerCard",
+	"instvars" : [
+		"titleElement",
+		"contentElement"
+	],
+	"name" : "GtDiagrammerTitledCard",
 	"type" : "normal"
 }

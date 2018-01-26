@@ -1,27 +1,19 @@
 actions
 instantiate: aStencil at: aPoint
-	| anElement aSelection |
-	
-	aSelection := nil.
+	| anElement |
 	
 	anElement := aStencil create.
-	anElement relocate: aPoint.
+	
+	"we need to force layout process of the element in order to relocate it in such a way that its center is at aPoint"
+	anElement forceLayout.
+	anElement relocate: aPoint - (anElement extent / 2.0) asIntegerPoint.
+	
 	anElement addEventHandler: BlPullHandler new.
 	anElement
 		addEventHandlerOn: BlElementSelectionAcquiredEvent
-		do: [ :anEvent | aSelection ifNil: [ aSelection := BlElementSelection on: anElement ] ].
+		do: [ :anEvent | self select: anEvent currentTarget ].
 	anElement
 		addEventHandlerOn: BlElementSelectionLostEvent
-		do: [ :anEvent | aSelection ifNotNil: [ aSelection close. aSelection := nil ] ].
-
-	"anElement
-		addEventHandlerOn: BlClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			
-			resizer attachTo: anEvent currentTarget.
-			self canvas addChild: resizer.
-
-			self edit: anEvent currentTarget ]."
+		do: [ :anEvent | self deselect ].
 
 	canvas addChild: anElement

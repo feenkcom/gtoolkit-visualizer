@@ -3,5 +3,4 @@ availableTools
 	^ availableTools ifNil: [ availableTools := {
 		GtDiagrammerSelectionTool new.
 		GtDiagrammerFigureTool new.
-		GtDiagrammerLineTool new.
-		GtDiagrammerTextTool new } ]
+		GtDiagrammerLineTool new } ]

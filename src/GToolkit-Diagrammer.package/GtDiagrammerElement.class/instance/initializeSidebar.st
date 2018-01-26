@@ -3,14 +3,15 @@ initializeSidebar
 	sidebar := BlElement new.
 	sidebar width: 300.
 	sidebar layout: (BlLinearLayout vertical).
+	sidebar clipChildren: false.
 	sidebar constraintsDo: [ :c |
 		c vertical matchParent.
 		c frame horizontal alignRight ].
-	"sidebar background: (Color gray alpha: 0.1)."
-	
+
 	sidebar
 		addChild: (BlElement new
-			layout: (BlLinearLayout vertical);
+			layout: BlLinearLayout vertical;
+			clipChildren: false;
 			constraintsDo: [ :c |
 				c horizontal matchParent.
 				c vertical fitContent ])
@@ -18,7 +19,8 @@ initializeSidebar
 		
 	sidebar
 		addChild: (BlElement new
-			layout: (BlLinearLayout vertical);
+			layout: BlLinearLayout vertical;
+			clipChildren: false;
 			constraintsDo: [ :c |
 				c horizontal matchParent.
 				c vertical fitContent ])
