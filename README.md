@@ -10,7 +10,7 @@ You can load Visualizer through:
 ```
 Iceberg enableMetacelloIntegration: true.
 Metacello new
-   baseline: 'BaselineOfGToolkitVisualizer';
+   baseline: 'GToolkitVisualizer';
    repository: 'github://feenkcom/gtoolkit-visualizer/src';
    load.
 ```
