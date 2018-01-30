@@ -12,6 +12,6 @@ baseline: spec
 				package: 'GToolkit-Plotter' with: [ spec requires: #(#Bloc) ];
 				package: 'GToolkit-Mondrian' with: [ spec requires: #(#'GToolkit-BlocGraph') ];
 				package: 'GToolkit-Mondrian-Layouts' with: [ spec requires: #(#'GToolkit-Mondrian') ];
-				package: 'GToolkit-Mondrian-Glamour' with: [ spec requires: #(#'GToolkit-Mondrian') ]";
-				package: 'GToolkit-Diagrammer' with: [ spec requires: #(#'GToolkit-Mondrian') ]"
-				 ]
+				package: 'GToolkit-Mondrian-Glamour' with: [ spec requires: #(#'GToolkit-Mondrian') ];
+				package: 'GToolkit-Connector' with: [ spec requires: #(#'GToolkit-Mondrian') ];
+				package: 'GToolkit-Diagrammer' with: [ spec requires: #(#'GToolkit-Mondrian') ] ]
