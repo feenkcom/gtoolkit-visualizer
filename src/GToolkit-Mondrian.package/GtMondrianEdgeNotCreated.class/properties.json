@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "BeaconSignal",
+	"category" : "GToolkit-Mondrian",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fromModel",
+		"toModel",
+		"fromElement",
+		"toElement",
+		"model"
+	],
+	"name" : "GtMondrianEdgeNotCreated",
+	"type" : "normal"
+}

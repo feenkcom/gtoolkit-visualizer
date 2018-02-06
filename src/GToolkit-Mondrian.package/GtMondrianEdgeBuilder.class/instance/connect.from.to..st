@@ -20,6 +20,7 @@ connect: aCollection from: aFromBlock to: aToBlock
 				ifTrue: [ line := self edgeElementFor: each from: fromElement to: toElement.
 					self areEdgesPassive
 						ifFalse: [ self edgeConstraintsFrom: fromElement to: toElement ].
-					elements add: line ] ].
+					elements add: line ]
+				ifFalse: [ (GtMondrianEdgeNotCreated new fromElement: fromElement; toElement: toElement; model: each; fromModel: fromObject; toModel: toObject) emit ] ].
 	self topStep root addChildren: elements.
 	^ elements
