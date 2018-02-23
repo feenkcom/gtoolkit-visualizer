@@ -2,7 +2,8 @@ instance creation
 editorsOf: anObject
 	^ ((Pragma
 		allNamed: #diagrammerEditor:
-		in: anObject class)
+		from: anObject class
+		to: BlElement)
 		sorted: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
 		collect: [ :aPragma | 
 			| anEditor |
