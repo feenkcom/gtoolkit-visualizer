@@ -8,5 +8,5 @@ initialize
 
 	self geometry: (BlRectangle cornerRadius: 4).
 	self background: Color white.
-	"self effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 0@0)".
+	"self effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 0@0)."
 	self border: (BlBorder paint: Color gray)

@@ -1,14 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "GtDiagrammerTool",
+	"super" : "BlElementEventListener",
 	"category" : "GToolkit-Diagrammer-Model",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"selector",
-		"chooser"
+		"diagrammer",
+		"currentSelection"
 	],
-	"name" : "GtDiagrammerSelectionTool",
+	"name" : "GtDiagrammerFigureChooser",
 	"type" : "normal"
 }

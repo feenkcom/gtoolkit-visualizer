@@ -5,7 +5,7 @@ edit: anElement
 	sidebar removeChildrenIn: #editor.
 	
 	theEditors := GtDiagrammerFigureEditor editorsOf: anElement.
-	
+
 	theCards := theEditors collect: [ :anEditor |
 		| aCard |
 		aCard := GtDiagrammerTitledCard new.
