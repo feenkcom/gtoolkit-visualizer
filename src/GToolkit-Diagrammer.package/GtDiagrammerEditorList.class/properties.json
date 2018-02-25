@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "BlInfiniteElement",
+	"category" : "GToolkit-Diagrammer-UI-Lists",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtDiagrammerEditorList",
+	"type" : "normal"
+}

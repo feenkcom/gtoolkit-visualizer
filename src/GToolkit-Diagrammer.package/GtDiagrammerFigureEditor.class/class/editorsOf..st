@@ -10,5 +10,5 @@ editorsOf: anObject
 		to: BlElement)
 		sorted: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
 		do: [ :aPragma | anObject perform: aPragma methodSelector with: aComposite ].
-		
+
 	^ aComposite editors

@@ -18,9 +18,7 @@ initializeSidebar
 		as: #tools.
 		
 	sidebar
-		addChild: (BlElement new
-			layout: BlLinearLayout vertical;
-			clipChildren: false;
+		addChild: (GtDiagrammerEditorList new
 			constraintsDo: [ :c |
 				c horizontal matchParent.
 				c vertical fitContent ])

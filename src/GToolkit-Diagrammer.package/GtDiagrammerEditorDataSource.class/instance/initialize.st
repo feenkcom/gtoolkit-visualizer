@@ -2,4 +2,5 @@ initialization
 initialize
 	super initialize.
 	
-	editors := #()
+	editors := #().
+	hasStableIds := true

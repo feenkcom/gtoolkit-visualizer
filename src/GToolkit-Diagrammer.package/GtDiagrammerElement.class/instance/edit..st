@@ -1,17 +1,10 @@
-actions
+editing
 edit: anElement
-	| theEditors theCards |
-
-	sidebar removeChildrenIn: #editor.
+	| theEditors |
 	
 	theEditors := GtDiagrammerFigureEditor editorsOf: anElement.
-
-	theCards := theEditors collect: [ :anEditor |
-		| aCard |
-		aCard := GtDiagrammerTitledCard new.
-		aCard title: anEditor title.
-		aCard content: anEditor editor.
-		aCard constraintsDo: [ :c | c horizontal matchParent ].		
-		aCard ].
-
-	sidebar addChildren: theCards in: #editor
+	
+	sidebar
+		childrenContaner: #editor
+		ifFound: [ :anEditorList | anEditorList dataSource editors: theEditors ]
+		ifNone: [ self error: 'Editor list must exist' ]
