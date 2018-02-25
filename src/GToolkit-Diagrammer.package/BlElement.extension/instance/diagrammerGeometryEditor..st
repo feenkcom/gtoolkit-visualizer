@@ -1,7 +1,7 @@
 *GToolkit-Diagrammer
-diagrammerGeometryEditor: anEditor
+diagrammerGeometryEditor: aComposite
 	<diagrammerEditor: 20>
 
-	^ anEditor
+	^ aComposite with
 		title: 'Geometry';
 		editor: [ self editorForGeometry ]

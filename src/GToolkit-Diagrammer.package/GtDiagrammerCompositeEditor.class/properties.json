@@ -1,13 +1,13 @@
 {
 	"commentStamp" : "",
-	"super" : "BlInfiniteDataSource",
-	"category" : "GToolkit-Diagrammer-UI-Lists",
+	"super" : "Object",
+	"category" : "GToolkit-Diagrammer-Model",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"editors"
 	],
-	"name" : "GtDiagrammerEditorDataSource",
+	"name" : "GtDiagrammerCompositeEditor",
 	"type" : "normal"
 }

@@ -1,7 +1,7 @@
 *GToolkit-Diagrammer
-diagrammerBorderEditor: anEditor
+diagrammerBorderEditor: aComposite
 	<diagrammerEditor: 20>
 
-	^ anEditor
+	^ aComposite with
 		title: 'Border';
 		editor: [ self editorForBorder ]

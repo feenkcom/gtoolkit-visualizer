@@ -1,7 +1,7 @@
 *GToolkit-Diagrammer
-diagrammerBackgroundEditor: anEditor
+diagrammerBackgroundEditor: aComposite
 	<diagrammerEditor: 10>
 
-	^ anEditor
+	^ aComposite with
 		title: 'Background';
 		editor: [ self editorForBackground ]
