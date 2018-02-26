@@ -22,7 +22,7 @@ editorForArrowHead
 	
 	toArrowHeadLabel := BlTextElement text: 'To head' asRopedText.
 	toArrowHeadPicker := GtDiagrammerArrowheadPicker new.
-	fromArrowHeadPicker select: (self hasToHead ifTrue: [ self toHead ] ifFalse: [ nil ]) class.
+	toArrowHeadPicker select: (self hasToHead ifTrue: [ self toHead ] ifFalse: [ nil ]) class.
 	toArrowHeadPicker
 		when: GtDiagrammerPickerSelected
 		do: [ :anEvent |
