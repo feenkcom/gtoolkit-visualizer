@@ -39,7 +39,7 @@ editorForBorder
 		do: [ :anEvent | self border: (self border copyWithStyle: (self border style copyWithLineJoin: anEvent entity)) ].
 	
 	widthPicker := GtDiagrammerNumberPicker new.
-	lineJoinPicker select: self border width.
+	widthPicker select: self border width.
 	widthPicker layout: BlFlowLayout horizontal.
 	widthPicker margin: (BlInsets top: 0 left: 10 bottom: 10 right: 0).
 	widthPicker constraintsDo: [ :c | 

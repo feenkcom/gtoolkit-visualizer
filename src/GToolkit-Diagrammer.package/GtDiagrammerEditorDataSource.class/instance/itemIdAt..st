@@ -1,3 +1,0 @@
-accessing
-itemIdAt: aPosition
-	^ aPosition
