@@ -8,4 +8,6 @@ connect: aFromElement and: aToElement in: aContainerElement
 	aLine fromAnchor: (BlElementCenterAnchor element: aFromElement).
 	aLine toAnchor: (BlElementCenterAnchor element: aToElement).
 
-	aContainerElement addChild: aLine
+	aContainerElement addChild: aLine.
+	
+	^ aLine

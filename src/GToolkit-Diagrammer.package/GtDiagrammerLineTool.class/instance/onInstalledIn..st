@@ -14,7 +14,12 @@ onInstalledIn: aDiagrammerElement
 						fromFigure
 							ifNil: [ fromFigure := aFigure ]
 							ifNotNil: [
-								self connect: fromFigure and: aFigure in: aDiagrammerElement canvas.
+								| aLine |
+								aLine := self connect: fromFigure and: aFigure in: aDiagrammerElement canvas.
+								aDiagrammerElement tool: GtDiagrammerSelectionTool new.
+								aDiagrammerElement select: aLine.
+								aDiagrammerElement edit: aLine.
+								
 								fromFigure := nil ] ]
 					ifNone: [ fromFigure := nil ] ]
 			ifFalse: [ fromFigure := nil ] ].
