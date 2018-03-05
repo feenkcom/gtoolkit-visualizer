@@ -4,11 +4,10 @@ createAndAddElementForMethod: method
 	
 	editorElement := BrEditorElement new.
 	editorElement
-		constraintsDo: [ :c | 
-			c horizontal fitContent.
+		constraintsDo: [ :c |
+			c horizontal exact: 400.
 			c vertical fitContent.
 			c maxHeight: 200.
-			c maxWidth: 400.
 			c padding: (BlInsets all: 10) ].
 	editorElement
 		background: Color white;

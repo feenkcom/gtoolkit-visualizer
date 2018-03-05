@@ -21,5 +21,5 @@ initializeSidebar
 		addChild: (GtDiagrammerEditorList new
 			constraintsDo: [ :c |
 				c horizontal matchParent.
-				c vertical fitContent ])
+				c vertical matchParent ])
 		as: #editor
