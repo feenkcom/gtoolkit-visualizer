@@ -1,3 +1,4 @@
 instance creation
 create
-	^ (BlEllipse extent: 200@100) asElement
+	^ GtDiagrammerLabelledElement new
+		geometry: BlEllipse new
