@@ -1,13 +1,15 @@
 {
 	"commentStamp" : "",
-	"super" : "GtDiagrammerPickerNew",
+	"super" : "BrToggleGroup",
 	"category" : "GToolkit-Diagrammer-UI",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"printBlock"
+		"displayBlock",
+		"entities",
+		"shapeBlock"
 	],
-	"name" : "GtDiagrammerNumberPicker",
+	"name" : "GtDiagrammerPickerNew",
 	"type" : "normal"
 }

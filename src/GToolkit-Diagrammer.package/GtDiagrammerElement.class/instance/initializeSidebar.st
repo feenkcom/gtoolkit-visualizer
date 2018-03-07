@@ -6,16 +6,8 @@ initializeSidebar
 	sidebar clipChildren: false.
 	sidebar constraintsDo: [ :c |
 		c vertical matchParent.
-		c frame horizontal alignRight ].
-
-	sidebar
-		addChild: (BlElement new
-			layout: BlLinearLayout vertical;
-			clipChildren: false;
-			constraintsDo: [ :c |
-				c horizontal matchParent.
-				c vertical fitContent ])
-		as: #tools.
+		c frame horizontal alignRight.
+		c grid vertical span: 2 ].
 		
 	sidebar
 		addChild: (GtDiagrammerEditorList new

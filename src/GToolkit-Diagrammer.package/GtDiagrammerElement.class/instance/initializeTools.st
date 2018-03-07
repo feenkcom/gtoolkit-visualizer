@@ -2,23 +2,20 @@ initialization
 initializeTools
 	| aToolsCard |
 
-	aToolsCard := GtDiagrammerTitledCard new.
-	aToolsCard title: 'Tools'.
+	aToolsCard := BlElement new.
 	aToolsCard constraintsDo: [ :c | c horizontal matchParent ].
-	aToolsCard content
-		layout: (BlGridLayout vertical cellSpacing: 2);
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical fitContent ].
+	aToolsCard layout: (BlGridLayout vertical cellSpacing: 2).
+	aToolsCard constraintsDo: [ :c | 
+		c horizontal matchParent.
+		c vertical fitContent ].
 
 	tools := GtDiagrammerToolPicker new.
-	tools layoutDo: [ :l | l cellSpacing: 5 ].
+	tools layout: BlLinearLayout horizontal.
+	tools look: BrMaterialLook new.
+	tools margin: (BlInsets all: 5).
 	tools display: [ self availableTools ].
-	tools constraintsDo: [ :c |
-		c horizontal fitContent.
-		c vertical fitContent ].
-	tools when: GtDiagrammerPickerSelected do: [ :anEvent | self tool: anEvent entity ].
-	
+	tools when: BrToggleActivatedEvent do: [ :anEvent | self tool: anEvent target viewModel model ].
+
 	styles := GtDiagrammerPicker new.
 	styles layoutDo: [ :l | l cellSpacing: 5 ].
 	styles shape: [ :aStyle | BlElement new size: 20@20; background: Color random ].
@@ -27,8 +24,7 @@ initializeTools
 		c vertical fitContent ].
 	styles when: GtDiagrammerPickerSelected do: [ :anEvent | self tool style: anEvent entity ].
 	
+	aToolsCard addChild: tools.
+	aToolsCard addChild: styles.
 	
-	aToolsCard addChild: tools in: #content.
-	aToolsCard addChild: styles in: #content.
-	
-	sidebar addChild: aToolsCard in: #tools.
+	topbar addChild: aToolsCard

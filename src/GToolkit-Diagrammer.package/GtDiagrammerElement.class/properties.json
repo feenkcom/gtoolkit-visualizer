@@ -12,7 +12,8 @@
 		"availableTools",
 		"styles",
 		"resizer",
-		"sidebar"
+		"sidebar",
+		"topbar"
 	],
 	"name" : "GtDiagrammerElement",
 	"type" : "normal"

@@ -8,6 +8,6 @@ initializeEditor
 		c vertical fitContent.
 		c frame horizontal alignCenter.
 		c frame vertical alignCenter.
-		c padding: (BlInsets all: 5) ].
+		c padding: (BlInsets all: 5)].
 	
 	self addChild: editorElement
