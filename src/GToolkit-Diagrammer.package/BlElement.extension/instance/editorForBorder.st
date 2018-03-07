@@ -46,7 +46,7 @@ editorForBorder
 		c horizontal matchParent.
 		c vertical fitContent ].
 	widthPicker
-		when: GtDiagrammerPickerSelected
-		do: [ :anEvent | self border: (self border copyWithWidth: anEvent entity) ].
+		when: BrToggleActivatedEvent
+		do: [ :anEvent | self border: (self border copyWithWidth: anEvent model) ].
 	
 	^ container addChildren: { colorPicker . outskirtsPicker . lineCapPicker . lineJoinPicker . widthPicker }
