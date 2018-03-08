@@ -13,7 +13,8 @@
 		"middleRight",
 		"bottomLeft",
 		"bottomCenter",
-		"bottomRight"
+		"bottomRight",
+		"resizerListeners"
 	],
 	"name" : "GtDiagrammerResizer",
 	"type" : "normal"

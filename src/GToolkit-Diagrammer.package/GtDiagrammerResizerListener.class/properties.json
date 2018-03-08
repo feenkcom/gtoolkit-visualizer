@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "BlElementEventListener",
+	"category" : "GToolkit-Diagrammer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dragStartPosition",
+		"originalPosition",
+		"resizeTarget",
+		"originalExtent"
+	],
+	"name" : "GtDiagrammerResizerListener",
+	"type" : "normal"
+}

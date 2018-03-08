@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtDiagrammerResizerListener",
+	"category" : "GToolkit-Diagrammer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtDiagrammerResizerBottomLeftListener",
+	"type" : "normal"
+}
