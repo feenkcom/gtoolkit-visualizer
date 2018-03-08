@@ -43,7 +43,7 @@ initialize
 	bottomRight constraintsDo: [ :c |
 		c frame horizontal alignRight.
 		c frame vertical alignBottom ].
-	
+
 	bottomRight when: BlMouseEnterEvent do: [ self inform: bottomRight asString ].
 
 	self addChildren: {

@@ -35,7 +35,6 @@ addLineFrom: aSourceElement to: aTargetElement
 	aLineElement constraints ignoreByLayout.
 	aLineElement
 		border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
-		wantsMouse: false;
 		fromAnchor: (BlElementCenterAnchor element: aSourceElement);
 		toAnchor: (BlElementLeftCenterAnchor element: aTargetElement).
 

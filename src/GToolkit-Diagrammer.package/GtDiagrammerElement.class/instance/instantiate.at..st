@@ -16,4 +16,6 @@ instantiate: aStencil at: aPoint
 		addEventHandlerOn: BlElementSelectionLostEvent
 		do: [ :anEvent | self deselect ].
 
-	canvas addChild: anElement
+	canvas addChild: anElement.
+
+	^ anElement
