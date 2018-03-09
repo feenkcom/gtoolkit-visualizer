@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "GtDiagrammerStencil",
-	"category" : "GToolkit-Diagrammer-Model",
+	"super" : "Object",
+	"category" : "GToolkit-Diagrammer-Examples",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "GtDiagrammerUmlStencil",
+	"name" : "GtDiagrammerResizerExamples",
 	"type" : "normal"
 }
