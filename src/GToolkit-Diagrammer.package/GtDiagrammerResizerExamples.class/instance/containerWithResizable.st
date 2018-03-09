@@ -1,4 +1,4 @@
-examples
+instance creation
 containerWithResizable
 	<gtExample>
 	| container resizable resizer |
