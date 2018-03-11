@@ -1,4 +1,4 @@
 initialization
 initializeResizer
-	resizer := GtDiagrammerResizer new.
+	resizer := BlResizerElement new.
 	resizer preventMouseEvents

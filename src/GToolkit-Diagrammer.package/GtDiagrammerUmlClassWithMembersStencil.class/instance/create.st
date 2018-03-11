@@ -4,7 +4,7 @@ create
 	uml := GtDiagrammerUmlClassElement withContainers: #(label attributes).
 
 	uml text: 'ClassName' asRopedText bold in: #label.
-	uml text: 'Attribute', String cr, 'Attribute' asRopedText in: #attributes.
+	uml text: 'Attribute' asRopedText in: #attributes.
 
 	uml relocate: 100@100.
 	uml constraintsDo: [ :c |

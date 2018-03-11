@@ -2,4 +2,4 @@ instance creation
 resizer
 	<gtExample>
 
-	^ GtDiagrammerResizer new
+	^ BlResizerElement new
