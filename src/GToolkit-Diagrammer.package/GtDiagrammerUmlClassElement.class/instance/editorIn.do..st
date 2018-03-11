@@ -4,10 +4,10 @@ editorIn: aContainerSymbol do: aBlock
 	and evaluate a block if such an editor is found"
 
 	self
-		childrenContaner: aContainerSymbol
+		childNamed: aContainerSymbol
 		ifFound: [ :aContainer |
 			aContainer
-				childrenContaner: #editor
+				childNamed: #editor
 				ifFound: aBlock
 			ifNone: #yourself ]
 		ifNone: #yourself
