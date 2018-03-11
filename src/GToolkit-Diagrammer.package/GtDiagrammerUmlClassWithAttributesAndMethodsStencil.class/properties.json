@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "GtDiagrammerStencil",
-	"category" : "GToolkit-Diagrammer-Model",
+	"category" : "GToolkit-Diagrammer-Stencils",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

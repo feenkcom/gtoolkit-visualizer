@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "GtDiagrammerStencil",
+	"super" : "BlElement",
 	"category" : "GToolkit-Diagrammer-Stencils",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "GtDiagrammerStarStencil",
+	"name" : "GtDiagrammerUmlClassElementExamples",
 	"type" : "normal"
 }
