@@ -1,5 +1,5 @@
 *GToolkit-Diagrammer
-editorForArrowHead
+editorForArrowHeadIn: anEditor
 	| container fromArrowHeadLabel fromArrowHeadPicker toArrowHeadLabel toArrowHeadPicker |
 	container := BlElement new.
 	container padding: (BlInsets all: 10).
@@ -18,7 +18,8 @@ editorForArrowHead
 			| aHead |
 			aHead := anEvent entity new.
 			aHead border: (self border copy).
-			self fromHead: aHead ].	
+			self fromHead: aHead.
+			anEditor changed ].	
 	
 	toArrowHeadLabel := BlTextElement text: 'To head' asRopedText.
 	toArrowHeadPicker := GtDiagrammerArrowheadPicker new.
@@ -29,8 +30,7 @@ editorForArrowHead
 			| aHead |
 			aHead := anEvent entity new.
 			aHead border: (self border copy).
-			self toHead: aHead ].
-
-	
+			self toHead: aHead.
+			anEditor changed ].
 
 	^ container addChildren: { fromArrowHeadLabel . fromArrowHeadPicker . toArrowHeadLabel . toArrowHeadPicker }

@@ -3,6 +3,8 @@ initialize
 	super initialize.
 
 	tool := GtDiagrammerDummyTool new.
+
+	self background: (Color gray alpha: 0.1).
 	
 	self layout: (BlGridLayout vertical cellSpacing: 20; rowCount: 2).
 	self constraintsDo: [ :c |

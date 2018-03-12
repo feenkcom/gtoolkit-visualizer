@@ -1,6 +1,6 @@
 accessing
 editor
-	"Return an editor for the property"
+	"Return an editor element for the property"
 	<return: #BlElement>
-	
-	^ editorBlock value
+
+	^ editorBlock cull: self

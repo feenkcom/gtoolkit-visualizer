@@ -3,5 +3,5 @@ with
 	| anEditor |
 	
 	anEditor := GtDiagrammerFigureEditor new.
-	editors add: anEditor.
+	self editors add: anEditor.
 	^ anEditor

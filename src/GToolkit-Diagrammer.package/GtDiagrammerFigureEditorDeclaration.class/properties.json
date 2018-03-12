@@ -6,13 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"editorBlock",
-		"title",
 		"condition",
-		"announcer",
-		"parent",
-		"editorDeclarations"
+		"editors"
 	],
-	"name" : "GtDiagrammerFigureEditor",
+	"name" : "GtDiagrammerFigureEditorDeclaration",
 	"type" : "normal"
 }

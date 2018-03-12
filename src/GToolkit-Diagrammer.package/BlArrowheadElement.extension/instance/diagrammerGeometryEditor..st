@@ -1,0 +1,2 @@
+*GToolkit-Diagrammer
+diagrammerGeometryEditor: aComposite

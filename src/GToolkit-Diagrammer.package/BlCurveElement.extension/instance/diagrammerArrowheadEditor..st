@@ -1,8 +1,22 @@
 *GToolkit-Diagrammer
-diagrammerArrowheadEditor: anEditor
+diagrammerArrowheadEditor: aComposite
 	<diagrammerEditor: 5>
-	
-	anEditor with
+
+	aComposite with
 		title: 'Arrow heads';
-		editor: [ self editorForArrowHead ]
-		
+		and: [ :newEditor |
+			newEditor
+				title: 'From head';
+				editor: [ self editorForFromArrowHeadIn: newEditor ].
+			newEditor with
+				title: 'From head style';
+				from: [ self fromHead ];
+				when: [ self hasFromHead ] ];
+		and: [ :newEditor |
+			newEditor
+				title: 'To head';
+				editor: [ self editorForToArrowHeadIn: newEditor ].
+			newEditor with
+				title: 'To head style';
+				from: [ self toHead ];
+				when: [ self hasToHead ] ]
