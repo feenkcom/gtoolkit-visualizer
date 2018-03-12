@@ -1,7 +1,14 @@
 *GToolkit-Diagrammer
-diagrammerAnchorEditor: anEditor
+diagrammerAnchorEditor: aComposite
 	<diagrammerEditor: 6>
-	
-	anEditor with
+		
+	aComposite with
 		title: 'Anchors';
-		editor: [ self editorForAnchors ]
+		and: [ :newEditor |
+			newEditor
+				title: 'From anchor';
+				editor: [ self editorForFromAnchor ] ];
+		and: [ :newEditor |
+			newEditor
+				title: 'To anchor';
+				editor: [ self editorForToAnchor ] ]
