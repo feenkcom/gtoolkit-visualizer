@@ -5,5 +5,5 @@ initialize
 	editorDeclarations := OrderedCollection new.
 
 	title := ''.
-	editorBlock := [ BlElement new size: 0@0 ].
+	editorBlock := nil.
 	condition := true
