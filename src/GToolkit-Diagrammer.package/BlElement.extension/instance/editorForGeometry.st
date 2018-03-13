@@ -4,6 +4,6 @@ editorForGeometry
 
 	picker := GtDiagrammerGeometryPicker new.
 	picker
-		when: GtDiagrammerPickerSelected
-		do: [ :anEvent | self geometry: anEvent entity ].
+		when: BrToggleActivatedEvent
+		do: [ :anEvent | self geometry: anEvent model class new ].
 	^ picker

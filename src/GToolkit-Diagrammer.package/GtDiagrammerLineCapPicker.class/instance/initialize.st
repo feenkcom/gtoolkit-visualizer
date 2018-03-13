@@ -8,8 +8,6 @@ initialize
 	
 	anchorY := (cellSize y / 2) rounded.
 	lineWidth := (cellSize y / 1.6) rounded.
-
-	self layoutDo: [ :l | l cellSpacing: 10 ].
 	
 	self display: [ { 
 		BlStrokeLineCap butt.
@@ -17,9 +15,8 @@ initialize
 		BlStrokeLineCap square.
 	 } ].
 
-
 	self shape: [ :aLineCap |
-		| fromAnchor toAnchor |
+		| fromAnchor toAnchor iconElement |
 		
 		fromAnchor := BlElement new
 			size: anchorSize;
@@ -32,12 +29,9 @@ initialize
 			geometry: BlEllipse new;
 			relocate: (cellSize x - (cellSize y / 2.0))@(anchorY) - (anchorSize / 2.0);
 			background: (Color gray alpha: 0.5).
-		
-		BlElement new
+
+		iconElement := BlElement new
 			size: cellSize;
-			background: (Color gray alpha: 0.2);
-			border: (BlBorder paint: (Color gray alpha: 0.8) width: 1);
-			geometry: (BlRectangle cornerRadius: 5);
 			addChildren: { fromAnchor . toAnchor };
 			addChild: (BlLineElement new
 				fromAnchor: (BlElementCenterAnchor element: fromAnchor);
@@ -46,6 +40,9 @@ initialize
 			addChild: (BlLineElement new
 				fromAnchor: (BlElementCenterAnchor element: fromAnchor);
 				toAnchor: (BlElementCenterAnchor element: toAnchor);
-				border: (BlBorder builder width: 1; paint: (Color blue alpha: 0.4); build)) ].
-	self selected: [ :anElement | anElement background: (BlLinearGradientPaint vertical from: (Color gray alpha: 0.4) to: (Color white alpha: 0.1) ) ].
-	self deselected: [ :anElement | anElement background: (Color white alpha: 0.4) ]
+				border: (BlBorder builder width: 1; paint: (Color blue alpha: 0.4); build)).
+		BrToggle new
+			look: BrMaterialToggleIconifiedLook;
+			icon: iconElement;
+			padding: (BlInsets empty);
+			margin: (BlInsets all: 3) ].

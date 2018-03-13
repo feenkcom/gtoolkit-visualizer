@@ -1,19 +1,11 @@
 initialization
 initializeEntities
-	self removeChildren.
+	self removeToggles.
 	
 	entities := displayBlock value.
-	selected := nil.
-	
-	self addChildren: (entities collect: [ :anEntity |
+	self addToggles: (entities collect: [ :anEntity |
 		| anElement |
-		
+
 		anElement := shapeBlock cull: anEntity.
-		anElement userData at: #pickerEntity put: anEntity.
-		anElement
-			addEventHandlerOn: BlMouseDownEvent
-			do: [ :anEvent |
-				anEvent consumed: true.
-				self select: anEntity ] ]).
-		
-	self deselectAll
+		anElement viewModel model: anEntity.
+		anElement ])

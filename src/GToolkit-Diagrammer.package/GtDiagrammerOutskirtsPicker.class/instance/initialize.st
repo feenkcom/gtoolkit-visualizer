@@ -6,8 +6,6 @@ initialize
 	cellSize := 60@30.
 	previewSize := 16@16.
 	borderWidth := 4.
-
-	self layoutDo: [ :l | l cellSpacing: 10 ].
 	
 	self display: [ { 
 		BlOutskirts inside.
@@ -15,12 +13,11 @@ initialize
 		BlOutskirts outside.
 	 } ].
 
-	self shape: [ :theOutskirts |		
-		BlElement new
+	self shape: [ :theOutskirts |
+		| anIconElement |	
+		anIconElement := BlElement new
 			size: cellSize;
-			border: (BlBorder paint: (Color gray alpha: 0.8) width: 1);
 			layout: BlFrameLayout new;
-			geometry: (BlRectangle cornerRadius: 5);
 			addChild: (BlElement new
 				outskirts: theOutskirts;
 				background: (Color gray alpha: 0.3);
@@ -37,6 +34,9 @@ initialize
 				constraintsDo: [ :c |
 					c frame horizontal alignCenter.
 					c frame vertical alignCenter ];
-				size: previewSize) ].
-	self selected: [ :anElement | anElement background: (BlLinearGradientPaint vertical from: (Color gray alpha: 0.4) to: (Color white alpha: 0.1) ) ].
-	self deselected: [ :anElement | anElement background: (Color white alpha: 0.4) ]
+				size: previewSize).
+		BrToggle new
+			look: BrMaterialToggleIconifiedLook;
+			icon: anIconElement;
+			padding: (BlInsets empty);
+			margin: (BlInsets all: 3) ].

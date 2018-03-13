@@ -1,4 +1,4 @@
-scripting
+accessing
 display: aBlock
 	displayBlock := aBlock.
 	

@@ -11,5 +11,5 @@ initialize
 
 	self shape: [ :anAnchorClass | BrToggle new
 		margin: (BlInsets all: 3);
-		look: BrMaterialToggleLabelledLook + BrShadowLook;
+		look: BrMaterialToggleLabelledLook;
 		label: anAnchorClass label ]

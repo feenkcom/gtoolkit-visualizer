@@ -1,17 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "BlElement",
+	"super" : "BrToggleGroup",
 	"category" : "GToolkit-Diagrammer-UI",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"shapeBlock",
 		"displayBlock",
-		"selectedBlock",
-		"deselectedBlock",
-		"selected",
-		"entities"
+		"entities",
+		"shapeBlock"
 	],
 	"name" : "GtDiagrammerPicker",
 	"type" : "normal"

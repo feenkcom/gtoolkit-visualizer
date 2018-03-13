@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "GtDiagrammerPickerNew",
+	"super" : "GtDiagrammerPicker",
 	"category" : "GToolkit-Diagrammer-UI",
 	"classinstvars" : [ ],
 	"pools" : [ ],

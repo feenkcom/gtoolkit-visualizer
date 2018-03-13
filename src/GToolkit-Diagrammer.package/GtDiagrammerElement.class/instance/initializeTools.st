@@ -14,15 +14,18 @@ initializeTools
 	tools look: BrShadowLook new.
 	tools margin: (BlInsets all: 5).
 	tools display: [ self availableTools ].
-	tools when: BrToggleActivatedEvent do: [ :anEvent | self tool: anEvent target viewModel model ].
+	tools when: BrToggleActivatedEvent do: [ :anEvent | self tool: anEvent model ].
 
 	styles := GtDiagrammerPicker new.
-	styles layoutDo: [ :l | l cellSpacing: 5 ].
-	styles shape: [ :aStyle | BlElement new size: 20@20; background: Color random ].
+	styles padding: (BlInsets empty).
+	styles shape: [ :aStyle |
+		BrToggle new
+			size: 20@20;
+			background: Color random ].
 	styles constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent ].
-	styles when: GtDiagrammerPickerSelected do: [ :anEvent | self tool style: anEvent entity ].
+	styles when: BrToggleActivatedEvent do: [ :anEvent | self tool style: anEvent model ].
 	
 	aToolsCard addChild: tools.
 	aToolsCard addChild: styles.

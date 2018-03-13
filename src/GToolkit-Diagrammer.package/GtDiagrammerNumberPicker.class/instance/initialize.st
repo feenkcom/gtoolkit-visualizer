@@ -12,5 +12,5 @@ initialize
 
 	self shape: [ :aNumber | BrToggle new
 		margin: (BlInsets all: 3);
-		look: BrMaterialToggleLabelledLook + BrShadowLook;
+		look: BrMaterialToggleLabelledLook;
 		label: (printBlock value: aNumber) ]

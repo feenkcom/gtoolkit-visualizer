@@ -1,5 +1,5 @@
-scripting
-shape: aShapeBlock
-	shapeBlock := aShapeBlock.
+accessing
+shape: aBlock
+	shapeBlock := aBlock.
 	
 	self initializeEntities

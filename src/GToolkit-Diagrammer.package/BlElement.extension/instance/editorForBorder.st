@@ -15,33 +15,31 @@ editorForBorder
 	colorPicker constraintsDo: [ :c | 
 		c horizontal matchParent.
 		c vertical fitContent ].
-	colorPicker margin: (BlInsets top: 0 left: 10 bottom: 10 right: 0).
 	colorPicker
-		when: GtDiagrammerPickerSelected
-		do: [ :anEvent | self border: (self border copyWithPaint: anEvent entity) ].
+		when: BrToggleActivatedEvent
+		do: [ :anEvent | self border: (self border copyWithPaint: anEvent model) ].
 
 	outskirtsPicker := GtDiagrammerOutskirtsPicker new.
 	outskirtsPicker select: self outskirts.
 	outskirtsPicker
-		when: GtDiagrammerPickerSelected
-		do: [ :anEvent | self outskirts: anEvent entity ].
+		when: BrToggleActivatedEvent
+		do: [ :anEvent | self outskirts: anEvent model ].
 
 	lineCapPicker := GtDiagrammerLineCapPicker new.
 	lineCapPicker select: self border style lineCap.
 	lineCapPicker
-		when: GtDiagrammerPickerSelected
-		do: [ :anEvent | self border: (self border copyWithStyle: (self border style copyWithLineCap: anEvent entity)) ].
+		when: BrToggleActivatedEvent
+		do: [ :anEvent | self border: (self border copyWithStyle: (self border style copyWithLineCap: anEvent model)) ].
 
 	lineJoinPicker := GtDiagrammerLineJoinPicker new.
 	lineJoinPicker select: self border style lineJoin.
 	lineJoinPicker
-		when: GtDiagrammerPickerSelected
-		do: [ :anEvent | self border: (self border copyWithStyle: (self border style copyWithLineJoin: anEvent entity)) ].
+		when: BrToggleActivatedEvent
+		do: [ :anEvent | self border: (self border copyWithStyle: (self border style copyWithLineJoin: anEvent model)) ].
 	
 	widthPicker := GtDiagrammerNumberPicker new.
 	widthPicker select: self border width.
 	widthPicker layout: BlFlowLayout horizontal.
-	widthPicker margin: (BlInsets top: 0 left: 10 bottom: 10 right: 0).
 	widthPicker constraintsDo: [ :c | 
 		c horizontal matchParent.
 		c vertical fitContent ].

@@ -1,6 +1,2 @@
-actions
+enumerating
 selectFirst
-	entities
-		ifEmpty: [ ^ self ].
-
-	self select: entities anyOne
