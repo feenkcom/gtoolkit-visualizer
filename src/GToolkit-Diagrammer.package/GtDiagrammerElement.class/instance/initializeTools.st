@@ -11,7 +11,7 @@ initializeTools
 
 	tools := GtDiagrammerToolPicker new.
 	tools layout: BlLinearLayout horizontal.
-	tools look: BrMaterialLook new.
+	tools look: BrShadowLook new.
 	tools margin: (BlInsets all: 5).
 	tools display: [ self availableTools ].
 	tools when: BrToggleActivatedEvent do: [ :anEvent | self tool: anEvent target viewModel model ].

@@ -3,7 +3,7 @@ initialize
 	super initialize.
 	
 	displayBlock := [ #() ].	
-	shapeBlock := [ BrToggle new look: BrMaterialToggleButtonLook new ].
+	shapeBlock := [ BrToggle new look: BrMaterialToggleLabelledLook new ].
 	
 	self layout: BlLinearLayout horizontal.
 	self padding: (BlInsets all: 10).
