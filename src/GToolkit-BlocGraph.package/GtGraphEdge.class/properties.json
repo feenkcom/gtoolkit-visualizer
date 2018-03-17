@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TudorGirba 8/28/2017 09:04",
 	"super" : "Object",
-	"category" : "GToolkit-Mondrian",
+	"category" : "GToolkit-BlocGraph",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
