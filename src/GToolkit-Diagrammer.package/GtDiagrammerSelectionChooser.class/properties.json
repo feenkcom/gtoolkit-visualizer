@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "",
+	"commentStamp" : "AliakseiSyrel 3/19/2018 10:50",
 	"super" : "BlElementEventListener",
 	"category" : "GToolkit-Diagrammer-Tools - Selection",
 	"classinstvars" : [ ],
@@ -9,6 +9,6 @@
 		"selectionTool",
 		"currentSelection"
 	],
-	"name" : "GtDiagrammerFigureChooser",
+	"name" : "GtDiagrammerSelectionChooser",
 	"type" : "normal"
 }

@@ -3,7 +3,7 @@ onInstalledIn: aDiagrammerElement
 	super onInstalledIn: aDiagrammerElement.
 
 	aDiagrammerElement canvas addEventHandler: selector.
-	chooser := GtDiagrammerFigureChooser on: self.
+	chooser := GtDiagrammerSelectionChooser on: self.
 
 	deleter := BlShortcut new
 		combination: (BlKeyCombination builder meta delete build);
