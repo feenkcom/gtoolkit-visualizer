@@ -1,5 +1,5 @@
 instance creation
 create
-	<return: #Object>
+	<return: #BlElement>
 
 	^ self subclassResponsibility

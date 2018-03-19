@@ -4,7 +4,7 @@ initialize
 
 	self layoutDo: [ :l | l cellSpacing: 10 ].
 
-	self display: [ GtDiagrammerStencil allSubclasses collect: #new ].
+	self display: [ GtDiagrammerElementStencil allSubclasses collect: #new ].
 	self shape: [ :aStencil |
 		BrToggle new
 			look: BrMaterialToggleIconifiedLook;

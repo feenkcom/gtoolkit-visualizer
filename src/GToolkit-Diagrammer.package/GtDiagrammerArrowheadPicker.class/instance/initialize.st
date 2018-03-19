@@ -19,7 +19,7 @@ initialize
 		aLine border: (BlBorder paint: (Color lightGray) width: 3).
 		aLine fromAnchor: (BlAbsolutePositionAnchor position: ((cellSize x / 4) @ cellSize y / 2.0)).
 		aLine toAnchor: (BlAbsolutePositionAnchor position: (cellSize x / 1.6 @ (cellSize y / 2.0))).
-		
+
 		aLine toHead: (anArrowheadClass new
 			background: Color lightGray;
 			border: (BlBorder paint: Color lightGray)).

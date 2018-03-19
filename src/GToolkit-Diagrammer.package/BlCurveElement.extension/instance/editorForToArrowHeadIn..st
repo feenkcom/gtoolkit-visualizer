@@ -6,7 +6,7 @@ editorForToArrowHeadIn: anEditor
 		when: BrToggleActivatedEvent
 			do: [ :anEvent |
 				| aHead |
-				aHead := anEvent model new.
+				aHead := anEvent model diagrammerDefault.
 				aHead border: (self border copy).
 				self toHead: aHead.
 				anEditor changed ]

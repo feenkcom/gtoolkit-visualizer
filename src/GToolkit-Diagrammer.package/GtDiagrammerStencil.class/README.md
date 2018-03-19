@@ -1,1 +1,1 @@
-I am an abstract factory of concrete elements that should appear in the diagrammer. My subclasses create concrete elements, such as rectangle.
+I am an abstract factory of objects that should appear in the diagrammer
