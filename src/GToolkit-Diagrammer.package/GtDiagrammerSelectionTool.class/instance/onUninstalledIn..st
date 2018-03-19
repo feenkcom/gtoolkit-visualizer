@@ -4,4 +4,6 @@ onUninstalledIn: aDiagrammerElement
 	aDiagrammerElement canvas removeEventHandler: chooser.
 	
 	aDiagrammerElement deselect.
-	aDiagrammerElement closeEditor
+	aDiagrammerElement closeEditor.
+	
+	aDiagrammerElement canvas removeShortcut: deleter.

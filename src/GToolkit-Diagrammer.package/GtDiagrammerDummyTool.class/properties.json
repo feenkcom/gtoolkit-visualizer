@@ -1,7 +1,7 @@
 {
-	"commentStamp" : "",
+	"commentStamp" : "AliakseiSyrel 3/19/2018 08:59",
 	"super" : "GtDiagrammerTool",
-	"category" : "GToolkit-Diagrammer-Model",
+	"category" : "GToolkit-Diagrammer-Tools",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

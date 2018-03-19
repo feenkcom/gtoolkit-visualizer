@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "GtDiagrammerTool",
-	"category" : "GToolkit-Diagrammer-Model",
+	"category" : "GToolkit-Diagrammer-Tools",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

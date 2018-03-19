@@ -2,6 +2,7 @@ initialization
 initialize
 	super initialize.
 	
+	entities := #().
 	displayBlock := [ #() ].	
 	shapeBlock := [ BrToggle new look: BrMaterialToggleLabelledLook new ].
 	

@@ -8,4 +8,6 @@ initializeEntities
 
 		anElement := shapeBlock cull: anEntity.
 		anElement viewModel model: anEntity.
-		anElement ])
+		anElement ]).
+	
+	self initializeSelection

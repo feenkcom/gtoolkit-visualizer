@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "BlElementEventListener",
-	"category" : "GToolkit-Diagrammer-Model",
+	"category" : "GToolkit-Diagrammer-Tools",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

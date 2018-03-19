@@ -1,5 +1,9 @@
 accessing
 tool: aGtDiagrammerTool
+
+	self tool = aGtDiagrammerTool
+		ifTrue: [ ^ self ].
+
 	self removeEventHandler: self tool.
 	tool := aGtDiagrammerTool.
 	self addEventHandler: self tool.

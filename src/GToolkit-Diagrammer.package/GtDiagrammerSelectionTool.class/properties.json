@@ -1,13 +1,14 @@
 {
 	"commentStamp" : "",
 	"super" : "GtDiagrammerTool",
-	"category" : "GToolkit-Diagrammer-Model",
+	"category" : "GToolkit-Diagrammer-Tools",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"selector",
-		"chooser"
+		"chooser",
+		"deleter"
 	],
 	"name" : "GtDiagrammerSelectionTool",
 	"type" : "normal"
