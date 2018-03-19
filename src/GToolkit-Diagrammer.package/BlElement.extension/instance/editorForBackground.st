@@ -27,6 +27,6 @@ editorForBackground
 		c vertical fitContent ].
 	alphaPicker
 		when: BrToggleActivatedEvent
-		do: [ :anEvent | self background: (self background paint color alpha: anEvent model) ].
+		do: [ :anEvent |  ].
 
-	^ container addChildren: { colorPicker . alphaPicker }
+	^ container addChildren: { colorPicker . "alphaPicker" }
