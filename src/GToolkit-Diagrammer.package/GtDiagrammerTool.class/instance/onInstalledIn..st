@@ -1,3 +1,3 @@
 api - hooks
 onInstalledIn: aDiagrammerElement
-	self subclassResponsibility
+	diagrammer := aDiagrammerElement

@@ -1,5 +1,5 @@
 instance creation
-on: aGtDiagrammerElement
+on: aSelectionTool
 	^ self basicNew 
 		initialize;
-		diagrammer: aGtDiagrammerElement
+		selectionTool: aSelectionTool

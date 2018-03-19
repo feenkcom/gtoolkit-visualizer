@@ -1,5 +1,7 @@
 api - hooks
 onInstalledIn: aDiagrammerElement
+	super onInstalledIn: aDiagrammerElement.
+
 	connector := BlEventHandler on: BlClickEvent do: [ :anEvent |
 		(anEvent target hasParent: aDiagrammerElement canvas)
 			ifTrue: [ 

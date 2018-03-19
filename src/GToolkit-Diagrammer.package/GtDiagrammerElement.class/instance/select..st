@@ -1,9 +1,6 @@
-actions
+api - selection
 select: anElement
 
-	self deselect.
-	resizer attachTo: anElement.
-	self canvas addChild: resizer.
-
+	"selection is only possible when corresponding tool is activated"	
 	self tool: GtDiagrammerSelectionTool new.
-	anElement requestFocus
+	self tool select: anElement

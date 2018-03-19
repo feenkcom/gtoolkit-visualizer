@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"style"
+		"style",
+		"diagrammer"
 	],
 	"name" : "GtDiagrammerTool",
 	"type" : "normal"

@@ -1,4 +1,5 @@
-selection
+api - selection
 deselect
-	 self diagrammer deselect.
+
+	self selectionTool deselectAll.
 	currentSelection := nil

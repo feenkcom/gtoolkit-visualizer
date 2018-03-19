@@ -1,5 +1,7 @@
 api - hooks
 onInstalledIn: aDiagrammerElement
+	super onInstalledIn: aDiagrammerElement.
+
 	creator := BlEventHandler on: BlClickEvent do: [ :anEvent |
 		| aLocation aFigureElement |
 		

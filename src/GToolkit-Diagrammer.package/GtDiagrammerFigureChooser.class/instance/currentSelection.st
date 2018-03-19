@@ -2,4 +2,4 @@ accessing
 currentSelection
 	<return: #BlElement>
 
-	^ currentSelection ifNil: [ currentSelection := self diagrammer canvas ]
+	^ currentSelection ifNil: [ currentSelection := self selectionTool canvas ]

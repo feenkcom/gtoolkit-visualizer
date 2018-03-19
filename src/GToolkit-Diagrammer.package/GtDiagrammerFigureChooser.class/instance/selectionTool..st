@@ -1,0 +1,3 @@
+accessing
+selectionTool: aGtDiagrammerSelectionTool
+	selectionTool := aGtDiagrammerSelectionTool

@@ -1,14 +1,16 @@
 {
-	"commentStamp" : "",
+	"commentStamp" : "AliakseiSyrel 3/19/2018 10:30",
 	"super" : "GtDiagrammerTool",
-	"category" : "GToolkit-Diagrammer-Tools",
+	"category" : "GToolkit-Diagrammer-Tools - Selection",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"chooser",
-		"deleter"
+		"deleter",
+		"selectedFigures",
+		"resizer"
 	],
 	"name" : "GtDiagrammerSelectionTool",
 	"type" : "normal"

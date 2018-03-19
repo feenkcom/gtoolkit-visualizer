@@ -1,13 +1,13 @@
 api - hooks
 onInstalledIn: aDiagrammerElement
+	super onInstalledIn: aDiagrammerElement.
 
 	aDiagrammerElement canvas addEventHandler: selector.
-
-	chooser := GtDiagrammerFigureChooser on: aDiagrammerElement.
+	chooser := GtDiagrammerFigureChooser on: self.
 
 	deleter := BlShortcut new
 		combination: (BlKeyCombination builder meta delete build);
-		action: [ self inform: 'delete' ].
+		action: [ self deleteSelected ].
 
 	aDiagrammerElement canvas addEventHandler: chooser.
-	aDiagrammerElement canvas addShortcut: deleter.
+	aDiagrammerElement canvas addShortcut: deleter
