@@ -1,0 +1,3 @@
+accessing
+resetCurrentSelection
+	currentSelection := nil

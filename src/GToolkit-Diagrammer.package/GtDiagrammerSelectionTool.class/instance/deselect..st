@@ -5,6 +5,8 @@ deselect: anElement
 	self selectedFigures remove: anElement.
 	self diagrammer closeEditor.
 
+	chooser resetCurrentSelection.
+
 	resizer detach.
 	(self canvas hasChild: resizer)
 		ifTrue: [ self canvas removeChild: resizer ]
