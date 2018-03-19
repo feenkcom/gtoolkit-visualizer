@@ -2,11 +2,11 @@ mouse handlers
 mouseDownEvent: anEvent
 	| theParents |
 
-	theParents := Array streamContents: [ :aStream |
-		aStream nextPut: anEvent target.
-		anEvent target parentsDo: [ :aParentElement | aStream nextPut: aParentElement ] ].
+	theParents := self computeSelectionChainFor: anEvent target.
 
 	theParents
-		detect: [ :anElement | anElement parent = self currentSelection ]
+		detect: [ :anElement |
+			anElement parent = self currentSelection
+				or: [ anElement = self currentSelection ] ]
 		ifFound: [ :anElement | self select: anElement ]
 		ifNone: [ self deselect ]

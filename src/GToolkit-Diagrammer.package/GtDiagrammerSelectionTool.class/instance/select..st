@@ -5,6 +5,8 @@ select: anElement
 
 	self selectedFigures add: anElement.
 
+	chooser currentSelection: anElement.
+
 	resizer attachTo: anElement.
 	resizer hasParent
 		ifFalse: [ self canvas addChild: resizer ].
