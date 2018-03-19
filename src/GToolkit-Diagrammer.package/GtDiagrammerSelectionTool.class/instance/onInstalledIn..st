@@ -2,7 +2,7 @@ api - hooks
 onInstalledIn: aDiagrammerElement
 	super onInstalledIn: aDiagrammerElement.
 
-	aDiagrammerElement canvas addEventHandler: selector.
+	"aDiagrammerElement canvas addEventHandler: selector."
 	chooser := GtDiagrammerSelectionChooser on: self.
 
 	deleter := BlShortcut new
