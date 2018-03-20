@@ -1,31 +1,18 @@
 initialization
 initialize
-	| cellSize |
 	super initialize.
-	
-	cellSize := 60@30.
-	
+		
 	self display: [ { 
-		BlArrowheadCircle.
-		BlArrowheadSimpleArrow.
-		BlArrowheadTriangle.
+		GtDiagrammerArrowheadCircleFilledStencil new scale: 5.
+		GtDiagrammerArrowheadCircleHollowStencil new scale: 5.
+		GtDiagrammerArrowheadSimpleArrowStencil new arrowLengthFraction: 12; arrowNoseAngle: 45.
+		GtDiagrammerArrowheadFilledTriangleStencil new scale: 5.
+		GtDiagrammerArrowheadHollowTriangleStencil new scale: 5.
+		GtDiagrammerArrowheadNoneStencil new
 	 } ].
 
-	self shape: [ :anArrowheadClass |
-		| aLine |
-		
-		aLine := BlLineElement new.
-		aLine transformDo: [ :t | t origin: BlAffineTransformationLeftCenterOrigin new; scaleBy: 1.5 ].
-		aLine border: (BlBorder paint: (Color lightGray) width: 3).
-		aLine fromAnchor: (BlAbsolutePositionAnchor position: ((cellSize x / 4) @ cellSize y / 2.0)).
-		aLine toAnchor: (BlAbsolutePositionAnchor position: (cellSize x / 1.6 @ (cellSize y / 2.0))).
-
-		aLine toHead: (anArrowheadClass new
-			background: Color lightGray;
-			border: (BlBorder paint: Color lightGray)).
-		
+	self shape: [ :anArrowheadStencil |	
 		BrToggle new
 			look: BrMaterialToggleIconifiedLook;
-			icon: aLine;
-			size: cellSize;
+			icon: anArrowheadStencil icon;
 			margin: (BlInsets all: 3) ]

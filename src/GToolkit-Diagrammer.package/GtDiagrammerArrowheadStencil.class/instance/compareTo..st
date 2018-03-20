@@ -1,0 +1,3 @@
+comparing
+compareTo: anArrowheadElement
+	^ true

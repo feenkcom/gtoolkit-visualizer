@@ -2,7 +2,7 @@
 editorForArrowLength
 	| aPicker |
 	aPicker := GtDiagrammerNumberPicker new.
-	aPicker select: self border width.
+	aPicker select: self arrowLengthFraction.
 	aPicker layout: BlFlowLayout horizontal.
 	aPicker constraintsDo: [ :c | 
 		c horizontal matchParent.

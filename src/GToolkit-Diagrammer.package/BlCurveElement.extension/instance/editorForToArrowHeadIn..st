@@ -2,11 +2,12 @@
 editorForToArrowHeadIn: anEditor
 
 	^ GtDiagrammerArrowheadPicker new
-		select: (self hasToHead ifTrue: [ self toHead ] ifFalse: [ nil ]) class;
+		layout: BlFlowLayout horizontal;
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical fitContent ];
+		select: (self hasToHead ifTrue: [ self toHead ] ifFalse: [ BlArrowheadNone new ]);
 		when: BrToggleActivatedEvent
 			do: [ :anEvent |
-				| aHead |
-				aHead := anEvent model diagrammerDefault.
-				aHead border: (self border copy).
-				self toHead: aHead.
+				anEvent model applyAsToHeadOn: self.
 				anEditor changed ]

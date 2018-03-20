@@ -1,0 +1,3 @@
+hook
+applyAsFromHeadOn: aCurveElement
+	aCurveElement removeFromHead

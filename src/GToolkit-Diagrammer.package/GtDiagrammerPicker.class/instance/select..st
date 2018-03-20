@@ -6,6 +6,6 @@ select: anEntity
 
 	selected = anEntity
 		ifTrue: [ ^ self ].
-	
+
 	selected := anEntity.
 	self initializeSelection

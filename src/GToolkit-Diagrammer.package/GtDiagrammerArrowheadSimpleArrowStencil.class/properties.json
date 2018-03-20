@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GtDiagrammerArrowheadStencil",
+	"category" : "GToolkit-Diagrammer-Stencils - Arrowheads",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"arrowLengthFraction",
+		"arrowNoseAngle"
+	],
+	"name" : "GtDiagrammerArrowheadSimpleArrowStencil",
+	"type" : "normal"
+}

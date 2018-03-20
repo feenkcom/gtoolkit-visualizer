@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtDiagrammerStencil",
+	"category" : "GToolkit-Diagrammer-Stencils - Arrowheads",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtDiagrammerArrowheadStencil",
+	"type" : "normal"
+}

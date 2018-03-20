@@ -3,7 +3,7 @@ editorForNoseAngle
 	| aPicker |
 	aPicker := GtDiagrammerNumberPicker new.
 	aPicker display: [ 15 to: 165 by: 15 ].
-	aPicker select: self border width.
+	aPicker select: self arrowNoseAngle.
 	aPicker layout: BlFlowLayout horizontal.
 	aPicker constraintsDo: [ :c |
 		c horizontal matchParent.
