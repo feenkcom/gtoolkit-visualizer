@@ -4,7 +4,7 @@ initializeTools
 
 	aToolsCard := BlElement new.
 	aToolsCard constraintsDo: [ :c | c horizontal matchParent ].
-	aToolsCard layout: (BlGridLayout vertical cellSpacing: 2).
+	aToolsCard layout: (BlGridLayout new cellSpacing: 2; columnCount: 1).
 	aToolsCard constraintsDo: [ :c | 
 		c horizontal matchParent.
 		c vertical fitContent ].

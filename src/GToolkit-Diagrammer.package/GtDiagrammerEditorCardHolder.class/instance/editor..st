@@ -14,7 +14,7 @@ editor: anEditor
 			| aContainer |
 
 			aContainer := BlElement new.
-			aContainer layout: (BlGridLayout horizontal cellSpacing: 10; columnCount: 1).
+			aContainer layout: (BlGridLayout new cellSpacing: 10; columnCount: 1).
 			aContainer constraintsDo: [ :c |
 				c horizontal matchParent.
 				c vertical fitContent ].
