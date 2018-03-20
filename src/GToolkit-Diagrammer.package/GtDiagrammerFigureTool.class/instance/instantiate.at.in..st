@@ -1,5 +1,5 @@
 api - diagrammer
-instantiate: aStencil at: aPoint in: aCanvasElement
+instantiate: aStencil at: aPoint in: aTarget
 	<return: #BlElement>
 	| anElement |
 
@@ -7,16 +7,15 @@ instantiate: aStencil at: aPoint in: aCanvasElement
 
 	"we need to force layout process of the element in order to relocate it in such a way that its center is at aPoint"
 	anElement forceLayout.
+	
+	(anElement extent) > (aTarget extent / 2.0)
+		ifTrue: [
+			anElement size: aTarget extent / 2.0.
+			anElement forceLayout ].
+	
 	anElement relocate: aPoint - (anElement extent / 2.0) asIntegerPoint.
-
 	anElement addEventHandler: BlPullHandler new.
-	anElement
-		addEventHandlerOn: BlElementSelectionAcquiredEvent
-		do: [ :anEvent | aCanvasElement select: anEvent currentTarget ].
-	anElement
-		addEventHandlerOn: BlElementSelectionLostEvent
-		do: [ :anEvent | aCanvasElement deselect ].
 
-	aCanvasElement addChild: anElement.
+	aTarget addChild: anElement.
 
 	^ anElement

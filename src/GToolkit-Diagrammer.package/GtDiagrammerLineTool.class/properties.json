@@ -7,7 +7,10 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"connector",
-		"fromFigure"
+		"fromFigure",
+		"overlay",
+		"hoverOver",
+		"hoverOut"
 	],
 	"name" : "GtDiagrammerLineTool",
 	"type" : "normal"

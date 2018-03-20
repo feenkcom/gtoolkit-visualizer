@@ -7,7 +7,10 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"creator",
-		"styles"
+		"styles",
+		"hoverOver",
+		"hoverOut",
+		"overlay"
 	],
 	"name" : "GtDiagrammerFigureTool",
 	"type" : "normal"

@@ -7,7 +7,8 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"selectionTool",
-		"currentSelection"
+		"currentSelection",
+		"mouseDownPosition"
 	],
 	"name" : "GtDiagrammerSelectionChooser",
 	"type" : "normal"

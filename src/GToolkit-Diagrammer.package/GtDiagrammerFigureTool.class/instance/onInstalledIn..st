@@ -1,18 +1,37 @@
 api - hooks
 onInstalledIn: aDiagrammerElement
 	super onInstalledIn: aDiagrammerElement.
-
+	
 	creator := BlEventHandler on: BlClickEvent do: [ :anEvent |
-		| aLocation aFigureElement |
+		| aLocation aFigureElement aTargetElement |
+		
+		aTargetElement := anEvent target.
 		
 		"`anEvent currentTarget` is already a canvas"
-		aLocation := anEvent currentTarget globalPointToLocal: anEvent position.
+		aLocation := aTargetElement globalPointToLocal: anEvent position.
 
 		aFigureElement := self
 			instantiate: self style
 			at: aLocation
-			in: aDiagrammerElement canvas.
+			in: aTargetElement.
 
 		self onInstantiated: aFigureElement in: aDiagrammerElement ].
+	
+	hoverOver := BlEventHandler on: BlMouseOverEvent do: [ :anEvent |
+		(anEvent target ~= self canvas)
+			ifTrue: [
+				overlay geometry: anEvent target geometry copy.
+				overlay attachTo: anEvent target.
+				overlay hasParent ifFalse: [ self canvas addChild: overlay ] ] ].
 
-	aDiagrammerElement canvas addEventHandler: creator
+	hoverOut := BlEventHandler
+		on: BlMouseOutEvent
+		do: [ :anEvent |
+			(anEvent target ~= self canvas)
+				ifTrue: [
+					overlay detach.
+					overlay removeFromParent ] ].
+
+	aDiagrammerElement canvas addEventHandler: creator.
+	aDiagrammerElement canvas addEventHandler: hoverOver.
+	aDiagrammerElement canvas addEventHandler: hoverOut

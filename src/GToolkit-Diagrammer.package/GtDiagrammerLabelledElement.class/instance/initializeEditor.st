@@ -3,6 +3,7 @@ initializeEditor
 	editor := BrTextEditor new.
 	editorElement := BrEditorElement new.
 	editorElement editor: editor.
+	editorElement beDiagrammerSelectionLeaf.
 	editorElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent.
