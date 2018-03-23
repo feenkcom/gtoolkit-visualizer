@@ -3,9 +3,8 @@ initializeTools
 	| aToolsCard |
 
 	aToolsCard := BlElement new.
-	aToolsCard constraintsDo: [ :c | c horizontal matchParent ].
 	aToolsCard layout: (BlGridLayout new cellSpacing: 2; columnCount: 1).
-	aToolsCard constraintsDo: [ :c | 
+	aToolsCard constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent ].
 
@@ -17,6 +16,7 @@ initializeTools
 	tools when: BrToggleActivatedEvent do: [ :anEvent | self tool: anEvent model ].
 
 	styles := GtDiagrammerPicker new.
+	styles layout: BlLinearLayout horizontal.
 	styles padding: (BlInsets empty).
 	styles shape: [ :aStyle |
 		BrToggle new
@@ -26,8 +26,8 @@ initializeTools
 		c horizontal matchParent.
 		c vertical fitContent ].
 	styles when: BrToggleActivatedEvent do: [ :anEvent | self tool style: anEvent model ].
-	
+
 	aToolsCard addChild: tools.
 	aToolsCard addChild: styles.
-	
+
 	topbar addChild: aToolsCard

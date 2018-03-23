@@ -15,6 +15,7 @@ initialize
 	self initializeTopbar.
 	self initializeSidebar.
 	self initializeTools.
+	self initializeExports.
 
 	self addChildren: { topbar . sidebar . canvas }.
 
