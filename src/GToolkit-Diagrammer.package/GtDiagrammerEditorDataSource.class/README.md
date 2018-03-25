@@ -1,0 +1,1 @@
+I am a data source for the diagrammer editor list

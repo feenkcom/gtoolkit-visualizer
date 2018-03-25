@@ -3,8 +3,8 @@ initialize
 	super initialize.
 		
 	self display: [ { 
-		GtDiagrammerArrowheadCircleFilledStencil new scale: 5.
-		GtDiagrammerArrowheadCircleHollowStencil new scale: 5.
+		GtDiagrammerArrowheadFilledCircleStencil new scale: 5.
+		GtDiagrammerArrowheadHollowCircleStencil new scale: 5.
 		GtDiagrammerArrowheadSimpleArrowStencil new arrowLengthFraction: 12; arrowNoseAngle: 45.
 		GtDiagrammerArrowheadFilledTriangleStencil new scale: 5.
 		GtDiagrammerArrowheadHollowTriangleStencil new scale: 5.

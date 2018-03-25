@@ -1,0 +1,1 @@
+I am an element holder for a card that represents an editor in the diagrammer editor list

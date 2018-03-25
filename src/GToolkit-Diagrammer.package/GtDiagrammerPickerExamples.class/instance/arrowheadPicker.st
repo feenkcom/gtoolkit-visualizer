@@ -1,6 +1,5 @@
-as yet unclassified
+examples - pickers
 arrowheadPicker
 	<gtExample>
-	
-	^ GtDiagrammerArrowheadPicker new
-		width: 200
+
+	^ GtDiagrammerArrowheadPicker new width: 200

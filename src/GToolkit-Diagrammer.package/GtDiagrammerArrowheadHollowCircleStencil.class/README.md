@@ -1,0 +1,1 @@
+I create a hollow circle arrow head with the border equal to the color of the curve
