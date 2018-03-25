@@ -17,7 +17,7 @@ initialize
 	self initializeTools.
 	self initializeExports.
 
-	self addChildren: { topbar . sidebar . canvas }.
+	self addChildren: { topbar . sidebar . canvasContainer }.
 
 	"select a tool by default"
 	self tool: self availableTools anyOne

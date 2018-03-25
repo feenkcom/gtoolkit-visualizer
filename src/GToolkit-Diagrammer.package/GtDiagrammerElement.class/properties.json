@@ -12,7 +12,8 @@
 		"availableTools",
 		"styles",
 		"sidebar",
-		"topbar"
+		"topbar",
+		"canvasContainer"
 	],
 	"name" : "GtDiagrammerElement",
 	"type" : "normal"
