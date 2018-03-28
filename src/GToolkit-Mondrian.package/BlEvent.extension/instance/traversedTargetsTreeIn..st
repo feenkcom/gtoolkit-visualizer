@@ -34,7 +34,10 @@ traversedTargetsTreeIn: aView
 		fromRightCenter;
 		toLeftCenter;
 		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4)) ];
-		connectFrom: #owner.
+		connectFrom: [ :aTarget |
+			aTarget hasOwner
+				ifTrue: [ aTarget owner ]
+				ifFalse: [ aTarget ] ].
 
 	aView edges
 		shape: [ :x |
