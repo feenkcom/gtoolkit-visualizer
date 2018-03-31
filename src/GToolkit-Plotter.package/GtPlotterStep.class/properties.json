@@ -6,8 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"stack"
+		"root"
 	],
-	"name" : "GtPlotter",
+	"name" : "GtPlotterStep",
 	"type" : "normal"
 }

@@ -1,6 +1,7 @@
 measure
 measure: anElement with: anExtentSpec
-	
+	self measureIgnored: anElement with: anExtentSpec.
+
 	horizontalAxisElement := anElement children
 		detect: [ :aChildElement | aChildElement constraints plotter isHorizonalAxis ]
 		ifNone: [ ^ self ].

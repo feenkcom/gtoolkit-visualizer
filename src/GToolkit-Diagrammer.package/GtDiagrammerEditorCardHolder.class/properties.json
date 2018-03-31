@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "AliakseiSyrel 3/25/2018 09:57",
-	"super" : "BlInfiniteElementHolder",
+	"super" : "BlInfiniteHolder",
 	"category" : "GToolkit-Diagrammer-UI-Lists",
 	"classinstvars" : [ ],
 	"pools" : [ ],

@@ -7,8 +7,6 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"root",
-		"elementBlock",
-		"childrenContainer",
 		"childrenContainers"
 	],
 	"name" : "GtMondrianStep",

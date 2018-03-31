@@ -6,8 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"stack"
+		"plotter"
 	],
-	"name" : "GtPlotter",
+	"name" : "GtPlotterBuilder",
 	"type" : "normal"
 }

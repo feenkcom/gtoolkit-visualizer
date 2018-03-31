@@ -1,13 +1,16 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "GtPlotterBuilder",
 	"category" : "GToolkit-Plotter",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"stack"
+		"axisY",
+		"axisX",
+		"lineBlock",
+		"dotBlock"
 	],
-	"name" : "GtPlotter",
+	"name" : "GtPlotterLineDiagramBuilder",
 	"type" : "normal"
 }

@@ -1,6 +1,10 @@
 layout
 layout: anElement in: aRectangle
 	| verticalAxisBounds horizontalAxisBounds |
+	
+	
+	self layoutIgnored: anElement.
+	
 
 	verticalAxisBounds := verticalAxisElement measuredBounds bounds.
 	horizontalAxisBounds := horizontalAxisElement measuredBounds bounds.
