@@ -1,7 +1,7 @@
 instance creation
 create
 	| uml |
-	uml := GtDiagrammerUmlClassElement withContainers: #(label attributes).
+	uml := BrUmlClassElement withContainers: #(label attributes).
 
 	uml text: 'ClassName' asRopedText bold in: #label.
 	uml text: 'Attribute' asRopedText in: #attributes.
