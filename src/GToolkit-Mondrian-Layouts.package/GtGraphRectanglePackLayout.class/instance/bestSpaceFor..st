@@ -7,7 +7,7 @@ bestSpaceFor: anElement
 	suitableSpaces := freeSpace select: [ :space |
 		elementsPadedBox width <= space width and:
 			[ elementsPadedBox height <= space height ] ].
-	
+	suitableSpaces isEmpty ifTrue: [ ^ freeSpace anyOne ].
 	^ suitableSpaces
 		fold: [ :best :current |
 			| bestExt currentExt | 
