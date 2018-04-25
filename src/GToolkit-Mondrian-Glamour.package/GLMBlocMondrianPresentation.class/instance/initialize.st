@@ -1,4 +1,6 @@
 scripting
 initialize
 	super initialize.
-	paintingBlock := [ :aGtMondrian :theDisplayValue | ]
+	paintingBlock := [ :aGtMondrian :theDisplayValue | ].
+	self withNodeClicks.
+	self withEdgeClicks

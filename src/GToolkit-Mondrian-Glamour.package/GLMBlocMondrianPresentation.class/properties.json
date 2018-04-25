@@ -6,7 +6,10 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"paintingBlock"
+		"paintingBlock",
+		"shouldInstallClicksOnNodes",
+		"viewInitializer",
+		"shouldInstallClicksOnEdges"
 	],
 	"name" : "GLMBlocMondrianPresentation",
 	"type" : "normal"
