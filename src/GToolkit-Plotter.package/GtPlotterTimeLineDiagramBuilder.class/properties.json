@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "GtPlotterLineDiagramBuilder",
+	"category" : "GToolkit-Plotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"updateBlock",
+		"delay",
+		"task",
+		"limit"
+	],
+	"name" : "GtPlotterTimeLineDiagramBuilder",
+	"type" : "normal"
+}

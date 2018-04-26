@@ -13,5 +13,8 @@ lineElementFrom: aFromAnchorElement to: aToAnchorElement
 		constraintsDo: [ :c | c ignoreByLayout ];
 		fromAnchor: (BlElementCenterAnchor element: aFromAnchorElement);
 		toAnchor: (BlElementCenterAnchor element: aToAnchorElement).
+		
+	aFromAnchorElement when: BlElementRemovedEvent do: [ aLineElement removeFromParent ].
+	aToAnchorElement when: BlElementRemovedEvent do: [ aLineElement removeFromParent ].
 	
 	^ aLineElement
