@@ -26,18 +26,16 @@ traversedTargetsTreeIn: aView
 			| text |
 			text := aTarget gtDisplayString asRopedText.
 			text attributes: {BrTextForegroundAttribute paint: Color lightGray}.
-			BlTextEditElement new
+			BlTextElement new
 				text: text;
 				padding: (BlInsets all: 5) ];
 		with: (connectedTargets).
-	aView edges 
+	aView edges
 		fromRightCenter;
 		toLeftCenter;
 		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4)) ];
-		connectFrom: [ :aTarget |
-			aTarget hasOwner
-				ifTrue: [ aTarget owner ]
-				ifFalse: [ aTarget ] ].
+		connect: (connectedTargets select: [ :each | each hasOwner ])
+			from: [ :aTarget | aTarget owner ].
 
 	aView edges
 		shape: [ :x |
@@ -53,5 +51,5 @@ traversedTargetsTreeIn: aView
 					border: (BlBorder builder paint: (color alpha: 0.4); width: 2; build)) ];
 		passive;
 		connect: thePairs from: [ :x | x key target ]
-		to: [ :x | x value target].
+		to: [ :x | x value target ].
 	aView layout horizontalTree horizontalGap: 40
