@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGraphAbstractHorizontalTreeLayout",
+	"category" : "GToolkit-BlocGraph-Layouts-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtGraphHorizontalTreeLayout",
+	"type" : "normal"
+}

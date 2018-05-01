@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGraphLayout",
+	"category" : "GToolkit-BlocGraph-Layouts-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"gapSize",
+		"lineItemsCountBlock"
+	],
+	"name" : "GtGraphAbstractGridLayout",
+	"type" : "normal"
+}

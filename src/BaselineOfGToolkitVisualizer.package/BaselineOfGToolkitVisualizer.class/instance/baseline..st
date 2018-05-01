@@ -4,14 +4,23 @@ baseline: spec
 	spec
 		for: #common
 		do: [ spec
-				baseline: 'Bloc'
-					with: [ spec
-						repository: 'github://pharo-graphics/Bloc/src';
-						loads: #core ];
-				package: 'GToolkit-BlocGraph' with: [ spec requires: #(#Bloc) ];
-				package: 'GToolkit-Plotter' with: [ spec requires: #(#Bloc) ];
-				package: 'GToolkit-Mondrian' with: [ spec requires: #(#'GToolkit-BlocGraph') ];
-				package: 'GToolkit-Mondrian-Layouts' with: [ spec requires: #(#'GToolkit-Mondrian') ];
+				baseline: 'Brick'
+				with: [ spec
+					repository: 'github://pharo-graphics/Brick/src';
+					loads: #core ];
+
+				package: 'GToolkit-BlocGraph' with: [ spec requires: #(#Brick) ];
+				package: 'GToolkit-BlocGraph-Layouts' with: [ spec requires: #(#'GToolkit-BlocGraph') ];
+				
+				"GT Mondrian, an engine that offers a fluent API for scripting graph-based visualizations."
+				package: 'GToolkit-Mondrian' with: [ spec requires: #(#'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts') ];
 				package: 'GToolkit-Mondrian-Glamour' with: [ spec requires: #(#'GToolkit-Mondrian') ];
-				package: 'GToolkit-Connector' with: [ spec requires: #(#'GToolkit-Mondrian') ];
-				package: 'GToolkit-Diagrammer' with: [ spec requires: #(#'GToolkit-Mondrian') ] ]
+				
+				"GT Connector, an engine that offers a visual way to explore examples."
+				package: 'GToolkit-Connector' with: [ spec requires: #(#'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts') ];
+				
+				"GT Diagrammer, an engine for constructing diagrams."
+				package: 'GToolkit-Diagrammer' with: [ spec requires: #(#'GToolkit-Mondrian') ];
+				
+				"GT Plotter, an engine that offers a fluent API for scripting charts and plots"
+				package: 'GToolkit-Plotter' with: [ spec requires: #(#Brick) ] ]

@@ -6,4 +6,6 @@ nodeElementFor: anObject
 		ifNil: [ self defaultNodeElement ].
 	nodeElement graph model: anObject.
 	nodeElement graph beNode.
-	^ nodeElement 
+	nodeElement addEventHandler: BlPullHandler new.
+
+	^ nodeElement
