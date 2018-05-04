@@ -10,6 +10,7 @@ baseline: spec
 					loads: #core ];
 
 				package: 'GToolkit-BlocGraph' with: [ spec requires: #(Brick) ];
+				package: 'GToolkit-BlocGraph-Grad' with: [ spec requires: #('GToolkit-BlocGraph') ];
 				package: 'GToolkit-BlocGraph-Layouts' with: [ spec requires: #('GToolkit-BlocGraph') ];
 				
 				"GT Mondrian, an engine that offers a fluent API for scripting graph-based visualizations."

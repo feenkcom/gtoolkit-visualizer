@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "BlFitLayout",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtGradLayout",
+	"type" : "normal"
+}
