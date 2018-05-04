@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradLayout",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"distance"
+	],
+	"name" : "GtGradCircleLayout",
+	"type" : "normal"
+}
