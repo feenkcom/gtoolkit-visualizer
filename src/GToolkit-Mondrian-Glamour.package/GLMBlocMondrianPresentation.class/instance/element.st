@@ -7,15 +7,17 @@ element
 			self displayValue asGlamorousMultiValue,
 			self asGlamorousMultiValue).
 	shouldInstallClicksOnNodes ifTrue: [ 
-		view topStep root
-			allChildrenBreadthFirstDo: [ :element | 
-				element graph isNode ifTrue: [ 
-					element when: BlClickEvent do: [ :event | self selection: element graph model ] ] ] ].
+		view topStep root when: BlClickEvent do: [ :anEvent |
+			anEvent target graph isNode
+				ifTrue: [
+					anEvent consumed: true.
+					self selection: anEvent target graph model ] ] ].
 	shouldInstallClicksOnEdges ifTrue: [ 
-		view topStep root
-			allChildrenBreadthFirstDo: [ :element | 
-				element graph isEdge ifTrue: [ 
-					element when: BlClickEvent do: [ :event | self selection: element graph model ] ] ] ].
+		view topStep root when: BlClickEvent do: [ :anEvent |
+			anEvent target graph isEdge
+				ifTrue: [
+					anEvent consumed: true.
+					self selection: anEvent target graph model ] ] ].
 	view topStep root 
 		when: GLMBlocObjectToSelect 
 		do: [:signal | self selection: signal toSelect ].
