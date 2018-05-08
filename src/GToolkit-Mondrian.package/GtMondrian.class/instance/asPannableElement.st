@@ -1,15 +1,13 @@
 ui
 asPannableElement
-	| scalable |
-	scalable := BlPannableElement new.
-	scalable
+	| pannable |
+	pannable := BlPannableElement new.
+	pannable
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ].
-	scalable contentElement: self topStep root.
-	scalable background: (Color gray alpha: 0.2).
-	scalable contentElement look: BrShadowLook new.
-	scalable zoomableElement clipChildren: false.
+	pannable contentElement: self topStep root.
+"	pannable background: (Color lightGray alpha: 0.2)."
+	pannable zoomableElement clipChildren: false.
 	self topStep root clipChildren: true.
-	
-	^ scalable
+	^ pannable
