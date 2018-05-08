@@ -9,7 +9,8 @@
 		"paintingBlock",
 		"shouldInstallClicksOnNodes",
 		"viewInitializer",
-		"shouldInstallClicksOnEdges"
+		"shouldInstallClicksOnEdges",
+		"createdElement"
 	],
 	"name" : "GLMBlocMondrianPresentation",
 	"type" : "normal"

@@ -1,6 +1,12 @@
 scripting
 element
+	<return: #BlElement>
 	| view |
+	
+	"returned a cached created element or create a new one"
+	createdElement
+		ifNotNil: [ ^ createdElement ].
+	
 	view := viewInitializer value.
 	paintingBlock glamourValue: 
 			(view asGlamorousMultiValue, 
@@ -12,7 +18,7 @@ element
 				ifTrue: [
 					anEvent consumed: true.
 					self selection: anEvent target graph model ] ] ].
-	shouldInstallClicksOnEdges ifTrue: [ 
+	shouldInstallClicksOnEdges ifTrue: [
 		view topStep root when: BlClickEvent do: [ :anEvent |
 			anEvent target graph isEdge
 				ifTrue: [
@@ -21,4 +27,5 @@ element
 	view topStep root 
 		when: GLMBlocObjectToSelect 
 		do: [:signal | self selection: signal toSelect ].
-	^ view asPannableElement
+
+	^ createdElement := view asPannableElement
