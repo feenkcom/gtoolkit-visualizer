@@ -21,4 +21,4 @@ element
 	view topStep root 
 		when: GLMBlocObjectToSelect 
 		do: [:signal | self selection: signal toSelect ].
-	^ view asScalableElement
+	^ view asPannableElement
