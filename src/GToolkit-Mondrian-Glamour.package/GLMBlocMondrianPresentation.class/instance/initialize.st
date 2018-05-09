@@ -4,4 +4,5 @@ initialize
 	paintingBlock := [ :aGtMondrian :theDisplayValue | ].
 	viewInitializer := [ GtMondrian new ].
 	self withNodeClicks.
-	self withEdgeClicks
+	self withEdgeClicks.
+	self defaultActions
