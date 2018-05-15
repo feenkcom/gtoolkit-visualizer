@@ -14,16 +14,18 @@ element
 			self asGlamorousMultiValue).
 	shouldInstallClicksOnNodes ifTrue: [ 
 		view topStep root when: BlClickEvent do: [ :anEvent |
-			anEvent target graph isNode
-				ifTrue: [
-					anEvent consumed: true.
-					self selection: anEvent target graph model ] ] ].
+			anEvent target withParentsDo: [ :element |
+				element graph isNode
+					ifTrue: [
+						anEvent consumed: true.
+						self selection: element graph model ] ] ] ].
 	shouldInstallClicksOnEdges ifTrue: [
 		view topStep root when: BlClickEvent do: [ :anEvent |
-			anEvent target graph isEdge
-				ifTrue: [
-					anEvent consumed: true.
-					self selection: anEvent target graph model ] ] ].
+			anEvent target withParentsDo: [ :element |
+				element graph isEdge
+					ifTrue: [
+						anEvent consumed: true.
+						self selection: element graph model ] ] ] ].
 	view topStep root 
 		when: GLMBlocObjectToSelect 
 		do: [:signal | self selection: signal toSelect ].

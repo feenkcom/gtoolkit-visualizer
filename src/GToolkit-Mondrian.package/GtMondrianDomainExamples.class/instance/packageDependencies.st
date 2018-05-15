@@ -3,8 +3,10 @@ packageDependencies
 	<gtExample>
 	| view packages dependencies |
 	view := self emptyView.
-	packages := {'Glamour-Core' . 'Glamour-Presentations'.
+	"packages := {'Glamour-Core' . 'Glamour-Presentations'.
 	'Glamour-Morphic-Renderer' . 'Glamour-Browsers'} collect: #asPackage.
+	"
+	packages := RPackageOrganizer default packages select: [ :each | each name beginsWith: 'GToolkit-' ].
 	dependencies := packages
 		flatCollect: [ :p | 
 			((p definedClasses flatCollect: #subclasses) groupedBy: #package)
