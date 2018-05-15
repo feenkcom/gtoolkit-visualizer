@@ -3,4 +3,4 @@ gtInspectorTraversedTargetsOnTreeIn: composite
 	<gtInspectorPresentationOrder: 15>
 	composite blocMondrian
 		title: 'Tree';
-		painting: [ :view | self traversedTargetsTreeIn: view ]
+		painting: [ :view | self traversedTargetsTreeWith: view ]

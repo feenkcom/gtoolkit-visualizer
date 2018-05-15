@@ -1,5 +1,5 @@
 *Gtoolkit-Mondrian
-traversedTargetsTreeIn: aView
+traversedTargetsTreeWith: mondrian
 	| thePairs connectedTargets topMostTarget aCurrentTarget |
 	thePairs := Array streamContents: [ :aStream | 
 		self traversedTargets overlappingPairsDo: [ :from :to | aStream nextPut: from -> to ] ].
@@ -21,7 +21,7 @@ traversedTargetsTreeIn: aView
 					aHandler hasOwner ifTrue: [ allNodes add: aHandler ] ] ].
 			allNodes ]. 
 
-	aView nodes
+	mondrian nodes
 		shape: [ :aTarget |
 			| text |
 			text := aTarget gtDisplayString asRopedText.
@@ -30,14 +30,14 @@ traversedTargetsTreeIn: aView
 				text: text;
 				padding: (BlInsets all: 5) ];
 		with: (connectedTargets).
-	aView edges
+	mondrian edges
 		fromRightCenter;
 		toLeftCenter;
 		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4)) ];
 		connect: (connectedTargets select: [ :each | each hasOwner ])
 			from: [ :aTarget | aTarget owner ].
 
-	aView edges
+	mondrian edges
 		shape: [ :x |
 			| color |
 			color := Color red.
@@ -52,4 +52,4 @@ traversedTargetsTreeIn: aView
 		passive;
 		connect: thePairs from: [ :x | x key target ]
 		to: [ :x | x value target ].
-	aView layout horizontalTree horizontalGap: 40
+	mondrian layout horizontalTree horizontalGap: 40
