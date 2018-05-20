@@ -8,5 +8,4 @@ asPannableElement
 			c vertical matchParent ].
 	pannable contentElement: self topStep root.
 	pannable zoomableElement clipChildren: false.
-	self topStep root clipChildren: true.
 	^ pannable
