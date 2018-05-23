@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtPhlowViewDecorator",
+	"category" : "GToolkit-Mondrian-Phlow",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtPhlowMondrianView",
+	"type" : "normal"
+}
