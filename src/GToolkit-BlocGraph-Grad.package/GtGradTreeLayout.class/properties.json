@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradLayout",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"orientation",
+		"levelDistance",
+		"nodeDistance"
+	],
+	"name" : "GtGradTreeLayout",
+	"type" : "normal"
+}
