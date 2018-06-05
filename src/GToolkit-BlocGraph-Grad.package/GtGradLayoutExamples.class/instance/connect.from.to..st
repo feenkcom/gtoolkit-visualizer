@@ -1,10 +1,10 @@
 building - graph
 connect: nodes from: aFromBlock to: aBlockOrSymbol
-	
+
 	^ nodes
 		collect: [ :e | 
 			| fromModel toModel fromElement toElement |
-			Halt now.
+			
 			fromModel := aFromBlock cull: (e userData at: #model).
 			toModel := aBlockOrSymbol cull: (e userData at: #model).
 			
