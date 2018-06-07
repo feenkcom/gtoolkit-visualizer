@@ -5,10 +5,8 @@ startLayout: aNode
 	<return: #Collection of: #Point>
 	
 	| offsets |
-	offsets := Dictionary new.
-	
-	Halt now.
-	
+	offsets := IdentityDictionary new.
+
 	(aNode children) do: [ :each |
 			| height |
 			self startLayout: each.

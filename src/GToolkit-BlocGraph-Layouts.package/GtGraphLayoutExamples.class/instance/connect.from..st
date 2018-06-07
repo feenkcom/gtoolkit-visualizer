@@ -1,4 +1,3 @@
 building - graph
 connect: nodes from: aBlockOrASymbol
-	Halt now.
 	^ self connect: nodes from: aBlockOrASymbol to: #yourself
