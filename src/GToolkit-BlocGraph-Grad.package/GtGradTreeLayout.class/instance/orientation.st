@@ -1,4 +1,4 @@
-calculating
+accessing
 orientation
 	<return: #Boolean>
 

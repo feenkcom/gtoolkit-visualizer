@@ -8,7 +8,8 @@
 	"instvars" : [
 		"orientation",
 		"levelDistance",
-		"nodeDistance"
+		"nodeDistance",
+		"cachedChildren"
 	],
 	"name" : "GtGradTreeLayout",
 	"type" : "normal"

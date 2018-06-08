@@ -1,5 +1,9 @@
 calculating
 calculatePositionsFor: aRootNode
 	<return: #Collection of: #Point>
+	| offsets positions|
 	
-	self startLayout: aRootNode.
+	offsets := IdentityDictionary new.
+	positions := IdentityDictionary new.
+	
+	self startLayout: aRootNode offsets: offsets.
