@@ -5,11 +5,13 @@ calculateHeightAndSetOffsets: aNode offsets: offsetsDictionary
 	sum := 0.
 	
 	prev := nil.
-	(aNode children ) do: [ :each |
-			sum := sum + each measuredBounds width + (2 * self nodeDistance).
+	(self childrenNodes: aNode) do: [ :child |
+			sum := sum + child measuredBounds width + (2 * self nodeDistance).
 			(prev isNotNil)
 				ifTrue: [ 
-					offsetsDictionary at: each put: 0@(prev measuredBounds width + (2 * self nodeDistance)).
+					offsetsDictionary at: child put: 0@(prev measuredBounds width + (2 * self nodeDistance)).
 			].
+			prev := child.
 		 ].
+
 	^ sum.

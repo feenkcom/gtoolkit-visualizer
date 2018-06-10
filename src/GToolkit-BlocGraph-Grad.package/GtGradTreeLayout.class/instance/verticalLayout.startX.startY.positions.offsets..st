@@ -11,12 +11,12 @@ verticalLayout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: a
 	childrenOffsetY := newNodePositionY.
 	
 	(self childrenNodes: aNode) doWithIndex: [ :child  :i|
-				
-		self verticalLayout: child startX: newNodePositionX startY: newNodePositionY positions: aPositionsDict offsets: anOffsetsDict. 
+		
+		self verticalLayout: child startX: childrenOffsetX startY: childrenOffsetY positions: aPositionsDict offsets: anOffsetsDict. 
 		i = 1
 			ifTrue: [ 
 				childrenOffsetX := childrenOffsetX + ((anOffsetsDict at: child) y).
-				childrenOffsetY := childrenOffsetY + ((anOffsetsDict at: child) x).
 			].
+		childrenOffsetY := childrenOffsetY + ((anOffsetsDict at: child) x).
 	].
 

@@ -2,6 +2,6 @@ initialization
 initialize
 	super initialize.
 	
-	levelDistance := 40.
+	levelDistance := 5.
 	nodeDistance := 20.
 	orientation := 1.

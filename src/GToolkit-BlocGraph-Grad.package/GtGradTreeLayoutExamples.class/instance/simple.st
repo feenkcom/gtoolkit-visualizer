@@ -6,7 +6,7 @@ simple
 	
 	view := self view.
 	theNodes := self nodes: (1 to: 10).
-	view addChildren: theNodes.
+	view addChildren: theNodes. 
 
 	edges := self connectPairsOfNodes: theNodes pairs: '1,2;1,3;1,4;4,5;4,6;5,7;6,8;8,9;8,10'.
 	self assert: edges size equals: 9.
@@ -16,7 +16,7 @@ simple
 	view forceLayout. 
 	
    theNodeExtents := theNodes collect: [ :aNode | aNode extent ].
-	theNodePositions := theNodes collect: [ :aNode | aNode position ]. 
+	theNodePositions := theNodes collect: [ :aNode | aNode position ].
 
 	^ view
 
