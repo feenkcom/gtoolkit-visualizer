@@ -4,5 +4,6 @@ nodes: aDataCollection
 		| child |
 		child := self nodeFor: model.
 		child userData at: #model put: model.
+		
 		child graph beNode.
 		child ]

@@ -13,7 +13,7 @@ containerWithCircleLayoutAnd10SimpleNodes
 	self assert: aContainer extent equals: (200@180).
 	
 	theNodeExtents := theNodes collect: [ :aNode | aNode extent ].
-	theNodePositions := theNodes collect: [ :aNode | aNode position ].
+	theNodePositions := theNodes collect: [ :aNode | aNode position ]. 
 	
 	self assert: theNodeExtents asArray equals: (10 timesCollect: [ self nodeExtent ]).
 	self

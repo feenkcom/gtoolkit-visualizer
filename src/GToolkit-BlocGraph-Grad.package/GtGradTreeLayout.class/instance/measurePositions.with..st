@@ -8,5 +8,8 @@ measurePositions: anElement with: anExtentSpec
 		select: [ :aChildElement | aChildElement graph isNode ].
 
 	theRoot := theNodes first.
-	thePositions := self calculatePositionsFor: theRoot.
+	thePositions := self calculatePositionsFor: theNodes root: theRoot.
+	
+	thePositions keysDo: [ :aNodeElement |
+		aNodeElement measuredBounds position: (thePositions at: aNodeElement) ]
 	
