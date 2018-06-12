@@ -1,12 +1,9 @@
 building - graph
 connectPairsOfNodes: nodes pairs: pairsOfNodes
-	| splitPairs |
-	splitPairs := pairsOfNodes splitOn: ';'.
-	^ splitPairs collect: [ :pair |
-		| fromNode toNode pairElements| 
-		pairElements := pair splitOn: ','.
-		fromNode := nodes at:  ((pairElements at: 1) trim) asNumber.
-		toNode := nodes at: ((pairElements at: 2) trim) asNumber.
+	^ pairsOfNodes collect: [ :aPair |
+		| fromNode toNode |
+		fromNode := nodes at: aPair key.
+		toNode := nodes at: aPair value.
 		self connectNodesFrom: fromNode to: toNode.
 	]
 
