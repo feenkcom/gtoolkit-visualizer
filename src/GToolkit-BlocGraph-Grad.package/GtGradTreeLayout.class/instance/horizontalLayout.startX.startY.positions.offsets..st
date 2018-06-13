@@ -10,7 +10,7 @@ horizontalLayout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets:
 	childrenOffsetX := newNodePositionX.
 	childrenOffsetY := newNodePositionY.
 	
-	(self childrenNodes: aNode) doWithIndex: [ :child  :i|
+	(self nodesConnectedToNode: aNode) doWithIndex: [ :child  :i|
 		
 		self horizontalLayout: child startX: childrenOffsetX startY: childrenOffsetY positions: aPositionsDict offsets: anOffsetsDict. 
 		i = 1

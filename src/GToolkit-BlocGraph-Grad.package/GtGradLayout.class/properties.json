@@ -5,7 +5,11 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
+	"instvars" : [
+		"cachedIncomingNodes",
+		"cachedOutgoingNodes",
+		"cachedConnectingNodes"
+	],
 	"name" : "GtGradLayout",
 	"type" : "normal"
 }

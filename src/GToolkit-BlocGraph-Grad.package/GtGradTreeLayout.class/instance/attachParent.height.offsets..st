@@ -6,6 +6,6 @@ attachParent: aNode height: aNumber offsets: offsetsDictionary
 	y2 := ((aNumber - aNode measuredBounds width) / 2) - self nodeDistance.
 	y1 := (y2 + aNode measuredBounds width) + (2 * self nodeDistance ) - aNumber.
 	offset := (x + aNode measuredBounds height)@y1.
-	offsetsDictionary at: (self firstChildNode: aNode) put: offset
+	offsetsDictionary at: (self firstNodeConnectedToNode: aNode) put: offset
 		
 		
