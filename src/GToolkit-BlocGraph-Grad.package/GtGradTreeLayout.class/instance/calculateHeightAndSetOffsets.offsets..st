@@ -5,7 +5,7 @@ calculateHeightAndSetOffsets: aNode offsets: offsetsDictionary
 	sum := 0.
 	
 	prev := nil.
-	(self nodesConnectedToNode: aNode) do: [ :child |
+	(aNode graph connectedNodesAlongOutgoingEdges) do: [ :child |
 			sum := sum + child measuredBounds width + (2 * self nodeDistance).
 			(prev isNotNil)
 				ifTrue: [ 

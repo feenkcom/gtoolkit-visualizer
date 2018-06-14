@@ -6,7 +6,10 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"element"
+		"element",
+		"connectedNodes",
+		"connectedNodesAlongIncomingEdges",
+		"connectedNodesAlongOutgoingEdges"
 	],
 	"name" : "GtGraphElement",
 	"type" : "normal"
