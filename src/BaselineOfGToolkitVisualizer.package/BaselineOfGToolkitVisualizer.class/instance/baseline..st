@@ -8,13 +8,14 @@ baseline: spec
 				with: [ spec
 					repository: 'github://pharo-graphics/Brick/src';
 					loads: #core ];
+			   baseline: 'Beacon' with: [ spec repository: 'github://pharo-project/pharo-beacon/repository' ];
 
 				package: 'GToolkit-BlocGraph' with: [ spec requires: #(Brick) ];
 				package: 'GToolkit-BlocGraph-Grad' with: [ spec requires: #('GToolkit-BlocGraph') ];
 				package: 'GToolkit-BlocGraph-Layouts' with: [ spec requires: #('GToolkit-BlocGraph') ];
 				
 				"GT Mondrian, an engine that offers a fluent API for scripting graph-based visualizations."
-				package: 'GToolkit-Mondrian' with: [ spec requires: #(Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts') ];
+				package: 'GToolkit-Mondrian' with: [ spec requires: #(Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon') ];
 				package: 'GToolkit-Mondrian-Glamour' with: [ spec requires: #('GToolkit-Mondrian') ];
 				
 				"GT Connector, an engine that offers a visual way to explore examples."
