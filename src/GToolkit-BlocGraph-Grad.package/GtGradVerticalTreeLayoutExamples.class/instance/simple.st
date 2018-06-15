@@ -2,7 +2,7 @@ example
 simple
 	<gtExample>
 		
-	| connected view theNodes pairsOfNodes edges aTreeLayout theNodePositions theNodeExtents |
+	| view theNodes pairsOfNodes edges aTreeLayout theNodePositions theNodeExtents |
 	
 	view := self view.
 	theNodes := self nodes: (1 to: 9).  

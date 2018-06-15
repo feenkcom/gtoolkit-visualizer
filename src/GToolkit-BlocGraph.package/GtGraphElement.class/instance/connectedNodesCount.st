@@ -1,3 +1,3 @@
 *GToolkit-BlocGraph
 connectedNodesCount
-	^ self connectedNodes count.
+	^ self connectedNodes size.

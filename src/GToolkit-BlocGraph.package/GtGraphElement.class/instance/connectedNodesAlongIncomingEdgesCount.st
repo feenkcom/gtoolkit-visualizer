@@ -1,3 +1,3 @@
 *GToolkit-BlocGraph
 connectedNodesAlongIncomingEdgesCount
-	^ connectedNodesAlongIncomingEdges size.
+	^ self connectedNodesAlongIncomingEdges size.

@@ -12,6 +12,6 @@ calculatePositionsFor: nodes root: aRootNode
 	positions at: aRootNode put: 0@0.
 	
 	self startLayout: aRootNode offsets: offsets.
-	self horizontalLayout: aRootNode startX:50 startY:50  positions:positions offsets:offsets.
+	self layout: aRootNode startX:50 startY:50  positions:positions offsets:offsets.
 
 	^ positions

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradTreeLayoutExamples",
+	"category" : "GToolkit-BlocGraph-Grad-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtGradHorizontalTreeLayoutExamples",
+	"type" : "normal"
+}

@@ -1,5 +1,5 @@
 calculating
-verticalLayout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict
+layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict
 	| nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY |
 	
 	nodePosition := aPositionsDict at: aNode.
@@ -12,7 +12,7 @@ verticalLayout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: a
 	
 	(aNode graph connectedNodesAlongOutgoingEdges) doWithIndex: [ :child  :i|
 		
-		self verticalLayout: child startX: childrenOffsetX startY: childrenOffsetY positions: aPositionsDict offsets: anOffsetsDict. 
+		self layout: child startX: childrenOffsetX startY: childrenOffsetY positions: aPositionsDict offsets: anOffsetsDict. 
 		i = 1
 			ifTrue: [ 
 				childrenOffsetY := childrenOffsetY + ((anOffsetsDict at: child) x).
