@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"position",
+		"next"
+	],
+	"name" : "NodeContourLine",
+	"type" : "normal"
+}

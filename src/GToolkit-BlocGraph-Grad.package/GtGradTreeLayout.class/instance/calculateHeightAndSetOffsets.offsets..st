@@ -1,4 +1,6 @@
 calculating
+"protocol: #calculating"
+
 calculateHeightAndSetOffsets: aNode offsets: offsetsDictionary
 	
 	| sum prev |
