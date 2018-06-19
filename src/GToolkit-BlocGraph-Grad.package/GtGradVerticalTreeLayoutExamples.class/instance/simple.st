@@ -5,7 +5,7 @@ simple
 	| view theNodes pairsOfNodes edges aTreeLayout theNodePositions theNodeExtents |
 	
 	view := self view.
-	theNodes := self nodes: (1 to: 9).  
+	theNodes := self nodes: (1 to: 9).
 	view addChildren: theNodes. 
 
 	pairsOfNodes := OrderedCollection new.

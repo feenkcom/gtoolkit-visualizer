@@ -42,6 +42,7 @@ mergeContours: aNode child: childNode contours: aContoursDict
 				].
 		 ].
 	
+	Halt now.
 	lower isNotNil
 		ifTrue: [ 
 			| connectingLine |
