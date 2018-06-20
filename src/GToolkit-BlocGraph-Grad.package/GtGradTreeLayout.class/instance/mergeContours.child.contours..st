@@ -23,6 +23,7 @@ mergeContours: aNode child: childNode contours: aContoursDict
 			| offset lowerX upperX lowerY upperY|
 			offset := self calculateOffset: lower otherContourLine: upper x: x y: y.
 			y := y + offset.
+			Halt now.
 			total := total + offset.		
 			lowerX := lower position x.
 			upperX := upper position x.
@@ -42,7 +43,7 @@ mergeContours: aNode child: childNode contours: aContoursDict
 				].
 		 ].
 	
-	Halt now.
+
 	lower isNotNil
 		ifTrue: [ 
 			| connectingLine |

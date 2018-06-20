@@ -8,12 +8,18 @@ attachParent: aNode height: aNumber offsets: offsetsDictionary contours: aCounto
 	offset := (x + aNode measuredBounds height)@y1.
 	offsetsDictionary at: (aNode graph firstConnectedNodeAlongOutgoingEdge) put: offset.
 	
-	newUpperHead := NodeContourLine new: (aNode measuredBounds height)@0.
-	newUpperHeadNext := (NodeContourLine new: x@y1) next: (aCountoursDict at: aNode) upperHead.
+	newUpperHead := NodeContourLine new.
+	newUpperHead position: (aNode measuredBounds height)@0.
+	newUpperHeadNext := NodeContourLine new.
+	newUpperHeadNext position: x@y1.
+	newUpperHeadNext next: (aCountoursDict at: aNode) upperHead.
 	newUpperHead next: newUpperHeadNext.
 	
-	newLowerHead := NodeContourLine new: (aNode measuredBounds height)@0.
-	newLowerHeadNext := (NodeContourLine new: x@y2) next: (aCountoursDict at: aNode) lowerHead.
+	newLowerHead := NodeContourLine new.
+	newLowerHead position: (aNode measuredBounds height)@0.
+	newLowerHeadNext := NodeContourLine new.
+	newLowerHeadNext position: x@y2.
+	newLowerHeadNext next: (aCountoursDict at: aNode) lowerHead.
 	newLowerHead next: newLowerHeadNext.
 	
 	

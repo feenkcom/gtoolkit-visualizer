@@ -9,6 +9,6 @@ startLayout: aNode offsets: anOffsetsDict contours: aContoursDict
 			self layoutLeaf: aNode countours: aContoursDict  
 		]
 		ifTrue: [ 
-			height := self calculateHeightAndSetOffsets: aNode offsets: anOffsetsDict. "contours: aContoursDict."
-			self attachParent: aNode height: height offsets: anOffsetsDict
+			height := self mergeWithChildrenContours: aNode offsets: anOffsetsDict contours: aContoursDict.
+			self attachParent: aNode height: height offsets: anOffsetsDict contours: aContoursDict
 	].
