@@ -1,27 +1,22 @@
 calculating
-attachParent: aNode height: aNumber offsets: offsetsDictionary contours: aCountoursDict
+attachParent: aNode height: height offsets: offsetsDictionary contours: aContoursDict
 	
-	| x y1 y2 offset newUpperHead newUpperHeadNext newLowerHead newLowerHeadNext|
+	| x y1 y2 offset nodeContour previousUpperHead previousLowerHead upperHeadNext lowerHeadNext|
 	x := self nodeDistance + self levelDistance.
-	y2 := ((aNumber - aNode measuredBounds width) / 2) - self nodeDistance.
-	y1 := (y2 + aNode measuredBounds width) + (2 * self nodeDistance ) - aNumber.
+	y2 := ((height - aNode measuredBounds width) / 2) - self nodeDistance.
+	y1 := (y2 + aNode measuredBounds width) + (2 * self nodeDistance) - height.
 	offset := (x + aNode measuredBounds height)@y1.
 	offsetsDictionary at: (aNode graph firstConnectedNodeAlongOutgoingEdge) put: offset.
 	
-	newUpperHead := NodeContourLine new.
-	newUpperHead position: (aNode measuredBounds height)@0.
-	newUpperHeadNext := NodeContourLine new.
-	newUpperHeadNext position: x@y1.
-	newUpperHeadNext next: (aCountoursDict at: aNode) upperHead.
-	newUpperHead next: newUpperHeadNext.
+	nodeContour := aContoursDict at: aNode.
+	previousUpperHead := nodeContour upperHead.
+	nodeContour upperHead: (NodeContourLine new position: (aNode measuredBounds height)@0).
+	upperHeadNext := (NodeContourLine new position: x@y1) next: previousUpperHead.
+	nodeContour upperHead next: upperHeadNext.
 	
-	newLowerHead := NodeContourLine new.
-	newLowerHead position: (aNode measuredBounds height)@0.
-	newLowerHeadNext := NodeContourLine new.
-	newLowerHeadNext position: x@y2.
-	newLowerHeadNext next: (aCountoursDict at: aNode) lowerHead.
-	newLowerHead next: newLowerHeadNext.
-	
-	
-	
+	previousLowerHead := nodeContour lowerHead.
+	nodeContour lowerHead: (NodeContourLine new position: (aNode measuredBounds height)@0).
+	lowerHeadNext := (NodeContourLine new position: x@y2) next: previousLowerHead.
+	nodeContour lowerHead next: lowerHeadNext.
+
 		

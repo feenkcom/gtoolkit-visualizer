@@ -5,7 +5,7 @@ failing
 	| view theNodes pairsOfNodes edges aTreeLayout theNodePositions theNodeExtents |
 	
 	view := self view. 
-	theNodes := self nodes: (1 to: 7). 
+	theNodes := self nodes: (1 to: 7).
 	view addChildren: theNodes.
 
 	pairsOfNodes := OrderedCollection new.

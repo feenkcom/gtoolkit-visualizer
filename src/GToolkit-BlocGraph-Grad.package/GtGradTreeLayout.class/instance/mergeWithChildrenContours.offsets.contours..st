@@ -14,7 +14,6 @@ mergeWithChildrenContours: aNode offsets: anOffsetsDict contours: aContoursDict
 			]
 			ifFalse: [ 
 				d := self mergeContours: aNode child: child contours: aContoursDict.
-				Halt now.
 				anOffsetsDict at: child put: 0@(width + d).
 			].
 			

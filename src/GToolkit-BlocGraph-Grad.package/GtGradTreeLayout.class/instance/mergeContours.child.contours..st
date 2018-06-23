@@ -23,13 +23,12 @@ mergeContours: aNode child: childNode contours: aContoursDict
 			| offset lowerX upperX lowerY upperY|
 			offset := self calculateOffset: lower otherContourLine: upper x: x y: y.
 			y := y + offset.
-			Halt now.
 			total := total + offset.		
 			lowerX := lower position x.
 			upperX := upper position x.
 			lowerY := lower position y.
 			upperY := lower position y.
-			
+
 			((x + lowerX) <= upperX)
 				ifTrue: [ 
 					x := x + lowerX.

@@ -1,3 +1,3 @@
 accessing
 nodeDistance: aNumber
-	nodeDistance= aNumber
+	nodeDistance := aNumber
