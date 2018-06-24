@@ -13,6 +13,7 @@ connectingLine: otherLine x1: x1 y1: y1 x2: x2 y2: y2
 	retLine next: (otherLine next).
 	nextLine := self class new position: 0@(y2 + otherY - newY - y1).
 	nextLine next: retLine.
+	self next: nextLine.
 	
 	^ retLine.
 	

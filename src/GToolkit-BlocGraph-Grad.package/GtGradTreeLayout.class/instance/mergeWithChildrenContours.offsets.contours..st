@@ -17,10 +17,9 @@ mergeWithChildrenContours: aNode offsets: anOffsetsDict contours: aContoursDict
 				anOffsetsDict at: child put: 0@(width + d).
 			].
 			
-		width := (aNode measuredBounds width) + (2 * self nodeDistance).
+		width := (child measuredBounds width) + (2 * self nodeDistance).
 		total := total + width + d.
 	].
-
 
 	^ total
 	

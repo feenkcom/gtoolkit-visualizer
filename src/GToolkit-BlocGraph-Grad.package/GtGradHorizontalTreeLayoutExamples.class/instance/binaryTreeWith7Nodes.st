@@ -1,5 +1,5 @@
 example
-failing
+binaryTreeWith7Nodes
 	<gtExample>
 		
 	| view theNodes pairsOfNodes edges aTreeLayout theNodePositions theNodeExtents |

@@ -9,18 +9,18 @@ calculateOffset: contour1 otherContourLine: contour2 x: x y: y
 
 	(contour2x <= x or: [ x + contour1x <= 0 ])
 		ifTrue: [ ^ 0 ].
-	(contour2x * contour1y) - (contour1x * contour2y) > 0
+	((contour2x * contour1y) - (contour1x * contour2y)) > 0
 		ifTrue: [ x < 0
-				ifTrue: [ offset := x * contour1y / (contour1x - y) ].
+				ifTrue: [ offset := ((x * contour1y) / contour1x) - y ].
 			x > 0
-				ifTrue: [ offset := x * contour2y / (contour2x - y) ].
+				ifTrue: [ offset := ((x * contour2y) / contour2x) - y ].
 			x = 0
-				ifTrue: [ offset := 0 - y ] ]
+				ifTrue: [ offset := 0 - y ]. ]
 		ifFalse: [ offset := contour2x < (x + contour1x)
-				ifTrue: [ contour2y - (y + (((contour2x - x) * contour1y) / x)) ]
+				ifTrue: [ contour2y - (y + (((contour2x - x) * contour1y) / contour1x)) ]
 				ifFalse: [ contour2x > (x + contour1x)
-						ifTrue: [ (contour1x + x) * contour2y / contour2x - (y + contour1y) ]
-						ifFalse: [ contour2y - (y + contour1y) ] ] ].
+						ifTrue: [ (((contour1x + x) * contour2y) / contour2x) - (y + contour1y) ]
+						ifFalse: [ contour2y - (y + contour1y) ]. ]. ].
 	offset > 0
 		ifTrue: [ ^ offset ].
 	^ 0

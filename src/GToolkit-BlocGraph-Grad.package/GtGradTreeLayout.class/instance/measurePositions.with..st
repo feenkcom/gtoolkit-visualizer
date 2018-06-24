@@ -7,7 +7,7 @@ measurePositions: anElement with: anExtentSpec
 	theNodes := anElement children accountedByLayout
 		select: [ :aChildElement | aChildElement graph isNode ].
 
-	theRoot := theNodes first.
+	theRoot := self findRoot: theNodes.
 	thePositions := self calculatePositionsFor: theNodes root: theRoot.
 	
 	thePositions keysDo: [ :aNodeElement |
