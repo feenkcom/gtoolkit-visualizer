@@ -15,7 +15,6 @@ binaryTreeWith15Nodes
 	
 	edges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-
 	aTreeLayout := self treeLayout.
 	view layout: aTreeLayout.
 	view forceLayout. 

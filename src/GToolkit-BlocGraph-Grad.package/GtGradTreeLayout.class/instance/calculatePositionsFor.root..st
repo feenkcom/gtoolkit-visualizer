@@ -14,8 +14,8 @@ calculatePositionsFor: nodes root: aRootNode
 	].
 	positions at: aRootNode put: 0@0.
 	
-	self startLayout: aRootNode offsets: offsets contours: contours level: 1 maxLevelHeights: maxLevelHeights.
+	self startLayout: aRootNode offsets: offsets contours: contours level: 1 largestNodeDimByLevel: maxLevelHeights.
 	self flag: 'do not use nil as initialization. instead try to use a zero bounds'.
-	bounds := self layout: aRootNode startX:50 startY:50  positions: positions offsets: offsets bounds: nil  level: 1 maxLevelHeights: maxLevelHeights.
+	bounds := self layout: aRootNode startX:50 startY:50  positions: positions offsets: offsets bounds: nil  level: 1 largestNodeDimByLevel: maxLevelHeights.
 
 	^ positions

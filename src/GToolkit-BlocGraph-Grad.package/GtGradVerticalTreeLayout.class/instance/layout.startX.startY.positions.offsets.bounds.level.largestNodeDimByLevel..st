@@ -1,5 +1,5 @@
 calculating
-layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict bounds: bounds level: level maxLevelHeights: maxLevelHeightsDict
+layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict bounds: bounds level: level largestNodeDimByLevel: maxLevelHeightsDict
 	| nodePosition newBounds newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY nodeHeight levelMaxHeight yCorrection|
 	
 	nodePosition := aPositionsDict at: aNode.
@@ -17,7 +17,7 @@ layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsets
 	
 	(aNode graph connectedNodesAlongOutgoingEdges) doWithIndex: [ :child  :i|
 		
-		newBounds := self layout: child startX: childrenOffsetX startY: childrenOffsetY positions: aPositionsDict offsets: anOffsetsDict bounds: newBounds level: (level + 1) maxLevelHeights: maxLevelHeightsDict. 
+		newBounds := self layout: child startX: childrenOffsetX startY: childrenOffsetY positions: aPositionsDict offsets: anOffsetsDict bounds: newBounds level: (level + 1) largestNodeDimByLevel: maxLevelHeightsDict. 
 		self flag: 'instead of checking for hte index, consider:
 		collection first doSomething.
 		collection allButFirst do: [...]'.
