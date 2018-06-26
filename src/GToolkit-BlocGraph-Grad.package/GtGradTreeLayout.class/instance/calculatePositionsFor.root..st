@@ -1,7 +1,7 @@
 calculating
 calculatePositionsFor: nodes root: aRootNode
 	<return: #Collection of: #Point>
-	| offsets positions contours |
+	| offsets positions contours bounds|
 	
 	offsets := IdentityDictionary new.
 	positions := IdentityDictionary new.
@@ -15,6 +15,8 @@ calculatePositionsFor: nodes root: aRootNode
 	
 	self startLayout: aRootNode offsets: offsets contours: contours.
 
-	self layout: aRootNode startX:50 startY:50  positions: positions offsets: offsets.
+	bounds := self layout: aRootNode startX:50 startY:50  positions: positions offsets: offsets bounds: nil.
+	
+	Halt now.
 
 	^ positions
