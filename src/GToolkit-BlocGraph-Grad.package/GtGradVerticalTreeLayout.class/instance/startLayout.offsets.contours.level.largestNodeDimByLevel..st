@@ -1,7 +1,7 @@
 calculating
 startLayout: aNode offsets: anOffsetsDict contours: aContoursDict level: level largestNodeDimByLevel: maxLevelHeightsDict
 	<return: #Collection of: #Point>
-	| height nodeHeight maxHeight |
+	| nodeHeight maxHeight |
 	nodeHeight := aNode measuredBounds height.
 	maxLevelHeightsDict at: level ifAbsentPut: [ nodeHeight ].
 	maxHeight := maxLevelHeightsDict at: level.
