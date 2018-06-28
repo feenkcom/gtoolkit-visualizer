@@ -4,10 +4,10 @@ setOffsetsAndContours: aNode offsets: anOffsetsDict contours: aContoursDict leve
 	aNode graph connectedNodesAlongOutgoingEdges
 		do: [ :child | 
 			self startLayout: child
-				offsets: anOffsetsDict
-				contours: aContoursDict
-				level: level + 1
-				largestNodeDimByLevel: largestNodeDimByLevel ].
+				  offsets: anOffsetsDict
+				  contours: aContoursDict
+				  level: level + 1
+				  largestNodeDimByLevel: largestNodeDimByLevel ].
 	aNode graph connectedNodesAlongOutgoingEdgesCount ~= 0
 		ifFalse: [ self layoutLeaf: aNode countours: aContoursDict ]
 		ifTrue: [ height := self

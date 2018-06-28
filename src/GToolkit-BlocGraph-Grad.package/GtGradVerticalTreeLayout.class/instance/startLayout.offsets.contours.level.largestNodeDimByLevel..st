@@ -7,4 +7,8 @@ startLayout: aNode offsets: anOffsetsDict contours: aContoursDict level: level l
 	maxHeight := maxLevelHeightsDict at: level.
 	nodeHeight > maxHeight
 		ifTrue: [ maxLevelHeightsDict at: level put: nodeHeight ].
-	self setOffsetsAndContours: aNode offsets: anOffsetsDict contours: aContoursDict  level: level  largestNodeDimByLevel: maxLevelHeightsDict
+	self setOffsetsAndContours: aNode
+		  offsets: anOffsetsDict
+		  contours: aContoursDict
+		  level: level
+		  largestNodeDimByLevel: maxLevelHeightsDict

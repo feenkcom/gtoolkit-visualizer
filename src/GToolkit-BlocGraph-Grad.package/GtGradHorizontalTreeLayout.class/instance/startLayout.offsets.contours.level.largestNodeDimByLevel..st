@@ -7,4 +7,8 @@ startLayout: aNode offsets: anOffsetsDict contours: aContoursDict level: level l
 	maxWidth := maxLevelWidthsDict at: level.
 	nodeWidth > maxWidth
 		ifTrue: [ maxLevelWidthsDict at: level put: nodeWidth ].
-	self setOffsetsAndContours: aNode offsets: anOffsetsDict contours: aContoursDict  level: level  largestNodeDimByLevel: maxLevelWidthsDict
+	self setOffsetsAndContours: aNode
+	 	  offsets: anOffsetsDict
+		  contours: aContoursDict
+		  level: level
+		  largestNodeDimByLevel: maxLevelWidthsDict
