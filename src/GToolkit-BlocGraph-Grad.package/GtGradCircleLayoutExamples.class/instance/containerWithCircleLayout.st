@@ -3,7 +3,7 @@ containerWithCircleLayout
 	<gtExample>
 	| aContainer aCircleLayout |
 	
-	aContainer := self container.
+	aContainer := self container. 
 	aCircleLayout := self circleLayout.
 
 	aContainer layout: aCircleLayout.
