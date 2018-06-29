@@ -4,10 +4,10 @@ binaryTreeWith15Nodes
 		
 	| view theNodes aTreeLayout theNodePositions theNodeExtents |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	theNodes := self constructBinaryTreeWith15Nodes key.
-	view addChildren: theNodes.
+	view addChildren: theNodes. 
 	
 	view layout: aTreeLayout.
 	view forceLayout. 

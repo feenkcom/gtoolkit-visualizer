@@ -14,8 +14,12 @@ calculatePositionsFor: nodes root: aRootNode
 	].
 	positions at: aRootNode put: 0@0.
 	
-	self startLayout: aRootNode offsets: offsets contours: contours level: 1 largestNodeDimByLevel: maxLevelHeights.
-
+	self startLayout: aRootNode
+		  offsets: offsets
+		  contours: contours
+		  level: 1
+		  largestNodeDimByLevel: maxLevelHeights.
+		
 	bounds := self layout: aRootNode
 						startX:50
 						startY:50

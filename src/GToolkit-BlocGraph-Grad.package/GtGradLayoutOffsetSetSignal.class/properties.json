@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "BeaconSignal",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"node",
+		"offsetX",
+		"offsetY"
+	],
+	"name" : "GtGradLayoutOffsetSetSignal",
+	"type" : "normal"
+}

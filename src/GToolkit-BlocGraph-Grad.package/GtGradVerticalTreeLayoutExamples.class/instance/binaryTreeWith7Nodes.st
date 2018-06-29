@@ -8,7 +8,7 @@ binaryTreeWith7Nodes
 	theNodes := self constructBinaryTreeWith7Nodes key.
 	view addChildren: theNodes.
 
-	aTreeLayout := self treeLayout.
+	aTreeLayout := self treeLayout. 
 	view layout: aTreeLayout.
 	view forceLayout. 
 	

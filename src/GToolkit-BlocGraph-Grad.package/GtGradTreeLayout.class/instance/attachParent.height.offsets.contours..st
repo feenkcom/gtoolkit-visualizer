@@ -7,6 +7,11 @@ attachParent: aNode height: height offsets: offsetsDictionary contours: aContour
 	y1 := (y2 + aNode measuredBounds width) + (2 * self nodeDistance) - height.
 	offset := (x + aNode measuredBounds height)@y1.
 	offsetsDictionary at: (aNode graph firstConnectedNodeAlongOutgoingEdge) put: offset.
+	GtGradLayoutOffsetSetSignal new 
+		node: aNode; 
+		offsetX: offset x; 
+		offsetY: offset y;
+		emit.
 	
 	nodeContour := aContoursDict at: aNode.
 	previousUpperHead := nodeContour upperHead.
