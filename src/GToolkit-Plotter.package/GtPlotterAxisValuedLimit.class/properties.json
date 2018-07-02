@@ -1,17 +1,13 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "GtPlotterAxisLimit",
 	"category" : "GToolkit-Plotter-Axis",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"name",
-		"scale",
-		"projections",
-		"minLimit",
-		"maxLimit"
+		"value"
 	],
-	"name" : "GtPlotterAxis",
+	"name" : "GtPlotterAxisValuedLimit",
 	"type" : "normal"
 }

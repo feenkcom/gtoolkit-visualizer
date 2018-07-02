@@ -3,4 +3,4 @@ min
 	"Return a minimum axis value defined by my range"
 	<return: #GtPlotterAxisValue>
 	
-	^ self projections min
+	^ self minLimit limit

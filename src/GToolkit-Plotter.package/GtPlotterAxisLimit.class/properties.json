@@ -6,12 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"name",
-		"scale",
-		"projections",
-		"minLimit",
-		"maxLimit"
+		"axis"
 	],
-	"name" : "GtPlotterAxis",
+	"name" : "GtPlotterAxisLimit",
 	"type" : "normal"
 }
