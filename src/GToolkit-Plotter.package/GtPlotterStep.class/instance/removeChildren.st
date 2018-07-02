@@ -1,0 +1,3 @@
+accessing
+removeChildren
+	self root removeChildren

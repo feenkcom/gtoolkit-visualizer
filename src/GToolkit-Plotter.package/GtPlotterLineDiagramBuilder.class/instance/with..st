@@ -2,6 +2,8 @@ api - scripting
 with: aCollection
 	| theAnchors theLines |
 
+	self topStep removeChildren.
+
 	self topStep addChildren: { axisX . axisY }.
 	
 	"we must not proceed, because overlapping pairs does not work with an empty collection :)"
