@@ -2,4 +2,4 @@ initialization
 initialize
 	super initialize.
 	
-	distance := 20
+	distance := 50

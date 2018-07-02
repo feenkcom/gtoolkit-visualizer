@@ -7,7 +7,7 @@ containerWithCircleLayoutAnd10EditorNodesAndLine
 	aContainer := self containerWithCircleLayoutAnd10EditorNodes.
 	
 	fromNode := aContainer children first.
-	toNode := aContainer children at: (aContainer children size // 2).
+	toNode := aContainer children at: (aContainer children size // 2). 
 	
 	aLine := self line.
 	aLine fromAnchor: (BlElementCenterAnchor element: fromNode).

@@ -8,7 +8,7 @@ measurePositions: anElement with: anExtentSpec
 	theNodes := anElement children accountedByLayout
 		select: [ :aChildElement | aChildElement graph isNode ].
 
-	aRadius := self calculateRadiusFor: theNodes threshold: 50.
+	aRadius := self calculateRadiusFor: theNodes threshold: self distance.
 	thePosition := self calculatePositionsFor: theNodes radius: aRadius center: 0@0.
 
 	"SequenceableCollection"

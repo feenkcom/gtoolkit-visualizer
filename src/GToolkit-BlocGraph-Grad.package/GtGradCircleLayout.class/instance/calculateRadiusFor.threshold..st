@@ -29,8 +29,8 @@ calculateRadiusFor: aCollectionOfNodes threshold: threshold
 						ifTrue: [ry := ((each measuredBounds height) + (previousNode measuredBounds height) + threshold) / angleSin].
 		
 					rCurrent := rx min: ry.
-					(radius = 0) | (rCurrent < radius)
-						ifTrue: [radius := rCurrent]
+					((radius = 0) or: [radius > rCurrent])
+						ifTrue: [radius := rCurrent].
 				 ].	
 		previousNode := each. 
 	].

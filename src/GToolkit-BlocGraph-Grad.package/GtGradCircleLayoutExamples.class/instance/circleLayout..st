@@ -1,9 +1,10 @@
 examples - instance creation
-circleLayout
+circleLayout: distance
 	<gtExample>
 	| aCircleLayout |
 
 	aCircleLayout := GtGradCircleLayout new.
-	self assert: aCircleLayout distance equals: 50.
+	aCircleLayout  distance: distance.
+	self assert: aCircleLayout distance equals: distance.
 
 	^ aCircleLayout
