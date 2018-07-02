@@ -11,8 +11,6 @@
 		"verticalAxis",
 		"horizontalAxisElement",
 		"domainElements",
-		"horizontalRange",
-		"verticalRange",
 		"domainObjects",
 		"horizontalProjections",
 		"verticalProjections"

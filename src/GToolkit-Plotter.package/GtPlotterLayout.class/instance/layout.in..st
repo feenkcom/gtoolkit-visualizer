@@ -16,11 +16,4 @@ layout: anElement in: aRectangle
 	domainElements
 		ifEmpty: [ ^ self ].
 	
-	horizontalRange := GtPlotterFixedRange new
-		min: horizontalProjections min;
-		max: horizontalProjections max.
-	verticalRange := GtPlotterFixedRange new
-		min: verticalProjections min;
-		max: verticalProjections max.
-	
 	domainElements do: [ :aChildElement | self layoutDomainChild: aChildElement ]
