@@ -10,7 +10,8 @@ layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsets
 	newNodePositionX := (nodePosition x) + x0 + ((anOffsetsDict at: aNode) x) + xCorrection.
 	newNodePositionY := (nodePosition y) + y0 + ((anOffsetsDict at: aNode) y).
 	aPositionsDict at: aNode put: newNodePositionX@newNodePositionY.
-	newBounds := self calculateBounds: aNode bounds: bounds  positions: aPositionsDict.
+
+	newBounds := self calculateBounds: aNode bounds: bounds positions: aPositionsDict.
 
 	(aNode graph connectedNodesAlongOutgoingEdges) isEmpty
 		ifTrue: [ ^ newBounds ].
