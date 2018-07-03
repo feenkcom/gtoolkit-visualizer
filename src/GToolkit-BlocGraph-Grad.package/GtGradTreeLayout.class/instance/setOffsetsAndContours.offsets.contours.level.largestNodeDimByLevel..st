@@ -1,21 +1,26 @@
 calculating
-setOffsetsAndContours: aNode offsets: anOffsetsDict contours: aContoursDict level: level largestNodeDimByLevel: largestNodeDimByLevel
-	| height |
-	aNode graph connectedNodesAlongOutgoingEdges
-		do: [ :child | 
-			self startLayout: child
+setOffsetsAndContours: aNodeElement offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: largestNodeDimByLevel
+	
+	"Perform the initial layout pass along all the nodes going from the root to the leafs"
+	aNodeElement graph connectedNodesAlongOutgoingEdges
+		do: [ :aConnectedElement | 
+			self startLayout: aConnectedElement
 				  offsets: anOffsetsDict
 				  contours: aContoursDict
-				  level: level + 1
+				  level: aLevel + 1
 				  largestNodeDimByLevel: largestNodeDimByLevel ].
-	aNode graph connectedNodesAlongOutgoingEdgesCount ~= 0
-		ifFalse: [ self layoutLeaf: aNode countours: aContoursDict ]
-		ifTrue: [ height := self
-				mergeWithChildrenContours: aNode
+
+	aNodeElement graph hasConnectedNodesAlongOutgoingEdges
+		ifFalse: [ self layoutLeaf: aNodeElement countours: aContoursDict ]
+		ifTrue: [
+			| aHeight |
+			
+			aHeight := self
+				mergeWithChildrenContours: aNodeElement
 				offsets: anOffsetsDict
 				contours: aContoursDict.
 			self
-				attachParent: aNode
-				height: height
+				attachParent: aNodeElement
+				height: aHeight
 				offsets: anOffsetsDict
 				contours: aContoursDict ]

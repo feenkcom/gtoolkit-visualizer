@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"axis"
+		"axis",
+		"tick"
 	],
 	"name" : "GtPlotterLayoutConstraintsAxis",
 	"type" : "normal"

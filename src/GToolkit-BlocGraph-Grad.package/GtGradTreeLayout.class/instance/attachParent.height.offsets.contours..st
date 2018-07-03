@@ -12,7 +12,7 @@ attachParent: aNode height: height offsets: offsetsDictionary contours: aContour
 		offsetX: offset x; 
 		offsetY: offset y;
 		emit.
-	
+
 	nodeContour := aContoursDict at: aNode.
 	previousUpperHead := nodeContour upperHead.
 	nodeContour upperHead: (NodeContourLine new position: (aNode measuredBounds height)@0).

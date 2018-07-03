@@ -9,7 +9,5 @@ measurePositions: anElement with: anExtentSpec
 
 	theRoot := self findRoot: theNodes.
 	thePositions := self calculatePositionsFor: theNodes root: theRoot.
-	
-	thePositions keysDo: [ :aNodeElement |
-		aNodeElement measuredBounds position: (thePositions at: aNodeElement) ]
-	
+
+	thePositions keysAndValuesDo: [ :aNodeElement :aPosition | aNodeElement measuredBounds position: aPosition ]
