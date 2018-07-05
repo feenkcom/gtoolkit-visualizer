@@ -27,7 +27,15 @@ calculateRadiusFor: aCollectionOfNodes threshold: threshold
 						ifTrue: [rx := ((each measuredBounds width) + (previousNode measuredBounds width) + threshold) / angleCos].
 					angleSin > 0.01
 						ifTrue: [ry := ((each measuredBounds height) + (previousNode measuredBounds height) + threshold) / angleSin].
-		
+				GtGradCircleLayoutRadiusSignal new
+					element1: each;
+					element2: previousNode;
+					angle1: currentTheta;
+					angle2: previousTheta;
+					rx: rx;
+					ry: ry;
+					emit.
+					
 					rCurrent := rx min: ry.
 					((radius = 0) or: [radius > rCurrent])
 						ifTrue: [radius := rCurrent].
