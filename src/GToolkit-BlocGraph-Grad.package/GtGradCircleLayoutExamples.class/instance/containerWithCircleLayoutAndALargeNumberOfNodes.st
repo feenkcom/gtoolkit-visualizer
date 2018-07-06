@@ -4,7 +4,7 @@ containerWithCircleLayoutAndALargeNumberOfNodes
 	| aContainer theNodes |
 	
 	aContainer := self containerWithCircleLayout.
-	theNodes := self simpleNodesN: 100.
+	theNodes := self simpleNodesN: 100. 
 	aContainer addChildren: theNodes.
 	
 	aContainer forceLayout.

@@ -13,6 +13,6 @@ containerWithCircleLayoutAnd10EditorNodesAndLine
 	aLine fromAnchor: (BlElementCenterAnchor element: fromNode).
 	aLine toAnchor: (BlElementCenterAnchor element: toNode).
 
-	aContainer addChild: aLine.
+	aContainer addChild: aLine. 
 
 	^ aContainer
