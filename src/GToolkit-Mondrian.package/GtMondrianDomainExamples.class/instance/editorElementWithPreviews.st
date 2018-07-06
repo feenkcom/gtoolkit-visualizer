@@ -24,7 +24,7 @@ editorElementWithPreviews
 	root layout: (BlGridLayout new cellSpacing: 20; columnCount: 1).
 	element := BrEditorElement new.
 	editor := BrTextEditor new.
-	editor text: BrRopeExamples new textWithAttributes.
+	editor text: BrRopedTextExamples new textWithAttributes.
 	editor when: BrTextEditorInsertedEvent do: block.
 	element 
 		background: Color white;

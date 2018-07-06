@@ -2,7 +2,7 @@ examples
 editorElements
 	<gtExample>
 	| text element editor view |
-	text := BrRopeExamples new textWithAttributes.
+	text := BrRopedTextExamples new textWithAttributes.
 	element := BrEditorElement new.
 	editor := BrTextEditor new.
 	editor text: text.
