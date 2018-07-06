@@ -12,7 +12,9 @@ editorElementsOf: element on: view
 			labelText := (((each class name withoutPrefix: 'Br') withoutPrefix: 'Bl') withoutSuffix: 'Element').
 			labelText ifEmpty: [ labelText := 'Element' ].
 			labelText := labelText asRopedText.
-			labelText attributes: { BrFontSizeAttribute size: 9 . BrTextForegroundAttribute paint: Color lightGray }.
+			labelText fontSize: 9.
+			labelText foreground: Color lightGray.
+			
 			label := BlTextElement new text: labelText. 
 			label constraintsDo: [ :c | c grid horizontal alignCenter ].
 			container addChild: label.
