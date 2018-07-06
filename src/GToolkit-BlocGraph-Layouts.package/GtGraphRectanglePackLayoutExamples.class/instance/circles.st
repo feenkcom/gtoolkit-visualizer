@@ -8,14 +8,15 @@ circles
 
 	view := self view.
 	nodes := self nodes: data.
-	nodes do: [ :node || model label |
+	nodes do: [ :node |
+		| model label |
 		model := node userData at: #model.
 		node
 			geometry: BlEllipse new;
 			size: model value asPoint;
 			background: Color random.
 		label := BlTextElement new.
-		label text: ((BrRopedText string: model key)
+		label text: (model key asRopedText
 			attributes: { 
 				BrTextForegroundAttribute paint: Color black .
 				BrFontSizeAttribute size: 10 } ).

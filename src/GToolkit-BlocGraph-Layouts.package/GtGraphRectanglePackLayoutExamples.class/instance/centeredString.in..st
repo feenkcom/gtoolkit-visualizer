@@ -2,7 +2,7 @@ private
 centeredString: aString in: aNode
 	| label |
 	label := BlTextElement new.
-	label text: (BrRopedText string: aString).
+	label text: aString asRopedText.
 	label constraintsDo: [ :constraints |
 		constraints frame horizontal alignCenter.
 		constraints frame vertical alignCenter.

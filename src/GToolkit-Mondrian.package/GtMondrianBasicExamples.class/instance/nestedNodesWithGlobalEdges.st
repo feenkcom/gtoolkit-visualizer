@@ -14,7 +14,7 @@ nestedNodesWithGlobalEdges
 			(4 to: 6)}
 		forEach: [ :collection | 
 			view nodes
-				shape: [ :x | BlTextElement new text: (BrRopedText string: x asString) ];
+				shape: [ :x | BlTextElement new text: x asString asRopedText ];
 				with: collection.
 			view layout circle ].
 	view edges

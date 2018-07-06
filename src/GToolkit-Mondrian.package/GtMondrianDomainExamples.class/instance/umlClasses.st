@@ -10,7 +10,7 @@ umlClasses
 			view nodes
 				shape: [ :method | 
 					BlTextElement new
-						text: (BrRopedText string: method selector);
+						text: method selector asRopedText;
 						padding:
 							(BlInsets
 								top: 5

@@ -7,14 +7,15 @@ circlesRaw
 	data := self circlesData.
 
 	view := BlElement new.
-	data do: [ :model || node label |
+	data do: [ :model |
+		| node label |
 		node := BlElement new 
 			geometry: BlEllipse new;
 			size: model value asPoint;
 			background: Color random.
 		label := BlTextElement new.
-		label text: ((BrRopedText string: model key)
-			attributes: {  
+		label text: (model key asRopedText
+			attributes: {
 				BrTextForegroundAttribute paint: Color black .
 				BrFontSizeAttribute size: 10 } ).
 		label constraintsDo: [ :constraints |

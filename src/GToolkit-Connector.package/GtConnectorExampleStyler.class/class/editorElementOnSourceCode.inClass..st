@@ -2,7 +2,7 @@ factory
 editorElementOnSourceCode: aString inClass: aClass
 	| styler editor editorElement text |
 	
-	text := BrRopedText string: aString.
+	text := aString asRopedText.
 	styler := self new.
 	styler classOrMetaClass: aClass.
 	text attributes: { BrFontGenericFamilyAttribute monospace beNotOverwritableByStyler}.

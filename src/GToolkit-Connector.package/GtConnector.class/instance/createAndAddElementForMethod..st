@@ -1,6 +1,6 @@
 private
 createAndAddElementForMethod: method
-	| editor editorElement text |	
+	| editor editorElement text styler |	
 	
 	editorElement := BrEditorElement new.
 	editorElement
@@ -27,7 +27,7 @@ createAndAddElementForMethod: method
 	editorElement beConnectorTarget.
 	editorElement connectorTarget: method.
 
-	text := BrRopedText string: method sourceCode.
+	text := method sourceCode asRopedText.
 
 	self addChild: editorElement.
 	"because we connect editors with lines based on styler we must change text

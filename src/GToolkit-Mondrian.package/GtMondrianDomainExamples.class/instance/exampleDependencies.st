@@ -6,7 +6,7 @@ exampleDependencies
 	view nodes 
 		shape: [ :each | 
 			| text styler editor editorElement |
-			text := BrRopedText string: each method sourceCode.
+			text := each method sourceCode asRopedText.
 			styler := GtExamplesStyler new classOrMetaClass: each methodClass.
 			editor := BrTextEditor new.
 			editor styler: styler.

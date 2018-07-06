@@ -25,7 +25,7 @@ packageDependencies
 				constraintsDo: [ :c | 
 					c vertical fitContent.
 					c horizontal fitContent ].
-			text := BrRopedText string: p name.
+			text := p name asRopedText.
 			label := BlShrinkingTextElement new text: text.
 			label
 				constraintsDo: [ :c | 

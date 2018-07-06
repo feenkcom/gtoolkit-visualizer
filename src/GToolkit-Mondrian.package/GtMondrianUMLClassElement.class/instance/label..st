@@ -1,3 +1,3 @@
 accessing
 label: aString
-	label text: (BrRopedText string: aString)
+	label text: aString asRopedText

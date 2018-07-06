@@ -2,7 +2,7 @@ initialization
 initialize
 	super initialize.
 	label := BlTextElement new
-		text: (BrRopedText string: '');
+		text: '' asRopedText;
 		padding: (BlInsets all: 5);
 		constraintsDo: [ :c | c frame horizontal alignCenter ].
 	labelContainer := BlElement new.

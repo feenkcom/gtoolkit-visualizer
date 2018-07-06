@@ -15,7 +15,7 @@ initialSketch
 	    c horizontal matchParent.
 	    c vertical matchParent ].
 	spawner := [ :method | 
-		text := BrRopedText string: method sourceCode.
+		text := method sourceCode asRopedText.
 		styler := GtConnectorExampleStyler new 
 			exampleAction: [ :exampleMethod :messageNode :button |
 				newMethod := spawner value: exampleMethod.

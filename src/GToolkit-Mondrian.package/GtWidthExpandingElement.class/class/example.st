@@ -3,7 +3,7 @@ example
 	<gtExample>
 	| label contents contentLabel grid |
 	label := BlTextElement new
-            text: (BrRopedText string: 'Name');
+            text: 'Name' asRopedText;
             background: (BlBackground paint: Color white);
             yourself.
 	contents := BlElement new.
@@ -14,7 +14,7 @@ example
 	        c horizontal fitContent ];
 	    background: Color white.
 	contentLabel := BlTextElement new
-	            text: (BrRopedText string: 'Label with multiple words');
+	            text: 'Label with multiple words' asRopedText;
 	            background: (BlBackground paint: Color white);
 	            yourself.
 	contents addChild: contentLabel.

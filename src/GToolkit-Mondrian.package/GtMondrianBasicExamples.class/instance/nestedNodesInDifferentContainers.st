@@ -7,7 +7,7 @@ nestedNodesInDifferentContainers
 		shape: [ :anObject | 
 			| label labelContainer contents1 contents2 grid |
 			label := BlTextElement new
-				text: (BrRopedText string: anObject asString);
+				text: anObject asString asRopedText;
 				padding: (BlInsets all: 5);
 				constraintsDo: [ :c | c frame horizontal alignCenter ].
 			labelContainer := BlElement new.
