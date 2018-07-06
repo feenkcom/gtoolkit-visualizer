@@ -10,6 +10,9 @@
 		"element2",
 		"angle1",
 		"angle2",
+		"rx",
+		"ry",
+		"rCurrent",
 		"radius"
 	],
 	"name" : "GtGradCircleLayoutRadiusSignal",

@@ -10,7 +10,7 @@ containerWithCircleLayoutAnd10SimpleNodesWithDistance
 	
 	aContainer forceLayout.
 	
-	self assert: aContainer position equals: 0@0.
+	self assert: aContainer position equals: 0@0. 
 
 
 
