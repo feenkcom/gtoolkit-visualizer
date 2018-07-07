@@ -4,7 +4,7 @@ constructBinaryTreeWith15Nodes
 		
 	| theNodes  pairsOfNodes theEdges |
 	
-	theNodes := self nodes: (1 to: 15). 
+	theNodes := self nodes: (1 to: 15).
 	
 	pairsOfNodes := OrderedCollection new.
 	pairsOfNodes add: (1->2); add: (1->3); add:(2->4); add: (2->5); add: (3->6); add: (3->7);

@@ -1,4 +1,6 @@
 calculating
+"protocol: #calculating"
+
 layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict bounds: bounds level: level largestNodeDimByLevel: maxLevelHeightsDict
 	| nodePosition newBounds newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY nodeHeight levelMaxHeight yCorrection firstChild|
 	

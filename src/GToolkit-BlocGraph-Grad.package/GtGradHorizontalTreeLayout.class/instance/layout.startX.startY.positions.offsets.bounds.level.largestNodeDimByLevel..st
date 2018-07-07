@@ -1,14 +1,15 @@
 calculating
 layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict bounds: bounds level: level largestNodeDimByLevel: maxLevelWidthsDict
-	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY nodeWidth levelMaxWidth xCorrection firstChild|
+	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY nodeWidth levelMaxWidth breadthCorrection lengthCorrection firstChild|
 	
 	nodePosition := aPositionsDict at: aNode.
 	nodeWidth := aNode measuredBounds width.
 	levelMaxWidth := maxLevelWidthsDict at: level.
-	xCorrection := (levelMaxWidth - nodeWidth)/2.
+	breadthCorrection :=  self nodeBreadthCorrection: aNode level: level largestNodeDimByLevel: maxLevelWidthsDict.
+	lengthCorrection :=  self nodeLengthCorrection: aNode level: level largestNodeDimByLevel: maxLevelWidthsDict.
 	
-	newNodePositionX := (nodePosition x) + x0 + ((anOffsetsDict at: aNode) x) + xCorrection.
-	newNodePositionY := (nodePosition y) + y0 + ((anOffsetsDict at: aNode) y).
+	newNodePositionX := (nodePosition x) + x0 + (self nodeOffsetBreadth: aNode offsets: anOffsetsDict) + breadthCorrection.
+	newNodePositionY := (nodePosition y) + y0 + (self nodeOffsetLength: aNode offsets: anOffsetsDict) + lengthCorrection.
 	aPositionsDict at: aNode put: newNodePositionX@newNodePositionY.
 
 	newBounds := self calculateBounds: aNode bounds: bounds positions: aPositionsDict.
@@ -26,8 +27,8 @@ layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsets
 							level: (level + 1)
 							largestNodeDimByLevel: maxLevelWidthsDict. 
 
-	childrenOffsetX := newNodePositionX + ((anOffsetsDict at: firstChild) x).
-	childrenOffsetY := newNodePositionY + ((anOffsetsDict at: firstChild) y).
+	childrenOffsetX := newNodePositionX + (self nodeOffsetBreadth: firstChild offsets: anOffsetsDict).
+	childrenOffsetY := newNodePositionY + (self nodeOffsetLength: firstChild offsets: anOffsetsDict)..
 
 	(aNode graph connectedNodesAlongOutgoingEdges) do: [ :child |
 		
@@ -42,7 +43,8 @@ layout: aNode startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsets
 											level: (level + 1)
 											largestNodeDimByLevel: maxLevelWidthsDict. 
 
-					childrenOffsetY := childrenOffsetY + ((anOffsetsDict at: child) y).
+					childrenOffsetX := childrenOffsetX + (self childOffsetBreadth: child offsets: anOffsetsDict).
+					childrenOffsetY := childrenOffsetY + (self childOffsetLength: child offsets: anOffsetsDict).
 				].
 		].
 
