@@ -1,3 +1,3 @@
 accessing
 levelDistance: aNumber
-	levelDistance:= aNumber
+	levelDistance := aNumber

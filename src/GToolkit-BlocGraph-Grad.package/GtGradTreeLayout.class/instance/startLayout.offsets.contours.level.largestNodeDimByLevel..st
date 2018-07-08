@@ -1,15 +1,26 @@
 calculating
-startLayout: aNode offsets: anOffsetsDict contours: aContoursDict level: level largestNodeDimByLevel: maxLevelDimsDict
+startLayout: aNodeElement offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: maxLevelDimsDict
 	| nodeDim maxDim|
 	
-	nodeDim := self nodeOffsetDim: aNode.
-	maxLevelDimsDict at: level ifAbsentPut: [ nodeDim ].
-	maxDim := maxLevelDimsDict at: level.
-	nodeDim > maxDim
-		ifTrue: [ maxLevelDimsDict at: level put: nodeDim ].
+	GtGradTreeLayoutNodeProcessingStartedSignal new 
+									node: aNodeElement;
+									level: aLevel;
+									emit.
 		
-	self setOffsetsAndContours: aNode
+	nodeDim := self nodeOffsetDim: aNodeElement.
+	maxLevelDimsDict at: aLevel ifAbsentPut: [ nodeDim ].
+	maxDim := maxLevelDimsDict at: aLevel.
+	nodeDim > maxDim
+		ifTrue: [ maxLevelDimsDict at: aLevel put: nodeDim ].
+		
+
+	self setOffsetsAndContours: aNodeElement
 	 	  offsets: anOffsetsDict
 		  contours: aContoursDict
-		  level: level
-		  largestNodeDimByLevel: maxLevelDimsDict
+		  level: aLevel
+		  largestNodeDimByLevel: maxLevelDimsDict.
+		
+	GtGradTreeLayoutNodeProcessingFinishedSignal new
+									node: aNodeElement;
+									level: aLevel;
+									emit.

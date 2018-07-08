@@ -10,7 +10,7 @@ attachParent: aNode height: height offsets: offsetsDictionary contours: aContour
 
 	offsetsDictionary at: (aNode graph firstConnectedNodeAlongOutgoingEdge) put: offset.
 
-	GtGradLayoutOffsetSetSignal new 
+	GtGradTreeLayoutOffsetSetSignal new 
 		node: aNode; 
 		offsetX: offset x; 
 		offsetY: offset y;

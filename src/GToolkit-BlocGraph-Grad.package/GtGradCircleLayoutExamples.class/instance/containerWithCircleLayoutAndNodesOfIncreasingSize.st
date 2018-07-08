@@ -1,10 +1,10 @@
 examples - layout
 containerWithCircleLayoutAndNodesOfIncreasingSize
 	<gtExample>
-	| aContainer theNodes theNodeExtents theNodePositions |
+	| aContainer theNodes |
 
 	aContainer := self containerWithCircleLayout.
-	theNodes := self create10NodesOfIncreasingSize.
+	theNodes := self createNNodesOfIncreasingSize: 10.
 	aContainer addChildren: theNodes.
 	
 	aContainer forceLayout.

@@ -1,22 +1,22 @@
 calculating
-mergeWithChildrenContours: aNode offsets: anOffsetsDict contours: aContoursDict
+mergeWithChildrenContours: aNodeElement offsets: anOffsetsDict contours: aContoursDict
 	| total width firstChild | 
 	
-	firstChild := (aNode graph connectedNodesAlongOutgoingEdges) first.
-	aContoursDict at: aNode put: (aContoursDict at: firstChild).
+	firstChild := (aNodeElement graph connectedNodesAlongOutgoingEdges) first.
+	aContoursDict at: aNodeElement put: (aContoursDict at: firstChild).
 	width := (firstChild measuredBounds width) + (2 * self nodeDistance).
 	total := width.
 		
-	(aNode graph connectedNodesAlongOutgoingEdges) do: [ :child | 
+	(aNodeElement graph connectedNodesAlongOutgoingEdges) do: [ :child | 
 
 		child = firstChild
 			ifFalse: [
 				| d |
 
-				d := self mergeContours: aNode child: child contours: aContoursDict.
+				d := self mergeContours: aNodeElement child: child contours: aContoursDict.
 				anOffsetsDict at: child put: 0@(width + d).
-				GtGradLayoutOffsetSetSignal new
-									node: aNode; 
+				GtGradTreeLayoutOffsetSetSignal new
+									node: aNodeElement; 
 									offsetX: 0; 
 									offsetY: width + d;
 									emit.

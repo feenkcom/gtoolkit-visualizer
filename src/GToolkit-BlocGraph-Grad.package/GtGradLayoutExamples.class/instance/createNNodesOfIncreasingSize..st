@@ -1,9 +1,9 @@
-examples - composite
-create10NodesOfIncreasingSize
+examples - layout
+createNNodesOfIncreasingSize: numberOfNodes
 	<gtExample>
 
 
-	^ 10 timesCollect: [ :index |
+	^ numberOfNodes timesCollect: [ :index |
 		| anElement |
 		anElement := BlElement new
 							background: (Color gray alpha: 0.5);

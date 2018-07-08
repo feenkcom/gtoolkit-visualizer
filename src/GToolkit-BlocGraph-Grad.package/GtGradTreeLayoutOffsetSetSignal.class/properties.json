@@ -10,6 +10,6 @@
 		"offsetX",
 		"offsetY"
 	],
-	"name" : "GtGradLayoutOffsetSetSignal",
+	"name" : "GtGradTreeLayoutOffsetSetSignal",
 	"type" : "normal"
 }
