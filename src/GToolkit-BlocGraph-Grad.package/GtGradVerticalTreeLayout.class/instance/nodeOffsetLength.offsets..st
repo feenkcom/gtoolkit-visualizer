@@ -1,3 +1,3 @@
 calculating
 nodeOffsetLength: aNodeElement offsets: anOffsetsDict
-	^ 0
+	^ (anOffsetsDict at: aNodeElement) x

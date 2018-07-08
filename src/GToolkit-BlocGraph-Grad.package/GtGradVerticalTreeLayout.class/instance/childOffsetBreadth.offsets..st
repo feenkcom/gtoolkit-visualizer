@@ -1,3 +1,3 @@
 calculating
 childOffsetBreadth: aChildElement offsets: anOffsetsDict
-	^ 0
+	^ (anOffsetsDict at: aChildElement) y.

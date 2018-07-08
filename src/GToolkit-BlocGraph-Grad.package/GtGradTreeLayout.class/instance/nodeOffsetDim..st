@@ -1,0 +1,3 @@
+calculating
+nodeOffsetDim: aNodeElement
+	self subclassResponsibility

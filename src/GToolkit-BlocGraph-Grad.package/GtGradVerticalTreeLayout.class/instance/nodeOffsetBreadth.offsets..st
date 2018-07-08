@@ -1,3 +1,3 @@
 calculating
 nodeOffsetBreadth: aNodeElement offsets: anOffsetsDict
-	^ 0
+	^ (anOffsetsDict at: aNodeElement) y
