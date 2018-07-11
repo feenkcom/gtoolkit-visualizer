@@ -1,5 +1,5 @@
 calculating
-attachParent: aNode height: height offsets: offsetsDictionary contours: aContoursDict
+attachParent: aNode tree: aDFSTree height: height offsets: offsetsDictionary contours: aContoursDict
 	| x y1 y2 offset nodeContour previousUpperHead previousLowerHead upperHeadNext lowerHeadNext |
 
 	x := self nodeDistance + self levelDistance.
@@ -8,7 +8,7 @@ attachParent: aNode height: height offsets: offsetsDictionary contours: aContour
 
 	offset := (x + aNode measuredBounds height)@y1.
 
-	offsetsDictionary at: (aNode graph firstConnectedNodeAlongOutgoingEdge) put: offset.
+	offsetsDictionary at: ((aDFSTree at: aNode) first) put: offset.
 
 	GtGradTreeLayoutOffsetSetSignal new 
 		node: aNode; 

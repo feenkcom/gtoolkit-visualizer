@@ -1,5 +1,5 @@
 calculating
-startLayout: aNodeElement offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: maxLevelDimsDict
+startLayout: aNodeElement tree: aDFSTree offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: maxLevelDimsDict
 	| nodeDim maxDim|
 	
 	GtGradTreeLayoutNodeProcessingStartedSignal new 
@@ -12,9 +12,9 @@ startLayout: aNodeElement offsets: anOffsetsDict contours: aContoursDict level: 
 	maxDim := maxLevelDimsDict at: aLevel.
 	nodeDim > maxDim
 		ifTrue: [ maxLevelDimsDict at: aLevel put: nodeDim ].
-		
 
 	self setOffsetsAndContours: aNodeElement
+		  tree: aDFSTree
 	 	  offsets: anOffsetsDict
 		  contours: aContoursDict
 		  level: aLevel

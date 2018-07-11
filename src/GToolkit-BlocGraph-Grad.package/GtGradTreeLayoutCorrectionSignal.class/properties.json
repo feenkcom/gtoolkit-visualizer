@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "BeaconSignal",
+	"category" : "GToolkit-BlocGraph-Grad-Signals",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"node",
+		"breadthCorrection",
+		"lengthCorrection"
+	],
+	"name" : "GtGradTreeLayoutCorrectionSignal",
+	"type" : "normal"
+}

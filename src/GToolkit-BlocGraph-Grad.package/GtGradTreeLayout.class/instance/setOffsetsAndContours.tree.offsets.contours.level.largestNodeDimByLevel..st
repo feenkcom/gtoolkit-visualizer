@@ -1,10 +1,11 @@
 calculating
-setOffsetsAndContours: aNodeElement offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: largestNodeDimByLevel
+setOffsetsAndContours: aNodeElement tree: aDFSTree offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: largestNodeDimByLevel
 	
 	"Perform the initial layout pass along all the nodes going from the root to the leafs"
 	aNodeElement graph connectedNodesAlongOutgoingEdges
 		do: [ :aConnectedElement | 
 			self startLayout: aConnectedElement
+				  tree: aDFSTree
 				  offsets: anOffsetsDict
 				  contours: aContoursDict
 				  level: aLevel + 1
@@ -21,6 +22,7 @@ setOffsetsAndContours: aNodeElement offsets: anOffsetsDict contours: aContoursDi
 				contours: aContoursDict.
 			self
 				attachParent: aNodeElement
+				tree: aDFSTree
 				height: aHeight
 				offsets: anOffsetsDict
 				contours: aContoursDict ]

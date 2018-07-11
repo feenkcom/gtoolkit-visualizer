@@ -1,7 +1,7 @@
 calculating
 calculatePositionsFor: theNodeElements root: aRootNode
 	<return: #Collection of: #Point>
-	| offsets positions contours bounds maxLevelHeights |
+	| aDFSTree offsets positions contours bounds maxLevelHeights |
 
 	offsets := IdentityDictionary new.
 	positions := IdentityDictionary new.
@@ -14,14 +14,17 @@ calculatePositionsFor: theNodeElements root: aRootNode
 		contours at: aNodeElement put: NodeContour new ].
 	
 	positions at: aRootNode put: 0@0.
+	aDFSTree := self formDFSTree: aRootNode.
 	
 	self startLayout: aRootNode
+		  tree: aDFSTree
 		  offsets: offsets
 		  contours: contours
 		  level: 1
 		  largestNodeDimByLevel: maxLevelHeights.
 		
 	bounds := self layout: aRootNode
+						tree: aDFSTree
 						startX:50
 						startY:50
 						positions: positions
