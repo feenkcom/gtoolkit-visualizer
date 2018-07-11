@@ -1,3 +1,3 @@
 scripting anchors
 toLeftCenter
-	self toAnchor: BlElementLeftCenterAnchor
+	self toAnchor: BlElementCenterLeftAnchor

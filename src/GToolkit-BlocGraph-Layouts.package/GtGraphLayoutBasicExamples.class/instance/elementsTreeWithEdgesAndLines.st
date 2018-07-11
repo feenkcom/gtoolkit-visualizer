@@ -15,7 +15,7 @@ elementsTreeWithEdgesAndLines
 				line constraints ignoreByLayout.
 				line
 					border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
-					fromAnchor: (BlElementRightCenterAnchor element: parentLabel);
-					toAnchor: (BlElementLeftCenterAnchor element: label).
+					fromAnchor: (BlElementCenterRightAnchor element: parentLabel);
+					toAnchor: (BlElementCenterLeftAnchor element: label).
 				root addChild: line ] ].
 	^ root

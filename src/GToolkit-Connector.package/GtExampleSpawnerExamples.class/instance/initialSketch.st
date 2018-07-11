@@ -22,7 +22,7 @@ initialSketch
 				line := BlLineElement new border: (BlBorder paint: (Color gray alpha: 0.2) width: 5).
 				line
 					fromAnchor: (BlElementCenterAnchor element: button button);
-					toAnchor: (BlElementLeftCenterAnchor element: newMethod).
+					toAnchor: (BlElementCenterLeftAnchor element: newMethod).
 				line constraints ignoreByLayout.
 				root addChild: line.
 				root addChild: newMethod.

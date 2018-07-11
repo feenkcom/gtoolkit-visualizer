@@ -36,7 +36,7 @@ addLineFrom: aSourceElement to: aTargetElement
 	aLineElement
 		border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
 		fromAnchor: (BlElementCenterAnchor element: aSourceElement);
-		toAnchor: (BlElementLeftCenterAnchor element: aTargetElement).
+		toAnchor: (BlElementCenterLeftAnchor element: aTargetElement).
 
 	"Line should disappear when any of source or target elements is deleted"
 	aDeleteListener := nil.

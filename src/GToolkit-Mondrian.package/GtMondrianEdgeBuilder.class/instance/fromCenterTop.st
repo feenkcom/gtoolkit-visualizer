@@ -1,3 +1,3 @@
 scripting anchors
 fromCenterTop
-	self fromAnchor: BlElementCenterTopAnchor
+	self fromAnchor: BlElementTopCenterAnchor

@@ -3,9 +3,9 @@ initialize
 	super initialize.
 	
 	self display: [ { 
-		BlElementLeftTopAnchor . BlElementCenterTopAnchor . BlElementRightTopAnchor .
-		BlElementLeftCenterAnchor . BlElementCenterAnchor . BlElementRightCenterAnchor .
-		BlElementLeftBottomAnchor . BlElementCenterBottomAnchor . BlElementRightBottomAnchor .
+		BlElementTopLeftAnchor . BlElementTopCenterAnchor . BlElementTopRightAnchor .
+		BlElementCenterLeftAnchor . BlElementCenterAnchor . BlElementCenterRightAnchor .
+		BlElementBottomLeftAnchor . BlElementBottomCenterAnchor . BlElementBottomRightAnchor .
 		BlNearestPositionBoundsAnchor . BlNearestPositionLooseCircleAnchor . BlNearestPositionEllipseAnchor
 	 } ].
 
