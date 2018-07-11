@@ -9,11 +9,11 @@ To get a more concrete idea of what Mondrian is about, let's consider some examp
 
 The first example shows a tree made of nodes and interconnecting edges that are organized as a radial tree. Except that there are also two red edges that do not affect the layout.
 
-[[[example=GtMondrianBasicExamples>>#passiveEdges|expanded=true|noCode=true|show=gtLiveFor:]]]
+${example:GtMondrianBasicExamples>>#passiveEdges|expandedPreview}$
 
 Another one shows a UML-like visualization of a class hierarchy.
 
-[[[example=GtMondrianDomainExamples>>#umlClasses|expanded=true|noCode=true|show=gtLiveFor:]]]
+${example:GtMondrianDomainExamples>>#umlClasses|expandedPreview}$
 
 Each of these examples are similar in that they are constructed as transformations of some input data into pictures. Yet, the transformation is different: 
 - One shows a tree with nodes represented as rectangles. Another one shows nodes represented as UML class elements. 
@@ -33,15 +33,15 @@ The most basic parts of a Mondrian view are:
 
 Let's see how we create these. First the nodes.
 
-[[[example=GtMondrianBasicExamples>>#twoNodes|expanded=true]]]
+${example:GtMondrianBasicExamples>>#twoNodes|expandedPreview}$
 
 Given those nodes, we can build edges.
 
-[[[example=GtMondrianBasicExamples>>#oneEdgeBetweenTwoNodes|expanded=true]]]
+${example:GtMondrianBasicExamples>>#oneEdgeBetweenTwoNodes|expandedPreview}$
 
 And finally, we lay them out.
 
-[[[example=GtMondrianBasicExamples>>#layoutOnOneEdgeBetweenTwoNodes|expanded=true]]]
+${example:GtMondrianBasicExamples>>#layoutOnOneEdgeBetweenTwoNodes|expandedPreview}$
 
 
 !!!Shapes
@@ -50,22 +50,22 @@ The look and feel of nodes and edges is specified by Shapes, which can be includ
 
 A shape can be defined by a block that takes the node's model object as its argument and returns an instance of a Bloc element. In the example below, we see nine nodes drawn as circles with black borders, whose sizes depend on the number which each node represents.
 
-[[[example=GtMondrianBasicExamples>>#nodesWithEllipses|expanded=true]]]
+${example:GtMondrianBasicExamples>>#nodesWithEllipses|expandedPreview}$
 
 We can define the shape of edges in a similar way. In the example below, the nodes are connected by blue edges whose width varies depending on the node it tries to connect.
 
-[[[example=GtMondrianBasicExamples>>#edgesWithThickerLines|expanded=true]]]
+${example:GtMondrianBasicExamples>>#edgesWithThickerLines|expandedPreview}$
 
 
 !!!Nesting
 
 Mondrian graphs can also be nested. In other words, a node can have a subgraph.
 
-[[[example=GtMondrianBasicExamples>>#nestedNodes|expanded=true]]]
+${example:GtMondrianBasicExamples>>#nestedNodes|expandedPreview}$
 
 Nested nodes behave like leaf nodes in that they can be connected through edges and laid out accordingly.
 
-[[[example=GtMondrianBasicExamples>>#nestedWithEdges|expanded=true]]]
+${example:GtMondrianBasicExamples>>#nestedWithEdges|expandedPreview}$
 
 
 !!Differences to previous incarnations of Mondrian
@@ -87,18 +87,18 @@ Mondrian is useful for creating custom views that are specific to a given domain
 
 In this example, we see a list of packages arranged in a circle, with nested classes and the inheritance dependencies between the classes grouped at package level. One interesting thing is that the label of the packages shrinks to the available space offered by the size of the boxes. Another particularity is the use of parabolla arcs and heads.
 
-[[[example=GtMondrianDomainExamples>>#packageDependencies|noCode=true|expanded=true]]]
+${example:GtMondrianDomainExamples>>#packageDependencies|expandedPreview}$
 
 
 !!!Examples dependencies
 
 This examples shows a tree of dependencies between example methods. We can see here that the visualization can embed arbitrary elements, such as an editor element with syntax highlighting.
 
-[[[example=GtMondrianDomainExamples>>#exampleDependencies|noCode=true|expanded=true]]]
+${example:GtMondrianDomainExamples>>#exampleDependencies|expandedPreview}$
 
 
 !!The inner structure of an element editor
 
 Visualization can be applied to any object or set objects. For example, the following visualization helps us understand how the editor element is composed out of smaller elements by showing the tree of the elements, each depicted with a label and a picture of the actual element.
 
-[[[example=GtMondrianDomainExamples>>#editorElements|noCode=true|expanded=true]]]
+${example:GtMondrianDomainExamples>>#editorElements|expandedPreview}$
