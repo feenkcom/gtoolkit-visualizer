@@ -4,7 +4,7 @@ binaryTreeWith7Nodes
 		
 	| view theNodes  aTreeLayout theNodePositions theNodeExtents |
 	
-	view := self view.
+	view := self view. 
 	theNodes := self constructBinaryTreeWith7Nodes key.
 	view addChildren: theNodes.
 

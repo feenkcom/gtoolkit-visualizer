@@ -18,10 +18,10 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 
 	newBounds := self calculateBounds: aNodeElement bounds: bounds positions: aPositionsDict.
 
-	(aNodeElement graph connectedNodesAlongOutgoingEdges) isEmpty
-		ifTrue: [ ^ newBounds ].
+	(aDFSTree includesKey: aNodeElement)
+		ifFalse: [ ^ newBounds ].
 
-	firstChild := (aNodeElement graph connectedNodesAlongOutgoingEdges) first.
+	firstChild := (aDFSTree at: aNodeElement) first.
 	newBounds := self layout: firstChild
 							tree: aDFSTree
 							startX: newNodePositionX

@@ -1,13 +1,13 @@
 calculating
-mergeWithChildrenContours: aNodeElement offsets: anOffsetsDict contours: aContoursDict
+mergeWithChildrenContours: aNodeElement tree: aDFSTree offsets: anOffsetsDict contours: aContoursDict
 	| total width firstChild | 
 	
-	firstChild := (aNodeElement graph connectedNodesAlongOutgoingEdges) first.
+	firstChild := (aDFSTree at: aNodeElement) first.
 	aContoursDict at: aNodeElement put: (aContoursDict at: firstChild).
 	width := (firstChild measuredBounds width) + (2 * self nodeDistance).
 	total := width.
 		
-	(aNodeElement graph connectedNodesAlongOutgoingEdges) do: [ :child | 
+	(aDFSTree at: aNodeElement) do: [ :child | 
 
 		child = firstChild
 			ifFalse: [
