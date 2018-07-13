@@ -1,11 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "BlFitLayout",
+	"super" : "Object",
 	"category" : "GToolkit-BlocGraph-Grad",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
-	"name" : "GtGradLayout",
+	"instvars" : [
+		"root",
+		"connectedNodes"
+	],
+	"name" : "DFSTree",
 	"type" : "normal"
 }

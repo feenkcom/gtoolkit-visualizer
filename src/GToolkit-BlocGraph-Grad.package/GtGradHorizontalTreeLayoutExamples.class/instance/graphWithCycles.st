@@ -1,6 +1,4 @@
 example
-"protocol: #example"
-
 graphWithCycles
 	<gtExample>
 		

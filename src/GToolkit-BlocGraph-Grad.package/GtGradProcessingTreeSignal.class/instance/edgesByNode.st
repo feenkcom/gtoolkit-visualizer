@@ -1,0 +1,3 @@
+accessing
+edgesByNode
+	^ edgesByNode

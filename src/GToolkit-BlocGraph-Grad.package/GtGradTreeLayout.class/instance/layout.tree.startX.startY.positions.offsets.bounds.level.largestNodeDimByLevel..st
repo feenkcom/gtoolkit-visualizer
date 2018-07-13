@@ -16,7 +16,11 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 	newNodePositionY := (nodePosition y) + y0 + (self nodeOffsetLength: aNodeElement offsets: anOffsetsDict) + lengthCorrection.
 	aPositionsDict at: aNodeElement put: newNodePositionX@newNodePositionY.
 
-	newBounds := self calculateBounds: aNodeElement bounds: bounds positions: aPositionsDict.
+	newBounds := self updateBounds: aNodeElement
+							bounds:bounds
+							positionX: newNodePositionX
+							positionY: newNodePositionY.	
+
 
 	(aDFSTree includesKey: aNodeElement)
 		ifFalse: [ ^ newBounds ].
