@@ -7,9 +7,9 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"element",
-		"connectedNodes",
-		"connectedNodesAlongIncomingEdges",
-		"connectedNodesAlongOutgoingEdges"
+		"isEdge",
+		"isNode",
+		"model"
 	],
 	"name" : "GtGraphElement",
 	"type" : "normal"

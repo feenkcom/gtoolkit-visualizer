@@ -1,3 +1,3 @@
-*GToolkit-BlocGraph
+api - children
 edgeChildren
 	^ self element children select: [ :each | each graph isEdge ]

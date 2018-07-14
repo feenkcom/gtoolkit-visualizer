@@ -1,0 +1,1 @@
+I represent graph constraints and allow users to specify logical connections between graph nodes with the help of attached graph edges

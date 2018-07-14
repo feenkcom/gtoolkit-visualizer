@@ -1,3 +1,3 @@
-api
+deprecated
 beChildrenContainer
 	self beChildrenContainer: #default

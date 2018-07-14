@@ -1,4 +1,4 @@
-*GToolkit-BlocGraph
+deprecated
 childrenContainers
 	^ self userData 
 		at: #mondrianChildrenContainers

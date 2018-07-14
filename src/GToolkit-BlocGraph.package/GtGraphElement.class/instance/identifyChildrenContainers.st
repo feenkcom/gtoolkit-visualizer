@@ -1,4 +1,4 @@
-api
+deprecated
 identifyChildrenContainers
 	| childrenContainers |
 	childrenContainers := Dictionary new.

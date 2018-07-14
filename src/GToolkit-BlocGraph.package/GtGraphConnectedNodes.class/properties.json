@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "AliakseiSyrel 7/14/2018 19:28",
+	"super" : "GtGraphIterator",
+	"category" : "GToolkit-BlocGraph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"edges"
+	],
+	"name" : "GtGraphConnectedNodes",
+	"type" : "normal"
+}

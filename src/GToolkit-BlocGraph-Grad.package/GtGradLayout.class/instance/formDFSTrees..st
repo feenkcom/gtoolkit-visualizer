@@ -2,17 +2,17 @@ measure
 formDFSTrees: theNodes
 	| allTrees visitedList |
 	
-	visitedList := OrderedCollection new.
+	visitedList := Set new.
 	allTrees := OrderedCollection new.
 	theNodes do: [ :aNodeElement |
 		| connectedNodesDictionary |
 		(visitedList includes: aNodeElement)
 			ifFalse: [
-				(aNodeElement graph connectedNodesAlongIncomingEdgesCount isZero)
-					ifTrue: [
+				aNodeElement graph hasNodesAlongIncomingEdges
+					ifFalse: [
 						connectedNodesDictionary := IdentityDictionary new.
 						self dfs: aNodeElement visited: visitedList tree: connectedNodesDictionary. 
-						allTrees add: (DFSTree new
+						allTrees add: (GtGradDepthFirstSearchTree new
 												root: aNodeElement;
 												connectedNodes: connectedNodesDictionary).
 					].

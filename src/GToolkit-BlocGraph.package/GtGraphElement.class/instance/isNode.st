@@ -1,3 +1,3 @@
-api
+api - testing
 isNode
-	^ self userData at: #isMondrianNode ifAbsent: [ false ]
+	^ isNode

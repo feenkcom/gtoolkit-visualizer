@@ -1,3 +1,5 @@
-*GToolkit-BlocGraph
+api - graph
 connectedNodesCount
-	^ self connectedNodes size.
+	<return: #Number>
+
+	^ self connectedNodes size

@@ -1,3 +1,3 @@
-api
+api - testing
 isEdge
-	^ self userData at: #isMondrianEdge ifAbsent: [ false ]
+	^ isEdge

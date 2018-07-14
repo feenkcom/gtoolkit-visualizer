@@ -1,3 +1,5 @@
 *GToolkit-BlocGraph
 graph
-	^ GtGraphElement on: self
+	^ self userData
+		at: #blocGraph 
+		ifAbsentPut: [ GtGraphElement on: self ]

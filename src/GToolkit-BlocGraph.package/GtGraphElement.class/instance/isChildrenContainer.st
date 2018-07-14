@@ -1,4 +1,4 @@
-api
+deprecated
 isChildrenContainer
 	"this property marks an element for being a container of children within the Mondrian context.
 	it is useful in the following Mondrian context:

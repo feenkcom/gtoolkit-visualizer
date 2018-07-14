@@ -16,14 +16,14 @@ constructTreeWithNodesOfIncreasingSize
 	
 	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	
-	self assert: ((theNodes at: 1) graph) connectedNodesAlongOutgoingEdgesCount equals: 2.
-	self assert: ((theNodes at: 1) graph) connectedNodesAlongIncomingEdgesCount equals: 0.
-	self assert: ((theNodes at: 2) graph) connectedNodesAlongOutgoingEdgesCount equals: 2.
-	self assert: ((theNodes at: 2) graph) connectedNodesAlongIncomingEdgesCount equals: 1.
-	self assert: ((theNodes at: 6) graph) connectedNodesAlongOutgoingEdgesCount equals: 4. 
-	self assert: ((theNodes at: 6) graph) connectedNodesAlongIncomingEdgesCount equals: 1. 
-	self assert: ((theNodes at: 15) graph) connectedNodesAlongOutgoingEdgesCount equals: 0.
-	self assert: ((theNodes at: 15) graph) connectedNodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 1) graph) nodesAlongOutgoingEdgesCount equals: 2.
+	self assert: ((theNodes at: 1) graph) nodesAlongIncomingEdgesCount equals: 0.
+	self assert: ((theNodes at: 2) graph) nodesAlongOutgoingEdgesCount equals: 2.
+	self assert: ((theNodes at: 2) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 6) graph) nodesAlongOutgoingEdgesCount equals: 4. 
+	self assert: ((theNodes at: 6) graph) nodesAlongIncomingEdgesCount equals: 1. 
+	self assert: ((theNodes at: 15) graph) nodesAlongOutgoingEdgesCount equals: 0.
+	self assert: ((theNodes at: 15) graph) nodesAlongIncomingEdgesCount equals: 1.
 
 	self assert: theEdges size equals: 14.
 

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "AliakseiSyrel 7/14/2018 19:31",
+	"super" : "BlLayoutConstraints",
+	"category" : "GToolkit-BlocGraph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"connectedEdges",
+		"radius"
+	],
+	"name" : "GtGraphConstraints",
+	"type" : "normal"
+}

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "AliakseiSyrel 7/14/2018 19:27",
+	"super" : "GtGraphEdgesIterator",
+	"category" : "GToolkit-BlocGraph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtGraphOutgoingEdges",
+	"type" : "normal"
+}
