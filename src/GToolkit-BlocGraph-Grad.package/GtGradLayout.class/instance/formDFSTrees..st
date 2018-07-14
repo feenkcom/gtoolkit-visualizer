@@ -4,22 +4,18 @@ formDFSTrees: theNodes
 	
 	visitedList := Set new.
 	allTrees := OrderedCollection new.
+
 	theNodes do: [ :aNodeElement |
 		| connectedNodesDictionary |
-		(visitedList includes: aNodeElement)
+		
+		((visitedList includes: aNodeElement) or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
 			ifFalse: [
-				aNodeElement graph hasNodesAlongIncomingEdges
-					ifFalse: [
-						connectedNodesDictionary := IdentityDictionary new.
-						self dfs: aNodeElement visited: visitedList tree: connectedNodesDictionary. 
-						allTrees add: (GtGradDepthFirstSearchTree new
-												root: aNodeElement;
-												connectedNodes: connectedNodesDictionary).
-					].
-			].
-	].
+				connectedNodesDictionary := IdentityDictionary new.
+					
+				self dfs: aNodeElement visited: visitedList tree: connectedNodesDictionary. 
+						
+				allTrees add: (GtGradDepthFirstSearchTree new
+						root: aNodeElement;
+						connectedNodes: connectedNodesDictionary) ] ].
 	
 	^ allTrees
-		
-
-	

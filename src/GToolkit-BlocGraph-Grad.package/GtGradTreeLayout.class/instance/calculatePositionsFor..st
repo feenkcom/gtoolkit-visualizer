@@ -11,9 +11,9 @@ calculatePositionsFor: theNodeElements
 	dfsTrees := self formDFSTrees: theNodeElements.
 	
 	theNodeElements do: [ :aNodeElement |
-	offsets at: aNodeElement put: 0@0.
-	positions at: aNodeElement put: 0@0.
-	contours at: aNodeElement put: NodeContour new ].
+		offsets at: aNodeElement put: 0@0.
+		positions at: aNodeElement put: 0@0.
+		contours at: aNodeElement put: NodeContour new ].
 
 	startX := 50.
 	startY := 50.
