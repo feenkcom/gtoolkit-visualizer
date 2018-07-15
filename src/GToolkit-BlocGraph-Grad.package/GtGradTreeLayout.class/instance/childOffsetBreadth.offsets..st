@@ -1,3 +1,0 @@
-accessing
-childOffsetBreadth: aChildElement offsets: anOffsetsDict
-	self subclassResponsibility

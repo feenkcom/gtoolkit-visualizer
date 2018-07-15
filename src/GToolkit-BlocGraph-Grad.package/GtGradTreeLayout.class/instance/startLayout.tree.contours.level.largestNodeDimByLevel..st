@@ -1,5 +1,5 @@
-calculating
-startLayout: aNodeElement tree: aDFSTree offsets: anOffsetsDict contours: aContoursDict level: aLevel largestNodeDimByLevel: maxLevelDimsDict
+as yet unclassified
+startLayout: aNodeElement tree: aDFSTree contours: aContoursDict level: aLevel largestNodeDimByLevel: maxLevelDimsDict
 	| nodeDim maxDim|
 	
 	GtGradTreeLayoutNodeProcessingStartedSignal new 
@@ -15,7 +15,6 @@ startLayout: aNodeElement tree: aDFSTree offsets: anOffsetsDict contours: aConto
 
 	self setOffsetsAndContours: aNodeElement
 		  tree: aDFSTree
-	 	  offsets: anOffsetsDict
 		  contours: aContoursDict
 		  level: aLevel
 		  largestNodeDimByLevel: maxLevelDimsDict.

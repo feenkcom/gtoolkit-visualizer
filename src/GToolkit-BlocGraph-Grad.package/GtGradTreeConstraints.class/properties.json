@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "AliakseiSyrel 7/15/2018 14:51",
+	"super" : "BlLayoutConstraints",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"computedOffset"
+	],
+	"name" : "GtGradTreeConstraints",
+	"type" : "normal"
+}

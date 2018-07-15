@@ -1,5 +1,5 @@
-calculating
-layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsDict offsets: anOffsetsDict bounds: bounds level: aLevel largestNodeDimByLevel: maxaLevelDimsDict
+as yet unclassified
+layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsDict bounds: bounds level: aLevel largestNodeDimByLevel: maxaLevelDimsDict
 	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY breadthCorrection lengthCorrection firstChild|
 	
 	nodePosition := aPositionsDict at: aNodeElement.
@@ -12,8 +12,8 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 		lengthCorrection: lengthCorrection;
 		emit.
 	
-	newNodePositionX := (nodePosition x) + x0 + (self nodeOffsetBreadth: aNodeElement offsets: anOffsetsDict) + breadthCorrection.
-	newNodePositionY := (nodePosition y) + y0 + (self nodeOffsetLength: aNodeElement offsets: anOffsetsDict) + lengthCorrection.
+	newNodePositionX := (nodePosition x) + x0 + (self nodeOffsetBreadth: aNodeElement) + breadthCorrection.
+	newNodePositionY := (nodePosition y) + y0 + (self nodeOffsetLength: aNodeElement) + lengthCorrection.
 	aPositionsDict at: aNodeElement put: newNodePositionX@newNodePositionY.
 
 	newBounds := self updateBounds: aNodeElement
@@ -31,13 +31,12 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 							startX: newNodePositionX
 							startY: newNodePositionY
 							positions: aPositionsDict
-							offsets: anOffsetsDict
 							bounds: newBounds
 							level: (aLevel + 1)
 							largestNodeDimByLevel: maxaLevelDimsDict. 
 
-	childrenOffsetX := newNodePositionX + (self nodeOffsetBreadth: firstChild offsets: anOffsetsDict).
-	childrenOffsetY := newNodePositionY + (self nodeOffsetLength: firstChild offsets: anOffsetsDict).
+	childrenOffsetX := newNodePositionX + (self nodeOffsetBreadth: firstChild).
+	childrenOffsetY := newNodePositionY + (self nodeOffsetLength: firstChild).
 
 	(aDFSTree at: aNodeElement) do: [ :child |
 		
@@ -48,13 +47,12 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 											startX: childrenOffsetX
 											startY: childrenOffsetY
 											positions: aPositionsDict
-											offsets: anOffsetsDict
 											bounds: newBounds
 											level: (aLevel + 1)
 											largestNodeDimByLevel: maxaLevelDimsDict. 
 
-					childrenOffsetX := childrenOffsetX + (self childOffsetBreadth: child offsets: anOffsetsDict).
-					childrenOffsetY := childrenOffsetY + (self childOffsetLength: child offsets: anOffsetsDict).
+					childrenOffsetX := childrenOffsetX + (self childOffsetBreadth: child).
+					childrenOffsetY := childrenOffsetY + (self childOffsetLength: child).
 				].
 		].
 

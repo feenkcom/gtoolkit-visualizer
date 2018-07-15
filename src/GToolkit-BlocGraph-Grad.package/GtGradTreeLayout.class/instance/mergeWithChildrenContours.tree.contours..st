@@ -1,5 +1,5 @@
 calculating
-mergeWithChildrenContours: aNodeElement tree: aDFSTree offsets: anOffsetsDict contours: aContoursDict
+mergeWithChildrenContours: aNodeElement tree: aDFSTree contours: aContoursDict
 	| total width firstChild | 
 	
 	firstChild := (aDFSTree at: aNodeElement) first.
@@ -14,7 +14,10 @@ mergeWithChildrenContours: aNodeElement tree: aDFSTree offsets: anOffsetsDict co
 				| d |
 
 				d := self mergeContours: aNodeElement child: child contours: aContoursDict.
-				anOffsetsDict at: child put: 0@(width + d).
+
+				self flag: 'Use constraints'.
+				child constraints gradTree computedOffset: 0@(width + d).
+				
 				GtGradTreeLayoutOffsetSetSignal new
 									node: aNodeElement; 
 									offsetX: 0; 

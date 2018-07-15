@@ -1,3 +1,0 @@
-accessing
-nodeOffsetLength: aNodeElement offsets: anOffsetsDict
-	self subclassResponsibility
