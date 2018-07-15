@@ -18,3 +18,16 @@ Small distances:
 ${example:name=GtGradVerticalTreeLayouttExamples>>#simpleTreeWithSmallerDistances|expanded=true|expandedPreview=true}$
 ${example:name=GtGradHorizontalTreeLayouttExamples>>#simpleTreeWithSmallerDistances|expanded=true|expandedPreview=true}$
 
+The layout can also handle graph which are not trees. This is done by firstly traversing the graph using DFS and forming a tree.  
+An example of this feature shown bellow.
+
+${example:name=GtGradVerticalTreeLayouttExamples>>#graphWithCycles|expanded=true|expandedPreview=true}$
+${example:name=GtGradHorizontalTreeLayouttExamples>>#graphWithCycles|expanded=true|expandedPreview=true}$
+
+Additionally, it the layout handles laying out a disconnected graph. That is, a graph that contains several disconnected componnents.
+It is possible to configure the distance between trees, as demonstrated by the next examples,  with the first one having the
+default distance between trees, and the second one a larger one.
+
+${example:name=GtGradVerticalTreeLayouttExamples>>#disconnectedGraph|expanded=true|expandedPreview=true}$
+${example:name=GtGradVerticalTreeLayouttExamples>>#disconnectedGraphBiggerDistance|expanded=true|expandedPreview=true}$
+
