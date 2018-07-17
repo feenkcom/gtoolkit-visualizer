@@ -33,7 +33,7 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 							positions: aPositionsDict
 							bounds: newBounds
 							level: (aLevel + 1)
-							largestNodeDimByLevel: maxaLevelDimsDict. 
+							largestNodeDimByLevel: maxaLevelDimsDict.
 
 	childrenOffsetX := newNodePositionX + (self nodeOffsetBreadth: firstChild).
 	childrenOffsetY := newNodePositionY + (self nodeOffsetLength: firstChild).

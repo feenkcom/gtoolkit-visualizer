@@ -1,15 +1,20 @@
-calculating
-mergeContours: aNodeElement child: childNode contours: aContoursDict
+private - contrours
+mergeContour: aParentContour with: aChildContour
+	<return: #Number>
 	| x y total upper lower parentUpperTail childUpperTail parentLowerTail childLowerTail |
+
 	x := 0.
 	y := 0.
 	total := 0.
-	parentUpperTail := (aContoursDict at: aNodeElement) upperTail.
-	childUpperTail := (aContoursDict at: childNode) upperTail.
-	parentLowerTail := (aContoursDict at: aNodeElement) lowerTail.
-	childLowerTail := (aContoursDict at: childNode) lowerTail.
-	upper := (aContoursDict at: aNodeElement) lowerHead.
-	lower := (aContoursDict at: childNode) upperHead.
+
+	parentUpperTail := aParentContour upperTail.
+	parentLowerTail := aParentContour lowerTail.
+	
+	childUpperTail := aChildContour upperTail.
+	childLowerTail := aChildContour lowerTail.
+	upper := aParentContour lowerHead.
+	lower := aChildContour upperHead.
+
 	[ lower isNotNil and: [ upper isNotNil ] ]
 		whileTrue: [ | offset lowerX upperX lowerY upperY |
 			offset := self calculateOffset: lower otherContourLine: upper x: x y: y.
@@ -37,6 +42,7 @@ mergeContours: aNodeElement child: childNode contours: aContoursDict
 			connectingLine := childLowerTail connectingLine: upper x1: x y1: y x2: 0 y2: 0.
 			connectingLine next isNil
 				ifTrue: [ parentLowerTail := connectingLine ] ].
-	(aContoursDict at: aNodeElement)
-		lowerHead: (aContoursDict at: childNode) lowerHead.
+	
+	aParentContour lowerHead: aChildContour lowerHead.
+
 	^ total

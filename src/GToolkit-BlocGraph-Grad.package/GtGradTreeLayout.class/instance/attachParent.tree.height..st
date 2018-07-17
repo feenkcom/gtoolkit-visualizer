@@ -1,5 +1,5 @@
 calculating
-attachParent: aNode tree: aDFSTree height: height contours: aContoursDict
+attachParent: aNode tree: aDFSTree height: height
 	| x y1 y2 offset nodeContour previousUpperHead previousLowerHead upperHeadNext lowerHeadNext |
 
 	x := self nodeDistance + self levelDistance.
@@ -17,15 +17,16 @@ attachParent: aNode tree: aDFSTree height: height contours: aContoursDict
 		offsetY: offset y;
 		emit.
 
-	nodeContour := aContoursDict at: aNode.
+	nodeContour := aNode constraints gradTree computedContour.
+
 	previousUpperHead := nodeContour upperHead.
-	nodeContour upperHead: (NodeContourLine new position: (aNode measuredBounds height)@0).
-	upperHeadNext := (NodeContourLine new position: x@y1) next: previousUpperHead.
+	nodeContour upperHead: (GtGradNodeContourLine new position: (aNode measuredBounds height)@0).
+	upperHeadNext := (GtGradNodeContourLine new position: x@y1) next: previousUpperHead.
 	nodeContour upperHead next: upperHeadNext.
 	
 	previousLowerHead := nodeContour lowerHead.
-	nodeContour lowerHead: (NodeContourLine new position: (aNode measuredBounds height)@0).
-	lowerHeadNext := (NodeContourLine new position: x@y2) next: previousLowerHead.
+	nodeContour lowerHead: (GtGradNodeContourLine new position: (aNode measuredBounds height)@0).
+	lowerHeadNext := (GtGradNodeContourLine new position: x@y2) next: previousLowerHead.
 	nodeContour lowerHead next: lowerHeadNext.
 
 		

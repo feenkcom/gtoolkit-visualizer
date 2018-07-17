@@ -1,17 +1,14 @@
 calculating
 calculatePositionsFor: theNodeElements
 	<return: #Collection of: #Point>
-	| dfsTrees positions contours bounds maxLevelHeights startX startY |
+	| dfsTrees positions bounds maxLevelHeights startX startY |
 
 	positions := IdentityDictionary new.
-	contours := IdentityDictionary new.
 	maxLevelHeights := Dictionary new.
 	
 	dfsTrees := self formDFSTrees: theNodeElements.
 	
-	theNodeElements do: [ :aNodeElement |
-		positions at: aNodeElement put: 0@0.
-		contours at: aNodeElement put: NodeContour new ].
+	theNodeElements do: [ :aNodeElement | positions at: aNodeElement put: 0@0 ].
 
 	startX := 50.
 	startY := 50.
@@ -25,7 +22,6 @@ calculatePositionsFor: theNodeElements
 
 		self startLayout: aTree root
 		  tree: aTree connectedNodes
-		  contours: contours
 		  level: 1
 		  largestNodeDimByLevel: maxLevelHeights.
 		

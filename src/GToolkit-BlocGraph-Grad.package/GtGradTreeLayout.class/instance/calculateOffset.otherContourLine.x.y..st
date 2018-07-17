@@ -1,6 +1,8 @@
-calculating
+private - contrours
 calculateOffset: contour1 otherContourLine: contour2 x: x y: y
+	<return: #Number>
 	| offset contour1x contour1y contour2x contour2y |
+
 	offset := 0.
 	contour1x := contour1 position x.
 	contour1y := contour1 position y.

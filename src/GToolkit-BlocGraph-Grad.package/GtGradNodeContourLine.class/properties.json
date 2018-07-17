@@ -6,11 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"upperTail",
-		"upperHead",
-		"lowerTail",
-		"lowerHead"
+		"position",
+		"next"
 	],
-	"name" : "NodeContour",
+	"name" : "GtGradNodeContourLine",
 	"type" : "normal"
 }

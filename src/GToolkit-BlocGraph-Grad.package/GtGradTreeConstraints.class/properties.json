@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"computedOffset"
+		"computedOffset",
+		"computedContour"
 	],
 	"name" : "GtGradTreeConstraints",
 	"type" : "normal"

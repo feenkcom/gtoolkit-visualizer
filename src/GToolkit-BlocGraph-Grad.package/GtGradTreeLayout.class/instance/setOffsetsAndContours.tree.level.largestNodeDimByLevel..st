@@ -1,5 +1,5 @@
 calculating
-setOffsetsAndContours: aNodeElement tree: aDFSTree contours: aContoursDict level: aLevel largestNodeDimByLevel: largestNodeDimByLevel
+setOffsetsAndContours: aNodeElement tree: aDFSTree level: aLevel largestNodeDimByLevel: largestNodeDimByLevel
 	
 	"Perform the initial layout pass along all the nodes going from the root to the leafs"
 	
@@ -10,21 +10,18 @@ setOffsetsAndContours: aNodeElement tree: aDFSTree contours: aContoursDict level
 			do: [ :aConnectedElement | 
 				self startLayout: aConnectedElement
 				  		tree: aDFSTree
-	  				   contours: aContoursDict
 				  		level: aLevel + 1
 				  		largestNodeDimByLevel: largestNodeDimByLevel 
 			].
 
 			aHeight := self
 				mergeWithChildrenContours: aNodeElement
-				tree: aDFSTree
-				contours: aContoursDict.
+				tree: aDFSTree.
 			self
 				attachParent: aNodeElement
 				tree: aDFSTree
 				height: aHeight
-				contours: aContoursDict 
 	]
-	ifFalse: [ self layoutLeaf: aNodeElement countours: aContoursDict ].
+	ifFalse: [ self layoutLeaf: aNodeElement ].
 
 			

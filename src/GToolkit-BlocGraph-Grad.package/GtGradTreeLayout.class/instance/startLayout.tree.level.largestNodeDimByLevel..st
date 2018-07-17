@@ -1,12 +1,12 @@
 as yet unclassified
-startLayout: aNodeElement tree: aDFSTree contours: aContoursDict level: aLevel largestNodeDimByLevel: maxLevelDimsDict
+startLayout: aNodeElement tree: aDFSTree level: aLevel largestNodeDimByLevel: maxLevelDimsDict
 	| nodeDim maxDim|
 	
 	GtGradTreeLayoutNodeProcessingStartedSignal new 
-									node: aNodeElement;
-									level: aLevel;
-									emit.
-		
+		node: aNodeElement;
+		level: aLevel;
+		emit.
+
 	nodeDim := self nodeOffsetDim: aNodeElement.
 	maxLevelDimsDict at: aLevel ifAbsentPut: [ nodeDim ].
 	maxDim := maxLevelDimsDict at: aLevel.
@@ -15,11 +15,10 @@ startLayout: aNodeElement tree: aDFSTree contours: aContoursDict level: aLevel l
 
 	self setOffsetsAndContours: aNodeElement
 		  tree: aDFSTree
-		  contours: aContoursDict
 		  level: aLevel
 		  largestNodeDimByLevel: maxLevelDimsDict.
 		
 	GtGradTreeLayoutNodeProcessingFinishedSignal new
-									node: aNodeElement;
-									level: aLevel;
-									emit.
+		node: aNodeElement;
+		level: aLevel;
+		emit
