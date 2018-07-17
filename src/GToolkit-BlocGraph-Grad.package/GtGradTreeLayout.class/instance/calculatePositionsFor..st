@@ -1,14 +1,14 @@
 calculating
 calculatePositionsFor: theNodeElements
 	<return: #Collection of: #Point>
-	| dfsTrees positions bounds maxLevelHeights startX startY |
+	| dfsTrees bounds maxLevelHeights startX startY |
 
-	positions := IdentityDictionary new.
+	"reset all computed positions"
+	theNodeElements do: [ :aNodeElement | aNodeElement constraints gradTree computedPosition: 0@0 ].
+
 	maxLevelHeights := Dictionary new.
 	
 	dfsTrees := self formDFSTrees: theNodeElements.
-	
-	theNodeElements do: [ :aNodeElement | positions at: aNodeElement put: 0@0 ].
 
 	startX := 50.
 	startY := 50.
@@ -29,15 +29,10 @@ calculatePositionsFor: theNodeElements
 						tree: aTree connectedNodes
 						startX: startX
 						startY: startY
-						positions: positions
 						bounds: 0@0
 						level: 1
 						largestNodeDimByLevel: maxLevelHeights.
 
 			maxLevelHeights removeAll.
 			
-			startX := startX + bounds x + self treesDistance.
-
-	].
-
-	^ positions
+			startX := startX + bounds x + self treesDistance ]

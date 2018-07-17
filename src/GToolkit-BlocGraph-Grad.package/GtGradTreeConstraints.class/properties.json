@@ -7,7 +7,8 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"computedOffset",
-		"computedContour"
+		"computedContour",
+		"computedPosition"
 	],
 	"name" : "GtGradTreeConstraints",
 	"type" : "normal"

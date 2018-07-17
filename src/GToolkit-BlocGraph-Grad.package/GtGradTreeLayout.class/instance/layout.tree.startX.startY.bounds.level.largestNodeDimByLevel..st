@@ -1,8 +1,9 @@
 as yet unclassified
-layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsDict bounds: bounds level: aLevel largestNodeDimByLevel: maxaLevelDimsDict
+layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 bounds: bounds level: aLevel largestNodeDimByLevel: maxaLevelDimsDict
 	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY breadthCorrection lengthCorrection firstChild|
 	
-	nodePosition := aPositionsDict at: aNodeElement.
+	nodePosition := aNodeElement constraints gradTree computedPosition.
+
 	breadthCorrection :=  self nodeBreadthCorrection: aNodeElement level: aLevel largestNodeDimByLevel: maxaLevelDimsDict.
 	lengthCorrection :=  self nodeLengthCorrection: aNodeElement level: aLevel largestNodeDimByLevel: maxaLevelDimsDict.
 	
@@ -11,10 +12,11 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 		breadthCorrection: breadthCorrection; 
 		lengthCorrection: lengthCorrection;
 		emit.
-	
+
 	newNodePositionX := (nodePosition x) + x0 + (self nodeOffsetBreadth: aNodeElement) + breadthCorrection.
 	newNodePositionY := (nodePosition y) + y0 + (self nodeOffsetLength: aNodeElement) + lengthCorrection.
-	aPositionsDict at: aNodeElement put: newNodePositionX@newNodePositionY.
+
+	aNodeElement constraints gradTree computedPosition: newNodePositionX@newNodePositionY.
 
 	newBounds := self updateBounds: aNodeElement
 							bounds:bounds
@@ -30,7 +32,6 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 							tree: aDFSTree
 							startX: newNodePositionX
 							startY: newNodePositionY
-							positions: aPositionsDict
 							bounds: newBounds
 							level: (aLevel + 1)
 							largestNodeDimByLevel: maxaLevelDimsDict.
@@ -46,7 +47,6 @@ layout: aNodeElement tree: aDFSTree startX: x0 startY: y0 positions: aPositionsD
 											tree: aDFSTree
 											startX: childrenOffsetX
 											startY: childrenOffsetY
-											positions: aPositionsDict
 											bounds: newBounds
 											level: (aLevel + 1)
 											largestNodeDimByLevel: maxaLevelDimsDict. 
