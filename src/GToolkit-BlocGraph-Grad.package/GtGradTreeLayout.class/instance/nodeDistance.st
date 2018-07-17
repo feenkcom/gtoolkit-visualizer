@@ -1,4 +1,4 @@
-accessing
+api - accessing
 nodeDistance
 	<return: #Number>
 

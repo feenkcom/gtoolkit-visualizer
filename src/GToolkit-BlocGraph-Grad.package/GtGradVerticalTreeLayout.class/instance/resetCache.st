@@ -1,0 +1,3 @@
+actions
+resetCache
+	maxHeights removeAll

@@ -1,3 +1,3 @@
-accessing
-treesDistance: anObject
-	treesDistance := anObject
+api - accessing
+treesDistance: aNumber
+	treesDistance := aNumber

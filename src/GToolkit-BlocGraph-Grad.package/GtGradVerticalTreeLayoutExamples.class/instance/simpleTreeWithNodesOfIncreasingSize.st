@@ -1,7 +1,6 @@
 example
 simpleTreeWithNodesOfIncreasingSize
 	<gtExample>
-		
 	| view theNodes aTreeLayout |
 	
 	view := self view. 

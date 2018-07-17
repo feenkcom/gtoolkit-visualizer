@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradTreeVisitor",
+	"category" : "GToolkit-BlocGraph-Grad-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"layout"
+	],
+	"name" : "GtGradTreeLayouter",
+	"type" : "normal"
+}

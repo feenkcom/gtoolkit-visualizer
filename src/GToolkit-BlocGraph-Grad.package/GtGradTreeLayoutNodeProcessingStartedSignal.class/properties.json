@@ -6,8 +6,7 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"node",
-		"level"
+		"node"
 	],
 	"name" : "GtGradTreeLayoutNodeProcessingStartedSignal",
 	"type" : "normal"

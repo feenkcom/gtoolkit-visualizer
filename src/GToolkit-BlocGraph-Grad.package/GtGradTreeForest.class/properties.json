@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "GToolkit-BlocGraph-Grad-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"trees"
+	],
+	"name" : "GtGradTreeForest",
+	"type" : "normal"
+}

@@ -1,4 +1,4 @@
-accessing
+api - accessing
 levelDistance
 	<return: #Number>
 

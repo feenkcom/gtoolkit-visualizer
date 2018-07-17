@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "GtGradLayout",
-	"category" : "GToolkit-BlocGraph-Grad",
+	"category" : "GToolkit-BlocGraph-Grad-Tree",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

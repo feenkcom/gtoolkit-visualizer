@@ -1,11 +1,13 @@
 {
 	"commentStamp" : "",
 	"super" : "GtGradTreeLayout",
-	"category" : "GToolkit-BlocGraph-Grad",
+	"category" : "GToolkit-BlocGraph-Grad-Tree",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
+	"instvars" : [
+		"maxHeights"
+	],
 	"name" : "GtGradVerticalTreeLayout",
 	"type" : "normal"
 }

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradTreeLayouter",
+	"category" : "GToolkit-BlocGraph-Grad-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"origin"
+	],
+	"name" : "GtGradTreeLayoutCalculator",
+	"type" : "normal"
+}

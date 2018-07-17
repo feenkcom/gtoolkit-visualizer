@@ -1,4 +1,4 @@
-measure
+private - tree
 formDFSTrees: theNodes
 	| allTrees visitedList |
 	

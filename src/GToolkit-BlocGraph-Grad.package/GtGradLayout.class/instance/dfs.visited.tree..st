@@ -1,4 +1,4 @@
-measure
+private - tree
 dfs: theCurrentNode visited: aVisitedList tree: aDFSTree
 
 	aVisitedList add: theCurrentNode.

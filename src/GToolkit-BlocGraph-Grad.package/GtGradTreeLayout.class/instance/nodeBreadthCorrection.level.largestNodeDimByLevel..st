@@ -1,3 +1,0 @@
-accessing
-nodeBreadthCorrection: aNodeElement level: aLevel largestNodeDimByLevel: aLargestNodeDimByLevelDict
-	self subclassResponsibility
