@@ -1,12 +1,15 @@
 private - layout
-attachParent: aTreeNode height: height
+attachParent: aTreeNode breadth: aChildrenBreadth
 	| x y1 y2 offset nodeContour previousUpperHead previousLowerHead upperHeadNext lowerHeadNext |
 
 	x := self nodeDistance + self levelDistance.
-	y2 := ((height - aTreeNode width) / 2) - self nodeDistance.
-	y1 := (y2 + aTreeNode width) + (2 * self nodeDistance) - height.
+	
+	"here we make sure that the parent is centered relative to its children"
+	y2 := ((aChildrenBreadth - (self layout nodeBreadth: aTreeNode)) / 2.0) - self nodeDistance.
 
-	offset := (x + aTreeNode height)@y1.
+	y1 := (y2 + (self layout nodeBreadth: aTreeNode)) + (2 * self nodeDistance) - aChildrenBreadth.
+
+	offset := (x + (self layout nodeLength: aTreeNode))@y1.
 
 	aTreeNode nodes first element constraints gradTree computedOffset: offset.
 

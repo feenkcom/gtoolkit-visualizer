@@ -1,3 +1,3 @@
 accessing
 nodeExtent
-	^ 20@10
+	^ 50@20

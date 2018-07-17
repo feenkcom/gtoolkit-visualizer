@@ -1,6 +1,6 @@
 private - layout
 mergeWithChildrenContours: aTreeNode
-	| total width aFirstChildNode aNodeContour | 
+	| aTotalBreadt aChildBreadth aFirstChildNode aNodeContour | 
 
 	aFirstChildNode := aTreeNode nodes first.
 
@@ -8,10 +8,10 @@ mergeWithChildrenContours: aTreeNode
 	aNodeContour := aFirstChildNode element constraints gradTree computedContour.
 	aTreeNode element constraints gradTree computedContour: aNodeContour.
 
-	width := (aFirstChildNode width) + (2 * self nodeDistance).
+	aChildBreadth := (self layout nodeBreadth: aFirstChildNode) + (2 * self nodeDistance).
 
-	total := width.
-	
+	aTotalBreadt := aChildBreadth.
+
 	aTreeNode nodes
 		select: [ :aChildNode | aChildNode ~~ aFirstChildNode ]
 		thenDo: [ :aChildNode | 
@@ -21,16 +21,16 @@ mergeWithChildrenContours: aTreeNode
 					mergeContour: aNodeContour
 					with: aChildNode element constraints gradTree computedContour.
 
-				aChildNode element constraints gradTree computedOffset: 0@(width + aDeltaDistance).
-				
+				aChildNode element constraints gradTree computedOffset: 0@(aChildBreadth + aDeltaDistance).
+
 				GtGradTreeLayoutOffsetSetSignal new
 					node: aChildNode; 
 					offsetX: 0; 
-					offsetY: width + aDeltaDistance;
+					offsetY: aChildBreadth + aDeltaDistance;
 					emit.
 
-				width := (aChildNode width) + (2 * self nodeDistance).
-				total := total + width + aDeltaDistance ].
+				aChildBreadth := (self layout nodeBreadth: aChildNode) + (2 * self nodeDistance).
+				aTotalBreadt := aTotalBreadt + aChildBreadth + aDeltaDistance ].
 
-	^ total
+	^ aTotalBreadt
 	

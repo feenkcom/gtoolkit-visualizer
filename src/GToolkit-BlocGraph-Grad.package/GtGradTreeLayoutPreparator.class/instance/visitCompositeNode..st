@@ -1,9 +1,9 @@
 visiting
 visitCompositeNode: aTreeNode
-	| aHeight |
+	| theChildrenBreadth |
 
-	aHeight := self mergeWithChildrenContours: aTreeNode.
+	theChildrenBreadth := self mergeWithChildrenContours: aTreeNode.
 
 	self
 		attachParent: aTreeNode
-		height: aHeight
+		breadth: theChildrenBreadth

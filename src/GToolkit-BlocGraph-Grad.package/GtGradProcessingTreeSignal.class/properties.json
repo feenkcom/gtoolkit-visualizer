@@ -6,8 +6,7 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"root",
-		"edgesByNode"
+		"root"
 	],
 	"name" : "GtGradProcessingTreeSignal",
 	"type" : "normal"

@@ -11,4 +11,4 @@ visitRootNode: aTreeNode
 		start: self origin
 		bounds: 0@0.
 
-	origin := self origin + ((bounds x + self treesDistance) @ self origin y)
+	origin := self origin + ((bounds x + self treesDistance) @ 0)
