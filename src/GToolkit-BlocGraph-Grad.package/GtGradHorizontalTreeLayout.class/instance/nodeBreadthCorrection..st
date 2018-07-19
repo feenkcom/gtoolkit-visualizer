@@ -1,3 +1,5 @@
 api - geometry
 nodeBreadthCorrection: aTreeNode
-	^ ((self maxWidthAt: aTreeNode) - aTreeNode width) / 2.0
+	aTreeNode parent isNil
+		ifTrue: [ ^ 0 ].
+	^ (self maxWidthAt: (aTreeNode parent)) - (aTreeNode parent) width

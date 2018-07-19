@@ -1,3 +1,5 @@
 api - geometry
 nodeLengthCorrection: aTreeNode
-	^ ((self maxHeightAt: aTreeNode) - aTreeNode height) / 2.0
+	aTreeNode parent isNil
+		ifTrue: [ ^ 0 ].
+	^ (self maxHeightAt: (aTreeNode parent)) - (aTreeNode parent) height

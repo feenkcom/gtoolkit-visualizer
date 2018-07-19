@@ -8,7 +8,7 @@ simpleTreeWithNodesOfIncreasingSize
 	theNodes := self constructTreeWithNodesOfIncreasingSize key.
 	view addChildren: theNodes. 
 
-	view layout: aTreeLayout.
+	view layout: aTreeLayout. 
 	view forceLayout. 
 
 	^ view
