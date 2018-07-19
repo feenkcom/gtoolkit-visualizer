@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradTreeNodesAlignment",
+	"category" : "GToolkit-BlocGraph-Grad-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtGradTreeNodesVerticalCenterAlignment",
+	"type" : "normal"
+}

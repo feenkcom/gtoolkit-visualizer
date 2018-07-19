@@ -8,7 +8,8 @@
 	"instvars" : [
 		"levelDistance",
 		"nodeDistance",
-		"treesDistance"
+		"treesDistance",
+		"nodesAlignment"
 	],
 	"name" : "GtGradTreeLayout",
 	"type" : "normal"
