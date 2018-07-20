@@ -7,8 +7,7 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"node",
-		"breadthCorrection",
-		"lengthCorrection"
+		"alignmentCorrection"
 	],
 	"name" : "GtGradTreeLayoutCorrectionSignal",
 	"type" : "normal"

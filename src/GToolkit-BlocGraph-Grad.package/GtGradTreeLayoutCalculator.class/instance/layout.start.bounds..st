@@ -1,20 +1,23 @@
 private - layout
 layout: aTreeNode start: aStartPoint bounds: bounds
-	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY breadthCorrection lengthCorrection firstChild|
+	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection|
 
 	nodePosition := aTreeNode element constraints gradTree computedPosition.
-
-	breadthCorrection :=  self layout nodeBreadthCorrection: aTreeNode.
-	lengthCorrection :=  self layout nodeLengthCorrection: aTreeNode.
+	alignmentCorrection := (self layout nodeAlignmentCorrection: aTreeNode).
 
 	GtGradTreeLayoutCorrectionSignal new 
 		node: aTreeNode;
-		breadthCorrection: breadthCorrection; 
-		lengthCorrection: lengthCorrection;
+		alignmentCorrection: alignmentCorrection;
 		emit.
-
-	newNodePositionX := (nodePosition x) + aStartPoint x + (self layout nodeOffsetBreadth: aTreeNode element) + breadthCorrection.
-	newNodePositionY := (nodePosition y) + aStartPoint y + (self layout nodeOffsetLength: aTreeNode element) + lengthCorrection.
+	
+	newNodePositionX := (nodePosition x) +
+							  aStartPoint x +
+							  (self layout nodeOffsetBreadth: aTreeNode element) +
+							  alignmentCorrection x.
+	newNodePositionY := (nodePosition y) +
+							  aStartPoint y +
+							  (self layout nodeOffsetLength: aTreeNode element) +
+							  alignmentCorrection y.
 
 	aTreeNode element constraints gradTree computedPosition: newNodePositionX@newNodePositionY.
 

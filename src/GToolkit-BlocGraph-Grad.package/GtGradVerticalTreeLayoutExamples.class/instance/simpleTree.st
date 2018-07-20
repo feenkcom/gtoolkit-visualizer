@@ -4,7 +4,7 @@ simpleTree
 		
 	| view theNodes aTreeLayout theNodePositions theNodeExtents |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	theNodes := self constructSimpleTree key.
 	view addChildren: theNodes. 
