@@ -1,3 +1,3 @@
 scripting
 tree
-	^ self custom: GtGraphTreeLayout new
+	^ self custom: GtGradVerticalTreeLayout new
