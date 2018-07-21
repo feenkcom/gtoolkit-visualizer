@@ -3,7 +3,7 @@ layout: aTreeNode start: aStartPoint bounds: bounds
 	| newBounds nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection|
 
 	nodePosition := aTreeNode element constraints gradTree computedPosition.
-	alignmentCorrection := (self layout nodeAlignmentCorrection: aTreeNode).
+	alignmentCorrection := (self layout nodesAlignment calculateCorrectionFor: aTreeNode layout: layout).
 
 	GtGradTreeLayoutCorrectionSignal new 
 		node: aTreeNode;
