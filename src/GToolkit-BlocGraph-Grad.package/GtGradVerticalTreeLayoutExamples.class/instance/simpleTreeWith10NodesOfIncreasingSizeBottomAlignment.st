@@ -1,5 +1,5 @@
 example
-simpleTreeWithNodesOfIncreasingSizeBottomAlignment
+simpleTreeWith10NodesOfIncreasingSizeBottomAlignment
 	<gtExample>
 		
 	| view theNodes aTreeLayout |
@@ -7,7 +7,7 @@ simpleTreeWithNodesOfIncreasingSizeBottomAlignment
 	view := self view. 
 	aTreeLayout := self treeLayout. 
 	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
-	theNodes := self constructTreeWithNodesOfIncreasingSize key.
+	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
 	view addChildren: theNodes. 
 	
 	view layout: aTreeLayout.

@@ -6,7 +6,7 @@ simpleTreeWithNodesOfIncreasingBottomAlignment
 	
 	view := self view. 
 	aTreeLayout := self treeLayout.
-	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment.
+	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
 	view addChildren: theNodes. 
 	

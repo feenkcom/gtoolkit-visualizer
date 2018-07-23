@@ -5,4 +5,4 @@ initialize
 	levelDistance := 10.
 	nodeDistance := 40.
 	treesDistance := 50.
-	nodesAlignment := GtGradTreeNodesTopAlignment.
+	nodesAlignment := GtGradTreeNodesTopAlignment new.
