@@ -9,7 +9,8 @@
 		"levelDistance",
 		"nodeDistance",
 		"treesDistance",
-		"nodesAlignment"
+		"nodesAlignment",
+		"reverse"
 	],
 	"name" : "GtGradTreeLayout",
 	"type" : "normal"

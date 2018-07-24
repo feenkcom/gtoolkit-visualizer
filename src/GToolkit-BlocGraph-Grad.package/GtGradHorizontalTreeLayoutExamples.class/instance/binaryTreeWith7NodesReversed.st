@@ -1,15 +1,16 @@
 example
-binaryTreeWith7Nodes
+binaryTreeWith7NodesReversed
 	<gtExample>
 		
 	| view theNodes  aTreeLayout theNodePositions theNodeExtents |
 	
-	view := self view.
-	theNodes := self constructBinaryTreeWith7Nodes key. 
-	view addChildren: theNodes. 
+	view := self view. 
+	theNodes := self constructBinaryTreeWith7Nodes key.
+	view addChildren: theNodes.
 
 	aTreeLayout := self treeLayout.
-	view layout: aTreeLayout. 
+	aTreeLayout reverse: true.
+	view layout: aTreeLayout.
 	view forceLayout. 
 	
    theNodeExtents := theNodes collect: [ :aNode | aNode extent ].
