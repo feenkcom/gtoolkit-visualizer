@@ -1,3 +1,3 @@
 scripting
 horizontalTree
-	^ self custom: GtGraphHorizontalTreeLayout new
+	^ self custom: GtGradHorizontalTreeLayout new

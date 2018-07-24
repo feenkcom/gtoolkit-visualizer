@@ -5,7 +5,7 @@ asPannableElement
 	pannable
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
-			c vertical matchParent ].
-	pannable contentElement: self topStep root.
+			c vertical matchParent ].	
+	pannable contentElement: self root removeFromParent.
 	pannable zoomableElement clipChildren: false.
 	^ pannable
