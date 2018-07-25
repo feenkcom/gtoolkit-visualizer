@@ -6,7 +6,7 @@ over a horizontal line containing the root node"
 	
 	nodePosition := aTreeNode element constraints gradTree computedPosition.
 
-	^ (nodePosition x) @ ( 2 * (theRootPosition y) - (nodePosition  y) + (theBounds y)).
+	^ (nodePosition x) @ ( 2 * (theRootPosition y) - (nodePosition  y) + (theBounds bottom)).
 	
 	
 
