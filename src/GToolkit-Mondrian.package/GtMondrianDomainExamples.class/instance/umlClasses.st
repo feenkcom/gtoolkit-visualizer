@@ -23,5 +23,5 @@ umlClasses
 		fromCenterBottom;
 		toCenterTop;
 		connectFrom: #superclass.
-	view layout tree verticalGap: 100.
+	view layout tree levelDistance: 100.
 	^ view
