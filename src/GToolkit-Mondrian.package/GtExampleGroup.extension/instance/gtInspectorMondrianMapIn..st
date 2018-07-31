@@ -9,7 +9,6 @@ gtInspectorMondrianMapIn: composite
 				with: (self examples groupedBy: #methodClass) associations forEach: [ :assoc | 
 				view nodes
 					shape: [ :each |
-						| text styler editor editorElement |
 						BlElement new 	
 							geometry: BlEllipse new;
 							border: (BlBorder paint: Color black width: 2);
@@ -18,7 +17,7 @@ gtInspectorMondrianMapIn: composite
 								constraints padding: (BlInsets all: 10) ];
 							 addEventHandlerOn: BlMouseDownEvent do: [ :anEvent | mondrian selection: each ]	];
 					with: assoc value.
-				view layout tree verticalGap: 100 ].
+				view layout tree levelDistance:  100 ].
 			view edges 
 				fromCenterBottom;
 				toCenterTop;
