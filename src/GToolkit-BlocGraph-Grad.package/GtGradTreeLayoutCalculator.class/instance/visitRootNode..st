@@ -12,6 +12,7 @@ visitRootNode: aTreeNode
 	bounds left: SmallInteger maxVal.
 	self
 		layout: aTreeNode
+		currentNode: aTreeNode
 		start: self origin
 		bounds: bounds.
 

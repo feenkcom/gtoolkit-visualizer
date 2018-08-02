@@ -2,8 +2,6 @@ measure
 measurePositions: anElement with: anExtentSpec
 	| theNodes aTreeForest |
 
-	self resetCache.
-
 	"BlElement is a root for all graphical components"
 	"anElement children  -> an instance of BlChildren"
 	theNodes := anElement children accountedByLayout

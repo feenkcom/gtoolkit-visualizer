@@ -1,3 +1,0 @@
-calculating
-calculateCorrectionFor: aTreeNode layout: aLayout
-	self subclassResponsibility

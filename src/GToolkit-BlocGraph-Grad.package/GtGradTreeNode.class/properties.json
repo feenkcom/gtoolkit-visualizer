@@ -9,7 +9,9 @@
 		"nodes",
 		"element",
 		"depth",
-		"parent"
+		"parent",
+		"maxWidths",
+		"maxHeights"
 	],
 	"name" : "GtGradTreeNode",
 	"type" : "normal"

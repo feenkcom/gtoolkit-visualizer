@@ -1,3 +1,0 @@
-actions
-resetCache
-	maxHeights removeAll

@@ -1,10 +1,11 @@
 private - layout
-layout: aTreeNode start: aStartPoint bounds: bounds
+layout: aRootNode currentNode: aTreeNode start: aStartPoint bounds: bounds
 	|  nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection |
 	nodePosition := aTreeNode element constraints gradTree
 		computedPosition.
 	alignmentCorrection := self layout nodesAlignment
 		calculateCorrectionFor: aTreeNode
+		aRootNode: aRootNode
 		layout: layout.
 	GtGradTreeLayoutCorrectionSignal new
 		node: aTreeNode;
@@ -27,7 +28,8 @@ layout: aTreeNode start: aStartPoint bounds: bounds
 		ifFalse: [ ^ self ].
 	firstChild := aTreeNode nodes first.
 	self
-		layout: firstChild
+		layout: aTreeNode
+		currentNode: firstChild
 		start: newNodePositionX @ newNodePositionY
 		bounds: bounds.
 	childrenOffsetX := newNodePositionX
@@ -38,7 +40,8 @@ layout: aTreeNode start: aStartPoint bounds: bounds
 		do: [ :child | 
 			child = firstChild
 				ifFalse: [ self
-							layout: child
+							layout: aRootNode
+							currentNode: child
 							start: childrenOffsetX @ childrenOffsetY
 							bounds: bounds.
 					childrenOffsetX := childrenOffsetX

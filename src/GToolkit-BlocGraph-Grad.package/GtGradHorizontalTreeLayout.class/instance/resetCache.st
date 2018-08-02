@@ -1,3 +1,0 @@
-actions
-resetCache
-	maxWidths removeAll
