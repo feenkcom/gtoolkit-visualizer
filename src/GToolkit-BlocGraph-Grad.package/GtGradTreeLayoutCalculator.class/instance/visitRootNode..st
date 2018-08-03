@@ -2,7 +2,7 @@ visiting
 "protocol: #visiting"
 
 visitRootNode: aTreeNode
-	| bounds dx dy originX |
+	| bounds dx dy |
 
 	GtGradProcessingTreeSignal new
 		root: aTreeNode;
@@ -10,6 +10,7 @@ visitRootNode: aTreeNode
 
 	bounds := BlBounds new.
 	bounds left: SmallInteger maxVal.
+	bounds top: SmallInteger maxVal.
 	self
 		layout: aTreeNode
 		currentNode: aTreeNode
@@ -17,7 +18,7 @@ visitRootNode: aTreeNode
 		bounds: bounds.
 
 	dx := (self origin x) - (bounds left).
-	dy := (self origin y) - (bounds bottom).
+	dy := (self origin y) - (bounds top).
 	
 	self reverse
 		ifTrue: [ 
@@ -31,9 +32,10 @@ visitRootNode: aTreeNode
 			self moveNode: aTreeNode dx: dx dy: dy.
 	 ].
 
-	
-	originX := bounds right + self treesDistance.
-	dx > 0
-		ifTrue: [ originX := originX + dx ].
-
-	self origin: originX @ (self origin y).
+	self origin: (self layout calculateTreeStart: bounds
+									  nodesXCorrection: dx
+									  nodesYCorrection: dy
+									  startX: self origin x
+									  startY: self origin y).
+										
+	"self origin: originX @ (self origin y)."
