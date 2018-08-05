@@ -3,7 +3,7 @@ initialize
 	super initialize.
 	
 	levelDistance := 10.
-	nodeDistance := 40.
-	treesDistance := 50.
+	nodeDistance := 1.
+	treesDistance := 30.
 	reverse := false.
 	nodesAlignment := GtGradTreeNodesTopAlignment new.
