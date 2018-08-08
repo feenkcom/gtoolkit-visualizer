@@ -8,7 +8,7 @@ simpleTreeReversed
 	aTreeLayout := self treeLayout.
 	aTreeLayout reverse: true.
 	theNodes := self constructSimpleTree key.
-	view addChildren: theNodes. 
+	view addChildren: theNodes.
 	
 	view layout: aTreeLayout.
 	view forceLayout. 

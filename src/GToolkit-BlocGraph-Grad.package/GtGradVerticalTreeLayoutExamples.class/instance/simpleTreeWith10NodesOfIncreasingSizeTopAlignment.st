@@ -8,7 +8,7 @@ simpleTreeWith10NodesOfIncreasingSizeTopAlignment
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesTopAlignment new.
 	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
-	view addChildren: theNodes. 
+	view addChildren: theNodes.
 	
 	view layout: aTreeLayout.
 	view forceLayout. 

@@ -37,5 +37,4 @@ visitRootNode: aTreeNode
 									  nodesYCorrection: dy
 									  startX: self origin x
 									  startY: self origin y).
-										
-	"self origin: originX @ (self origin y)."
+
