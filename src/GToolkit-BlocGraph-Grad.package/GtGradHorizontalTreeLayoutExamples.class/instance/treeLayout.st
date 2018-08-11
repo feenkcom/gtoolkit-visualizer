@@ -5,6 +5,6 @@ treeLayout
 
 	aTreeLayout := GtGradHorizontalTreeLayout new.
 	self assert: aTreeLayout levelDistance equals: 10.
-	self assert: aTreeLayout nodeDistance equals: 40.
+	self assert: aTreeLayout nodeDistance equals: 1.
 
 	^ aTreeLayout

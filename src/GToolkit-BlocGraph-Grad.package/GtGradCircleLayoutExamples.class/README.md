@@ -10,7 +10,7 @@ ${example:name=GtGradCircleLayoutExamples>>#containerWithCircleLayoutAndNodesOfI
 
 It can be noticed that it is not necessary to specify the circle's radius - it is automatically calculated so that the nodes do not overlap.  The following example shows this feature in action by laying out 10 nodes, much bigger than those used in the preivous example.
 
-${example:name=GtGradCircleLayoutExamples>>#containerWithCircleLayoutAnd10BigeNodes|expanded=true|expandedPreview=true}$
+${example:name=GtGradCircleLayoutExamples>>#containerWithCircleLayoutAnd10BigNodes|expanded=true|expandedPreview=true}$
 
 
 Optionally, a threshold value can be provided. If that is not the case, the radius will be calculated so that the nodes are close to each other in the resulting layout. If more space is required, the threshold can be manually specified. The larged that value is, the more space there will be between the nodes. The next example shows the same 10 nodes as in the first example, but with the distance parameter (threshold) set to  a value which is twice as big as the default one.

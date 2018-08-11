@@ -9,7 +9,6 @@ containerWithCircleLayoutAndNodesOfIncreasingSize
 	
 	aContainer forceLayout.
 	
-	self assert: aContainer position equals: 0@0. 
-	"self assert: aContainer extent equals: (977@896)."
+	self assert: aContainer position equals: 0@0.
 		
 	^ aContainer

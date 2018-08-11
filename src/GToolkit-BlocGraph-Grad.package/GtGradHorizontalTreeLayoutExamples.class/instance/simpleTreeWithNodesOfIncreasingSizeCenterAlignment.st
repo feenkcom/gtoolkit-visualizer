@@ -8,10 +8,8 @@ simpleTreeWithNodesOfIncreasingSizeCenterAlignment
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesCenterAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
-	view addChildren: theNodes. 
-	
+	view addChildren: theNodes.
 	view layout: aTreeLayout.
 	view forceLayout. 
-	  
-
+	
 	^ view

@@ -1,0 +1,3 @@
+accessing
+simpleTreeWithBiggerDistances
+	^ self subclassResponsibility
