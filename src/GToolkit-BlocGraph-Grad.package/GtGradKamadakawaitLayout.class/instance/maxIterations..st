@@ -1,3 +1,3 @@
 accessing
-maxIterations: anObject
-	maxIterations := anObject
+maxIterations: aNumber
+	maxIterations := aNumber

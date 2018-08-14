@@ -1,0 +1,3 @@
+accessing
+maxHorizontalValue
+	^ maxHorizontalValue

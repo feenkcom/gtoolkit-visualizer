@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradLayout",
+	"category" : "GToolkit-BlocGraph-Grad",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"maxVerticalValue",
+		"maxHorizontalValue"
+	],
+	"name" : "GtGradRandomLayout",
+	"type" : "normal"
+}

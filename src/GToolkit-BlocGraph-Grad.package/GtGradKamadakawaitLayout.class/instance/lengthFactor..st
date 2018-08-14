@@ -1,3 +1,3 @@
 accessing
-lengthFactor: anObject
-	lengthFactor := anObject
+lengthFactor: aNumber
+	lengthFactor := aNumber

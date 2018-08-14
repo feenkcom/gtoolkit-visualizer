@@ -7,9 +7,12 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"lengthFactor",
-		"disconnectedMultiple",
-		"maxIterations"
+		"disconnectedMultiplier",
+		"maxIterations",
+		"currentIteration",
+		"adjustForGravity",
+		"exchangeNodes"
 	],
-	"name" : "GtGradKamadakawaitLayout",
+	"name" : "GtGradKamadaKawaitLayout",
 	"type" : "normal"
 }

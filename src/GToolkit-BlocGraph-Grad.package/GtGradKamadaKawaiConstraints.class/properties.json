@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "BlLayoutConstraints",
+	"category" : "GToolkit-BlocGraph-Grad-Force-Directed",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"computedPosition",
+		"distanceMatrix",
+		"diameter",
+		"length"
+	],
+	"name" : "GtGradKamadaKawaiConstraints",
+	"type" : "normal"
+}
