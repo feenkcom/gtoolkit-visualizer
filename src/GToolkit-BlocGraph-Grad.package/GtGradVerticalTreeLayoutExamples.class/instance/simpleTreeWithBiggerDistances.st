@@ -5,12 +5,10 @@ simpleTreeWithBiggerDistances
 	| view theNodes aTreeLayout |
 	
 	view := self view. 
-	aTreeLayout := self treeLayout: 50 nodeDistance: 50.
+	aTreeLayout := self treeLayout: 40 nodeDistance: 30.
 	theNodes := self constructSimpleTree key.
 	view addChildren: theNodes. 
-	
 	view layout: aTreeLayout.
 	view forceLayout. 
-	  
-
+	
 	^ view

@@ -1,5 +1,5 @@
 examples - layout
-containerWithCircleLayoutAndBigNodes
+containerWithCircleLayoutAnd10BigNodes
 	<gtExample>
 	| aContainer theNodes  |
 

@@ -1,0 +1,3 @@
+accessing
+graphWithCycles
+	^ self subclassResponsibility

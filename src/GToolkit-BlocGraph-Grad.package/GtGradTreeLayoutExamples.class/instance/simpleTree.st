@@ -1,0 +1,3 @@
+accessing
+simpleTree
+	^ self subclassResponsibility

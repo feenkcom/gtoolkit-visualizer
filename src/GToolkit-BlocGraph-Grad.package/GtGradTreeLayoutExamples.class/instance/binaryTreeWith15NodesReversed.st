@@ -1,0 +1,3 @@
+accessing
+binaryTreeWith15NodesReversed
+	^ self subclassResponsibility

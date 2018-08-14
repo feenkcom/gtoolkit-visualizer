@@ -10,7 +10,7 @@ containerWithCircleLayoutAnd10SimpleNodes
 	aContainer forceLayout.
 	
 	self assert: aContainer position equals: 0@0.
-	self assert: aContainer extent equals: (200@180).
+	self assert: aContainer extent equals: (296@254).
 	
 	theNodeExtents := theNodes collect: [ :aNode | aNode extent ].
 	theNodePositions := theNodes collect: [ :aNode | aNode position ]. 
@@ -18,6 +18,6 @@ containerWithCircleLayoutAnd10SimpleNodes
 	self assert: theNodeExtents asArray equals: (10 timesCollect: [ self nodeExtent ]).
 	self
 		assert: theNodePositions asArray
-		equals: { (180.0@85.0). (162.0@137.0). (117.0@170.0). (63.0@170.0). (18.0@137.0). (0.0@85.0). (18.0@33.0). (63.0@0.0). (117.0@0.0). (162.0@33.0)}.
+		equals: {(246.0@117.0). (223.0@189.0). (161.0@234.0). (85.0@234.0). (23.0@189.0). (0.0@117.0). (23.0@45.0). (85.0@0.0). (161.0@0.0). (223.0@45.0)}.
 
 	^ aContainer
