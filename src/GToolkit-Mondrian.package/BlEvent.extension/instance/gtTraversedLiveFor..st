@@ -1,7 +1,7 @@
 *Gtoolkit-Mondrian
 gtTraversedLiveFor: aView
 	<gtView: 10>
-	^ aView 
+	^ aView explicit
 		title: 'Traversed';
 		stencil: [ 
 			| mondrian |
