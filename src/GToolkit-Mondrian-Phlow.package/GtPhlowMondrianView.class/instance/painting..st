@@ -4,7 +4,7 @@ painting: aBlock
 		| mondrian pannableElement | 
 		mondrian := GtMondrian new.
 		aBlock value: mondrian.
-		pannableElement := mondrian view topStep.
+		pannableElement := mondrian asPannableElement.
 		pannableElement 
 			when: BlClickEvent 
 			do: [ :event | 
