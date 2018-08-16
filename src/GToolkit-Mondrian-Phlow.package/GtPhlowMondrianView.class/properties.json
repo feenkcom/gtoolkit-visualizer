@@ -6,7 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"paintingStencilBuilder"
+		"paintingStencilBuilder",
+		"mondrianInstanceBuilder",
+		"mondrianInstance"
 	],
 	"name" : "GtPhlowMondrianView",
 	"type" : "normal"
