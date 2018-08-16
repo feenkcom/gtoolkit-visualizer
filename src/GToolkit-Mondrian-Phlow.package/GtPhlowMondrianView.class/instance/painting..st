@@ -1,7 +1,14 @@
 scripting
 painting: aBlock
 	self originalView stencil: [
-		| mondrian | 
+		| mondrian pannableElement | 
 		mondrian := GtMondrian new.
 		aBlock value: mondrian.
-		mondrian asPannableElement ]
+		pannableElement := mondrian view topStep.
+		pannableElement 
+			when: BlClickEvent 
+			do: [ :event | 
+				event target graph isNode ifTrue: [ 	
+					pannableElement fireEvent: (GtInspectorObjectToSpawn new
+						object: event target graph model;
+						sourceElement: event target) ] ] ]
