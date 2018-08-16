@@ -10,7 +10,7 @@ gtLiveFor: aView
 				when: BlClickEvent 
 				do: [ :event | 
 					event target graph isNode ifTrue: [ 	
-						pannableElement fireEvent: (GtInspectorObjectToSpawn new
+						pannableElement fireEvent: (GtPhlowObjectToSpawn new
 							object: event target graph model;
 							sourceElement: event target) ] ].
 			pannableElement ]
