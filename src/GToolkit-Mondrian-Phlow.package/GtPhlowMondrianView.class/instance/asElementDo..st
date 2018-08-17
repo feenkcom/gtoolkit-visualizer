@@ -9,7 +9,7 @@ asElementDo: aBlock
 			event target graph isNode
 				ifTrue: [ pannableElement
 						fireEvent:
-							(GtPhlowObjectToSpawn new
+							(GtPhlowObjectToSelect new
 								object: event target graph model;
 								sourceElement: event target) ] ].
 	^ aBlock value: pannableElement
