@@ -11,7 +11,11 @@
 		"maxIterations",
 		"currentIteration",
 		"adjustForGravity",
-		"exchangeNodes"
+		"exchangeNodes",
+		"distanceMatrix",
+		"length",
+		"diameter",
+		"arbitraryConstantK"
 	],
 	"name" : "GtGradKamadaKawaitLayout",
 	"type" : "normal"

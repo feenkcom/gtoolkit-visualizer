@@ -7,5 +7,8 @@ initialize
 	maxIterations := 2000.
 	adjustForGravity := true.
 	exchangeNodes := true.
+	arbitraryConstantK := 1.
+
+	
 
 	

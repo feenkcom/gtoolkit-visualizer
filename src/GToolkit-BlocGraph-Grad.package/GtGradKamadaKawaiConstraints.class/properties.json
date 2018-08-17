@@ -6,10 +6,7 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"computedPosition",
-		"distanceMatrix",
-		"diameter",
-		"length"
+		"computedPosition"
 	],
 	"name" : "GtGradKamadaKawaiConstraints",
 	"type" : "normal"
