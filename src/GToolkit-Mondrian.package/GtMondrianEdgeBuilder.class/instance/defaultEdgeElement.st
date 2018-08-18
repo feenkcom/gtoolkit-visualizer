@@ -1,4 +1,5 @@
 private
 defaultEdgeElement
 	^ BlLineElement new
-		border: (BlBorder paint: (Color gray alpha: 0.5) width: 1)
+		border: (BlBorder paint: (Color gray alpha: 0.5) width: 1);
+		zIndex: -1
