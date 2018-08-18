@@ -1,10 +1,6 @@
 *Gtoolkit-Mondrian
 gtTraversedLiveFor: aView
 	<gtView: 10>
-	^ aView explicit
+	^ aView mondrian
 		title: 'Traversed';
-		stencil: [ 
-			| mondrian |
-			mondrian := GtMondrian new.
-			self traversedTargetsTreeWith: mondrian.
-			mondrian asPannableElement ]
+		painting: [ :mondrian | self traversedTargetsTreeWith: mondrian ]
