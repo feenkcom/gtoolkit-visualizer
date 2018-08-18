@@ -1,3 +1,0 @@
-accessing
-maxHorizontalValue
-	^ maxHorizontalValue

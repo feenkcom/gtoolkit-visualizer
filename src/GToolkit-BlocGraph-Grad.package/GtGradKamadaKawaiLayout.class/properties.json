@@ -15,8 +15,9 @@
 		"distanceMatrix",
 		"length",
 		"diameter",
-		"arbitraryConstantK"
+		"arbitraryConstantK",
+		"epsilon"
 	],
-	"name" : "GtGradKamadaKawaitLayout",
+	"name" : "GtGradKamadaKawaiLayout",
 	"type" : "normal"
 }

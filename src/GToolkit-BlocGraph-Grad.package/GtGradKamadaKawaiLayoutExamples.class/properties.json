@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GtGradLayoutExamples",
+	"category" : "GToolkit-BlocGraph-Grad-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtGradKamadaKawaiLayoutExamples",
+	"type" : "normal"
+}
