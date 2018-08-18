@@ -6,7 +6,7 @@ asElementDo: aBlock
 	pannableElement
 		when: BlClickEvent
 		do: [ :event | 
-			event target graph isNode
+			(event target graph isNode or: [ event target graph isEdge ])
 				ifTrue: [ pannableElement
 						fireEvent:
 							(GtPhlowObjectToSelect new
