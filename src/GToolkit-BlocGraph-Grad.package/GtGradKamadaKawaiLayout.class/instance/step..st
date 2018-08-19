@@ -44,8 +44,18 @@ step: theNodes
 			nodesNum := theNodes count.
 			1 to: nodesNum do: [ :i |
 				(i + 1) to: nodesNum do: [ :j |
-					| exenergy |
-		
+					| exenergy firstNode secondNode position1 position2|
+					exenergy := self calculateEnergyIfExchanged: theNodes firstNodeIndex: i  secondNodeIndex: j.
+					energy > exenergy
+						ifTrue: [ 
+							"swap positions of nodes"
+							firstNode := theNodes at: i.
+							secondNode := theNodes at: j.
+							position1 := firstNode constraints gradKamadaKawai computedPosition.
+							position2 := secondNode constraints gradKamadaKawai computedPosition.
+							firstNode constraints gradKamadaKawai computedPosition: position2.
+							secondNode constraints gradKamadaKawai computedPosition: position1.			
+						].
 				].		
 			].
 		].
