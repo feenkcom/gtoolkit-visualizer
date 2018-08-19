@@ -32,4 +32,20 @@ step: theNodes
 			thresholdReached := (self
 				calculateDeltaNode: theNodes
 				node: nodeWithMaxDelta
-				nodeIndex: nodeWithMaxDeltaIndex) < self epsilon ]
+				nodeIndex: nodeWithMaxDeltaIndex) < self epsilon ].
+	
+	self adjustForGravity
+		ifTrue: [ self shiftNodesToTheCenterOfGavity: theNodes ].
+		
+	(self exchangeNodes and: [ maxDeltaNode < self epsilon])
+		ifTrue: [ 
+			| energy nodesNum |
+			energy := self calculateEnergy: theNodes.
+			nodesNum := theNodes count.
+			1 to: nodesNum do: [ :i |
+				(i + 1) to: nodesNum do: [ :j |
+					| exenergy |
+		
+				].		
+			].
+		].
