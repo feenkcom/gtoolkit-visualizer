@@ -4,7 +4,8 @@ initialize
 	label := BlTextElement new
 		text: '' asRopedText;
 		padding: (BlInsets all: 5);
-		constraintsDo: [ :c | c frame horizontal alignCenter ].
+		constraintsDo: [ :c | c frame horizontal alignCenter ];
+		preventMouseEvents.
 	labelContainer := BlElement new.
 	labelContainer 
 		layout: BlFrameLayout new;
@@ -13,7 +14,8 @@ initialize
 		constraintsDo: [ :c |
 			c horizontal fitContent.
 			c vertical fitContent ];
-		addChild: label.
+		addChild: label;
+		preventMouseEvents.
     self
 		layout: (BlGridLayout vertical cellSpacing: 1);
 		constraintsDo: [ :c |
