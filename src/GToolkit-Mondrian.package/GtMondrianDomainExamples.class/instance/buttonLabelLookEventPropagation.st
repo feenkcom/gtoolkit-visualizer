@@ -31,6 +31,6 @@ buttonLabelLookEventPropagation
 		connect: (theNodes select: [ :each | each hasOwner ])
 			from: [ :aTarget | aTarget owner ].
 
-	aView layout horizontalTree horizontalGap: 40.
+	aView layout horizontalTree levelDistance: 40.
 
 	^ aView

@@ -8,7 +8,8 @@
 	"instvars" : [
 		"paintingStencilBuilder",
 		"mondrianInstanceBuilder",
-		"mondrianInstance"
+		"mondrianInstance",
+		"mondrianElement"
 	],
 	"name" : "GtPhlowMondrianView",
 	"type" : "normal"

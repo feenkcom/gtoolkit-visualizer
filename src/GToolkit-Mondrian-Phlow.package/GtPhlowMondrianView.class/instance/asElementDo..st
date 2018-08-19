@@ -1,15 +1,14 @@
 accessing
 asElementDo: aBlock
-	| pannableElement |
 	paintingStencilBuilder value: mondrianInstance.
-	pannableElement := mondrianInstance asPannableElement.
-	pannableElement
+	mondrianElement := mondrianInstance asPannableElement.
+	mondrianElement
 		when: BlClickEvent
 		do: [ :event | 
 			(event target graph isNode or: [ event target graph isEdge ])
-				ifTrue: [ pannableElement
+				ifTrue: [ mondrianElement
 						fireEvent:
 							(GtPhlowObjectToSelect new
 								object: event target graph model;
 								sourceElement: event target) ] ].
-	^ aBlock value: pannableElement
+	^ aBlock value: mondrianElement

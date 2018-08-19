@@ -6,7 +6,7 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"elementBlock"
+		"elementStencilBuilder"
 	],
 	"name" : "GtMondrianGraphBuilder",
 	"type" : "normal"

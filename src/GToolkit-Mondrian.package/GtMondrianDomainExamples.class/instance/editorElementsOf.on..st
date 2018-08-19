@@ -31,6 +31,6 @@ editorElementsOf: element on: view
 		toCenterTop;
 		shape: [ :each | BlLineElement new border: (BlBorder paint: (Color gray alpha: 0.3) width: 2) ];
 		connectFrom: #parent.
-	view layout tree horizontalGap: 10; verticalGap: 40.
+	view layout tree.
 	^ view
 		

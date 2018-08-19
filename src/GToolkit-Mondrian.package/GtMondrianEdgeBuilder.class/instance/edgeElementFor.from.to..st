@@ -1,8 +1,8 @@
 private
 edgeElementFor: anObject from: fromElement to: toElement
 	| edgeElement |
-	edgeElement := elementBlock
-		ifNotNil: [ elementBlock 
+	edgeElement := elementStencilBuilder
+		ifNotNil: [ elementStencilBuilder 
 				cull: anObject
 				cull: fromElement
 				cull: toElement ]

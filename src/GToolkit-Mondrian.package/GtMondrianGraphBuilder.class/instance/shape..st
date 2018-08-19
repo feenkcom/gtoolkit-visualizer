@@ -1,3 +1,3 @@
 scripting
 shape: aBlock
-	self elementBlock: aBlock
+	self stencil: aBlock

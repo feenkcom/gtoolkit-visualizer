@@ -1,5 +1,5 @@
 accessing
 edgeElementFor: anObject
-	^ elementBlock
-		ifNotNil: [ elementBlock value: anObject ]
+	^ elementStencilBuilder
+		ifNotNil: [ elementStencilBuilder value: anObject ]
 		ifNil: [ self defaultEdgeElement ]
