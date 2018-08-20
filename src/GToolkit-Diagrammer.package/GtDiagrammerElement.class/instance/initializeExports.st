@@ -8,25 +8,25 @@ initializeExports
 		label: 'SVG';
 		action: [ self canvas exportAsSVG ].
 
-	asPdf := BlElement new
+	asPdf := BrButton new
 		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrLabelLook new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'PDF';
 		action: [ self canvas exportAsPDF ].
 		
-	asPng := BlElement new
+	asPng := BrButton new
 		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook  + (BrLabelLook new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'PNG';
 		action: [ self canvas exportAsPNG ].
 
-	asJpg := BlElement new
+	asJpg := BrButton new
 		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrLabelLook new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'JPG';
 		action: [ self canvas exportAsJPEG ].
 		
-	asForm := BlElement new
+	asForm := BrButton new
 		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrLabelLook new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'Form';
