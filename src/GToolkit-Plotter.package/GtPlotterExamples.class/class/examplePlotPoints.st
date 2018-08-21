@@ -8,10 +8,6 @@ examplePlotPoints
 	plot clipChildren: false.
 	
 	space := BlSpace new.
+	space withHalos.
 	space root addChild: plot.
-	space root
-		addEventHandler:
-			(BlEventHandler
-				on: BlDblClickEvent
-				do: [ :evt | BlElementSelection on: evt target ]).
 	space show
