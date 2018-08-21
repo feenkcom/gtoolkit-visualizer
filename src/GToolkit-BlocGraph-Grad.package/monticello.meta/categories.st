@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'GToolkit-BlocGraph-Grad'!
+SystemOrganization addCategory: 'GToolkit-BlocGraph-Grad-Algorithms'!
 SystemOrganization addCategory: 'GToolkit-BlocGraph-Grad-Examples'!
 SystemOrganization addCategory: 'GToolkit-BlocGraph-Grad-Force-Directed'!
 SystemOrganization addCategory: 'GToolkit-BlocGraph-Grad-Signals'!

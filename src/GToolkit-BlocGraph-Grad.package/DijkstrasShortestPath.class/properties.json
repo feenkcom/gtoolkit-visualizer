@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "GToolkit-BlocGraph-Grad-Algorithms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"unvisited"
+	],
+	"name" : "DijkstrasShortestPath",
+	"type" : "normal"
+}
