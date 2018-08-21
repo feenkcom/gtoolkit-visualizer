@@ -4,10 +4,7 @@ baseline: spec
 	spec
 		for: #common
 		do: [ spec
-				baseline: 'Brick'
-				with: [ spec
-					repository: 'github://pharo-graphics/Brick/src';
-					loads: #core ];
+				baseline: 'Brick' with: [ spec repository: 'github://pharo-graphics/Brick/src' ];
 			   baseline: 'Beacon' with: [ spec repository: 'github://pharo-project/pharo-beacon/repository' ];
 
 				package: 'GToolkit-BlocGraph' with: [ spec requires: #(Brick) ];
