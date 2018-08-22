@@ -5,22 +5,22 @@ initialize
 	paintingStencilBuilder := [ :x | "do nothing by default" ].
 	self actionStencil: [ 
 		BrButton new 
-			look: BrMaterialToggleIconifiedLook;
-			icon: GLMUIThemeExtraIcons glamorousZoomIn asElement ;
+			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			icon: BrGlamorousIcons zoomin asElement ;
 			action: [ mondrianElement zoomIn ] ].
 	self actionStencil: [ 
 		BrButton new 
-			look: BrMaterialToggleIconifiedLook;
-			icon: GLMUIThemeExtraIcons glamorousZoomOut asElement ;
+			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			icon: BrGlamorousIcons zoomout asElement ;
 			action: [ mondrianElement zoomOut ] ].
 	self actionStencil: [ 
 		BrButton new 
-			look: BrMaterialToggleIconifiedLook;
-			icon: GLMUIThemeExtraIcons glamorousZoomToFit asElement ;
+			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			icon: BrGlamorousIcons zoomtofit asElement ;
 			action: [ mondrianElement zoomToFit ] ].
 	self actionStencil: [ 
 		BrButton new
-			look: BrMaterialToggleIconifiedLook;
-			icon: GLMUIThemeExtraIcons glamorousGrayCircle asElement;
+			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			icon: BrGlamorousIcons actualsize asElement;
 			action: [ mondrianElement zoomToActualSize ] ]
 	
