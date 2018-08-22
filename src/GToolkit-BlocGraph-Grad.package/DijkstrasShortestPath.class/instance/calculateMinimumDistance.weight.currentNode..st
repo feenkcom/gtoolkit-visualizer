@@ -1,2 +1,0 @@
-calculating
-calculateMinimumDistance: adjacentNode weight: weight currentNode: currentNode

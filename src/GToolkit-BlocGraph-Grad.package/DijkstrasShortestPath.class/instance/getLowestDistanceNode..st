@@ -1,3 +1,0 @@
-calculating
-getLowestDistanceNode: theNodes
-	
