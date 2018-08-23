@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
-	"category" : "GToolkit-BlocGraph-Grad-Algorithms",
+	"super" : "GtGradExamples",
+	"category" : "GToolkit-BlocGraph-Grad-Examples",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "DijkstrasShortestPath",
+	"name" : "GtGradAlgorithmsExamples",
 	"type" : "normal"
 }

@@ -8,7 +8,7 @@ binaryTreeWith15Nodes
 	aTreeLayout := self treeLayout.
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes.
-	view layout: aTreeLayout.
+	view layout: aTreeLayout. 
 	view forceLayout. 
 
 	^ view
