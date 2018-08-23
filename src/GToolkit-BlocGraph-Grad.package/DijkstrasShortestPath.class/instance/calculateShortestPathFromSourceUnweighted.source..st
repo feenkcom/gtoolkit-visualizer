@@ -21,8 +21,9 @@ calculateShortestPathFromSourceUnweighted: theNodes source: source
 		whileTrue: [ 
 			| currentNode |
 			currentNode := self getLowestDistanceNode: unsettledNodes nodeDistances: distancesDict.
+			unsettledNodes remove: currentNode.
 			(currentNode graph nodesAlongOutgoingEdges) do: [ :adjacentNode |
-				(settledNodes contains: adjacentNode)
+				(settledNodes includes: adjacentNode)
 					ifFalse: [
 				 		self calculateMinimumDistance: adjacentNode weight: 1 source: currentNode nodeDistances: distancesDict paths: pathsDict.
 						unsettledNodes add: adjacentNode.					
@@ -30,6 +31,8 @@ calculateShortestPathFromSourceUnweighted: theNodes source: source
 			].
 			settledNodes add: currentNode.
 		]. 
+	
+	^ pathsDict
 	
 	
 	

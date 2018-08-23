@@ -14,7 +14,6 @@
 		"exchangeNodes",
 		"distanceMatrix",
 		"length",
-		"diameter",
 		"arbitraryConstantK",
 		"epsilon"
 	],
