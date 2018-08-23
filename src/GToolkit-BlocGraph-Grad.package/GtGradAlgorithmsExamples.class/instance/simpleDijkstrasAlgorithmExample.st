@@ -22,4 +22,6 @@ simpleDijkstrasAlgorithmExample
 	self assert: ((paths at: (theNodes at: 5)) size) equals: 2.
 	self assert: ((paths at: (theNodes at: 6)) size) equals: 2.
 	self assert: ((paths at: (theNodes at: 7)) size) equals: 3.
+	
+	^ paths.
 

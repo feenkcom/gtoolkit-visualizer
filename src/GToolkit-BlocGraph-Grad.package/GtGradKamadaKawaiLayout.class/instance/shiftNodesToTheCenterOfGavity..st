@@ -23,6 +23,7 @@ shiftNodesToTheCenterOfGavity: theNodes
 	
 	"set new postions of nodes"
 	theNodes do: [ :aNode |
+		" this is not correct..."
 		aNode constraints gradKamadaKawai computedPosition: diffx@diffy.
 	].
 	

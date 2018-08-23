@@ -8,12 +8,12 @@ calculateDiameter:  theNodes
 		theNodes do: [  :secondNode |
 			firstNode = secondNode
 				ifFalse: [ 
-					| paths |
-					paths := dijkstra calculateShortestPathFromSourceUnweighted: theNodes source: firstNode.
-					(paths includesKey: secondNode)
+					| path |
+					path := dijkstra calculateShortestPathFromSourceToTargetUnweighted: theNodes source: firstNode target: secondNode.
+					(path isNotNil)
 						ifTrue: [ 
 							| currentDistance |
-							currentDistance := (paths at: secondNode) size.
+							currentDistance := path size.
 							diameterVal := diameterVal max: currentDistance. 
 						].
 				].

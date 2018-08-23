@@ -15,7 +15,7 @@ calculateDeltaNode: theNodes node: aNode nodeIndex: nodeIndex
 					dx := nodePosition x - currentNodePosition x.
 					dy := nodePosition y - currentNodePosition y.
 					d := (dx squared + dy squared) sqrt.
-					common := (self arbitraryConstantK  / (dist square)) * (1 - ((self length * dist)/d)).
+					common := (self arbitraryConstantK  / (dist squared)) * (1 - ((self length * dist)/d)).
 					dxSum := dxSum + (common * dx).
 					dySum := dySum + (common * dy).		
 			].

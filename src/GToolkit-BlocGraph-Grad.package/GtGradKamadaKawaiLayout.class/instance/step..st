@@ -1,6 +1,7 @@
 private-layout
 step: theNodes
-	| maxDeltaNode nodeWithMaxDelta nodeWithMaxDeltaIndex deltaNode loopIndex thresholdReached |
+	| maxDeltaNode nodeWithMaxDelta nodeWithMaxDeltaIndex deltaNode loopIndex thresholdReached energy nodesNum |
+	self currentIteration: self currentIteration + 1.
 	maxDeltaNode := 0.
 	nodeWithMaxDeltaIndex := -1.
 	theNodes
@@ -17,7 +18,7 @@ step: theNodes
 		ifFalse: [ ^ self ].
 	loopIndex := 1.
 	thresholdReached := false.
-	(loopIndex <= 100 and: [ thresholdReached negated ])
+	[loopIndex <= 100 and: [ thresholdReached not ]]
 		whileTrue: [ | dxy nodePosition newNodePositionX newNodePositionY |
 			dxy := self
 				calculateDeltaPositionNode: theNodes
@@ -33,29 +34,26 @@ step: theNodes
 				calculateDeltaNode: theNodes
 				node: nodeWithMaxDelta
 				nodeIndex: nodeWithMaxDeltaIndex) < self epsilon ].
-	
 	self adjustForGravity
 		ifTrue: [ self shiftNodesToTheCenterOfGavity: theNodes ].
-		
-	(self exchangeNodes and: [ maxDeltaNode < self epsilon])
-		ifTrue: [ 
-			| energy nodesNum |
-			energy := self calculateEnergy: theNodes.
-			nodesNum := theNodes count.
-			1 to: nodesNum do: [ :i |
-				(i + 1) to: nodesNum do: [ :j |
-					| exenergy firstNode secondNode position1 position2|
-					exenergy := self calculateEnergyIfExchanged: theNodes firstNodeIndex: i  secondNodeIndex: j.
-					energy > exenergy
-						ifTrue: [ 
-							"swap positions of nodes"
-							firstNode := theNodes at: i.
-							secondNode := theNodes at: j.
-							position1 := firstNode constraints gradKamadaKawai computedPosition.
-							position2 := secondNode constraints gradKamadaKawai computedPosition.
-							firstNode constraints gradKamadaKawai computedPosition: position2.
-							secondNode constraints gradKamadaKawai computedPosition: position1.			
-						].
-				].		
-			].
-		].
+	(self exchangeNodes and: [ maxDeltaNode < self epsilon ])
+		ifFalse: [ ^ self ].
+	energy := self calculateEnergy: theNodes.
+	nodesNum := theNodes count.
+	1 to: nodesNum do: [ :i | 
+		i + 1 to: nodesNum do: [ :j | 
+			| exenergy firstNode secondNode position1 position2 |
+			exenergy := self
+				calculateEnergyIfExchanged: theNodes
+				firstNodeIndex: i
+				secondNodeIndex: j.
+			energy > exenergy
+				ifTrue: [ firstNode := theNodes at: i.
+					secondNode := theNodes at: j.
+					position1 := firstNode constraints gradKamadaKawai
+						computedPosition.
+					position2 := secondNode constraints gradKamadaKawai
+						computedPosition.
+					firstNode constraints gradKamadaKawai computedPosition: position2.
+					secondNode constraints gradKamadaKawai
+						computedPosition: position1 ] ] ]

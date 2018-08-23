@@ -25,9 +25,9 @@ calculateDeltaPositionNode: theNodes node: aNode nodeIndex: nodeIndex
 				
 				dEx := dEx + (k * (1 - (l / d)) * dx).
 				dEy := dEy + (k * (1 - (l / d)) * dy).
-				d2Ex := d2Ex + ( k * ( 1 - (( l * dy squared ) / dCube))). 
+				d2Ex := d2Ex + (k * ( 1 - (( l * dy squared ) / dCube))). 
 				d2Exy := d2Exy + ((k * l * dx * dy) / dCube).
-				d2Ex := d2Ey + ( k * ( 1 - ((l * dx squared ) / dCube))). 
+				d2Ey := d2Ey + (k * ( 1 - ((l * dx squared ) / dCube))). 
 			].
 	].
 	denominator := (d2Ex * d2Ey) - (d2Exy squared).
