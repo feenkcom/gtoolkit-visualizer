@@ -1,3 +1,0 @@
-api - testing
-isEdge
-	^ isEdge

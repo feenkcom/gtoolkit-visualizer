@@ -1,3 +1,0 @@
-initialization
-defaultHorizontal
-	^ GtPlotterLayoutConstraintsAxis new

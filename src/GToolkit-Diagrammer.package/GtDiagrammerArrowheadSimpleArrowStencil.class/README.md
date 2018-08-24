@@ -1,1 +1,0 @@
-I create a "simple arrow" arrowhead

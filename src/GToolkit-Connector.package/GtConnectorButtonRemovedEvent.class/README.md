@@ -1,1 +1,0 @@
-Is sent after button is removed from the scene graph.

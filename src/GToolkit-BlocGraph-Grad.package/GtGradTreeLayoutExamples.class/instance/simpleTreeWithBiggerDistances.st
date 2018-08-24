@@ -1,3 +1,0 @@
-accessing
-simpleTreeWithBiggerDistances
-	^ self subclassResponsibility

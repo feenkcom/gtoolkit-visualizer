@@ -1,3 +1,0 @@
-accessing
-binaryTreeWith7Nodes
-	^ self subclassResponsibility

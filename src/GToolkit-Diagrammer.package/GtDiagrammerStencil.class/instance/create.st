@@ -1,5 +1,0 @@
-instance creation
-create
-	<return: #Object>
-
-	^ self subclassResponsibility

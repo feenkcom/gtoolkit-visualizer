@@ -1,1 +1,0 @@
-I am an abstract factory of objects that should appear in the diagrammer

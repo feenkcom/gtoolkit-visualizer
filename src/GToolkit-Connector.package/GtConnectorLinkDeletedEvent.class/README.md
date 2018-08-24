@@ -1,1 +1,0 @@
-Is sent by styler when logical link between methods disappeared since previous styling operation

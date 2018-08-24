@@ -1,1 +1,0 @@
-I describes a logical connection (link) between methods

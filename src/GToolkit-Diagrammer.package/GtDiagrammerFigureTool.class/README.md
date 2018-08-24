@@ -1,1 +1,0 @@
-I am responsible for instantiation of new figures from stencils

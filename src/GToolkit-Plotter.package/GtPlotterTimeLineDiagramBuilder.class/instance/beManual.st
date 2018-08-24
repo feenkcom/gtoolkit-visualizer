@@ -1,3 +1,0 @@
-accessing
-beManual
-	task dequeue

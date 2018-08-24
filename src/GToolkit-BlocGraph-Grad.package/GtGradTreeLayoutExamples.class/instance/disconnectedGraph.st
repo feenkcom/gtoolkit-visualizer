@@ -1,3 +1,0 @@
-accessing
-disconnectedGraph
-	^ self subclassResponsibility

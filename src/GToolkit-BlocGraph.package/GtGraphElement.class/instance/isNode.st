@@ -1,3 +1,0 @@
-api - testing
-isNode
-	^ isNode

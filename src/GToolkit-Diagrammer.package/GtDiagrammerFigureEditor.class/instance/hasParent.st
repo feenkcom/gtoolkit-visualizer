@@ -1,3 +1,0 @@
-testing
-hasParent
-	^ parent isNotNil

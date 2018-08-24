@@ -1,1 +1,0 @@
-I create a UML class element with a one container for class members (either attributes or methods)

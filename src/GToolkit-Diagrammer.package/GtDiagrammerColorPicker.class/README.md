@@ -1,1 +1,0 @@
-I allow users to pick a color

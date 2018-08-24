@@ -1,0 +1,33 @@
+Class {
+	#name : #GtGradTreeVisitor,
+	#superclass : #Object,
+	#category : 'GToolkit-BlocGraph-Grad-Tree'
+}
+
+{ #category : #visiting }
+GtGradTreeVisitor >> postVisitNode: aTreeNode [
+]
+
+{ #category : #visiting }
+GtGradTreeVisitor >> preVisitNode: aTreeNode [
+]
+
+{ #category : #visiting }
+GtGradTreeVisitor >> visitCompositeNode: aTreeNode [
+]
+
+{ #category : #visiting }
+GtGradTreeVisitor >> visitForest: aTreeForest [
+]
+
+{ #category : #visiting }
+GtGradTreeVisitor >> visitLeafNode: aTreeNode [
+]
+
+{ #category : #visiting }
+GtGradTreeVisitor >> visitNode: aTreeNode [
+]
+
+{ #category : #visiting }
+GtGradTreeVisitor >> visitRootNode: aTreeNode [
+]

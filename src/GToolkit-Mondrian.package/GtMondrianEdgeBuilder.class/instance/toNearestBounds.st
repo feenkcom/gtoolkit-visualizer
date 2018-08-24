@@ -1,3 +1,0 @@
-scripting anchors
-toNearestBounds
-	self toAnchor: BlNearestPositionBoundsAnchor

@@ -1,3 +1,0 @@
-testing
-hasSelected
-	^ selected isNotNil

@@ -1,1 +1,0 @@
-I create a filled circle arrow head with the border and background equal to the color of the curve

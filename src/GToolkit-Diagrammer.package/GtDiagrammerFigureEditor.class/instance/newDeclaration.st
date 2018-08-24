@@ -1,3 +1,0 @@
-instance creation
-newDeclaration
-	^ GtDiagrammerFigureEditorDeclaration new

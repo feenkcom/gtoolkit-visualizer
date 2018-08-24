@@ -1,3 +1,0 @@
-hook
-applyAsToHeadOn: aCurveElement
-	aCurveElement removeToHead

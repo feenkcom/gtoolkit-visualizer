@@ -1,1 +1,0 @@
-I handle styler events, process them and communicate actions to the connector

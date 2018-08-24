@@ -1,3 +1,0 @@
-accessing
-resetCurrentSelection
-	currentSelection := nil

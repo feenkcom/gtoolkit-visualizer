@@ -1,1 +1,0 @@
-I am notified by an editor when its graphical representation should be recreated due to underlying element or model changes.

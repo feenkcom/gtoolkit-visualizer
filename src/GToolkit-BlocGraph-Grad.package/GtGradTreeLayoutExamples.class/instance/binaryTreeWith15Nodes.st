@@ -1,3 +1,0 @@
-accessing
-binaryTreeWith15Nodes
-	^ self subclassResponsibility

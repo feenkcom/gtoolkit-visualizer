@@ -1,1 +1,0 @@
-I am a function that maps input values from a predifined domain to values within a range

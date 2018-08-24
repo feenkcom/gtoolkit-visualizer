@@ -1,1 +1,0 @@
-I allow users to pick an arrowhead for a curve

@@ -1,3 +1,0 @@
-accessing
-disconnectedGraphBiggerDistance
-	^ self subclassResponsibility

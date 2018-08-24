@@ -1,3 +1,0 @@
-comparing
-compareTo: anArrowheadElement
-	^ true

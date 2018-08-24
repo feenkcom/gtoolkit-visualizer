@@ -1,2 +1,0 @@
-*GToolkit-Diagrammer
-diagrammerBackgroundEditor: anEditor

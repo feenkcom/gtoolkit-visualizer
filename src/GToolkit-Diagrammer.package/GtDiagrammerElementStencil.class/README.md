@@ -1,1 +1,0 @@
-I am a special stencil designed to create visual elements for a figure creation tool

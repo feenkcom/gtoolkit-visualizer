@@ -1,3 +1,0 @@
-accessing
-simpleTreeWithNodesOfIncreasingSizeCenterAlignment
-	^ self subclassResponsibility

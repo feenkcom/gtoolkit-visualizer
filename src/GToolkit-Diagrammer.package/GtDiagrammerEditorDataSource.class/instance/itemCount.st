@@ -1,3 +1,0 @@
-accessing
-itemCount
-	^ editors size
