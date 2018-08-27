@@ -58,9 +58,10 @@ GtMondrian >> gtInspectorPreviewIn: composite [
 
 { #category : #ui }
 GtMondrian >> gtLiveFor: aView [
-	<gtView: 0>
+	<gtView>
 	^ aView mondrian
 		title: 'Live';
+		priority: 50;
 		initialize: self
 ]
 
