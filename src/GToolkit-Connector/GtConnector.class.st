@@ -321,7 +321,7 @@ GtConnector >> elementsWithTarget: aTarget [
 { #category : #'gt-extension' }
 GtConnector >> gtLiveFor: aView [
 	^ (super gtLiveFor: aView) 
-		stencil: [ self asScalableElement ]
+		stencil: [ self asPannableElement ]
 ]
 
 { #category : #testing }
