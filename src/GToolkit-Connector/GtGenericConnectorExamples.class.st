@@ -20,20 +20,34 @@ GtGenericConnectorExamples >> oneSimpleExample [
 	<gtExample>
 	| connector |
 	connector := GtGenericConnector new.
-	connector stencil: [ :data | (BlEllipse diameter: 30) asElement
+	
+	connector stencil: [ :data |
+		| ellipse labelButton| 
+		ellipse := (BlEllipse diameter: 30) asElement
 		background: (Color gray alpha: 0.1);
 		border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
+		 
+		labelButton := BrButton new.
+		labelButton look: BrLabelLook.
+		labelButton label: data.
+		labelButton layout: BlFrameLayout new.
+
+		labelButton relocate: 10 @ 10.
+		ellipse addChild: labelButton.
+		ellipse 
 	].
+
 	connector connectionsStencil: [ :element :entity |
-		| dotButton |
-		dotButton := (BlEllipse diameter: 10) asElement background: (Color black).
-		dotButton constraintsDo: [ :c |
-				c frame vertical alignTop.
-				c frame horizontal alignLeft.
-		].
-	dotButton relocate: 5 @ 5.
+		| dotButton buttonElement |				
+		buttonElement := (BlEllipse diameter: 5) asElement background: (Color black).
+		dotButton := BrButton new.
+		dotButton icon: buttonElement.
+		dotButton look: BrIconLook.
+		dotButton action: [ connector addEntity: entity + 1 ].
+		dotButton relocate: 5 @ 5.
 		element addChild: dotButton.
 	].
+
 	connector addEntity: 1.
 	^ connector
 ]
