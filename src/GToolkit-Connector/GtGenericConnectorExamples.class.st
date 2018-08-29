@@ -46,6 +46,10 @@ GtGenericConnectorExamples >> oneSimpleExample [
 		dotButton action: [ connector addEntity: entity + 1 ].
 		dotButton relocate: 5 @ 5.
 		element addChild: dotButton.
+		dotButton beConnectorSource.
+		
+		dotButton connectorSource: entity.
+		dotButton connectorTarget: entity + 1.
 	].
 
 	connector addEntity: 1.

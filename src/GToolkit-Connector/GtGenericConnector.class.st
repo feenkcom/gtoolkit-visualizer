@@ -201,6 +201,8 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 	"build the entity itself"
 	entityElement := self stencil value: anEntity.
 	"allow for connector dots garnishing"
+	entityElement beConnectorTarget.
+	entityElement connectorTarget: anEntity.
 	self connectionsStencil cull: entityElement cull: anEntity.
 	self addChild: entityElement.
 
