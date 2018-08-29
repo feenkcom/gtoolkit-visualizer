@@ -2,10 +2,11 @@ Extension { #name : #BlElement }
 
 { #category : #'*GToolkit-Connector' }
 BlElement >> beConnectedTo: anObject [
-	self userData
-		at: #connectorConnections
+	self connector
+		beConnectedTo: anObject.
+"		at: #connectorConnections
 		ifPresent: [ :aCollection | aCollection add: anObject ]
-		ifAbsentPut: [ Set with: anObject ]
+		ifAbsentPut: [ Set with: anObject ]"
 ]
 
 { #category : #'*GToolkit-Connector' }
@@ -23,6 +24,13 @@ BlElement >> beNotConnectedTo: anObject [
 	self userData
 		at: #connectorConnections
 		ifPresent: [ :aCollection | aCollection remove: anObject ]
+]
+
+{ #category : #'*GToolkit-Connector' }
+BlElement >> connector [
+	^ self userData
+		at: #connector 
+		ifAbsentPut: [ GtConnectorNode on: self ]
 ]
 
 { #category : #'*GToolkit-Connector' }
@@ -47,22 +55,20 @@ BlElement >> connectorTarget: anObject [
 
 { #category : #'*GToolkit-Connector' }
 BlElement >> isConnectedTo: anObject [
-	^ self userData
-		at: #connectorConnections
+	^ self connector 
+		isConnectedTo: anObject
+	"	at: #connectorConnections
 		ifPresent: [ :aCollection | aCollection includes: anObject ]
-		ifAbsent: [ false ]
+		ifAbsent: [ false ]"
 ]
 
 { #category : #'*GToolkit-Connector' }
 BlElement >> isConnectorSource [
-	^ self userData
-		at: #isConnectorSource
-		ifAbsent: [ false ]
+	^ self connector isNotNil and: [ self connector source isNotNil ]
 ]
 
 { #category : #'*GToolkit-Connector' }
 BlElement >> isConnectorTarget [
-	^ self userData
-		at: #isConnectorTarget
-		ifAbsent: [ false ]
+	^ self connector isNotNil and: [ self connector target isNotNil ]
+
 ]

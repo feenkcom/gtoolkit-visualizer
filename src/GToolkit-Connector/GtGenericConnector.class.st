@@ -117,16 +117,6 @@ GtGenericConnector >> addLink: aLink [
 	self addEdgeFrom: aSourceElement to: aTargetElement
 ]
 
-{ #category : #public }
-GtGenericConnector >> addMethod: aMethod [
-	"Create a new editor on a given method, add it to the scene"
-	
-	(self hasOpenedEntity: aMethod)
-		ifTrue: [ ^ self ].
-
-	self openMethod: aMethod.
-]
-
 { #category : #converting }
 GtGenericConnector >> asScalableElement [
 	| scalable |
@@ -166,7 +156,7 @@ GtGenericConnector >> connect: anElement [
 
 	"we assume (?) that source knows target, because we have N:1 (many source - one target)"
 	anElement isConnectorSource ifTrue: [
-		(self elementsWithTarget: anElement connectorTarget)
+		(self elementsWithTarget: anElement connector target)
 			select: [ :aTargetElement | (anElement isConnectedTo: aTargetElement) not
 				and: [ (self doesExist: aTargetElement)
 					and: [ (self doesExist: anElement) ] ] ]
@@ -174,7 +164,7 @@ GtGenericConnector >> connect: anElement [
 
 	"Element is a target, connect it to all sources"
 	anElement isConnectorTarget ifTrue: [
-		(self sourcesWithTarget: anElement connectorTarget)
+		(self sourcesWithTarget: anElement connector target)
 			select: [ :aSourceElement | (aSourceElement isConnectedTo: anElement) not
 				and: [ (self doesExist: aSourceElement)
 					and: [ (self doesExist: anElement) ] ]  ]
@@ -201,8 +191,7 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 	"build the entity itself"
 	entityElement := self stencil value: anEntity.
 	"allow for connector dots garnishing"
-	entityElement beConnectorTarget.
-	entityElement connectorTarget: anEntity.
+	entityElement connector target: anEntity.
 	self connectionsStencil cull: entityElement cull: anEntity.
 	self addChild: entityElement.
 
@@ -212,40 +201,6 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 { #category : #testing }
 GtGenericConnector >> doesExist: anElement [
 	^ (anElement hasParent: self) or: [ anElement isAttachedToSceneGraph ]
-]
-
-{ #category : #search }
-GtGenericConnector >> edgesForLink: aLink [
-	| theSourceElements theTargetElements |
-	<return: #SequenceableCollection of: #GtGraphEdge>
-	
-	theSourceElements := self elementsWithMethod: aLink source.
-	theSourceElements
-		ifEmpty: [ ^ #() ].
-		
-	theTargetElements := self elementsWithMethod: aLink target.
-	theTargetElements
-		ifEmpty: [ ^ #() ].
-		
-	^ Array streamContents: [ :aStream |
-			theSourceElements do: [ :aSourceElement |
-				aStream nextPutAll: (aSourceElement constraints graph outgoingEdges
-					select: [ :anEdge |
-						| anEdgeLink |
-						anEdgeLink := GtConnectorLink
-							source: anEdge fromElement connectorSource
-							target: anEdge fromElement connectorTarget.
-						
-						anEdge = aLink
-					]) ] ]
-]
-
-{ #category : #search }
-GtGenericConnector >> editorElements [
-	"Return a collection of existing editor elements that are already added to the tree"
-	<return: #SequenceableCollection of: #BrEditorElement>
-
-	^ self children select: [ :anElement | anElement isKindOf: BrEditorElement ]
 ]
 
 { #category : #search }
@@ -271,10 +226,10 @@ GtGenericConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 
 	self entityElements 
 		detect: [ :anEntityElement | 
-			anEntityElement userData
-				at: #editedMethod
+			anEntityElement connector target = anEntity 
+				"at: #editedMethod
 				ifPresent: [ :anEditedMethod | anEntity = anEditedMethod ]
-				ifAbsent: [ false ] ]
+				ifAbsent: [ false ]" ]
 		ifFound: [ :anEditorElement | aBlock cull: anEditorElement ]
 ]
 
@@ -297,7 +252,7 @@ GtGenericConnector >> elementsWithSource: aSource [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement isConnectorSource
-				and: [ aChildElement connectorSource = aSource ])
+				and: [ aChildElement connector source = aSource ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
@@ -309,16 +264,16 @@ GtGenericConnector >> elementsWithTarget: aTarget [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement isConnectorTarget
-				and: [ aChildElement connectorTarget = aTarget ])
+				and: [ aChildElement connector target = aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
 { #category : #'as yet unclassified' }
 GtGenericConnector >> entityElements [
 	"Return a collection of existing editor elements that are already added to the tree"
-	<return: #SequenceableCollection of: #BrEditorElement>
+	<return: #SequenceableCollection of: #BlElement>
 
-	^ self children select: [ :anElement | anElement isKindOf: BrEditorElement ]
+	^ self children reject: [ :anElement | anElement isKindOf: BlLineElement ]
 ]
 
 { #category : #'gt-extension' }
@@ -374,11 +329,10 @@ GtGenericConnector >> link: anElement [
 	self
 		assert: [ anElement isConnectorTarget ]
 		description: [ 'An element must be a target' ].
-
-	(self sourcesWithTarget: anElement connectorTarget)
+		
+	(self sourcesWithTarget: anElement connector target)
 		do: [ :anInnerElement |
-			(self elementsWithEntity: anInnerElement connectorSource)
-				do: [ :aSourceElement | self addEdgeFrom: aSourceElement to: anElement ] ]
+			self addEdgeFrom: anInnerElement to: anElement ]
 ]
 
 { #category : #private }
@@ -390,8 +344,7 @@ GtGenericConnector >> openEntity: anEntity [
 		description: [ 'Can not open already opened enity' ].
 
 	aTargetElement := self createAndAddElementForEntity: anEntity.	
-	aTargetElement beConnectorTarget.
-	aTargetElement connectorTarget: anEntity.
+	aTargetElement connector target: anEntity.
 	self link: aTargetElement.
 	self connect: aTargetElement
 ]
@@ -453,7 +406,7 @@ GtGenericConnector >> sourcesWithTarget: aTarget [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement isConnectorSource
-				and: [ aChildElement connectorTarget = aTarget ])
+				and: [ aChildElement connector target = aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
