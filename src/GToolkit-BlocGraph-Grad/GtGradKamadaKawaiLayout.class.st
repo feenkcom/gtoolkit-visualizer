@@ -14,9 +14,11 @@ Class {
 		'distanceMatrix',
 		'length',
 		'arbitraryConstantK',
-		'epsilon'
+		'epsilon',
+		'width',
+		'height'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Force-Directed'
+	#category : #'GToolkit-BlocGraph-Grad-Force-Directed'
 }
 
 { #category : #constraints }
@@ -116,11 +118,13 @@ GtGradKamadaKawaiLayout >> calculateDiameter:  theNodes [
 	dijkstra := DijkstrasShortestPath new.
 	diameterVal := 0.
 	theNodes do: [ :firstNode |
+		| paths |
+		paths := dijkstra calculateShortestPathFromSourceUnweighted: theNodes source: firstNode.
 		theNodes do: [  :secondNode |
 			firstNode = secondNode
 				ifFalse: [ 
 					| path |
-					path := dijkstra calculateShortestPathFromSourceToTargetUnweighted: theNodes source: firstNode target: secondNode.
+					path := paths at: secondNode.
 					(path isNotEmpty)
 						ifTrue: [ 
 							diameterVal := diameterVal max: (path size). 
@@ -241,6 +245,16 @@ GtGradKamadaKawaiLayout >> exchangeNodes: aBool [
 	exchangeNodes := aBool
 ]
 
+{ #category : #accessing }
+GtGradKamadaKawaiLayout >> height [
+	^ height
+]
+
+{ #category : #accessing }
+GtGradKamadaKawaiLayout >> height: anObject [
+	height := anObject
+]
+
 { #category : #initialization }
 GtGradKamadaKawaiLayout >> initialize [
 	super initialize.
@@ -252,6 +266,8 @@ GtGradKamadaKawaiLayout >> initialize [
 	exchangeNodes := true.
 	arbitraryConstantK := 1.
 	epsilon := 0.1.
+	height := 400.
+	width := 400.
 
 	
 
@@ -260,28 +276,30 @@ GtGradKamadaKawaiLayout >> initialize [
 
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> initializeLayout: theNodes [
-	| diameter width height num dijkstra |
+	| diameter num dijkstra paths |
 
-	"TODO"
-	width := 1000.
-	height := 1000.
 	num := theNodes size.
 	dijkstra := DijkstrasShortestPath new.	
 
-	self distanceMatrix: (Matrix new: (theNodes size) tabulate: [ :i :j | 0 ]).
-	self randomlyPositionNodes: theNodes maxVerticalValue: 1000 maxHorizontalValue: 1000.
+	self distanceMatrix: (Matrix new: num tabulate: [ :i :j | 0 ]).
+	self randomlyPositionNodes: theNodes maxVerticalValue: self height maxHorizontalValue: self width.
 	
 	"Now we need to calculate the distances"
 	diameter := self calculateDiameter: theNodes.
-	self length: ((height min: width) / diameter) * self lengthFactor.
+	self length: ((self height min: self width) / diameter) * self lengthFactor.
+	
+	paths := IdentityDictionary new.
+	theNodes do: [ :node |
+		paths at: node put: (dijkstra calculateShortestPathFromSourceUnweighted: theNodes source: node).
+	].
 	
 	1 to: (num - 1) do: [ :i |
 		( i + 1 ) to: num do: [ :j  |
 			| pathij pathji nodei nodej dist |
 			nodei := theNodes at: i.
 			nodej := theNodes at: j.
-			pathij := dijkstra calculateShortestPathFromSourceToTargetUnweighted: theNodes source: nodei target: nodej.
-			pathji := dijkstra calculateShortestPathFromSourceToTargetUnweighted: theNodes source: nodej target: nodei.
+			pathij := (paths at: nodei) at: nodej.
+			pathji := (paths at: nodej) at: nodei.
 			dist := diameter * self disconnectedMultiplier.
 			pathij isNotEmpty
 				ifTrue: [ dist := dist min: (pathij size) ].
@@ -370,10 +388,7 @@ GtGradKamadaKawaiLayout >> randomlyPositionNodes: theNodes maxVerticalValue: max
 
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
-	| height width gx gy nodesNum diffx diffy|
-	"TODO configurable/calculate width height"
-	height := 1000.
-	width := 1000.
+	| gx gy nodesNum diffx diffy|
 	gx := 0.
 	gy := 0.
 	nodesNum := theNodes size.
@@ -388,8 +403,8 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 
 	gx := gx / nodesNum.
 	gy := gy / nodesNum.
-	diffx := (width / 2) - gx.
-	diffy := (height / 2) - gy.
+	diffx := (self width / 2) - gx.
+	diffy := (self height / 2) - gy.
 	
 	"set new postions of nodes"
 	theNodes do: [ :aNode |
@@ -464,4 +479,14 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 					firstNode constraints gradKamadaKawai computedPosition: position2.
 					secondNode constraints gradKamadaKawai
 						computedPosition: position1 ] ] ]
+]
+
+{ #category : #accessing }
+GtGradKamadaKawaiLayout >> width [
+	^ width
+]
+
+{ #category : #accessing }
+GtGradKamadaKawaiLayout >> width: anObject [
+	width := anObject
 ]
