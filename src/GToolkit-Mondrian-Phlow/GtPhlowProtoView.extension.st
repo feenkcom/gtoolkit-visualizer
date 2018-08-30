@@ -1,7 +1,7 @@
-Extension { #name : #GtPhlowView }
+Extension { #name : #GtPhlowProtoView }
 
 { #category : #'*GToolkit-Mondrian-Phlow' }
-GtPhlowView >> mondrian [
+GtPhlowProtoView >> mondrian [
 	^ GtPhlowMondrianView new
 		originalView: self;
 		definingMethod: thisContext stack second method asRingDefinition
