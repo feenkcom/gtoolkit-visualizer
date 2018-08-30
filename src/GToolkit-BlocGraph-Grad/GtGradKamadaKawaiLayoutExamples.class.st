@@ -12,7 +12,7 @@ GtGradKamadaKawaiLayoutExamples >> simpleExample [
 	
 	view := self view.
 	layout := GtGradKamadaKawaiLayout new.
-	theNodes := self nodes: (1 to: 7).
+	theNodes := self nodes: (1 to: 7). 
 	theNodes doWithIndex: [ :node :index |
 			node labeled: (index asString).
 	].

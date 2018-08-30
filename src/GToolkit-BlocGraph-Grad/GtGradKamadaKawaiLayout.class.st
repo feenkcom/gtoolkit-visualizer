@@ -45,7 +45,7 @@ GtGradKamadaKawaiLayout >> arbitraryConstantK: anObject [
 ]
 
 { #category : #'private-layout' }
-GtGradKamadaKawaiLayout >> calculateDeltaForNode: theNodes node: aNode nodeIndex: nodeIndex [
+GtGradKamadaKawaiLayout >> calculateDeltaAtNode: theNodes node: aNode nodeIndex: nodeIndex [
 	| nodePosition dxSum dySum|
 	
 	nodePosition := aNode constraints gradKamadaKawai computedPosition.
@@ -151,7 +151,7 @@ GtGradKamadaKawaiLayout >> calculateEnergy: theNodes [
 			dx := (position1 x) - (position2 x).
 			dy := (position1 y) - (position2 y).
 			d := ((dx squared) + (dy squared)) sqrt.
-			energy := energy + (kij / (2 * (dx squared + dy squared + lij squared - (2 * lij * d)))). 	
+			energy := energy + (kij / 2) * (dx squared + dy squared + lij squared - (2 * lij * d)). 	
 		].
 	].
 	
@@ -182,7 +182,7 @@ GtGradKamadaKawaiLayout >> calculateEnergyIfExchanged: theNodes firstNodeIndex: 
 			dx := nodePosition1 x - nodePosition2 x.
 			dy := nodePosition1 y - nodePosition2 y.
 			d := (dx squared + dy squared) sqrt.
-			energy := energy + (k / (2 * ((dx squared + dy squared + l squared) - (2 * l * d)))).
+			energy := energy + (k / 2) * (dx squared + dy squared + l squared - (2 * l * d)).
 		].
 	].
 
@@ -388,8 +388,8 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 
 	gx := gx / nodesNum.
 	gy := gy / nodesNum.
-	diffx := width / (2 - gx).
-	diffy := height / (2 - gy).
+	diffx := (width / 2) - gx.
+	diffy := (height / 2) - gy.
 	
 	"set new postions of nodes"
 	theNodes do: [ :aNode |
@@ -414,7 +414,7 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 	theNodes
 		doWithIndex: [ :aNode :index | 
 			deltaNode := self
-				calculateDeltaForNode: theNodes
+				calculateDeltaAtNode: theNodes
 				node: aNode
 				nodeIndex: index.
 			deltaNode > maxDeltaNode
@@ -438,7 +438,7 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 			nodeWithMaxDelta constraints gradKamadaKawai
 				computedPosition: newNodePositionX @ newNodePositionY.
 			thresholdReached := (self
-				calculateDeltaForNode: theNodes
+				calculateDeltaAtNode: theNodes
 				node: nodeWithMaxDelta
 				nodeIndex: nodeWithMaxDeltaIndex) < self epsilon ].
 	self adjustForGravity
