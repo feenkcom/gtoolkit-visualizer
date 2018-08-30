@@ -43,6 +43,7 @@ GtGenericConnectorExamples >> oneSimpleExample [
 		dotButton := BrButton new.
 		dotButton icon: buttonElement.
 		dotButton look: BrIconLook.
+		dotButton size: 5 @ 5.
 		dotButton action: [ connector addEntity: entity + 1 ].
 		dotButton relocate: 5 @ 5.
 		element addChild: dotButton.
