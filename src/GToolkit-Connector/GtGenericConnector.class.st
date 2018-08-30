@@ -129,34 +129,18 @@ GtGenericConnector >> asScalableElement [
 	^ scalable
 ]
 
-{ #category : #public }
-GtGenericConnector >> closeMethod: aMethod [
-
-	self
-		assert: [ self hasOpenedMethod: aMethod ]
-		description: [ 'Method must be opened' ].
-
-	self
-		elementWithMethod: aMethod
-		ifPresent: [ :aMethodElement |
-			self removeEdgesFrom: aMethodElement.
-			"as soon as method element is removed, lines will automatically disappear"
-			aMethodElement removeFromParent ]
-]
-
 { #category : #'private - adding / removing' }
 GtGenericConnector >> connect: anElement [
 	"I create a visual edge between elements (not used by layouts)"
 
-	self
+	"self
 		assert: [ anElement isConnectorSource or: [ anElement isConnectorTarget ] ]
-		description: [ 'An element must be either a source or a target' ].
+		description: [ 'An element must be either a source or a target' ]."
 
 	"Element is a source, connect it to all targets"
-
-	"we assume (?) that source knows target, because we have N:1 (many source - one target)"
-	anElement isConnectorSource ifTrue: [
-		(self elementsWithTarget: anElement connector target)
+	
+	anElement connector isVisualSource ifTrue: [
+		(self elementsWithTarget: anElement connector model)
 			select: [ :aTargetElement | (anElement isConnectedTo: aTargetElement) not
 				and: [ (self doesExist: aTargetElement)
 					and: [ (self doesExist: anElement) ] ] ]
@@ -191,7 +175,7 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 	"build the entity itself"
 	entityElement := self stencil value: anEntity.
 	"allow for connector dots garnishing"
-	entityElement connector target: anEntity.
+	
 	self connectionsStencil cull: entityElement cull: anEntity.
 	self addChild: entityElement.
 
@@ -201,6 +185,33 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 { #category : #testing }
 GtGenericConnector >> doesExist: anElement [
 	^ (anElement hasParent: self) or: [ anElement isAttachedToSceneGraph ]
+]
+
+{ #category : #accessing }
+GtGenericConnector >> drawLines: anElement [
+	
+	anElement connector isVisualSource ifTrue: [
+		(self targetElementsWith: anElement connector model)
+			select: [ :aTargetElement |  (anElement isConnectedTo: aTargetElement) not 
+				and: [(self doesExist: aTargetElement)
+					and: [ (self doesExist: anElement) ] ] ]
+			thenDo: [ :aTargetElement | self addLineFrom: anElement to: aTargetElement ] ].
+		
+	"Element is a target, connect it to all sources"
+	anElement connector isVisualTarget ifTrue: [
+		(self sourceElementsWith: anElement connector model)
+			select: [ :aSourceElement |  (aSourceElement isConnectedTo: anElement) not 
+				and: [(self doesExist: aSourceElement)
+					and: [ (self doesExist: anElement) ] ] ]
+			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ]
+]
+
+{ #category : #accessing }
+GtGenericConnector >> elementAddedToScene: anElement [
+	"I create a logical edge between elements (not visible)"
+	self link: anElement.
+	self drawLines: anElement.
+	
 ]
 
 { #category : #search }
@@ -226,22 +237,35 @@ GtGenericConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 
 	self entityElements 
 		detect: [ :anEntityElement | 
-			anEntityElement connector target = anEntity 
+			anEntityElement connector model = anEntity 
 				"at: #editedMethod
 				ifPresent: [ :anEditedMethod | anEntity = anEditedMethod ]
 				ifAbsent: [ false ]" ]
 		ifFound: [ :anEditorElement | aBlock cull: anEditorElement ]
 ]
 
-{ #category : #'as yet unclassified' }
-GtGenericConnector >> elementsWithEntity: anEntity [
+{ #category : #search }
+GtGenericConnector >> elementsVisualWithSource: aSource [
+	"Return a collection of source elements whose source is a given object"
+	<return: #SequenceableCollection of: #BlElement>
 
-	^ self entityElements 
-		select: [ :anEntityElement | 
-			anEntityElement userData
-				at: #containedEntity
-				ifPresent: [ :containedEntity | anEntity = containedEntity ]
-				ifAbsent: [ false ] ]
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualSource
+				and: [ aChildElement connector model = aSource ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
+]
+
+{ #category : #search }
+GtGenericConnector >> elementsVisualWithTarget: aSource [
+	"Return a collection of source elements whose source is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualTarget
+				and: [ aChildElement connector model = aSource ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
 { #category : #search }
@@ -263,17 +287,35 @@ GtGenericConnector >> elementsWithTarget: aTarget [
 
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement isConnectorTarget
-				and: [ aChildElement connector target = aTarget ])
+			(aChildElement connector isVisualTarget
+				and: [ aChildElement connector model = aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGenericConnector >> entityElements [
 	"Return a collection of existing editor elements that are already added to the tree"
 	<return: #SequenceableCollection of: #BlElement>
 
 	^ self children reject: [ :anElement | anElement isKindOf: BlLineElement ]
+]
+
+{ #category : #accessing }
+GtGenericConnector >> goUpToSourceLayoutElement: anElement [
+	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
+	| result |
+	result := anElement.
+	[result isNotNil and: [result connector isLayoutSource]] whileFalse: [ result := result parent ].
+	^ result
+]
+
+{ #category : #accessing }
+GtGenericConnector >> goUpToTargetLayoutElement: anElement [
+	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
+	| result |
+	result := anElement.
+	[result isNotNil and: [result connector isLayoutTarget]] whileFalse: [ result := result parent ].
+	^ result
 ]
 
 { #category : #'gt-extension' }
@@ -325,28 +367,43 @@ GtGenericConnector >> initializeListeners [
 { #category : #accessing }
 GtGenericConnector >> link: anElement [
 	"I create a logical edge between elements (not visible)"
-
+	| sourceLayoutElement targetLayoutElement |
 	self
-		assert: [ anElement isConnectorTarget ]
-		description: [ 'An element must be a target' ].
+		assert: [ anElement connector isNotNil ]
+		description: [ 'An element connector must not be nil' ].
+	
+	anElement connector isVisualTarget ifTrue: [ 
 		
-	(self sourcesWithTarget: anElement connector target)
-		do: [ :anInnerElement |
-			self addEdgeFrom: anInnerElement to: anElement ]
+		targetLayoutElement := self goUpToTargetLayoutElement: anElement.
+		(self elementsVisualWithSource: anElement connector model) do: [ :layoutSource |
+			
+			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
+			
+			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
+		].
+	].
+	
+	anElement connector isVisualSource ifTrue: [
+		
+		sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
+		
+		(self elementsVisualWithTarget: anElement connector model) do: [ :layoutTarget |
+
+			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
+			
+			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
+		]
+	]
 ]
 
 { #category : #private }
 GtGenericConnector >> openEntity: anEntity [
-	"Open a given method without connecting it to other"
-	| aTargetElement |	
+	"Open a given method without connecting it to other"	
 	self
 		assert: [ (self hasOpenedEntity: anEntity) not ]
 		description: [ 'Can not open already opened enity' ].
 
-	aTargetElement := self createAndAddElementForEntity: anEntity.	
-	aTargetElement connector target: anEntity.
-	self link: aTargetElement.
-	self connect: aTargetElement
+	self createAndAddElementForEntity: anEntity.
 ]
 
 { #category : #'private - adding / removing' }
@@ -399,6 +456,18 @@ GtGenericConnector >> removeLink: aLink [
 ]
 
 { #category : #search }
+GtGenericConnector >> sourceElementsWith: aTarget [
+	"Return a collection of target elements whose source is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualSource
+				and: [ aChildElement connector model = aTarget ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
+]
+
+{ #category : #search }
 GtGenericConnector >> sourcesWithTarget: aTarget [
 	"Return a collection of target elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
@@ -418,6 +487,18 @@ GtGenericConnector >> stencil [
 { #category : #search }
 GtGenericConnector >> stencil: aStencil [
 	stencil := aStencil
+]
+
+{ #category : #search }
+GtGenericConnector >> targetElementsWith: aTarget [
+	"Return a collection of target elements whose target is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualTarget
+				and: [ aChildElement connector model = aTarget ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
 { #category : #search }

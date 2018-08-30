@@ -30,7 +30,7 @@ BlElement >> beNotConnectedTo: anObject [
 BlElement >> connector [
 	^ self userData
 		at: #connector 
-		ifAbsentPut: [ GtConnectorNode on: self ]
+		ifAbsentPut: [ GtConnectorElement on: self ]
 ]
 
 { #category : #'*GToolkit-Connector' }

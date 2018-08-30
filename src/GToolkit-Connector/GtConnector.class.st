@@ -49,13 +49,13 @@ GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
 		assert: [ aTargetElement isNotNil ]
 		description: [ 'Target element must not be nil' ].
 		
-	self
+"	self
 		assert: [ (aSourceElement isConnectedTo: aTargetElement) not ]
 		description: [ 'Source must not be connected to the target' ].
 		
 	self
 		assert: [ (aTargetElement isConnectedTo: aSourceElement) not ]
-		description: [ 'Target must not be connected to the source' ].
+		description: [ 'Target must not be connected to the source' ]."
 
 	self
 		assert: [ aSourceElement ~~ aTargetElement ]
@@ -314,7 +314,7 @@ GtConnector >> elementsWithTarget: aTarget [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement isConnectorTarget
-				and: [ aChildElement connectorTarget = aTarget ])
+				and: [ aChildElement connector model = aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
@@ -377,9 +377,6 @@ GtConnector >> openMethod: aMethod [
 		description: [ 'Can not open already opened method' ].
 
 	aTargetElement := self createAndAddElementForMethod: aMethod.	
-
-	self link: aTargetElement.
-	self connect: aTargetElement
 ]
 
 { #category : #'private - adding / removing' }
