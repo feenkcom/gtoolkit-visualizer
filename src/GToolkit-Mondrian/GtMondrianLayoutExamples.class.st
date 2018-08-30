@@ -4,7 +4,7 @@ Class {
 	#category : 'GToolkit-Mondrian-Examples'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutBinaryTree15Nodes [
 	<gtExample>
 	| mondrian |
@@ -15,7 +15,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutBinaryTree15Nodes [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutGraphWithCycles [
 	<gtExample>
 	| mondrian |
@@ -26,7 +26,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutGraphWithCycles [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTree [
 	<gtExample>
 	| mondrian |
@@ -38,7 +38,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTree [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeReversed [
 	<gtExample>
 	| mondrian |
@@ -50,7 +50,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeReversed [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeWithBiggerDistances [
 	<gtExample>
 	| mondrian |
@@ -62,7 +62,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeWithBiggerDis
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutWithBottomAlignment [
 	<gtExample>
 	| mondrian |
@@ -76,7 +76,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithBottomAlignment [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutWithCenterAlignment [
 	<gtExample>
 	| mondrian |
@@ -90,7 +90,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithCenterAlignment [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutWithNodeAndLevelDistances [
 	<gtExample>
 	| mondrian |
@@ -104,7 +104,18 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithNodeAndLevelDistances [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #force }
+GtMondrianLayoutExamples >> simpleTreeForceDirectedExample [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 7).
+	mondrian edges connectFrom: [:x |x // 2].
+	mondrian layout custom: (GtGradKamadaKawaiLayout  new).
+	^ mondrian
+]
+
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutBinaryTree15Nodes [
 	<gtExample>
 	| mondrian |
@@ -115,7 +126,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutBinaryTree15Nodes [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutGraphWithCycles [
 	<gtExample>
 	| mondrian |
@@ -126,7 +137,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutGraphWithCycles [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTree [
 	<gtExample>
 	| mondrian |
@@ -138,7 +149,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTree [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTreeReversed [
 	<gtExample>
 	| mondrian |
@@ -150,7 +161,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTreeReversed [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTreeWithBiggerDistances [
 	<gtExample>
 	| mondrian |
@@ -162,7 +173,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTreeWithBiggerDista
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutWithBottomAlignment [
 	<gtExample>
 	| mondrian |
@@ -176,7 +187,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutWithBottomAlignment [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutWithCenterAlignment [
 	<gtExample>
 	| mondrian |
@@ -190,7 +201,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutWithCenterAlignment [
 	^ mondrian
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutWithNodeAndLevelDistances [
 	<gtExample>
 	| mondrian |

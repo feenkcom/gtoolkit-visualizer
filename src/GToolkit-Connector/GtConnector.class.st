@@ -321,7 +321,15 @@ GtConnector >> elementsWithTarget: aTarget [
 { #category : #'gt-extension' }
 GtConnector >> gtLiveFor: aView [
 	^ (super gtLiveFor: aView) 
-		stencil: [ self asPannableElement ]
+		stencil: [ 
+			self space
+				ifNotNil: [ BrEditorElement new 
+					editor: (BrTextEditor new
+						text: (self printString, ' element cannot be currently displayed here as it is already displayed in another view') asRopedText readonly);
+					constraintsDo: [ :c | 
+						c horizontal matchParent.
+						c vertical matchParent ]  ]
+				ifNil: [ self asPannableElement ] ]
 ]
 
 { #category : #testing }
