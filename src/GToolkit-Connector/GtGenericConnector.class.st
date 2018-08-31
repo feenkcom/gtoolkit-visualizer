@@ -369,7 +369,9 @@ GtGenericConnector >> initialize [
 { #category : #initialization }
 GtGenericConnector >> initializeListeners [
 	
-	stylerListener := GtConnectorStylerListener new connector: self
+	stylerListener := GtConnectorStylerListener new connector: self.
+	self when: GtConnectorTargetElement do: [ :event | self link: event element. self drawLines: event element ].
+	self when: GtConnectorSourceElement do: [ :event | self link: event element. self drawLines: event element ].
 ]
 
 { #category : #accessing }

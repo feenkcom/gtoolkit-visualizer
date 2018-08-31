@@ -25,7 +25,7 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 		| labelButton container| 
 		container := VocalBlElement new.
 		container geometry: (BlEllipse diameter: 30).
-		container gtConnector: gtconnector.
+		"container gtConnector: gtconnector."
 		container
 		background: (Color gray alpha: 0.1);
 		border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
@@ -61,7 +61,7 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 		buttonContainer addChild: dotButton.
 		
 		element addChild: buttonContainer.
-		buttonContainer gtConnector: gtconnector.
+		"buttonContainer gtConnector: gtconnector."
 		buttonContainer connector beVisualSource; model: entity + 1.
 	].
 

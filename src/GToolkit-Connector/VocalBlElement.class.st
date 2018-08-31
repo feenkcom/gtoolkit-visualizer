@@ -1,26 +1,16 @@
 Class {
 	#name : #VocalBlElement,
 	#superclass : #BlElement,
-	#instVars : [
-		'gtConnector'
-	],
 	#category : #'GToolkit-Connector'
 }
 
-{ #category : #accessing }
-VocalBlElement >> gtConnector [
-	^ gtConnector
-]
-
-{ #category : #accessing }
-VocalBlElement >> gtConnector: anObject [
-	gtConnector := anObject
-]
-
 { #category : #'hooks - children' }
 VocalBlElement >> onAddedToSceneGraph [
-	super onAddedToSceneGraph 
-	gtConnector isNotNil ifTrue: [ gtConnector elementAddedToScene: self ].
+	super onAddedToSceneGraph.
+	self connector isVisualSource ifTrue: [
+	self fireEvent: (GtConnectorSourceElement new element: self)].
+	self connector isVisualTarget ifTrue: [
+		self fireEvent: (GtConnectorTargetElement new element: self) ].
 	
 ]
 
