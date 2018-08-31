@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'stylerDoneListener',
 		'stylerListener',
-		'stencil',
-		'connectionsStencil'
+		'stencil'
 	],
 	#category : #'GToolkit-Connector'
 }
@@ -152,17 +151,9 @@ GtGenericConnector >> connect: anElement [
 			select: [ :aSourceElement | (aSourceElement isConnectedTo: anElement) not
 				and: [ (self doesExist: aSourceElement)
 					and: [ (self doesExist: anElement) ] ]  ]
-			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ]
-]
-
-{ #category : #search }
-GtGenericConnector >> connectionsStencil [
-	^ connectionsStencil
-]
-
-{ #category : #search }
-GtGenericConnector >> connectionsStencil: aTwoParameterStencilBlock [
-	connectionsStencil := aTwoParameterStencilBlock
+			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ].
+		
+	self requestLayout.
 ]
 
 { #category : #private }
@@ -174,9 +165,7 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 		description: [ 'Stencil describing each entity can not be nil' ].
 	"build the entity itself"
 	entityElement := self stencil value: anEntity.
-	"allow for connector dots garnishing"
-	
-	self connectionsStencil cull: entityElement cull: anEntity.
+
 	self addChild: entityElement.
 
 	^ entityElement
@@ -203,7 +192,9 @@ GtGenericConnector >> drawLines: anElement [
 			select: [ :aSourceElement |  (aSourceElement isConnectedTo: anElement) not 
 				and: [(self doesExist: aSourceElement)
 					and: [ (self doesExist: anElement) ] ] ]
-			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ]
+			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ].
+		
+	self requestLayout.
 ]
 
 { #category : #accessing }
@@ -388,7 +379,6 @@ GtGenericConnector >> link: anElement [
 		(self elementsVisualWithSource: anElement connector model) do: [ :layoutSource |
 			
 			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-			
 			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
 		].
 	].
@@ -400,7 +390,6 @@ GtGenericConnector >> link: anElement [
 		(self elementsVisualWithTarget: anElement connector model) do: [ :layoutTarget |
 
 			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-			
 			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
 		]
 	]

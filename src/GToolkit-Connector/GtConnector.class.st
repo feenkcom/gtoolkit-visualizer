@@ -49,13 +49,13 @@ GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
 		assert: [ aTargetElement isNotNil ]
 		description: [ 'Target element must not be nil' ].
 		
-"	self
+	self
 		assert: [ (aSourceElement isConnectedTo: aTargetElement) not ]
 		description: [ 'Source must not be connected to the target' ].
 		
 	self
 		assert: [ (aTargetElement isConnectedTo: aSourceElement) not ]
-		description: [ 'Target must not be connected to the source' ]."
+		description: [ 'Target must not be connected to the source' ].
 
 	self
 		assert: [ aSourceElement ~~ aTargetElement ]

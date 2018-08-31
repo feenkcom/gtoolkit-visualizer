@@ -22,10 +22,9 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 	gtconnector := GtGenericConnector new.
 	
 	gtconnector stencil: [ :data |
-		| labelButton container| 
+		| labelButton container dotButton buttonElement buttonContainer | 
 		container := VocalBlElement new.
 		container geometry: (BlEllipse diameter: 30).
-		"container gtConnector: gtconnector."
 		container
 		background: (Color gray alpha: 0.1);
 		border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
@@ -43,11 +42,7 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 		container connector beLayoutTarget.
 		container connector beVisualTarget.
 		container connector model: data.
-		container 
-	].
-
-	gtconnector connectionsStencil: [ :element :entity |
-		| dotButton buttonElement buttonContainer |			
+		
 		buttonContainer := VocalBlElement new.	
 		buttonContainer size: 5 @ 5.
 		
@@ -56,13 +51,14 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 		dotButton icon: buttonElement.
 		dotButton look: BrIconLook.
 		dotButton size: 5 @ 5.
-		dotButton action: [ gtconnector addEntity: entity + 1. gtconnector addEntity: entity + 2.  ].
+		dotButton action: [ gtconnector addEntity: data + 1. gtconnector addEntity: data + 2. ].
 		buttonContainer relocate: 10 @ 10.
 		buttonContainer addChild: dotButton.
 		
-		element addChild: buttonContainer.
-		"buttonContainer gtConnector: gtconnector."
-		buttonContainer connector beVisualSource; model: entity + 1.
+		buttonContainer connector beVisualSource; model: data + 1.
+		
+		container addChild: buttonContainer.
+		container
 	].
 
 	gtconnector addEntity: 1.
