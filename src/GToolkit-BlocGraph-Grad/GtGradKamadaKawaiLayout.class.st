@@ -165,11 +165,11 @@ GtGradKamadaKawaiLayout >> calculateEnergy: theNodes [
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> calculateEnergyIfExchanged: theNodes firstNodeIndex: firstIndex secondNodeIndex: secondIndex [
 " Calculates the energy function E as if positions of the specified nodes are exchanged."
-	| energy nodesNum dist l k dx dy d|
+	| energy nodesNum dist l k dx dy d |
 	
 	energy := 0.
 	nodesNum := theNodes size.
-	(1 to: nodesNum -1) do: [ :i |
+	(1 to: nodesNum - 1) do: [ :i |
 		((i + 1) to: nodesNum) do: [ :j |
 			| ii jj nodePosition1 nodePosition2 |
 			ii := i.
@@ -258,16 +258,16 @@ GtGradKamadaKawaiLayout >> height: anObject [
 { #category : #initialization }
 GtGradKamadaKawaiLayout >> initialize [
 	super initialize.
-	currentIteration := 0.
+	currentIteration := 1.
 	lengthFactor := 0.9.
 	disconnectedMultiplier := 0.5.
-	maxIterations := 1000.
+	maxIterations := 2000.
 	adjustForGravity := true.
 	exchangeNodes := true.
 	arbitraryConstantK := 1.
 	epsilon := 0.1.
-	height := 400.
-	width := 400.
+	height := 500.
+	width := 500.
 
 	
 
@@ -310,6 +310,9 @@ GtGradKamadaKawaiLayout >> initializeLayout: theNodes [
 				
 		].
 	 ].
+	GtGradKamadaKawaiDistanceMatrixSignal new
+		distanceMatrix: distanceMatrix;
+		emit.
 ]
 
 { #category : #'private-layout' }
@@ -380,10 +383,15 @@ GtGradKamadaKawaiLayout >> randomlyPositionNodes: theNodes maxVerticalValue: max
 					ifFalse: [ 
 						positions add: position.
 						aNodeElement constraints gradKamadaKawai computedPosition: position.
+						GtGradKamadaKawaiInitialPositionSetSignal new
+							node: aNodeElement;
+							position: position;
+							emit.
 						positionSet := true.
 					].
 			].
 	].
+
 ]
 
 { #category : #'private-layout' }
@@ -422,12 +430,13 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> step: theNodes [
-	| maxDeltaNode nodeWithMaxDelta nodeWithMaxDeltaIndex deltaNode loopIndex thresholdReached energy nodesNum |
+	| maxDeltaNode nodeWithMaxDelta nodeWithMaxDeltaIndex loopIndex thresholdReached energy nodesNum |
 	self currentIteration: self currentIteration + 1.
 	maxDeltaNode := 0.
 	nodeWithMaxDeltaIndex := -1.
 	theNodes
-		doWithIndex: [ :aNode :index | 
+		doWithIndex: [ :aNode :index |
+			| deltaNode |
 			deltaNode := self
 				calculateDeltaAtNode: theNodes
 				node: aNode
@@ -441,29 +450,30 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 	loopIndex := 1.
 	thresholdReached := false.
 	[loopIndex <= 100 and: [ thresholdReached not ]]
-		whileTrue: [ | dxy nodePosition newNodePositionX newNodePositionY |
+		whileTrue: [ | dxy nodePosition  deltaAtNode|
+			loopIndex := loopIndex + 1.
 			dxy := self
 				calculateDeltaPositionNode: theNodes
 				node: nodeWithMaxDelta
 				nodeIndex: nodeWithMaxDeltaIndex.
 			nodePosition := nodeWithMaxDelta constraints gradKamadaKawai
 				computedPosition.
-			newNodePositionX := nodePosition x + dxy x.
-			newNodePositionY := nodePosition y + dxy y.
 			nodeWithMaxDelta constraints gradKamadaKawai
-				computedPosition: newNodePositionX @ newNodePositionY.
-			thresholdReached := (self
+				computedPosition: (nodePosition x + dxy x) @ (nodePosition y + dxy y).
+				deltaAtNode := self
 				calculateDeltaAtNode: theNodes
-				node: nodeWithMaxDelta
-				nodeIndex: nodeWithMaxDeltaIndex) < self epsilon ].
+					node: nodeWithMaxDelta
+					nodeIndex: nodeWithMaxDeltaIndex.
+			thresholdReached := deltaAtNode < self epsilon ].
 	self adjustForGravity
 		ifTrue: [ self shiftNodesToTheCenterOfGavity: theNodes ].
 	(self exchangeNodes and: [ maxDeltaNode < self epsilon ])
 		ifFalse: [ ^ self ].
+	
 	energy := self calculateEnergy: theNodes.
 	nodesNum := theNodes size.
-	1 to: nodesNum do: [ :i | 
-		i + 1 to: nodesNum do: [ :j | 
+	1 to: (nodesNum - 1) do: [ :i | 
+		(i + 1) to: nodesNum do: [ :j | 
 			| exenergy firstNode secondNode position1 position2 |
 			exenergy := self
 				calculateEnergyIfExchanged: theNodes
@@ -476,9 +486,9 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 						computedPosition.
 					position2 := secondNode constraints gradKamadaKawai
 						computedPosition.
-					firstNode constraints gradKamadaKawai computedPosition: position2.
+					firstNode constraints gradKamadaKawai computedPosition: (position2 x)@(position2 y).
 					secondNode constraints gradKamadaKawai
-						computedPosition: position1 ] ] ]
+						computedPosition: (position1 x)@(position1 y) ] ] ]
 ]
 
 { #category : #accessing }

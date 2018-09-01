@@ -111,7 +111,7 @@ GtMondrianLayoutExamples >> simpleTreeForceDirectedExample [
 	mondrian := GtMondrian new.
 	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 7).
 	mondrian edges connectFrom: [:x |x // 2].
-	mondrian layout custom: (GtGradKamadaKawaiLayout  new).
+	mondrian layout custom: (GtGradKamadaKawaiLayout  new). 
 	^ mondrian
 ]
 
