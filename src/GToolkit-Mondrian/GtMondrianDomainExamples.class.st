@@ -147,7 +147,7 @@ GtMondrianDomainExamples >> editorElements [
 		toCenterTop;
 		shape: [ :each | BlLineElement new border: (BlBorder paint: (Color gray alpha: 0.3) width: 2) ];
 		connectFrom: #parent.
-	view layout tree horizontalGap: 10; verticalGap: 40.
+	view layout tree nodeDistance: 10; levelDistance: 40.
 	^ view
 		
 ]
@@ -203,23 +203,23 @@ GtMondrianDomainExamples >> exampleDependencies [
 	view := self emptyView.
 	view nodes 
 		shape: [ :each | 
-			| text styler editor editorElement |
-			text := each method sourceCode asRopedText.
-			styler := GtExamplesStyler new classOrMetaClass: each methodClass.
-			editor := BrTextEditor new.
-			editor styler: styler.
-			editor text: text.
-			editorElement := BrEditorElement new.
-			editorElement constraintsDo: [ :c |
-			    c horizontal matchParent.
-			    c vertical matchParent ].
-			editorElement editor: editor.
-			editorElement ];
+			(GtExamplesStyler 
+				editorElementOnSourceCode: each method sourceCode 
+				inClass: each methodClass)
+				constraintsDo: [ :c | 
+					c horizontal exact: 300.
+				   c vertical exact: 200 ] ];
 		with: ((BlBezierExamples>>#quadraticCurveWithAnchors) gtExample withDeepCollect: #directDependencies) asSet.
 	view edges 
-		fromRightCenter; toLeftCenter;
+		fromNearestCircle;
+		toNearestCircle;
+		shape: [ :each | 
+			BlLineElement new
+				border: (BlBorder paint: (Color gray alpha: 0.4) width: 3);
+				toHead: (BlArrowheadSimpleArrow new
+					border: (BlBorder builder paint: (Color gray alpha: 0.4); width: 3; build)) ];
 		connectToAll: #directDependencies.
-	view layout horizontalDominanceTree layered horizontalGap: 100.
+	view layout horizontalTree levelDistance: 200; nodeDistance: 40.
 	^ view
 ]
 
