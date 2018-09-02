@@ -46,7 +46,7 @@ GtDiagrammerSelectionChooser >> computeSelectionChainFor: anElement [
 	"first we have to collect all parents of the given element"
 	theParents := Array streamContents: [ :aStream |
 		aStream nextPut: anElement.
-		anElement parentsDo: [ :aParentElement | aStream nextPut: aParentElement ] ].
+		anElement allParentsDo: [ :aParentElement | aStream nextPut: aParentElement ] ].
 
 	"then select only those ones that are parents of the element marked as selection leaf (cutting point).
 	Note: selection leaf is included in the chain, however selection can not `dive-in` in the leaf"
