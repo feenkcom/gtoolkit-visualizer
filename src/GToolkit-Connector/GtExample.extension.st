@@ -6,7 +6,7 @@ GtExample >> gtConnectionsFor: aView [
 	^ aView explicit
 		title: 'Connections';
 		stencil: [	
-			| gtconnector |
+			| gtconnector aBottomResizer aRightResizer |
 			gtconnector := GtGenericConnector new.
 			gtconnector stencil: [ :method |
 				| editorElement styler text editor vocalEditorContainer vocalVisualTarget|
@@ -21,11 +21,14 @@ GtExample >> gtConnectionsFor: aView [
 				editorElement := BrEditorElement new.
 				editorElement
 					constraintsDo: [ :c |
-					c horizontal exact: 400.
-					c vertical exact: 200.
+					c horizontal matchParent.
+					c vertical matchParent.
 					c padding: (BlInsets all: 10) ].
 				vocalVisualTarget := VocalBlElement new.
-				vocalVisualTarget size: 400@200.
+				vocalVisualTarget
+					constraintsDo: [ :c |
+					c horizontal matchParent.
+					c vertical matchParent ].
 				
 				vocalVisualTarget connector beVisualTarget.
 				vocalVisualTarget connector model: method.
@@ -45,8 +48,16 @@ GtExample >> gtConnectionsFor: aView [
 				"because we connect editors with lines based on styler we must change text
 				only after editor is added to the scene, otherwise events will be ignored"
 				editor text: text.	
-				
+				aBottomResizer := BlElement new
+					look: BrGlamorousResizerBottomBarLook new;
+					addEventHandler: (BlResizerBottomListener new resizeTarget: vocalEditorContainer; minimumExtent: 0@75).
+				aRightResizer := BlElement new
+					look: BrGlamorousResizerRightBarLook new;
+					addEventHandler: (BlResizerRightListener new resizeTarget: vocalEditorContainer; minimumExtent: 75@0).
+
 				vocalEditorContainer addChild: vocalVisualTarget.
+				vocalEditorContainer addChild: aBottomResizer.
+				vocalEditorContainer addChild: aRightResizer.
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
