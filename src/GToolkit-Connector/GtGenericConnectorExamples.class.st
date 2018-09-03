@@ -81,8 +81,6 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 		vocalEditorContainer connector model: method.
 		vocalEditorContainer size: 400@200.
 		
-
-		
 		editorElement := BrEditorElement new.
 		editorElement
 			constraintsDo: [ :c |
@@ -118,6 +116,46 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 		
 		vocalEditorContainer addChild: vocalVisualTarget.
 		vocalEditorContainer 
+	].
+	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
+	^ gtconnector
+]
+
+{ #category : #examples }
+GtGenericConnectorExamples >> rawObjectExample [
+	<gtExample>
+	| gtconnector |
+	gtconnector := GtGenericConnector new.
+	gtconnector stencil: [ :entity|
+		 |grid child1 child2 child3|
+
+	grid := BlElement new.
+	grid size: 500@400.
+	grid layout: (BlGridLayout horizontal cellSpacing: 10; columnCount: 2).
+
+	child1 := BlElement new.
+	child1 background: (Color red alpha: 0.5).
+	child1 constraintsDo: [ :c |
+		c horizontal matchParent.
+		c vertical matchParent ].
+
+	child2 := BlElement new.
+	child2 background: (Color blue alpha: 0.5).
+	child2 constraintsDo: [ :c |
+		c horizontal matchParent.
+		c vertical matchParent.
+		c grid vertical span: 2 ].
+
+	child3 := BlElement new.
+	child3 background: (Color green alpha: 0.5).
+	child3 constraintsDo: [ :c |
+		c horizontal matchParent.
+		c vertical matchParent ].
+
+	grid addChildren: { child1. child2. child3 }.
+
+	grid forceLayout.
+	grid
 	].
 	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
 	^ gtconnector
