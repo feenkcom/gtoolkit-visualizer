@@ -73,8 +73,9 @@ GtConnectorTextButtonAttribute >> link [
 { #category : #initialization }
 GtConnectorTextButtonAttribute >> newButton [
 	<return: #BlElement>
-	| aButton |
-
+	| aButton buittonContainer |
+	buittonContainer := VocalBlElement new.
+	buittonContainer size:6@6.
 	aButton := GtConnectorTextButtonElement new
 		size: 6 @ 6;
 		margin:
@@ -88,10 +89,10 @@ GtConnectorTextButtonAttribute >> newButton [
 		addEventHandlerOn: BlClickEvent
 			do: [ :anEvent | actionBlock value: anEvent ];
 		yourself.
-	aButton beConnectorSource.
-	aButton connectorSource: self source.
-	aButton connectorTarget: self target.
-	^ aButton
+	buittonContainer connector beVisualSource.
+	buittonContainer connector model: self target.
+	buittonContainer addChild: aButton.
+	^ buittonContainer
 ]
 
 { #category : #printing }

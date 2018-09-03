@@ -106,11 +106,11 @@ GtGenericConnector >> addLink: aLink [
 	| aSourceElement aTargetElement |
 	
 	aSourceElement := self
-		elementWithMethod: aLink source
+		elementWithEntity: aLink source
 		ifAbsent: [ ^ self ].
 		
 	aTargetElement := self
-		elementWithMethod: aLink target
+		elementWithEntity: aLink target
 		ifAbsent: [ ^ self ].
 
 	self addEdgeFrom: aSourceElement to: aTargetElement
@@ -254,6 +254,7 @@ GtGenericConnector >> elementsVisualWithTarget: aSource [
 
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
+			
 			(aChildElement connector isVisualTarget
 				and: [ aChildElement connector model = aSource ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
@@ -376,6 +377,7 @@ GtGenericConnector >> link: anElement [
 	anElement connector isVisualTarget ifTrue: [ 
 		
 		targetLayoutElement := self goUpToTargetLayoutElement: anElement.
+		
 		(self elementsVisualWithSource: anElement connector model) do: [ :layoutSource |
 			
 			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
@@ -388,7 +390,7 @@ GtGenericConnector >> link: anElement [
 		sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
 		
 		(self elementsVisualWithTarget: anElement connector model) do: [ :layoutTarget |
-
+			
 			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
 			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
 		]

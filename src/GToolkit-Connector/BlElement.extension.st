@@ -69,6 +69,6 @@ BlElement >> isConnectorSource [
 
 { #category : #'*GToolkit-Connector' }
 BlElement >> isConnectorTarget [
-	^ self connector isNotNil and: [ self connector target isNotNil ]
+	^ self connector isNotNil and: [ self connector isVisualTarget  ]
 
 ]
