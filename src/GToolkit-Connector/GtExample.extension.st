@@ -1,6 +1,59 @@
 Extension { #name : #GtExample }
 
 { #category : #'*GToolkit-Connector' }
+GtExample >> gtConnectionsFor: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Connections';
+		stencil: [	
+			| gtconnector |
+			gtconnector := GtGenericConnector new.
+			gtconnector stencil: [ :method |
+				| editorElement styler text editor vocalEditorContainer vocalVisualTarget|
+				vocalEditorContainer := VocalBlElement new.
+				vocalEditorContainer connector beLayoutSource.
+				vocalEditorContainer connector beLayoutTarget.
+				vocalEditorContainer connector model: method.
+				vocalEditorContainer size: 400@200.
+				vocalEditorContainer
+					background: Color white;
+					effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
+				editorElement := BrEditorElement new.
+				editorElement
+					constraintsDo: [ :c |
+					c horizontal exact: 400.
+					c vertical exact: 200.
+					c padding: (BlInsets all: 10) ].
+				vocalVisualTarget := VocalBlElement new.
+				vocalVisualTarget size: 400@200.
+				
+				vocalVisualTarget connector beVisualTarget.
+				vocalVisualTarget connector model: method.
+				vocalVisualTarget addChild: editorElement.
+
+				styler := GtConnectorExampleStyler new.
+				styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
+				styler classOrMetaClass: method methodClass.
+				styler addEventHandler: (GtConnectorStylerListener new connector: gtconnector).
+
+				editor := BrTextEditor new.
+				editor styler: styler.
+				editorElement editor: editor.
+
+				text := method sourceCode asRopedText.
+
+				"because we connect editors with lines based on styler we must change text
+				only after editor is added to the scene, otherwise events will be ignored"
+				editor text: text.	
+				
+				vocalEditorContainer addChild: vocalVisualTarget.
+				vocalEditorContainer 
+			].
+			gtconnector addEntity: self method.
+			gtconnector asPannableElement ]
+]
+
+{ #category : #'*GToolkit-Connector' }
 GtExample >> gtInspectorBlocConnectedExamplesIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	composite bloc
