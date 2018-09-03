@@ -446,11 +446,11 @@ GtGenericConnector >> removeLink: aLink [
 	| aSourceElement aTargetElement |
 	
 	aSourceElement := self
-		elementWithMethod: aLink source
+		elementWithEntity: aLink source
 		ifAbsent: [ ^ self ].
 		
 	aTargetElement := self
-		elementWithMethod: aLink target
+		elementWithEntity: aLink target
 		ifAbsent: [ ^ self ].
 
 	self removeEdgeFrom: aSourceElement to: aTargetElement
