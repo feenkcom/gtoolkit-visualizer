@@ -37,6 +37,11 @@ GtConnectorElement >> beLayoutTarget [
 ]
 
 { #category : #accessing }
+GtConnectorElement >> beNotConnectedTo: anObject [ 
+	connectorConnections isNotNil ifTrue: [ connectorConnections remove: anObject ].
+]
+
+{ #category : #accessing }
 GtConnectorElement >> beVisualSource [
 	isVisualSource := true
 ]

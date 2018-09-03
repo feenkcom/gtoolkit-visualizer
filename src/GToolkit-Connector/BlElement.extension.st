@@ -10,20 +10,9 @@ BlElement >> beConnectedTo: anObject [
 ]
 
 { #category : #'*GToolkit-Connector' }
-BlElement >> beConnectorSource [
-	self userData at: #isConnectorSource put: true
-]
-
-{ #category : #'*GToolkit-Connector' }
-BlElement >> beConnectorTarget [
-	self userData at: #isConnectorTarget put: true
-]
-
-{ #category : #'*GToolkit-Connector' }
 BlElement >> beNotConnectedTo: anObject [
-	self userData
-		at: #connectorConnections
-		ifPresent: [ :aCollection | aCollection remove: anObject ]
+	self connector
+		beNotConnectedTo: anObject.
 ]
 
 { #category : #'*GToolkit-Connector' }
