@@ -16,5 +16,9 @@ VocalBlElement >> onAddedToSceneGraph [
 
 { #category : #'hooks - children' }
 VocalBlElement >> onRemovedFromSceneGraph [
-	super onRemovedFromSceneGraph 
+	super onRemovedFromSceneGraph.
+	self connector isVisualSource ifTrue: [
+		self dispatchEvent: (BlElementRemovedEvent target: self)].
+	self connector isVisualTarget ifTrue: [
+		self dispatchEvent: (BlElementRemovedEvent target: self)].
 ]

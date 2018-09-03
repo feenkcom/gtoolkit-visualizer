@@ -16,5 +16,5 @@ GtConnectorTextButtonElement >> onRemovedFromSceneGraph [
 	super onRemovedFromSceneGraph.	
 	
 	self dispatchEvent: GtConnectorButtonRemovedEvent new.
-	self dispatchEvent: (BlElementRemovedEvent target: self).
+	"self dispatchEvent: (BlElementRemovedEvent target: self)."
 ]

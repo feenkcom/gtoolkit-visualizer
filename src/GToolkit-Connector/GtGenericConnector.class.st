@@ -90,6 +90,7 @@ GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
 		aTargetElement removeEventHandler: aDeleteListener.
 		aSourceElement beNotConnectedTo: aTargetElement.
 		aTargetElement beNotConnectedTo: aSourceElement.
+		self inform: 'line removed'.
 		aLineElement removeFromParent ].
 	
 	aSourceElement addEventHandler: aDeleteListener.

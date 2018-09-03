@@ -122,40 +122,97 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 ]
 
 { #category : #examples }
+GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
+	| variableNodes list |
+	variableNodes := OrderedCollection new: anObject class allSlots size.
+	variableNodes add: (GTInspectorSelfNode hostObject: anObject).
+	anObject gtInspectorVariableNodesIn: variableNodes.
+	
+	list := BrColumnedList new display: variableNodes.
+	"list addEventHandler: (GtInspectorListToSelectHandler new transformation: [ :aNode | aNode rawValue ])."
+	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
+
+	list column
+		title: 'Icon';
+		stencil: [ :aNode :index |
+			| icon |
+			icon := ([ aNode rawValue gtInspectorIcon ifNil: [ aNode rawValue class systemIcon ] ]
+					on: Error 
+					do: [ :error | anObject iconNamed: #smallWarningIcon ]).
+			icon asElement].
+	list column
+		title: 'Variable';
+		stencil: [ :aNode :index | 
+					| textElement text vocal |
+					text := aNode label asRopedText.								
+					textElement :=  (BrListLabelStencil matchParent: text) asElement.
+					textElement constraintsDo: [ :c | c horizontal matchParent.  c padding: (BlInsets left: 10 right:  10). c padding: (BlInsets top: 5 bottom:  5) ].
+					
+					vocal := VocalBlElement new.
+					vocal layout: BlLinearLayout vertical alignCenter.
+					vocal addChild: textElement.
+					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent].
+					
+					
+					vocal ].
+		list column
+				title: 'Value';
+				stencil: [ :aNode :index |
+					| text textElement vocal |
+					text := [ aNode rawValue gtDisplayString asRopedText ] 
+						on: Error 
+						do: [ aNode errorMessage asRopedText foreground: Color red ].
+					textElement :=  (BrListLabelStencil matchParent: text) asElement.
+					textElement constraintsDo: [ :c | c horizontal matchParent. c padding: (BlInsets left: 10 right: 10) ].
+					
+					vocal := VocalBlElement new.
+					vocal layout: BlLinearLayout vertical.
+					vocal addChild: textElement.
+					vocal connector beVisualSource.
+					aNode rawValue = aNode hostObject ifFalse: [  
+						vocal connector model: aNode rawValue.
+					].
+					vocal when: BlDoubleClickEvent do: [ :event | self inform:event printString. connector addEntity: aNode rawValue ].
+					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
+					vocal border: (BlBorder builder width:2; paint: Color lightGray) build.
+					
+					vocal
+					
+			  ].
+			
+	^ list 
+]
+
+{ #category : #examples }
 GtGenericConnectorExamples >> rawObjectExample [
 	<gtExample>
 	| gtconnector |
 	gtconnector := GtGenericConnector new.
-	gtconnector stencil: [ :entity|
-		 |grid child1 child2 child3|
-
-	grid := BlElement new.
-	grid size: 500@400.
-	grid layout: (BlGridLayout horizontal cellSpacing: 10; columnCount: 2).
-
-	child1 := BlElement new.
-	child1 background: (Color red alpha: 0.5).
-	child1 constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-
-	child2 := BlElement new.
-	child2 background: (Color blue alpha: 0.5).
-	child2 constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent.
-		c grid vertical span: 2 ].
-
-	child3 := BlElement new.
-	child3 background: (Color green alpha: 0.5).
-	child3 constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-
-	grid addChildren: { child1. child2. child3 }.
-
-	grid forceLayout.
-	grid
+	gtconnector stencil: [ :entity |
+		| header text textElement uml|
+		uml := VocalBlElement new.
+		uml size: 300@300.
+		uml layout: BlLinearLayout new beVertical.
+		uml connector beLayoutSource.
+		uml connector beLayoutTarget.
+		uml connector model: entity.
+	
+		header := VocalBlElement new.
+		header connector beVisualTarget.
+		header connector model: entity.
+		header look: (BrLayoutLook linearVertical hMatchParent).
+	
+		text := BlRopedText string: entity printString.
+		textElement := BlTextElement new text: text asRopedText.
+		
+		textElement look: (BrLayoutLook fitContent alignTopCenter).
+	
+		header addChild: textElement.
+		textElement constraintsDo: [ :c | c padding: (BlInsets all:10) ].	
+	
+		uml addChild: header.
+		uml addChild: (self rawObjectConnectorTableFor: entity in: gtconnector).
+		uml
 	].
 	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
 	^ gtconnector
