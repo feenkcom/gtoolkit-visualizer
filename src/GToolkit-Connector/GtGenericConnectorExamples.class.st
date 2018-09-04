@@ -172,7 +172,7 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 					aNode rawValue = aNode hostObject ifFalse: [  
 						vocal connector model: aNode rawValue.
 					].
-					vocal when: BlDoubleClickEvent do: [ :event | self inform:event printString. connector addEntity: aNode rawValue ].
+					vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
 					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
 					vocal border: (BlBorder builder width:2; paint: Color lightGray) build.
 					
