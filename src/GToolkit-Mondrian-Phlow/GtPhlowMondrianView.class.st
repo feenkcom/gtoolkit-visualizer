@@ -23,6 +23,7 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 							(GtPhlowObjectToSelect new
 								object: event target graph model;
 								sourceElement: event target) ] ].
+	mondrianElement phlow beView; entity: self.
 	^ aBlock value: mondrianElement
 ]
 

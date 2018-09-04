@@ -74,6 +74,9 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 	editor text: BrRopedTextExamples new textWithAttributes.
 	editor when: BrTextEditorInsertedEvent do: block.
 	editor when: BrTextEditorDeletedEvent do: block.
+	editor when: BrTextEditorCursorMovedEvent do: block.
+	editor when: BrTextEditorCursorAddedEvent do: block.
+	editor when: BrTextEditorCursorRemovedEvent do: block.
 	element 
 		background: Color white;
 		effect: (BlDropShadowEffect color: Color lightGray width: 10 offset: 10@10);
@@ -82,6 +85,7 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 				c horizontal matchParent.
 				c vertical matchParent.
 				c grid vertical weight: 0.5 ].
+	
 	root addChild: element.
 
 	elementsMondrian := BlElement new.
@@ -169,7 +173,6 @@ GtMondrianDomainExamples >> editorElementsOf: element on: view [
 			labelText := labelText asRopedText.
 			labelText fontSize: 9.
 			labelText foreground: Color lightGray.
-			
 			label := BlTextElement new text: labelText. 
 			label constraintsDo: [ :c | c grid horizontal alignCenter ].
 			container addChild: label.
@@ -186,9 +189,7 @@ GtMondrianDomainExamples >> editorElementsOf: element on: view [
 		toCenterTop;
 		shape: [ :each | BlLineElement new border: (BlBorder paint: (Color gray alpha: 0.3) width: 2) ];
 		connectFrom: #parent.
-	view layout tree.
-	^ view
-		
+	view layout tree nodeDistance: 10; levelDistance: 40.
 ]
 
 { #category : #examples }
