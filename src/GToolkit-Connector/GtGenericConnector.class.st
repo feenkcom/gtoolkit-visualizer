@@ -79,7 +79,7 @@ GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
 	aLineElement constraints ignoreByLayout.
 	aLineElement
 		border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
-		fromAnchor: (BlElementCenterAnchor element: aSourceElement);
+		fromAnchor: (BlElementCenterRightAnchor element: aSourceElement);
 		toAnchor: (BlElementCenterLeftAnchor element: aTargetElement).
 
 	"Line should disappear when any of source or target elements is deleted"
@@ -193,8 +193,6 @@ GtGenericConnector >> drawLines: anElement [
 				and: [(self doesExist: aSourceElement)
 					and: [ (self doesExist: anElement) ] ] ]
 			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ].
-		
-"	self requestParentLayout."
 ]
 
 { #category : #accessing }

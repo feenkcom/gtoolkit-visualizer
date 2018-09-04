@@ -196,6 +196,8 @@ GtGenericConnectorExamples >> rawObjectExample [
 		uml connector beLayoutTarget.
 		uml connector model: entity.
 		uml constraintsDo: [:c | c padding: (BlInsets top: 1 bottom: 1).].
+		uml background: Color white;
+			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
 		"uml border: (BlBorder builder width:2; paint: Color lightGray) build."
 		
 		header := VocalBlElement new.
@@ -217,7 +219,7 @@ GtGenericConnectorExamples >> rawObjectExample [
 		tabGroup 
 			allChildrenBreadthFirstDetect: [ :each | each isKindOf: BrTabGroup ] 
 			ifFound: [ :theInterestingTabGroup |
-				theInterestingTabGroup addTabFirst: (BrTab new
+				theInterestingTabGroup addTab: (BrTab new
 					look: BrGlamorousTabLook new;
 					label: 'Connector';
 					stencil: [ self rawObjectConnectorTableFor: entity in: gtconnector ]) ].
@@ -225,5 +227,5 @@ GtGenericConnectorExamples >> rawObjectExample [
 		uml
 	].
 	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
-	^ gtconnector
+	^ gtconnector 
 ]
