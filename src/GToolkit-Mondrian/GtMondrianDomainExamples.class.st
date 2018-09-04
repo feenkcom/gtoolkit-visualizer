@@ -73,6 +73,7 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 	editor := BrTextEditor new.
 	editor text: BrRopedTextExamples new textWithAttributes.
 	editor when: BrTextEditorInsertedEvent do: block.
+	editor when: BrTextEditorDeletedEvent do: block.
 	element 
 		background: Color white;
 		effect: (BlDropShadowEffect color: Color lightGray width: 10 offset: 10@10);
