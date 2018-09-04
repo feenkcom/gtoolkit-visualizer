@@ -61,7 +61,7 @@ GtExample >> gtConnectionsFor: aView [
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
-			gtconnector asPannableElement ]
+			gtconnector "asPannableElement" ]
 ]
 
 { #category : #'*GToolkit-Connector' }

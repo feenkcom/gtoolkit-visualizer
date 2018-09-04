@@ -194,7 +194,7 @@ GtGenericConnector >> drawLines: anElement [
 					and: [ (self doesExist: anElement) ] ] ]
 			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ].
 		
-	self requestLayout.
+"	self requestParentLayout."
 ]
 
 { #category : #accessing }
@@ -361,8 +361,12 @@ GtGenericConnector >> initialize [
 { #category : #initialization }
 GtGenericConnector >> initializeListeners [
 	
-	self when: GtConnectorTargetElement do: [ :event | self link: event element. self drawLines: event element ].
-	self when: GtConnectorSourceElement do: [ :event | self link: event element. self drawLines: event element ].
+	self when: GtConnectorTargetElement do: [ :event | 
+		self drawLines: event element.
+		self link: event element ].
+	self when: GtConnectorSourceElement do: [ :event | 
+		self drawLines: event element.
+		self link: event element ].
 ]
 
 { #category : #accessing }

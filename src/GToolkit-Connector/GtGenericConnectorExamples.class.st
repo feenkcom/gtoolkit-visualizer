@@ -188,7 +188,7 @@ GtGenericConnectorExamples >> rawObjectExample [
 	| gtconnector |
 	gtconnector := GtGenericConnector new.
 	gtconnector stencil: [ :entity |
-		| header text textElement uml|
+		| header text textElement uml tabGroup tab |
 		uml := VocalBlElement new.
 		uml size: 300@300.
 		uml layout: BlLinearLayout new beVertical.
@@ -212,7 +212,16 @@ GtGenericConnectorExamples >> rawObjectExample [
 		textElement constraintsDo: [ :c | c padding: (BlInsets all:10) ].	
 	
 		uml addChild: header.
-		uml addChild: (self rawObjectConnectorTableFor: entity in: gtconnector).
+		
+		tabGroup := (self gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
+		tabGroup 
+			allChildrenBreadthFirstDetect: [ :each | each isKindOf: BrTabGroup ] 
+			ifFound: [ :theInterestingTabGroup |
+				theInterestingTabGroup addTabFirst: (BrTab new
+					look: BrGlamorousTabLook new;
+					label: 'Connector';
+					stencil: [ self rawObjectConnectorTableFor: entity in: gtconnector ]) ].
+		uml addChild: tabGroup.
 		uml
 	].
 	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
