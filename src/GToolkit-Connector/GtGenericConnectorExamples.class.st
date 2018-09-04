@@ -174,7 +174,6 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 					].
 					vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
 					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
-					vocal border: (BlBorder builder width:2; paint: Color lightGray) build.
 					
 					vocal
 					
@@ -196,10 +195,12 @@ GtGenericConnectorExamples >> rawObjectExample [
 		uml connector beLayoutSource.
 		uml connector beLayoutTarget.
 		uml connector model: entity.
-	
+		uml constraintsDo: [:c | c padding: (BlInsets top: 1 bottom: 1).].
+		"uml border: (BlBorder builder width:2; paint: Color lightGray) build."
+		
 		header := VocalBlElement new.
-		header connector beVisualTarget.
-		header connector model: entity.
+		uml connector beVisualTarget.
+		uml connector model: entity.
 		header look: (BrLayoutLook linearVertical hMatchParent).
 	
 		text := BlRopedText string: entity printString.
