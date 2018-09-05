@@ -131,53 +131,48 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 	list := BrColumnedList new display: variableNodes.
 	"list addEventHandler: (GtInspectorListToSelectHandler new transformation: [ :aNode | aNode rawValue ])."
 	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
-
 	list column
 		title: 'Icon';
 		stencil: [ :aNode :index |
 			| icon |
 			icon := ([ aNode rawValue gtInspectorIcon ifNil: [ aNode rawValue class systemIcon ] ]
-					on: Error 
-					do: [ :error | anObject iconNamed: #smallWarningIcon ]).
+				on: Error 
+				do: [ :error | anObject iconNamed: #smallWarningIcon ]).
 			icon asElement].
 	list column
 		title: 'Variable';
 		stencil: [ :aNode :index | 
-					| textElement text vocal |
-					text := aNode label asRopedText.								
-					textElement :=  (BrListLabelStencil matchParent: text) asElement.
-					textElement constraintsDo: [ :c | c horizontal matchParent.  c padding: (BlInsets left: 10 right:  10). c padding: (BlInsets top: 5 bottom:  5) ].
-					
-					vocal := VocalBlElement new.
-					vocal layout: BlLinearLayout vertical alignCenter.
-					vocal addChild: textElement.
-					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent].
-					
-					
-					vocal ].
+			| textElement text vocal |
+			text := aNode label asRopedText.								
+			textElement :=  (BrListLabelStencil matchParent: text) asElement.
+			textElement constraintsDo: [ :c | c horizontal matchParent.  c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
+			vocal := VocalBlElement new.
+			vocal layout: BlLinearLayout vertical alignCenter.
+			vocal addChild: textElement.
+			vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent].
+			vocal ].
 		list column
-				title: 'Value';
-				stencil: [ :aNode :index |
-					| text textElement vocal |
-					text := [ aNode rawValue gtDisplayString asRopedText ] 
-						on: Error 
-						do: [ aNode errorMessage asRopedText foreground: Color red ].
-					textElement :=  (BrListLabelStencil matchParent: text) asElement.
-					textElement constraintsDo: [ :c | c horizontal matchParent. c padding: (BlInsets left: 10 right: 10) ].
-					
-					vocal := VocalBlElement new.
-					vocal layout: BlLinearLayout vertical.
-					vocal addChild: textElement.
-					vocal connector beVisualSource.
-					aNode rawValue = aNode hostObject ifFalse: [  
-						vocal connector model: aNode rawValue.
-					].
-					vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
-					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
-					vocal
-			  ].
-			
-	^ list 
+			title: 'Value';
+			stencil: [ :aNode :index |
+				| text textElement vocal |
+				text := [ aNode rawValue gtDisplayString asRopedText ] 
+					on: Error 
+					do: [ aNode errorMessage asRopedText foreground: Color red ].
+				textElement :=  (BrListLabelStencil matchParent: text) asElement.
+				textElement constraintsDo: [ :c | c horizontal matchParent. c padding: (BlInsets left: 10) ].
+				
+				vocal := VocalBlElement new.
+				vocal layout: BlLinearLayout vertical.
+				vocal addChild: textElement.
+				vocal connector beVisualSource.
+				aNode rawValue = aNode hostObject ifFalse: [  
+					vocal connector model: aNode rawValue.
+				].
+				vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
+				vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
+				vocal
+		  ].
+	^ list
 ]
 
 { #category : #'examples-raw' }
@@ -251,6 +246,6 @@ GtGenericConnectorExamples >> rawObjectExample [
 		uml clipChildren: false.
 		uml
 	].
-	gtconnector addEntity: 'one'.
+	gtconnector addEntity: GtGenericConnector new.
 	^ gtconnector 
 ]

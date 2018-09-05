@@ -2,8 +2,7 @@ Extension { #name : #GtExample }
 
 { #category : #'*GToolkit-Connector' }
 GtExample >> gtConnectionsFor: aView [
-	<gtView>
-	^ aView explicit
+	^ (super gtConnectionsFor: aView) explicit
 		title: 'Connections';
 		stencil: [	
 			| gtconnector aBottomResizer aRightResizer |
