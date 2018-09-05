@@ -174,9 +174,7 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 					].
 					vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
 					vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
-					
 					vocal
-					
 			  ].
 			
 	^ list 
@@ -188,7 +186,7 @@ GtGenericConnectorExamples >> rawObjectExample [
 	| gtconnector |
 	gtconnector := GtGenericConnector new.
 	gtconnector stencil: [ :entity |
-		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton|
+		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement|
 		
 		uml := VocalBlElement new.
 		uml size: 300@300.
@@ -204,6 +202,16 @@ GtGenericConnectorExamples >> rawObjectExample [
 		
 		tabGroup := (entity gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
 
+		header := VocalBlElement new.
+		header look: (BrLayoutLook linearVertical hMatchParent).
+		text := BlRopedText string: entity printString.
+		textElement := BlTextElement new text: text asRopedText.
+		
+		textElement look: (BrLayoutLook fitContent alignCenter).
+	
+		header addChild: textElement.
+		textElement constraintsDo: [ :c | c padding: (BlInsets top:25) ].	
+	
 		connectorTable := self rawObjectConnectorTableFor: entity in: gtconnector.
 		
 		aCloseButton := GtInspectorRoundButtonStencil new asElement
@@ -224,8 +232,8 @@ GtGenericConnectorExamples >> rawObjectExample [
 			c ignored horizontal alignCenter.
 			c ignored vertical alignTop ].
 		
-		aDetailsButton := GtInspectorConnectorSwitchStencil new asElement
-		label: entity printString;
+		aDetailsButton := GtInspectorRoundButtonStencil new asElement
+		icon: (BrGlamorousIcons inspect asElement);
 		
 		constraintsDo: [ :c |
 			c ignoreByLayout.
@@ -233,9 +241,10 @@ GtGenericConnectorExamples >> rawObjectExample [
 			c ignored horizontal alignCenter.
 			c ignored vertical alignTop ].
 		
-		aConnectorButton action: [ uml removeChild: aCloseButton. uml removeChild: tabGroup. uml addChild: connectorTable. uml addChild: aCloseButton.  uml removeChild: aConnectorButton. uml addChild: aDetailsButton.  ].
-		aDetailsButton action: [ uml removeChild: aCloseButton. uml removeChild: connectorTable. uml addChild: tabGroup. uml addChild: aCloseButton. uml removeChild: aDetailsButton. uml addChild: aConnectorButton.  ].
+		aConnectorButton action: [ uml removeChild: aCloseButton. uml removeChild: tabGroup. uml addChild: header. uml addChild: connectorTable. uml addChild: aCloseButton.  uml removeChild: aConnectorButton. uml addChild: aDetailsButton.  ].
+		aDetailsButton action: [ uml removeChild: aCloseButton. uml removeChild: header. uml removeChild: connectorTable. uml addChild: tabGroup. uml addChild: aCloseButton. uml removeChild: aDetailsButton. uml addChild: aConnectorButton.  ].
 		
+		uml addChild: header.
 		uml addChild: connectorTable.
 		uml addChild: aCloseButton.
 		uml addChild: aDetailsButton.
