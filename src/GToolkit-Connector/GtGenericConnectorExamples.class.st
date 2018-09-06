@@ -181,7 +181,7 @@ GtGenericConnectorExamples >> rawObjectExample [
 	| gtconnector |
 	gtconnector := GtGenericConnector new.
 	gtconnector stencil: [ :entity |
-		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement|
+		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement aBottomResizer aRightResizer|
 
 		uml := VocalBlElement new.
 		uml size: 300@300.
@@ -253,7 +253,18 @@ GtGenericConnectorExamples >> rawObjectExample [
 			uml addChild: aCloseButton.
 			uml removeChild: aDetailsButton.
 			uml addChild: aConnectorButton.  ].
-
+		aBottomResizer := BlElement new
+			look: BrGlamorousResizerBottomBarLook new;
+			constraintsDo: [ :c |
+				c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
+				addEventHandler: (BlResizerBottomListener new resizeTarget: uml; minimumExtent: 0@75).
+		aRightResizer := BlElement new
+			look: BrGlamorousResizerRightBarLook new;
+			constraintsDo: [ :c |
+				c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
+				addEventHandler: (BlResizerRightListener new resizeTarget: uml; minimumExtent: 75@0).
+		uml addChild: aBottomResizer. 
+		uml addChild: aRightResizer.
 		uml addChild: header.
 		uml addChild: connectorTable.
 		uml addChild: aCloseButton.
