@@ -8,12 +8,13 @@ GtExample >> gtConnectionsFor: aView [
 			| gtconnector aBottomResizer aRightResizer |
 			gtconnector := GtGenericConnector new.
 			gtconnector stencil: [ :method |
-				| editorElement styler text editor vocalEditorContainer vocalVisualTarget aGoButton |
+				| editorElement styler text editor vocalEditorContainer vocalVisualTarget aGoButton exampleContainer |
 				vocalEditorContainer := VocalBlElement new.
 				vocalEditorContainer connector beLayoutSource.
 				vocalEditorContainer connector beLayoutTarget.
 				vocalEditorContainer connector model: method.
 				vocalEditorContainer size: 400@200.
+				vocalEditorContainer layout: BlLinearLayout horizontal.
 				vocalEditorContainer
 					background: Color white;
 					effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
@@ -62,25 +63,39 @@ GtExample >> gtConnectionsFor: aView [
 						c ignored horizontal alignRight.
 						c ignored vertical alignTop ];
 					action: [ :e | 
-						| examplePreview example |
-						examplePreview := BlElement new.
+						|  examplePreview  |
 						"examplePreview background: Color black."
-						example := (self runThenDo: [ :r | r returnValue ] onErrorDo: [ :r | r ]).
-						examplePreview size:200@200.
-						example size:200@200.
-						self halt.
-						examplePreview addChild: example.
-						vocalEditorContainer addChild: examplePreview.
+						exampleContainer isNil ifTrue: [ 
+							exampleContainer := BlElement new.
+							exampleContainer clipChildren: false.
+							examplePreview := (self runThenDo: [ :r | r returnValue ] onErrorDo: [ :r | r ]).
+							exampleContainer size: 80@80.
+							exampleContainer constraintsDo: [ :c |
+								"c ignoreByLayout."
+								c margin: (BlInsets top: 0 left: 0 bottom: 0 right: -80).
+								c ignored horizontal alignRight.
+								c ignored vertical alignTop ].
+							exampleContainer addChild: examplePreview.
+							examplePreview constraintsDo: [ :c |
+								c ignoreByLayout.
+								c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).
+								c ignored horizontal alignLeft.
+								c ignored vertical alignTop.
+							].
+							vocalEditorContainer addChild: exampleContainer.
+						] ifFalse: [ vocalEditorContainer removeChild: exampleContainer. exampleContainer := nil. ].
+						
 					].
 
 				vocalEditorContainer addChild: vocalVisualTarget.
 				vocalEditorContainer addChild: aBottomResizer.
 				vocalEditorContainer addChild: aRightResizer.
 				vocalEditorContainer addChild: aGoButton.
+				vocalEditorContainer clipChildren: false.
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
-			gtconnector asPannableElement ]
+			gtconnector asPannableElement ] 
 ]
 
 { #category : #'*GToolkit-Connector' }
