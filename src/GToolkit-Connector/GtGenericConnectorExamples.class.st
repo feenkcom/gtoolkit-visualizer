@@ -20,15 +20,15 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 	<gtExample>
 	| gtconnector |
 	gtconnector := GtGenericConnector new.
-	
+
 	gtconnector stencil: [ :data |
-		| labelButton container dotButton buttonElement buttonContainer | 
+		| labelButton container dotButton buttonElement buttonContainer |
 		container := VocalBlElement new.
 		container geometry: (BlEllipse diameter: 30).
 		container
 		background: (Color gray alpha: 0.1);
 		border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
-		 
+
 		labelButton := BrButton new.
 		labelButton look: BrLabelLook.
 		labelButton label: data.
@@ -36,16 +36,16 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 		labelButton constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent ].
 		labelButton connector beVisualTarget.
 		labelButton relocate: 15 @ 15.
-		
+
 		container addChild: labelButton.
 		container connector beLayoutSource.
 		container connector beLayoutTarget.
 		container connector beVisualTarget.
 		container connector model: data.
-		
-		buttonContainer := VocalBlElement new.	
+
+		buttonContainer := VocalBlElement new.
 		buttonContainer size: 5 @ 5.
-		
+
 		buttonElement := (BlEllipse diameter: 5) asElement background: (Color black).
 		dotButton := BrButton new.
 		dotButton icon: buttonElement.
@@ -54,9 +54,9 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 		dotButton action: [ gtconnector addEntity: data + 1. gtconnector addEntity: data + 2. ].
 		buttonContainer relocate: 10 @ 10.
 		buttonContainer addChild: dotButton.
-		
+
 		buttonContainer connector beVisualSource; model: data + 1.
-		
+
 		container addChild: buttonContainer.
 		container
 	].
@@ -80,7 +80,7 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 		vocalEditorContainer connector beLayoutTarget.
 		vocalEditorContainer connector model: method.
 		vocalEditorContainer size: 400@200.
-		
+
 		editorElement := BrEditorElement new.
 		editorElement
 			constraintsDo: [ :c |
@@ -92,7 +92,7 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
 		vocalVisualTarget := VocalBlElement new.
 		vocalVisualTarget size: 400@200.
-		
+
 		vocalVisualTarget connector beVisualTarget.
 		vocalVisualTarget connector model: method.
 		vocalVisualTarget addChild: editorElement.
@@ -112,10 +112,10 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 
 		"because we connect editors with lines based on styler we must change text
 		only after editor is added to the scene, otherwise events will be ignored"
-		editor text: text.	
-		
+		editor text: text.
+
 		vocalEditorContainer addChild: vocalVisualTarget.
-		vocalEditorContainer 
+		vocalEditorContainer
 	].
 	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
 	^ gtconnector
@@ -127,7 +127,7 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 	variableNodes := OrderedCollection new: anObject class allSlots size.
 	variableNodes add: (GTInspectorSelfNode hostObject: anObject).
 	anObject gtInspectorVariableNodesIn: variableNodes.
-	
+
 	list := BrColumnedList new display: variableNodes.
 	"list addEventHandler: (GtInspectorListToSelectHandler new transformation: [ :aNode | aNode rawValue ])."
 	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
@@ -136,14 +136,14 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 		stencil: [ :aNode :index |
 			| icon |
 			icon := ([ aNode rawValue gtInspectorIcon ifNil: [ aNode rawValue class systemIcon ] ]
-				on: Error 
+				on: Error
 				do: [ :error | anObject iconNamed: #smallWarningIcon ]).
 			icon asElement].
 	list column
 		title: 'Variable';
-		stencil: [ :aNode :index | 
+		stencil: [ :aNode :index |
 			| textElement text vocal |
-			text := aNode label asRopedText.								
+			text := aNode label asRopedText.
 			textElement :=  (BrListLabelStencil matchParent: text) asElement.
 			textElement constraintsDo: [ :c | c horizontal matchParent.  c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
 			vocal := VocalBlElement new.
@@ -155,17 +155,17 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 			title: 'Value';
 			stencil: [ :aNode :index |
 				| text textElement vocal |
-				text := [ aNode rawValue gtDisplayString asRopedText ] 
-					on: Error 
+				text := [ aNode rawValue gtDisplayString asRopedText ]
+					on: Error
 					do: [ aNode errorMessage asRopedText foreground: Color red ].
 				textElement :=  (BrListLabelStencil matchParent: text) asElement.
 				textElement constraintsDo: [ :c | c horizontal matchParent. c padding: (BlInsets left: 10) ].
-				
+
 				vocal := VocalBlElement new.
 				vocal layout: BlLinearLayout vertical.
 				vocal addChild: textElement.
 				vocal connector beVisualSource.
-				aNode rawValue = aNode hostObject ifFalse: [  
+				aNode rawValue = aNode hostObject ifFalse: [
 					vocal connector model: aNode rawValue.
 				].
 				vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
@@ -182,7 +182,7 @@ GtGenericConnectorExamples >> rawObjectExample [
 	gtconnector := GtGenericConnector new.
 	gtconnector stencil: [ :entity |
 		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement|
-		
+
 		uml := VocalBlElement new.
 		uml size: 300@300.
 		uml layout: BlLinearLayout new beVertical.
@@ -194,21 +194,24 @@ GtGenericConnectorExamples >> rawObjectExample [
 			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
 		uml connector beVisualTarget.
 		uml connector model: entity.
-		
+
 		tabGroup := (entity gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
 
 		header := VocalBlElement new.
 		header look: (BrLayoutLook linearVertical hMatchParent).
 		text := BlRopedText string: entity printString.
+		text attributes: {
+		BrFontSizeAttribute size: 12.
+		BrTextForegroundAttribute paint: Color gray.}.
 		textElement := BlTextElement new text: text asRopedText.
-		
+
 		textElement look: (BrLayoutLook fitContent alignCenter).
-	
+
 		header addChild: textElement.
-		textElement constraintsDo: [ :c | c padding: (BlInsets top:25) ].	
-	
+		textElement constraintsDo: [ :c | c padding: (BlInsets new top: 20 right: 0 bottom: 0 left: 20) ].
+
 		connectorTable := self rawObjectConnectorTableFor: entity in: gtconnector.
-		
+
 		aCloseButton := GtInspectorRoundButtonStencil new asElement
 		icon: (GtInspectorPlusIconStencil close asElement);
 		constraintsDo: [ :c |
@@ -217,28 +220,40 @@ GtGenericConnectorExamples >> rawObjectExample [
 			c ignored horizontal alignRight.
 			c ignored vertical alignTop ];
 		action: [ :e | gtconnector removeChild: e parent ].
-		
+
 		aConnectorButton := GtInspectorConnectorSwitchStencil new asElement
 		label: 'Connector';
-		
+
 		constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
 			c ignored horizontal alignCenter.
 			c ignored vertical alignTop ].
-		
+
 		aDetailsButton := GtInspectorRoundButtonStencil new asElement
 		icon: (BrGlamorousIcons inspect asElement);
-		
+
 		constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
 			c ignored horizontal alignCenter.
 			c ignored vertical alignTop ].
-		
-		aConnectorButton action: [ uml removeChild: aCloseButton. uml removeChild: tabGroup. uml addChild: header. uml addChild: connectorTable. uml addChild: aCloseButton.  uml removeChild: aConnectorButton. uml addChild: aDetailsButton.  ].
-		aDetailsButton action: [ uml removeChild: aCloseButton. uml removeChild: header. uml removeChild: connectorTable. uml addChild: tabGroup. uml addChild: aCloseButton. uml removeChild: aDetailsButton. uml addChild: aConnectorButton.  ].
-		
+
+		aConnectorButton action: [ uml removeChild: aCloseButton.
+			uml removeChild: tabGroup.
+			uml addChild: header.
+			uml addChild: connectorTable.
+			uml addChild: aCloseButton.
+			uml removeChild: aConnectorButton.
+			uml addChild: aDetailsButton.  ].
+		aDetailsButton action: [ uml removeChild: aCloseButton.
+			uml removeChild: header.
+			uml removeChild: connectorTable.
+			uml addChild: tabGroup.
+			uml addChild: aCloseButton.
+			uml removeChild: aDetailsButton.
+			uml addChild: aConnectorButton.  ].
+
 		uml addChild: header.
 		uml addChild: connectorTable.
 		uml addChild: aCloseButton.
@@ -247,5 +262,5 @@ GtGenericConnectorExamples >> rawObjectExample [
 		uml
 	].
 	gtconnector addEntity: GtGenericConnector new.
-	^ gtconnector 
+	^ gtconnector
 ]
