@@ -204,9 +204,7 @@ GtGenericConnectorExamples >> rawObjectExample [
 		BrFontSizeAttribute size: 12.
 		BrTextForegroundAttribute paint: Color gray.}.
 		textElement := BlTextElement new text: text asRopedText.
-
 		textElement look: (BrLayoutLook fitContent alignCenter).
-
 		header addChild: textElement.
 		textElement constraintsDo: [ :c | c padding: (BlInsets new top: 20 right: 0 bottom: 0 left: 20) ].
 

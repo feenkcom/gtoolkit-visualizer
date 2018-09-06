@@ -8,7 +8,7 @@ GtExample >> gtConnectionsFor: aView [
 			| gtconnector aBottomResizer aRightResizer |
 			gtconnector := GtGenericConnector new.
 			gtconnector stencil: [ :method |
-				| editorElement styler text editor vocalEditorContainer vocalVisualTarget|
+				| editorElement styler text editor vocalEditorContainer vocalVisualTarget aGoButton |
 				vocalEditorContainer := VocalBlElement new.
 				vocalEditorContainer connector beLayoutSource.
 				vocalEditorContainer connector beLayoutTarget.
@@ -53,10 +53,30 @@ GtExample >> gtConnectionsFor: aView [
 				aRightResizer := BlElement new
 					look: BrGlamorousResizerRightBarLook new;
 					addEventHandler: (BlResizerRightListener new resizeTarget: vocalEditorContainer; minimumExtent: 75@0).
+					
+				aGoButton := GtInspectorRoundButtonStencil new asElement
+					icon: (BrGlamorousIcons go asElement);
+					constraintsDo: [ :c |
+						c ignoreByLayout.
+						c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).
+						c ignored horizontal alignRight.
+						c ignored vertical alignTop ];
+					action: [ :e | 
+						| examplePreview example |
+						examplePreview := BlElement new.
+						"examplePreview background: Color black."
+						example := (self runThenDo: [ :r | r returnValue ] onErrorDo: [ :r | r ]).
+						examplePreview size:200@200.
+						example size:200@200.
+						self halt.
+						examplePreview addChild: example.
+						vocalEditorContainer addChild: examplePreview.
+					].
 
 				vocalEditorContainer addChild: vocalVisualTarget.
 				vocalEditorContainer addChild: aBottomResizer.
 				vocalEditorContainer addChild: aRightResizer.
+				vocalEditorContainer addChild: aGoButton.
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
