@@ -32,9 +32,7 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 	only after editor is added to the scene, otherwise events will be ignored"
 	editor text: text.	
 	vocalVisualTarget addChild: editorElement.
-	vocalVisualTarget
-		background: Color white;
-		effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
+
 	^ vocalVisualTarget.
 					
 ]
@@ -100,6 +98,9 @@ GtExample >> gtConnectionsFor: aView [
 				vocalEditorContainer addChild: aBottomResizer.
 				"vocalVisualTarget addChild: aGoButton."
 				"vocalEditorContainer clipChildren: false."
+				vocalEditorContainer
+					background: Color white;
+					effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
