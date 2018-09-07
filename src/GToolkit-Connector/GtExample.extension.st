@@ -98,8 +98,8 @@ GtExample >> gtConnectionsFor: aView [
 				vocalEditorContainer addChild: vocalVisualTarget.
 				vocalEditorContainer addChild: aRightResizer.
 				vocalEditorContainer addChild: aBottomResizer.
-				vocalVisualTarget addChild: aGoButton.
-				vocalEditorContainer clipChildren: false.
+				"vocalVisualTarget addChild: aGoButton."
+				"vocalEditorContainer clipChildren: false."
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
