@@ -156,7 +156,7 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 				text := [ aNode rawValue gtDisplayString asRopedText ]
 					on: Error
 					do: [ aNode errorMessage asRopedText foreground: Color red ].
-				textElement :=  (BrListLabelStencil fitContent: text) asElement.
+				textElement := (BrListLabelStencil fitContent: text) asElement.
 				textElement constraintsDo: [ :c | c padding: (BlInsets right: 10) ].
 
 				vocal := VocalBlElement new.
@@ -167,7 +167,7 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 					vocal connector model: aNode rawValue.
 				].
 				vocal when: BlDoubleClickEvent do: [ :event | connector addEntity: aNode rawValue ].
-				vocal constraintsDo: [:c | c vertical fitContent. c horizontal fitContent. c padding: (BlInsets top: 1 bottom: 1).].
+				vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent. c padding: (BlInsets top: 1 bottom: 1).].
 				vocal
 		  ].
 	^ list

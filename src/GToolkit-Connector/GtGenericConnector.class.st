@@ -75,10 +75,9 @@ GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
 		assert: [ self doesExist: aTargetElement ]
 		description: [ 'Target element must be in the scene graph' ].
 
-"	aLineElement := BlParabollaArcElement new.
+	aLineElement := BlParabollaArcElement new.
 	aLineElement curvatureFraction: 0.2.
-"
-	aLineElement := BlLineElement new.
+	aLineElement zIndex: 10.
 	aLineElement toHead: (BlArrowheadSimpleArrow new
 					border: (BlBorder builder paint: (Color gray alpha: 0.2); width: 5; build)).
 	aLineElement constraints ignoreByLayout.
