@@ -488,7 +488,9 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 						computedPosition.
 					firstNode constraints gradKamadaKawai computedPosition: (position2 x)@(position2 y).
 					secondNode constraints gradKamadaKawai
-						computedPosition: (position1 x)@(position1 y) ] ] ]
+						computedPosition: (position1 x)@(position1 y).
+						^ self.
+						] ] ]
 ]
 
 { #category : #accessing }

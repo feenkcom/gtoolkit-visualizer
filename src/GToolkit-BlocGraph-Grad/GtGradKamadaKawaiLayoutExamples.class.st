@@ -8,13 +8,13 @@ Class {
 GtGradKamadaKawaiLayoutExamples >> simpleExample [
 	<gtExample>
 		
-	| view theNodes layout pairsOfNodes |
+	| view theNodes layout pairsOfNodes theNodePositions |
 	
 	view := self view.
 	layout := GtGradKamadaKawaiLayout new.
 	theNodes := self nodes: (1 to: 7).
 	theNodes doWithIndex: [ :node :index |
-			node labeled: (index asString). 
+			node labeled: (index asString).
 	].
 	
 	pairsOfNodes := OrderedCollection new.
@@ -26,7 +26,17 @@ GtGradKamadaKawaiLayoutExamples >> simpleExample [
 	view addChildren: theNodes.
 	view layout: layout.
 	view forceLayout. 
+	theNodePositions := theNodes collect: [ :aNode | aNode position ].
+	theNodes do: [ :aNode |
+		(aNode graph nodesAlongOutgoingEdges) do: [ :adjacentNode |
+			| line |
+			line := BlLine new.
+			line from: (aNode position) to: (adjacentNode position).
+			view addChild: (line asElement ).
+		].
+	].
 
+	
 	^ view
 ]
 
