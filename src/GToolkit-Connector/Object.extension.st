@@ -24,7 +24,7 @@ Object >> gtConnectionsFor: aView [
 				uml connector beVisualTarget.
 				uml connector model: entity.
 				
-				tabGroup := (entity gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
+				tabGroup := (entity gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
 
 				header := VocalBlElement new.
 				header look: (BrLayoutLook linearVertical hMatchParent).
