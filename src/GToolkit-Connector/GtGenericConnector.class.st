@@ -75,7 +75,12 @@ GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
 		assert: [ self doesExist: aTargetElement ]
 		description: [ 'Target element must be in the scene graph' ].
 
+"	aLineElement := BlParabollaArcElement new.
+	aLineElement curvatureFraction: 0.2.
+"
 	aLineElement := BlLineElement new.
+	aLineElement toHead: (BlArrowheadSimpleArrow new
+					border: (BlBorder builder paint: (Color gray alpha: 0.2); width: 5; build)).
 	aLineElement constraints ignoreByLayout.
 	aLineElement
 		border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
@@ -351,7 +356,7 @@ GtGenericConnector >> initialize [
 		c vertical matchParent.
 		c padding: (BlInsets all: 40) ].
 
-	self layout: (GtGraphHorizontalDominanceTreeLayout new horizontalGap: 100; verticalGap: 40).
+	self layout: (GtGraphHorizontalDominanceTreeLayout new horizontalGap: 200; verticalGap: 40).
 	
 	self initializeListeners
 ]
