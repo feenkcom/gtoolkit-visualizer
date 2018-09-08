@@ -125,11 +125,9 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
 	| variableNodes list |
 	variableNodes := OrderedCollection new: anObject class allSlots size.
-	variableNodes add: (GTInspectorSelfNode hostObject: anObject).
 	anObject gtInspectorVariableNodesIn: variableNodes.
 
 	list := BrColumnedList new display: variableNodes.
-	"list addEventHandler: (GtInspectorListToSelectHandler new transformation: [ :aNode | aNode rawValue ])."
 	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
 	list column
 		title: 'Icon';
@@ -145,7 +143,7 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 			| textElement text vocal |
 			text := aNode label asRopedText.
 			textElement :=  (BrListLabelStencil matchParent: text) asElement.
-			textElement constraintsDo: [ :c | c horizontal matchParent.  c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
+			textElement constraintsDo: [ :c | c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
 			vocal := VocalBlElement new.
 			vocal layout: BlLinearLayout vertical alignCenter.
 			vocal addChild: textElement.
@@ -158,8 +156,8 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 				text := [ aNode rawValue gtDisplayString asRopedText ]
 					on: Error
 					do: [ aNode errorMessage asRopedText foreground: Color red ].
-				textElement :=  (BrListLabelStencil matchParent: text) asElement.
-				textElement constraintsDo: [ :c | c horizontal matchParent. c padding: (BlInsets left: 10) ].
+				textElement := (BrListLabelStencil fitContent: text) asElement.
+				textElement constraintsDo: [ :c | c padding: (BlInsets right: 10) ].
 
 				vocal := VocalBlElement new.
 				vocal layout: BlLinearLayout vertical.

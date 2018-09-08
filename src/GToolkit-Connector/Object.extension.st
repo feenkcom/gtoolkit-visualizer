@@ -39,43 +39,57 @@ Object >> gtConnectionsFor: aView [
 				connectorTable := GtGenericConnectorExamples new rawObjectConnectorTableFor: entity in: gtconnector.
 				
 				aCloseButton := GtInspectorRoundButtonStencil new asElement
-				icon: (GtInspectorPlusIconStencil close asElement);
-				constraintsDo: [ :c |
-					c ignoreByLayout.
-					c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
-					c ignored horizontal alignRight.
-					c ignored vertical alignTop ];
-				action: [ :e | gtconnector removeChild: e parent ].
+					icon: (GtInspectorPlusIconStencil close asElement);
+					constraintsDo: [ :c |
+						c ignoreByLayout.
+						c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
+						c ignored horizontal alignRight.
+						c ignored vertical alignTop ];
+					action: [ :e | gtconnector removeChild: e parent ].
 				
 				aConnectorButton := GtInspectorConnectorSwitchStencil new asElement
-				label: 'Connector';
-				
-				constraintsDo: [ :c |
-					c ignoreByLayout.
-					c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
-					c ignored horizontal alignCenter.
-					c ignored vertical alignTop ].
+					label: 'Connector';
+					constraintsDo: [ :c |
+						c ignoreByLayout.
+						c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
+						c ignored horizontal alignCenter.
+						c ignored vertical alignTop ].
 				
 				aDetailsButton := GtInspectorRoundButtonStencil new asElement
-				icon: (BrGlamorousIcons inspect asElement);
+					icon: (BrGlamorousIcons inspect asElement);
+					constraintsDo: [ :c |
+						c ignoreByLayout.
+						c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
+						c ignored horizontal alignCenter.
+						c ignored vertical alignTop ].
 				
-				constraintsDo: [ :c |
-					c ignoreByLayout.
-					c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
-					c ignored horizontal alignCenter.
-					c ignored vertical alignTop ].
-				
-				aConnectorButton action: [ uml removeChild: aCloseButton. uml removeChild: tabGroup. uml addChild: header. uml addChild: connectorTable. uml addChild: aCloseButton.  uml removeChild: aConnectorButton. uml addChild: aDetailsButton.  ].
-				aDetailsButton action: [ uml removeChild: aCloseButton. uml removeChild: header. uml removeChild: connectorTable. uml addChild: tabGroup. uml addChild: aCloseButton. uml removeChild: aDetailsButton. uml addChild: aConnectorButton.  ].
+				aConnectorButton action: [ 
+					uml removeChild: aCloseButton. 
+					uml removeChild: tabGroup. 
+					uml addChild: header. 
+					uml addChild: connectorTable. 
+					uml addChild: aCloseButton.  
+					uml removeChild: aConnectorButton. 
+					uml addChild: aDetailsButton
+				].
+				aDetailsButton action: [ 
+					uml removeChild: aCloseButton. 
+					uml removeChild: header. 
+					uml removeChild: connectorTable. 
+					uml addChild: tabGroup. 
+					uml addChild: aCloseButton. 
+					uml removeChild: aDetailsButton. 
+					uml addChild: aConnectorButton 
+				].
 				aBottomResizer := BlElement new
 					look: BrGlamorousResizerBottomBarLook new;
 					constraintsDo: [ :c |
-					c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
+						c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
 					addEventHandler: (BlResizerBottomListener new resizeTarget: uml; minimumExtent: 0@75).
 				aRightResizer := BlElement new
 					look: BrGlamorousResizerRightBarLook new;
 					constraintsDo: [ :c |
-					c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
+						c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
 					addEventHandler: (BlResizerRightListener new resizeTarget: uml; minimumExtent: 75@0).
 
 				uml addChild: header.
