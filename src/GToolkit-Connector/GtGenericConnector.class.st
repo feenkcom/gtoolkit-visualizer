@@ -102,7 +102,14 @@ GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
 	aSourceElement beConnectedTo: aTargetElement.
 	aTargetElement beConnectedTo: aSourceElement.
 
-	self addChild: aLineElement
+	self addChild: aLineElement.
+	
+	aLineElement visibility: BlVisibility hidden.
+    aLineElement enqueueTask: (BlTaskAction new action: [
+        aLineElement requestLayout.
+        aLineElement visibility: BlVisibility visible.
+        self forceLayout.
+        aLineElement forceLayout ])
 ]
 
 { #category : #'private - adding / removing' }
