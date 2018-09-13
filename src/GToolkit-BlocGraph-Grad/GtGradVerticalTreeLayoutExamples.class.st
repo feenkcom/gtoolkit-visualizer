@@ -15,7 +15,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes.

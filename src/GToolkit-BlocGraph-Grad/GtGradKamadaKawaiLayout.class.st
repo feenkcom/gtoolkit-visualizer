@@ -269,13 +269,11 @@ GtGradKamadaKawaiLayout >> initialize [
 	height := 500.
 	width := 500.
 
-	
-
-	
 ]
 
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> initializeLayout: theNodes [
+"Initialization of the layout "
 	| diameter num dijkstra paths |
 
 	num := theNodes size.
