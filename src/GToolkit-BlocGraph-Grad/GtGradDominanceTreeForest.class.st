@@ -8,44 +8,57 @@ Class {
 }
 
 { #category : #'private - depth-first-search' }
-GtGradDominanceTreeForest class >> dfs: theCurrentNode nodeMaxParentsHeights: aNodeMaxParenstHeightsDictionary currentHeight: currentHeight [
+GtGradDominanceTreeForest class >> dfs: theRootNode [
+	|aVisitedDictionary |
+	aVisitedDictionary := IdentityDictionary new.
+	aVisitedDictionary := IdentityDictionary new.
+	self dfs: theRootNode visited: aVisitedDictionary.
+	
+]
 
+{ #category : #'private - depth-first-search' }
+GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
+	| currentDepth |
+	currentDepth := theCurrentNode depth.
 	theCurrentNode element graph nodesAlongOutgoingEdges
 		do: [ :aNodeElement |
-					| aTreeNode |
+			| aTreeNode |
+			(aVisitedDictionary includesKey: aNodeElement)
+				ifTrue: [
+					| oldDepth |
+					aTreeNode := aVisitedDictionary at: aNodeElement.
+					oldDepth := aTreeNode parent depth.
+					currentDepth > oldDepth
+						ifTrue: [ 
+							aTreeNode parent remove: aTreeNode.
+							theCurrentNode add: aTreeNode.
+						]]
+				ifFalse: [ 
 					aTreeNode := GtGradTreeNode on: aNodeElement.
-					(aNodeMaxParenstHeightsDictionary includesKey: aTreeNode)
-						ifTrue: [
-							| maxHeight |
-							maxHeight := aNodeMaxParenstHeightsDictionary at: aTreeNode.
-							currentHeight > maxHeight
-								ifTrue: [ aNodeMaxParenstHeightsDictionary at: aTreeNode put: currentHeight. ]
-						]
-						ifFalse: [ 
-							aNodeMaxParenstHeightsDictionary at: aTreeNode put: currentHeight.
-						].
-					self
-						dfs: aTreeNode
-						nodeMaxParentsHeights: aNodeMaxParenstHeightsDictionary
-						currentHeight: currentHeight + 1
+					theCurrentNode add: aTreeNode.
+					aVisitedDictionary at: aNodeElement put: aTreeNode.
+				].		
+				self
+					dfs: aTreeNode
+					visited: aVisitedDictionary
 		] 
 ]
 
 { #category : #'instance-creation' }
 GtGradDominanceTreeForest class >> from: aCollectionOfElements [
 	"Create a forest of node trees using depth-first-search algorithm"
-	| allTrees visitedDictionary nodeMaxParentsHeightsDict |
+	| allTrees visitedDictionary  |
 
 	allTrees := OrderedDictionary new.
 	visitedDictionary := IdentityDictionary new.
-	nodeMaxParentsHeightsDict := IdentityDictionary new.
+
 
 	aCollectionOfElements do: [ :aNodeElement |
 		((visitedDictionary includesKey: aNodeElement) or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
 			ifFalse: [
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
-				self dfs: aTreeNode nodeMaxParentsHeights: nodeMaxParentsHeightsDict currentHeight: 0.
+				self dfs: aTreeNode.
 				allTrees at: aTreeNode root put: #root ] ].
 
 	^ self new trees: allTrees keys
