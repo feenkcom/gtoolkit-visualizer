@@ -108,18 +108,6 @@ GtExample >> gtConnectionsFor: aView [
 ]
 
 { #category : #'*GToolkit-Connector' }
-GtExample >> gtInspectorBlocConnectedExamplesIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	composite bloc
-		title: 'Connected (Bloc)';
-		element: [ 
-			| connector |
-			connector := GtConnector new.
-			connector addMethod: self method.
-			connector asScalableElement ]
-]
-
-{ #category : #'*GToolkit-Connector' }
 GtExample >> vocalEditorContainer: method [
 	|vocalEditorContainer|
 	vocalEditorContainer := VocalBlElement new.
