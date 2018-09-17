@@ -74,7 +74,7 @@ GtExample >> buildRunButton: vocalEditorContainer [
 
 { #category : #'*GToolkit-Connector' }
 GtExample >> gtConnectionsFor: aView [
-	^ (super gtConnectionsFor: aView) explicit
+	^ aView explicit
 		title: 'Connections';
 		stencil: [	
 			| gtconnector aBottomResizer aRightResizer |
@@ -86,9 +86,13 @@ GtExample >> gtConnectionsFor: aView [
 					
 				aBottomResizer := BlElement new
 					look: BrGlamorousResizerBottomBarLook new;
+					background: BrGlamorousColors editorBorderColor;
+					constraintsDo: [ :c | c margin: (BlInsets bottom: 0). c vertical exact: 5.];
 					addEventHandler: (BlResizerBottomListener new resizeTarget: vocalEditorContainer; minimumExtent: 0@75).
 				aRightResizer := BlElement new
 					look: BrGlamorousResizerRightBarLook new;
+					background: BrGlamorousColors editorBorderColor;
+					constraintsDo: [ :c | c margin: (BlInsets right: 0). c horizontal exact: 5.];
 					addEventHandler: (BlResizerRightListener new resizeTarget: vocalEditorContainer; minimumExtent: 75@0).
 					
 				aGoButton := self buildRunButton: vocalEditorContainer.
@@ -98,9 +102,6 @@ GtExample >> gtConnectionsFor: aView [
 				vocalEditorContainer addChild: aBottomResizer.
 				"vocalVisualTarget addChild: aGoButton."
 				"vocalEditorContainer clipChildren: false."
-				vocalEditorContainer
-					background: Color white;
-					effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
 				vocalEditorContainer 
 			].
 			gtconnector addEntity: self method.
@@ -117,6 +118,7 @@ GtExample >> vocalEditorContainer: method [
 	vocalEditorContainer size: 400@200.
 	vocalEditorContainer layout: BlLinearLayout new.
 	vocalEditorContainer
-		background: Color white.
+		background: Color white;
+		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
 	^ vocalEditorContainer
 ]
