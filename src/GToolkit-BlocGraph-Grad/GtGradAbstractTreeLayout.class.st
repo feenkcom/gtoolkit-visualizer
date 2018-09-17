@@ -13,7 +13,7 @@ GtGradTreeLayout is  a superclass of GtGradHorizontalTreeLayout and GtGradVertic
 The tree algorithms can be  used to lay out inner elements of a Bloc element or a Mondrian view.
 "
 Class {
-	#name : #GtGradTreeLayout,
+	#name : #GtGradAbstractTreeLayout,
 	#superclass : #GtGradLayout,
 	#instVars : [
 		'levelDistance',
@@ -22,21 +22,21 @@ Class {
 		'nodesAlignment',
 		'reverse'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #constraints }
-GtGradTreeLayout class >> constraints [
+GtGradAbstractTreeLayout class >> constraints [
 	^ GtGradTreeConstraints new
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
+GtGradAbstractTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
 	self subclassResponsibility
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> childOffsetBreadth: aChildElement [
+GtGradAbstractTreeLayout >> childOffsetBreadth: aChildElement [
 	"Return the breadth of the offset of the given child element"
 	<return: #Number>
 
@@ -44,15 +44,20 @@ GtGradTreeLayout >> childOffsetBreadth: aChildElement [
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> childOffsetLength: aChildElement [
+GtGradAbstractTreeLayout >> childOffsetLength: aChildElement [
 	"Return the length of the offset of the given child element"
 	<return: #Number>
 
 	^ self subclassResponsibility
 ]
 
+{ #category : #'api - accessing' }
+GtGradAbstractTreeLayout >> formForestFrom: theNodes [
+	self subclassResponsibility
+]
+
 { #category : #initialization }
-GtGradTreeLayout >> initialize [
+GtGradAbstractTreeLayout >> initialize [
 	super initialize.
 	
 	levelDistance := 10.
@@ -63,7 +68,7 @@ GtGradTreeLayout >> initialize [
 ]
 
 { #category : #'api - accessing' }
-GtGradTreeLayout >> levelDistance [
+GtGradAbstractTreeLayout >> levelDistance [
 	<return: #Number>
 
 	^ levelDistance 
@@ -71,12 +76,12 @@ GtGradTreeLayout >> levelDistance [
 ]
 
 { #category : #'api - accessing' }
-GtGradTreeLayout >> levelDistance: aNumber [
+GtGradAbstractTreeLayout >> levelDistance: aNumber [
 	levelDistance := aNumber
 ]
 
 { #category : #measure }
-GtGradTreeLayout >> measurePositions: anElement with: anExtentSpec [
+GtGradAbstractTreeLayout >> measurePositions: anElement with: anExtentSpec [
 	| theNodes aTreeForest |
 
 	"BlElement is a root for all graphical components"
@@ -86,8 +91,8 @@ GtGradTreeLayout >> measurePositions: anElement with: anExtentSpec [
 
 	"reset all computed positions"
 	theNodes do: [ :aNodeElement | aNodeElement constraints gradTree computedPosition: 0@0 ].
+	aTreeForest := self formForestFrom: theNodes. 
 
-	aTreeForest := GtGradTreeForest from: theNodes.
 	aTreeForest accept: (GtGradTreeLayoutPreparator on: self).
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
 
@@ -96,22 +101,22 @@ GtGradTreeLayout >> measurePositions: anElement with: anExtentSpec [
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
+GtGradAbstractTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 	self subclassResponsibility
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeBreadth: aTreeNode [
+GtGradAbstractTreeLayout >> nodeBreadth: aTreeNode [
 	^ self subclassResponsibility
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeCenterAlignmentCorrection: aTreeNode aRootNode: aRootNode [
+GtGradAbstractTreeLayout >> nodeCenterAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 	self subclassResponsibility
 ]
 
 { #category : #'api - accessing' }
-GtGradTreeLayout >> nodeDistance [
+GtGradAbstractTreeLayout >> nodeDistance [
 	<return: #Number>
 
 	^ nodeDistance 
@@ -119,17 +124,17 @@ GtGradTreeLayout >> nodeDistance [
 ]
 
 { #category : #'api - accessing' }
-GtGradTreeLayout >> nodeDistance: aNumber [
+GtGradAbstractTreeLayout >> nodeDistance: aNumber [
 	nodeDistance := aNumber
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeLength: aTreeNode [
+GtGradAbstractTreeLayout >> nodeLength: aTreeNode [
 	^ self subclassResponsibility
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeOffsetBreadth: aNodeElement [
+GtGradAbstractTreeLayout >> nodeOffsetBreadth: aNodeElement [
 	"Return the breadth of the offset of the given node element"
 	<return: #Number>
 
@@ -137,7 +142,7 @@ GtGradTreeLayout >> nodeOffsetBreadth: aNodeElement [
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeOffsetLength: aNodeElement [
+GtGradAbstractTreeLayout >> nodeOffsetLength: aNodeElement [
 	"Return the length of the offset of the given node element"
 	<return: #Number>
 
@@ -145,47 +150,47 @@ GtGradTreeLayout >> nodeOffsetLength: aNodeElement [
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> nodeTopAlignmentCorrection: aTreeNode aRootNode: aRootNode [
+GtGradAbstractTreeLayout >> nodeTopAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-GtGradTreeLayout >> nodesAlignment [
+GtGradAbstractTreeLayout >> nodesAlignment [
 	^ nodesAlignment
 ]
 
 { #category : #accessing }
-GtGradTreeLayout >> nodesAlignment: anObject [
+GtGradAbstractTreeLayout >> nodesAlignment: anObject [
 	nodesAlignment := anObject
 ]
 
 { #category : #actions }
-GtGradTreeLayout >> resetCache [
+GtGradAbstractTreeLayout >> resetCache [
 ]
 
 { #category : #accessing }
-GtGradTreeLayout >> reverse [
+GtGradAbstractTreeLayout >> reverse [
 	^ reverse
 ]
 
 { #category : #accessing }
-GtGradTreeLayout >> reverse: anObject [
+GtGradAbstractTreeLayout >> reverse: anObject [
 	reverse := anObject
 ]
 
 { #category : #'api - geometry' }
-GtGradTreeLayout >> reversedPositionOfNode: aTreeNode rootPosition: theRootPosition bounds: theBounds [
+GtGradAbstractTreeLayout >> reversedPositionOfNode: aTreeNode rootPosition: theRootPosition bounds: theBounds [
 	self subclassResponsibility
 ]
 
 { #category : #'api - accessing' }
-GtGradTreeLayout >> treesDistance [
+GtGradAbstractTreeLayout >> treesDistance [
 	<return: #Number>
 
 	^ treesDistance
 ]
 
 { #category : #'api - accessing' }
-GtGradTreeLayout >> treesDistance: aNumber [
+GtGradAbstractTreeLayout >> treesDistance: aNumber [
 	treesDistance := aNumber
 ]

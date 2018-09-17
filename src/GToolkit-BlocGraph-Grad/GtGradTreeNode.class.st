@@ -260,6 +260,15 @@ GtGradTreeNode >> printOn: aStream [
 		nextPut: $)
 ]
 
+{ #category : #'api - adding' }
+GtGradTreeNode >> remove: aTreeNode [
+	
+	aTreeNode parent: nil.
+	aTreeNode depth: 0.
+
+	self nodes remove: aTreeNode.
+]
+
 { #category : #accessing }
 GtGradTreeNode >> root [
 	"Return the root of this tree"

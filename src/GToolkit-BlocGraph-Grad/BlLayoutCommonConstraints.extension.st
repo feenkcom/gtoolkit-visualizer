@@ -7,5 +7,5 @@ BlLayoutCommonConstraints >> gradKamadaKawai [
 
 { #category : #'*GToolkit-BlocGraph-Grad' }
 BlLayoutCommonConstraints >> gradTree [
-	^ self at: GtGradTreeLayout
+	^ self at: GtGradAbstractTreeLayout
 ]
