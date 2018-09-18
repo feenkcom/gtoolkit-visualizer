@@ -1,6 +1,33 @@
 Extension { #name : #GtExample }
 
 { #category : #'*GToolkit-Connector' }
+GtExample >> buildBlankContainer: method [
+	|container|
+	container := VocalBlElement new.
+	container 
+		connector 
+			beLayoutSource; 
+			beLayoutTarget;
+			model: method.
+			
+	container 
+		size: 400@200; 
+		background:  (Color lightGray alpha: 0.1);
+		layout: BlLinearLayout new.
+	^ container
+]
+
+{ #category : #'*GToolkit-Connector' }
+GtExample >> buildBottomResizerFor: blankContainer [
+	^  BlElement new
+			look: BrGlamorousResizerBottomBarLook new;
+			background: BrGlamorousColors editorBorderColor;
+			constraintsDo: [ :c | c vertical exact: 5. c grid horizontal span: 2];
+			addEventHandler: (BlResizerBottomListener new resizeTarget: blankContainer; minimumExtent: 0@75).
+
+]
+
+{ #category : #'*GToolkit-Connector' }
 GtExample >> buildEditor: aMethod for: gtconnector [
 	| vocalVisualTarget styler editorElement editor text |
 	vocalVisualTarget:= VocalBlElement new.
@@ -38,85 +65,93 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 ]
 
 { #category : #'*GToolkit-Connector' }
+GtExample >> buildRightResizerFor: blankContainer [
+	^  BlElement new
+			look: BrGlamorousResizerRightBarLook new;
+			background: BrGlamorousColors editorBorderColor;
+			constraintsDo: [ :c | c margin: (BlInsets right: 0). c horizontal exact: 5.];
+			addEventHandler: (BlResizerRightListener new resizeTarget: blankContainer; minimumExtent: 75@0).
+
+]
+
+{ #category : #'*GToolkit-Connector' }
 GtExample >> buildRunButton: vocalEditorContainer [
-	|aGoButton exampleContainer|
+	| aGoButton |
 	aGoButton := GtInspectorRoundButtonStencil new asElement
 		icon: (BrGlamorousIcons go asElement);
 		constraintsDo: [ :c |
 			c ignoreByLayout.
-			c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).
+			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
 			c ignored horizontal alignRight.
-			c ignored vertical alignTop ];
-			action: [ :e | 
-				|  examplePreview  |
-				"examplePreview background: Color black."
-				exampleContainer isNil ifTrue: [ 
-				exampleContainer := BlElement new.
-				exampleContainer clipChildren: false.
-				examplePreview := (self runThenDo: [ :r | r returnValue ] onErrorDo: [ :r | r ]).
-				exampleContainer size: 80@80.
-				exampleContainer constraintsDo: [ :c |
-					c margin: (BlInsets top: 0 left: 0 bottom: 0 right: -80).
-					c ignored horizontal alignRight.
-					c ignored vertical alignTop ].
-				exampleContainer addChild: examplePreview.
-				examplePreview constraintsDo: [ :c |
-					c ignoreByLayout.
-					c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).
-					c ignored horizontal alignLeft.
-					c ignored vertical alignTop.
-				].
-				vocalEditorContainer addChild: exampleContainer.
-					] ifFalse: [ vocalEditorContainer removeChild: exampleContainer. exampleContainer := nil. ].
-				].
+			c ignored vertical alignTop ].
 	^ aGoButton.
 ]
 
 { #category : #'*GToolkit-Connector' }
 GtExample >> gtConnectionsFor: aView [
-	^ (super gtConnectionsFor: aView) explicit
+	^ aView explicit
 		title: 'Connections';
 		stencil: [	
-			| gtconnector aBottomResizer aRightResizer |
+			| gtconnector  |
 			gtconnector := GtGenericConnector new.
 			gtconnector stencil: [ :method |
-				| vocalEditorContainer vocalVisualTarget aGoButton |
-				vocalEditorContainer := self vocalEditorContainer: method. 	
-				vocalVisualTarget := self buildEditor: method for: gtconnector.
-					
-				aBottomResizer := BlElement new
-					look: BrGlamorousResizerBottomBarLook new;
-					addEventHandler: (BlResizerBottomListener new resizeTarget: vocalEditorContainer; minimumExtent: 0@75).
-				aRightResizer := BlElement new
-					look: BrGlamorousResizerRightBarLook new;
-					addEventHandler: (BlResizerRightListener new resizeTarget: vocalEditorContainer; minimumExtent: 75@0).
-					
-				aGoButton := self buildRunButton: vocalEditorContainer.
+				| blankContainer vocalEditorContainer vocalVisualTarget playButton examplePreview sourceButton aBottomResizer aRightResizer |
+				"The blankContainer is there as a placeholder for toggling between the source and the output of the example."
 				
+				blankContainer := self buildBlankContainer: method.
+				blankContainer clipChildren: false.
+				vocalEditorContainer := self vocalEditorContainer.
+				vocalVisualTarget := self buildEditor: method for: gtconnector.
 				vocalEditorContainer addChild: vocalVisualTarget.
-				vocalEditorContainer addChild: aRightResizer.
-				vocalEditorContainer addChild: aBottomResizer.
-				"vocalVisualTarget addChild: aGoButton."
-				"vocalEditorContainer clipChildren: false."
-				vocalEditorContainer
-					background: Color white;
-					effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 5@5).
-				vocalEditorContainer 
+				
+				aRightResizer := self buildRightResizerFor: blankContainer.
+				aBottomResizer := self buildBottomResizerFor: blankContainer.
+				
+				
+				playButton := self buildRunButton: vocalEditorContainer.
+				
+				sourceButton := self buildRunButton: vocalEditorContainer.
+				
+				blankContainer addChild: vocalEditorContainer.
+				blankContainer addChild: aRightResizer.
+				blankContainer addChild: aBottomResizer.
+				blankContainer addChild: playButton.
+				examplePreview := (method gtExample runThenDo: [ :r | r returnValue ] onErrorDo: [ :r | r ]).
+				
+				sourceButton action: [
+					blankContainer removeChild: examplePreview.
+					blankContainer removeChild: aRightResizer.
+					blankContainer removeChild: aBottomResizer.
+					blankContainer removeChild: sourceButton.
+					blankContainer addChild: vocalEditorContainer.
+					blankContainer addChild: aRightResizer.
+					blankContainer addChild: aBottomResizer.
+					blankContainer addChild: playButton].
+				
+				playButton action: [
+					blankContainer removeChild: vocalEditorContainer.
+					blankContainer removeChild: aRightResizer.
+					blankContainer removeChild: aBottomResizer.
+					blankContainer removeChild: playButton.
+					blankContainer addChild: examplePreview.
+					blankContainer addChild: aRightResizer.
+					blankContainer addChild: aBottomResizer.
+					blankContainer addChild: sourceButton.
+				].
+				blankContainer
 			].
 			gtconnector addEntity: self method.
 			gtconnector asPannableElement ]
 ]
 
 { #category : #'*GToolkit-Connector' }
-GtExample >> vocalEditorContainer: method [
+GtExample >> vocalEditorContainer [
 	|vocalEditorContainer|
 	vocalEditorContainer := VocalBlElement new.
-	vocalEditorContainer connector beLayoutSource.
-	vocalEditorContainer connector beLayoutTarget.
-	vocalEditorContainer connector model: method.
-	vocalEditorContainer size: 400@200.
+	vocalEditorContainer constraintsDo: [ :c | c vertical matchParent. c horizontal matchParent. ].
 	vocalEditorContainer layout: BlLinearLayout new.
 	vocalEditorContainer
-		background: Color white.
+		background: Color white;
+		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
 	^ vocalEditorContainer
 ]
