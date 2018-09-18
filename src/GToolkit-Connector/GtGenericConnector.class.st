@@ -10,6 +10,76 @@ Class {
 }
 
 { #category : #'private - adding / removing' }
+GtGenericConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
+	"Add a line connecting two given elements.
+	Both elements must not be nil"
+	| aLineElement aDeleteListener |
+	self
+		assert: [ aSourceElement isNotNil ]
+		description: [ 'Source element must not be nil' ].
+		
+	self
+		assert: [ aTargetElement isNotNil ]
+		description: [ 'Target element must not be nil' ].
+		
+	self
+		assert: [ (aSourceElement isConnectedTo: aTargetElement) not ]
+		description: [ 'Source must not be connected to the target' ].
+		
+	self
+		assert: [ (aTargetElement isConnectedTo: aSourceElement) not ]
+		description: [ 'Target must not be connected to the source' ].
+
+	self
+		assert: [ aSourceElement ~~ aTargetElement ]
+		description: [ 'Can not connect element with itself' ].
+
+	self
+		assert: [ self doesExist: aSourceElement ]
+		description: [ 'Source element must be in the scene graph' ].
+		
+	self
+		assert: [ self doesExist: aTargetElement ]
+		description: [ 'Target element must be in the scene graph' ].
+
+	aLineElement := BlParabollaArcElement new.
+	aLineElement curvatureFraction: 0.
+	aLineElement zIndex: 10.
+	aLineElement toHead: (BlArrowheadSimpleArrow new
+					border: (BlBorder builder paint: (Color gray alpha: 0.04); width: 10; build)).
+	aLineElement constraints ignoreByLayout.
+	aLineElement
+		border: (BlBorder paint: (Color gray alpha: 0.04) width: 20);
+		fromAnchor: (BlNearestPositionLooseCircleAnchor nearestTo:aTargetElement from: aSourceElement);
+		toAnchor: (BlNearestPositionBoundsAnchor nearestTo: aSourceElement from: aTargetElement).
+
+	"Line should disappear when any of source or target elements is deleted"
+	aDeleteListener := nil.
+	"we should not forget to remove event handlers before removing a line"
+	aDeleteListener := BlEventHandler on: BlElementRemovedEvent do: [ :anEvent |
+		aSourceElement removeEventHandler: aDeleteListener.
+		aTargetElement removeEventHandler: aDeleteListener.
+		aSourceElement beNotConnectedTo: aTargetElement.
+		aTargetElement beNotConnectedTo: aSourceElement.
+		aLineElement removeFromParent ].
+	
+	aSourceElement addEventHandler: aDeleteListener.
+	aTargetElement addEventHandler: aDeleteListener.
+	
+	aSourceElement beConnectedTo: aTargetElement.
+	aTargetElement beConnectedTo: aSourceElement.
+
+	self addChild: aLineElement.
+	
+"	aLineElement visibility: BlVisibility hidden.
+    aLineElement enqueueTask: (BlTaskAction new action: [
+        aLineElement requestLayout.
+        aLineElement visibility: BlVisibility visible.
+        self forceLayout.
+        aLineElement forceLayout ])"
+]
+
+{ #category : #'private - adding / removing' }
 GtGenericConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
 	"Add a graph edge between two given elements.
 	Both elements must not be nil"
@@ -28,6 +98,8 @@ GtGenericConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
 
 	aSourceElement constraints graph addConnectedEdge: anEdge.
 	aTargetElement constraints graph addConnectedEdge: anEdge.
+	(aSourceElement isConnectedTo: aTargetElement)
+		ifFalse: [ self addDiscreteLineFrom: aSourceElement to: aTargetElement].
 
 	self requestLayout
 ]
