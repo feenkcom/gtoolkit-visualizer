@@ -12,6 +12,7 @@ GtExample >> buildBlankContainer: method [
 			
 	container 
 		size: 400@200; 
+		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2);
 		layout: BlLinearLayout new.
 	^ container
 ]
@@ -179,8 +180,5 @@ GtExample >> vocalEditorContainer [
 	vocalEditorContainer := VocalBlElement new.
 	vocalEditorContainer constraintsDo: [ :c | c vertical matchParent. c horizontal matchParent. ].
 	vocalEditorContainer layout: BlLinearLayout new.
-	vocalEditorContainer
-		background: Color white;
-		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
 	^ vocalEditorContainer
 ]
