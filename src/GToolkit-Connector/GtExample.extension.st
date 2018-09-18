@@ -28,6 +28,20 @@ GtExample >> buildBottomResizerFor: blankContainer [
 ]
 
 { #category : #'*GToolkit-Connector' }
+GtExample >> buildCloseButton: gtconnector. [ 
+	^ GtInspectorRoundButtonStencil new asElement
+		icon: (GtInspectorPlusIconStencil close asElement);
+		constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
+			c ignored horizontal alignRight.
+			c ignored vertical alignTop ];
+		action: [ :e | gtconnector removeChild: e parent ].
+				
+			
+]
+
+{ #category : #'*GToolkit-Connector' }
 GtExample >> buildEditor: aMethod for: gtconnector [
 	| vocalVisualTarget styler editorElement editor text |
 	vocalVisualTarget:= VocalBlElement new.
@@ -78,11 +92,11 @@ GtExample >> buildRightResizerFor: blankContainer [
 GtExample >> buildRunButton: vocalEditorContainer [
 	| aGoButton |
 	aGoButton := GtInspectorRoundButtonStencil new asElement
-		icon: (BrGlamorousIcons go asElement);
+		icon: (BrGlamorousIcons inspect asElement);
 		constraintsDo: [ :c |
 			c ignoreByLayout.
-			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
-			c ignored horizontal alignRight.
+			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: 0).
+			c ignored horizontal alignCenter.
 			c ignored vertical alignTop ].
 	^ aGoButton.
 ]
@@ -95,7 +109,7 @@ GtExample >> gtConnectionsFor: aView [
 			| gtconnector  |
 			gtconnector := GtGenericConnector new.
 			gtconnector stencil: [ :method |
-				| blankContainer vocalEditorContainer vocalVisualTarget playButton examplePreview sourceButton aBottomResizer aRightResizer |
+				| blankContainer vocalEditorContainer vocalVisualTarget playButton examplePreview sourceButton aBottomResizer aRightResizer aCloseButton|
 				"The blankContainer is there as a placeholder for toggling between the source and the output of the example."
 				
 				blankContainer := self buildBlankContainer: method.
@@ -103,20 +117,19 @@ GtExample >> gtConnectionsFor: aView [
 				vocalEditorContainer := self vocalEditorContainer.
 				vocalVisualTarget := self buildEditor: method for: gtconnector.
 				vocalEditorContainer addChild: vocalVisualTarget.
-				
 				aRightResizer := self buildRightResizerFor: blankContainer.
 				aBottomResizer := self buildBottomResizerFor: blankContainer.
-				
-				
 				playButton := self buildRunButton: vocalEditorContainer.
-				
 				sourceButton := self buildRunButton: vocalEditorContainer.
+				aCloseButton := self buildCloseButton: gtconnector. 
 				
 				blankContainer addChild: vocalEditorContainer.
 				blankContainer addChild: aRightResizer.
 				blankContainer addChild: aBottomResizer.
 				blankContainer addChild: playButton.
-				examplePreview := (method gtExample runThenDo: [ :r | r returnValue ] onErrorDo: [ :r | r ]).
+				blankContainer addChild: aCloseButton.
+				examplePreview := (method gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
+				
 				
 				sourceButton action: [
 					blankContainer removeChild: examplePreview.
