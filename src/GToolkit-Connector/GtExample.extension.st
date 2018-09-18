@@ -12,7 +12,9 @@ GtExample >> buildBlankContainer: method [
 			
 	container 
 		size: 400@200; 
-		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2);
+		"border: (BlBorder paint: (BrGlamorousColors editorBorderColor) width: 1);"
+		background: Color white;
+		look: BrShadowLook new;
 		layout: BlLinearLayout new.
 	^ container
 ]
@@ -142,7 +144,6 @@ GtExample >> gtConnectionsFor: aView [
 				blankContainer addChild: playButton.
 				blankContainer addChild: aCloseButton.
 				examplePreview := (method gtExample returnValue gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
-				
 				
 				sourceButton action: [
 					blankContainer removeChild: examplePreview.
