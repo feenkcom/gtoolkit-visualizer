@@ -1,7 +1,10 @@
+"
+I am a utility component that provides Phlow (see ${class:BaselineOfGToolkitPhlow}$ extensions that include visualizations (see ${class:BaselineOfGToolkitVisualizer}$.
+"
 Class {
 	#name : #BaselineOfGToolkitVisualizerPhlow,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfGToolkitVisualizerPhlow'
+	#category : #BaselineOfGToolkitVisualizerPhlow
 }
 
 { #category : #baseline }
