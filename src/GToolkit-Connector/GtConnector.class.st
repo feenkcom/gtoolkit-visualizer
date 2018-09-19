@@ -1,5 +1,5 @@
 Class {
-	#name : #GtGenericConnector,
+	#name : #GtConnector,
 	#superclass : #BlElement,
 	#instVars : [
 		'stylerDoneListener',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
+GtConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements.
 	Both elements must not be nil"
 	| aLineElement aDeleteListener |
@@ -74,7 +74,7 @@ GtGenericConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
+GtConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
 	"Add a graph edge between two given elements.
 	Both elements must not be nil"
 	| anEdge |
@@ -99,7 +99,7 @@ GtGenericConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
 ]
 
 { #category : #public }
-GtGenericConnector >> addEntity: anEntity [
+GtConnector >> addEntity: anEntity [
 	"Create a new editor on a given method, add it to the scene"
 	
 	(self hasOpenedEntity: anEntity)
@@ -109,7 +109,7 @@ GtGenericConnector >> addEntity: anEntity [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
+GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements.
 	Both elements must not be nil"
 	| aLineElement aDeleteListener |
@@ -173,7 +173,7 @@ GtGenericConnector >> addLineFrom: aSourceElement to: aTargetElement [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> addLink: aLink [
+GtConnector >> addLink: aLink [
 	| aSourceElement aTargetElement |
 	
 	aSourceElement := self
@@ -188,7 +188,7 @@ GtGenericConnector >> addLink: aLink [
 ]
 
 { #category : #converting }
-GtGenericConnector >> asScalableElement [
+GtConnector >> asScalableElement [
 	| scalable |
 	scalable := BlScalableElement new.
 	scalable
@@ -200,7 +200,7 @@ GtGenericConnector >> asScalableElement [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> connect: anElement [
+GtConnector >> connect: anElement [
 	"I create a visual edge between elements (not used by layouts)"
 
 	"self
@@ -228,7 +228,7 @@ GtGenericConnector >> connect: anElement [
 ]
 
 { #category : #private }
-GtGenericConnector >> createAndAddElementForEntity: anEntity [
+GtConnector >> createAndAddElementForEntity: anEntity [
 	| entityElement |	
 		
 	self
@@ -244,12 +244,12 @@ GtGenericConnector >> createAndAddElementForEntity: anEntity [
 ]
 
 { #category : #testing }
-GtGenericConnector >> doesExist: anElement [
+GtConnector >> doesExist: anElement [
 	^ (anElement hasParent: self) or: [ anElement isAttachedToSceneGraph ]
 ]
 
 { #category : #accessing }
-GtGenericConnector >> drawLines: anElement [
+GtConnector >> drawLines: anElement [
 	
 	anElement connector isVisualSource ifTrue: [
 		(self targetElementsWith: anElement connector model)
@@ -268,7 +268,7 @@ GtGenericConnector >> drawLines: anElement [
 ]
 
 { #category : #accessing }
-GtGenericConnector >> elementAddedToScene: anElement [
+GtConnector >> elementAddedToScene: anElement [
 	"I create a logical edge between elements (not visible)"
 	self link: anElement.
 	self drawLines: anElement.
@@ -276,7 +276,7 @@ GtGenericConnector >> elementAddedToScene: anElement [
 ]
 
 { #category : #search }
-GtGenericConnector >> elementWithEntity: aMethod ifAbsent: aBlock [
+GtConnector >> elementWithEntity: aMethod ifAbsent: aBlock [
 	
 	self
 		elementWithEntity: aMethod
@@ -286,7 +286,7 @@ GtGenericConnector >> elementWithEntity: aMethod ifAbsent: aBlock [
 ]
 
 { #category : #search }
-GtGenericConnector >> elementWithEntity: anEntity ifPresent: aBlock [
+GtConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 	"Search for an element containg a given entity
 	and evaluate aBlock with it as argument if such an element is found.
 	Note: we don't make any assumptions on the type of anEntity object,
@@ -306,7 +306,7 @@ GtGenericConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 ]
 
 { #category : #search }
-GtGenericConnector >> elementsVisualWithSource: aSource [
+GtConnector >> elementsVisualWithSource: aSource [
 	"Return a collection of source elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -318,7 +318,7 @@ GtGenericConnector >> elementsVisualWithSource: aSource [
 ]
 
 { #category : #search }
-GtGenericConnector >> elementsVisualWithTarget: aSource [
+GtConnector >> elementsVisualWithTarget: aSource [
 	"Return a collection of source elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -331,7 +331,7 @@ GtGenericConnector >> elementsVisualWithTarget: aSource [
 ]
 
 { #category : #search }
-GtGenericConnector >> elementsWithSource: aSource [
+GtConnector >> elementsWithSource: aSource [
 	"Return a collection of source elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -343,7 +343,7 @@ GtGenericConnector >> elementsWithSource: aSource [
 ]
 
 { #category : #search }
-GtGenericConnector >> elementsWithTarget: aTarget [
+GtConnector >> elementsWithTarget: aTarget [
 	"Return a collection of target elements whose target is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -355,7 +355,7 @@ GtGenericConnector >> elementsWithTarget: aTarget [
 ]
 
 { #category : #accessing }
-GtGenericConnector >> entityElements [
+GtConnector >> entityElements [
 	"Return a collection of existing editor elements that are already added to the tree"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -363,7 +363,7 @@ GtGenericConnector >> entityElements [
 ]
 
 { #category : #accessing }
-GtGenericConnector >> goUpToSourceLayoutElement: anElement [
+GtConnector >> goUpToSourceLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
 	result := anElement.
@@ -372,7 +372,7 @@ GtGenericConnector >> goUpToSourceLayoutElement: anElement [
 ]
 
 { #category : #accessing }
-GtGenericConnector >> goUpToTargetLayoutElement: anElement [
+GtConnector >> goUpToTargetLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
 	result := anElement.
@@ -381,7 +381,7 @@ GtGenericConnector >> goUpToTargetLayoutElement: anElement [
 ]
 
 { #category : #'gt-extension' }
-GtGenericConnector >> gtLiveFor: aView [
+GtConnector >> gtLiveFor: aView [
 	^ (super gtLiveFor: aView) 
 		stencil: [ 
 			self space
@@ -395,7 +395,7 @@ GtGenericConnector >> gtLiveFor: aView [
 ]
 
 { #category : #testing }
-GtGenericConnector >> hasOpenedEntity: anEntity [
+GtConnector >> hasOpenedEntity: anEntity [
 	"Return true if there already exists an editor opened on a given method, false otheriwse.
 	aMethod must not be nil"
 	<return: #Boolean>
@@ -405,7 +405,7 @@ GtGenericConnector >> hasOpenedEntity: anEntity [
 ]
 
 { #category : #testing }
-GtGenericConnector >> hasOpenedMethod: aMethod [
+GtConnector >> hasOpenedMethod: aMethod [
 	"Return true if there already exists an editor opened on a given method, false otheriwse.
 	aMethod must not be nil"
 	<return: #Boolean>
@@ -415,7 +415,7 @@ GtGenericConnector >> hasOpenedMethod: aMethod [
 ]
 
 { #category : #initialization }
-GtGenericConnector >> initialize [
+GtConnector >> initialize [
 	super initialize.
 
 	self constraintsDo: [ :c |
@@ -429,7 +429,7 @@ GtGenericConnector >> initialize [
 ]
 
 { #category : #initialization }
-GtGenericConnector >> initializeListeners [
+GtConnector >> initializeListeners [
 	
 	self when: GtConnectorTargetElement do: [ :event | 
 		self drawLines: event element.
@@ -440,7 +440,7 @@ GtGenericConnector >> initializeListeners [
 ]
 
 { #category : #accessing }
-GtGenericConnector >> link: anElement [
+GtConnector >> link: anElement [
 	"I create a logical edge between elements (not visible)"
 	| sourceLayoutElement targetLayoutElement |
 	self
@@ -471,7 +471,7 @@ GtGenericConnector >> link: anElement [
 ]
 
 { #category : #private }
-GtGenericConnector >> openEntity: anEntity [
+GtConnector >> openEntity: anEntity [
 	"Open a given method without connecting it to other"	
 	self
 		assert: [ (self hasOpenedEntity: anEntity) not ]
@@ -481,7 +481,7 @@ GtGenericConnector >> openEntity: anEntity [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> removeEdgeFrom: aSourceElement to: aTargetElement [
+GtConnector >> removeEdgeFrom: aSourceElement to: aTargetElement [
 	"I remove edges associated with the given element and edges from other elements with which it is connected"
 
 	aSourceElement constraints graph outgoingEdges
@@ -493,7 +493,7 @@ GtGenericConnector >> removeEdgeFrom: aSourceElement to: aTargetElement [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> removeEdgesFrom: anElement [
+GtConnector >> removeEdgesFrom: anElement [
 	"I remove edges associated with the given element and edges from other elements with which it is connected"
 
 	anElement constraints graph connectedEdges
@@ -515,7 +515,7 @@ GtGenericConnector >> removeEdgesFrom: anElement [
 ]
 
 { #category : #'private - adding / removing' }
-GtGenericConnector >> removeLink: aLink [
+GtConnector >> removeLink: aLink [
 	| aSourceElement aTargetElement |
 	
 	aSourceElement := self
@@ -530,7 +530,7 @@ GtGenericConnector >> removeLink: aLink [
 ]
 
 { #category : #search }
-GtGenericConnector >> sourceElementsWith: aTarget [
+GtConnector >> sourceElementsWith: aTarget [
 	"Return a collection of target elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -542,7 +542,7 @@ GtGenericConnector >> sourceElementsWith: aTarget [
 ]
 
 { #category : #search }
-GtGenericConnector >> sourcesWithTarget: aTarget [
+GtConnector >> sourcesWithTarget: aTarget [
 	"Return a collection of target elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -554,17 +554,17 @@ GtGenericConnector >> sourcesWithTarget: aTarget [
 ]
 
 { #category : #search }
-GtGenericConnector >> stencil [ 
+GtConnector >> stencil [ 
 	^ stencil 
 ]
 
 { #category : #search }
-GtGenericConnector >> stencil: aStencil [
+GtConnector >> stencil: aStencil [
 	stencil := aStencil
 ]
 
 { #category : #search }
-GtGenericConnector >> targetElementsWith: aTarget [
+GtConnector >> targetElementsWith: aTarget [
 	"Return a collection of target elements whose target is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
@@ -576,7 +576,7 @@ GtGenericConnector >> targetElementsWith: aTarget [
 ]
 
 { #category : #search }
-GtGenericConnector >> targetsWithSource: aSource [
+GtConnector >> targetsWithSource: aSource [
 	"Return a collection of target elements whose source is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 

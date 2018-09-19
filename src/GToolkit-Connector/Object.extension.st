@@ -8,7 +8,7 @@ Object >> gtConnectionsFor: aView [
 		priority: 110;
 		stencil: [
 			| gtconnector |
-			gtconnector := GtGenericConnector new.
+			gtconnector := GtConnector new.
 			gtconnector stencil: [ :entity |
 				| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement aBottomResizer aRightResizer|
 				
@@ -36,7 +36,7 @@ Object >> gtConnectionsFor: aView [
 				header addChild: textElement.
 				textElement constraintsDo: [ :c | c padding: (BlInsets top:25) ].	
 			
-				connectorTable := GtGenericConnectorExamples new rawObjectConnectorTableFor: entity in: gtconnector.
+				connectorTable := GtConnectorExamples new rawObjectConnectorTableFor: entity in: gtconnector.
 				
 				aCloseButton := GtInspectorRoundButtonStencil new asElement
 					icon: (GtInspectorPlusIconStencil close asElement);

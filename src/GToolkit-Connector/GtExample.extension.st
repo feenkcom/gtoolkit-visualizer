@@ -123,7 +123,7 @@ GtExample >> gtConnectionsFor: aView [
 		title: 'Connections';
 		stencil: [	
 			| gtconnector  |
-			gtconnector := GtGenericConnector new.
+			gtconnector := GtConnector new.
 			gtconnector stencil: [ :method |
 				| blankContainer vocalEditorContainer vocalVisualTarget playButton examplePreview sourceButton aBottomResizer aRightResizer aCloseButton|
 				"The blankContainer is there as a placeholder for toggling between the source and the output of the example."

@@ -1,25 +1,16 @@
 Class {
-	#name : #GtGenericConnectorExamples,
+	#name : #GtConnectorExamples,
 	#superclass : #Object,
 	#traits : 'TBlExample',
 	#classTraits : 'TBlExample classTrait',
-	#category : #'GToolkit-Connector'
+	#category : 'GToolkit-Connector'
 }
 
 { #category : #examples }
-GtGenericConnectorExamples class >> oneExampleMethod [
-	<script: 'self oneExampleMethod'>
-	self
-		openInWindow: self new oneExampleMethod
-		named: 'GT-Connector'
-		extent: 960@790
-]
-
-{ #category : #examples }
-GtGenericConnectorExamples >> anotherSimpleExample [
+GtConnectorExamples >> anotherSimpleExample [
 	<gtExample>
 	| gtconnector |
-	gtconnector := GtGenericConnector new.
+	gtconnector := GtConnector new.
 
 	gtconnector stencil: [ :data |
 		| labelButton container dotButton buttonElement buttonContainer |
@@ -69,10 +60,10 @@ GtGenericConnectorExamples >> anotherSimpleExample [
 ]
 
 { #category : #examples }
-GtGenericConnectorExamples >> exampleMethodsExample [
+GtConnectorExamples >> exampleMethodsExample [
 	<gtExample>
 	| gtconnector |
-	gtconnector := GtGenericConnector new.
+	gtconnector := GtConnector new.
 	gtconnector stencil: [ :method |
 		| editorElement styler text editor vocalEditorContainer vocalVisualTarget|
 		vocalEditorContainer := VocalBlElement new.
@@ -122,7 +113,7 @@ GtGenericConnectorExamples >> exampleMethodsExample [
 ]
 
 { #category : #'examples-raw' }
-GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
+GtConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
 	| variableNodes list |
 	variableNodes := OrderedCollection new: anObject class allSlots size.
 	anObject gtInspectorVariableNodesIn: variableNodes.
@@ -174,10 +165,10 @@ GtGenericConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector
 ]
 
 { #category : #'examples-raw' }
-GtGenericConnectorExamples >> rawObjectExample [
+GtConnectorExamples >> rawObjectExample [
 	<gtExample>
 	| gtconnector |
-	gtconnector := GtGenericConnector new.
+	gtconnector := GtConnector new.
 	gtconnector stencil: [ :entity |
 		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement aBottomResizer aRightResizer|
 
@@ -269,6 +260,6 @@ GtGenericConnectorExamples >> rawObjectExample [
 		uml clipChildren: false.
 		uml
 	].
-	gtconnector addEntity: GtGenericConnector new.
+	gtconnector addEntity: GtConnector new.
 	^ gtconnector
 ]
