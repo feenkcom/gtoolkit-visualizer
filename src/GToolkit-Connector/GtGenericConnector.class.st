@@ -423,7 +423,7 @@ GtGenericConnector >> initialize [
 		c vertical matchParent.
 		c padding: (BlInsets all: 40) ].
 
-	self layout: (GtGradHorizontalTreeLayout new levelDistance: 50; nodeDistance: 10 "horizontalGap: 200; verticalGap: 40").
+	self layout: (GtGradHorizontalTreeLayout new levelDistance: 200; nodeDistance: 40).
 	
 	self initializeListeners
 ]
