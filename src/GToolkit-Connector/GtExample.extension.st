@@ -8,8 +8,9 @@ GtExample >> buildBlankContainer: method [
 		connector 
 			beLayoutSource; 
 			beLayoutTarget;
+			beVisualTarget;
 			model: method.
-			
+
 	container 
 		size: 400@200; 
 		"border: (BlBorder paint: (BrGlamorousColors editorBorderColor) width: 1);"
@@ -52,8 +53,8 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 		c horizontal matchParent.
 		c vertical matchParent ].
 				
-	vocalVisualTarget connector beVisualTarget.
-	vocalVisualTarget connector model: aMethod.
+"	vocalVisualTarget connector beVisualTarget.
+	vocalVisualTarget connector model: aMethod."
 				
 	styler := GtConnectorExampleStyler new.
 	styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
