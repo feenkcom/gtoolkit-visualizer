@@ -20,7 +20,12 @@ GtMondrianLayoutBuilder >> custom: aLayout [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> dominanceTree [
-	^ self custom: GtGraphDominanceTreeLayout new
+	^ self custom: GtGradVerticalDominanceTreeLayout new
+]
+
+{ #category : #scripting }
+GtMondrianLayoutBuilder >> force [
+	^ self custom: GtGradKamadaKawaiLayout new
 ]
 
 { #category : #scripting }
@@ -28,9 +33,9 @@ GtMondrianLayoutBuilder >> grid [
 	^ self custom: GtGraphGridLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 GtMondrianLayoutBuilder >> horizontalDominanceTree [
-	^ self custom: GtGraphHorizontalDominanceTreeLayout new
+	^ self custom: GtGradHorizontalDominanceTreeLayout new
 ]
 
 { #category : #scripting }
