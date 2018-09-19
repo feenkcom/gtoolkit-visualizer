@@ -24,6 +24,11 @@ GtMondrianLayoutBuilder >> dominanceTree [
 ]
 
 { #category : #scripting }
+GtMondrianLayoutBuilder >> force [
+	^ self custom: GtGradKamadaKawaiLayout new
+]
+
+{ #category : #scripting }
 GtMondrianLayoutBuilder >> grid [
 	^ self custom: GtGraphGridLayout new
 ]
