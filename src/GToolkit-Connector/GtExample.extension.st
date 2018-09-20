@@ -53,13 +53,9 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 		c horizontal matchParent.
 		c vertical matchParent ].
 				
-"	vocalVisualTarget connector beVisualTarget.
-	vocalVisualTarget connector model: aMethod."
-				
 	styler := GtConnectorExampleStyler new.
 	styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
 	styler classOrMetaClass: aMethod methodClass.
-	styler addEventHandler: (GtConnectorStylerListener new connector: gtconnector).
 				
 	editorElement := BrEditorElement new.
 	editorElement

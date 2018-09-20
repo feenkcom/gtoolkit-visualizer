@@ -480,55 +480,6 @@ GtConnector >> openEntity: anEntity [
 	self createAndAddElementForEntity: anEntity.
 ]
 
-{ #category : #'private - adding / removing' }
-GtConnector >> removeEdgeFrom: aSourceElement to: aTargetElement [
-	"I remove edges associated with the given element and edges from other elements with which it is connected"
-
-	aSourceElement constraints graph outgoingEdges
-		select: [ :anEdge | anEdge toElement == aTargetElement ]
-		thenDo: [ :anEdge |
-			aSourceElement constraints graph removeConnectedEdge: anEdge.
-			aTargetElement constraints graph removeConnectedEdge: anEdge ].
-	self requestLayout
-]
-
-{ #category : #'private - adding / removing' }
-GtConnector >> removeEdgesFrom: anElement [
-	"I remove edges associated with the given element and edges from other elements with which it is connected"
-
-	anElement constraints graph connectedEdges
-		do: [ :anEdge |
-			| aConnectedElement |
-			"connected element is an element on the other side of the edge"
-			aConnectedElement := (anEdge fromElement == anElement)
-				ifTrue: [ anEdge toElement  ]
-				ifFalse: [ anEdge fromElement ].
-			
-			self
-				assert: [ aConnectedElement constraints graph hasConnectedEdge: anEdge ]
-				description: [ 'Connected element must have the same edge, otherwise something went out of sync' ].
-
-			aConnectedElement constraints graph removeConnectedEdge: anEdge ].
-	
-	"constraints changed, should update layout"
-	self requestLayout
-]
-
-{ #category : #'private - adding / removing' }
-GtConnector >> removeLink: aLink [
-	| aSourceElement aTargetElement |
-	
-	aSourceElement := self
-		elementWithEntity: aLink source
-		ifAbsent: [ ^ self ].
-		
-	aTargetElement := self
-		elementWithEntity: aLink target
-		ifAbsent: [ ^ self ].
-
-	self removeEdgeFrom: aSourceElement to: aTargetElement
-]
-
 { #category : #search }
 GtConnector >> sourceElementsWith: aTarget [
 	"Return a collection of target elements whose source is a given object"

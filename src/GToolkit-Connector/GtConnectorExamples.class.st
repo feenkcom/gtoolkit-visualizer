@@ -90,7 +90,6 @@ GtConnectorExamples >> exampleMethodsExample [
 		styler := GtConnectorExampleStyler new.
 		styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
 		styler classOrMetaClass: method methodClass.
-		styler addEventHandler: (GtConnectorStylerListener new connector: gtconnector).
 
 		editor := BrTextEditor new.
 
