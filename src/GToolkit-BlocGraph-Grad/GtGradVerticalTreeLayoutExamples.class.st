@@ -52,7 +52,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith7Nodes [
 	theNodes := self constructBinaryTreeWith7Nodes key. 
 	view addChildren: theNodes. 
 	aTreeLayout := self treeLayout.
-	view layout: aTreeLayout. 
+	view layout: aTreeLayout.
 	view forceLayout. 
 		
 	^ view
@@ -91,7 +91,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraph [
 	aTreeLayout := self treeLayout.
 	theNodes := self constructDisconnectedGraph  key. 
 	view addChildren: theNodes.
-	view layout: aTreeLayout.
+	view layout: aTreeLayout. 
 	view forceLayout. 
 
 	^ view
@@ -109,6 +109,22 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	theNodes := self constructDisconnectedGraph  key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #example }
+GtGradVerticalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self treeLayout.
+	theNodes := self constructDisconnectedGraphWithRootsOfDifferentSizes key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout. 
 	view forceLayout. 
 
 	^ view

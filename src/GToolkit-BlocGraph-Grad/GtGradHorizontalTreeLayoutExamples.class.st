@@ -88,7 +88,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	| view theNodes aTreeLayout |
 	
 	view := self view.
-	aTreeLayout := self treeLayout.
+	aTreeLayout := self treeLayout. 
 	theNodes := self constructDisconnectedGraph  key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
@@ -107,6 +107,22 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	aTreeLayout := self treeLayout.
 	aTreeLayout treesDistance: 150.
 	theNodes := self constructDisconnectedGraph  key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view. 
+	aTreeLayout := self treeLayout. 
+	theNodes := self constructDisconnectedGraphWithRootsOfDifferentSizes key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
 	view forceLayout. 

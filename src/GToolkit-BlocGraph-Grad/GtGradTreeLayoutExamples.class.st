@@ -160,6 +160,33 @@ GtGradTreeLayoutExamples >> constructDisconnectedGraph [
 ]
 
 { #category : #example }
+GtGradTreeLayoutExamples >> constructDisconnectedGraphWithRootsOfDifferentSizes [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+
+	theNodes := self nodes: (1 to: 12).
+	
+	pairsOfNodes := OrderedCollection new.
+	
+	"The first tree's root is. The second root is 8"
+	pairsOfNodes add: (1->2); add: (1->3); add:(2->4); add: (2->5); add: (3->6); add: (3->7);
+	add: (6->2); add: (5->3); add: (8->9); add: (8->10); add:(10->11); add: (11->12).
+	
+	(theNodes at: 1) size: 50@50.
+	(theNodes at: 8) size: 80@70.
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+	self assert: theEdges size equals: 12.
+
+	^ theNodes -> theEdges
+
+	
+ 
+]
+
+{ #category : #example }
 GtGradTreeLayoutExamples >> constructGraphWithCycles [
 	<gtExample>
 		

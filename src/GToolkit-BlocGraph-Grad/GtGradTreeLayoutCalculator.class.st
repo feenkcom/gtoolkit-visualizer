@@ -164,17 +164,13 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 			     rootPosition: (aTreeNode element constraints gradTree computedPosition)
 			     bounds: bounds
 		].
-	
-	(dx > 0 or: [ dy > 0 ])
-		ifTrue: [
-			self moveNode: aTreeNode dx: dx dy: dy.
-	 ].
 
 	self origin: (self layout calculateTreeStart: bounds
 									  nodesXCorrection: dx
 									  nodesYCorrection: dy
 									  startX: self origin x
 									  startY: self origin y).
+	
 
 
 ]
