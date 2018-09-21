@@ -85,7 +85,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	<gtExample>
 		
-	| view theNodes aTreeLayout |
+	| view theNodes aTreeLayout firstTreeRoot secondTreeRoot |
 	
 	view := self view.
 	aTreeLayout := self treeLayout. 
@@ -93,6 +93,11 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
 	view forceLayout. 
+	
+	firstTreeRoot := theNodes at: 1.
+	secondTreeRoot := theNodes at: 8.
+	
+	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
 
 	^ view
 ]
@@ -101,7 +106,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	<gtExample>
 		
-	| view theNodes aTreeLayout |
+	| view theNodes aTreeLayout firstTreeRoot secondTreeRoot |
 	
 	view := self view.
 	aTreeLayout := self treeLayout.
@@ -110,6 +115,11 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
 	view forceLayout. 
+	
+	firstTreeRoot := theNodes at: 1.
+	secondTreeRoot := theNodes at: 8.
+	
+	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
 
 	^ view
 ]
@@ -118,7 +128,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
 	<gtExample>
 		
-	| view theNodes aTreeLayout |
+	|  view theNodes aTreeLayout firstTreeRoot secondTreeRoot  |
 	
 	view := self view. 
 	aTreeLayout := self treeLayout. 
@@ -126,7 +136,12 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
 	view forceLayout. 
-
+	
+	firstTreeRoot := theNodes at: 1.
+	secondTreeRoot := theNodes at: 8.
+	
+	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
+	
 	^ view
 ]
 
