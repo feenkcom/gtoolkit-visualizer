@@ -39,15 +39,7 @@ GtMondrianEdgeBuilder >> connect: aCollection from: aFromBlock to: aToBlock [
 		toObject := aToBlock value: each.
 		fromElement := mondrian nodeAt: fromObject ifAbsent: [nil].
 		toElement := mondrian nodeAt: toObject ifAbsent: [nil].
-"		self topStep root allChildrenBreadthFirstDo: [ :child | 
-					child graph isNode
-						ifTrue: [ | aMondrianModel |
-							aMondrianModel := child graph model.
-							aMondrianModel = fromObject
-								ifTrue: [ fromElement := child ].
-							aMondrianModel = toObject
-								ifTrue: [ toElement := child ] ] ].
-"		(toElement notNil and: [ fromElement notNil ])
+		(toElement notNil and: [ fromElement notNil ])
 			ifTrue: [ line := self edgeElementFor: each from: fromElement to: toElement.
 				self areEdgesPassive
 					ifFalse: [ self edgeConstraintsFrom: fromElement to: toElement ].
