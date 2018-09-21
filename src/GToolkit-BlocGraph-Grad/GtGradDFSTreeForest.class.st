@@ -1,9 +1,6 @@
 Class {
 	#name : #GtGradDFSTreeForest,
 	#superclass : #GtGradTreeForest,
-	#instVars : [
-		'trees'
-	],
 	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
