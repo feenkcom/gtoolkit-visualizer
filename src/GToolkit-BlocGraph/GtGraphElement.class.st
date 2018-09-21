@@ -8,9 +8,10 @@ Class {
 		'element',
 		'isEdge',
 		'isNode',
-		'model'
+		'model',
+		'objectsToNodesCache'
 	],
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph'
 }
 
 { #category : #'instance creation' }
@@ -134,7 +135,8 @@ GtGraphElement >> initialize [
 	super initialize.
 	
 	isEdge := false.
-	isNode := false
+	isNode := false.
+	objectsToNodesCache := IdentityDictionary new
 ]
 
 { #category : #deprecated }
@@ -169,6 +171,37 @@ GtGraphElement >> model [
 { #category : #api }
 GtGraphElement >> model: anObject [
 	model := anObject
+]
+
+{ #category : #accessing }
+GtGraphElement >> nodeAt: anObject ifAbsent: aBlock [
+	^ self 
+		nodeAt: anObject 
+		ifPresent: [ :aNode | ^ aNode ]
+		ifAbsent: aBlock
+]
+
+{ #category : #accessing }
+GtGraphElement >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	objectsToNodesCache
+		at: anObject 
+		ifPresent: aPresentBlock
+		ifAbsent: [
+			objectsToNodesCache values notEmpty
+				ifTrue: [ 
+					objectsToNodesCache values do: [ :aChildNode |
+						aChildNode graph
+							nodeAt: anObject 
+							ifPresent: [ :aNode | 
+								^ aPresentBlock value: aNode ] 
+							ifAbsent: [ ].
+					^ anAbsentBlock value ] ]
+				ifFalse: anAbsentBlock ]
+]
+
+{ #category : #accessing }
+GtGraphElement >> nodeAt: anObject put: aNodeElement [
+	^ objectsToNodesCache at: anObject put: aNodeElement
 ]
 
 { #category : #'api - children' }

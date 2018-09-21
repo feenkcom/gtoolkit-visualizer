@@ -39,14 +39,15 @@ GtMondrianStep >> layout: aLayout [
 
 { #category : #accessing }
 GtMondrianStep >> nodeAt: anObject ifAbsent: aBlock [
-	^ objectsToNodesCache
+	^ self root graph nodeAt: anObject ifAbsent: aBlock
+	"^ objectsToNodesCache
 		at: anObject 
-		ifAbsent: aBlock
+		ifAbsent: aBlock"
 ]
 
 { #category : #accessing }
 GtMondrianStep >> nodeAt: anObject put: aNode [
-	^ objectsToNodesCache at: anObject put: aNode
+	^ self root graph nodeAt: anObject put: aNode
 ]
 
 { #category : #accessing }

@@ -1,0 +1,51 @@
+Class {
+	#name : #GtMondrianBuilderExamples,
+	#superclass : #Object,
+	#traits : 'GtAssertingTrait',
+	#classTraits : 'GtAssertingTrait classTrait',
+	#category : #'GToolkit-Mondrian-Examples'
+}
+
+{ #category : #'as yet unclassified' }
+GtMondrianBuilderExamples >> lookupNodeThatDoesNotExist [
+	<gtExample>
+	| mondrian result |
+	mondrian := GtMondrian new.
+	mondrian nodes with: (1 to: 2).
+	result := mondrian root graph 
+		nodeAt: 0
+		ifPresent: [ self assert: false description: 'There should not be a node for 0 in the cache' ]
+		ifAbsent: [ nil ].
+	self assert: result isNil.
+	^ mondrian
+]
+
+{ #category : #'as yet unclassified' }
+GtMondrianBuilderExamples >> lookupNodeThatExistsInChild [
+	<gtExample>
+	| mondrian result |
+	mondrian := GtMondrian new.
+	mondrian nodes 
+		with: (1 to: 2); 
+		forEach: [ :x | mondrian nodes with: {x * 10} ].
+	result := mondrian root graph 
+		nodeAt: 10
+		ifAbsent: [ self assert: false description: 'There should be a node for 10 in the cache' ].
+	self assert: result graph isNode.
+	self assert: result graph model = 10.
+	^ mondrian
+]
+
+{ #category : #'as yet unclassified' }
+GtMondrianBuilderExamples >> lookupNodeThatExistsInRoot [
+	<gtExample>
+	| mondrian result |
+	mondrian := GtMondrian new.
+	mondrian nodes with: (1 to: 2).
+	result := mondrian root graph 
+		nodeAt: 1
+		ifAbsent: [ self assert: false description: 'There should be a node for 1 in the cache' ].
+	self assert: result graph isNode.
+	self assert: result graph model = 1.
+	^ mondrian
+]
