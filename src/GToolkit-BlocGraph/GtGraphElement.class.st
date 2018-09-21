@@ -136,7 +136,7 @@ GtGraphElement >> initialize [
 	
 	isEdge := false.
 	isNode := false.
-	objectsToNodesCache := IdentityDictionary new
+	objectsToNodesCache := Dictionary new
 ]
 
 { #category : #deprecated }
