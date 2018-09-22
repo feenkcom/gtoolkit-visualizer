@@ -5,6 +5,23 @@ Class {
 }
 
 { #category : #'examples - instance creation' }
+GtGradHorizontalDominanceTreeLayoutExamples >> distinctSubtrees [
+	<gtExample>
+		
+	| view theNodes aTreeLayout|
+	
+	view := self view.
+	aTreeLayout := self dominanceTreeLayout.
+	aTreeLayout separateSubtrees: true.
+	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout. 
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #'examples - instance creation' }
 GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	<gtExample>
 	|  aTreeLayout |

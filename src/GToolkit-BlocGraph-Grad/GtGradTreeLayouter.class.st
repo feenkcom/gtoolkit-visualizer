@@ -38,6 +38,11 @@ GtGradTreeLayouter >> reverse [
 ]
 
 { #category : #'api - layout' }
+GtGradTreeLayouter >> separateSubtrees [
+	^ self layout separateSubtrees
+]
+
+{ #category : #'api - layout' }
 GtGradTreeLayouter >> treesDistance [
 	^ self layout treesDistance
 ]

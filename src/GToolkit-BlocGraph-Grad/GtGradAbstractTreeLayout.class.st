@@ -20,7 +20,8 @@ Class {
 		'nodeDistance',
 		'treesDistance',
 		'nodesAlignment',
-		'reverse'
+		'reverse',
+		'separateSubtrees'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
@@ -64,6 +65,7 @@ GtGradAbstractTreeLayout >> initialize [
 	nodeDistance := 1.
 	treesDistance := 30.
 	reverse := false.
+	separateSubtrees := false.
 	nodesAlignment := GtGradTreeNodesTopAlignment new.
 ]
 
@@ -91,7 +93,7 @@ GtGradAbstractTreeLayout >> measurePositions: anElement with: anExtentSpec [
 
 	"reset all computed positions"
 	theNodes do: [ :aNodeElement | aNodeElement constraints gradTree computedPosition: 0@0 ].
-	aTreeForest := self formForestFrom: theNodes. 
+	aTreeForest := self formForestFrom: theNodes.
 
 	aTreeForest accept: (GtGradTreeLayoutPreparator on: self).
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
@@ -181,6 +183,16 @@ GtGradAbstractTreeLayout >> reverse: anObject [
 { #category : #'api - geometry' }
 GtGradAbstractTreeLayout >> reversedPositionOfNode: aTreeNode rootPosition: theRootPosition bounds: theBounds [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayout >> separateSubtrees [
+	^ separateSubtrees
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayout >> separateSubtrees: anObject [
+	separateSubtrees := anObject
 ]
 
 { #category : #'api - accessing' }

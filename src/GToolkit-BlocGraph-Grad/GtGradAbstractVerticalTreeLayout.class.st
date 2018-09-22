@@ -16,15 +16,15 @@ GtGradAbstractVerticalTreeLayout >> calculateTreeStart: bounds nodesXCorrection:
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractVerticalTreeLayout >> childOffsetBreadth: aChildElement [
+GtGradAbstractVerticalTreeLayout >> childOffsetBreadth: aNodesChild [
 	"Return the breadth of the offset of the given child element"
 	<return: #Number>
 
-	^ aChildElement constraints gradTree computedOffset y
+	^ aNodesChild offset y
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractVerticalTreeLayout >> childOffsetLength: aChildElement [
+GtGradAbstractVerticalTreeLayout >> childOffsetLength: aNodesChild [
 	"Return the length of the offset of the given child element"
 	<return: #Number>
 	
@@ -69,19 +69,19 @@ GtGradAbstractVerticalTreeLayout >> nodeLength: aTreeNode [
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractVerticalTreeLayout >> nodeOffsetBreadth: aNodeElement [
+GtGradAbstractVerticalTreeLayout >> nodeOffsetBreadth: aTreeNode [
 	"Return the breadth of the offset of the given node element"
 	<return: #Number>
 
-	^ aNodeElement constraints gradTree computedOffset y
+	^ aTreeNode offset y
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractVerticalTreeLayout >> nodeOffsetLength: aNodeElement [
+GtGradAbstractVerticalTreeLayout >> nodeOffsetLength: aTreeNode [
 	"Return the length of the offset of the given node element"
 	<return: #Number>
 
-	^ aNodeElement constraints gradTree computedOffset x
+	^ aTreeNode offset x
 ]
 
 { #category : #'api - geometry' }

@@ -17,6 +17,11 @@ GtGradTreeLayoutCalculator >> initialize [
 { #category : #'private - layout' }
 GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aStartPoint bounds: bounds [
 	|  nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection |
+	self separateSubtrees
+		ifTrue: [ 
+			aTreeNode nodes isEmpty
+				ifTrue: [ ^self ]
+		].
 	nodePosition := aTreeNode element constraints gradTree
 		computedPosition.
 	alignmentCorrection := self layout nodesAlignment
@@ -28,10 +33,10 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 		alignmentCorrection: alignmentCorrection;
 		emit.
 	newNodePositionX := nodePosition x + aStartPoint x
-		+ (self layout nodeOffsetBreadth: aTreeNode element)
+		+ (self layout nodeOffsetBreadth: aTreeNode)
 		+ alignmentCorrection x.
 	newNodePositionY := nodePosition y + aStartPoint y
-		+ (self layout nodeOffsetLength: aTreeNode element)
+		+ (self layout nodeOffsetLength: aTreeNode)
 		+ alignmentCorrection y.
 	aTreeNode element constraints gradTree
 		computedPosition: newNodePositionX @ newNodePositionY.
@@ -49,9 +54,9 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 		start: newNodePositionX @ newNodePositionY
 		bounds: bounds.
 	childrenOffsetX := newNodePositionX
-		+ (self layout nodeOffsetBreadth: firstChild element).
+		+ (self layout nodeOffsetBreadth: firstChild).
 	childrenOffsetY := newNodePositionY
-		+ (self layout nodeOffsetLength: firstChild element).
+		+ (self layout nodeOffsetLength: firstChild).
 	aTreeNode nodes
 		do: [ :child | 
 			child = firstChild
@@ -61,9 +66,9 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 							start: childrenOffsetX @ childrenOffsetY
 							bounds: bounds.
 					childrenOffsetX := childrenOffsetX
-						+ (self layout childOffsetBreadth: child element).
+						+ (self layout childOffsetBreadth: child).
 					childrenOffsetY := childrenOffsetY
-						+ (self layout childOffsetLength: child element) ] ]
+						+ (self layout childOffsetLength: child) ] ]
 ]
 
 { #category : #visiting }
@@ -146,6 +151,7 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 		root: aTreeNode;
 		emit.
 
+	
 	bounds := BlBounds new.
 	bounds left: SmallInteger maxVal.
 	bounds top: SmallInteger maxVal.

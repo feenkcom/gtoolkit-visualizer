@@ -8,44 +8,57 @@ Class {
 }
 
 { #category : #'private - depth-first-search' }
-GtGradDominanceTreeForest class >> dfs: theRootNode [
+GtGradDominanceTreeForest class >> dfs: theRootNode separateSubtrees: separateSubtrees [
 	|aVisitedDictionary |
 	aVisitedDictionary := IdentityDictionary new.
 	aVisitedDictionary := IdentityDictionary new.
-	self dfs: theRootNode visited: aVisitedDictionary.
+	self dfs: theRootNode visited: aVisitedDictionary separateSubtrees: separateSubtrees.
 	
 ]
 
 { #category : #'private - depth-first-search' }
-GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
+GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary separateSubtrees: separateSubtrees [
 	| currentDepth |
 	currentDepth := theCurrentNode depth.
-	theCurrentNode element graph nodesAlongOutgoingEdges
-		do: [ :aNodeElement |
-			| aTreeNode |
-			(aVisitedDictionary includesKey: aNodeElement)
-				ifTrue: [
-					| oldDepth |
-					aTreeNode := aVisitedDictionary at: aNodeElement.
-					oldDepth := aTreeNode parent depth.
-					currentDepth > oldDepth
-						ifTrue: [ 
-							aTreeNode parent remove: aTreeNode.
-							theCurrentNode add: aTreeNode.
-						]]
-				ifFalse: [ 
-					aTreeNode := GtGradTreeNode on: aNodeElement.
+		theCurrentNode element graph hasNodesAlongOutgoingEdges
+		ifFalse: [ 
+			separateSubtrees
+				ifTrue: [ 
+					| aTreeNode |
+
+					aTreeNode := GtGradTreeNode on: theCurrentNode element.
 					theCurrentNode add: aTreeNode.
-					aVisitedDictionary at: aNodeElement put: aTreeNode.
-				].		
-				self
-					dfs: aTreeNode
-					visited: aVisitedDictionary
-		] 
+				] 
+		]
+		ifTrue: [ 
+			theCurrentNode element graph nodesAlongOutgoingEdges
+				do: [ :aNodeElement |
+					| aTreeNode |
+					(aVisitedDictionary includesKey: aNodeElement)
+						ifTrue: [
+							| oldDepth |
+							aTreeNode := aVisitedDictionary at: aNodeElement.
+							oldDepth := aTreeNode parent depth.
+							currentDepth > oldDepth
+								ifTrue: [ 
+									aTreeNode parent remove: aTreeNode.
+									theCurrentNode add: aTreeNode.
+								]]
+						ifFalse: [ 
+							aTreeNode := GtGradTreeNode on: aNodeElement.
+							theCurrentNode add: aTreeNode.
+							aVisitedDictionary at: aNodeElement put: aTreeNode.
+						].		
+						self
+							dfs: aTreeNode
+							visited: aVisitedDictionary
+							separateSubtrees: separateSubtrees
+				] 
+			]
 ]
 
 { #category : #'instance-creation' }
-GtGradDominanceTreeForest class >> from: aCollectionOfElements [
+GtGradDominanceTreeForest class >> from: aCollectionOfElements separateSubtrees: separateSubtrees [
 	"Create a forest of node trees using depth-first-search algorithm"
 	| allTrees visitedDictionary  |
 
@@ -58,7 +71,7 @@ GtGradDominanceTreeForest class >> from: aCollectionOfElements [
 			ifFalse: [
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
-				self dfs: aTreeNode.
+				self dfs: aTreeNode separateSubtrees: separateSubtrees.
 				allTrees at: aTreeNode root put: #root ] ].
 
 	^ self new trees: allTrees keys

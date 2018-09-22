@@ -6,10 +6,12 @@ Class {
 		'element',
 		'depth',
 		'parent',
+		'contour',
+		'offset',
 		'maxWidths',
 		'maxHeights'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #'instance creation' }
@@ -57,6 +59,16 @@ GtGradTreeNode >> addAll: aCollectionOfNodes [
 			aTreeNode depth: aChildDepth ].
 
 	self nodes addAll: aCollectionOfNodes
+]
+
+{ #category : #accessing }
+GtGradTreeNode >> contour [
+	^ contour
+]
+
+{ #category : #accessing }
+GtGradTreeNode >> contour: anObject [
+	contour := anObject
 ]
 
 { #category : #accessing }
@@ -125,6 +137,8 @@ GtGradTreeNode >> initialize [
 	parent := nil.
 	"by default we are not attached to any element"
 	element := nil.
+	contour := GtGradNodeContour new.
+	offset := 0@0.
 ]
 
 { #category : #'api - testing' }
@@ -228,6 +242,16 @@ GtGradTreeNode >> nodesAt: aDepth do: aBlock [
 			^ self ].
 
 	self nodes do: [ :aTreeNode | aTreeNode nodesAt: aDepth do: aBlock ]
+]
+
+{ #category : #accessing }
+GtGradTreeNode >> offset [
+	^ offset
+]
+
+{ #category : #accessing }
+GtGradTreeNode >> offset: anObject [
+	offset := anObject
 ]
 
 { #category : #accessing }

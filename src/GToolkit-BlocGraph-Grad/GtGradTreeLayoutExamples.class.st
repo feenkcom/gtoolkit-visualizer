@@ -302,6 +302,48 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfIncreasingSize [
  
 ]
 
+{ #category : #example }
+GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+	
+	theNodes := self nodes: (1 to: 7).
+	
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6);
+	 add: (2->7).
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+
+	^ theNodes -> theEdges
+
+	
+ 
+]
+
+{ #category : #example }
+GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel2 [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+	
+	theNodes := self nodes: (1 to: 12).
+	
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6);
+	 add: (2->7); add: (5->8); add: (6->9); add: (7->10); add: (3->11); add: (4->12).
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+
+	^ theNodes -> theEdges
+
+	
+ 
+]
+
 { #category : #accessing }
 GtGradTreeLayoutExamples >> disconnectedGraph [
 	^ self subclassResponsibility

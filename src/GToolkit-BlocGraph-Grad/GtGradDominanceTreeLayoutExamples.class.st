@@ -65,3 +65,24 @@ GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToAN
 	^ theNodes -> theEdges
 
 ]
+
+{ #category : #example }
+GtGradDominanceTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+	
+	theNodes := self nodes: (1 to: 7).
+	
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6);
+	 add: (2->7).
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+
+	^ theNodes -> theEdges
+
+	
+ 
+]

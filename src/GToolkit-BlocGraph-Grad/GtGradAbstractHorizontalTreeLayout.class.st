@@ -16,7 +16,7 @@ GtGradAbstractHorizontalTreeLayout >> calculateTreeStart: bounds nodesXCorrectio
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractHorizontalTreeLayout >> childOffsetBreadth: aChildElement [
+GtGradAbstractHorizontalTreeLayout >> childOffsetBreadth: aNodesChild [
 	"Return the breadth of the offset of the given child element"
 	<return: #Number>
 
@@ -24,16 +24,11 @@ GtGradAbstractHorizontalTreeLayout >> childOffsetBreadth: aChildElement [
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractHorizontalTreeLayout >> childOffsetLength: aChildElement [
+GtGradAbstractHorizontalTreeLayout >> childOffsetLength: aNodesChild [
 	"Return the length of the offset of the given child element"
 	<return: #Number>
 
-	^ aChildElement constraints gradTree computedOffset y
-]
-
-{ #category : #accessing }
-GtGradAbstractHorizontalTreeLayout >> computedPosition: aPoint [
-	computedPosition := aPoint
+	^ aNodesChild offset y
 ]
 
 { #category : #initialization }
@@ -73,19 +68,19 @@ GtGradAbstractHorizontalTreeLayout >> nodeLength: aTreeNode [
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractHorizontalTreeLayout >> nodeOffsetBreadth: aNodeElement [
+GtGradAbstractHorizontalTreeLayout >> nodeOffsetBreadth: aTreeNode [
 	"Return the breadth of the offset of the given node element"
 	<return: #Number>
 
-	^ aNodeElement constraints gradTree computedOffset x
+	^ aTreeNode offset x
 ]
 
 { #category : #'api - geometry' }
-GtGradAbstractHorizontalTreeLayout >> nodeOffsetLength: aNodeElement [
+GtGradAbstractHorizontalTreeLayout >> nodeOffsetLength: aTreeNode [
 	"Return the length of the offset of the given node element"
 	<return: #Number>
 
-	^ aNodeElement constraints gradTree computedOffset y
+	^ aTreeNode offset y
 
 ]
 

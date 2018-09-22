@@ -5,27 +5,42 @@ Class {
 }
 
 { #category : #'private - depth-first-search' }
-GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
+GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary separateSubtrees: separateSubtrees [
 
 	"aVisitedDictionary is a dictionary of already visited visual elements (element -> tree node)"
 	aVisitedDictionary
 		at: theCurrentNode element
 		put: theCurrentNode.
 
-	theCurrentNode element graph nodesAlongOutgoingEdges
-		do: [ :aNodeElement |
-			(aVisitedDictionary includesKey: aNodeElement)
-				ifFalse: [
+	theCurrentNode element graph hasNodesAlongOutgoingEdges
+		ifFalse: [ 
+			separateSubtrees
+				ifTrue: [ 
 					| aTreeNode |
-					aTreeNode := GtGradTreeNode on: aNodeElement.
+
+					aTreeNode := GtGradTreeNode on: theCurrentNode element.
 					theCurrentNode add: aTreeNode.
-					self
-						dfs: aTreeNode
-						visited: aVisitedDictionary ] ]
+				] 
+		]
+		ifTrue: [ 
+			theCurrentNode element graph nodesAlongOutgoingEdges
+			do: [ :aNodeElement |
+				(aVisitedDictionary includesKey: aNodeElement)
+					ifFalse: [
+						| aTreeNode |
+						aTreeNode := GtGradTreeNode on: aNodeElement.
+						theCurrentNode add: aTreeNode.
+						self
+							dfs: aTreeNode
+							visited: aVisitedDictionary
+							separateSubtrees: separateSubtrees
+							] 
+					]
+			]
 ]
 
 { #category : #'instance-creation' }
-GtGradDFSTreeForest class >> from: aCollectionOfElements [
+GtGradDFSTreeForest class >> from: aCollectionOfElements separateSubtrees: separateSubtrees [
 	"Create a forest of node trees using depth-first-search algorithm"
 	| allTrees visitedDictionary |
 
@@ -37,7 +52,7 @@ GtGradDFSTreeForest class >> from: aCollectionOfElements [
 			ifFalse: [
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
-				self dfs: aTreeNode visited: visitedDictionary.
+				self dfs: aTreeNode visited: visitedDictionary separateSubtrees: separateSubtrees.
 				allTrees at: aTreeNode root put: #root ] ].
 
 	^ self new trees: allTrees keys

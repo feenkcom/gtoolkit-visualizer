@@ -17,7 +17,7 @@ GtGradTreeLayoutPreparator >> attachParent: aTreeNode breadth: aChildrenBreadth 
 
 	offset := (x + (self layout nodeLength: aTreeNode))@y1.
 
-	aTreeNode nodes first element constraints gradTree computedOffset: offset.
+	aTreeNode nodes first offset: offset.
 
 	GtGradTreeLayoutOffsetSetSignal new 
 		node: aTreeNode; 
@@ -25,7 +25,7 @@ GtGradTreeLayoutPreparator >> attachParent: aTreeNode breadth: aChildrenBreadth 
 		offsetY: offset y;
 		emit.
 
-	nodeContour := aTreeNode element constraints gradTree computedContour.
+	nodeContour := aTreeNode contour.
 
 	previousUpperHead := nodeContour upperHead.
 	nodeContour upperHead: (GtGradNodeContourLine new position: (aTreeNode height)@0).
@@ -122,17 +122,17 @@ GtGradTreeLayoutPreparator >> mergeContour: aParentContour with: aChildContour [
 
 { #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
-	| aTotalBreadt aChildBreadth aFirstChildNode aNodeContour | 
+	| aTotalBreadth aChildBreadth aFirstChildNode aNodeContour | 
 
 	aFirstChildNode := aTreeNode nodes first.
 
 	"store a reference to the parent's contour outside of the loop to eliminate unnecessary dictionary accesses"
-	aNodeContour := aFirstChildNode element constraints gradTree computedContour.
-	aTreeNode element constraints gradTree computedContour: aNodeContour.
+	aNodeContour := aFirstChildNode contour.
+	aTreeNode contour: aNodeContour.
 
 	aChildBreadth := (self layout nodeBreadth: aFirstChildNode) + (2 * self nodeDistance).
 
-	aTotalBreadt := aChildBreadth.
+	aTotalBreadth := aChildBreadth.
 
 	aTreeNode nodes
 		select: [ :aChildNode | aChildNode ~~ aFirstChildNode ]
@@ -141,9 +141,9 @@ GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 
 				aDeltaDistance := self
 					mergeContour: aNodeContour
-					with: aChildNode element constraints gradTree computedContour.
+					with: aChildNode contour.
 
-				aChildNode element constraints gradTree computedOffset: 0@(aChildBreadth + aDeltaDistance).
+				aChildNode offset: 0@(aChildBreadth + aDeltaDistance).
 
 				GtGradTreeLayoutOffsetSetSignal new
 					node: aChildNode; 
@@ -152,9 +152,9 @@ GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 					emit.
 
 				aChildBreadth := (self layout nodeBreadth: aChildNode) + (2 * self nodeDistance).
-				aTotalBreadt := aTotalBreadt + aChildBreadth + aDeltaDistance ].
+				aTotalBreadth := aTotalBreadth + aChildBreadth + aDeltaDistance ].
 
-	^ aTotalBreadt
+	^ aTotalBreadth
 	
 ]
 
@@ -198,5 +198,6 @@ GtGradTreeLayoutPreparator >> visitLeafNode: aTreeNode [
 	leafCountour lowerHead: (GtGradNodeContourLine new position: (nodeHeight + distance)@0).
 	leafCountour lowerHead next: leafCountour lowerTail.
 
-	aTreeNode element constraints gradTree computedContour: leafCountour
+	aTreeNode contour: leafCountour
+
 ]

@@ -146,6 +146,23 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 ]
 
 { #category : #example }
+GtGradHorizontalTreeLayoutExamples >> distinctSubtrees [
+	<gtExample>
+		
+	| view theNodes aTreeLayout|
+	
+	view := self view.
+	aTreeLayout := self treeLayout.
+	aTreeLayout separateSubtrees: true.
+	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout. 
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #example }
 GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	<gtExample>
 		
