@@ -27,6 +27,23 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutGraphWithCycles [
 ]
 
 { #category : #tree }
+GtMondrianLayoutExamples >> horizontalTreeLayoutSeparateSubtrees [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes 
+ 	   stencil: [ :x | 
+  	      BlTextElement new 
+   	         text: x asString asRopedText ];
+    	with: (0 to: 20).
+	mondrian edges connectFrom: [ :x | x // 3 ].
+	mondrian layout horizontalTree separateSubtrees: true.
+	
+	^ mondrian
+
+]
+
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTree [
 	<gtExample>
 	| mondrian |
@@ -135,6 +152,23 @@ GtMondrianLayoutExamples >> verticalTreeLayoutGraphWithCycles [
 	mondrian edges connect: { 1->2 . 1->3 . 2->4 . 2->5 . 3->6 . 3->7 . 6->2 . 5-> 3} from: #key to: #value.
 	mondrian layout tree.
 	^ mondrian
+]
+
+{ #category : #tree }
+GtMondrianLayoutExamples >> verticalTreeLayoutSeparateSubtrees [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes 
+ 	   stencil: [ :x | 
+  	      BlTextElement new 
+   	         text: x asString asRopedText ];
+    	with: (0 to: 20).
+	mondrian edges connectFrom: [ :x | x // 3 ].
+	mondrian layout tree separateSubtrees: true.
+	
+	^ mondrian
+
 ]
 
 { #category : #tree }

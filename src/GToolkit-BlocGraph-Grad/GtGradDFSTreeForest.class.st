@@ -13,7 +13,10 @@ GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary sep
 		put: theCurrentNode.
 
 	theCurrentNode element graph hasNodesAlongOutgoingEdges
-		ifFalse: [ 
+		ifFalse: [
+			"The easiest way of showing distinct subtrees consists of connecting new tree
+			nodes as children of leaf nodes. This ensures the desired result without having
+			to modify the algorithm"
 			separateSubtrees
 				ifTrue: [ 
 					| aTreeNode |

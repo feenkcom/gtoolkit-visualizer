@@ -163,6 +163,23 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtrees [
 ]
 
 { #category : #example }
+GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
+	<gtExample>
+		
+	| view theNodes aTreeLayout|
+	
+	view := self view.
+	aTreeLayout := self treeLayout.
+	aTreeLayout separateSubtrees: true.
+	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout. 
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #example }
 GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	<gtExample>
 		

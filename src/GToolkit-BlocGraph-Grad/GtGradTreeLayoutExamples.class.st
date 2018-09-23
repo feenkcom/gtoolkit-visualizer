@@ -43,19 +43,22 @@ ${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithNodesOfIncreas
 ${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeBottomAlignment|expanded=true|expandedPreview=true|show=gtLiveFor:}$
 ${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithNodesOfIncreasingBottomAlignment|expanded=true|expandedPreview=true|show=gtLiveFor:}$
 
-Finally, the trees can be reversed, so that in case of  a vertical tree, the root node is at the bottom, while in case of the horizontal tree, the root node is to the right of the all other nodes. The two examples are shown next:
+The trees can be reversed, so that in case of  a vertical tree, the root node is at the bottom, while in case of the horizontal tree, the root node is to the right of the all other nodes. The two examples are shown next:
 
 ${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeReversed|expanded=true|expandedPreview=true|show=gtLiveFor:}$
 ${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeReversed|expanded=true|expandedPreview=true|show=gtLiveFor:}$
 
+The previous examples demonstrate that this tree algorithm tends to create compact trees. However, in some cases, this is not preferable. By setting separateSubtrees parameter's value to true, all subtrees are clearly separated. An example is seen below:
 
+${example:name=GtGradVerticalTreeLayoutExamples>>#distinctSubtrees|expanded=true|expandedPreview=true|show=gtLiveFor:}$
+${example:name=GtGradHorizontalTreeLayoutExamples>>#distinctSubtrees|expanded=true|expandedPreview=true|show=gtLiveFor:}$
 
 
 "
 Class {
 	#name : #GtGradTreeLayoutExamples,
 	#superclass : #GtGradLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Grad-Examples'
+	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
 { #category : #accessing }
@@ -324,16 +327,18 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSam
 ]
 
 { #category : #example }
-GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel2 [
+GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger [
 	<gtExample>
 		
 	| theNodes  pairsOfNodes theEdges |
 	
-	theNodes := self nodes: (1 to: 12).
+	theNodes := self nodes: (1 to: 21).
 	
 	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6);
-	 add: (2->7); add: (5->8); add: (6->9); add: (7->10); add: (3->11); add: (4->12).
+	pairsOfNodes add: (1->2); add: (1->3); add: (2->4); add: (2->5); add: (2->6);
+	add: (4->10); add: (4->11); add: (4->12); add: (5->13); add: (5->14); add: (5->15);
+	add: (6->16); add: (6->17); add: (6->18); add: (3->7); add: (3->8); add: (3->9);
+	add: (7->19); add: (7->20); add: (7->21).
 	
 	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	
@@ -351,6 +356,21 @@ GtGradTreeLayoutExamples >> disconnectedGraph [
 
 { #category : #accessing }
 GtGradTreeLayoutExamples >> disconnectedGraphBiggerDistance [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> distinctSubtrees [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	^ self subclassResponsibility
 ]
 

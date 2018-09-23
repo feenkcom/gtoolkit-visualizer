@@ -156,22 +156,22 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtrees [
 	aTreeLayout separateSubtrees: true.
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
 	view addChildren: theNodes.
-	view layout: aTreeLayout. 
+	view layout: aTreeLayout.
 	view forceLayout. 
 
 	^ view
 ]
 
 { #category : #example }
-GtGradVerticalTreeLayoutExamples >> distinctSubtreesTest [
+GtGradVerticalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	<gtExample>
 		
 	| view theNodes aTreeLayout|
 	
 	view := self view.
-	aTreeLayout := self treeLayout. 
-	aTreeLayout separateSubtrees: false.
-	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel2 key.
+	aTreeLayout := self treeLayout.
+	aTreeLayout separateSubtrees: true.
+	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout. 
 	view forceLayout. 
@@ -190,7 +190,7 @@ GtGradVerticalTreeLayoutExamples >> graphWithCycles [
 	theNodes := self constructGraphWithCycles key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
 
 	^ view
 ]
