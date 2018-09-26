@@ -190,6 +190,28 @@ GtGradTreeLayoutExamples >> constructDisconnectedGraphWithRootsOfDifferentSizes 
 ]
 
 { #category : #example }
+GtGradTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+	
+	theNodes := self nodes: (1 to: 6).
+	
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (1->2); add: (1->3); add: (1->4); add: (1->5);
+					 add: (2->6); add: (3->6); add: (4->6); add: (5->6).
+
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+
+	^ theNodes -> theEdges
+
+	
+ 
+]
+
+{ #category : #example }
 GtGradTreeLayoutExamples >> constructGraphWithCycles [
 	<gtExample>
 		

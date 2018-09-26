@@ -180,6 +180,22 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 ]
 
 { #category : #example }
+GtGradVerticalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self treeLayout.
+	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #example }
 GtGradVerticalTreeLayoutExamples >> graphWithCycles [
 	<gtExample>
 		

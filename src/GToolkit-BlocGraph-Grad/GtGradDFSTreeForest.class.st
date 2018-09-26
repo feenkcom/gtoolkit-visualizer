@@ -37,7 +37,7 @@ GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary sep
 							dfs: aTreeNode
 							visited: aVisitedDictionary
 							separateSubtrees: separateSubtrees
-							] 
+							]
 					]
 			]
 ]

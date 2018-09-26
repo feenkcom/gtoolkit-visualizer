@@ -66,6 +66,22 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 ]
 
 { #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self dominanceTreeLayout.
+	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #'examples - instance creation' }
 GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	<gtExample>
 	| view theNodes aTreeLayout |

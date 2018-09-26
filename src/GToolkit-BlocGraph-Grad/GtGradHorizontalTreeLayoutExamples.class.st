@@ -131,7 +131,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 	|  view theNodes aTreeLayout firstTreeRoot secondTreeRoot  |
 	
 	view := self view. 
-	aTreeLayout := self treeLayout. 
+	aTreeLayout := self treeLayout.
 	theNodes := self constructDisconnectedGraphWithRootsOfDifferentSizes key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
@@ -174,6 +174,22 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout. 
+	view forceLayout. 
+
+	^ view
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self treeLayout.
+	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
 	view forceLayout. 
 
 	^ view
