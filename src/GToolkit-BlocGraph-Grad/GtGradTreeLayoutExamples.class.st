@@ -57,7 +57,7 @@ ${example:name=GtGradHorizontalTreeLayoutExamples>>#distinctSubtrees|expanded=tr
 "
 Class {
 	#name : #GtGradTreeLayoutExamples,
-	#superclass : #GtGradLayoutExamples,
+	#superclass : #GtGradAbstractTreeLayoutExamples,
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 

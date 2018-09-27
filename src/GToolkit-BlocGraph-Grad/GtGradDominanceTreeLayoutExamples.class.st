@@ -1,6 +1,6 @@
 Class {
 	#name : #GtGradDominanceTreeLayoutExamples,
-	#superclass : #GtGradLayoutExamples,
+	#superclass : #GtGradAbstractTreeLayoutExamples,
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
