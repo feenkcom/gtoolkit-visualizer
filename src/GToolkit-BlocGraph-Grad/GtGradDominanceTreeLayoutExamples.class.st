@@ -67,6 +67,11 @@ GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToAN
 ]
 
 { #category : #example }
+GtGradDominanceTreeLayoutExamples >> constructForest: theNodes [
+	^ GtGradDominanceTreeForest from: theNodes separateSubtrees: false
+]
+
+{ #category : #example }
 GtGradDominanceTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
 		

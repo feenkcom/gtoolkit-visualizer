@@ -7,7 +7,7 @@ Class {
 { #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes [
 	| forest |
-	forest := GtGradDFSTreeForest from: theNodes separateSubtrees: false.
+	forest := self constructForest: theNodes.
 	
 	forest trees do: [ :aRootNode |
 		self checkIfAllChildrenHaveTheSameHorizontalPositionForTree: aRootNode. 	
@@ -35,7 +35,7 @@ GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameHorizontalPosit
 { #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameVerticalPosition: theNodes [
 	| forest |
-	forest := GtGradDFSTreeForest from: theNodes separateSubtrees: false.
+	forest := self constructForest: theNodes.
 	
 	forest trees do: [ :aRootNode |
 		self checkIfAllChildrenHaveTheSameVerticalPositionForTree: aRootNode. 	
@@ -57,4 +57,9 @@ GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameVerticalPositio
 			].
 		self checkIfAllChildrenHaveTheSameVerticalPositionForTree: aChildNode.
 	].
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> constructForest: theNodes [
+	self subclassResponsibility
 ]

@@ -190,6 +190,11 @@ GtGradTreeLayoutExamples >> constructDisconnectedGraphWithRootsOfDifferentSizes 
 ]
 
 { #category : #example }
+GtGradTreeLayoutExamples >> constructForest: theNodes [
+	^ GtGradDFSTreeForest from: theNodes separateSubtrees: false
+]
+
+{ #category : #example }
 GtGradTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
 		

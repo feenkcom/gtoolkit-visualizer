@@ -43,7 +43,9 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 	view addChildren: theNodes. 
 	aTreeLayout := self dominanceTreeLayout.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
+	
+	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
 		
 	^ view
 
@@ -59,7 +61,9 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 	view addChildren: theNodes.
 	aTreeLayout := self dominanceTreeLayout.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
+	
+	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
 		
 	^ view
 
@@ -76,7 +80,9 @@ GtGradHorizontalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncoming
 	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
+	
+	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
 
 	^ view
 ]
@@ -91,7 +97,9 @@ GtGradHorizontalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	view addChildren: theNodes. 
 	aTreeLayout := self dominanceTreeLayout.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
+	
+	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
 		
 	^ view
 
