@@ -166,7 +166,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtrees [
 	
 	view := self view.
 	aTreeLayout := self treeLayout.
-	aTreeLayout separateSubtrees: true.
+	aTreeLayout separateSubtrees: true. 
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
