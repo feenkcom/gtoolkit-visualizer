@@ -94,7 +94,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraph [
 		
 	| view theNodes aTreeLayout firstTreeRoot secondTreeRoot |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	theNodes := self constructDisconnectedGraph  key. 
 	view addChildren: theNodes.
@@ -220,7 +220,7 @@ GtGradVerticalTreeLayoutExamples >> graphWithCycles [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	theNodes := self constructGraphWithCycles key.
 	view addChildren: theNodes.
