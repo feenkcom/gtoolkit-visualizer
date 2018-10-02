@@ -1,11 +1,11 @@
 Class {
-	#name : #GtMondrialClassHierarcyExamples,
+	#name : #GtMondrianClassHierarcyExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-Mondrian-Examples'
 }
 
 { #category : #assertions }
-GtMondrialClassHierarcyExamples >> assertNumberOfElementsIn: view [
+GtMondrianClassHierarcyExamples >> assertNumberOfElementsIn: view [
 	| mainElement expectedNumberOfElements |
 	mainElement := view topStep root.
 	"In he root space there should be an element and a line for each subclasses. 
@@ -19,7 +19,7 @@ GtMondrialClassHierarcyExamples >> assertNumberOfElementsIn: view [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTree [
+GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTree [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -34,7 +34,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTree [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
+GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -51,7 +51,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
+GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -73,7 +73,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithInBetweenEdges [
+GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithInBetweenEdges [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -92,7 +92,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithInBetweenEdge
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods [
+GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -122,7 +122,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethodsAndClassNames [
+GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethodsAndClassNames [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -151,7 +151,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 ]
 
 { #category : #examples }
-GtMondrialClassHierarcyExamples >> emptyView [
+GtMondrianClassHierarcyExamples >> emptyView [
 	<gtExample>
 	| view |
 	view := GtMondrian new.
@@ -160,6 +160,6 @@ GtMondrialClassHierarcyExamples >> emptyView [
 ]
 
 { #category : #accessing }
-GtMondrialClassHierarcyExamples >> targetClass [ 
+GtMondrianClassHierarcyExamples >> targetClass [ 
 	^ GLMFormatedPresentation
 ]
