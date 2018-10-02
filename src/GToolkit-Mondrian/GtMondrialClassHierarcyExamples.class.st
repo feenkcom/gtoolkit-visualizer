@@ -27,7 +27,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTree [
 	view nodes
 		with: targetClass withAllSubclasses.
 	view edges
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	self assertNumberOfElementsIn: view.
 	^ view
@@ -45,7 +45,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 				border: (BlBorder paint: Color gray width: 1) ]; 
 		with: targetClass withAllSubclasses.
 	view edges
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view
 ]
@@ -67,7 +67,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view
 ]
@@ -86,7 +86,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithInBetweenEdge
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view
 ]
@@ -116,7 +116,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view 
 ]
@@ -146,7 +146,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view 
 ]
