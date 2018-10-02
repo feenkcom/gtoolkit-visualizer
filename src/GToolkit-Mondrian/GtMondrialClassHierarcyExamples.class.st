@@ -116,7 +116,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view 
 ]
@@ -145,7 +145,7 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		connectFrom: #yourself toAll: #subclasses.
+		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view 
 ]
