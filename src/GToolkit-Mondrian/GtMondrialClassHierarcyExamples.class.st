@@ -102,17 +102,17 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 			BlElement new
 				border: (BlBorder paint: Color gray width: 1);
 				constraintsDo: [ :c |
+					c vertical fitContent. c horizontal fitContent.
 					c padding: (BlInsets all: 5) ] ]; 
 		with: targetClass withAllSubclasses;
 		forEach: [ :aClass |
 			view nodes
-				shape: [ 
+				shape: [ :m | 
 					BlElement new
-						size: 10@10;
+						size: (m sourceCode lines size) @(m sourceCode lines size);
 						border: (BlBorder paint: Color blue width: 1) ];
 				with: aClass methods.
-			view layout grid
-				gapSize: 5 ].
+			view layout grid].
 	view edges
 		fromRightCenter;
 		toLeftCenter;

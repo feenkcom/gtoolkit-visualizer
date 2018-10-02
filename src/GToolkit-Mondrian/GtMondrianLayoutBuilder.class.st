@@ -30,7 +30,12 @@ GtMondrianLayoutBuilder >> force [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> grid [
-	^ self custom: GtGraphGridLayout new
+	self topStep root constraintsDo: [ :c |
+			c horizontal fitContent.
+			c vertical fitContent ].
+	^ self custom: (BlGridLayout new 
+		columnCount: self topStep root graph nodeChildren size sqrt asInteger;
+		cellSpacing: 2)
 ]
 
 { #category : #scripting }
