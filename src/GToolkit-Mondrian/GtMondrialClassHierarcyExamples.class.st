@@ -51,6 +51,26 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 ]
 
 { #category : #'tutorial - nesting' }
+GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShapeWithSize [
+	<gtExample>
+	| targetClass view |
+	targetClass := self targetClass.
+	view := self emptyView.
+	view nodes
+		shape: [ :aClass |
+			BlElement new
+				border: (BlBorder paint: Color gray width: 1);
+				size: (aClass numberOfMethods min: 50 max: 5) asPoint ]; 
+		with: targetClass withAllSubclasses.
+	view edges
+		fromRightCenter;
+		toLeftCenter;
+		connectToAll: #subclasses.
+	view layout horizontalTree.
+	^ view
+]
+
+{ #category : #'tutorial - nesting' }
 GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
 	<gtExample>
 	| targetClass view |
@@ -70,6 +90,33 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
 		connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view
+]
+
+{ #category : #'tutorial - nesting' }
+GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithCustomShapeForClasses [
+	<gtExample>
+	| targetClass view |
+	targetClass := self targetClass.
+	view := self emptyView.
+	view nodes
+		shape: [ :aClass |
+			GtMondrialClassHierarcyExampleElement new 
+				className: aClass ]; 
+		with: targetClass withAllSubclasses;
+		forEach: [ :aClass |
+			view nodes
+				shape: [ :aMethod |
+					BlElement new
+						size: (aMethod linesOfCode min: 50 max: 5) asPoint;
+						border: (BlBorder paint: Color blue width: 1) ];
+				with: aClass methods.
+			view layout grid ].
+	view edges
+		fromRightCenter;
+		toLeftCenter;
+		connectToAll: #subclasses.
+	view layout horizontalTree.
+	^ view 
 ]
 
 { #category : #'tutorial - nesting' }
@@ -102,12 +149,11 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 			BlElement new
 				border: (BlBorder paint: Color gray width: 1);
 				constraintsDo: [ :c |
-					c vertical fitContent. c horizontal fitContent.
 					c padding: (BlInsets all: 5) ] ]; 
 		with: targetClass withAllSubclasses;
 		forEach: [ :aClass |
 			view nodes
-				shape: [ :m | 
+				shape: [ 
 					BlElement new
 						size: 10 @ 10;
 						border: (BlBorder paint: Color blue width: 1) ];
@@ -128,6 +174,54 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
+		shape: [ :aClass ||classNameText containerElement labelElement methodsElement|
+			containerElement := BlElement new
+				layout: BlLinearLayout vertical;
+				border: (BlBorder paint: Color gray width: 1);
+				constraintsDo: [ :c |
+					c padding: (BlInsets all: 5).
+					c horizontal fitContent.
+					c vertical fitContent ].
+			classNameText := aClass name asRopedText.
+			classNameText attributes: {
+				BrFontSizeAttribute size: 10 }.
+			labelElement := BlTextElement new
+				text: classNameText;
+				constraintsDo: [ :c | 
+					c padding: (BlInsets all: 5).
+					c linear horizontal alignCenter ].
+			methodsElement := BlElement new
+				constraintsDo: [ :c | 
+					c linear horizontal alignCenter ].
+			methodsElement graph beChildrenContainer.
+			containerElement
+				addChild: labelElement;
+				addChild: methodsElement.
+			containerElement ]; 
+		with: targetClass withAllSubclasses;
+		forEach: [ :aClass |
+			view nodes
+				shape: [ :aMethod |
+					BlElement new
+						size: (aMethod linesOfCode min: 50 max: 5) asPoint;
+						border: (BlBorder paint: Color blue width: 1) ];
+				with: aClass methods.
+			view layout grid ].
+	view edges
+		fromRightCenter;
+		toLeftCenter;
+		connectToAll: #subclasses.
+	view layout horizontalTree.
+	^ view 
+]
+
+{ #category : #'tutorial - nesting' }
+GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethodsWithSize [
+	<gtExample>
+	| targetClass view |
+	targetClass := self targetClass.
+	view := self emptyView.
+	view nodes
 		shape: [ 
 			BlElement new
 				border: (BlBorder paint: Color gray width: 1);
@@ -136,12 +230,12 @@ GtMondrialClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 		with: targetClass withAllSubclasses;
 		forEach: [ :aClass |
 			view nodes
-				shape: [ 
+				shape: [ :aMethod |
 					BlElement new
-						size: 10@10;
+						size: (aMethod linesOfCode min: 50 max: 5) asPoint;
 						border: (BlBorder paint: Color blue width: 1) ];
 				with: aClass methods.
-			view layout grid ].
+			view layout grid].
 	view edges
 		fromRightCenter;
 		toLeftCenter;
