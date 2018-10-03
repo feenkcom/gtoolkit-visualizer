@@ -39,12 +39,12 @@ GtMondrianUMLClassElement >> initialize [
 		addChild: label;
 		preventMouseEvents.
     self
-		layout: (BlGridLayout vertical cellSpacing: 1);
+		layout: (BlGridLayout vertical cellSpacing: -1);
+		padding: (BlInsets all: 1);
 		constraintsDo: [ :c |
 			c vertical fitContent.
 			c horizontal fitContent ];
 		background: Color white;
-		border: (BlBorder paint: Color gray);
 		addChildren: { labelContainer }
 ]
 
@@ -60,16 +60,16 @@ GtMondrianUMLClassElement >> labelAttributes: aCollection [
 
 { #category : #accessing }
 GtMondrianUMLClassElement >> newContainers: aCollectionOfSymbols [
-	aCollectionOfSymbols
-		do: [ :each | 
-			| element |
-			element := BlElement new
-						layout: BlLinearLayout horizontal;
-						constraintsDo: [ :c | 
-							c vertical fitContent.
-							c horizontal fitContent ];
-						background: Color white;
-						padding: (BlInsets all: 5).
-			element graph beChildrenContainer: each.
-			self addChild: element ]
+	aCollectionOfSymbols do: [ :each | 
+		| element |
+		element := BlElement new
+			layout: BlLinearLayout horizontal;
+			constraintsDo: [ :c | 
+				c vertical fitContent.
+				c horizontal fitContent ];
+			background: Color white;
+			border: (BlBorder paint: Color gray);
+			padding: (BlInsets all: 5).
+		element graph beChildrenContainer: each.
+		self addChild: element ]
 ]
