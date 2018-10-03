@@ -160,6 +160,29 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 ]
 
 { #category : #example }
+GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode [
+	<gtExample>
+		
+	|  view theNodes aTreeLayout firstTreeRoot secondTreeRoot  |
+	
+	view := self view. 
+	aTreeLayout := self treeLayout.
+	theNodes := self constructDisconnectedGraphWithTreeContainingOneNode key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout. 
+	
+	firstTreeRoot := theNodes at: 1.
+	secondTreeRoot := theNodes at: 2.
+	
+	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
+	
+	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	
+	^ view
+]
+
+{ #category : #example }
 GtGradHorizontalTreeLayoutExamples >> distinctSubtrees [
 	<gtExample>
 		

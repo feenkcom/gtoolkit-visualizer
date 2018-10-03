@@ -71,6 +71,28 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 						+ (self layout childOffsetLength: child) ] ]
 ]
 
+{ #category : #'private - layout' }
+GtGradTreeLayoutCalculator >> moveNode: aTreeNode dx: dx dy: dy [ [
+	| nodePosition  newNodePositionX newNodePositionY|
+ 	nodePosition := aTreeNode element constraints gradTree computedPosition.
+	newNodePositionX := nodePosition x.
+	newNodePositionY := nodePosition y.
+	dx > 0
+		ifTrue: [ 
+			newNodePositionX := (newNodePositionX + dx).
+	 ].
+ 	dy > 0
+		ifTrue: [ 
+			newNodePositionY := (newNodePositionY + dy).
+	 ].
+	
+	aTreeNode element constraints gradTree computedPosition: newNodePositionX @ newNodePositionY .
+ 	aTreeNode nodes do: [ :child |
+		self moveNode: child dx: dx dy: dy.
+	].
+]
+]
+
 { #category : #accessing }
 GtGradTreeLayoutCalculator >> origin [
 	<return: #Point>
@@ -139,6 +161,11 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 
 	dx := (self origin x) - (bounds left).
 	dy := (self origin y) - (bounds top).
+	
+	"(dx > 0 or: [ dy > 0 ])
+		ifTrue: [
+			self moveNode: aTreeNode dx: dx dy: dy.
+	 ]."
 	
 	self reverse
 		ifTrue: [ 

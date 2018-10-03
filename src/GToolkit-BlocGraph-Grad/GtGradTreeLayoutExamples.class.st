@@ -190,6 +190,27 @@ GtGradTreeLayoutExamples >> constructDisconnectedGraphWithRootsOfDifferentSizes 
 ]
 
 { #category : #example }
+GtGradTreeLayoutExamples >> constructDisconnectedGraphWithTreeContainingOneNode [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+	
+	theNodes := self nodes: (1 to: 5).
+	
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (2->3); add: (2->4); add: (2->5).
+
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+
+	^ theNodes -> theEdges
+
+	
+ 
+]
+
+{ #category : #example }
 GtGradTreeLayoutExamples >> constructForest: theNodes [
 	^ GtGradDFSTreeForest from: theNodes separateSubtrees: false
 ]
