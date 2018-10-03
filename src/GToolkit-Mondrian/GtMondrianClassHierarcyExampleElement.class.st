@@ -2,13 +2,13 @@
 I am an element for displaying a class. I show the name of the class and have a container for adding methods. I am meant to be used as a shape within Mondrian views.
 "
 Class {
-	#name : #GtMondrialClassHierarcyExampleElement,
+	#name : #GtMondrianClassHierarcyExampleElement,
 	#superclass : #BlElement,
 	#category : #'GToolkit-Mondrian-Examples'
 }
 
 { #category : #'building widgets' }
-GtMondrialClassHierarcyExampleElement >> buildLabelElement [
+GtMondrianClassHierarcyExampleElement >> buildLabelElement [
 	^ BlTextElement new
 		constraintsDo: [ :c | 
 			c padding: (BlInsets all: 5).
@@ -16,14 +16,14 @@ GtMondrialClassHierarcyExampleElement >> buildLabelElement [
 ]
 
 { #category : #'building widgets' }
-GtMondrialClassHierarcyExampleElement >> buildMethodsElement [
+GtMondrianClassHierarcyExampleElement >> buildMethodsElement [
 	^ BlElement new
 		constraintsDo: [ :c | 
 			c linear horizontal alignCenter ]
 ]
 
 { #category : #accessing }
-GtMondrialClassHierarcyExampleElement >> className: aClassName [
+GtMondrianClassHierarcyExampleElement >> className: aClassName [
 	| classNameText |
 	classNameText := aClassName asRopedText.
 	classNameText attributes: {
@@ -32,7 +32,7 @@ GtMondrialClassHierarcyExampleElement >> className: aClassName [
 ]
 
 { #category : #initialization }
-GtMondrialClassHierarcyExampleElement >> initialize [ 
+GtMondrianClassHierarcyExampleElement >> initialize [ 
 	| labelElement methodsElement|
 	super initialize.
 	self 
@@ -51,6 +51,6 @@ GtMondrialClassHierarcyExampleElement >> initialize [
 ]
 
 { #category : #accessing }
-GtMondrialClassHierarcyExampleElement >> labelElement [
+GtMondrianClassHierarcyExampleElement >> labelElement [
 	^ self children first
 ]
