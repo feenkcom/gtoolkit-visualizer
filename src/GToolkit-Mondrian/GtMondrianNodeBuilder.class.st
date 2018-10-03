@@ -18,9 +18,6 @@ GtMondrianNodeBuilder >> defaultNodeElement [
 		background: (BlBackground paint: Color white);
 		border: (BlBorder paint: Color black width: 2);
 		size: 5@5;
-		constraintsDo: [ :c | 
-			c vertical fitContent.
-			c horizontal fitContent ];
 		zIndex: 10
 ]
 
