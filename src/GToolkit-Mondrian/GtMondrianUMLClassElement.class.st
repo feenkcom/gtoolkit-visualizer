@@ -31,7 +31,7 @@ GtMondrianUMLClassElement >> initialize [
 	labelContainer := BlElement new.
 	labelContainer 
 		layout: BlFrameLayout new;
-		background: (BlBackground paint: Color white);
+		background: Color white;
 		border: (BlBorder paint: Color gray);
 		constraintsDo: [ :c |
 			c horizontal fitContent.

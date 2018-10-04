@@ -52,7 +52,7 @@ BlElement >> editorForBackground [
 	colorPicker constraintsDo: [ :c | c linear vertical alignCenter ].
 	colorPicker
 		when: BrToggleActivatedEvent
-		do: [ :anEvent | self background: (BlBackground paint: anEvent model) ].
+		do: [ :anEvent | self background: anEvent model ].
 
 	alphaPicker := GtDiagrammerNumberPicker new.
 	alphaPicker format: [ :aNumber | aNumber printShowingDecimalPlaces: 1 ].

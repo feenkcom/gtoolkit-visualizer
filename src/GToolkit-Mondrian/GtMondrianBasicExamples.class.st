@@ -148,7 +148,7 @@ GtMondrianBasicExamples >> nestedNodes [
 		shape: [ :x | 
 			BlElement new 
 				geometry: BlEllipse new; 
-				background: (BlBackground paint: Color paleOrange);
+				background: Color paleOrange;
 				constraintsDo: [ :c | c padding: (BlInsets all: 10) ] ];
 		with: (1 to: 9)
 		forEach: [ :each |
@@ -174,7 +174,7 @@ GtMondrianBasicExamples >> nestedNodesInDifferentContainers [
 			labelContainer := BlElement new.
 			labelContainer
 				layout: BlFrameLayout new;
-				background: (BlBackground paint: Color white);
+				background: Color white;
 				border: (BlBorder paint: Color gray);
 				constraintsDo: [ :c | 
 					c horizontal fitContent.

@@ -44,14 +44,14 @@ GtGraphLayoutExamples >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 { #category : #'initialize-release' }
 GtGraphLayoutExamples >> defaultNode [
 	^ BlElement new
-		background: (BlBackground paint: Color lightGray);
+		background: Color lightGray;
 		size: 6@6
 ]
 
 { #category : #'initialize-release' }
 GtGraphLayoutExamples >> defaultView [
 	^ BlElement new
-		background: (BlBackground paint: Color blue)
+		background: Color blue
 ]
 
 { #category : #'building - edges' }
@@ -92,5 +92,5 @@ GtGraphLayoutExamples >> view [
 			constraints horizontal fitContent.
 			constraints vertical fitContent.
 			constraints padding: (BlInsets all: 10) ];
-		background: (BlBackground paint: Color white)
+		background: Color white
 ]

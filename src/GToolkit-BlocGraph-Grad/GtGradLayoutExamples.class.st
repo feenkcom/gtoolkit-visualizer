@@ -44,8 +44,7 @@ GtGradLayoutExamples >> createNNodesOfIncreasingSize: numberOfNodes [
 
 { #category : #'examples - instance creation' }
 GtGradLayoutExamples >> defaultView [
-	^ BlElement new
-		background: (BlBackground paint: Color blue)
+	^ BlElement new background: Color blue
 ]
 
 { #category : #'examples - instance creation' }
@@ -101,5 +100,5 @@ GtGradLayoutExamples >> view [
 			constraints horizontal fitContent.
 			constraints vertical fitContent.
 			constraints padding: (BlInsets all: 10) ];
-		background: (BlBackground paint: Color white)
+		background: Color white
 ]

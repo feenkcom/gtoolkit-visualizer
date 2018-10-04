@@ -142,7 +142,7 @@ GtMondrianDomainExamples >> editorElements [
 			form := each asSpartaForm.
 			content := BlElement new
 				size: form extent;
-				background: (BlBackground image: form);
+				background: form;
 				constraintsDo: [ :c | c grid horizontal alignCenter ].
 			container addChild: content.
 			container ];
@@ -179,7 +179,7 @@ GtMondrianDomainExamples >> editorElementsOf: element on: view [
 			form := each asSpartaForm.
 			content := BlElement new
 				size: form extent;
-				background: (BlBackground image: form);
+				background: form;
 				constraintsDo: [ :c | c grid horizontal alignCenter ].
 			container addChild: content.
 			container ];

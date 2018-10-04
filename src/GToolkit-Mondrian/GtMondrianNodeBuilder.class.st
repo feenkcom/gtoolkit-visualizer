@@ -15,7 +15,7 @@ Class {
 { #category : #private }
 GtMondrianNodeBuilder >> defaultNodeElement [
 	^ BlElement new
-		background: (BlBackground paint: Color white);
+		background: Color white;
 		border: (BlBorder paint: Color black width: 2);
 		size: 5@5;
 		zIndex: 10

@@ -18,7 +18,7 @@ GtPlotter >> initialize [
 			constraintsDo: [ :constraints |
 				constraints horizontal matchParent.
 				constraints vertical matchParent ];
-			background: (BlBackground paint: Color white);
+			background: Color white;
 			zIndex: 1)))
 ]
 

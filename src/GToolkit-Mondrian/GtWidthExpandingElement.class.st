@@ -13,7 +13,7 @@ GtWidthExpandingElement class >> example [
 	| label contents contentLabel grid |
 	label := BlTextElement new
             text: 'Name' asRopedText;
-            background: (BlBackground paint: Color white);
+            background: Color white;
             yourself.
 	contents := BlElement new.
 	contents 
@@ -24,7 +24,7 @@ GtWidthExpandingElement class >> example [
 	    background: Color white.
 	contentLabel := BlTextElement new
 	            text: 'Label with multiple words' asRopedText;
-	            background: (BlBackground paint: Color white);
+	            background: Color white;
 	            yourself.
 	contents addChild: contentLabel.
 	grid := GtWidthExpandingElement new.
