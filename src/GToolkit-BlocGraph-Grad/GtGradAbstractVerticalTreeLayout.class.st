@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #'api - geometry' }
+GtGradAbstractVerticalTreeLayout >> calculateTreePositionCorrection: delta [
+	^ (delta x)@0
+]
+
+{ #category : #'api - geometry' }
 GtGradAbstractVerticalTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
 	| x y |
 	x := bounds right + self treesDistance.

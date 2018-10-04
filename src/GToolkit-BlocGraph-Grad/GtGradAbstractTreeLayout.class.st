@@ -32,6 +32,11 @@ GtGradAbstractTreeLayout class >> constraints [
 ]
 
 { #category : #'api - geometry' }
+GtGradAbstractTreeLayout >> calculateTreePositionCorrection: delta [
+	self subclassResponsibility
+]
+
+{ #category : #'api - geometry' }
 GtGradAbstractTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
 	self subclassResponsibility
 ]

@@ -72,25 +72,26 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 ]
 
 { #category : #'private - layout' }
-GtGradTreeLayoutCalculator >> moveNode: aTreeNode dx: dx dy: dy [ [
+GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
 	| nodePosition  newNodePositionX newNodePositionY|
  	nodePosition := aTreeNode element constraints gradTree computedPosition.
 	newNodePositionX := nodePosition x.
 	newNodePositionY := nodePosition y.
-	dx > 0
+
+	delta x > 0
 		ifTrue: [ 
-			newNodePositionX := (newNodePositionX + dx).
+			newNodePositionX := (newNodePositionX + delta x).
 	 ].
- 	dy > 0
+ 	delta y > 0
 		ifTrue: [ 
-			newNodePositionY := (newNodePositionY + dy).
+			newNodePositionY := (newNodePositionY + delta y).
 	 ].
 	
 	aTreeNode element constraints gradTree computedPosition: newNodePositionX @ newNodePositionY .
  	aTreeNode nodes do: [ :child |
-		self moveNode: child dx: dx dy: dy.
+		self moveNode: child delta: delta.
 	].
-]
+
 ]
 
 { #category : #accessing }
@@ -143,7 +144,7 @@ GtGradTreeLayoutCalculator >> updateNodeBounds: aTreeNode bounds: bounds positio
 
 { #category : #visiting }
 GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
-	| bounds dx dy |
+	| bounds dx dy treePositionCorrection|
 
 	GtGradProcessingTreeSignal new
 		root: aTreeNode;
@@ -161,11 +162,12 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 
 	dx := (self origin x) - (bounds left).
 	dy := (self origin y) - (bounds top).
+	treePositionCorrection := (self layout calculateTreePositionCorrection: dx@dy).
 	
-	"(dx > 0 or: [ dy > 0 ])
+	(treePositionCorrection x > 0 or: [ treePositionCorrection  y > 0 ])
 		ifTrue: [
-			self moveNode: aTreeNode dx: dx dy: dy.
-	 ]."
+			self moveNode: aTreeNode delta: treePositionCorrection
+	 ].
 	
 	self reverse
 		ifTrue: [ 
@@ -180,6 +182,5 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 									  startX: self origin x
 									  startY: self origin y).
 	
-
 
 ]

@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #'api - geometry' }
+GtGradAbstractHorizontalTreeLayout >> calculateTreePositionCorrection: delta [
+	^ 0@(delta y)
+]
+
+{ #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
 	| x y |
 	x := startX.
