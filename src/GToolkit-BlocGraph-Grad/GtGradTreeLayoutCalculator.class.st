@@ -74,6 +74,8 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 { #category : #'private - layout' }
 GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
 	| nodePosition  newNodePositionX newNodePositionY|
+	
+
  	nodePosition := aTreeNode element constraints gradTree computedPosition.
 	newNodePositionX := nodePosition x.
 	newNodePositionY := nodePosition y.
@@ -89,7 +91,10 @@ GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
 	
 	aTreeNode element constraints gradTree computedPosition: newNodePositionX @ newNodePositionY .
  	aTreeNode nodes do: [ :child |
-		self moveNode: child delta: delta.
+		(self layout separateSubtrees not or: [ child nodes isNotEmpty ])
+			ifTrue: [ 
+				self moveNode: child delta: delta.
+			]
 	].
 
 ]
