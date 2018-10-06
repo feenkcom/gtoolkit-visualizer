@@ -22,7 +22,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -41,7 +41,8 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 
 	^ view
 ]
@@ -59,7 +60,8 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7Nodes [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 
 	^ view
 
@@ -81,7 +83,8 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 	view layout: aTreeLayout.
 	view forceLayout. 
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 
 	^ view
 
@@ -107,7 +110,9 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	
 	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
+
 
 	^ view
 ]
@@ -131,7 +136,8 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	
 	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 
 	^ view
 ]
@@ -154,7 +160,8 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 	
 	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 	
 	^ view
 ]
@@ -177,7 +184,8 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode
 	
 	self assert: (firstTreeRoot position x ) equals:  (secondTreeRoot position x ).
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 	
 	^ view
 ]
@@ -196,7 +204,8 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 
 	^ view
 ]
@@ -215,7 +224,8 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	view layout: aTreeLayout. 
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 
 	^ view
 ]
@@ -233,7 +243,8 @@ GtGradHorizontalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -250,7 +261,8 @@ GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -267,7 +279,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -285,7 +297,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -302,7 +314,25 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	view layout: aTreeLayout.
 	view forceLayout. 
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	^ view
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view. 
+	aTreeLayout := self treeLayout. 
+	theNodes := self constructTreeWithNodesOfDifferentSizes key.
+	view addChildren: theNodes. 
+	view layout: aTreeLayout.
+	view forceLayout.
+	
+	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -320,7 +350,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingBottomAlign
 	view layout: aTreeLayout.
 	view forceLayout. 
 	 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -338,7 +368,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterA
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -356,7 +386,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlig
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -373,13 +403,12 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	view layout: aTreeLayout.
 	view forceLayout.
 		
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
 { #category : #'examples - instance creation' }
 GtGradHorizontalTreeLayoutExamples >> treeLayout [
-	<gtExample>
 	|  aTreeLayout |
 
 	aTreeLayout := GtGradHorizontalTreeLayout new.

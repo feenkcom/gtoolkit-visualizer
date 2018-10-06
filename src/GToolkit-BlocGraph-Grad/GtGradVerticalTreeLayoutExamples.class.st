@@ -15,14 +15,15 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
-	aTreeLayout := self treeLayout.
+	view := self view.
+	aTreeLayout := self treeLayout. 
 	theNodes := self constructBinaryTreeWith15Nodes key.
-	view addChildren: theNodes.
+	view addChildren: theNodes. 
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -40,7 +41,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -58,7 +59,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith7Nodes [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition:	theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -80,7 +81,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith7NodesRevered [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	
 	^ view
 
@@ -106,7 +107,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraph [
 	
 	self assert: (firstTreeRoot position y ) equals:  (secondTreeRoot position y ).
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -130,7 +131,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	
 	self assert: (firstTreeRoot position y ) equals:  (secondTreeRoot position y ).
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -153,7 +154,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
 	
 	self assert: (firstTreeRoot position y ) equals:  (secondTreeRoot position y ).
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -176,7 +177,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode [
 	
 	self assert: (firstTreeRoot position y ) equals:  (secondTreeRoot position y ).
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	
 	^ view
 ]
@@ -195,7 +196,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -214,7 +215,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -232,7 +233,7 @@ GtGradVerticalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -250,7 +251,7 @@ GtGradVerticalTreeLayoutExamples >> graphWithCycles [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -268,7 +269,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTree [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -287,7 +288,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeReversed [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -306,7 +307,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeBottomA
 	view layout: aTreeLayout.
 	view forceLayout. 
 	 
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	
 	^ view
 ]
@@ -325,7 +326,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterA
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	 
 	^ view
 ]
@@ -344,7 +345,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeTopAlig
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -362,8 +363,26 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	
+	^ view
+]
+
+{ #category : #example }
+GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view. 
+	aTreeLayout := self treeLayout. 
+	theNodes := self constructTreeWithNodesOfDifferentSizes key.
+	view addChildren: theNodes. 
+	view layout: aTreeLayout.
+	view forceLayout.
+	
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -381,7 +400,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeBottomAli
 	view layout: aTreeLayout.
 	view forceLayout. 
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -400,7 +419,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAli
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	
 	^ view
 ]
@@ -419,7 +438,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlignm
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -437,14 +456,13 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 	
 	^ view
 ]
 
 { #category : #'examples - instance creation' }
 GtGradVerticalTreeLayoutExamples >> treeLayout [
-	<gtExample>
 	|  aTreeLayout |
 
 	aTreeLayout := GtGradVerticalTreeLayout new.

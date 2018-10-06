@@ -18,6 +18,8 @@ GtGradHorizontalDominanceTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout. 
 	view forceLayout. 
 
+	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -45,7 +47,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -63,7 +65,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -82,7 +84,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncoming
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -99,7 +101,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes.
+	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 

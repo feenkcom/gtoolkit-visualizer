@@ -5,58 +5,107 @@ Class {
 }
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameHorizontalPosition: theNodes [
+GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenHorizontalTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed [
+	| previousChildNode previousChildNodePosition currentNodePosition|
+	previousChildNode := nil.
+	previousChildNodePosition := nil.
+	currentNodePosition := theCurrentNode element position.
+	theCurrentNode nodes do: [ :aChildNode |
+		| currentChildNodePosition |
+
+		currentChildNodePosition := aChildNode element position.
+		"check if that positions overlaps with the parent"
+		reversed
+			ifFalse: [ 
+				self assert: currentNodePosition x + levelDistance <= currentChildNodePosition x.
+			]
+			ifTrue: [ 
+				self assert: currentNodePosition x - levelDistance >= currentChildNodePosition x.
+			].
+
+		previousChildNode isNotNil
+			ifTrue: [ 
+				| previousNodeHeight |
+				"check if all children have the same y position"
+				self assert: previousChildNodePosition x equals: currentChildNodePosition x.
+				previousNodeHeight := previousChildNode element bounds extent y.
+				"check if the space between nodes is equal to or
+				greater than the specified space between nodes"
+				self assert: (currentChildNodePosition y  - (previousChildNodePosition y + previousNodeHeight)) >= nodeDistance. 
+			].
+		previousChildNode := aChildNode.
+		previousChildNodePosition := currentChildNodePosition.
+		self checkPositionsAndDistancesBetweenHorizontalTreeNodes: aChildNode
+															   nodeDistance: nodeDistance
+															   levelDistance: levelDistance
+																reversed: reversed
+	].
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenVerticalTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed [
+	| previousChildNode previousChildNodePosition currentNodePosition|
+	previousChildNode := nil.
+	previousChildNodePosition := nil.
+	currentNodePosition := theCurrentNode element position.
+	theCurrentNode nodes do: [ :aChildNode |
+		| currentChildNodePosition |
+
+		currentChildNodePosition := aChildNode element position.
+		"check if that positions overlaps with the parent"
+		reversed
+			ifFalse: [ 
+				self assert: currentNodePosition y + levelDistance <= currentChildNodePosition y.
+			]
+			ifTrue: [ 
+				self assert: currentNodePosition y - levelDistance >= currentChildNodePosition y.
+			].
+
+		previousChildNode isNotNil
+			ifTrue: [ 
+				| previousNodeWidth |
+				"check if all children have the same y position"
+				self assert: previousChildNodePosition y equals: currentChildNodePosition y.
+				previousNodeWidth := previousChildNode element bounds extent x.
+				"check if the space between nodes is equal to or
+				greater than the specified space between nodes"
+				self assert: (currentChildNodePosition x  - (previousChildNodePosition x + previousNodeWidth)) >= nodeDistance. 
+			].
+		previousChildNode := aChildNode.
+		previousChildNodePosition := currentChildNodePosition.
+		self checkPositionsAndDistancesBetweenVerticalTreeNodes: aChildNode
+															   nodeDistance: nodeDistance
+															   levelDistance: levelDistance
+																reversed: reversed
+	].
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout [
 	| forest |
 	forest := self constructForest: theNodes.
 	
 	forest trees do: [ :aRootNode |
-		self checkIfAllChildrenHaveTheSameHorizontalPositionForTree: aRootNode. 	
+		self checkPositionsAndDistancesBetweenHorizontalTreeNodes: aRootNode
+											 				  nodeDistance: aTreeLayout nodeDistance
+															  levelDistance: aTreeLayout levelDistance
+															  reversed: aTreeLayout reverse.
 	]
 	
 ]
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameHorizontalPositionForTree: theCurrentNode [
-	| childrenPosition |
-	
-	childrenPosition := -1.
-	theCurrentNode nodes do: [ :aChildNode |
-		childrenPosition = -1
-			ifTrue: [
-				childrenPosition := aChildNode element position x
-			]
-			ifFalse: [ 
-				self assert: aChildNode element position x equals: childrenPosition	
-			].
-		self checkIfAllChildrenHaveTheSameHorizontalPositionForTree: aChildNode.
-	].
-]
-
-{ #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameVerticalPosition: theNodes [
+GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalTreesAndNodes: theNodes layout: aTreeLayout [
 	| forest |
 	forest := self constructForest: theNodes.
-	
-	forest trees do: [ :aRootNode |
-		self checkIfAllChildrenHaveTheSameVerticalPositionForTree: aRootNode. 	
+	forest trees
+		do: [ :aRootNode | 
+			self
+				checkPositionsAndDistancesBetweenVerticalTreeNodes: aRootNode
+											 nodeDistance: aTreeLayout nodeDistance
+							    			 levelDistance: aTreeLayout levelDistance
+											 reversed: aTreeLayout reverse 
 	]
-
-]
-
-{ #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkIfAllChildrenHaveTheSameVerticalPositionForTree: theCurrentNode [
-	| childrenPosition |
-	childrenPosition := -1.
-	theCurrentNode nodes do: [ :aChildNode |
-		childrenPosition = -1
-			ifTrue: [
-				childrenPosition := aChildNode element position y
-			]
-			ifFalse: [ 
-				self assert: aChildNode element position y equals: childrenPosition	
-			].
-		self checkIfAllChildrenHaveTheSameVerticalPositionForTree: aChildNode.
-	].
 ]
 
 { #category : #example }

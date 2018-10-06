@@ -18,6 +18,8 @@ GtGradVerticalDominanceTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout. 
 	view forceLayout. 
 
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+
 	^ view
 ]
 
@@ -30,6 +32,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	self assert: aTreeLayout levelDistance equals: 10.
 	self assert: aTreeLayout nodeDistance equals: 1.
 
+		
 	^ aTreeLayout
 ]
 
@@ -45,7 +48,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -63,7 +66,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -75,14 +78,14 @@ GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEd
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self dominanceTreeLayout.
 	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
 
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -99,7 +102,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkIfAllChildrenHaveTheSameVerticalPosition: theNodes.
+	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 

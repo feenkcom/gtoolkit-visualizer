@@ -319,6 +319,37 @@ GtGradTreeLayoutExamples >> constructTreeWith10NodesOfIncreasingSize [
 ]
 
 { #category : #example }
+GtGradTreeLayoutExamples >> constructTreeWithNodesOfDifferentSizes [
+	<gtExample>
+		
+	| theNodes  pairsOfNodes theEdges |
+	
+	theNodes := self nodes: (1 to: 4).
+	(theNodes at: 2) size: 40@40.
+	(theNodes at: 3) size: 100@100.
+	(theNodes at: 4) size: 70@70.
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (1->2); add: (1->3); add:(1->4).
+	
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	
+	self assert: ((theNodes at: 1) graph) nodesAlongOutgoingEdgesCount equals: 3.
+	self assert: ((theNodes at: 1) graph) nodesAlongIncomingEdgesCount equals: 0.
+	self assert: ((theNodes at: 2) graph) nodesAlongOutgoingEdgesCount equals: 0.
+	self assert: ((theNodes at: 2) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 2) graph) nodesAlongOutgoingEdgesCount equals: 0.
+	self assert: ((theNodes at: 2) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 2) graph) nodesAlongOutgoingEdgesCount equals: 0.
+	self assert: ((theNodes at: 2) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: theEdges size equals: 3.
+
+	^ theNodes -> theEdges
+
+	
+ 
+]
+
+{ #category : #example }
 GtGradTreeLayoutExamples >> constructTreeWithNodesOfIncreasingSize [
 	<gtExample>
 		
