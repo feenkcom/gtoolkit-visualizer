@@ -134,12 +134,18 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenVerticalTre
 
 { #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout [
-	| forest previousBottommostPoint|
+	| forest previousBottommostPoint previousRootHorizontalPosition |
 	forest := self constructForest: theNodes.
 	previousBottommostPoint := nil.
+	previousRootHorizontalPosition := nil.
 	
 	forest trees do: [ :aRootNode |
 		| bounds |
+		previousRootHorizontalPosition isNotNil
+			ifTrue: [ 
+				self assert: previousRootHorizontalPosition equals: aRootNode element position x.	
+			].
+		previousRootHorizontalPosition := aRootNode element position x.
 		bounds := self checkPositionsAndDistancesBetweenHorizontalTreeNodes: aRootNode
 											 				  nodeDistance: aTreeLayout nodeDistance
 															  levelDistance: aTreeLayout levelDistance
@@ -158,12 +164,19 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalTreesAndNodes: the
 
 { #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalTreesAndNodes: theNodes layout: aTreeLayout [
-	| forest previousRightmostPoint |
+	| forest previousRightmostPoint previousRootVerticalPosition|
 	forest := self constructForest: theNodes.
 	previousRightmostPoint := nil.
+	previousRootVerticalPosition := nil.
+
 	forest trees
 		do: [ :aRootNode | 
 			| bounds |
+			previousRootVerticalPosition isNotNil
+			ifTrue: [ 
+				self assert: previousRootVerticalPosition equals: aRootNode element position y.	
+			].
+			previousRootVerticalPosition := aRootNode element position y.
 			bounds := self
 					checkPositionsAndDistancesBetweenVerticalTreeNodes: aRootNode
 											 nodeDistance: aTreeLayout nodeDistance
