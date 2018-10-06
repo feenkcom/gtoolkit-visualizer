@@ -20,7 +20,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes. 
 	view layout: aTreeLayout.
-	view forceLayout.
+	view forceLayout. 
 	
 	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
@@ -99,7 +99,7 @@ GtGradVerticalTreeLayoutExamples >> disconnectedGraph [
 	aTreeLayout := self treeLayout.
 	theNodes := self constructDisconnectedGraph  key. 
 	view addChildren: theNodes.
-	view layout: aTreeLayout. 
+	view layout: aTreeLayout.
 	view forceLayout. 
 	
 	firstTreeRoot := theNodes at: 1.
@@ -299,7 +299,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeBottomA
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
 	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
