@@ -5,11 +5,66 @@ Class {
 }
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkBottomAlignmentOfNodes: aTreeNode positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+GtGradAbstractTreeLayoutExamples >> calculateNodeAlignedPosition: aTreeNode alignment: alignment [
+	| nodePosition parentPosition parentDimension |
+	
+	nodePosition := self getNodeLevelConstantPosition: aTreeNode.
+	
+	( alignment isMemberOf: GtGradTreeNodesTopAlignment)
+		ifTrue: [ 
+			"in case of top alignment all nodes on the same level should have the same position"
+			^ nodePosition
+		].
+
+	parentPosition := self getNodeLevelConstantPosition: aTreeNode parent.
+	parentDimension := self getNodeLevelConstantAxisDimension: aTreeNode parent.
+
+	( alignment isMemberOf: GtGradTreeNodesBottomAlignment)
+		ifTrue: [ 
+			"in case of the bottom alignment positions of  nodes on the same level  - bottommost points
+			of their parents should be the same "
+			^ nodePosition - (parentPosition + parentDimension)
+		].
+	
+	( alignment isMemberOf: GtGradTreeNodesBottomAlignment)
+		ifTrue: [ 
+			"in case of the bottom alignment positions of  nodes on the same level  - bottommost points
+			of their parents / 2 should be the same "
+			^ nodePosition - ((parentPosition + parentDimension) / 2)
+		]
+	
+
 ]
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkCenterAlignmentOfNodes: aTreeNode positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+GtGradAbstractTreeLayoutExamples >> checkAlignmentOfNodes: aTreeNode alignment: alignment positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+	| levelPosition nodePosition nodeSize |
+	nodePosition := self getNodeLevelConstantPosition: aTreeNode.
+	nodeSize := self getNodeLevelConstantAxisDimension: aTreeNode.
+
+	aTreeNode nodes isEmpty
+		ifTrue: [ 
+			^ self
+		 ].
+	levelPosition := nil.
+	(aPositionsByLevelsMap includesKey: theCurrentLevel)
+		ifTrue: [ 
+			levelPosition := aPositionsByLevelsMap at: theCurrentLevel 
+		]
+		ifFalse: [ 
+			| firstChild |
+			firstChild := aTreeNode nodes first.
+			levelPosition := self calculateNodeAlignedPosition: firstChild alignment: alignment.
+			aPositionsByLevelsMap at: theCurrentLevel put: levelPosition.
+		].
+		
+	aTreeNode nodes
+		do: [ :aChildNode | 
+			| currentChildNodePosition |
+			currentChildNodePosition := self calculateNodeAlignedPosition: aChildNode alignment: alignment.
+			self assert: currentChildNodePosition equals: levelPosition.
+			self checkAlignmentOfNodes: aChildNode alignment: alignment  positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel + 1.
+	]
 ]
 
 { #category : #example }
@@ -121,32 +176,9 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfTreesAndNodes: theNodes layo
 				ifTrue: [ 
 					self checkPositionsOfSubtrees: aRootNode
 				].
+			self checkAlignmentOfNodes: aRootNode alignment: aTreeLayout nodesAlignment positionsByLevels: Dictionary new currentLevel: 1.
 			
 			]
-]
-
-{ #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkTopAlignmentOfNodes: aTreeNode positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
-	| levelVerticalPosition |
-	"WIP!"
-
-	levelVerticalPosition := nil.
-	(aPositionsByLevelsMap includesKey: theCurrentLevel)
-		ifTrue:
-			[ levelVerticalPosition := aPositionsByLevelsMap at: theCurrentLevel ].
-		
-	aTreeNode nodes
-		do: [ :aChildNode | 
-			| currentChildNodePosition  |
-			currentChildNodePosition := aChildNode element position.
-			levelVerticalPosition
-				ifNotNil: [ self
-						assert: currentChildNodePosition x
-						equals: levelVerticalPosition ]
-				ifNil: [ aPositionsByLevelsMap
-						at: theCurrentLevel
-						put: currentChildNodePosition x ].
-	]
 ]
 
 { #category : #example }
