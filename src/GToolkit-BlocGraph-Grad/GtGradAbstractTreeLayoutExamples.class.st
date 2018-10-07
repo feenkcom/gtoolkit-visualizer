@@ -5,208 +5,75 @@ Class {
 }
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenHorizontalTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+GtGradAbstractTreeLayoutExamples >> checkBottomAlignmentOfNodes: aTreeNode positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkCenterAlignmentOfNodes: aTreeNode positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed [
 	"
 	In addition to checking if children of overlap and if children overlap with their parents, we also 
 	need to check if all nodes on one level have the same horizontal position. 
 	"
-
-	| previousChildNode previousChildNodePosition currentNodePosition levelHorizontalPosition topmostPoint bottommostPoint |
+	| previousChildNode  maxPoint minPoint |
 	previousChildNode := nil.
-	previousChildNodePosition := nil.
-	levelHorizontalPosition := nil.
-	currentNodePosition := theCurrentNode element position.
-	topmostPoint := currentNodePosition y
-		+ theCurrentNode element bounds extent y.
-	bottommostPoint := currentNodePosition y.
-	(aPositionsByLevelsMap includesKey: theCurrentLevel)
-		ifTrue:
-			[ levelHorizontalPosition := aPositionsByLevelsMap at: theCurrentLevel ].
+	maxPoint :=  self nodeMaximumPoint: theCurrentNode.
+	minPoint := self nodeMinimumPoint: theCurrentNode.
+	
 	theCurrentNode nodes
 		do: [ :aChildNode | 
-			| currentChildNodePosition childBounds |
-			currentChildNodePosition := aChildNode element position.
-			levelHorizontalPosition
-				ifNotNil: [ self
-						assert: currentChildNodePosition x
-						equals: levelHorizontalPosition ]
-				ifNil: [ aPositionsByLevelsMap
-						at: theCurrentLevel
-						put: currentChildNodePosition x ].
+			| childBounds |
 
 			"check if that positions overlaps with the parent"
 			reversed
 				ifFalse: [ self
-						assert: currentNodePosition x + levelDistance <= currentChildNodePosition x ]
+						assert: (self getNodeLevelConstantPosition: theCurrentNode) + levelDistance <= ( self getNodeLevelConstantPosition: aChildNode) ]
 				ifTrue: [ self
-						assert: currentNodePosition x - levelDistance >= currentChildNodePosition x ].
+						assert: ( self getNodeLevelConstantPosition: theCurrentNode) - levelDistance >= ( self getNodeLevelConstantPosition: aChildNode ) ].
+
 			previousChildNode isNotNil
-				ifTrue: [ | previousHeight |
+				ifTrue: [ | previousSize |
 					"check if all children have the same y position"
 					self
-						assert: previousChildNodePosition x
-						equals: currentChildNodePosition x.
-					previousHeight := previousChildNode element bounds extent y.
+						assert: ( self getNodeLevelConstantPosition: previousChildNode )
+						equals: ( self getNodeLevelConstantPosition: aChildNode ).
+					previousSize := self getNodeLevelVariableAxisDimension: previousChildNode.
 					"check if the space between nodes is equal to or
-				greater than the specified space between nodes"
+					greater than the specified space between nodes"
 					self
 						assert:
-							currentChildNodePosition y
-								- (previousChildNodePosition y + previousHeight)
+							( self getNodeLevelVariablePosition: aChildNode )
+								- (( self getNodeLevelVariablePosition: previousChildNode ) + previousSize)
 								>= nodeDistance ].
 			previousChildNode := aChildNode.
-			previousChildNodePosition := currentChildNodePosition.
+
 			childBounds := self
-				checkPositionsAndDistancesBetweenHorizontalTreeNodes: aChildNode
+				checkPositionsAndDistancesBetweenTreeNodes: aChildNode
 				nodeDistance: nodeDistance
 				levelDistance: levelDistance
-				reversed: reversed
-				positionsByLevels: aPositionsByLevelsMap
-				currentLevel: theCurrentLevel + 1.
-			topmostPoint := topmostPoint min: childBounds x.
-			bottommostPoint := bottommostPoint max: childBounds y ].
-	^ bottommostPoint @ topmostPoint
+				reversed: reversed.
+			minPoint := minPoint min: childBounds x.
+			maxPoint := maxPoint max: childBounds y ].
+	^ minPoint @ maxPoint
 ]
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenVerticalTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
-	"
-	In addition to checking if children of overlap and if children overlap with their parents, we also
-	 need to check if all nodes on one level have the same vertical position. 
-	"
-
-	| previousChildNode previousChildNodePosition currentNodePosition levelVerticalPosition rightmostPoint leftmostPoint |
-	previousChildNode := nil.
-	previousChildNodePosition := nil.
-	levelVerticalPosition := nil.
-	currentNodePosition := theCurrentNode element position.
-	rightmostPoint := currentNodePosition x
-		+ theCurrentNode element bounds extent x.
-	leftmostPoint := currentNodePosition x.
-	(aPositionsByLevelsMap includesKey: theCurrentLevel)
-		ifTrue:
-			[ levelVerticalPosition := aPositionsByLevelsMap at: theCurrentLevel ].
-	theCurrentNode nodes
-		do: [ :aChildNode | 
-			| currentChildNodePosition childBounds |
-			currentChildNodePosition := aChildNode element position.
-			levelVerticalPosition
-				ifNotNil: [ self
-						assert: currentChildNodePosition y
-						equals: levelVerticalPosition ]
-				ifNil: [ aPositionsByLevelsMap
-						at: theCurrentLevel
-						put: currentChildNodePosition y ].
-
-			"check if that positions overlaps with the parent"
-			reversed
-				ifFalse: [ self
-						assert: currentNodePosition y + levelDistance <= currentChildNodePosition y ]
-				ifTrue: [ self
-						assert: currentNodePosition y - levelDistance >= currentChildNodePosition y ].
-			previousChildNode isNotNil
-				ifTrue: [ | previousNodeWidth |
-					"check if all children have the same y position"
-					self
-						assert: previousChildNodePosition y
-						equals: currentChildNodePosition y.
-					previousNodeWidth := previousChildNode element bounds extent x.
-					"check if the space between nodes is equal to or
-				greater than the specified space between nodes"
-					self
-						assert:
-							currentChildNodePosition x
-								- (previousChildNodePosition x + previousNodeWidth)
-								>= nodeDistance ].
-			previousChildNode := aChildNode.
-			previousChildNodePosition := currentChildNodePosition.
-			childBounds := self
-				checkPositionsAndDistancesBetweenVerticalTreeNodes: aChildNode
-				nodeDistance: nodeDistance
-				levelDistance: levelDistance
-				reversed: reversed
-				positionsByLevels: aPositionsByLevelsMap
-				currentLevel: theCurrentLevel + 1.
-			leftmostPoint := leftmostPoint min: childBounds x.
-			rightmostPoint := rightmostPoint max: childBounds y ].
-	^ leftmostPoint @ rightmostPoint
-]
-
-{ #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalSubtrees: theCurrentNode [
-	"this method  should make sure that a node is positioned below
-	  the bottommost child of its closest sibling"
-	| previousChildNodesBottommostChildPoint lastChildPosition lastChildHeight |
-	
-	previousChildNodesBottommostChildPoint := nil.
-
-	theCurrentNode nodes do: [ :aChildNode |
-		previousChildNodesBottommostChildPoint isNotNil
-			ifTrue: [ 
-				self assert:  previousChildNodesBottommostChildPoint < (aChildNode element position y).
-			].
-		previousChildNodesBottommostChildPoint := self checkPositionsOfHorizontalSubtrees: aChildNode.
-	 ].
-
-	theCurrentNode nodes isEmpty
-		ifTrue: [ 
-			^ nil	
-		].
-
-	lastChildPosition := (theCurrentNode nodes last) element position y.
-	lastChildHeight :=  (theCurrentNode nodes last) element bounds extent y.
-	^ lastChildPosition + lastChildHeight
-	
-]
-
-{ #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout [
-	| forest previousBottommostPoint previousRootHorizontalPosition |
-	forest := self constructForest: theNodes.
-	previousBottommostPoint := nil.
-	previousRootHorizontalPosition := nil.
-	
-	forest trees do: [ :aRootNode |
-		| bounds |
-		previousRootHorizontalPosition isNotNil
-			ifTrue: [ 
-				self assert: previousRootHorizontalPosition equals: aRootNode element position x.	
-			].
-		previousRootHorizontalPosition := aRootNode element position x.
-		bounds := self checkPositionsAndDistancesBetweenHorizontalTreeNodes: aRootNode
-											 				  nodeDistance: aTreeLayout nodeDistance
-															  levelDistance: aTreeLayout levelDistance
-															  reversed: aTreeLayout reverse
-															  positionsByLevels: Dictionary new
-				          								  currentLevel: 1.
-		previousBottommostPoint isNotNil
-			ifTrue: [ 
-				self assert: previousBottommostPoint < bounds y	
-			].
-			previousBottommostPoint := bounds x.
-
-			aTreeLayout separateSubtrees
-				ifTrue: [ 
-					self checkPositionsOfHorizontalSubtrees: aRootNode
-				].
-	]
-	
-]
-
-{ #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalSubtrees: theCurrentNode [
+GtGradAbstractTreeLayoutExamples >> checkPositionsOfSubtrees: theCurrentNode [
 	"this method  should make sure that a node is positioned to the right
 	 of the rightmost child of its left sibling"
-	| previousChildNodesRightmostChildPoint lastChildPosition lastChildWidth |
+	| previousChildNodesMaxChildPoint lastChildPosition lastChildDim |
 	
-	previousChildNodesRightmostChildPoint := nil.
+	previousChildNodesMaxChildPoint := nil.
 
 	theCurrentNode nodes do: [ :aChildNode |
-		previousChildNodesRightmostChildPoint isNotNil
+		previousChildNodesMaxChildPoint isNotNil
 			ifTrue: [ 
-				self assert:  previousChildNodesRightmostChildPoint < (aChildNode element position x).
+				self assert:  previousChildNodesMaxChildPoint < (self getNodeLevelVariablePosition: aChildNode).
 			].
-		previousChildNodesRightmostChildPoint := self checkPositionsOfVerticalSubtrees: aChildNode.
+		previousChildNodesMaxChildPoint := self checkPositionsOfSubtrees: aChildNode.
 	 ].
 
 	theCurrentNode nodes isEmpty
@@ -214,9 +81,9 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalSubtrees: theCurrent
 			^ nil	
 		].
 
-	lastChildPosition := (theCurrentNode nodes last) element position x.
-	lastChildWidth :=  (theCurrentNode nodes last) element bounds extent x.
-	^ lastChildPosition + lastChildWidth
+	lastChildPosition := self getNodeLevelVariablePosition: (theCurrentNode nodes last).
+	lastChildDim := self getNodeLevelVariableAxisDimension: (theCurrentNode nodes last).
+	^ lastChildPosition + lastChildDim
 
 	
 	
@@ -224,39 +91,62 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalSubtrees: theCurrent
 ]
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalTreesAndNodes: theNodes layout: aTreeLayout [
-	| forest previousRightmostPoint previousRootVerticalPosition|
+GtGradAbstractTreeLayoutExamples >> checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout [
+	| forest previousMaxPoint previousRoot|
 	forest := self constructForest: theNodes.
-	previousRightmostPoint := nil.
-	previousRootVerticalPosition := nil.
-
+	previousMaxPoint := nil.
+	previousRoot := nil.
+	
 	forest trees
 		do: [ :aRootNode | 
 			| bounds |
-			previousRootVerticalPosition isNotNil
+			previousRoot isNotNil
 			ifTrue: [ 
-				self assert: previousRootVerticalPosition equals: aRootNode element position y.	
+				self assert: (self getNodeLevelConstantPosition: previousRoot) equals: (self getNodeLevelConstantPosition: aRootNode).
 			].
-			previousRootVerticalPosition := aRootNode element position y.
+			previousRoot := aRootNode.
 			bounds := self
-					checkPositionsAndDistancesBetweenVerticalTreeNodes: aRootNode
+					checkPositionsAndDistancesBetweenTreeNodes: aRootNode
 											 nodeDistance: aTreeLayout nodeDistance
-							    			 levelDistance: aTreeLayout levelDistance
-											 reversed: aTreeLayout reverse
-											 positionsByLevels: Dictionary new
-											 currentLevel: 1.
+							    			 	 levelDistance: aTreeLayout levelDistance
+											 reversed: aTreeLayout reverse.
 
-			previousRightmostPoint isNotNil
+			previousMaxPoint isNotNil
 				ifTrue: [ 
-					self assert: previousRightmostPoint < bounds y	
+					self assert: ( previousMaxPoint + aTreeLayout treesDistance )  <=  bounds x.
 				].
+			previousMaxPoint := bounds y.
 
 			aTreeLayout separateSubtrees
 				ifTrue: [ 
-					self checkPositionsOfVerticalSubtrees: aRootNode
+					self checkPositionsOfSubtrees: aRootNode
 				].
 			
 			]
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkTopAlignmentOfNodes: aTreeNode positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
+	| levelVerticalPosition |
+	"WIP!"
+
+	levelVerticalPosition := nil.
+	(aPositionsByLevelsMap includesKey: theCurrentLevel)
+		ifTrue:
+			[ levelVerticalPosition := aPositionsByLevelsMap at: theCurrentLevel ].
+		
+	aTreeNode nodes
+		do: [ :aChildNode | 
+			| currentChildNodePosition  |
+			currentChildNodePosition := aChildNode element position.
+			levelVerticalPosition
+				ifNotNil: [ self
+						assert: currentChildNodePosition x
+						equals: levelVerticalPosition ]
+				ifNil: [ aPositionsByLevelsMap
+						at: theCurrentLevel
+						put: currentChildNodePosition x ].
+	]
 ]
 
 { #category : #example }

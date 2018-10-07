@@ -18,7 +18,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout. 
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -47,7 +47,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -65,9 +65,27 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
+
+]
+
+{ #category : #'examples - instance creation' }
+GtGradHorizontalDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
+	^ aTreeNode element position x
+	
+]
+
+{ #category : #'examples - instance creation' }
+GtGradHorizontalDominanceTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
+	^ aTreeNode element measuredBounds extent  y.
+	
+]
+
+{ #category : #'examples - instance creation' }
+GtGradHorizontalDominanceTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
+	^ aTreeNode element position y
 
 ]
 
@@ -84,9 +102,19 @@ GtGradHorizontalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncoming
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
+]
+
+{ #category : #'examples - instance creation' }
+GtGradHorizontalDominanceTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
+	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
+]
+
+{ #category : #'examples - instance creation' }
+GtGradHorizontalDominanceTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
+	^ aTreeNode element position y
 ]
 
 { #category : #'examples - instance creation' }
@@ -101,7 +129,7 @@ GtGradHorizontalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 

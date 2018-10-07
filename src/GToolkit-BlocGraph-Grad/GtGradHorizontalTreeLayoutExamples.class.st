@@ -22,7 +22,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -41,7 +41,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 	^ view
@@ -60,7 +60,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7Nodes [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 	^ view
@@ -83,7 +83,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 	view layout: aTreeLayout.
 	view forceLayout. 
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 	^ view
@@ -106,7 +106,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	view forceLayout. 
 	
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 
@@ -128,7 +128,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	view forceLayout. 
 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 	^ view
@@ -148,7 +148,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 	view forceLayout. 
 	
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 	
 	^ view
@@ -168,7 +168,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode
 	view forceLayout. 
 
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 	
 	^ view
@@ -188,7 +188,7 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 	^ view
@@ -208,10 +208,28 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 
 	^ view
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
+	^ aTreeNode element position x
+	
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
+	^ aTreeNode element measuredBounds extent  y.
+	
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
+	^ aTreeNode element position y
+
 ]
 
 { #category : #example }
@@ -227,7 +245,7 @@ GtGradHorizontalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -245,9 +263,19 @@ GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 	^ view
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
+	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
+]
+
+{ #category : #example }
+GtGradHorizontalTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
+	^ aTreeNode element position y
 ]
 
 { #category : #example }
@@ -263,7 +291,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -281,7 +309,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -298,7 +326,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	view layout: aTreeLayout.
 	view forceLayout. 
 	
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -315,7 +343,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfHorizontalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -334,7 +362,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingBottomAlign
 	view layout: aTreeLayout.
 	view forceLayout. 
 	 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -352,7 +380,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterA
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -370,7 +398,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlig
 	view layout: aTreeLayout.
 	view forceLayout. 
 
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 
@@ -387,7 +415,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	view layout: aTreeLayout.
 	view forceLayout.
 		
-	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
 	^ view
 ]
 

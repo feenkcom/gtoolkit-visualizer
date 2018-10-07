@@ -78,8 +78,7 @@ GtGradTreeLayoutExamples >> binaryTreeWith7Nodes [
 
 { #category : #example }
 GtGradTreeLayoutExamples >> constructBinaryTreeWith15Nodes [
-	<gtExample>
-		
+	<gtExample>		
 	| theNodes  pairsOfNodes theEdges |
 	
 	theNodes := self nodes: (1 to: 15).
@@ -111,8 +110,7 @@ GtGradTreeLayoutExamples >> constructBinaryTreeWith15Nodes [
 
 { #category : #example }
 GtGradTreeLayoutExamples >> constructBinaryTreeWith7Nodes [
-	<gtExample>
-		
+	<gtExample>		
 	| theNodes  pairsOfNodes theEdges |
 	
 	theNodes := self nodes: (1 to: 7).
@@ -138,6 +136,14 @@ GtGradTreeLayoutExamples >> constructBinaryTreeWith7Nodes [
 
 	
  
+]
+
+{ #category : #example }
+GtGradTreeLayoutExamples >> constructClassHierarchyTree [
+	<gtExample>		
+	| theNodes  pairsOfNodes theEdges |
+	
+ 	theNodes := self nodes: (1 to: 23).
 ]
 
 { #category : #example }

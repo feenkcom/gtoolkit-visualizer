@@ -18,7 +18,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> distinctSubtrees [
 	view layout: aTreeLayout. 
 	view forceLayout. 
 
-	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
@@ -48,7 +48,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
@@ -66,9 +66,27 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	view layout: aTreeLayout.
 	view forceLayout.
 	
-	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
+
+]
+
+{ #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
+	^ aTreeNode element position y
+	
+]
+
+{ #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
+	^ aTreeNode element measuredBounds extent  x.
+	
+]
+
+{ #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
+	^ aTreeNode element position x
 
 ]
 
@@ -85,9 +103,19 @@ GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEd
 	view layout: aTreeLayout.
 	view forceLayout.
 
-	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
+]
+
+{ #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
+	^ aTreeNode element position x + aTreeNode element measuredBounds extent x.
+]
+
+{ #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
+	^ aTreeNode element position x
 ]
 
 { #category : #'examples - instance creation' }
@@ -102,7 +130,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 		
 	^ view
 
