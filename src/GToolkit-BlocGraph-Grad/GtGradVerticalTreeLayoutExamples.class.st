@@ -18,9 +18,9 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	view := self view.
 	aTreeLayout := self treeLayout.
 	theNodes := self constructBinaryTreeWith15Nodes key.
-	view addChildren: theNodes. 
+	view addChildren: theNodes.
 	view layout: aTreeLayout.
-	view forceLayout. 
+	view forceLayout.
 	
 	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
 
@@ -35,7 +35,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	
 	view := self view.
 	aTreeLayout := self treeLayout.
-	aTreeLayout reverse: true.
+	aTreeLayout reverse: true. 
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
@@ -173,7 +173,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtrees [
 	
 	view := self view.
 	aTreeLayout := self treeLayout.
-	aTreeLayout separateSubtrees: true. 
+	aTreeLayout separateSubtrees: true.
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
@@ -190,8 +190,8 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 		
 	| view theNodes aTreeLayout|
 	
-	view := self view. 
-	aTreeLayout := self treeLayout.
+	view := self view.
+	aTreeLayout := self treeLayout. 
 	aTreeLayout separateSubtrees: true.
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger key.
 	view addChildren: theNodes.

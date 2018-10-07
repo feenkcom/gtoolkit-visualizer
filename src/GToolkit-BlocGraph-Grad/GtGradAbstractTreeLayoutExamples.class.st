@@ -133,6 +133,33 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenVerticalTre
 ]
 
 { #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalSubtrees: theCurrentNode [
+	"this method  should make sure that a node is positioned below
+	  the bottommost child of its closest sibling"
+	| previousChildNodesBottommostChildPoint lastChildPosition lastChildHeight |
+	
+	previousChildNodesBottommostChildPoint := nil.
+
+	theCurrentNode nodes do: [ :aChildNode |
+		previousChildNodesBottommostChildPoint isNotNil
+			ifTrue: [ 
+				self assert:  previousChildNodesBottommostChildPoint < (aChildNode element position y).
+			].
+		previousChildNodesBottommostChildPoint := self checkPositionsOfHorizontalSubtrees: aChildNode.
+	 ].
+
+	theCurrentNode nodes isEmpty
+		ifTrue: [ 
+			^ nil	
+		].
+
+	lastChildPosition := (theCurrentNode nodes last) element position y.
+	lastChildHeight :=  (theCurrentNode nodes last) element bounds extent y.
+	^ lastChildPosition + lastChildHeight
+	
+]
+
+{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout [
 	| forest previousBottommostPoint previousRootHorizontalPosition |
 	forest := self constructForest: theNodes.
@@ -158,8 +185,42 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfHorizontalTreesAndNodes: the
 			].
 			previousBottommostPoint := bounds x.
 
+			aTreeLayout separateSubtrees
+				ifTrue: [ 
+					self checkPositionsOfHorizontalSubtrees: aRootNode
+				].
 	]
 	
+]
+
+{ #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalSubtrees: theCurrentNode [
+	"this method  should make sure that a node is positioned to the right
+	 of the rightmost child of its left sibling"
+	| previousChildNodesRightmostChildPoint lastChildPosition lastChildWidth |
+	
+	previousChildNodesRightmostChildPoint := nil.
+
+	theCurrentNode nodes do: [ :aChildNode |
+		previousChildNodesRightmostChildPoint isNotNil
+			ifTrue: [ 
+				self assert:  previousChildNodesRightmostChildPoint < (aChildNode element position x).
+			].
+		previousChildNodesRightmostChildPoint := self checkPositionsOfVerticalSubtrees: aChildNode.
+	 ].
+
+	theCurrentNode nodes isEmpty
+		ifTrue: [ 
+			^ nil	
+		].
+
+	lastChildPosition := (theCurrentNode nodes last) element position x.
+	lastChildWidth :=  (theCurrentNode nodes last) element bounds extent x.
+	^ lastChildPosition + lastChildWidth
+
+	
+	
+
 ]
 
 { #category : #example }
@@ -189,7 +250,11 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfVerticalTreesAndNodes: theNo
 				ifTrue: [ 
 					self assert: previousRightmostPoint < bounds y	
 				].
-			previousRightmostPoint := bounds x.
+
+			aTreeLayout separateSubtrees
+				ifTrue: [ 
+					self checkPositionsOfVerticalSubtrees: aRootNode
+				].
 			
 			]
 ]

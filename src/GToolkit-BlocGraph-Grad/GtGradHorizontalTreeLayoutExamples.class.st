@@ -205,7 +205,7 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	aTreeLayout separateSubtrees: true.
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger key.
 	view addChildren: theNodes.
-	view layout: aTreeLayout. 
+	view layout: aTreeLayout.
 	view forceLayout. 
 
 	self checkPositionsOfHorizontalTreesAndNodes: theNodes layout: aTreeLayout.

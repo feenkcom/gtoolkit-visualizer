@@ -411,13 +411,13 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSam
 		
 	| theNodes  pairsOfNodes theEdges |
 	
-	theNodes := self nodes: (1 to: 21).
+	theNodes := self nodes: (1 to: 23).
 	
 	pairsOfNodes := OrderedCollection new.
 	pairsOfNodes add: (1->2); add: (1->3); add: (2->4); add: (2->5); add: (2->6);
 	add: (4->10); add: (4->11); add: (4->12); add: (5->13); add: (5->14); add: (5->15);
 	add: (6->16); add: (6->17); add: (6->18); add: (3->7); add: (3->8); add: (3->9);
-	add: (7->19); add: (7->20); add: (7->21).
+	add: (7->19); add: (7->20); add: (7->21); add:(21->22); add:(21->23).
 	
 	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	
@@ -425,7 +425,7 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSam
 	^ theNodes -> theEdges
 
 	
- 
+
 ]
 
 { #category : #accessing }
