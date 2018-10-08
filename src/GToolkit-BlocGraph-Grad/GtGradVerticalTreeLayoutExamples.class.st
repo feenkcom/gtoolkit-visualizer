@@ -198,7 +198,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	view layout: aTreeLayout. 
 	view forceLayout.
 	
-	self checkPositionsOfVerticalTreesAndNodes:	theNodes layout: aTreeLayout.
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
 
 	^ view
 ]
