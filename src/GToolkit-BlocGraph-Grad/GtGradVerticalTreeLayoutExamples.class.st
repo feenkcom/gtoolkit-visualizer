@@ -205,7 +205,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 
 { #category : #example }
 GtGradVerticalTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent  y.
+	^ aTreeNode element measuredBounds extent y.
 	
 ]
 

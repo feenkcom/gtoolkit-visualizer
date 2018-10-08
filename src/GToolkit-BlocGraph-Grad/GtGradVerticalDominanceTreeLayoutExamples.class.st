@@ -73,6 +73,11 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 ]
 
 { #category : #'examples - instance creation' }
+GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
+	^ aTreeNode element measuredBounds extent y
+]
+
+{ #category : #'examples - instance creation' }
 GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
 	^ aTreeNode element position y
 	

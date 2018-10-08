@@ -71,6 +71,12 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 
 ]
 
+{ #category : #example }
+GtGradHorizontalDominanceTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
+	^ aTreeNode element measuredBounds extent x.
+	
+]
+
 { #category : #'examples - instance creation' }
 GtGradHorizontalDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
 	^ aTreeNode element position x

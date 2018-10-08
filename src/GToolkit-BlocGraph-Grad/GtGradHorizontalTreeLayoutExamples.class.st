@@ -215,6 +215,12 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 ]
 
 { #category : #example }
+GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
+	^ aTreeNode element measuredBounds extent x.
+	
+]
+
+{ #category : #example }
 GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
 	^ aTreeNode element position x
 	
