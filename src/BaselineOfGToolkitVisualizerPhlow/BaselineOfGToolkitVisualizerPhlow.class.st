@@ -1,4 +1,6 @@
 "
+!VisualizerPhlow
+
 I am a utility component that provides Phlow (see ${class:BaselineOfGToolkitPhlow}$ extensions that include visualizations (see ${class:BaselineOfGToolkitVisualizer}$.
 "
 Class {
