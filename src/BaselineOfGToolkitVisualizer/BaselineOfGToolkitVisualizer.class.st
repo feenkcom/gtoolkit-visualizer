@@ -1,8 +1,42 @@
+"
+!Visualizer
+
+Visualization is a first class citizen in Glamorous Toolkit. 
+
+Currently, the projects contains:
+-Mondrian, an engine that offers a fluent API for scripting graph-based visualizations.
+- Connector, an engine that allows you to create a visual way to navigate graphs.
+
+!!Mondrian
+
+Mondrian is an engine for scripting graph-based visualization. Take a look at the following example:
+
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames|expandedPreview|show=gtLiveFor:}$
+
+Learn more about it here:
+${icebergFile:path=feenkcom/gtoolkit-visualizer/doc/mondrian/index.pillar}$
+
+
+!!Connector
+
+Connector is an engine for scripting a visual exploration of a graph. For example, below we can see an instantiation of the engine for navigating examples. Just click on the dots.
+
+${example:GtConnectorExamples>>#exampleMethodsExample|noCode|show=gtLiveFor:|previewHeight=300}$
+
+
+
+"
 Class {
 	#name : #BaselineOfGToolkitVisualizer,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfGToolkitVisualizer'
+	#category : #BaselineOfGToolkitVisualizer
 }
+
+{ #category : #accessing }
+BaselineOfGToolkitVisualizer class >> itself [
+	<gtExample>
+	^ self
+]
 
 { #category : #baseline }
 BaselineOfGToolkitVisualizer >> baseline: spec [
