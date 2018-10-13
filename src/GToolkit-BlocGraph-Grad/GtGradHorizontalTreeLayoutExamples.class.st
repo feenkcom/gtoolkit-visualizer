@@ -53,7 +53,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7Nodes [
 		
 	| view theNodes  aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	theNodes := self constructBinaryTreeWith7Nodes key.
 	view addChildren: theNodes.
 	aTreeLayout := self treeLayout.
@@ -360,7 +360,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingBottomAlign
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
