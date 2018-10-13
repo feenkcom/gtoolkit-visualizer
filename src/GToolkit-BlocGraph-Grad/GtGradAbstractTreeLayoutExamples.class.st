@@ -115,11 +115,29 @@ GtGradAbstractTreeLayoutExamples >> checkDistancesBetweenLevels: theRootNode lev
 ]
 
 { #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkOverlapBetweenLevels: theRootNode levelDistance: levelDistance [
+	| biggestNodesByLevelsMap numOfLevels |
+	
+	biggestNodesByLevelsMap := Dictionary new.
+	self biggestNodesByLevels: theRootNode currentLevel: 1 maxDimensionByLevels: biggestNodesByLevelsMap.
+	
+	numOfLevels := biggestNodesByLevelsMap size.
+	
+	2 to: numOfLevels do:  [ :theCurrentLevel |
+		| previousNode currentNode previousNodePosition currentNodePosition |
+		previousNode := biggestNodesByLevelsMap at: theCurrentLevel - 1.
+		currentNode := biggestNodesByLevelsMap at: theCurrentLevel.
+		previousNodePosition:= self getNodeLevelConstantPosition: previousNode.
+		currentNodePosition := self getNodeLevelConstantPosition: currentNode.
+		self assert: currentNodePosition > previousNodePosition
+	].
+]
+
+{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed [
 	"
 	In addition to checking if children of overlap and if children overlap with their parents, we also
 	need to check if all nodes on one level have the same horizontal position.
-	The minimum distance between two nodes belonging to adjacent levels should be equal to levelDistance
 	"
 	| previousChildNode  maxPoint minPoint |
 	previousChildNode := nil.
@@ -225,7 +243,7 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfTreesAndNodes: theNodes layo
 					self checkPositionsOfSubtrees: aRootNode
 				].
 			self checkAlignmentOfNodes: aRootNode alignment: aTreeLayout nodesAlignment positionsByLevels: Dictionary new currentLevel: 1.
-			self checkDistancesBetweenLevels: aRootNode levelDistance: aTreeLayout treesDistance
+			self checkOverlapBetweenLevels: aRootNode levelDistance: aTreeLayout treesDistance
 	
 			]
 ]
