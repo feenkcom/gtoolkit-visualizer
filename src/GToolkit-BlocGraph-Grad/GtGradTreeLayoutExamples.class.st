@@ -450,6 +450,11 @@ GtGradTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
 ]
 
 { #category : #accessing }
+GtGradTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 GtGradTreeLayoutExamples >> distinctSubtrees [
 	^ self subclassResponsibility
 ]
@@ -460,7 +465,42 @@ GtGradTreeLayoutExamples >> distinctSubtreesBiggerTree [
 ]
 
 { #category : #accessing }
+GtGradTreeLayoutExamples >> getNodeLevelConstantAxisDimension: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> getNodeLevelConstantPosition: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> getNodeLevelVariableAxisDimension: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> getNodeLevelVariablePosition: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 GtGradTreeLayoutExamples >> graphWithCycles [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> nodeMaximumPoint: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> nodeMinimumPoint: arg1 [ 
 	^ self subclassResponsibility
 ]
 
@@ -476,6 +516,11 @@ GtGradTreeLayoutExamples >> simpleTreeReversed [
 
 { #category : #accessing }
 GtGradTreeLayoutExamples >> simpleTreeWithBiggerDistances [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 	^ self subclassResponsibility
 ]
 

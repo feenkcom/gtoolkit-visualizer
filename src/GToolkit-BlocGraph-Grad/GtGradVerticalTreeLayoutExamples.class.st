@@ -15,8 +15,8 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
-	aTreeLayout := self treeLayout.
+	view := self view.
+	aTreeLayout := self treeLayout. 
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes.
 	view layout: aTreeLayout.
@@ -316,7 +316,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeBottomA
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
 	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
@@ -335,7 +335,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterA
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.  
+	view := self view.
 	aTreeLayout := self treeLayout. 
 	aTreeLayout nodesAlignment: GtGradTreeNodesCenterAlignment new.
 	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
@@ -355,11 +355,13 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeTopAlig
 	| view theNodes aTreeLayout |
 	
 	view := self view. 
-	aTreeLayout := self treeLayout.
+	aTreeLayout := self treeLayout. 
 	aTreeLayout nodesAlignment: GtGradTreeNodesTopAlignment new.
 	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
 	view addChildren: theNodes.
+	aTreeLayout levelDistance: 30.
 	view layout: aTreeLayout.
+
 	view forceLayout.
 	
 	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.

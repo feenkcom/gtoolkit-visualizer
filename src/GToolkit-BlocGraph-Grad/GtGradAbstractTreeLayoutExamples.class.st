@@ -5,6 +5,31 @@ Class {
 }
 
 { #category : #example }
+GtGradAbstractTreeLayoutExamples >> biggestNodesByLevels: theCurrentNode currentLevel: theCurrentLevel maxDimensionByLevels: aMaxDimensionsByLevelsMap [
+	| nodeDimension currentMax |
+	
+	nodeDimension := self getNodeLevelConstantAxisDimension: theCurrentNode.
+	currentMax := 0.
+	(aMaxDimensionsByLevelsMap includesKey: theCurrentLevel)
+		ifTrue: [ 
+			currentMax := self getNodeLevelConstantAxisDimension: (aMaxDimensionsByLevelsMap at: theCurrentLevel).
+		].
+	nodeDimension > currentMax
+		ifTrue: [ 
+			aMaxDimensionsByLevelsMap at: theCurrentLevel put: theCurrentNode.
+	].
+	
+	theCurrentNode nodes do: [ :aChildNode |
+		self biggestNodesByLevels: aChildNode currentLevel: theCurrentLevel + 1 maxDimensionByLevels: aMaxDimensionsByLevelsMap
+	].
+	
+	
+
+	
+	
+]
+
+{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> calculateNodeAlignedPosition: aTreeNode alignment: alignment [
 	| nodePosition parentPosition parentDimension |
 	
@@ -33,14 +58,11 @@ GtGradAbstractTreeLayoutExamples >> calculateNodeAlignedPosition: aTreeNode alig
 			^ nodePosition - ((parentPosition + parentDimension) / 2)
 		]
 	
-
 ]
 
 { #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkAlignmentOfNodes: aTreeNode alignment: alignment positionsByLevels: aPositionsByLevelsMap currentLevel: theCurrentLevel [
-	| levelPosition nodePosition nodeSize |
-	nodePosition := self getNodeLevelConstantPosition: aTreeNode.
-	nodeSize := self getNodeLevelConstantAxisDimension: aTreeNode.
+	| levelPosition |
 
 	aTreeNode nodes isEmpty
 		ifTrue: [ 
@@ -68,10 +90,36 @@ GtGradAbstractTreeLayoutExamples >> checkAlignmentOfNodes: aTreeNode alignment: 
 ]
 
 { #category : #example }
+GtGradAbstractTreeLayoutExamples >> checkDistancesBetweenLevels: theRootNode levelDistance: levelDistance [
+	"
+	The minimum distance between two nodes belonging to adjacent levels should be equal to 	levelDistance.
+	If nodes are of different sizes, the space between a node and its parent could be larger than 	levelDistance.
+	This basically means that the distance between largest (either highest of widest) nodes on 	adjacent levels should be equal to levelDistance
+	"
+	| biggestNodesByLevelsMap numOfLevels |
+	
+	biggestNodesByLevelsMap := Dictionary new.
+	self biggestNodesByLevels: theRootNode currentLevel: 1 maxDimensionByLevels: biggestNodesByLevelsMap.
+	
+	numOfLevels := biggestNodesByLevelsMap size.
+	
+	2 to: numOfLevels do:  [ :theCurrentLevel |
+		| previousNode currentNode previousNodePosition currentNodePosition previousDim currentDim |
+		previousNode := biggestNodesByLevelsMap at: theCurrentLevel - 1.
+		currentNode := biggestNodesByLevelsMap at: theCurrentLevel.
+		previousNodePosition:= self getNodeLevelConstantPosition: previousNode.
+		currentNodePosition := self getNodeLevelConstantPosition: currentNode.
+		previousDim := self getNodeLevelConstantAxisDimension: previousNode.
+		currentDim := self getNodeLevelConstantAxisDimension: currentNode.
+	].
+]
+
+{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkPositionsAndDistancesBetweenTreeNodes: theCurrentNode nodeDistance: nodeDistance levelDistance: levelDistance reversed: reversed [
 	"
-	In addition to checking if children of overlap and if children overlap with their parents, we also 
-	need to check if all nodes on one level have the same horizontal position. 
+	In addition to checking if children of overlap and if children overlap with their parents, we also
+	need to check if all nodes on one level have the same horizontal position.
+	The minimum distance between two nodes belonging to adjacent levels should be equal to levelDistance
 	"
 	| previousChildNode  maxPoint minPoint |
 	previousChildNode := nil.
@@ -177,11 +225,62 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfTreesAndNodes: theNodes layo
 					self checkPositionsOfSubtrees: aRootNode
 				].
 			self checkAlignmentOfNodes: aRootNode alignment: aTreeLayout nodesAlignment positionsByLevels: Dictionary new currentLevel: 1.
-			
+			self checkDistancesBetweenLevels: aRootNode levelDistance: aTreeLayout treesDistance
+	
 			]
 ]
 
 { #category : #example }
 GtGradAbstractTreeLayoutExamples >> constructForest: theNodes [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> distinctSubtrees [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> getNodeLevelConstantAxisDimension: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> getNodeLevelConstantPosition: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> getNodeLevelVariableAxisDimension: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> getNodeLevelVariablePosition: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> nodeMaximumPoint: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradAbstractTreeLayoutExamples >> nodeMinimumPoint: arg1 [ 
+	^ self subclassResponsibility
 ]
