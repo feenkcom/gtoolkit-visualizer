@@ -8,7 +8,6 @@ Class {
 GtGradDominanceTreeForest class >> dfs: theRootNode separateSubtrees: separateSubtrees [
 	|aVisitedDictionary |
 	aVisitedDictionary := IdentityDictionary new.
-	aVisitedDictionary := IdentityDictionary new.
 	self dfs: theRootNode visited: aVisitedDictionary separateSubtrees: separateSubtrees.
 	
 ]
