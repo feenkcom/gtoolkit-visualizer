@@ -189,8 +189,8 @@ GtConnectorExamples >> rawObjectExample [
 		header look: (BrLayoutLook linearVertical hMatchParent).
 		text := BlRopedText string: entity printString.
 		text attributes: {
-		BrFontSizeAttribute size: 12.
-		BrTextForegroundAttribute paint: Color gray.}.
+		BlFontSizeAttribute size: 12.
+		BlTextForegroundAttribute paint: Color gray.}.
 		textElement := BlTextElement new text: text asRopedText.
 		textElement look: (BrLayoutLook fitContent alignCenter).
 		header addChild: textElement.

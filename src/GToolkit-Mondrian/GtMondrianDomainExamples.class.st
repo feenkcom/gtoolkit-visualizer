@@ -27,7 +27,7 @@ GtMondrianDomainExamples >> buttonLabelLookEventPropagation [
 		shape: [ :aTarget |
 			| text |
 			text := aTarget gtDisplayString asRopedText.
-			text attributes: {BrTextForegroundAttribute paint: Color lightGray}.
+			text attributes: {BlTextForegroundAttribute paint: Color lightGray}.
 			BlTextElement new
 				text: text;
 				padding: (BlInsets all: 5) ];

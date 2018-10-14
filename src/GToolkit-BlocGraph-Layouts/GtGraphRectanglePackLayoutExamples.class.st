@@ -38,8 +38,8 @@ GtGraphRectanglePackLayoutExamples >> circles [
 		label := BlTextElement new.
 		label text: (model key asRopedText
 			attributes: { 
-				BrTextForegroundAttribute paint: Color black .
-				BrFontSizeAttribute size: 10 } ).
+				BlTextForegroundAttribute paint: Color black .
+				BlFontSizeAttribute size: 10 } ).
 		label constraintsDo: [ :constraints |
 			constraints frame horizontal alignCenter.
 			constraints frame vertical alignCenter ].
@@ -77,8 +77,8 @@ GtGraphRectanglePackLayoutExamples >> circlesRaw [
 		label := BlTextElement new.
 		label text: (model key asRopedText
 			attributes: {
-				BrTextForegroundAttribute paint: Color black .
-				BrFontSizeAttribute size: 10 } ).
+				BlTextForegroundAttribute paint: Color black .
+				BlFontSizeAttribute size: 10 } ).
 		label constraintsDo: [ :constraints |
 			constraints frame horizontal alignCenter.
 			constraints frame vertical alignCenter ].
@@ -116,8 +116,8 @@ GtGraphRectanglePackLayoutExamples >> circlesSimplified [
 			background: Color random.
 		label := self centeredString: model key in: node.
 		label text attributes: { 
-			BrTextForegroundAttribute paint: Color black .
-			BrFontSizeAttribute size: 10 } ].
+			BlTextForegroundAttribute paint: Color black .
+			BlFontSizeAttribute size: 10 } ].
 	
 	view layout: (GtGraphRectanglePackLayout new gap: 0).
 	self applyLayoutIn: view.

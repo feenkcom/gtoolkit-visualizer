@@ -44,8 +44,8 @@ GtDiagrammerTitledCard >> title: aString [
 	
 	aText := aString asString asRopedText.
 	aText attributes: {
-		BrTextForegroundAttribute paint: Color gray.
-		BrFontWeightAttribute thin }.
+		BlTextForegroundAttribute paint: Color gray.
+		BlFontWeightAttribute thin }.
 	
 	titleElement text: aText
 ]

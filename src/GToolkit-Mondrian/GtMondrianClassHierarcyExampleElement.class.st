@@ -27,7 +27,7 @@ GtMondrianClassHierarcyExampleElement >> className: aClassName [
 	| classNameText |
 	classNameText := aClassName asRopedText.
 	classNameText attributes: {
-		BrFontSizeAttribute size: 10 }.
+		BlFontSizeAttribute size: 10 }.
 	self labelElement text: classNameText
 ]
 

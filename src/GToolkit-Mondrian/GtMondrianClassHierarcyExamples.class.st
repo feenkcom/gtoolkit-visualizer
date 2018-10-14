@@ -184,7 +184,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 					c vertical fitContent ].
 			classNameText := aClass name asRopedText.
 			classNameText attributes: {
-				BrFontSizeAttribute size: 10 }.
+				BlFontSizeAttribute size: 10 }.
 			labelElement := BlTextElement new
 				text: classNameText;
 				constraintsDo: [ :c | 
