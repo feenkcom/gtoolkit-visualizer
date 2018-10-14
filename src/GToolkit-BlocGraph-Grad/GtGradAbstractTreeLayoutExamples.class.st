@@ -90,31 +90,6 @@ GtGradAbstractTreeLayoutExamples >> checkAlignmentOfNodes: aTreeNode alignment: 
 ]
 
 { #category : #example }
-GtGradAbstractTreeLayoutExamples >> checkDistancesBetweenLevels: theRootNode levelDistance: levelDistance [
-	"
-	The minimum distance between two nodes belonging to adjacent levels should be equal to 	levelDistance.
-	If nodes are of different sizes, the space between a node and its parent could be larger than 	levelDistance.
-	This basically means that the distance between largest (either highest of widest) nodes on 	adjacent levels should be equal to levelDistance
-	"
-	| biggestNodesByLevelsMap numOfLevels |
-	
-	biggestNodesByLevelsMap := Dictionary new.
-	self biggestNodesByLevels: theRootNode currentLevel: 1 maxDimensionByLevels: biggestNodesByLevelsMap.
-	
-	numOfLevels := biggestNodesByLevelsMap size.
-	
-	2 to: numOfLevels do:  [ :theCurrentLevel |
-		| previousNode currentNode previousNodePosition currentNodePosition previousDim currentDim |
-		previousNode := biggestNodesByLevelsMap at: theCurrentLevel - 1.
-		currentNode := biggestNodesByLevelsMap at: theCurrentLevel.
-		previousNodePosition:= self getNodeLevelConstantPosition: previousNode.
-		currentNodePosition := self getNodeLevelConstantPosition: currentNode.
-		previousDim := self getNodeLevelConstantAxisDimension: previousNode.
-		currentDim := self getNodeLevelConstantAxisDimension: currentNode.
-	].
-]
-
-{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> checkOverlapBetweenLevels: theRootNode levelDistance: levelDistance reversed: reversed [
 	"This check should ensure that nodes on adjacent levels that are closest to each other vertically/horizontally do not overlap. Still work in progress. These nodes which are closest to each other are the biggest nodes on levels "
 	| biggestNodesByLevelsMap numOfLevels |
@@ -125,17 +100,18 @@ GtGradAbstractTreeLayoutExamples >> checkOverlapBetweenLevels: theRootNode level
 	numOfLevels := biggestNodesByLevelsMap size.
 	
 	2 to: numOfLevels do:  [ :theCurrentLevel |
-		| previousNode currentNode previousNodePosition currentNodePosition |
+		| previousNode currentNode previousNodePosition currentNodePosition previousDim |
 		previousNode := biggestNodesByLevelsMap at: theCurrentLevel - 1.
 		currentNode := biggestNodesByLevelsMap at: theCurrentLevel.
 		previousNodePosition:= self getNodeLevelConstantPosition: previousNode.
 		currentNodePosition := self getNodeLevelConstantPosition: currentNode.
+		previousDim := self getNodeLevelConstantAxisDimension: previousNode.
 		reversed
 			ifFalse: [
-				self assert: currentNodePosition > previousNodePosition
+				self assert: currentNodePosition > (previousNodePosition + previousDim)
 			]
 			ifTrue: [ 
-				self assert: currentNodePosition < previousNodePosition
+				self assert: currentNodePosition < (previousNodePosition - previousDim)
 			].
 	].
 ]
@@ -250,7 +226,7 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfTreesAndNodes: theNodes layo
 					self checkPositionsOfSubtrees: aRootNode
 				].
 			self checkAlignmentOfNodes: aRootNode alignment: aTreeLayout nodesAlignment positionsByLevels: Dictionary new currentLevel: 1.
-			self checkOverlapBetweenLevels: aRootNode levelDistance: aTreeLayout treesDistance reversed: aTreeLayout reverse.
+			self checkOverlapBetweenLevels: aRootNode levelDistance: aTreeLayout levelDistance reversed: aTreeLayout reverse.
 	
 			]
 ]

@@ -15,7 +15,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes.
@@ -33,7 +33,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	aTreeLayout := self treeLayout.
 	aTreeLayout reverse: true.
 	theNodes := self constructBinaryTreeWith15Nodes key.
@@ -342,7 +342,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout. 
 	theNodes := self constructTreeWithNodesOfDifferentSizes key.
 	view addChildren: theNodes. 

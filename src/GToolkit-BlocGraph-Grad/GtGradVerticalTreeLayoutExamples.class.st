@@ -15,7 +15,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout. 
 	theNodes := self constructBinaryTreeWith15Nodes key.
 	view addChildren: theNodes.
@@ -52,7 +52,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith7Nodes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view.
+	view := self view. 
 	theNodes := self constructBinaryTreeWith7Nodes key. 
 	view addChildren: theNodes. 
 	aTreeLayout := self treeLayout.
@@ -171,7 +171,7 @@ GtGradVerticalTreeLayoutExamples >> distinctSubtrees [
 		
 	| view theNodes aTreeLayout|
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	aTreeLayout separateSubtrees: true.
 	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
@@ -251,7 +251,7 @@ GtGradVerticalTreeLayoutExamples >> graphWithCycles [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	theNodes := self constructGraphWithCycles key.
 	view addChildren: theNodes.
@@ -279,7 +279,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTree [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	theNodes := self constructSimpleTree key.
 	view addChildren: theNodes.
@@ -297,7 +297,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeReversed [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	aTreeLayout reverse: true.
 	theNodes := self constructSimpleTree key.
@@ -393,7 +393,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout.
 	theNodes := self constructTreeWithNodesOfDifferentSizes key.
 	view addChildren: theNodes. 
@@ -411,7 +411,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeBottomAli
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout. 
 	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key.
@@ -449,7 +449,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlignm
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout. 
 	aTreeLayout nodesAlignment: GtGradTreeNodesTopAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
@@ -468,7 +468,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self treeLayout: 5 nodeDistance: 1.
 	theNodes := self constructSimpleTree key.
 	view addChildren: theNodes. 
