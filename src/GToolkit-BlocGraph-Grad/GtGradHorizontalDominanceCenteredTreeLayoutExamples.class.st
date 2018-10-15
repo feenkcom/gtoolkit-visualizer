@@ -58,6 +58,24 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> graphWithANodeWithSeveral
 	^ view
 ]
 
+{ #category : #example }
+GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANodeWithSeveralIncomingEdges [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self centeredDominanceTreeLayout.
+	theNodes := self constructMoreComplexGraphWithANodeWithSeveralIncomingEdges key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout.
+	
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+
+	^ view
+]
+
 { #category : #'example - instance creation' }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
 	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
