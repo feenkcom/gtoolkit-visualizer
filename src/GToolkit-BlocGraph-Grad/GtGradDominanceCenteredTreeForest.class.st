@@ -45,14 +45,17 @@ GtGradDominanceCenteredTreeForest class >> dfs: theCurrentElement nodesDepths: a
 
 { #category : #'private - breadth-first-search' }
 GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode nodesDepthsDictionary: theNodesDepthsDictionary nodesOnLevelsDictionary: theNodesOnLevelsDictionary separateSubtrees: separateSubtrees visited: aVisitedDictionary [
-	|queue|
+	| queue firstLevelNodes |
 	queue := OrderedCollection new.
 	queue add: theRootNode.
-	queue isNotEmpty
+	firstLevelNodes := OrderedCollection new.
+	firstLevelNodes add: theRootNode.
+	theNodesOnLevelsDictionary at: 1 put: firstLevelNodes.
+	[queue isNotEmpty]
 		whileTrue: [ 
 			| theCurrentNode currentDepth|
 			theCurrentNode := queue removeAt: 1.
-			currentDepth := theCurrentNode depth.
+			currentDepth := theCurrentNode depth + 1.
 			theCurrentNode element graph hasNodesAlongOutgoingEdges
 				ifFalse: [
 				"The easiest way of showing distinct subtrees consists of connecting new tree
@@ -70,8 +73,9 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 					childrenDepth := currentDepth + 1.
 					outgoingEdges := theCurrentNode element graph nodesAlongOutgoingEdges.
 					nodesOnCurrentLevel := theNodesOnLevelsDictionary at: currentDepth.
+
 					numOfNodesOnCurrentLevel := nodesOnCurrentLevel size.
-					currentNodeCenterDistance := ((numOfNodesOnCurrentLevel / 2) - (nodesOnCurrentLevel indexOf: theCurrentNode)) abs.
+					currentNodeCenterDistance := (((numOfNodesOnCurrentLevel + 1) / 2) - (nodesOnCurrentLevel indexOf: theCurrentNode)) abs.
 
 					(theNodesOnLevelsDictionary includesKey: childrenDepth)
 						ifTrue: [ 
@@ -92,7 +96,7 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 								ifTrue: [ 
 									| parentCenterDistance |
 									aTreeNode := aVisitedDictionary at: aChildElement.
-									parentCenterDistance := ((numOfNodesOnCurrentLevel / 2) - (nodesOnCurrentLevel indexOf: aTreeNode parent)) abs.
+									parentCenterDistance := (((numOfNodesOnCurrentLevel + 1) / 2) - (nodesOnCurrentLevel indexOf: aTreeNode parent)) abs.
 									currentNodeCenterDistance  < parentCenterDistance
 										ifTrue: [ 
 											"Move the tree node"
@@ -113,8 +117,8 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 								].
 							]
 						].
-			]			
-	].
+				]			
+		].
 	
 ]
 
