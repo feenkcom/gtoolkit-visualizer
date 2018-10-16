@@ -63,7 +63,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANodeWi
 		
 	| view theNodes aTreeLayout |
 	
-	view := self view. 
+	view := self view.
 	aTreeLayout := self centeredDominanceTreeLayout.
 	theNodes := self constructMoreComplexGraphWithANodeWithSeveralIncomingEdges key.
 	view addChildren: theNodes.
@@ -83,4 +83,22 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> nodeMaximumPoint: aTreeNode
 { #category : #example }
 GtGradVerticalDominanceCenteredTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
 	^ aTreeNode element position x
+]
+
+{ #category : #example }
+GtGradVerticalDominanceCenteredTreeLayoutExamples >> treeWithEdgesWhoseSoucesAreOnDifferentLevels [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self centeredDominanceTreeLayout.
+	theNodes := self construcTreeWithEdgesWhoseSoucesAreOnDifferentLevels key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout.
+	
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+
+	^ view
 ]

@@ -85,3 +85,21 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMaximumPoint: aTreeNo
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
 	^ aTreeNode element position y
 ]
+
+{ #category : #example }
+GtGradHorizontalDominanceCenteredTreeLayoutExamples >> treeWithEdgesWhoseSoucesAreOnDifferentLevels [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self centeredDominanceTreeLayout.
+	theNodes := self construcTreeWithEdgesWhoseSoucesAreOnDifferentLevels key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout.
+	view forceLayout.
+	
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+
+	^ view
+]
