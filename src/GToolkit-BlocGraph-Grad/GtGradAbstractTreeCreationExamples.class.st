@@ -5,6 +5,89 @@ Class {
 }
 
 { #category : #example }
+GtGradAbstractTreeCreationExamples >> centeredDominanceTreesCreation [
+	<gtExample>
+	| theNodes pairsOfNodes theEdges trees root level1Node1 level1Node2 level1Node3 level1Node4
+	  level2Node1 level2Node2 level3Node1 level3Node2 level3Node3|
+
+	theNodes := self nodes: (1 to: 11).
+	
+	pairsOfNodes := OrderedCollection new.
+	pairsOfNodes add: (1->2); add: (1->3); add: (1->4); add: (1->5);
+					 add: (2->6); add: (3->6); add: (4->6); add: (5->6);
+					 add: (6->7); add: (6->8); add: (2->10); add: (10->11);
+					 add: (11->9); add: (7->9); add: (8->9).
+	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+
+	self assert: ((theNodes at: 1) graph) nodesAlongOutgoingEdgesCount equals: 4.
+	self assert: ((theNodes at: 1) graph) nodesAlongIncomingEdgesCount equals: 0.
+	self assert: ((theNodes at: 2) graph) nodesAlongOutgoingEdgesCount equals: 2.
+	self assert: ((theNodes at: 2) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 3) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 3) graph) nodesAlongIncomingEdgesCount equals: 1.	
+	self assert: ((theNodes at: 4) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 4) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 5) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 5) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 6) graph) nodesAlongOutgoingEdgesCount equals: 2.
+	self assert: ((theNodes at: 6) graph) nodesAlongIncomingEdgesCount equals: 4.
+	self assert: ((theNodes at: 7) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 7) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 8) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 8) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 9) graph) nodesAlongOutgoingEdgesCount equals: 0.
+	self assert: ((theNodes at: 9) graph) nodesAlongIncomingEdgesCount equals: 3.
+	self assert: ((theNodes at: 10) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 10) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 11) graph) nodesAlongOutgoingEdgesCount equals: 1.
+	self assert: ((theNodes at: 11) graph) nodesAlongIncomingEdgesCount equals: 1.
+
+	self assert: theEdges size equals: 15.	
+	trees := (GtGradDominanceCenteredTreeForest from: theNodes separateSubtrees: true) trees.
+	self assert: trees size equals: 1.
+	
+	root := trees first.
+	
+	self assert: root element equals:(theNodes at: 1).
+	self assert: root nodes size equals: 4.
+	level1Node1 := root nodes at: 1.
+	level1Node2 := root nodes at: 2.
+	level1Node3 := root nodes at: 3.
+	level1Node4 := root nodes at: 4.
+	self assert: level1Node1 element equals: (theNodes at: 2).
+	self assert: level1Node2 element equals: (theNodes at: 3).
+	self assert: level1Node3 element equals: (theNodes at: 4).
+	self assert: level1Node4 element equals: (theNodes at: 5).
+	self assert: level1Node1 nodes size equals: 1.
+	self assert: level1Node2 nodes size equals: 1.
+	self assert: level1Node3 nodes size equals: 0.
+	self assert: level1Node4 nodes size equals: 0.
+	
+	
+	level2Node1 := level1Node1 nodes at: 1.
+	level2Node2 := level1Node2 nodes at: 1.
+	self assert: level2Node1 element equals: (theNodes at: 10).
+	self assert: level2Node1 nodes size equals: 1.
+	self assert: level2Node2 element equals: (theNodes at: 6).
+	self assert: level2Node2 nodes size equals: 2.
+	
+	level3Node1 := level2Node1 nodes at: 1.
+	level3Node2 := level2Node2 nodes at: 1.
+	level3Node3 := level2Node2 nodes at: 2.
+	self assert: level3Node1 element equals: (theNodes at: 11).
+	self assert: level3Node2 element equals: (theNodes at: 7).
+	self assert: level3Node3 element equals: (theNodes at: 8).
+	self assert: level3Node1 nodes size equals: 0.
+	self assert: level3Node2 nodes size equals: 1.
+	self assert: level3Node3 nodes size equals: 0.
+	self assert: (level3Node2 nodes at: 1) element equals: (theNodes at: 9).
+	
+	
+	^	root
+
+]
+
+{ #category : #example }
 GtGradAbstractTreeCreationExamples >> distinctDominanceSubtrees [
 	<gtExample>
 	| theNodes pairsOfNodes theEdges trees root level1Node1 level1Node2 level1Node3
