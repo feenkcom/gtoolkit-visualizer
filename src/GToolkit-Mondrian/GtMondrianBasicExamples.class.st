@@ -55,6 +55,7 @@ GtMondrianBasicExamples >> edgesWithThickerLines [
 			BlLineElement new
 				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
+	view topStep root graph edgeChildren do: [ :edgeChild | edgeChild width > 1 ].
 	view layout tree.
 	^ view
 ]
@@ -296,6 +297,7 @@ GtMondrianBasicExamples >> nodesWithEllipses [
 				geometry: BlEllipse new; 
 				size: (x * 2) @ (x * 2) ];
 		with: (1 to: 9).
+	self assert: view topStep root graph nodeChildren size = 9.
 	^ view
 ]
 
