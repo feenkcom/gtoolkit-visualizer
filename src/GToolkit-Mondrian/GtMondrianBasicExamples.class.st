@@ -39,8 +39,10 @@ GtMondrianBasicExamples >> edgesWithTextAndThickerLinesHorizontalTree [
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4)) ];
+		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4) width: x) ];
 		connectFrom: [ :x | x // 2 ].
+	view topStep root graph edgeChildren do: [ :edgeChild | 
+		self assert: edgeChild border width > 1 ].
 	view layout horizontalTree levelDistance: 40.
 	^ view
 ]
@@ -55,7 +57,8 @@ GtMondrianBasicExamples >> edgesWithThickerLines [
 			BlLineElement new
 				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
-	view topStep root graph edgeChildren do: [ :edgeChild | edgeChild width > 1 ].
+	view topStep root graph edgeChildren do: [ :edgeChild | 
+		self assert: edgeChild border width > 1 ].
 	view layout tree.
 	^ view
 ]
@@ -70,6 +73,8 @@ GtMondrianBasicExamples >> edgesWithThickerLinesHorizontalTree [
 			BlLineElement new
 				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
+	view root graph edgeChildren do: [:edgeElement | 
+		self assert: edgeElement border width > 1 ].
 	view layout horizontalTree.
 	^ view
 ]
@@ -137,6 +142,8 @@ GtMondrianBasicExamples >> layoutOnOneEdgeBetweenTwoNodes [
 	| view |
 	view := self oneEdgeBetweenTwoNodes.
 	view layout tree.
+	self assert: (view root layout isKindOf: BlOnceLayout).
+	self assert: (view root layout layout isKindOf: GtGradVerticalTreeLayout).
 	^ view
 ]
 
@@ -157,6 +164,8 @@ GtMondrianBasicExamples >> nestedNodes [
 				shape: [ :x | BlTextElement new text: (x asString asRopedText attributes: {BlTextForegroundAttribute paint: Color gray}) ];
 				with: (10 * each to: (10 * each + 4)).
 			view layout circle radius: 20 ].
+	self assert: view root children size = 9.
+	view root children do: [:child | self assert: child children size = 5 ].
 	^ view
 ]
 
@@ -282,6 +291,7 @@ GtMondrianBasicExamples >> nestedWithEdges [
 		toCenterTop;
 		connectFrom: [ :x | x // 2 ].
 	view layout tree.
+	self assert: (view root children select: [ :each | each graph isEdge ]) size = 8.
 	^ view
 ]
 

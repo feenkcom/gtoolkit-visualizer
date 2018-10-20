@@ -27,11 +27,6 @@ GtMondrianStep >> addChildren: aCollection in: aSymbol [
 	root graph addChildren: aCollection inChildrenContainer: aSymbol
 ]
 
-{ #category : #initialization }
-GtMondrianStep >> initialize [
-	objectsToNodesCache := IdentityDictionary new
-]
-
 { #category : #accessing }
 GtMondrianStep >> layout: aLayout [
 	root layout: aLayout
@@ -40,9 +35,6 @@ GtMondrianStep >> layout: aLayout [
 { #category : #accessing }
 GtMondrianStep >> nodeAt: anObject ifAbsent: aBlock [
 	^ self root graph nodeAt: anObject ifAbsent: aBlock
-	"^ objectsToNodesCache
-		at: anObject 
-		ifAbsent: aBlock"
 ]
 
 { #category : #accessing }
