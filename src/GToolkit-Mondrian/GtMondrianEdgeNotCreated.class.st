@@ -46,16 +46,6 @@ GtMondrianEdgeNotCreated >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-GtMondrianEdgeNotCreated >> printOneLineString [
-	^ ''
-]
-
-{ #category : #accessing }
-GtMondrianEdgeNotCreated >> to: anObject [
-	to := anObject
-]
-
 { #category : #accessing }
 GtMondrianEdgeNotCreated >> toElement [
 	^ toElement

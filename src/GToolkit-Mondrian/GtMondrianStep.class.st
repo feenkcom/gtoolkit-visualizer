@@ -39,7 +39,7 @@ GtMondrianStep >> nodeAt: anObject ifAbsent: aBlock [
 
 { #category : #accessing }
 GtMondrianStep >> nodeAt: anObject put: aNode [
-	^ self root graph nodeAt: anObject put: aNode
+	^ self root graph firstNodeParent graph nodeAt: anObject put: aNode
 ]
 
 { #category : #accessing }

@@ -37,6 +37,25 @@ GtMondrianBuilderExamples >> lookupNodeThatExistsInChild [
 ]
 
 { #category : #'as yet unclassified' }
+GtMondrianBuilderExamples >> lookupNodeThatExistsInChildButWithUMLClassShape [
+	<gtExample>
+	"this defines a tricky scenario in which the children are added in a sub element of the 
+	parent node element"
+	| mondrian result |
+	mondrian := GtMondrian new.
+	mondrian nodes 
+		umlClassShapeWithName: [:x | x asString ];
+		with: (1 to: 2); 
+		forEach: [ :x | mondrian nodes with: {x * 10} ].
+	result := mondrian root graph 
+		nodeAt: 10
+		ifAbsent: [ self assert: false description: 'There should be a node for 10 in the cache' ].
+	self assert: result graph isNode.
+	self assert: result graph model = 10.
+	^ mondrian
+]
+
+{ #category : #'as yet unclassified' }
 GtMondrianBuilderExamples >> lookupNodeThatExistsInRoot [
 	<gtExample>
 	| mondrian result |

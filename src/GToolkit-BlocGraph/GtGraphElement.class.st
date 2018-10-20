@@ -103,6 +103,13 @@ GtGraphElement >> element: anElement [
 	element := anElement
 ]
 
+{ #category : #accessing }
+GtGraphElement >> firstNodeParent [
+	self isNode ifTrue: [ ^ self element ].
+	element parent isNil ifTrue: [ ^ self element ].
+	^ element parent graph firstNodeParent
+]
+
 { #category : #'api - graph' }
 GtGraphElement >> hasNodesAlongIncomingEdges [
 	<return: #Boolean>

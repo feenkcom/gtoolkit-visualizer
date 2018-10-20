@@ -31,7 +31,7 @@ GtMondrianUMLClassElement >> initialize [
 	labelContainer := BlElement new.
 	labelContainer 
 		layout: BlFrameLayout new;
-		background: Color white;
+		background: Color transparent;
 		border: (BlBorder paint: Color gray);
 		constraintsDo: [ :c |
 			c horizontal fitContent.
@@ -44,7 +44,7 @@ GtMondrianUMLClassElement >> initialize [
 		constraintsDo: [ :c |
 			c vertical fitContent.
 			c horizontal fitContent ];
-		background: Color white;
+		background: Color transparent;
 		addChildren: { labelContainer }
 ]
 
@@ -67,7 +67,7 @@ GtMondrianUMLClassElement >> newContainers: aCollectionOfSymbols [
 			constraintsDo: [ :c | 
 				c vertical fitContent.
 				c horizontal fitContent ];
-			background: Color white;
+			background: Color transparent;
 			border: (BlBorder paint: Color gray);
 			padding: (BlInsets all: 5).
 		element graph beChildrenContainer: each.
