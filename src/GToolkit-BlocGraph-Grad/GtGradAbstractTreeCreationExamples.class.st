@@ -288,13 +288,6 @@ GtGradAbstractTreeCreationExamples >> getNumberOfLeavesOfForest: aForest [
 
 	^ numberOfLeaves.
 
-			
-
-			
-	
-	
-	
-
 ]
 
 { #category : #example }
@@ -317,14 +310,6 @@ GtGradAbstractTreeCreationExamples >> getNumberOfLeavesOfTree: theRootNode [
 				]
 		].
 	^ numberOfLeaves.
-			
-
-			
-
-			
-	
-	
-	
 
 ]
 
@@ -337,12 +322,6 @@ GtGradAbstractTreeCreationExamples >> getNumberOfNodesOfForest: aForest [
 	].
 
 	^ numberOfNodes.
-			
-
-			
-	
-	
-	
 
 ]
 
@@ -361,12 +340,6 @@ GtGradAbstractTreeCreationExamples >> getNumberOfNodesOfTree: theRootNode [
 			queue addAll: theCurrentNode nodes.
 		].
 	^ numberOfNodes.
-			
-
-			
-	
-	
-	
 
 ]
 
