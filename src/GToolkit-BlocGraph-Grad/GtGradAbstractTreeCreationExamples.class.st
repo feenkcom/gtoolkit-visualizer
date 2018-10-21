@@ -45,6 +45,7 @@ GtGradAbstractTreeCreationExamples >> centeredDominanceTreesCreation [
 	self assert: theEdges size equals: 15.	
 	trees := (GtGradDominanceCenteredTreeForest from: theNodes separateSubtrees: true) trees.
 	self assert: trees size equals: 1.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size + (self getNumberOfLeavesOfForest: trees)).
 	
 	root := trees first.
 	
@@ -60,8 +61,8 @@ GtGradAbstractTreeCreationExamples >> centeredDominanceTreesCreation [
 	self assert: level1Node4 element equals: (theNodes at: 5).
 	self assert: level1Node1 nodes size equals: 1.
 	self assert: level1Node2 nodes size equals: 1.
-	self assert: level1Node3 nodes size equals: 0.
-	self assert: level1Node4 nodes size equals: 0.
+	self assert: level1Node3 nodes size equals: 1.
+	self assert: level1Node4 nodes size equals: 1.
 	
 	
 	level2Node1 := level1Node1 nodes at: 1.
@@ -77,9 +78,9 @@ GtGradAbstractTreeCreationExamples >> centeredDominanceTreesCreation [
 	self assert: level3Node1 element equals: (theNodes at: 11).
 	self assert: level3Node2 element equals: (theNodes at: 7).
 	self assert: level3Node3 element equals: (theNodes at: 8).
-	self assert: level3Node1 nodes size equals: 0.
+	self assert: level3Node1 nodes size equals: 1.
 	self assert: level3Node2 nodes size equals: 1.
-	self assert: level3Node3 nodes size equals: 0.
+	self assert: level3Node3 nodes size equals: 1.
 	self assert: (level3Node2 nodes at: 1) element equals: (theNodes at: 9).
 	
 	
@@ -96,25 +97,26 @@ GtGradAbstractTreeCreationExamples >> distinctDominanceSubtrees [
 	theNodes := self nodes: (1 to: 6).
 	
 	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6).
+	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6); add:(3->5).
 	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
 	self assert: ((theNodes at: 1) graph) nodesAlongOutgoingEdgesCount equals: 3.
 	self assert: ((theNodes at: 1) graph) nodesAlongIncomingEdgesCount equals: 0.
 	self assert: ((theNodes at: 2) graph) nodesAlongOutgoingEdgesCount equals: 2.
 	self assert: ((theNodes at: 2) graph) nodesAlongIncomingEdgesCount equals: 1.
-	self assert: ((theNodes at: 3) graph) nodesAlongOutgoingEdgesCount equals: 0.
+	self assert: ((theNodes at: 3) graph) nodesAlongOutgoingEdgesCount equals: 1.
 	self assert: ((theNodes at: 3) graph) nodesAlongIncomingEdgesCount equals: 1.	
 	self assert: ((theNodes at: 4) graph) nodesAlongOutgoingEdgesCount equals: 0.
 	self assert: ((theNodes at: 4) graph) nodesAlongIncomingEdgesCount equals: 1.
 	self assert: ((theNodes at: 5) graph) nodesAlongOutgoingEdgesCount equals: 0.
-	self assert: ((theNodes at: 5) graph) nodesAlongIncomingEdgesCount equals: 1.
+	self assert: ((theNodes at: 5) graph) nodesAlongIncomingEdgesCount equals: 2.
 	self assert: ((theNodes at: 6) graph) nodesAlongOutgoingEdgesCount equals: 0.
 	self assert: ((theNodes at: 6) graph) nodesAlongIncomingEdgesCount equals: 1.
 
 
-	self assert: theEdges size equals: 5.	
+	self assert: theEdges size equals: 6.	
 	trees := (GtGradDominanceTreeForest from: theNodes separateSubtrees: true) trees.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size + (self getNumberOfLeavesOfForest: trees)).
 	self assert: trees size equals: 1.
 	
 	root := trees first.
@@ -180,6 +182,7 @@ GtGradAbstractTreeCreationExamples >> distinctSubtreesDFS [
 
 	self assert: theEdges size equals: 5.	
 	trees := (GtGradDFSTreeForest from: theNodes separateSubtrees: true) trees.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size + (self getNumberOfLeavesOfForest: trees)).
 	self assert: trees size equals: 1.
 	
 	root := trees first.
@@ -252,6 +255,7 @@ GtGradAbstractTreeCreationExamples >> forestDFSCreation [
 
 	trees := (GtGradDFSTreeForest from: theNodes separateSubtrees: false) trees.
 	self assert: trees size equals: 2.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size).
 	
 	root1 := trees first.
 	self assert: root1 element equals:(theNodes at: 1).
@@ -275,10 +279,103 @@ GtGradAbstractTreeCreationExamples >> forestDFSCreation [
 ]
 
 { #category : #example }
+GtGradAbstractTreeCreationExamples >> getNumberOfLeavesOfForest: aForest [
+	| numberOfLeaves |
+	numberOfLeaves := 0.
+	aForest do: [ :aTree |
+		numberOfLeaves := numberOfLeaves + (self getNumberOfLeavesOfTree: aTree)
+	].
+
+	^ numberOfLeaves.
+
+			
+
+			
+	
+	
+	
+
+]
+
+{ #category : #example }
+GtGradAbstractTreeCreationExamples >> getNumberOfLeavesOfTree: theRootNode [
+	| queue numberOfLeaves |
+	queue := OrderedCollection new.
+	queue add: theRootNode.
+	numberOfLeaves := 0.
+	
+	[queue isNotEmpty]
+		whileTrue: [ 
+			| theCurrentNode |
+			theCurrentNode := queue removeAt: 1.
+			theCurrentNode nodes isEmpty
+				ifTrue: [ 
+					numberOfLeaves := numberOfLeaves + 1.
+				]
+				ifFalse: [ 
+					queue addAll: theCurrentNode nodes.	
+				]
+		].
+	^ numberOfLeaves.
+			
+
+			
+
+			
+	
+	
+	
+
+]
+
+{ #category : #example }
+GtGradAbstractTreeCreationExamples >> getNumberOfNodesOfForest: aForest [
+	| numberOfNodes |
+	numberOfNodes := 0.
+	aForest do: [ :aTree |
+		numberOfNodes := numberOfNodes + (self getNumberOfNodesOfTree: aTree)
+	].
+
+	^ numberOfNodes.
+			
+
+			
+	
+	
+	
+
+]
+
+{ #category : #example }
+GtGradAbstractTreeCreationExamples >> getNumberOfNodesOfTree: theRootNode [
+	| queue numberOfNodes |
+	queue := OrderedCollection new.
+	queue add: theRootNode.
+	numberOfNodes := 0.
+	
+	[queue isNotEmpty]
+		whileTrue: [ 
+			| theCurrentNode |
+    		numberOfNodes := numberOfNodes + 1.
+			theCurrentNode := queue removeAt: 1.
+			queue addAll: theCurrentNode nodes.
+		].
+	^ numberOfNodes.
+			
+
+			
+	
+	
+	
+
+]
+
+{ #category : #example }
 GtGradAbstractTreeCreationExamples >> graphWithCyclesTreeCreationDFS [
 	<gtExample>
 	
-	| theNodes  pairsOfNodes theEdges trees root level1Node level2Node1 level2Node2 level3Node|
+	| theNodes  pairsOfNodes theEdges trees root level1Node level2Node1
+	  level2Node2 level3Node |
 	
 	theNodes := self nodes: (1 to: 7).
 	
@@ -287,8 +384,8 @@ GtGradAbstractTreeCreationExamples >> graphWithCyclesTreeCreationDFS [
 	add: (6->2); add: (5->3).
 	
 	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.	
-	self assert: theEdges size equals: 8.
 	
+	self assert: theEdges size equals: 8.
 	
 	self assert: ((theNodes at: 1) graph) nodesAlongOutgoingEdgesCount equals: 2.
 	self assert: ((theNodes at: 1) graph) nodesAlongIncomingEdgesCount equals: 0.
@@ -305,6 +402,7 @@ GtGradAbstractTreeCreationExamples >> graphWithCyclesTreeCreationDFS [
 	
 	trees := (GtGradDFSTreeForest from: theNodes separateSubtrees: false) trees.
 	self assert: trees size equals: 1.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size).
 	
 	root := trees first.
 	self assert: root element equals:(theNodes at: 1).
@@ -356,6 +454,7 @@ GtGradAbstractTreeCreationExamples >> moreComplexDominanceTreeCreation [
 	self assert: theEdges size equals: 10.
 	
 	trees := (GtGradDominanceTreeForest from: theNodes separateSubtrees: false) trees.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size).	
 	self assert: trees size equals: 1.
 	
 	root := trees first.
@@ -416,6 +515,7 @@ GtGradAbstractTreeCreationExamples >> simpleDominanceTreeCreation [
 	
 	trees := (GtGradDominanceTreeForest from: theNodes separateSubtrees: false) trees.
 	self assert: trees size equals: 1.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size).
 	root := trees first.
 	
 	self assert: root element equals:(theNodes at: 1).
@@ -463,6 +563,7 @@ GtGradAbstractTreeCreationExamples >> simpleTreeCreationDFS [
 	
 	trees := (GtGradDFSTreeForest from: theNodes separateSubtrees: false) trees.
 	self assert: trees size equals: 1.
+	self assert: (self getNumberOfNodesOfForest: trees) equals: (theNodes size).		
 	
 	root := trees first.
 	self assert: root element equals:(theNodes at: 1).

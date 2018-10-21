@@ -5,47 +5,24 @@ Class {
 }
 
 { #category : #'private - depth-first-search' }
-GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary separateSubtrees: separateSubtrees [
+GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
 	| currentDepth |
 	currentDepth := theCurrentNode depth.
-		theCurrentNode element graph hasNodesAlongOutgoingEdges
-		ifFalse: [
-			"The easiest way of showing distinct subtrees consists of connecting new tree
-			nodes as children of leaf nodes. This ensures the desired result without having
-			to modify the algorithm"
-			separateSubtrees
-				ifTrue: [ 
-					| aTreeNode |
-
-					aTreeNode := GtGradTreeNode on: theCurrentNode element.
-					theCurrentNode add: aTreeNode.
-				] 
-		]
-		ifTrue: [ 
-			theCurrentNode element graph nodesAlongOutgoingEdges
-				do: [ :aNodeElement |
+	theCurrentNode element graph hasNodesAlongOutgoingEdges
+		ifTrue: [ theCurrentNode element graph nodesAlongOutgoingEdges
+				do: [ :aNodeElement | 
 					| aTreeNode |
 					(aVisitedDictionary includesKey: aNodeElement)
-						ifTrue: [
-							| oldDepth |
+						ifTrue: [ | oldDepth |
 							aTreeNode := aVisitedDictionary at: aNodeElement.
 							oldDepth := aTreeNode parent depth.
 							currentDepth > oldDepth
-								ifTrue: [ 
-									aTreeNode parent remove: aTreeNode.
-									theCurrentNode add: aTreeNode.
-								]]
-						ifFalse: [ 
-							aTreeNode := GtGradTreeNode on: aNodeElement.
+								ifTrue: [ aTreeNode parent remove: aTreeNode.
+									theCurrentNode add: aTreeNode ] ]
+						ifFalse: [ aTreeNode := GtGradTreeNode on: aNodeElement.
 							theCurrentNode add: aTreeNode.
-							aVisitedDictionary at: aNodeElement put: aTreeNode.
-						].		
-						self
-							dfs: aTreeNode
-							visited: aVisitedDictionary
-							separateSubtrees: separateSubtrees
-				] 
-			]
+							aVisitedDictionary at: aNodeElement put: aTreeNode ].
+					self dfs: aTreeNode visited: aVisitedDictionary ] ]
 ]
 
 { #category : #'instance-creation' }
@@ -62,7 +39,15 @@ GtGradDominanceTreeForest class >> from: aCollectionOfElements separateSubtrees:
 			ifFalse: [
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
-				self dfs: aTreeNode visited: visitedDictionary separateSubtrees: separateSubtrees.
+				self dfs: aTreeNode visited: visitedDictionary.
+				separateSubtrees
+					ifTrue: [ 
+						"The easiest way of showing distinct subtrees consists of connecting new tree
+						nodes as children of leaf nodes. This ensures the desired result without having
+						to modify the algorithm. If the graph has cycles, its nodes might be a leaves even 
+						though their element have outgoing edges."
+						self addChildNodesToLeaves:	aTreeNode.
+					].
 				allTrees at: aTreeNode root put: #root ] ].
 
 	^ self new trees: allTrees keys

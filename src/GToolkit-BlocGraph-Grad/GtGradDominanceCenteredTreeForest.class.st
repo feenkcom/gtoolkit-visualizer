@@ -5,10 +5,14 @@ Class {
 }
 
 { #category : #'private - breadth-first-search' }
-GtGradDominanceCenteredTreeForest class >> bfs: theRootNode nodesDepthDictionary: theNodesDepthsDictionary separateSubtrees: separateSubtrees visited: aVisitedDictionary [
-	| theNodesOnLevelsDictionary|
+GtGradDominanceCenteredTreeForest class >> bfs: theRootNode nodesDepthDictionary: theNodesDepthsDictionary visited: aVisitedDictionary [
+	| theNodesOnLevelsDictionary |
 	theNodesOnLevelsDictionary := IdentityDictionary new.
-	self formCenteredTreeBFS: theRootNode nodesDepthsDictionary: theNodesDepthsDictionary nodesOnLevelsDictionary: theNodesOnLevelsDictionary separateSubtrees: separateSubtrees visited: aVisitedDictionary
+	self
+		formCenteredTreeBFS: theRootNode
+		nodesDepthsDictionary: theNodesDepthsDictionary
+		nodesOnLevelsDictionary: theNodesOnLevelsDictionary
+		visited: aVisitedDictionary
 ]
 
 { #category : #'private - depth-first-search' }
@@ -46,7 +50,7 @@ GtGradDominanceCenteredTreeForest class >> dfs: theRootNode visited: aVisitedDic
 ]
 
 { #category : #'private - breadth-first-search' }
-GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode nodesDepthsDictionary: theNodesDepthsDictionary nodesOnLevelsDictionary: theNodesOnLevelsDictionary separateSubtrees: separateSubtrees visited: aVisitedDictionary [
+GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode nodesDepthsDictionary: theNodesDepthsDictionary nodesOnLevelsDictionary: theNodesOnLevelsDictionary visited: aVisitedDictionary [
 	| queue firstLevelNodes |
 	queue := OrderedCollection new.
 	queue add: theRootNode.
@@ -59,17 +63,6 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 			theCurrentNode := queue removeAt: 1.
 			currentDepth := theCurrentNode depth + 1.
 			theCurrentNode element graph hasNodesAlongOutgoingEdges
-				ifFalse: [
-				"The easiest way of showing distinct subtrees consists of connecting new tree
-				nodes as children of leaf nodes. This ensures the desired result without having
-				to modify the algorithm"
-					separateSubtrees
-						ifTrue: [ 
-							| aTreeNode |
-								aTreeNode := GtGradTreeNode on: theCurrentNode element.
-								theCurrentNode add: aTreeNode.
-						] 
-				]
 				ifTrue: [ 
 					| outgoingEdges childrenDepth numOfNodesOnCurrentLevel currentNodeCenterDistance nodesOnNextLevel nodesOnCurrentLevel |
 					childrenDepth := currentDepth + 1.
@@ -125,20 +118,31 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 { #category : #'instance creation' }
 GtGradDominanceCenteredTreeForest class >> from: aCollectionOfElements separateSubtrees: separateSubtrees [
 	"Create a forest of node trees using depth-first-search algorithm"
-	| allTrees visitedDictionary  |
 
+	| allTrees visitedDictionary |
 	allTrees := OrderedDictionary new.
 	visitedDictionary := IdentityDictionary new.
-
-
-	aCollectionOfElements do: [ :aNodeElement |
-		((visitedDictionary includesKey: aNodeElement) or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
-			ifFalse: [
-				| aTreeNode aNodesDepthsDictionary |
-				aTreeNode := GtGradTreeNode on: aNodeElement.
-				aNodesDepthsDictionary := self dfs: aTreeNode visited: visitedDictionary.
-				self bfs: aTreeNode nodesDepthDictionary: aNodesDepthsDictionary separateSubtrees: separateSubtrees visited: visitedDictionary.
-				allTrees at: aTreeNode root put: #root ] ].
-
+	aCollectionOfElements
+		do: [ :aNodeElement | 
+			((visitedDictionary includesKey: aNodeElement)
+				or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
+				ifFalse: [ | aTreeNode aNodesDepthsDictionary |
+					aTreeNode := GtGradTreeNode on: aNodeElement.
+					aNodesDepthsDictionary := self
+						dfs: aTreeNode
+						visited: visitedDictionary.
+					self
+						bfs: aTreeNode
+						nodesDepthDictionary: aNodesDepthsDictionary
+						visited: visitedDictionary.
+					separateSubtrees
+						ifTrue:
+							[ "The easiest way of showing distinct subtrees consists of connecting new tree
+							nodes as children of leaf nodes. This ensures the desired result without having
+							to modify the algorithm. If the graph has cycles, its nodes might be a leaves 
+							even though their element have outgoing edges."
+							self addChildNodesToLeaves: aTreeNode 
+						].
+					allTrees at: aTreeNode root put: #root ] ].
 	^ self new trees: allTrees keys
 ]
