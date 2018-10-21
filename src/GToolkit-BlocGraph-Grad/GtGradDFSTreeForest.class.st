@@ -58,7 +58,8 @@ GtGradDFSTreeForest class >> from: aCollectionOfElements separateSubtrees: separ
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
 				self dfs: aTreeNode visited: visitedDictionary separateSubtrees: separateSubtrees.
-				allTrees at: aTreeNode root put: #root ] ].
+				allTrees at: aTreeNode root put: #root.
+				] ].
 
 	^ self new trees: allTrees keys
 ]

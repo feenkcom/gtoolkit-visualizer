@@ -5,14 +5,6 @@ Class {
 }
 
 { #category : #'private - depth-first-search' }
-GtGradDominanceTreeForest class >> dfs: theRootNode separateSubtrees: separateSubtrees [
-	|aVisitedDictionary |
-	aVisitedDictionary := IdentityDictionary new.
-	self dfs: theRootNode visited: aVisitedDictionary separateSubtrees: separateSubtrees.
-	
-]
-
-{ #category : #'private - depth-first-search' }
 GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary separateSubtrees: separateSubtrees [
 	| currentDepth |
 	currentDepth := theCurrentNode depth.
@@ -70,7 +62,7 @@ GtGradDominanceTreeForest class >> from: aCollectionOfElements separateSubtrees:
 			ifFalse: [
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
-				self dfs: aTreeNode separateSubtrees: separateSubtrees.
+				self dfs: aTreeNode visited: visitedDictionary separateSubtrees: separateSubtrees.
 				allTrees at: aTreeNode root put: #root ] ].
 
 	^ self new trees: allTrees keys

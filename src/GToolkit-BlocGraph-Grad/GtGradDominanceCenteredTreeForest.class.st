@@ -5,42 +5,44 @@ Class {
 }
 
 { #category : #'private - breadth-first-search' }
-GtGradDominanceCenteredTreeForest class >> bfs: theRootNode nodesDepthDictionary: theNodesDepthsDictionary separateSubtrees: separateSubtrees [
-	| theNodesOnLevelsDictionary aVisitedDictionary |
+GtGradDominanceCenteredTreeForest class >> bfs: theRootNode nodesDepthDictionary: theNodesDepthsDictionary separateSubtrees: separateSubtrees visited: aVisitedDictionary [
+	| theNodesOnLevelsDictionary|
 	theNodesOnLevelsDictionary := IdentityDictionary new.
-	aVisitedDictionary := IdentityDictionary new.
 	self formCenteredTreeBFS: theRootNode nodesDepthsDictionary: theNodesDepthsDictionary nodesOnLevelsDictionary: theNodesOnLevelsDictionary separateSubtrees: separateSubtrees visited: aVisitedDictionary
 ]
 
 { #category : #'private - depth-first-search' }
-GtGradDominanceCenteredTreeForest class >> dfs: theRootNode [
-	| aNodesDepthsDictionary |
-	aNodesDepthsDictionary := IdentityDictionary new.
-	self dfs: theRootNode element nodesDepths: aNodesDepthsDictionary currentDepth: 2.
-	^ aNodesDepthsDictionary
-	
-]
-
-{ #category : #'private - depth-first-search' }
-GtGradDominanceCenteredTreeForest class >> dfs: theCurrentElement nodesDepths: aNodesDepthsDictionary currentDepth: theCurrentDepth [
+GtGradDominanceCenteredTreeForest class >> dfs: theCurrentElement nodesDepths: aNodesDepthsDictionary currentDepth: theCurrentDepth visited: aVisitedDictionary [
 	theCurrentElement graph nodesAlongOutgoingEdges
 		do: [ :aChildElement |
 			| theOldDepth |
-			theOldDepth := 0.
-			(aNodesDepthsDictionary includesKey: aChildElement)
-				ifTrue: [
-					theOldDepth := aNodesDepthsDictionary at: aChildElement
-				].
-			theCurrentDepth > theOldDepth
-				ifTrue: [ 
-					aNodesDepthsDictionary at: aChildElement put: theCurrentDepth.
-				].
-			
-			self
-				dfs: aChildElement
-				nodesDepths: aNodesDepthsDictionary
-				currentDepth: theCurrentDepth + 1
-		]
+			(aVisitedDictionary includesKey: aChildElement)
+				ifFalse: [
+					theOldDepth := 0.
+					(aNodesDepthsDictionary includesKey: aChildElement)
+						ifTrue: [
+							theOldDepth := aNodesDepthsDictionary at: aChildElement
+						].
+					theCurrentDepth > theOldDepth
+						ifTrue: [ 
+							aNodesDepthsDictionary at: aChildElement put: theCurrentDepth.
+						].
+				
+					self
+						dfs: aChildElement
+						nodesDepths: aNodesDepthsDictionary
+						currentDepth: theCurrentDepth + 1
+						visited: aVisitedDictionary
+					]
+			]
+]
+
+{ #category : #'private - depth-first-search' }
+GtGradDominanceCenteredTreeForest class >> dfs: theRootNode visited: aVisitedDictionary [
+	| aNodesDepthsDictionary |
+	aNodesDepthsDictionary := IdentityDictionary new.
+	self dfs: theRootNode element nodesDepths: aNodesDepthsDictionary currentDepth: 2 visited: aVisitedDictionary.
+	^ aNodesDepthsDictionary
 ]
 
 { #category : #'private - breadth-first-search' }
@@ -87,11 +89,9 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 						].
 					
 					outgoingEdges do: [ :aChildElement |
-						| elementRequiredDepth aTreeNode |
-						elementRequiredDepth := theNodesDepthsDictionary at: aChildElement.
-						elementRequiredDepth = childrenDepth
+						| aTreeNode |
+						((theNodesDepthsDictionary includesKey: aChildElement) and: [(theNodesDepthsDictionary at: aChildElement) = childrenDepth ])
 							ifTrue: [
-
 							 (aVisitedDictionary includesKey: aChildElement)
 								ifTrue: [ 
 									| parentCenterDistance |
@@ -136,8 +136,8 @@ GtGradDominanceCenteredTreeForest class >> from: aCollectionOfElements separateS
 			ifFalse: [
 				| aTreeNode aNodesDepthsDictionary |
 				aTreeNode := GtGradTreeNode on: aNodeElement.
-				aNodesDepthsDictionary := self dfs: aTreeNode.
-				self bfs: aTreeNode nodesDepthDictionary: aNodesDepthsDictionary separateSubtrees: separateSubtrees.
+				aNodesDepthsDictionary := self dfs: aTreeNode visited: visitedDictionary.
+				self bfs: aTreeNode nodesDepthDictionary: aNodesDepthsDictionary separateSubtrees: separateSubtrees visited: visitedDictionary.
 				allTrees at: aTreeNode root put: #root ] ].
 
 	^ self new trees: allTrees keys
