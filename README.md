@@ -4,15 +4,6 @@ A set of visualization engines that are part of the [Glamorous Toolkit](https://
 - GT Connector, an engine that offers a visual way to explore examples.
 - GT Diagrammer, an engine for constructing diagrams.
 
-## Installation
+## How to load
 
-You can load Visualizer through:
-
-```
-Iceberg enableMetacelloIntegration: true.
-Metacello new
-   baseline: 'GToolkitVisualizer';
-   repository: 'github://feenkcom/gtoolkit-visualizer/src';
-   load.
-```
-
+The ideal way to load the code is by loading the entire [Glamorous Toolkit project](https://github.com/feenkcom/gtoolkit).
