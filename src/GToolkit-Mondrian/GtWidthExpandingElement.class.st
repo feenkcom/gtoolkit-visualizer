@@ -11,29 +11,37 @@ Class {
 GtWidthExpandingElement class >> example [
 	<gtExample>
 	| label contents contentLabel grid |
+
 	label := BlTextElement new
-            text: 'Name' asRopedText;
-            background: Color white;
-            yourself.
+		text: 'Name' asRopedText;
+		background: Color white;
+		constraintsDo: [ :c | c horizontal matchParent ];
+		yourself.
+
 	contents := BlElement new.
-	contents 
-	    layout: BlLinearLayout horizontal;
-	   constraintsDo: [ :c |
-	        c vertical exact: 100.
-	        c horizontal fitContent ];
+	contents
+		layout: BlLinearLayout horizontal;
+		constraintsDo: [ :c |
+			c vertical exact: 100.
+			c horizontal matchParent ];
 	    background: Color white.
+
 	contentLabel := BlTextElement new
-	            text: 'Label with multiple words' asRopedText;
-	            background: Color white;
-	            yourself.
+		text: 'Label with multiple words' asRopedText;
+		background: Color white;
+		constraintsDo: [ :c | c horizontal matchParent ];
+		yourself.
 	contents addChild: contentLabel.
-	grid := GtWidthExpandingElement new.
-	grid 
-	    layout: (BlGridLayout vertical cellSpacing: 2);
-	    constraintsDo: [ :c |
-	        c vertical fitContent.
-	        c horizontal fitContent ];
-	    background: Color black.
+
+	grid := BlElement new.
+	grid
+		layout: (BlLinearLayout vertical cellSpacing: 2);
+		padding: (BlInsets left: 2 right: 2);
+		constraintsDo: [ :c |
+			c vertical fitContent.
+			c horizontal fitContent ];
+		background: Color black.
+
 	grid addChildren: { label . contents }.
 	^ grid
 ]
