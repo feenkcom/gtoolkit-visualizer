@@ -1,3 +1,27 @@
+"
+!Dominance tree layout
+
+This layout is a variation of the tree layout which makes sure that a tree node is placed as deep as 
+possible.  So, if a node has more than one incoming edge the tree will be formed in such a way that 
+its parent is the deepest of all possible  parents.  An example shown below demonstrates this:
+
+${example:name=GtGradVerticalDominanceTreeLayoutExamples>>#dominanceTreeWithMultiplePathsToANodesWith9Nodes|expanded=true|expandedPreview=true|show=gtLiveFor:}$
+
+The node on the fourth level is connected to the root node, as well as the rightmost node on the 
+third level. The bottommost node is connected to the middle node on the third level and the only 
+node on the fifth level.  In case of the simple tree layout, a spanning tree (to which the layout will be 
+applied) is contructed using depth-first search. This procedure would create a tree where the 
+mentioned bottomost node would be on the fourth level, with its parent being the middle node on 
+the third level..
+
+The following example shows the same graph , but laid out using the horizontal dominance tree:
+
+${example:name=GtGradHorizontalDominanceTreeLayoutExamples>>#dominanceTreeWithMultiplePathsToANodesWith9Nodes|expanded=true|expandedPreview=true|show=gtLiveFor:}$
+
+Other than  different contruction of the tree based on the input graph, there are no other differences 
+between this layout and the regular tree layout. Please see its documenation for more details.
+
+"
 Class {
 	#name : #GtGradDominanceTreeLayoutExamples,
 	#superclass : #GtGradAbstractTreeLayoutExamples,
@@ -12,7 +36,7 @@ GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith5Nodes [
 	
 	theNodes := self nodes: (1 to: 5).
 	theNodes doWithIndex: [ :aNode :index |
-		aNode labeled: index asString.	
+		aNode labeled: index asString.
 	].
 	
 	pairsOfNodes := OrderedCollection new.

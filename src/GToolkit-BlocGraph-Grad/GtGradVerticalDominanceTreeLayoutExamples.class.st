@@ -60,7 +60,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	| view theNodes aTreeLayout |
 	
 	view := self view.
-	theNodes := self constructDominanceTreeWithMultiplePathsToANodesWith9Nodes key. 
+	theNodes := self constructDominanceTreeWithMultiplePathsToANodesWith9Nodes key.
 	view addChildren: theNodes. 
 	aTreeLayout := self dominanceTreeLayout.
 	view layout: aTreeLayout.

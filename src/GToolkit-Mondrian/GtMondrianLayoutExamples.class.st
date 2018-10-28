@@ -5,6 +5,71 @@ Class {
 }
 
 { #category : #tree }
+GtMondrianLayoutExamples >> centeredDominanceHorizontalTree [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 11).
+	mondrian edges connect: { 1->2 . 1->3 . 1->4 . 1->5 .
+									 2->6 . 3->6 . 4->6 . 5->6 .
+									 6->7 . 6->8 . 2->10 . 10-> 11 .
+									 11->9 . 7->9 . 8->9} from: #key to: #value.
+	mondrian layout custom: (GtGradHorizontalDominanceCenteredTreeLayout new).
+	^ mondrian
+]
+
+{ #category : #tree }
+GtMondrianLayoutExamples >> centeredDominanceSimpleHorizontalTree [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 5).
+	mondrian edges connect: { 1->2 . 1->3 . 1->4 . 2->5 .
+									 2->5 . 3->5 . 4->5} from: #key to: #value.
+	mondrian layout custom: (GtGradHorizontalDominanceCenteredTreeLayout new).
+	^ mondrian
+]
+
+{ #category : #tree }
+GtMondrianLayoutExamples >> centeredDominanceSimpleVerticalTree [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 5).
+	mondrian edges connect: { 1->2 . 1->3 . 1->4 . 2->5 .
+									 2->5 . 3->5 . 4->5} from: #key to: #value.
+	mondrian layout custom: (GtGradVerticalDominanceCenteredTreeLayout new).
+	^ mondrian
+]
+
+{ #category : #tree }
+GtMondrianLayoutExamples >> centeredDominanceVerticalTree [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 11).
+	mondrian edges connect: { 1->2 . 1->3 . 1->4 . 1->5 . 
+									 2->6 . 3->6 . 4->6 . 5->6 .
+									 6->7 . 6->8 . 2->10 . 10-> 11 .
+									 11->9 . 7->9 . 8->9} from: #key to: #value.
+	mondrian layout custom: (GtGradVerticalDominanceCenteredTreeLayout new).
+	^ mondrian
+]
+
+{ #category : #tree }
+GtMondrianLayoutExamples >> horizontalDominanceTree [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new.
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 9).
+	mondrian edges connect: { 1->2 . 1->3 . 2->4 . 1->7 .
+									 2->9 . 3->5 . 5->6 . 6->7 .
+									 7->8 . 9->8} from: #key to: #value.
+	mondrian layout custom: (GtGradHorizontalDominanceTreeLayout new).
+	^ mondrian
+]
+
+{ #category : #tree }
 GtMondrianLayoutExamples >> horizontalTreeLayoutBinaryTree15Nodes [
 	<gtExample>
 	| mondrian |
@@ -133,6 +198,19 @@ GtMondrianLayoutExamples >> simpleTreeForceDirectedExample [
 ]
 
 { #category : #tree }
+GtMondrianLayoutExamples >> verticalDominanceTree [
+	<gtExample>
+	| mondrian |
+	mondrian := GtMondrian new. 
+	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 9).
+	mondrian edges connect: { 1->2 . 1->3 . 2->4 . 1->7 .
+									 2->9 . 3->5 . 5->6 . 6->7 .
+									 7->8 . 9->8} from: #key to: #value.
+	mondrian layout custom: (GtGradVerticalDominanceTreeLayout new).
+	^ mondrian
+]
+
+{ #category : #tree }
 GtMondrianLayoutExamples >> verticalTreeLayoutBinaryTree15Nodes [
 	<gtExample>
 	| mondrian |
@@ -149,7 +227,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutGraphWithCycles [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 7).
-	mondrian edges connect: { 1->2 . 1->3 . 2->4 . 2->5 . 3->6 . 3->7 . 6->2 . 5-> 3} from: #key to: #value.
+	mondrian edges connect: { 1->2 . 1->3 . 2->4 . 2->5 . 3->6 . 3->7 . 6->2 . 5->3 } from: #key to: #value.
 	mondrian layout tree.
 	^ mondrian
 ]
