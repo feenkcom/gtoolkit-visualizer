@@ -90,12 +90,12 @@ GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToAN
 
 ]
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructForest: theNodes [
 	^ GtGradDominanceTreeForest from: theNodes separateSubtrees: false
 ]
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
 		
@@ -117,7 +117,7 @@ GtGradDominanceTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingE
  
 ]
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
 	<gtExample>
 		
@@ -138,62 +138,22 @@ GtGradDominanceTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildre
  
 ]
 
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> distinctSubtrees [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> getNodeLevelConstantAxisDimension: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> getNodeLevelVariableAxisDimension: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> getNodeLevelVariablePosition: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> nodeMaximumPoint: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradDominanceTreeLayoutExamples >> nodeMinimumPoint: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
+{ #category : #example }
 GtGradDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	^ self subclassResponsibility
 ]

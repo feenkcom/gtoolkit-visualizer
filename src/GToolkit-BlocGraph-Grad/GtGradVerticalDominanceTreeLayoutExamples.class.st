@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #'examples - instance creation' }
+{ #category : #example }
 GtGradVerticalDominanceTreeLayoutExamples >> distinctSubtrees [
 	<gtExample>
 		
@@ -23,7 +23,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> distinctSubtrees [
 	^ view
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #'example - instance creation' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	<gtExample>
 	|  aTreeLayout |
@@ -36,7 +36,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	^ aTreeLayout
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #example }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
 	| view theNodes aTreeLayout |
@@ -54,7 +54,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #example }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
 	| view theNodes aTreeLayout |
@@ -72,30 +72,30 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #accessing }
 GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
 	^ aTreeNode element measuredBounds extent y
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #accessing }
 GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
 	^ aTreeNode element position y
 	
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #accessing }
 GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
 	^ aTreeNode element measuredBounds extent  x.
 	
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #accessing }
 GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
 	^ aTreeNode element position x
 
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #example }
 GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
 		
@@ -113,17 +113,17 @@ GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEd
 	^ view
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #accessing }
 GtGradVerticalDominanceTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
 	^ aTreeNode element position x + aTreeNode element measuredBounds extent x.
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #accessing }
 GtGradVerticalDominanceTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
 	^ aTreeNode element position x
 ]
 
-{ #category : #'examples - instance creation' }
+{ #category : #example }
 GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	<gtExample>
 	| view theNodes aTreeLayout |

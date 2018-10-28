@@ -61,17 +61,17 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> binaryTreeWith15Nodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> binaryTreeWith7Nodes [
 	^ self subclassResponsibility
 ]
@@ -136,14 +136,6 @@ GtGradTreeLayoutExamples >> constructBinaryTreeWith7Nodes [
 
 	
  
-]
-
-{ #category : #example }
-GtGradTreeLayoutExamples >> constructClassHierarchyTree [
-	<gtExample>		
-	| theNodes  pairsOfNodes theEdges |
-	
- 	theNodes := self nodes: (1 to: 23).
 ]
 
 { #category : #example }
@@ -216,12 +208,12 @@ GtGradTreeLayoutExamples >> constructDisconnectedGraphWithTreeContainingOneNode 
  
 ]
 
-{ #category : #example }
+{ #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructForest: theNodes [
 	^ GtGradDFSTreeForest from: theNodes separateSubtrees: false
 ]
 
-{ #category : #example }
+{ #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
 		
@@ -390,7 +382,7 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfIncreasingSize [
  
 ]
 
-{ #category : #example }
+{ #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
 	<gtExample>
 		
@@ -434,107 +426,67 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSam
 
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> disconnectedGraph [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> distinctSubtrees [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> getNodeLevelConstantAxisDimension: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> getNodeLevelConstantPosition: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> getNodeLevelVariableAxisDimension: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> getNodeLevelVariablePosition: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> graphWithCycles [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> nodeMaximumPoint: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutExamples >> nodeMinimumPoint: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTree [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTreeReversed [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlignment [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	^ self subclassResponsibility
 ]

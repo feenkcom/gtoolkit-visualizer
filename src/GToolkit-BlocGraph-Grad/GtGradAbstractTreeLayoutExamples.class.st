@@ -231,22 +231,22 @@ GtGradAbstractTreeLayoutExamples >> checkPositionsOfTreesAndNodes: theNodes layo
 			]
 ]
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructForest: theNodes [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> distinctSubtrees [
 	^ self subclassResponsibility
 ]
@@ -271,7 +271,7 @@ GtGradAbstractTreeLayoutExamples >> getNodeLevelVariablePosition: arg1 [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #example }
 GtGradAbstractTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	^ self subclassResponsibility
 ]

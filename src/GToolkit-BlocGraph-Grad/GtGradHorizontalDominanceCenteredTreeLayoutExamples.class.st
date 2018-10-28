@@ -16,25 +16,25 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> centeredDominanceTreeLayo
 	^ aTreeLayout
 ]
 
-{ #category : #'example - instance creation' }
+{ #category : #accessing }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
 	^ aTreeNode element measuredBounds extent x.
 	
 ]
 
-{ #category : #'example - instance creation' }
+{ #category : #accessing }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
 	^ aTreeNode element position x
 	
 ]
 
-{ #category : #'example - instance creation' }
+{ #category : #accessing }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
 	^ aTreeNode element measuredBounds extent  y.
 	
 ]
 
-{ #category : #'example - instance creation' }
+{ #category : #accessing }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
 	^ aTreeNode element position y
 
@@ -76,12 +76,12 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANode
 	^ view
 ]
 
-{ #category : #'example - instance creation' }
+{ #category : #accessing }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
 	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
 ]
 
-{ #category : #'example - instance creation' }
+{ #category : #accessing }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
 	^ aTreeNode element position y
 ]

@@ -214,25 +214,25 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	^ view
 ]
 
-{ #category : #example }
+{ #category : #accessing }
 GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
 	^ aTreeNode element measuredBounds extent x.
 	
 ]
 
-{ #category : #example }
+{ #category : #accessing }
 GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
 	^ aTreeNode element position x
 	
 ]
 
-{ #category : #example }
+{ #category : #accessing }
 GtGradHorizontalTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
 	^ aTreeNode element measuredBounds extent  y.
 	
 ]
 
-{ #category : #example }
+{ #category : #accessing }
 GtGradHorizontalTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
 	^ aTreeNode element position y
 
@@ -274,12 +274,12 @@ GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	^ view
 ]
 
-{ #category : #example }
+{ #category : #accessing }
 GtGradHorizontalTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
 	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
 ]
 
-{ #category : #example }
+{ #category : #accessing }
 GtGradHorizontalTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
 	^ aTreeNode element position y
 ]
