@@ -392,6 +392,47 @@ GtGradKamadaKawaiLayout >> randomlyPositionNodes: theNodes maxVerticalValue: max
 
 ]
 
+{ #category : #initialization }
+GtGradKamadaKawaiLayout >> setDefaultParameterValues: theNodes [
+	| maxNodeSize factor |
+	"This is experimental. Created it like that based on previous experimentation
+	using an editor with nodes of different default sizes. There is definitely room
+	for improvement, but this is the basic idea"
+	maxNodeSize := 0.
+	theNodes do: [ :aNode |
+		| nodeWidth nodeHeight biggerDim |
+		nodeWidth := aNode bounds extent x.
+		nodeHeight := aNode bounds extent y.
+		biggerDim := nodeWidth max: nodeHeight.
+		maxNodeSize := maxNodeSize max: biggerDim. 
+	].
+
+	factor := 1 max: (maxNodeSize / 70).
+	theNodes size < 4
+		ifTrue: [ 
+			self lengthFactor: 0.4 * factor.
+			self disconnectedMultiplier: 0.8 * factor.
+			^ self
+		].
+	theNodes size < 10
+		ifTrue: [ 
+			self lengthFactor: 0.8 * factor.
+			self disconnectedMultiplier: 4 * factor.
+			^ self
+		].
+	factor := 1 max: (maxNodeSize / 100).
+	theNodes size < 20
+		ifTrue: [ 
+			self lengthFactor: factor.
+			self disconnectedMultiplier: 5 * factor.	
+		]
+		ifFalse: [ 
+			self lengthFactor: 1.2 * factor.
+			self disconnectedMultiplier: 10 * factor.
+		].
+
+]
+
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 	| gx gy nodesNum diffx diffy|
