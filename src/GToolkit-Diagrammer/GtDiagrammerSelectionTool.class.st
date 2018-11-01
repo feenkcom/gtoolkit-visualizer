@@ -76,7 +76,7 @@ GtDiagrammerSelectionTool >> onInstalledIn: aDiagrammerElement [
 	chooser := GtDiagrammerSelectionChooser on: self.
 
 	deleter := BlShortcut new
-		combination: (BlKeyCombination builder meta delete build);
+		combination: (BlKeyCombination builder primary delete build);
 		action: [ self deleteSelected ].
 
 	aDiagrammerElement canvas addEventHandler: chooser.
