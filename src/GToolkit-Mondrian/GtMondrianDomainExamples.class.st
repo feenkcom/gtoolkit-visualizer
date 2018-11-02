@@ -211,7 +211,7 @@ GtMondrianDomainExamples >> exampleDependencies [
 				constraintsDo: [ :c | 
 					c horizontal exact: 300.
 				   c vertical exact: 200 ] ];
-		with: ((BlBezierExamples>>#quadraticCurveWithAnchors) gtExample withDeepCollect: #directDependencies) asSet.
+		with: ((BlBezierElementExamples>>#quadraticCurveWithAnchors) gtExample withDeepCollect: #directDependencies) asSet.
 	view edges 
 		fromNearestCircle;
 		toNearestCircle;
