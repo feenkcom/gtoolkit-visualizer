@@ -199,10 +199,9 @@ GtGraphElement >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBl
 					objectsToNodesCache values do: [ :aChildNode |
 						aChildNode graph
 							nodeAt: anObject 
-							ifPresent: [ :aNode | 
-								^ aPresentBlock value: aNode ] 
-							ifAbsent: [ ].
-					^ anAbsentBlock value ] ]
+							ifPresent: [ :aNode | ^ aPresentBlock value: aNode ] 
+							ifAbsent: [ ] ].
+					^ anAbsentBlock value ]
 				ifFalse: anAbsentBlock ]
 ]
 
