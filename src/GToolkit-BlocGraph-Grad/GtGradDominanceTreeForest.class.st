@@ -21,8 +21,9 @@ GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictiona
 									theCurrentNode add: aTreeNode ] ]
 						ifFalse: [ aTreeNode := GtGradTreeNode on: aNodeElement.
 							theCurrentNode add: aTreeNode.
-							aVisitedDictionary at: aNodeElement put: aTreeNode ].
-					self dfs: aTreeNode visited: aVisitedDictionary ] ]
+							aVisitedDictionary at: aNodeElement put: aTreeNode.
+							self dfs: aTreeNode visited: aVisitedDictionary
+							] ] ]
 ]
 
 { #category : #'instance-creation' }
