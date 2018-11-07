@@ -30,13 +30,12 @@ GtGradDominanceCenteredTreeForest class >> dfs: theCurrentElement nodesDepths: a
 					theCurrentDepth > theOldDepth
 						ifTrue: [ 
 							aNodesDepthsDictionary at: aChildElement put: theCurrentDepth.
+							self
+								dfs: aChildElement
+								nodesDepths: aNodesDepthsDictionary
+								currentDepth: theCurrentDepth + 1
+								visited: aVisitedDictionary
 						].
-				
-					self
-						dfs: aChildElement
-						nodesDepths: aNodesDepthsDictionary
-						currentDepth: theCurrentDepth + 1
-						visited: aVisitedDictionary
 					]
 			]
 ]
