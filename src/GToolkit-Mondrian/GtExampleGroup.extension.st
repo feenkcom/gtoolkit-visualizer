@@ -60,7 +60,7 @@ GtExampleGroup >> paintMapWith: view [
 		connect: self examples 
 		from: #yourself 
 		toAll: [:each | 
-			self select: [:exampleWithResult | 
+			self examples select: [:exampleWithResult | 
 				each example directDependencies anySatisfy: [ :dependency | exampleWithResult example = dependency ]] ].
 	view layout custom: (BlGridLayout horizontal columnCount: 10)
 ]

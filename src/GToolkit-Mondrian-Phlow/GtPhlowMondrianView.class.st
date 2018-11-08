@@ -20,7 +20,7 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 			(event target graph isNode or: [ event target graph isEdge ])
 				ifTrue: [ mondrianElement
 						fireEvent:
-							(GtPhlowObjectToSelect new
+							(GtPhlowObjectToSpawn new
 								object: event target graph model;
 								sourceElement: event target) ] ].
 	mondrianElement phlow beView; entity: self.
