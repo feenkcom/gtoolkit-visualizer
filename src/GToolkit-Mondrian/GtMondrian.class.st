@@ -10,6 +10,11 @@ Class {
 	#category : 'GToolkit-Mondrian'
 }
 
+{ #category : #accessing }
+GtMondrian >> asElement [
+	^ self asPannableElement
+]
+
 { #category : #ui }
 GtMondrian >> asPannableElement [
 	| pannable |
