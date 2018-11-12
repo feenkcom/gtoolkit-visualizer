@@ -8,7 +8,7 @@ Class {
 GtInspectorConnectorSwitchStencil >> create [
 	^ BrButton new
 		background: Color white;
-		look: BrLabelLook  + BrShadowLook new;
+		look: BrTextLabelLook  + BrShadowLook new;
 		constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent. c padding: (BlInsets all:5)];
 		geometry: (BlRectangle cornerRadius: 10);
 		layout: BlLinearLayout horizontal alignCenter;

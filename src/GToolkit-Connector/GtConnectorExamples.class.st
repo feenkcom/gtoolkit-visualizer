@@ -21,7 +21,7 @@ GtConnectorExamples >> anotherSimpleExample [
 		border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
 
 		labelButton := BrButton new.
-		labelButton look: BrLabelLook.
+		labelButton look: BrTextLabelLook.
 		labelButton label: data.
 		labelButton layout: BlFrameLayout new.
 		labelButton constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent ].
