@@ -75,11 +75,12 @@ GtMondrian >> initialize [
 	stack := Stack new.
 	stack push: (GtMondrianStep new 
 		root: ((BlElement new
-		clipChildren: false;
-		constraintsDo: [ :constraints |
-			constraints horizontal fitContent.
-			constraints vertical fitContent.
-			constraints padding: (BlInsets all: 10) ];
+			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
+			clipChildren: false;
+			constraintsDo: [ :constraints |
+				constraints horizontal fitContent.
+				constraints vertical fitContent.
+				constraints padding: (BlInsets all: 50) ];
 		background: Color white;
 		zIndex: 1)))
 ]
