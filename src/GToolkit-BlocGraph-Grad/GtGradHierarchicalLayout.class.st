@@ -17,15 +17,15 @@ GtGradHierarchicalLayout class >> constraints [
 	^ GtGradHierarchicalConstraints new
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> crossingStage: parent [
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> cycleStage: parent [
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> execute: parent roots: theRootsList [
 	| toRemove |
 	self layoutParent: parent.
@@ -42,7 +42,7 @@ GtGradHierarchicalLayout >> execute: parent roots: theRootsList [
 	self run: parent roots: theRootsList
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> filterDescendants: aNode [
 	| descendants |
 	
@@ -58,7 +58,7 @@ GtGradHierarchicalLayout >> filterDescendants: aNode [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> findRoots: theNodes [
 	"""
 	Finds all nodes that do not have incoming edges.
@@ -139,14 +139,14 @@ GtGradHierarchicalLayout >> intraCellSpacing: anObject [
 	intraCellSpacing := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 	^ (parentNode graph nodesAlongOutgoingEdges includes: childNode) or: [	
 	  parentNode graph nodesAlongOutgoingEdges
 		anySatisfy: [ :aChildNode | self isDescentantOf: childNode parentNode: aChildNode ]]
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> layeringStage [
 ]
 
@@ -171,7 +171,7 @@ GtGradHierarchicalLayout >> parallelEdgeSpacing: anObject [
 	parallelEdgeSpacing := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> placementStage: parent initialX: initialX [
 ]
 
@@ -185,7 +185,7 @@ GtGradHierarchicalLayout >> roots: anObject [
 	roots := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> run: parent [
 	| hierarchyComponentsList visitedNodesSet initialX|
 	hierarchyComponentsList := OrderedCollection new.
@@ -229,7 +229,7 @@ GtGradHierarchicalLayout >> run: parent [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> traverse: aNode visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: theFilledNodes [
 	(aNode isNil or: [ theVisitedNodes isNil ])
 		ifTrue: [ 
