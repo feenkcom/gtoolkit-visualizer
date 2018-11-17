@@ -9,6 +9,13 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
 
+{ #category : #'instance creation' }
+GtGradHierarchyEdge class >> on: theSourceNode target: theTargetNode [
+	<return: #GtGradHierarchyEdge>
+	
+	^ self new source: theSourceNode target: theTargetNode
+]
+
 { #category : #calculating }
 GtGradHierarchyEdge >> invert [
 	| temp |

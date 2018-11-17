@@ -8,6 +8,13 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
 
+{ #category : #'instance creation' }
+GtGradHierarchyNode class >> on: anElement [
+	<return: #GtGradHierarchyNode>
+	
+	^ self new element: anElement
+]
+
 { #category : #accessing }
 GtGradHierarchyNode >> incomingEdges [
 	^ incomingEdges
@@ -16,6 +23,12 @@ GtGradHierarchyNode >> incomingEdges [
 { #category : #accessing }
 GtGradHierarchyNode >> incomingEdges: anObject [
 	incomingEdges := anObject
+]
+
+{ #category : #initialization }
+GtGradHierarchyNode >> initialize [
+	self outgoingEdges: Set new.
+	self incomingEdges: Set new.
 ]
 
 { #category : #accessing }
