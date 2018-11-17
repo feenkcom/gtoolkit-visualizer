@@ -7,7 +7,8 @@ Class {
 		'nextLayerConnectedElements',
 		'previousLayerConnectedElements',
 		'maxRank',
-		'minRank'
+		'minRank',
+		'layer'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -29,6 +30,16 @@ GtGradHierarchyElement >> initialize [
 	positionsPerLayer := Dictionary new.
 	maxRank := -1.
 	minRank := -1
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> layer [
+	^ layer
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> layer: anObject [
+	layer := anObject
 ]
 
 { #category : #accessing }

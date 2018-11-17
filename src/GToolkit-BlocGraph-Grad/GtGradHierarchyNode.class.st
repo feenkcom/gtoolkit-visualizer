@@ -27,8 +27,10 @@ GtGradHierarchyNode >> incomingEdges: anObject [
 
 { #category : #initialization }
 GtGradHierarchyNode >> initialize [
+	super initialize.
 	self outgoingEdges: Set new.
 	self incomingEdges: Set new.
+	self layer: -1.
 ]
 
 { #category : #accessing }

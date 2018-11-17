@@ -16,6 +16,11 @@ GtGradHierarchyEdge class >> on: theSourceNode target: theTargetNode [
 	^ self new source: theSourceNode target: theTargetNode
 ]
 
+{ #category : #initialization }
+GtGradHierarchyEdge >> initialize [
+	super initialize
+]
+
 { #category : #calculating }
 GtGradHierarchyEdge >> invert [
 	| temp |
