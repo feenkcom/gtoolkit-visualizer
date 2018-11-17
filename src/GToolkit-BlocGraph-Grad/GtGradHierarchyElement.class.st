@@ -62,6 +62,12 @@ GtGradHierarchyElement >> nextLayerConnectedElements: anObject [
 ]
 
 { #category : #accessing }
+GtGradHierarchyElement >> nextLayerConnectedElementsOnLayer: layer length: length [
+	self subclassResponsibility
+	
+]
+
+{ #category : #accessing }
 GtGradHierarchyElement >> positionOnLayer: layer [
 	self subclassResponsibility
 	
@@ -94,7 +100,7 @@ GtGradHierarchyElement >> previousLayerConnectedElements: anObject [
 ]
 
 { #category : #accessing }
-GtGradHierarchyElement >> previousLayerConnectedElementsOnLayer: layer [
+GtGradHierarchyElement >> previousLayerConnectedElementsOnLayer: layer length: length [
 	self subclassResponsibility
 	
 ]

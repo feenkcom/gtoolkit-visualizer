@@ -19,6 +19,21 @@ GtGradHierarchyEdge >> invert [
 ]
 
 { #category : #accessing }
+GtGradHierarchyEdge >> nextLayerConnectedElementsOnLayer: layer length:length [
+	self nextLayerConnectedElements isEmpty
+		ifTrue: [ 
+			1 to: length do: [ :aNum | 
+				self nextLayerConnectedElements at: aNum add: OrderedCollection new.
+				aNum = length
+					ifTrue: [ self nextLayerConnectedElements add: self source ]
+					ifFalse: [ self nextLayerConnectedElements add: self ]
+			].
+		].
+	^ self nextLayerConnectedElements at: (layer - minRank)
+
+]
+
+{ #category : #accessing }
 GtGradHierarchyEdge >> positionOnLayer: layer [
 	^ self positionsPerLayer at: (layer - minRank -1)
 ]
@@ -26,6 +41,21 @@ GtGradHierarchyEdge >> positionOnLayer: layer [
 { #category : #accessing }
 GtGradHierarchyEdge >> positionOnLayer: layer position: position [
 	self positionsPerLayer at: (layer - minRank -1) put: position.
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> previousLayerConnectedElementsOnLayer: layer length:length [
+	self previousLayerConnectedElements isEmpty
+		ifTrue: [ 
+			1 to: length do: [ :aNum | 
+				self previousLayerConnectedElements at: aNum add: OrderedCollection new.
+				aNum = length
+					ifTrue: [ self previousLayerConnectedElements add: self target ]
+					ifFalse: [ self previousLayerConnectedElements add: self ]
+			].
+		].
+	^ self previousLayerConnectedElements at: (layer - minRank)
+
 ]
 
 { #category : #accessing }
