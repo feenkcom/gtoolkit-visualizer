@@ -178,8 +178,52 @@ GtGradHierarchyModel >> calculateInitialRank [
 ]
 
 { #category : #'layout - computations' }
-GtGradHierarchyModel >> fixRanks [
+GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection layer: theLayer [
+	aRootNode isNil
+		ifTrue: [ ^ self].
+	(aVisitedNodesCollection includes: aRootNode)
+		ifFalse: [ 
+			visitor visit: aRootNode
+					  parent: parent
+					  connectingEdge: theConnectingEdge
+					  layer: theLayer
+					  visited: false.
+			aVisitedNodesCollection add: aRootNode.
+			aRootNode outgoingEdges do: [ :anOutgoingEdge|
+				self dfs: anOutgoingEdge target
+					  parent: aRootNode
+					  connectingEdge: anOutgoingEdge
+					  visitor: visitor
+					  visitedNodes: aVisitedNodesCollection
+					  layer: theLayer + 1.
+			]
+		]
+		ifTrue: [ 
+			visitor visit: aRootNode
+			 		  parent: parent
+					  connectingEdge: theConnectingEdge
+					  layer: theLayer
+					  visited: true.
+		].
+]
 
+{ #category : #'layout - computations' }
+GtGradHierarchyModel >> fixRanks [
+	| rankCollection rootNodes visitor |
+	rankCollection := (1 to: maxRank + 1) collect: [ :aNumber|
+		Set	 new.
+	].
+	
+	"Performm DFS to calculate initial ordering for each rank"
+	rootNodes := nil.
+	self roots isNotNil
+		ifTrue: [
+				rootNodes := self roots collect: [ :aRootElement |
+					 hierarchyNodesDictionary at: aRootElement
+				].
+		].
+	visitor := GtGradFixRankHierarchyVisitor new rankCollection: rankCollection.
+	self visit: visitor dfsRoots: rootNodes trackAncestors: false visitedNodes: OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -226,4 +270,20 @@ GtGradHierarchyModel >> roots [
 { #category : #accessing }
 GtGradHierarchyModel >> roots: anObject [
 	roots := anObject
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchyModel >> visit: visitor dfsRoots: aDfsRootsCollection trackAncestors: shouldTrackAncestors visitedNodes: aVisitedNodesCollection [
+	aDfsRootsCollection isNil
+		ifTrue: [ ^ self	].
+	aDfsRootsCollection do: [ :aDfsRoot|
+		| aRootNode |
+		(self hierarchyNodesDictionary includesKey: aDfsRoot)
+			ifTrue: [ 
+				aRootNode := self hierarchyNodesDictionary: aDfsRoot.
+				"TODO: if track ancestors - figure out what's up with that"
+				self dfs: aRootNode parent: nil connectingEdge: nil visitor: visitor  visitedNodes: aVisitedNodesCollection layer: 1.
+			].
+		
+	].
 ]
