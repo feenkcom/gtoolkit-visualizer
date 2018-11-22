@@ -1,5 +1,5 @@
 "
-Subclass me to port Roassal layout
+I am an abstract graph layout. My subclasses define the concrete algorithm.
 "
 Class {
 	#name : #GtGraphLayout,
@@ -10,7 +10,7 @@ Class {
 		'affectedNodes',
 		'translator'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Basic'
+	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
 
 { #category : #constraints }
