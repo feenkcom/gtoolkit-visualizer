@@ -1,7 +1,89 @@
+"
+!Mondrian basics
+
+Mondrian is an engine for graph-based visualization. While its roots date back to 2005, there have been multiple incarnations since then, including the ones from Roassal. The current version is based on Bloc, the new graphical engine for Pharo. The current version makes extensive use of Bloc and its mechanisms. As a result it requires a very short implementation that is specific to visualizing graphs. It turns out that most of the things we need for graphs are actually generic concepts that can be used for all sorts of other graphical needs.
+
+To get a more concrete idea of what Mondrian is about, let's consider some examples. 
+
+
+!!A few examples
+
+The first example shows a tree made of nodes and interconnecting edges that are organized as a radial tree. Except that there are also two red edges that do not affect the layout.
+
+${example:GtMondrianBasicExamples>>#passiveEdges|previewExpanded|noCode=|previewShow=#gtLiveFor:}$
+
+Another one shows a UML-like visualization of a class hierarchy.
+
+${example:GtMondrianDomainExamples>>#umlClasses|previewExpanded|noCode=|previewShow=#gtLiveFor:|previewHeight=400}$
+
+Each of these examples are similar in that they are constructed as transformations of some input data into pictures. Yet, the transformation is different: 
+- One shows a tree with nodes represented as rectangles. Another one shows nodes represented as UML class elements. 
+- One shows only simple nodes. Another one also shows nested nodes.
+- Most drawn edges affect the visualization, except for two red ones that even if thicker they are passive ones.
+
+
+!!A tutorial
+
+
+!!!Nodes, edges and layouts
+
+The most basic parts of a Mondrian view are:
+# Nodes
+# Edges
+# Layout
+
+Let's see how we create these. First the nodes.
+
+${example:GtMondrianBasicExamples>>#multipleNodes|previewExpanded}$
+
+Given those nodes, we can build edges.
+
+${example:GtMondrianBasicExamples>>#edgesBetweenNodes|previewExpanded}$
+
+And finally, we lay them out.
+
+${example:GtMondrianBasicExamples>>#layoutOnEdgesBetweenNodes|previewExpanded}$
+
+
+!!!Shapes
+
+The look and feel of nodes and edges is specified by Shapes, which can be included in the construction of nodes and edges.
+
+A shape can be defined by a block that takes the node's model object as its argument and returns an instance of a Bloc element. In the example below, we see nine nodes drawn as circles with black borders, whose sizes depend on the number which each node represents.
+
+${example:GtMondrianBasicExamples>>#nodesWithEllipses|previewExpanded}$
+
+We can define the shape of edges in a similar way. In the example below, the nodes are connected by blue edges whose width varies depending on the node it tries to connect.
+
+${example:GtMondrianBasicExamples>>#edgesWithThickerLines|previewExpanded}$
+
+
+!!!Nesting
+
+Mondrian graphs can also be nested. In other words, a node can have a subgraph.
+
+${example:GtMondrianBasicExamples>>#nestedNodes|previewExpanded}$
+
+Nested nodes behave like leaf nodes in that they can be connected through edges and laid out accordingly.
+
+${example:GtMondrianBasicExamples>>#nestedWithEdges|previewExpanded}$
+
+
+!!Differences to previous incarnations of Mondrian
+
+The API has changed in comparison with the Roassal version because of the constraints and opportunities offered by Bloc:
+- Nodes are defined through ==view nodes with: { ... }==, instead of ==view nodes: { ... }==. One reason is to make the definition more similar to the one of edges.
+- Shapes are defined within the scope of a ==view nodes== or ==view edges== definition.
+- Shapes are mainly defined explicitly by instantiating of ==BlElement== and its subclasses.
+- The ==forEach:== clause can be cascaded after ==view nodes with: {...}==. This allows us to have multiple ==forEach:== statements per one nodes definition.
+- The new ==forEach:in:== allows the user to define the id of the container for the children. In this way, we can define children in different parts of the parent node.
+
+
+"
 Class {
 	#name : #GtMondrianBasicExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Mondrian-Examples'
+	#category : #'GToolkit-Mondrian-Examples'
 }
 
 { #category : #'debugging edge creation' }
@@ -29,6 +111,16 @@ GtMondrianBasicExamples >> capturingEdgesNotCreated [
 	self assert: l recordings third toModel = 5.
 	self assert: l recordings third toElement isNil. 
 	^ l
+]
+
+{ #category : #'tutorial - nodes, edges, layouts' }
+GtMondrianBasicExamples >> edgesBetweenNodes [
+	<gtExample>
+	| view |
+	view := self multipleNodes.
+	view edges connect: {1 . 2 . 3 . 4} from: [ :x | x // 2 ] to: [ :x | x ].
+	self assert: view topStep root graph edgeChildren size equals: 3.
+	^ view
 ]
 
 { #category : #'tutorial - shapes' }
@@ -137,13 +229,23 @@ GtMondrianBasicExamples >> emptyView [
 ]
 
 { #category : #'tutorial - nodes, edges, layouts' }
-GtMondrianBasicExamples >> layoutOnOneEdgeBetweenTwoNodes [
+GtMondrianBasicExamples >> layoutOnEdgesBetweenNodes [
 	<gtExample>
 	| view |
-	view := self oneEdgeBetweenTwoNodes.
+	view := self edgesBetweenNodes.
 	view layout tree.
 	self assert: (view root layout isKindOf: BlOnceLayout).
 	self assert: (view root layout layout isKindOf: GtGradVerticalTreeLayout).
+	^ view
+]
+
+{ #category : #'tutorial - nodes, edges, layouts' }
+GtMondrianBasicExamples >> multipleNodes [
+	<gtExample>
+	| view |
+	view := self emptyView.
+	view nodes with: {1 . 2 . 3 . 4}.
+	self assert: view topStep root children size equals: 4.
 	^ view
 ]
 
@@ -326,16 +428,6 @@ GtMondrianBasicExamples >> nodesWithText [
 	^ view
 ]
 
-{ #category : #'tutorial - nodes, edges, layouts' }
-GtMondrianBasicExamples >> oneEdgeBetweenTwoNodes [
-	<gtExample>
-	| view |
-	view := self twoNodes.
-	view edges connect: {1 . 2} from: [ :x | x + 1 ] to: [ :x | x ].
-	self assert: view topStep root graph edgeChildren size equals: 1.
-	^ view
-]
-
 { #category : #'node creation' }
 GtMondrianBasicExamples >> oneNode [
 	<gtExample>
@@ -397,16 +489,6 @@ GtMondrianBasicExamples >> passiveEdgesWithNesting [
 		passive; 
 		connect: { 1->53 . 11 -> 19 } from: #key to: #value.
 	view layout tree.
-	^ view
-]
-
-{ #category : #'tutorial - nodes, edges, layouts' }
-GtMondrianBasicExamples >> twoNodes [
-	<gtExample>
-	| view |
-	view := self emptyView.
-	view nodes with: {1 . 2}.
-	self assert: view topStep root children size equals: 2.
 	^ view
 ]
 
