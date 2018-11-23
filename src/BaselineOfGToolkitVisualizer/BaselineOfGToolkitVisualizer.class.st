@@ -11,7 +11,7 @@ Currently, the projects contains:
 
 Mondrian is an engine for scripting graph-based visualization like this one:
 
-${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames|previewExpanded=|noCode=|previewShow=gtLiveFor:}$
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames|previewExpanded=|noCode=|previewShow=gtLiveFor:|previewHeight=250}$
 
 Learn more about it: ${class:GtMondrianBasicExamples}$, and ${class:GtMondrianDomainExamples}$.
 
