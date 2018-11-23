@@ -9,19 +9,18 @@ Currently, the projects contains:
 
 !!Mondrian
 
-Mondrian is an engine for scripting graph-based visualization. Take a look at the following example:
+Mondrian is an engine for scripting graph-based visualization like this one:
 
-${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames|expandedPreview|show=gtLiveFor:}$
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames|previewExpanded=|noCode=|previewShow=gtLiveFor:}$
 
-Learn more about it here:
-${icebergFile:path=feenkcom/gtoolkit-visualizer/doc/mondrian/index.pillar}$
+Learn more about it: ${class:GtMondrianBasicExamples}$, and ${class:GtMondrianDomainExamples}$.
 
 
 !!Connector
 
 Connector is an engine for scripting a visual exploration of a graph. For example, below we can see an instantiation of the engine for navigating examples. Just click on the dots.
 
-${example:GtConnectorExamples>>#exampleMethodsExample|noCode|show=gtLiveFor:|previewHeight=300}$
+${example:GtConnectorExamples>>#exampleMethodsExample|noCode|previewShow=gtLiveFor:|previewHeight=300}$
 
 
 
