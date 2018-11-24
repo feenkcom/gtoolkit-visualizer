@@ -3,6 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'roots',
+		'ranks',
 		'parent',
 		'maxRank',
 		'hierarchyNodesDictionary'
@@ -199,11 +200,53 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 ]
 
 { #category : #'layout - computations' }
+GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection parentHashCode: theParentHashCode childHash: theChildHash layer: theLayer [
+	aRootNode isNil
+		ifTrue: [ ^ self].
+	theParentNode isNotNil
+		ifTrue: [ 
+			(aRootNode hashCode isNil or: [ aRootNode hashCode first ~= theParentNode hashCode first ])
+				ifTrue: [ 
+					aRootNode hashCode: (OrderedCollection new: theParentNode hashCode).
+					aRootNode hashCode add: theChildHash.
+				]
+			].
+		
+		(aVisitedNodesCollection includes: aRootNode)
+			ifFalse:[
+				visitor visit: aRootNode
+						  parent: theParentNode
+     					  connectingEdge: theConnectingEdge
+     					  layer: theLayer
+						  visited: false.
+				aVisitedNodesCollection add: aRootNode.
+				aRootNode outgoingEdges doWithIndex: [ :anEdge :theIndex |
+						self dfs: anEdge destination 
+								 parent: aRootNode
+								 connectingEdge: anEdge
+								 visitor: visitor
+								 visitedNodes: aVisitedNodesCollection
+								 parentHashCode: aRootNode hashCode 
+								 childHash: theIndex
+								 layer: theLayer + 1
+					]
+						
+			].
+
+			visitor visit: aRootNode
+			 		  parent: parent
+					  connectingEdge: theConnectingEdge
+					  layer: theLayer
+					  visited: true.
+
+]
+
+{ #category : #'layout - computations' }
 GtGradHierarchyModel >> fixRanks [
-	| rankCollection rootNodes visitor |
-	rankCollection := (1 to: maxRank + 1) collect: [ :aNumber|
+	| rootNodes visitor |
+	self ranks: ((1 to: maxRank + 1) collect: [ :aNumber|
 		Set	 new.
-	].
+	]).
 	
 	"Performm DFS to calculate initial ordering for each rank"
 	rootNodes := nil.
@@ -213,7 +256,7 @@ GtGradHierarchyModel >> fixRanks [
 					 hierarchyNodesDictionary at: aRootElement
 				].
 		].
-	visitor := GtGradFixRankHierarchyVisitor new rankCollection: rankCollection.
+	visitor := GtGradFixRankHierarchyVisitor new rankCollection: self ranks.
 	self visit: visitor dfsRoots: rootNodes trackAncestors: false visitedNodes: OrderedCollection new.
 ]
 
@@ -251,6 +294,16 @@ GtGradHierarchyModel >> parent [
 { #category : #accessing }
 GtGradHierarchyModel >> parent: anObject [
 	parent := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> ranks [
+	^ ranks
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> ranks: anObject [
+	ranks := anObject
 ]
 
 { #category : #accessing }

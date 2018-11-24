@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtGradHierarchyElement,
 	#instVars : [
 		'incomingEdges',
-		'outgoingEdges'
+		'outgoingEdges',
+		'hashCode'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -13,6 +14,16 @@ GtGradHierarchyNode class >> on: anElement [
 	<return: #GtGradHierarchyNode>
 	
 	^ self new element: anElement
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> hashCode [
+	^ hashCode
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> hashCode: anObject [
+	hashCode := anObject
 ]
 
 { #category : #accessing }
@@ -31,6 +42,27 @@ GtGradHierarchyNode >> initialize [
 	self outgoingEdges: Set new.
 	self incomingEdges: Set new.
 	self layer: -1.
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
+	(self hashCode isNil or: [ anotherNode hashCode isNil ])
+		ifTrue: [ ^ false ].
+	self hashCode count < anotherNode hashCode count
+		ifTrue: [ ^ false ].
+	self hashCode = anotherNode hashCode
+		ifTrue: [  ^ true ].
+	
+	self hashCode with: anotherNode hashCode do: [ :hashCode1 :hashCode2|
+		hashCode1 = hashCode2
+			ifFalse: [ ^ false ]
+	].
+	
+	^ true.
+	
+		
+	
+
 ]
 
 { #category : #accessing }
