@@ -62,3 +62,11 @@ GtMondrianLayoutBuilder >> rectanglePack [
 GtMondrianLayoutBuilder >> tree [
 	^ self custom: GtGradVerticalTreeLayout new
 ]
+
+{ #category : #scripting }
+GtMondrianLayoutBuilder >> vertical [
+	self topStep root constraintsDo: [ :c |
+			c horizontal fitContent.
+			c vertical fitContent ].
+	^ self custom: BlLinearLayout vertical
+]

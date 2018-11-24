@@ -2,7 +2,7 @@
 I am a utility class that offers an extra API for adding graph semantics to Bloc elements 
 "
 Class {
-	#name : #GtGraphElement,
+	#name : #GtGraphElementContext,
 	#superclass : #Object,
 	#instVars : [
 		'element',
@@ -15,117 +15,117 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtGraphElement class >> on: anElement [
+GtGraphElementContext class >> on: anElement [
 	^ self new 
 		element: anElement;
 		yourself
 ]
 
 { #category : #deprecated }
-GtGraphElement >> addChildren: aCollection inChildrenContainer: aSymbol [ 
+GtGraphElementContext >> addChildren: aCollection inChildrenContainer: aSymbol [ 
 	^ ((self childrenContainers) at: aSymbol ifAbsent: [self element]) addChildren: aCollection
 ]
 
 { #category : #deprecated }
-GtGraphElement >> beChildrenContainer [
+GtGraphElementContext >> beChildrenContainer [
 	self beChildrenContainer: #default
 ]
 
 { #category : #deprecated }
-GtGraphElement >> beChildrenContainer: aSymbol [
+GtGraphElementContext >> beChildrenContainer: aSymbol [
 	self userData at: #isMondrianChildrenContainer put: aSymbol
 ]
 
 { #category : #api }
-GtGraphElement >> beEdge [
+GtGraphElementContext >> beEdge [
 	isEdge := true.
 	isNode := false
 ]
 
 { #category : #api }
-GtGraphElement >> beNode [
+GtGraphElementContext >> beNode [
 	isEdge := false.
 	isNode := true
 ]
 
 { #category : #deprecated }
-GtGraphElement >> childrenContainerName [
+GtGraphElementContext >> childrenContainerName [
 	^ self userData at: #isMondrianChildrenContainer
 ]
 
 { #category : #deprecated }
-GtGraphElement >> childrenContainerNamed: aSymbol [
+GtGraphElementContext >> childrenContainerNamed: aSymbol [
 	^ self childrenContainers at: aSymbol
 ]
 
 { #category : #deprecated }
-GtGraphElement >> childrenContainers [
+GtGraphElementContext >> childrenContainers [
 	^ self userData 
 		at: #mondrianChildrenContainers
 		ifAbsentPut: [ Dictionary new ]
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> connectedEdges [
+GtGraphElementContext >> connectedEdges [
 	<return: #GtGraphConnectedEdges>
 
 	^ GtGraphConnectedEdges on: self
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> connectedNodes [
+GtGraphElementContext >> connectedNodes [
 	<return: #GtGraphConnectedNodes>
 
 	^ self connectedEdges nodes
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> connectedNodesCount [
+GtGraphElementContext >> connectedNodesCount [
 	<return: #Number>
 
 	^ self connectedNodes size
 ]
 
 { #category : #'api - children' }
-GtGraphElement >> edgeChildren [
+GtGraphElementContext >> edgeChildren [
 	^ self element children select: [ :each | each graph isEdge ]
 ]
 
 { #category : #accessing }
-GtGraphElement >> element [
+GtGraphElementContext >> element [
 	<return: #BlElement>
 
 	^ element
 ]
 
 { #category : #accessing }
-GtGraphElement >> element: anElement [
+GtGraphElementContext >> element: anElement [
 	element := anElement
 ]
 
 { #category : #accessing }
-GtGraphElement >> firstNodeParent [
+GtGraphElementContext >> firstNodeParent [
 	self isNode ifTrue: [ ^ self element ].
 	element parent isNil ifTrue: [ ^ self element ].
 	^ element parent graph firstNodeParent
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> hasNodesAlongIncomingEdges [
+GtGraphElementContext >> hasNodesAlongIncomingEdges [
 	<return: #Boolean>
 
 	^ self nodesAlongIncomingEdges isNotEmpty
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> hasNodesAlongOutgoingEdges [
+GtGraphElementContext >> hasNodesAlongOutgoingEdges [
 	<return: #Boolean>
 
 	^ self nodesAlongOutgoingEdges isNotEmpty
 ]
 
 { #category : #deprecated }
-GtGraphElement >> identifyChildrenContainers [
+GtGraphElementContext >> identifyChildrenContainers [
 	| childrenContainers |
 	childrenContainers := Dictionary new.
 	self element
@@ -138,7 +138,7 @@ GtGraphElement >> identifyChildrenContainers [
 ]
 
 { #category : #initialization }
-GtGraphElement >> initialize [
+GtGraphElementContext >> initialize [
 	super initialize.
 	
 	isEdge := false.
@@ -147,7 +147,7 @@ GtGraphElement >> initialize [
 ]
 
 { #category : #deprecated }
-GtGraphElement >> isChildrenContainer [
+GtGraphElementContext >> isChildrenContainer [
 	"this property marks an element for being a container of children within the Mondrian context.
 	it is useful in the following Mondrian context:
 		1. the developer first describes the shape of a node
@@ -161,27 +161,27 @@ GtGraphElement >> isChildrenContainer [
 ]
 
 { #category : #'api - testing' }
-GtGraphElement >> isEdge [
+GtGraphElementContext >> isEdge [
 	^ isEdge
 ]
 
 { #category : #'api - testing' }
-GtGraphElement >> isNode [
+GtGraphElementContext >> isNode [
 	^ isNode
 ]
 
 { #category : #api }
-GtGraphElement >> model [
+GtGraphElementContext >> model [
 	^ model
 ]
 
 { #category : #api }
-GtGraphElement >> model: anObject [
+GtGraphElementContext >> model: anObject [
 	model := anObject
 ]
 
 { #category : #accessing }
-GtGraphElement >> nodeAt: anObject ifAbsent: aBlock [
+GtGraphElementContext >> nodeAt: anObject ifAbsent: aBlock [
 	^ self 
 		nodeAt: anObject 
 		ifPresent: [ :aNode | ^ aNode ]
@@ -189,7 +189,7 @@ GtGraphElement >> nodeAt: anObject ifAbsent: aBlock [
 ]
 
 { #category : #accessing }
-GtGraphElement >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+GtGraphElementContext >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	objectsToNodesCache
 		at: anObject 
 		ifPresent: aPresentBlock
@@ -206,44 +206,44 @@ GtGraphElement >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBl
 ]
 
 { #category : #accessing }
-GtGraphElement >> nodeAt: anObject put: aNodeElement [
+GtGraphElementContext >> nodeAt: anObject put: aNodeElement [
 	^ objectsToNodesCache at: anObject put: aNodeElement
 ]
 
 { #category : #'api - children' }
-GtGraphElement >> nodeChildren [
+GtGraphElementContext >> nodeChildren [
 	^ self element children select: [ :each | each graph isNode ]
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> nodesAlongIncomingEdges [
+GtGraphElementContext >> nodesAlongIncomingEdges [
 	<return: #GtGraphConnectedNodes>
 
 	^ self connectedEdges incoming nodes
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> nodesAlongIncomingEdgesCount [
+GtGraphElementContext >> nodesAlongIncomingEdgesCount [
 	<return: #Number>
 
 	^ self nodesAlongIncomingEdges size
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> nodesAlongOutgoingEdges [
+GtGraphElementContext >> nodesAlongOutgoingEdges [
 	<return: #GtGraphConnectedNodes>
 
 	^ self connectedEdges outgoing nodes
 ]
 
 { #category : #'api - graph' }
-GtGraphElement >> nodesAlongOutgoingEdgesCount [
+GtGraphElementContext >> nodesAlongOutgoingEdgesCount [
 	<return: #Number>
 
 	^ self nodesAlongOutgoingEdges size
 ]
 
 { #category : #accessing }
-GtGraphElement >> userData [
+GtGraphElementContext >> userData [
 	^ self element userData
 ]

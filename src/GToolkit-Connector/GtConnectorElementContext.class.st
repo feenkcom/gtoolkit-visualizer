@@ -1,5 +1,5 @@
 Class {
-	#name : #GtConnectorElement,
+	#name : #GtConnectorElementContext,
 	#superclass : #Object,
 	#instVars : [
 		'model',
@@ -14,55 +14,55 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtConnectorElement class >> on: anElement [
+GtConnectorElementContext class >> on: anElement [
 	^ self new 
 		element: anElement;
 		yourself
 ]
 
 { #category : #accessing }
-GtConnectorElement >> beConnectedTo: anObject [ 
+GtConnectorElementContext >> beConnectedTo: anObject [ 
 	connectorConnections isNil ifTrue: [ connectorConnections := Set new ].
 	connectorConnections add: anObject.
 ]
 
 { #category : #accessing }
-GtConnectorElement >> beLayoutSource [
+GtConnectorElementContext >> beLayoutSource [
 	isLayoutSource := true
 ]
 
 { #category : #accessing }
-GtConnectorElement >> beLayoutTarget [
+GtConnectorElementContext >> beLayoutTarget [
 	isLayoutTarget := true
 ]
 
 { #category : #accessing }
-GtConnectorElement >> beNotConnectedTo: anObject [ 
+GtConnectorElementContext >> beNotConnectedTo: anObject [ 
 	connectorConnections isNotNil ifTrue: [ connectorConnections remove: anObject ].
 ]
 
 { #category : #accessing }
-GtConnectorElement >> beVisualSource [
+GtConnectorElementContext >> beVisualSource [
 	isVisualSource := true
 ]
 
 { #category : #accessing }
-GtConnectorElement >> beVisualTarget [
+GtConnectorElementContext >> beVisualTarget [
 	isVisualTarget := true
 ]
 
 { #category : #accessing }
-GtConnectorElement >> element [
+GtConnectorElementContext >> element [
 	^ element
 ]
 
 { #category : #accessing }
-GtConnectorElement >> element: anObject [
+GtConnectorElementContext >> element: anObject [
 	element := anObject
 ]
 
 { #category : #accessing }
-GtConnectorElement >> initialize [
+GtConnectorElementContext >> initialize [
 	isLayoutSource := false.
 	isLayoutTarget := false.
 	isVisualSource := false.
@@ -71,56 +71,56 @@ GtConnectorElement >> initialize [
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isConnectedTo: anObject [ 
+GtConnectorElementContext >> isConnectedTo: anObject [ 
 	^ 	connectorConnections isNotNil and: [ connectorConnections includes: anObject  ].
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isLayoutSource [
+GtConnectorElementContext >> isLayoutSource [
 	^ isLayoutSource
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isLayoutSource: anObject [
+GtConnectorElementContext >> isLayoutSource: anObject [
 	isLayoutSource := anObject
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isLayoutTarget [
+GtConnectorElementContext >> isLayoutTarget [
 	^ isLayoutTarget
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isLayoutTarget: anObject [
+GtConnectorElementContext >> isLayoutTarget: anObject [
 	isLayoutTarget := anObject
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isVisualSource [
+GtConnectorElementContext >> isVisualSource [
 	^ isVisualSource
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isVisualSource: anObject [
+GtConnectorElementContext >> isVisualSource: anObject [
 	isVisualSource := anObject
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isVisualTarget [
+GtConnectorElementContext >> isVisualTarget [
 	^ isVisualTarget
 ]
 
 { #category : #accessing }
-GtConnectorElement >> isVisualTarget: anObject [
+GtConnectorElementContext >> isVisualTarget: anObject [
 	isVisualTarget := anObject
 ]
 
 { #category : #accessing }
-GtConnectorElement >> model [
+GtConnectorElementContext >> model [
 	^ model
 ]
 
 { #category : #accessing }
-GtConnectorElement >> model: anObject [
+GtConnectorElementContext >> model: anObject [
 	model := anObject
 ]

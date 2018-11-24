@@ -255,5 +255,5 @@ GtMondrianClassHierarcyExamples >> emptyView [
 
 { #category : #accessing }
 GtMondrianClassHierarcyExamples >> targetClass [ 
-	^ GLMFormatedPresentation
+	^ GtPhlowView
 ]
