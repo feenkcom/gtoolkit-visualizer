@@ -89,92 +89,83 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 GtGradHierarchyModel >> calculateInitialRank [
 	| startNodes startNodesCopy |
 	
-	startNodes := OrderedCollection new.
-	self roots isNotNil
-		ifTrue: [ 
-			self roots do: [ :aRoot |
-				(self hierarchyNodesDictionary includesKey: aRoot)
-					ifTrue: [ 
-						startNodes add: (self hierarchyNodesDictionary at: aRoot)
-					]		
-			].	
-		].
-		startNodesCopy := OrderedCollection new: startNodes.
+	startNodes := self rootNodes.
+	startNodesCopy := OrderedCollection new: startNodes.
 		
-		[ startNodes isNotEmpty ]
-			whileTrue: [ 
-				| layerValue loopCounter aNode layerDetermeningEdges edgesToBeMarked allEdgesVisited minimumLayer |
-				aNode := startNodes first.
-				layerDetermeningEdges := aNode incomingEdges.
-				edgesToBeMarked := aNode outgoingEdges.
-				allEdgesVisited := true.
-				minimumLayer :=  SmallInteger maxVal.
-				loopCounter := 1.
-				"TODO why this value?? - can this be a random value?"
-				layerValue := 5270620.
-				(allEdgesVisited and: [ loopCounter <= layerDetermeningEdges count ])
-					whileTrue: [ 
-						| hierarchyEdge	|
-						hierarchyEdge := layerDetermeningEdges at: loopCounter.
-						hierarchyEdge layer = layerValue
-							ifTrue: [
+	[ startNodes isNotEmpty ]
+		whileTrue: [ 
+			| layerValue loopCounter aNode layerDetermeningEdges edgesToBeMarked allEdgesVisited minimumLayer |
+			aNode := startNodes first.
+			layerDetermeningEdges := aNode incomingEdges.
+			edgesToBeMarked := aNode outgoingEdges.
+			allEdgesVisited := true.
+			minimumLayer :=  SmallInteger maxVal.
+			loopCounter := 1.
+			"TODO why this value?? - can this be a random value?"
+			layerValue := 5270620.
+			(allEdgesVisited and: [ loopCounter <= layerDetermeningEdges count ])
+				whileTrue: [ 
+					| hierarchyEdge	|
+					hierarchyEdge := layerDetermeningEdges at: loopCounter.
+					hierarchyEdge layer = layerValue
+						ifTrue: [
+							| otherNode |
+							otherNode := hierarchyEdge source.
+							minimumLayer := minimumLayer min: (otherNode layer - 1).
+						]
+						ifFalse: [ 
+							allEdgesVisited := false	
+						]
+				 ].
+			allEdgesVisited
+				ifTrue: [ 
+					aNode layer: minimumLayer.
+					self maxRank: (self maxRank min: minimumLayer).
+					edgesToBeMarked isNotNil
+						ifTrue: [ 
+							edgesToBeMarked do: [ :anEdgeToBeMarked |
 								| otherNode |
-								otherNode := hierarchyEdge source.
-								minimumLayer := minimumLayer min: (otherNode layer - 1).
+								anEdgeToBeMarked layer: layerValue.
+								otherNode := anEdgeToBeMarked target.
+								otherNode layer = -1
+									ifTrue: [ 
+										startNodes add: otherNode.
+										"Mark this node as neither assigned nor assigned.
+										It won't be taken into consideration in any calculation"
+										otherNode layer: -2.
+									].	
 							]
-							ifFalse: [ 
-								allEdgesVisited := false	
-							]
-					 ].
-				allEdgesVisited
-					ifTrue: [ 
-						aNode layer: minimumLayer.
-						self maxRank: (self maxRank min: minimumLayer).
-						edgesToBeMarked isNotNil
-							ifTrue: [ 
-								edgesToBeMarked do: [ :anEdgeToBeMarked |
-									| otherNode |
-									anEdgeToBeMarked layer: layerValue.
-									otherNode := anEdgeToBeMarked target.
-									otherNode layer = -1
-										ifTrue: [ 
-											startNodes add: otherNode.
-											"Mark this node as neither assigned nor assigned.
-											It won't be taken into consideration in any calculation"
-											otherNode layer: -2.
-										].	
-								]
-							].
-						startNodes removeFirst
-					]
-					ifFalse: [ 
-						| removedNode |
-						removedNode := startNodes removeFirst.
-						startNodes add: aNode.
-						(removedNode = aNode and: [ startNodes count = 1])
-							ifTrue: [ 
-								"Error condition - break out of the loop"
-								startNodes removeAll.
-							]
-					]
-			].
-		"Normalize the ranks"
-		hierarchyNodesDictionary valuesDo: [ :aNode |
-			aNode layer: (aNode layer - self maxRank).
+						].
+					startNodes removeFirst
+				]
+				ifFalse: [ 
+					| removedNode |
+					removedNode := startNodes removeFirst.
+					startNodes add: aNode.
+					(removedNode = aNode and: [ startNodes count = 1])
+						ifTrue: [ 
+							"Error condition - break out of the loop"
+							startNodes removeAll.
+						]
+				]
 		].
+	"Normalize the ranks"
+	hierarchyNodesDictionary valuesDo: [ :aNode |
+		aNode layer: (aNode layer - self maxRank).
+	].
 	
-		startNodesCopy do: [ :aNode |
-			 | currentMaxLayer |
-			currentMaxLayer := 0.
-			aNode incomingEdges do: [ :anEdge |
-				| otherNode |
-				aNode layer: (currentMaxLayer max: otherNode layer + 1).
-				currentMaxLayer := aNode layer.
-			].
+	startNodesCopy do: [ :aNode |
+		 | currentMaxLayer |
+		currentMaxLayer := 0.
+		aNode incomingEdges do: [ :anEdge |
+			| otherNode |
+			otherNode := anEdge source.
+			aNode layer: (currentMaxLayer max: otherNode layer + 1).
+			currentMaxLayer := aNode layer.
 		].
-		self maxRank: (SmallInteger maxVal - self maxRank)
+	].
+	self maxRank: (SmallInteger maxVal - self maxRank)
 	
-
 ]
 
 { #category : #'layout - computations' }
@@ -260,6 +251,22 @@ GtGradHierarchyModel >> parent [
 { #category : #accessing }
 GtGradHierarchyModel >> parent: anObject [
 	parent := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> rootNodes [
+	| aRootElementsCollection |
+	aRootElementsCollection := OrderedCollection new.
+	self roots isNotNil
+		ifTrue: [ 
+			self roots do: [ :aRoot |
+				(self hierarchyNodesDictionary includesKey: aRoot)
+					ifTrue: [ 
+						aRootElementsCollection add: (self hierarchyNodesDictionary at: aRoot)
+					]		
+			].	
+		].
+	^ aRootElementsCollection
 ]
 
 { #category : #accessing }
