@@ -36,6 +36,6 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: parent connectingEdge: con
 	connectingEdge minRank: aNode maxRank.
 	connectingEdge minRank + 1 to: connectingEdge maxRank - 1 do: [ :aNum |
 		self rankCollection at: aNum add: connectingEdge.
-		connectingEdge rankPositions at: (aNum - connectingEdge minRank) put: (rankCollection count)
+		connectingEdge rankPositionsAt: aNum value: rankCollection count
 		]
 ]

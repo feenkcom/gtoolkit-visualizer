@@ -66,12 +66,12 @@ GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
 ]
 
 { #category : #accessing }
-GtGradHierarchyNode >> nextLayerConnectedElementsOnLayer: layer length: length [
+GtGradHierarchyNode >> nextLayerConnectedElementsOnLayer: aLayer [
 	self nextLayerConnectedElements isEmpty
 		ifTrue: [
 			self nextLayerConnectedElements add: OrderedCollection new.
 			self incomingEdges do: [ :anEdge |
-				(anEdge maxRank = -1 or: [ anEdge maxRank = layer + 1 ])
+				(anEdge maxRank = -1 or: [ anEdge maxRank = aLayer + 1 ])
 					ifTrue: [
 						 self nextLayerConnectedElements first add: anEdge source 
 					]
@@ -105,12 +105,12 @@ GtGradHierarchyNode >> positionOnLayer: layer position: position [
 ]
 
 { #category : #accessing }
-GtGradHierarchyNode >> previousLayerConnectedElementsOnLayer: layer length: length [
+GtGradHierarchyNode >> previousLayerConnectedElementsOnLayer: aLayer [
 	self previousLayerConnectedElements isEmpty
 		ifTrue: [
 			self previousLayerConnectedElements add: OrderedCollection new.
 			self outgoingEdges do: [ :anEdge |
-				(anEdge minRank = -1 or: [ anEdge minRank = layer - 1 ])
+				(anEdge minRank = -1 or: [ anEdge minRank = aLayer - 1 ])
 					ifTrue: [
 						 self previousLayerConnectedElements first add: anEdge target
 					]
@@ -122,4 +122,14 @@ GtGradHierarchyNode >> previousLayerConnectedElementsOnLayer: layer length: leng
 		].
 	^ self previousLayerConnectedElements first.
 		
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> rankPositionsAt: aLayer [
+	self rankPositions at: 1.
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> rankPositionsAt: aLayer value: aValue [
+	self rankPositions at: 1 put: aValue
 ]
