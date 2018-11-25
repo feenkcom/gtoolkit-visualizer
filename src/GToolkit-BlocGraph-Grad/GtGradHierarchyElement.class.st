@@ -8,7 +8,8 @@ Class {
 		'previousLayerConnectedElements',
 		'maxRank',
 		'minRank',
-		'layer'
+		'layer',
+		'rankPositions'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -29,7 +30,8 @@ GtGradHierarchyElement >> initialize [
 	previousLayerConnectedElements := OrderedCollection new.
 	positionsPerLayer := Dictionary new.
 	maxRank := -1.
-	minRank := -1
+	minRank := -1.
+	rankPositions := Dictionary new
 ]
 
 { #category : #accessing }
@@ -114,4 +116,14 @@ GtGradHierarchyElement >> previousLayerConnectedElements: anObject [
 GtGradHierarchyElement >> previousLayerConnectedElementsOnLayer: layer length: length [
 	self subclassResponsibility
 	
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> rankPositions [
+	^ rankPositions
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> rankPositions: anObject [
+	rankPositions := anObject
 ]

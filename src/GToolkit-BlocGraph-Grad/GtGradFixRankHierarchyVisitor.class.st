@@ -22,10 +22,11 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: parent connectingEdge: con
 	| parentNodeRankDifference |
 	visited
 		ifFalse: [ (aNode maxRank < 0 and: [ aNode minRank < 0 ])
-				ifTrue: [ (self rankCollection at: aNode layer) add: aNode.
-					aNode maxRank: aNode layout.
-					aNode minRank: aNode layout.
-					aNode layout: (self rankCollection at: aNode layout) count - 1 ] ].
+				ifTrue: [ 
+					(self rankCollection at: aNode layer) add: aNode.
+					aNode maxRank: aNode layer.
+					aNode minRank: aNode layer.
+					aNode layer: (self rankCollection at: aNode maxRank) count - 1 ] ].
 	(parent isNotNil and: [ connectingEdge isNotNil ])
 		ifFalse: [ ^ self ].
 	parentNodeRankDifference := parent maxRank - aNode maxRank.
@@ -33,8 +34,8 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: parent connectingEdge: con
 		ifFalse: [ ^ self ].
 	connectingEdge maxRank: parent maxRank.
 	connectingEdge minRank: aNode maxRank.
-	connectingEdge layer: parentNodeRankDifference - 1.
-	connectingEdge
-		position: (parentNodeRankDifference - 1) @ (parentNodeRankDifference - 1).
-	connectingEdge minRank + 1 to: connectingEdge maxRank do: [ :aNum | self rankCollection at: aNum add: connectingEdge ]
+	connectingEdge minRank + 1 to: connectingEdge maxRank - 1 do: [ :aNum |
+		self rankCollection at: aNum add: connectingEdge.
+		connectingEdge rankPositions at: (aNum - connectingEdge minRank) put: (rankCollection count)
+		]
 ]
