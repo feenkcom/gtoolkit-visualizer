@@ -3,11 +3,10 @@ Class {
 	#superclass : #GtGradHierarchicalLayoutStage,
 	#instVars : [
 		'maxIterations',
-		'nestedBestCanks',
+		'nestedBestRanks',
 		'currentBestCrossings',
 		'iterationsWithoutImprovement',
-		'maxNoImprovementIterations',
-		'nestedBestRanks'
+		'maxNoImprovementIterations'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -121,17 +120,77 @@ GtGradHierarchicalHybirdCrossingReductionStage >> maxNoImprovementIterations: an
 ]
 
 { #category : #accessing }
-GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankValue downwardSweep: downwardSweep [
+GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwardSweep: downwardSweep [
+	| elementsByMedianValueDictionary reservedPositions sortedMedianValues aCounter medianCounter |
+	elementsByMedianValueDictionary := Dictionary new.
+	reservedPositions := OrderedCollection new.
+	
+	(self nestedBestRanks at: aRankLayer) do: [ :anElement |
+		| nextLevelConnectedElements nextRankLayer |
+		downwardSweep
+			ifTrue: [ 
+				nextLevelConnectedElements := anElement nextLayerConnectedElementsOnLayer: aRankLayer.
+				nextRankLayer := aRankLayer + 1.
+			]
+			ifFalse: [
+				nextLevelConnectedElements := anElement previousLayerConnectedElementsOnLayer: aRankLayer.
+				nextRankLayer := aRankLayer -1
+			].
+		(nextLevelConnectedElements isNotNil and: [ nextLevelConnectedElements isNotEmpty ])
+			ifTrue: [ 
+				| medianValue |	
+				medianValue := self medianValue: nextLevelConnectedElements rankLayer: nextRankLayer.
+				(elementsByMedianValueDictionary includesKey: medianValue)
+					ifFalse: [ 
+						elementsByMedianValueDictionary at: medianValue put: OrderedCollection new.
+					].
+				elementsByMedianValueDictionary at: medianValue add: anElement.
+			]
+			ifFalse: [ reservedPositions add: (anElement rankPositionsAt: aRankLayer)]
+		].
+		sortedMedianValues := elementsByMedianValueDictionary keys asSortedCollection.
+		"TODO need to check this, due to the first index being 0"
+		medianCounter := 1.
+		aCounter := 1.
+		[ aCounter <= (nestedBestRanks at: aRankLayer count) ] 
+			whileTrue: [ 
+				| theCurrentMedian |
+				theCurrentMedian := sortedMedianValues at: medianCounter.
+				(elementsByMedianValueDictionary at: theCurrentMedian) do: [ :anElement |
+					(reservedPositions includes: aCounter)
+						ifFalse: [ 
+							anElement rankPositionsAt: aRankLayer value: aCounter.
+						].
+					aCounter := aCounter + 1.
+				].
+			medianCounter := medianCounter + 1.
+		]
+	
+		
 ]
 
 { #category : #accessing }
-GtGradHierarchicalHybirdCrossingReductionStage >> nestedBestCanks [
-	^ nestedBestCanks
-]
-
-{ #category : #accessing }
-GtGradHierarchicalHybirdCrossingReductionStage >> nestedBestCanks: anObject [
-	nestedBestCanks := anObject
+GtGradHierarchicalHybirdCrossingReductionStage >> medianValue: aConnectedElementsCollection rankLayer: aRankLayer [
+	| medianValues medianCollectionCount medianPoint leftMedian rightMedian |
+	medianValues := aConnectedElementsCollection collect: [ :anElement |
+		anElement rankPositionsAt: aRankLayer
+	].
+	medianValues := medianValues asSortedCollection.
+	medianCollectionCount := medianValues count.
+	medianCollectionCount odd
+		ifTrue: [ ^medianValues at: (medianCollectionCount / 2) ].
+	medianCollectionCount = 2
+		ifTrue: [ (medianValues first + medianValues second) / 2 ].
+	"TODO check indexes..."
+	medianPoint := medianCollectionCount / 2.
+	leftMedian := medianValues at: medianPoint - medianValues first.
+	rightMedian := medianValues last - medianValues at: (medianPoint  + 1).
+	^ (((medianValues at: medianPoint) * rightMedian) + 
+	((medianValues at: (medianPoint  + 1)) * leftMedian)) / (leftMedian + rightMedian)
+	
+	
+	
+	
 ]
 
 { #category : #accessing }
