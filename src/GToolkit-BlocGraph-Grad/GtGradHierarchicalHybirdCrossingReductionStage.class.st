@@ -78,7 +78,62 @@ GtGradHierarchicalHybirdCrossingReductionStage >> currentBestCrossings: anObject
 ]
 
 { #category : #'layout - computations' }
-GtGradHierarchicalHybirdCrossingReductionStage >> execute [
+GtGradHierarchicalHybirdCrossingReductionStage >> execute: parent [
+	| theCurrentIteration |
+	"TODO check indexes..."
+	self nestedBestRanks: Array2D new.
+	self model ranks doWithIndex: [ :aRank :anIndex |
+		(self nestedBestRanks at: anIndex) put: (aRank collect: [ :anElement |
+			anElement.	
+		])
+	].
+	self iterationsWithoutImprovement: 0.
+	self currentBestCrossings: self calculateCrossings.
+	theCurrentIteration := 1.
+	[theCurrentIteration <= self maxIterations and: [
+		iterationsWithoutImprovement < self maxNoImprovementIterations
+		and: [ currentBestCrossings > 0 ]]]
+		 whileTrue: [
+			| candidateCrossings |
+			self weightedMedian: theCurrentIteration.
+			self transpose: theCurrentIteration.
+			candidateCrossings := self calculateCrossings.
+			candidateCrossings < currentBestCrossings
+				ifTrue: [ 
+					currentBestCrossings := candidateCrossings.
+					iterationsWithoutImprovement := 0.
+					1 to: (self nestedBestRanks count) do: [ :anIndex |
+					 	| aRank |
+						aRank := self model ranks at: anIndex.
+						aRank do: [ :anElement |
+							self nestedBestRanks at: anIndex at: 
+								(anElement rankPositionsAt: anIndex) put: anElement.
+						]
+					]
+				]
+				ifFalse: [ 
+					iterationsWithoutImprovement := iterationsWithoutImprovement + 1.
+					1 to: (self nestedBestRanks count) do: [ :anIndex |
+					 	| aRank |
+						aRank := self model ranks at: anIndex.
+						aRank doWithIndex: [ :anElement :rankIndex |
+							anElement rankPositionsAt: anIndex value: rankIndex.
+						]
+					]		
+				]	
+			].
+
+	"update model ranks"
+	self model ranks removeAll.
+	self model ranks: (self nestedBestRanks collect: [ :aRankArray |
+			Set new withAll: aRankArray.
+		]).
+	
+	
+	
+
+
+	
 ]
 
 { #category : #initialization }

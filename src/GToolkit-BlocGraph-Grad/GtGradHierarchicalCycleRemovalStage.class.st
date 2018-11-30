@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'layout - computations' }
-GtGradHierarchicalCycleRemovalStage >> execute [
+GtGradHierarchicalCycleRemovalStage >> execute: parent [
 	| aVisitedNodesSet aVisitedNodesSetCopy aRootNodesCollection visitor newRootsCandidates |
 	aVisitedNodesSet := Set new.
 	aRootNodesCollection := self model rootNodes.
@@ -28,7 +28,9 @@ GtGradHierarchicalCycleRemovalStage >> execute [
 	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: aVisitedNodesSetCopy.
 	newRootsCandidates do: [ :aRootCandidate |
 		| anElement |
-		anElement := aRootCandidate element.		
+		anElement := aRootCandidate element.
+		anElement graph nodesAlongIncomingEdgesCount = 0
+			ifTrue: [ self model roots add: anElement].
 	]	
 
 

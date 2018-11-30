@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'layout - computations' }
-GtGradHierarchicalLayoutStage >> execute [
+GtGradHierarchicalLayoutStage >> execute: parent [
 	self subclassResponsibility
 ]
 
