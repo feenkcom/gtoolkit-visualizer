@@ -94,11 +94,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> initialize [
 	self channelBuffer: 4.
 	self jettyPositionsDictionary: IdentityDictionary new.
 	self fineTuning: true.
-	
-	
-	
-	
-	
+
 	
 ]
 
@@ -160,6 +156,44 @@ GtGradHierarchicalCoordinateAssignmentStage >> minEdgeJetty [
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> minEdgeJetty: anObject [
 	minEdgeJetty := anObject
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> minNode [
+	| weightedElements nodeWeightedElementDictionary rank maxTries triesCount tolerance |
+	weightedElements := OrderedCollection new.
+	nodeWeightedElementDictionary := IdentityDictionary new.
+	rank := Array2D new.
+	"TODO once again, think about indexes - just increased by one for npw"
+	1 to: (model maxRank + 1) do: [ :aRankValue |
+		| aRankSet |
+		aRankSet := model ranks at: aRankValue.
+		rank at: aRankValue put: aRankSet asCollection.
+		(aRankSet at: aRankValue) doWithIndex: [ :aNode :anRankIndex |
+			| aWeightedElement |
+			aWeightedElement := GtGradHierarchicalWeightedElement new
+										element: aNode ;
+										rankIndex: anRankIndex;
+										visited: true.
+			weightedElements add: aWeightedElement.
+			nodeWeightedElementDictionary at: aNode  put: aWeightedElement.
+		]
+	].
+	maxTries := weightedElements count * 10.
+	triesCount := 0.
+	tolerance := 1.
+	
+	[weightedElements isNotEmpty and: [ triesCount <= maxTries ]]
+		whileTrue: [ 
+			| aWeightedElement aNode rankValue rankIndex |
+			aWeightedElement := weightedElements first.
+			aNode := aWeightedElement element.
+			
+		].
+	
+	
+	
+	
 ]
 
 { #category : #accessing }
