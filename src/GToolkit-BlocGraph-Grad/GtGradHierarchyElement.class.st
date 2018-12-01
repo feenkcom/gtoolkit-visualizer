@@ -9,7 +9,9 @@ Class {
 		'maxRank',
 		'minRank',
 		'layer',
-		'rankPositions'
+		'rankPositions',
+		'xPositions',
+		'yPositions'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -136,4 +138,36 @@ GtGradHierarchyElement >> rankPositionsAt: aLayer [
 { #category : #accessing }
 GtGradHierarchyElement >> rankPositionsAt: aLayer value: aValue [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> xPositionAt: aLayer [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> xPositionAt: aLayer value: aValue [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> xPositions [
+	" x positions per layer"
+	^ xPositions
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> xPositions: anObject [
+	xPositions := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> yPositions [
+	"y positions per layer"
+	^ yPositions
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> yPositions: anObject [
+	yPositions := anObject
 ]

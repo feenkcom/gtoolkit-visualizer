@@ -133,3 +133,13 @@ GtGradHierarchyNode >> rankPositionsAt: aLayer [
 GtGradHierarchyNode >> rankPositionsAt: aLayer value: aValue [
 	self rankPositions at: 1 put: aValue
 ]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> xPositionAt: aLayer [
+	xPositions first
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> xPositionAt: aLayer value: aValue [
+	xPositions first: aValue.
+]

@@ -12,7 +12,7 @@ Class {
 		'minEdgeJetty',
 		'channelBuffer',
 		'jettyPositionsDictionary',
-		'initalX',
+		'initialX',
 		'limitX',
 		'currentXDelta',
 		'topYPerRank',
@@ -22,7 +22,8 @@ Class {
 		'rankYvalues',
 		'fineTuning',
 		'nextLayerConnectedElementsCache',
-		'previousLayerConnectedCache'
+		'previousLayerConnectedCache',
+		'widestRank'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -71,6 +72,10 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWeight: theCurrentNode n
 	^ totalWeight
 ]
 
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
+]
+
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> channelBuffer [
 	^ channelBuffer
@@ -106,13 +111,13 @@ GtGradHierarchicalCoordinateAssignmentStage >> fineTuning: anObject [
 ]
 
 { #category : #accessing }
-GtGradHierarchicalCoordinateAssignmentStage >> initalX [
-	^ initalX
+GtGradHierarchicalCoordinateAssignmentStage >> initialX [
+	^ initialX
 ]
 
 { #category : #accessing }
-GtGradHierarchicalCoordinateAssignmentStage >> initalX: anObject [
-	initalX := anObject
+GtGradHierarchicalCoordinateAssignmentStage >> initialX: anObject [
+	initialX := anObject
 ]
 
 { #category : #initialization }
@@ -130,6 +135,25 @@ GtGradHierarchicalCoordinateAssignmentStage >> initialize [
 	self fineTuning: true.
 
 	
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> initializeCoordinates [
+	self calculateWidestRank.
+	"sweep up and down from the widest rank"
+	
+	self widestRank + 1 to: 1 by: -1 do: [ :aRankValue |
+		aRankValue < self model maxRank
+			ifTrue: [ self rankCoordinates: aRankValue ]
+	].
+
+	self widestRank + 2 to: self model maxRank do: [ :aRankValue |
+		aRankValue > 0
+			ifTrue: [ self rankCoordinates: aRankValue  ]	
+	]
+		
+
+
 ]
 
 { #category : #accessing }
@@ -409,6 +433,35 @@ GtGradHierarchicalCoordinateAssignmentStage >> previousLayerConnectedCache: anOb
 ]
 
 { #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> rankCoordinates: aRankValue [
+	| aRankSet maxY localX |
+	"TODO replace isMemberOf"
+	aRankSet := model ranks at: aRankValue.
+	maxY := 0.
+	localX := self initialX + ((self widestRankValue - self rankWidths at: aRankValue) / 2).
+	aRankSet do: [ :aNode |
+		(aNode isMemberOf: GtGradHierarchyNode)
+			ifTrue: [ 
+				self setNodeWidthAndHeight: aNode.
+				 maxY := maxY max: aNode height.
+			]
+			ifFalse: [ 
+				| numberOfEdges |
+				numberOfEdges := 1.
+				aNode edges isNotNil
+					ifTrue: [ numberOfEdges := aNode edges count ].
+				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
+			].
+			localX := localX + aNode width / 2.
+			aNode xPositionAt: aRankValue value: localX.
+			aNode rankPositionsAt: aRankValue value: localX.
+			localX := localX + aNode width / 2 + self intraRankSpacing
+		]
+	
+	
+]
+
+{ #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> rankMedianPosition: aRankValue nextValue: theNextRankValue [
 	| weightedElements nodeWeightedElementDictionary rank |
 	"TODO of course, check indexes, is asOrderedCollection necessary"
@@ -515,6 +568,11 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankYvalues: anObject [
 ]
 
 { #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> setNodeWidthAndHeight: aNode [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank [
 	^ topYPerRank
 ]
@@ -522,6 +580,16 @@ GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank [
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank: anObject [
 	topYPerRank := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> widestRank [
+	^ widestRank
+]
+
+{ #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> widestRank: anObject [
+	widestRank := anObject
 ]
 
 { #category : #accessing }

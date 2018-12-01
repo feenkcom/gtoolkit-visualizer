@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'source',
 		'target',
-		'reversed'
+		'reversed',
+		'edges'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -14,6 +15,16 @@ GtGradHierarchyEdge class >> on: theSourceNode target: theTargetNode [
 	<return: #GtGradHierarchyEdge>
 	
 	^ self new source: theSourceNode target: theTargetNode
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> edges [
+	^ edges
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> edges: anObject [
+	edges := anObject
 ]
 
 { #category : #initialization }
@@ -108,4 +119,14 @@ GtGradHierarchyEdge >> target [
 { #category : #accessing }
 GtGradHierarchyEdge >> target: anObject [
 	target := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> xPositionAt: aLayer [
+	xPositions at: [ aLayer - minRank ]
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> xPositionAt: aLayer value: aValue [
+	xPositions add: aValue  at: aLayer
 ]
