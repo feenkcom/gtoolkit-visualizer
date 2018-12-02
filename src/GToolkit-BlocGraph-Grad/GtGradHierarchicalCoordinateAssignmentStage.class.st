@@ -74,6 +74,57 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWeight: theCurrentNode n
 
 { #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
+	| yValue lastRankMaxElementHeight distanceToNextRank |
+	yValue := self interRanksSpacing negated.
+	lastRankMaxElementHeight := 0.
+	self rankWidths: OrderedCollection new.
+	self rankYvalues: OrderedCollection new.
+	"TODO check intexes"
+	self model maxRank to: 1 by: -1 do: [ :aRankValue |
+		| maxElementHeight localX aRankSet |
+		maxElementHeight := 0.
+		aRankSet := model ranks at: aRankValue.
+		localX := self initialX.
+		aRankSet do: [ :aNode |
+			"TODO remove isMemberOf
+			The code below is mostly the same as in rank coordinates
+			Create a method"
+			(aNode isMemberOf: GtGradHierarchyNode)
+			ifTrue: [ 
+				self setNodeWidthAndHeight: aNode.
+				 maxElementHeight := maxElementHeight max: aNode height.
+			]
+			ifFalse: [ 
+				| numberOfEdges |
+				numberOfEdges := 1.
+				aNode edges isNotNil
+					ifTrue: [ numberOfEdges := aNode edges count ].
+				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
+			].
+			localX := localX + aNode width / 2.
+			aNode xPositionAt: aRankValue value: localX.
+			aNode rankPositionsAt: aRankValue value: localX.
+			localX := localX + aNode width / 2 + self intraRankSpacing.
+			localX > self widestRankValue
+				ifTrue: [ 
+					self widestRankValue: localX.
+					self widestRank: aRankValue.	
+				].
+			self rankWidths at: aRankValue put: localX.
+			self rankYvalues at: aRankValue put: yValue.
+			distanceToNextRank := (maxElementHeight / 2) + 
+										(lastRankMaxElementHeight / 2) +
+										self interRanksSpacing.
+			lastRankMaxElementHeight := maxElementHeight.
+			"create methods in subclasses for adding to y"			
+										
+		].
+		
+		
+		
+		
+	]
+
 ]
 
 { #category : #accessing }
