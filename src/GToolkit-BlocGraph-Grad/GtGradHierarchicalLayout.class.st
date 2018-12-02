@@ -26,21 +26,22 @@ GtGradHierarchicalLayout >> crossingStage: parent [
 GtGradHierarchicalLayout >> cycleStage: parent [
 ]
 
-{ #category : #'private-layout' }
+{ #category : #'api - layout' }
 GtGradHierarchicalLayout >> execute: parent roots: theRootsList [
 	| toRemove |
 	self layoutParent: parent.
 	(parent isNil and: [ theRootsList isNil ])
 		ifTrue: [ ^ self ].
 	(parent isNotNil and: [ theRootsList isNotNil ])
-		ifFalse: [ ^ self ].
-	toRemove := OrderedCollection new.
-	toRemove := theRootsList
-		collect: [ :aRoot | 
-			(self isDescentantOf: aRoot parentNode: parent)
-				ifTrue: [ aRoot ] ].
-	theRootsList removeAll: toRemove.
-	self run: parent roots: theRootsList
+		ifTrue: [ 
+			toRemove := theRootsList
+			collect: [ :aRoot | 
+				(self isDescentantOf: aRoot parentNode: parent)
+					ifTrue: [ aRoot ] ].
+			theRootsList removeAll: toRemove
+		].
+	self roots: theRootsList.
+	self run: parent
 ]
 
 { #category : #'private-layout' }
@@ -49,9 +50,7 @@ GtGradHierarchicalLayout >> filterDescendants: aNode [
 	
 	descendants := Set new.
 	aNode = self layoutParent
-		ifFalse: [ 
-			descendants add: aNode.
-		].
+		ifFalse: [ descendants add: aNode ].
 	aNode graph nodesAlongOutgoingEdges do: [ :aChildNode |
 		descendants addAll: (self filterDescendants: aChildNode)
 	].
@@ -161,6 +160,16 @@ GtGradHierarchicalLayout >> layoutParent: anObject [
 	layoutParent := anObject
 ]
 
+{ #category : #measure }
+GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
+	| theNodes |
+
+	theNodes := anElement children accountedByLayout
+		select: [ :aChildElement | aChildElement graph isNode ].
+
+	self execute: theNodes first roots: nil
+]
+
 { #category : #accessing }
 GtGradHierarchicalLayout >> parallelEdgeSpacing [
 	"Distance between parallel edges"
@@ -186,70 +195,77 @@ GtGradHierarchicalLayout >> roots: anObject [
 	roots := anObject
 ]
 
-{ #category : #'private-layout' }
+{ #category : #'api - layout' }
 GtGradHierarchicalLayout >> run: parent [
-	| hierarchyComponentsList visitedNodesSet initialX|
-	hierarchyComponentsList := OrderedCollection new.
-	visitedNodesSet := Set new.
-	"TODO: roots should not be an attribute"
+	| aHierarchyNodesCollection visitedNodes initialX |
+	"this is a list of sets"
+	aHierarchyNodesCollection := OrderedCollection new.
+	visitedNodes := Set new.
 	(self roots isNil and: [ parent isNotNil ])
-		ifTrue: [ 
-			| filledNodesSet|
-			filledNodesSet := self filterDescendants: parent.
+		ifTrue: [
+			| filledNodesSet |
 			self roots: OrderedCollection new.
+			filledNodesSet := self filterDescendants: parent.
 			[filledNodesSet isNotEmpty]
-				whileTrue: [ 
-					| candidateRoots |
-					candidateRoots := self findRoots: filledNodesSet.
-					candidateRoots do: [ :aRootCandidate |
-						| theCurrentComponent |
-						theCurrentComponent := Set new.
-						hierarchyComponentsList add: theCurrentComponent.
-						self traverse: aRootCandidate visitedNodes: visitedNodesSet currentComponent: theCurrentComponent hierarchyComponents: hierarchyComponentsList filledNodesSet: filledNodesSet
+				whileTrue: [
+					| rootCandidates |
+					rootCandidates := self findRoots: filledNodesSet.
+					rootCandidates do: [ :aRootCandidate |
+						| theCurrentNodesSet |
+						theCurrentNodesSet := Set new.
+						aHierarchyNodesCollection add: theCurrentNodesSet.
+						self traverse: aRootCandidate directed: false  visitedNodes: visitedNodes  currentComponent:  theCurrentNodesSet hierarchyComponents:  aHierarchyNodesCollection filledNodesSet: filledNodesSet
 					].
-					self roots addAll: candidateRoots.
-				].]
+					self roots addAll: rootCandidates
+				]
+			]
 		ifFalse: [ 
-			self roots do: [ :aRoot|
-				| theCurrentComponent |
-				theCurrentComponent := Set new.
-				hierarchyComponentsList add: theCurrentComponent.
-				self traverse: aRoot visitedNodes: visitedNodesSet currentComponent: theCurrentComponent hierarchyComponents: hierarchyComponentsList filledNodesSet: nil
-				].
-			].
+			self roots do: [ :aRoot |
+				| theCurrentNodesSet |
+				theCurrentNodesSet := Set new.
+				aHierarchyNodesCollection add: theCurrentNodesSet.
+				self traverse: aRoot directed: true  visitedNodes: visitedNodes  currentComponent:  theCurrentNodesSet hierarchyComponents:  aHierarchyNodesCollection filledNodesSet: nil
+			]
+	].
+	Halt now.
+	"Perform layout for each separate hierarchy"
 	initialX := 0.
-	hierarchyComponentsList do: [ :aComponent|
-		
-		self cycleStage: parent.
+	aHierarchyNodesCollection do: [ :aHierarchySet |
+		"create and initialize model"
 		self layeringStage.
 		self crossingStage: parent.
 		initialX := self placementStage: parent initialX: initialX.
-	].
-	
+	]
+
 	
 
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> traverse: aNode visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: theFilledNodes [
+GtGradHierarchicalLayout >> traverse: aNode directed: isDirectedTraversal visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: aFilledNodesSet [
 	(aNode isNil or: [ theVisitedNodes isNil ])
-		ifTrue: [ 
-			^ self	
-		].
-	((theVisitedNodes includes: aNode negated) and: [ theFilledNodes isNil or: [
-			theFilledNodes includes: aNode]])
+		ifTrue: [ ^ self	].
+	(((theVisitedNodes includes: aNode) not) and: [ aFilledNodesSet isNil or: [
+			aFilledNodesSet includes: aNode]])
 		ifTrue: [ 
 			theCurrentComponent add: aNode.
 			theVisitedNodes add: aNode.
 			
-			(theVisitedNodes isNotNil and: [ theVisitedNodes includes: aNode ])
+			(aFilledNodesSet isNotNil and: [ aFilledNodesSet includes: aNode ])
 				ifTrue:[
-					theVisitedNodes remove: aNode
+					aFilledNodesSet remove: aNode
 				].
-			"TODO: take a closer look at getEdges, this is probably not it"
+
 			aNode graph nodesAlongOutgoingEdges do: [ :aChildNode |
-				self traverse: aChildNode visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: theFilledNodes
+				self traverse: aChildNode directed: false visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: aFilledNodesSet.
 			].
+			isDirectedTraversal
+				ifTrue: [ 
+					"also process incoming edges"
+					aNode graph nodesAlongIncomingEdges do: [ :aChildNode |
+						self traverse: aChildNode directed: true visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: aFilledNodesSet.
+					]
+				]
 		]
 		ifFalse: [ 
 			(theCurrentComponent includes: aNode)
@@ -264,14 +280,12 @@ GtGradHierarchicalLayout >> traverse: aNode visitedNodes: theVisitedNodes curren
 							ifTrue: [ 
 								matchedComponent := aComponent.
 								theCurrentComponent addAll: aComponent.
-							].
+							]
 					].
 					matchedComponent isNotNil
 						ifTrue: [ 
 							theHierarchyComponents remove: matchedComponent	
-						].
-				].
+						]
+				]
 		].
-	
-
 ]
