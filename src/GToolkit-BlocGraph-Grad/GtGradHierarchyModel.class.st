@@ -6,7 +6,8 @@ Class {
 		'ranks',
 		'parent',
 		'maxRank',
-		'hierarchyNodesDictionary'
+		'hierarchyNodesDictionary',
+		'hierarchyEdgesDictionary'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -261,6 +262,16 @@ GtGradHierarchyModel >> fixRanks [
 ]
 
 { #category : #accessing }
+GtGradHierarchyModel >> hierarchyEdgesDictionary [
+	^ hierarchyEdgesDictionary
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> hierarchyEdgesDictionary: anObject [
+	hierarchyEdgesDictionary := anObject
+]
+
+{ #category : #accessing }
 GtGradHierarchyModel >> hierarchyNodesDictionary [
 	^ hierarchyNodesDictionary
 ]
@@ -273,7 +284,9 @@ GtGradHierarchyModel >> hierarchyNodesDictionary: anObject [
 { #category : #initialization }
 GtGradHierarchyModel >> initialize [
 	super initialize.
-	self maxRank: SmallInteger maxVal
+	self maxRank: SmallInteger maxVal.
+	self hierarchyNodesDictionary: IdentityDictionary new.
+	self hierarchyEdgesDictionary: IdentityDictionary new.
 ]
 
 { #category : #accessing }

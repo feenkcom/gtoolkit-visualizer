@@ -2,7 +2,8 @@ Class {
 	#name : #GtGradHierarchicalLayoutStage,
 	#superclass : #Object,
 	#instVars : [
-		'model'
+		'model',
+		'layout'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -10,6 +11,16 @@ Class {
 { #category : #'layout - computations' }
 GtGradHierarchicalLayoutStage >> execute: parent [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayoutStage >> layout [
+	^ layout
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayoutStage >> layout: anObject [
+	layout := anObject
 ]
 
 { #category : #accessing }

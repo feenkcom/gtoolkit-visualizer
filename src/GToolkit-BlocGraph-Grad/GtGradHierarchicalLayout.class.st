@@ -7,7 +7,8 @@ Class {
 		'interHierarchySpacing',
 		'parallelEdgeSpacing',
 		'layoutParent',
-		'roots'
+		'roots',
+		'positions'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }

@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #'layout - computations' }
+GtGradSouthHierarchicalCoordinateAssignmentStage >> distanceToNextRankIncrement: aValue [
+	^ aValue negated
+]
+
+{ #category : #'layout - computations' }
+GtGradSouthHierarchicalCoordinateAssignmentStage >> positionElement: anElement positionX: positionX positionY: positionY [
+	self layout positions at: anElement put: positionX@positionY
+]
+
+{ #category : #'layout - computations' }
 GtGradSouthHierarchicalCoordinateAssignmentStage >> setNodeWidthAndHeight: aNode [
 	aNode width: aNode element measuredWidth.
 	aNode height: aNode element measuredHeight.

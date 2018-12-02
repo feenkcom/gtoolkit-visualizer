@@ -111,19 +111,22 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 					self widestRank: aRankValue.	
 				].
 			self rankWidths at: aRankValue put: localX.
-			self rankYvalues at: aRankValue put: yValue.
-			distanceToNextRank := (maxElementHeight / 2) + 
-										(lastRankMaxElementHeight / 2) +
-										self interRanksSpacing.
-			lastRankMaxElementHeight := maxElementHeight.
-			"create methods in subclasses for adding to y"			
-										
-		].
-		
-		
-		
-		
+			].
+		self rankYvalues at: aRankValue put: yValue.
+		distanceToNextRank := (maxElementHeight / 2) + 
+									(lastRankMaxElementHeight / 2) +
+									self interRanksSpacing.
+		lastRankMaxElementHeight := maxElementHeight.
+		yValue := yValue + self distanceToNextRankIncrement: distanceToNextRank .
+		aRankSet do:  [ :aNode |
+			aNode xPositionAt: aRankValue value: yValue.
+		]										
 	]
+		
+		
+		
+		
+	
 
 ]
 
@@ -148,7 +151,34 @@ GtGradHierarchicalCoordinateAssignmentStage >> currentXDelta: anObject [
 ]
 
 { #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> distanceToNextRankIncrement: aValue [
+	self subclassResponsibility
+]
+
+{ #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> execute: parent [
+	| bestXDelta |
+	self currentXDelta: 0.
+	self initializeCoordinates.
+	bestXDelta := 100000000.
+	self fineTuning
+		ifTrue: [ 1 to: self maxIterations
+				do: [ :anIteration | 
+					anIteration > 1
+						ifTrue: [ self medianPositioning: anIteration ].
+					self minNode.
+					self model ranks
+						doWithIndex: [ :aRankSet :anIndex | 
+							aRankSet
+								do: [ :aNode | 
+									self currentXDelta < bestXDelta
+										ifTrue:
+											[ aNode xPositionAt: anIndex value: (aNode rankPositionsAt: anIndex) ]
+										ifFalse:
+											[ aNode rankPositionsAt: anIndex value: (aNode xPositionAt: anIndex) ].
+									bestXDelta := bestXDelta min: self currentXDelta ] ].
+					self minPath.
+					self currentXDelta: 0 ] ]
 ]
 
 { #category : #accessing }
@@ -423,6 +453,14 @@ GtGradHierarchicalCoordinateAssignmentStage >> minNode [
 	
 ]
 
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> minPath [
+	"This methods straightens edges.
+	Skipping calculation of edge segments for now...
+	Should be implemented later"
+	
+]
+
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> nextLayerConnectedElementsCache [
 	^ nextLayerConnectedElementsCache
@@ -451,6 +489,39 @@ GtGradHierarchicalCoordinateAssignmentStage >> parallelEdgeSpacing [
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> parallelEdgeSpacing: anObject [
 	parallelEdgeSpacing := anObject
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> positionElement: anElement positionX: positionX positionY: positionY [
+	self subclassResponsibility
+
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> positionElements [
+	"This method is supposed to position both nodes and edges
+	For now, we are only positioning nodes
+	Also, this handles resizing parents, but we will skip that
+	for now as well"
+
+	self
+		topYPerRank: (model ranks collect: [ :aRank | SmallInteger maxVal ]).
+	self bottomYPerRank: OrderedCollection new.
+	self model hierarchyNodesDictionary
+		valuesDo: [ :aNode | self positionNode: aNode ]
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
+	| anElement positionX positionY |
+	anElement := aNode element.
+	positionX := aNode xPositions first - (aNode width / 2).
+	positionY := aNode yPositions first - (aNode height / 2).
+	self topYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) min: positionY).
+	self bottomYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) max: (positionY + aNode height)).
+	self positionElement: anElement positionX: positionX positionY: positionY.
+	"limitX is needed while positioning edges, so this is not necesarry for now..."
+	self limitX: (self limitX max: positionX + aNode width)
 ]
 
 { #category : #accessing }
@@ -616,6 +687,45 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankYvalues [
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> rankYvalues: anObject [
 	rankYvalues := anObject
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> repositionOfElementValid: aHierarchyElement rank: aRankValue position: aPositionValue [
+	| aRankCollection aRankIndex currentRankPosition |
+	aRankCollection := (model ranks at: aRankValue) asOrderedCollection.
+	aRankIndex := aRankCollection indexOf: aHierarchyElement.
+	aRankIndex = 0
+		ifTrue: [ ^ false ].
+	currentRankPosition := aHierarchyElement rankPositionsAt: aRankValue.
+	aPositionValue < currentRankPosition
+		ifTrue: [
+			| leftElement leftLimit |
+			aRankIndex = 1
+				ifTrue: [ 
+					"left-most node can be moved anywhere"	
+					^ true.
+				].
+			leftElement := aRankCollection at: [ aRankIndex  - 1 ].
+			leftLimit := leftElement rankPositionsAt: aRankValue +
+							 (leftElement width / 2) +
+							 intraRankSpacing + (aHierarchyElement width / 2).
+			^ leftLimit <= aPositionValue	
+		].
+		aPositionValue > currentRankPosition
+			ifTrue: [
+				| rightElement rightLimit |
+				aRankIndex = aRankCollection count
+					ifTrue: [ 
+						"left-most node can be moved anywhere"	
+						^ true.
+					].
+				rightElement := aRankCollection at: [ aRankIndex  + 1 ].
+				rightLimit := rightElement rankPositionsAt: aRankValue -
+							 (rightElement width / 2) -
+							 intraRankSpacing - (aHierarchyElement width / 2).
+				^ rightLimit >= aPositionValue	
+			].
+	^ true
 ]
 
 { #category : #accessing }

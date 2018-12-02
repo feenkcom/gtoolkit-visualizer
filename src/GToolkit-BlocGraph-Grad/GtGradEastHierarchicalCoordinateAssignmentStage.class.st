@@ -4,6 +4,16 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
 
+{ #category : #'layout - computations' }
+GtGradEastHierarchicalCoordinateAssignmentStage >> distanceToNextRankIncrement: aValue [
+	^ aValue negated
+]
+
+{ #category : #'layout - computations' }
+GtGradEastHierarchicalCoordinateAssignmentStage >> positionElement: anElement positionX: positionX positionY: positionY [
+	self layout positions at: anElement put: positionY@positionX
+]
+
 { #category : #accessing }
 GtGradEastHierarchicalCoordinateAssignmentStage >> setNodeWidthAndHeight: aNode [
 	aNode height: aNode element measuredWidth.
