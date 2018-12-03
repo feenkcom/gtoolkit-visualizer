@@ -7,6 +7,7 @@ Class {
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExample [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
