@@ -147,7 +147,7 @@ BlElement >> gtInspectorEditorIn: aComposite [
 			
 			theEditors do: [ :anEditor |
 				| aTitle |
-				aTitle := BlTextEditElement new text: (anEditor title asRopedText).
+				aTitle := BlTextElement new text: (anEditor title asRopedText).
 				aTitle margin: (BlInsets all: 5). 
 				container addChild: aTitle.
 				container addChild: anEditor editor ].
