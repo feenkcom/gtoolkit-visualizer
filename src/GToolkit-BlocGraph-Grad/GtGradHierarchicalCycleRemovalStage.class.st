@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'layout - computations' }
-GtGradHierarchicalCycleRemovalStage >> execute: parent [
+GtGradHierarchicalCycleRemovalStage >> execute [
 	| aVisitedNodesSet aVisitedNodesSetCopy aRootNodesCollection visitor newRootsCandidates |
 	aVisitedNodesSet := Set new.
 	aRootNodesCollection := self model rootNodes.

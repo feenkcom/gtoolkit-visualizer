@@ -78,7 +78,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> currentBestCrossings: anObject
 ]
 
 { #category : #'layout - computations' }
-GtGradHierarchicalHybirdCrossingReductionStage >> execute: parent [
+GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 	| theCurrentIteration |
 	"TODO check indexes..."
 	self nestedBestRanks: Array2D new.

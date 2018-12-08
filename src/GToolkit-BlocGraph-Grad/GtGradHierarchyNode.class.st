@@ -16,6 +16,16 @@ GtGradHierarchyNode class >> on: anElement [
 	^ self new element: anElement
 ]
 
+{ #category : #'api - layout' }
+GtGradHierarchyNode >> addIncomingEdge: anEdge [
+	self incomingEdges add: anEdge
+]
+
+{ #category : #'api - layout' }
+GtGradHierarchyNode >> addOutgoingEdge: anEdge [
+	self outgoingEdges add: anEdge
+]
+
 { #category : #accessing }
 GtGradHierarchyNode >> hashCode [
 	^ hashCode

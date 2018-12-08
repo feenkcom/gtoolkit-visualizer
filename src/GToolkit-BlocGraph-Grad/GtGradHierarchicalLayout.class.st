@@ -6,7 +6,6 @@ Class {
 		'interRankCellSpacing',
 		'interHierarchySpacing',
 		'parallelEdgeSpacing',
-		'layoutParent',
 		'roots',
 		'positions'
 	],
@@ -19,29 +18,15 @@ GtGradHierarchicalLayout class >> constraints [
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> crossingStage: parent [
+GtGradHierarchicalLayout >> crossingStage: model [
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> cycleStage: parent [
-]
-
-{ #category : #'api - layout' }
-GtGradHierarchicalLayout >> execute: parent roots: theRootsList [
-	| toRemove |
-	self layoutParent: parent.
-	(parent isNil and: [ theRootsList isNil ])
-		ifTrue: [ ^ self ].
-	(parent isNotNil and: [ theRootsList isNotNil ])
-		ifTrue: [ 
-			toRemove := theRootsList
-			collect: [ :aRoot | 
-				(self isDescentantOf: aRoot parentNode: parent)
-					ifTrue: [ aRoot ] ].
-			theRootsList removeAll: toRemove
-		].
-	self roots: theRootsList.
-	self run: parent
+GtGradHierarchicalLayout >> cycleStage: model [
+	| cycleRemover |
+	cycleRemover := GtGradHierarchicalCycleRemovalStage new model: model.
+	"Tested until this point - there seems to be an infinite here"
+	"cycleRemover execute"
 ]
 
 { #category : #'private-layout' }
@@ -65,8 +50,8 @@ GtGradHierarchicalLayout >> findRoots: theNodes [
 	If there are no such nodes, the nodes which has maximum difference
 	between the number of incoming and outcoming edges is found
 	"""
-	| roots bestNode maxDiff |
-	roots := OrderedCollection new.
+	| aRootsCollection bestNode maxDiff |
+	aRootsCollection := OrderedCollection new.
 	bestNode := nil.
 	maxDiff := -1.
 	theNodes do: [ :theNode |
@@ -88,11 +73,11 @@ GtGradHierarchicalLayout >> findRoots: theNodes [
 			].
 	].
 	
-	(roots isEmpty and: [ bestNode isNotNil ])
+	(aRootsCollection isEmpty and: [ bestNode isNotNil ])
 		ifTrue: [ 
-			roots add: bestNode
+			aRootsCollection add: bestNode
 		].
-	^ roots
+	^ aRootsCollection
 ]
 
 { #category : #initialization }
@@ -150,16 +135,6 @@ GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 GtGradHierarchicalLayout >> layeringStage [
 ]
 
-{ #category : #accessing }
-GtGradHierarchicalLayout >> layoutParent [
-	^ layoutParent
-]
-
-{ #category : #accessing }
-GtGradHierarchicalLayout >> layoutParent: anObject [
-	layoutParent := anObject
-]
-
 { #category : #measure }
 GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
 	| theNodes |
@@ -167,7 +142,7 @@ GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
 	theNodes := anElement children accountedByLayout
 		select: [ :aChildElement | aChildElement graph isNode ].
 
-	self execute: theNodes first roots: nil
+	self run: theNodes
 ]
 
 { #category : #accessing }
@@ -196,16 +171,17 @@ GtGradHierarchicalLayout >> roots: anObject [
 ]
 
 { #category : #'api - layout' }
-GtGradHierarchicalLayout >> run: parent [
+GtGradHierarchicalLayout >> run: theGraphNodesList [
 	| aHierarchyNodesCollection visitedNodes initialX |
 	"this is a list of sets"
 	aHierarchyNodesCollection := OrderedCollection new.
 	visitedNodes := Set new.
-	(self roots isNil and: [ parent isNotNil ])
+	self roots isNil
 		ifTrue: [
 			| filledNodesSet |
 			self roots: OrderedCollection new.
-			filledNodesSet := self filterDescendants: parent.
+			filledNodesSet := OrderedCollection new.
+			filledNodesSet addAll: theGraphNodesList.
 			[filledNodesSet isNotEmpty]
 				whileTrue: [
 					| rootCandidates |
@@ -216,7 +192,7 @@ GtGradHierarchicalLayout >> run: parent [
 						aHierarchyNodesCollection add: theCurrentNodesSet.
 						self traverse: aRootCandidate directed: false  visitedNodes: visitedNodes  currentComponent:  theCurrentNodesSet hierarchyComponents:  aHierarchyNodesCollection filledNodesSet: filledNodesSet
 					].
-					self roots addAll: rootCandidates
+					self roots addAll: rootCandidates.
 				]
 			]
 		ifFalse: [ 
@@ -227,14 +203,16 @@ GtGradHierarchicalLayout >> run: parent [
 				self traverse: aRoot directed: true  visitedNodes: visitedNodes  currentComponent:  theCurrentNodesSet hierarchyComponents:  aHierarchyNodesCollection filledNodesSet: nil
 			]
 	].
-	Halt now.
 	"Perform layout for each separate hierarchy"
 	initialX := 0.
 	aHierarchyNodesCollection do: [ :aHierarchySet |
-		"create and initialize model"
-		self layeringStage.
-		self crossingStage: parent.
-		initialX := self placementStage: parent initialX: initialX.
+		| model |
+		model := GtGradHierarchyModel from: aHierarchySet.
+		Halt now.
+		self crossingStage.
+		"self layeringStage."
+		"self crossingStage.
+		initialX := self placementStage: parent initialX: initialX."
 	]
 
 	

@@ -17,17 +17,17 @@ GtGradHierarchyModel class >> directedToUndirectedRatio: aSourceElement target: 
 	| directedCount undirectedCount |
 	directedCount := 0.
 	undirectedCount := 0.
-	aSourceElement nodesAlongOutgoingEdges do: [ :aConnectedElement |
-		aConnectedElement = aTargetElement
-			ifTrue: [ 
-				undirectedCount := undirectedCount + 1.
-			]
-	].
-	undirectedCount := directedCount.
-	aSourceElement nodesAlongIncomingEdges do: [ :aConnectedElement |
+	aSourceElement graph nodesAlongOutgoingEdges do: [ :aConnectedElement |
 		aConnectedElement = aTargetElement
 			ifTrue: [ 
 				directedCount := directedCount + 1.
+			]
+	].
+	undirectedCount := directedCount.
+	aSourceElement graph nodesAlongIncomingEdges do: [ :aConnectedElement |
+		aConnectedElement = aTargetElement
+			ifTrue: [ 
+				undirectedCount := undirectedCount + 1.
 			]
 	].	
 	^ directedCount / undirectedCount
@@ -40,7 +40,7 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 	"Create an internal hierarchy model"
 	| nodesDictionary connectedElementsDictionary |
 	nodesDictionary := IdentityDictionary new.
-	"For each key value pair in this dictionary there a hierachy edge is constructed"
+	"For each key value pair in this dictionary a hierachy edge is constructed"
 	connectedElementsDictionary := IdentityDictionary new.
 	aCollectionOfElements do: [ :anElement |
 		| connectedElements aHierarchyNode|
@@ -51,7 +51,7 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 				nodesDictionary at: anElement put: (GtGradHierarchyNode on: anElement).
 			].
 		aHierarchyNode := nodesDictionary at: anElement.
-		anElement nodesAlongOutgoingEdges do: [ :anOutgoingElement |
+		anElement graph nodesAlongOutgoingEdges do: [ :anOutgoingElement |
 			anOutgoingElement ~= anElement
 				ifTrue: [
 					| otherElementConnectedElements |
@@ -62,7 +62,7 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 							"All edges between this source and its targets need to be processed
 							If there are back edges which create loops, they are callected into one
 							hierarchical edge.
-							It is assumed that source to targed is the natural direction if at least half
+							It is assumed that source -> target is the natural direction if at least half
 							of the edges are going in that direction."
 							 (self directedToUndirectedRatio: anElement target: anOutgoingElement) > 0.5
 								ifTrue: [
@@ -74,12 +74,12 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 									targetHierarchyNode := nodesDictionary at: anOutgoingElement.
 									hierarchyEdge := GtGradHierarchyEdge on: aHierarchyNode target: targetHierarchyNode.
 									connectedElements add: anOutgoingElement.
-									aHierarchyNode outgoingEdges add: hierarchyEdge.
-									targetHierarchyNode incomingEdges add: hierarchyEdge.
-								].
-						].
-				].			
-			].
+									aHierarchyNode addOutgoingEdge: hierarchyEdge.
+									targetHierarchyNode addIncomingEdge: hierarchyEdge.
+								]
+						]
+				]
+		]
 	].
 	^ self new hierarchyNodesDictionary: nodesDictionary.
 

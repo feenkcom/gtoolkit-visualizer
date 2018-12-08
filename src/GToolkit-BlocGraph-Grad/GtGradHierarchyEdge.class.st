@@ -14,7 +14,7 @@ Class {
 GtGradHierarchyEdge class >> on: theSourceNode target: theTargetNode [
 	<return: #GtGradHierarchyEdge>
 	
-	^ self new source: theSourceNode target: theTargetNode
+	^ self new source: theSourceNode; target: theTargetNode
 ]
 
 { #category : #accessing }

@@ -156,7 +156,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> distanceToNextRankIncrement: aVal
 ]
 
 { #category : #'layout - computations' }
-GtGradHierarchicalCoordinateAssignmentStage >> execute: parent [
+GtGradHierarchicalCoordinateAssignmentStage >> execute [
 	| bestXDelta |
 	self currentXDelta: 0.
 	self initializeCoordinates.
