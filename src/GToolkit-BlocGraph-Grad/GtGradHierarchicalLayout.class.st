@@ -25,7 +25,6 @@ GtGradHierarchicalLayout >> crossingStage: model [
 GtGradHierarchicalLayout >> cycleStage: model [
 	| cycleRemover |
 	cycleRemover := GtGradHierarchicalCycleRemovalStage new model: model.
-	"Tested until this point - there seems to be an infinite here"
 	"cycleRemover execute"
 ]
 
@@ -60,7 +59,7 @@ GtGradHierarchicalLayout >> findRoots: theNodes [
 		outgoingEdgesNum := theNode graph nodesAlongOutgoingEdgesCount.
 		(incomingEdgesNum = 0 and: [ outgoingEdgesNum > 0 ])
 			ifTrue: [ 
-				roots add: theNode.
+				aRootsCollection add: theNode.
 			]
 			ifFalse: [ 
 				| diff |
@@ -208,14 +207,11 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 	aHierarchyNodesCollection do: [ :aHierarchySet |
 		| model |
 		model := GtGradHierarchyModel from: aHierarchySet.
-		Halt now.
-		self crossingStage.
+		self cycleStage: model.
+		"self crossingStage."
 		"self layeringStage."
-		"self crossingStage.
-		initialX := self placementStage: parent initialX: initialX."
+		"initialX := self placementStage: parent initialX: initialX."
 	]
-
-	
 
 ]
 
