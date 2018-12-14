@@ -25,7 +25,7 @@ GtGradHierarchicalLayout >> crossingStage: model [
 GtGradHierarchicalLayout >> cycleStage: model [
 	| cycleRemover |
 	cycleRemover := GtGradHierarchicalCycleRemovalStage new model: model.
-	"cycleRemover execute"
+	cycleRemover execute
 ]
 
 { #category : #'private-layout' }
@@ -207,6 +207,7 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 	aHierarchyNodesCollection do: [ :aHierarchySet |
 		| model |
 		model := GtGradHierarchyModel from: aHierarchySet.
+		model roots: self roots.
 		self cycleStage: model.
 		"self crossingStage."
 		"self layeringStage."

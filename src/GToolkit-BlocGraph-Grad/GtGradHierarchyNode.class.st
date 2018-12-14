@@ -56,7 +56,9 @@ GtGradHierarchyNode >> initialize [
 
 { #category : #'layout - computations' }
 GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
-	(self hashCode isNil or: [ anotherNode hashCode isNil ])
+	anotherNode isNil
+		ifTrue: [ ^ false ].
+	(self hashCode isNil or: [ anotherNode  isNil ])
 		ifTrue: [ ^ false ].
 	self hashCode count < anotherNode hashCode count
 		ifTrue: [ ^ false ].

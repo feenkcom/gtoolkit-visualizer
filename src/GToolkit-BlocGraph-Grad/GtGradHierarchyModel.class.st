@@ -7,7 +7,8 @@ Class {
 		'parent',
 		'maxRank',
 		'hierarchyNodesDictionary',
-		'hierarchyEdgesDictionary'
+		'hierarchyEdgesDictionary',
+		'dfsCount'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -174,6 +175,7 @@ GtGradHierarchyModel >> calculateInitialRank [
 GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection layer: theLayer [
 	aRootNode isNil
 		ifTrue: [ ^ self].
+	Halt now.
 	(aVisitedNodesCollection includes: aRootNode)
 		ifFalse: [ 
 			visitor visit: aRootNode
@@ -201,20 +203,22 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 ]
 
 { #category : #'layout - computations' }
-GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection parentHashCode: theParentHashCode childHash: theChildHash layer: theLayer [
+GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection parentHashCode: theParentHashCode childHashCode: theChildHashCode layer: theLayer [
 	aRootNode isNil
 		ifTrue: [ ^ self].
+	Halt now.
 	theParentNode isNotNil
 		ifTrue: [ 
 			(aRootNode hashCode isNil or: [ aRootNode hashCode first ~= theParentNode hashCode first ])
 				ifTrue: [ 
 					aRootNode hashCode: (OrderedCollection new: theParentNode hashCode).
-					aRootNode hashCode add: theChildHash.
+					aRootNode hashCode add: theChildHashCode.
 				]
 			].
 		
 		(aVisitedNodesCollection includes: aRootNode)
 			ifFalse:[
+				Halt now.
 				visitor visit: aRootNode
 						  parent: theParentNode
      					  connectingEdge: theConnectingEdge
@@ -222,13 +226,13 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 						  visited: false.
 				aVisitedNodesCollection add: aRootNode.
 				aRootNode outgoingEdges doWithIndex: [ :anEdge :theIndex |
-						self dfs: anEdge destination 
+						self dfs: anEdge target 
 								 parent: aRootNode
 								 connectingEdge: anEdge
 								 visitor: visitor
 								 visitedNodes: aVisitedNodesCollection
 								 parentHashCode: aRootNode hashCode 
-								 childHash: theIndex
+								 childHashCode: theIndex
 								 layer: theLayer + 1
 					]
 						
@@ -240,6 +244,16 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 					  layer: theLayer
 					  visited: true.
 
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> dfsCount [
+	^ dfsCount
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> dfsCount: anObject [
+	dfsCount := anObject
 ]
 
 { #category : #'layout - computations' }
@@ -287,6 +301,7 @@ GtGradHierarchyModel >> initialize [
 	self maxRank: SmallInteger maxVal.
 	self hierarchyNodesDictionary: IdentityDictionary new.
 	self hierarchyEdgesDictionary: IdentityDictionary new.
+	self dfsCount: 1.
 ]
 
 { #category : #accessing }
@@ -349,14 +364,19 @@ GtGradHierarchyModel >> roots: anObject [
 GtGradHierarchyModel >> visit: visitor dfsRoots: aDfsRootsCollection trackAncestors: shouldTrackAncestors visitedNodes: aVisitedNodesCollection [
 	aDfsRootsCollection isNil
 		ifTrue: [ ^ self	].
-	aDfsRootsCollection do: [ :aDfsRoot|
-		| aRootNode |
-		(self hierarchyNodesDictionary includesKey: aDfsRoot)
-			ifTrue: [ 
-				aRootNode := self hierarchyNodesDictionary: aDfsRoot.
-				"TODO: if track ancestors - figure out what's up with that"
-				self dfs: aRootNode parent: nil connectingEdge: nil visitor: visitor  visitedNodes: aVisitedNodesCollection layer: 1.
+	aDfsRootsCollection doWithIndex: [ :aDfsRoot :anIndex |
+		"TODO: if track ancestors - figure out what's up with that"
+		shouldTrackAncestors
+			ifTrue: [
+				aDfsRoot hashCode: OrderedCollection new.
+				aDfsRoot hashCode add: self dfsCount.
+				aDfsRoot hashCode add: anIndex.
+				self dfs: aDfsRoot parent: nil connectingEdge: nil visitor: visitor visitedNodes:
+				aVisitedNodesCollection parentHashCode: aDfsRoot hashCode childHashCode: anIndex layer:1.
+			]
+			ifFalse: [
+				self dfs: aDfsRoot parent: nil connectingEdge: nil visitor: visitor  visitedNodes: aVisitedNodesCollection layer: 1.
 			].
-		
-	].
+		].
+	self dfsCount: self dfsCount + 1
 ]
