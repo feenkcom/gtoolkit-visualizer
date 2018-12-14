@@ -48,6 +48,7 @@ GtConnectorExampleStyler >> extraStyle: aText ast: ast [
 	| selfSendsExamples |
 	
 	selfSendsExamples := self findExampleSendsIn: ast.
+	
 	selfSendsExamples do: [ :each |
 		| buttonAttribute targetExampleMethod aLink |
 		
@@ -69,7 +70,7 @@ GtConnectorExampleStyler >> extraStyle: aText ast: ast [
 
 { #category : #private }
 GtConnectorExampleStyler >> findExampleSendsIn: anAST [
-	^ anAST allChildren select: [ :each | 
+	^ anAST allChildren asSet asArray select: [ :each | 
 		each isMessage and: [ 
 			each isSelfSend and: [ 
 				each isUnary and: [
