@@ -7,6 +7,7 @@ Class {
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExample [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
@@ -35,6 +36,7 @@ GtGradHierarchicalLayoutExamples >> simpleExample [
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
@@ -62,6 +64,7 @@ GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExampleWhereAllNodesHaveIncomingEdges [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
@@ -76,7 +79,7 @@ GtGradHierarchicalLayoutExamples >> simpleExampleWhereAllNodesHaveIncomingEdges 
 	
 	pairsOfNodes := OrderedCollection new.
 	pairsOfNodes add: (1->2); add: (2->3); add: (3->4); add: (4->5); add: (4->2);
-					 add: (1->5); add: (2->5); add: (4->1).
+					 add: (1->5); add: (2->5); add: (4->1); add: (5->1).
 	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
 	view addChildren: theNodes.
