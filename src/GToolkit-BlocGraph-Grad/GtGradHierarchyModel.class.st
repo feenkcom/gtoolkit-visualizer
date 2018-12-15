@@ -30,7 +30,7 @@ GtGradHierarchyModel class >> directedToUndirectedRatio: aSourceElement target: 
 			ifTrue: [ 
 				undirectedCount := undirectedCount + 1.
 			]
-	].	
+	].
 	^ directedCount / undirectedCount
 
 
@@ -58,14 +58,14 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 					| otherElementConnectedElements |
 					connectedElementsDictionary at: anOutgoingElement ifAbsentPut: OrderedCollection new.
 					otherElementConnectedElements := connectedElementsDictionary at: anOutgoingElement.
-					((connectedElementsDictionary includes: anOutgoingElement) or: [ otherElementConnectedElements includes: anElement ])
+					((connectedElements includes: anOutgoingElement) or: [ otherElementConnectedElements includes: anElement ])
 						ifFalse: [ 
 							"All edges between this source and its targets need to be processed
 							If there are back edges which create loops, they are callected into one
 							hierarchical edge.
 							It is assumed that source -> target is the natural direction if at least half
 							of the edges are going in that direction."
-							 (self directedToUndirectedRatio: anElement target: anOutgoingElement) > 0.5
+							 (self directedToUndirectedRatio: anElement target: anOutgoingElement) >= 0.5
 								ifTrue: [
 									| hierarchyEdge targetHierarchyNode|
 									(nodesDictionary includesKey: anOutgoingElement)
@@ -175,7 +175,6 @@ GtGradHierarchyModel >> calculateInitialRank [
 GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection layer: theLayer [
 	aRootNode isNil
 		ifTrue: [ ^ self].
-	Halt now.
 	(aVisitedNodesCollection includes: aRootNode)
 		ifFalse: [ 
 			visitor visit: aRootNode
@@ -206,19 +205,17 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection parentHashCode: theParentHashCode childHashCode: theChildHashCode layer: theLayer [
 	aRootNode isNil
 		ifTrue: [ ^ self].
-	Halt now.
 	theParentNode isNotNil
 		ifTrue: [ 
 			(aRootNode hashCode isNil or: [ aRootNode hashCode first ~= theParentNode hashCode first ])
 				ifTrue: [ 
-					aRootNode hashCode: (OrderedCollection new: theParentNode hashCode).
+					aRootNode hashCode: theParentNode hashCode copy.
 					aRootNode hashCode add: theChildHashCode.
 				]
 			].
 		
 		(aVisitedNodesCollection includes: aRootNode)
 			ifFalse:[
-				Halt now.
 				visitor visit: aRootNode
 						  parent: theParentNode
      					  connectingEdge: theConnectingEdge
@@ -234,15 +231,15 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 								 parentHashCode: aRootNode hashCode 
 								 childHashCode: theIndex
 								 layer: theLayer + 1
-					]
-						
-			].
-
+					]		
+			]
+		ifTrue: [
 			visitor visit: aRootNode
-			 		  parent: parent
+			 		  parent: theParentNode
 					  connectingEdge: theConnectingEdge
 					  layer: theLayer
-					  visited: true.
+					  visited: true
+			]
 
 ]
 

@@ -56,18 +56,17 @@ GtGradHierarchyNode >> initialize [
 
 { #category : #'layout - computations' }
 GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
-	anotherNode isNil
+	(self hashCode isNil or: [ anotherNode isNil or: [anotherNode hashCode isNil]])
 		ifTrue: [ ^ false ].
-	(self hashCode isNil or: [ anotherNode  isNil ])
-		ifTrue: [ ^ false ].
-	self hashCode count < anotherNode hashCode count
+	self hashCode size >= anotherNode hashCode size
 		ifTrue: [ ^ false ].
 	self hashCode = anotherNode hashCode
 		ifTrue: [  ^ true ].
 	
-	self hashCode with: anotherNode hashCode do: [ :hashCode1 :hashCode2|
-		hashCode1 = hashCode2
-			ifFalse: [ ^ false ]
+	"this code must match the start of the other nodes hash code"
+	self hashCode doWithIndex: [ :value :index |
+		value ~= (anotherNode hashCode at: index)
+			ifTrue: [ ^ false ]
 	].
 	
 	^ true.

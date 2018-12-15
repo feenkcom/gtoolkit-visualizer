@@ -6,26 +6,26 @@ Class {
 
 { #category : #'layout - computations' }
 GtGradHierarchicalCycleRemovalStage >> execute [
-	| aVisitedNodesCollection aVisitedNodesCollectionCopy aRootNodesCollection visitor newRootsCandidates |
-	aVisitedNodesCollection := OrderedCollection new.
+	| aVisitedNodesSet aVisitedNodesSetCopy aRootNodesCollection visitor newRootsCandidates |
+	aVisitedNodesSet := Set new.
 	aRootNodesCollection := self model rootNodes.
-	visitor := GtGradHierarchyCycleRemovalVisitor new visitedNodes: aVisitedNodesCollection.
-	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: aVisitedNodesCollection.
+	visitor := GtGradHierarchyCycleRemovalVisitor new visitedNodes: aVisitedNodesSet.
+	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: aVisitedNodesSet.
 	newRootsCandidates := Set new.
-	aVisitedNodesCollection count < (self model hierarchyNodesDictionary count)
+	aVisitedNodesSet size < (self model hierarchyNodesDictionary size)
 		ifTrue: [
 			newRootsCandidates := (self model hierarchyNodesDictionary values)
-										 select: [ :aNode | (aVisitedNodesCollection includes: aNode) negated ].
+										 select: [ :aNode | (aVisitedNodesSet includes: aNode) not ].
 		].
 
-	aVisitedNodesCollectionCopy := Collection new: aVisitedNodesCollection.
+	aVisitedNodesSetCopy := aVisitedNodesSet copy.
 	aRootNodesCollection removeAll.
 	newRootsCandidates isNotEmpty
 		ifTrue: [
 			"Add a random one. For now, adding thefirst one"
 			aRootNodesCollection add: newRootsCandidates first.
 		].	
-	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: aVisitedNodesCollectionCopy.
+	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: aVisitedNodesSetCopy.
 	newRootsCandidates do: [ :aRootCandidate |
 		| anElement |
 		anElement := aRootCandidate element.

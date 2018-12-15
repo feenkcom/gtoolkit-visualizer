@@ -29,7 +29,8 @@ GtGradHierarchyEdge >> edges: anObject [
 
 { #category : #initialization }
 GtGradHierarchyEdge >> initialize [
-	super initialize
+	super initialize.
+	self reversed: false
 ]
 
 { #category : #calculating }
@@ -38,7 +39,7 @@ GtGradHierarchyEdge >> invert [
 	temp := self source.
 	self source: self target.
 	self target: temp.
-	self reversed: (self reversed) negated.
+	self reversed: (self reversed) not.
 ]
 
 { #category : #accessing }
