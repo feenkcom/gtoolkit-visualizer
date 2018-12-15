@@ -7,6 +7,7 @@ Class {
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExample [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
@@ -35,6 +36,7 @@ GtGradHierarchicalLayoutExamples >> simpleExample [
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
@@ -62,6 +64,7 @@ GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExampleWhereAllNodesHaveIncomingEdges [
 	<gtExample>
+	<noTest>
 	| view theNodes layout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
