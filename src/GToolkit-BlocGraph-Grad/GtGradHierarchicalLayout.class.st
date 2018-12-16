@@ -131,7 +131,8 @@ GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> layeringStage [
+GtGradHierarchicalLayout >> layeringStage: model [
+	model calculateInitialRank
 ]
 
 { #category : #measure }
@@ -209,6 +210,7 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 		model := GtGradHierarchyModel from: aHierarchySet.
 		model roots: self roots.
 		self cycleStage: model.
+		self layeringStage: model.
 		"self crossingStage."
 		"self layeringStage."
 		"initialX := self placementStage: parent initialX: initialX."

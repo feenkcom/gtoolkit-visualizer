@@ -93,20 +93,20 @@ GtGradHierarchyModel >> calculateInitialRank [
 	| startNodes startNodesCopy |
 	
 	startNodes := self rootNodes.
-	startNodesCopy := OrderedCollection new: startNodes.
+	startNodesCopy := startNodes copy.
 		
 	[ startNodes isNotEmpty ]
 		whileTrue: [ 
 			| layerValue loopCounter aNode layerDetermeningEdges edgesToBeMarked allEdgesVisited minimumLayer |
 			aNode := startNodes first.
-			layerDetermeningEdges := aNode incomingEdges.
+			layerDetermeningEdges := aNode incomingEdges asOrderedCollection.
 			edgesToBeMarked := aNode outgoingEdges.
 			allEdgesVisited := true.
-			minimumLayer :=  SmallInteger maxVal.
+			minimumLayer :=  100000000.
 			loopCounter := 1.
 			"TODO why this value?? - can this be a random value?"
 			layerValue := 5270620.
-			(allEdgesVisited and: [ loopCounter <= layerDetermeningEdges count ])
+			[allEdgesVisited and: [ loopCounter <= layerDetermeningEdges size ]]
 				whileTrue: [ 
 					| hierarchyEdge	|
 					hierarchyEdge := layerDetermeningEdges at: loopCounter.
@@ -118,7 +118,8 @@ GtGradHierarchyModel >> calculateInitialRank [
 						]
 						ifFalse: [ 
 							allEdgesVisited := false	
-						]
+						].
+					loopCounter := loopCounter + 1
 				 ].
 			allEdgesVisited
 				ifTrue: [ 
@@ -145,13 +146,14 @@ GtGradHierarchyModel >> calculateInitialRank [
 					| removedNode |
 					removedNode := startNodes removeFirst.
 					startNodes add: aNode.
-					(removedNode = aNode and: [ startNodes count = 1])
+					(removedNode = aNode and: [ startNodes size = 1])
 						ifTrue: [ 
 							"Error condition - break out of the loop"
 							startNodes removeAll.
 						]
 				]
 		].
+	Halt now.
 	"Normalize the ranks"
 	hierarchyNodesDictionary valuesDo: [ :aNode |
 		aNode layer: (aNode layer - self maxRank).
