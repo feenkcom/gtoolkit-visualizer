@@ -22,11 +22,12 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: parent connectingEdge: con
 	| parentNodeRankDifference |
 	visited
 		ifFalse: [ (aNode maxRank < 0 and: [ aNode minRank < 0 ])
-				ifTrue: [ 
-					(self rankCollection at: aNode layer) add: aNode.
+				ifTrue: [
+					"it is necessary to add 1 because indexes start at 1"
+					(self rankCollection at: aNode layer + 1) add: aNode.
 					aNode maxRank: aNode layer.
 					aNode minRank: aNode layer.
-					aNode layer: (self rankCollection at: aNode maxRank) count - 1 ] ].
+					aNode layer: (self rankCollection at: aNode maxRank + 1) size - 1] ].
 	(parent isNotNil and: [ connectingEdge isNotNil ])
 		ifFalse: [ ^ self ].
 	parentNodeRankDifference := parent maxRank - aNode maxRank.

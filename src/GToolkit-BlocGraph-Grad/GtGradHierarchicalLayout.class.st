@@ -132,7 +132,8 @@ GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> layeringStage: model [
-	model calculateInitialRank
+	model calculateInitialRank.
+	model fixRanks
 ]
 
 { #category : #measure }

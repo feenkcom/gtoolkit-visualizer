@@ -153,23 +153,23 @@ GtGradHierarchyModel >> calculateInitialRank [
 						]
 				]
 		].
-	Halt now.
 	"Normalize the ranks"
 	hierarchyNodesDictionary valuesDo: [ :aNode |
 		aNode layer: (aNode layer - self maxRank).
 	].
-	
+
 	startNodesCopy do: [ :aNode |
 		 | currentMaxLayer |
 		currentMaxLayer := 0.
-		aNode incomingEdges do: [ :anEdge |
+		aNode outgoingEdges do: [ :anEdge |
 			| otherNode |
-			otherNode := anEdge source.
-			aNode layer: (currentMaxLayer max: otherNode layer + 1).
+			otherNode := anEdge target.
+			aNode layer: (currentMaxLayer max: (otherNode layer + 1)).
 			currentMaxLayer := aNode layer.
 		].
 	].
-	self maxRank: (SmallInteger maxVal - self maxRank)
+
+	self maxRank: 100000000 - self maxRank
 	
 ]
 
@@ -257,21 +257,15 @@ GtGradHierarchyModel >> dfsCount: anObject [
 
 { #category : #'layout - computations' }
 GtGradHierarchyModel >> fixRanks [
-	| rootNodes visitor |
+	| aRootNodesCollection visitor |
 	self ranks: ((1 to: maxRank + 1) collect: [ :aNumber|
 		Set	 new.
 	]).
 	
-	"Performm DFS to calculate initial ordering for each rank"
-	rootNodes := nil.
-	self roots isNotNil
-		ifTrue: [
-				rootNodes := self roots collect: [ :aRootElement |
-					 hierarchyNodesDictionary at: aRootElement
-				].
-		].
+	"Perform DFS to calculate initial ordering for each rank"
+	aRootNodesCollection := self rootNodes.
 	visitor := GtGradFixRankHierarchyVisitor new rankCollection: self ranks.
-	self visit: visitor dfsRoots: rootNodes trackAncestors: false visitedNodes: OrderedCollection new.
+	self visit: visitor dfsRoots: aRootNodesCollection trackAncestors: false visitedNodes: Set new.
 ]
 
 { #category : #accessing }
