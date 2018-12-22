@@ -117,6 +117,7 @@ GtGradHierarchyNode >> positionOnLayer: layer position: position [
 
 { #category : #accessing }
 GtGradHierarchyNode >> previousLayerConnectedElementsOnLayer: aLayer [
+	Halt now.
 	self previousLayerConnectedElements isEmpty
 		ifTrue: [
 			self previousLayerConnectedElements add: OrderedCollection new.

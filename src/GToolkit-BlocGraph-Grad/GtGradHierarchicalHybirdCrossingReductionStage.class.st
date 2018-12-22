@@ -15,8 +15,10 @@ Class {
 GtGradHierarchicalHybirdCrossingReductionStage >> calculateCrossings [
 	| totalCrossings |
 	totalCrossings := 0.
-	1 to: self model ranks count do: [ :aRankIndex |
-		totalCrossings := totalCrossings + self calculateRankCrossings: aRankIndex
+	2 to: self model ranks size do: [ :aRankIndex |
+		| rankCrossings |
+		rankCrossings := self calculateRankCrossings: aRankIndex. 
+		totalCrossings := totalCrossings + rankCrossings
 	].
 	
 	^ totalCrossings.
@@ -26,13 +28,15 @@ GtGradHierarchicalHybirdCrossingReductionStage >> calculateCrossings [
 GtGradHierarchicalHybirdCrossingReductionStage >> calculateRankCrossings: aRanksIndex [
 	| currentRank previousRank totalCrossings connections |
 	"ranks is a collection of sets"
+	Halt now.
 	currentRank := model ranks at: aRanksIndex.
 	previousRank := model ranks at: (aRanksIndex - 1).
-	connections := Array2D new.
+	connections := Array2D rows: currentRank size columns: previousRank size.
 	totalCrossings := 0.
 	
 	currentRank do: [ :anElement |
 		| rankPosition |
+		Halt now.
 		rankPosition := anElement rankPositionsAt: aRanksIndex.
 		anElement previousLayerConnectedElements do: [ :aConnectedElement |
 			| otherRankPosition |
@@ -81,14 +85,13 @@ GtGradHierarchicalHybirdCrossingReductionStage >> currentBestCrossings: anObject
 GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 	| theCurrentIteration |
 	"TODO check indexes..."
-	self nestedBestRanks: Array2D new.
+	self nestedBestRanks: Dictionary new.
 	self model ranks doWithIndex: [ :aRank :anIndex |
-		(self nestedBestRanks at: anIndex) put: (aRank collect: [ :anElement |
-			anElement.	
-		])
+		self nestedBestRanks at: anIndex put: aRank copy.
 	].
 	self iterationsWithoutImprovement: 0.
 	self currentBestCrossings: self calculateCrossings.
+	Halt now.
 	theCurrentIteration := 1.
 	[theCurrentIteration <= self maxIterations and: [
 		iterationsWithoutImprovement < self maxNoImprovementIterations

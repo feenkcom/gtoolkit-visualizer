@@ -19,6 +19,9 @@ GtGradHierarchicalLayout class >> constraints [
 
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> crossingStage: model [
+	| crossingReduction |
+	crossingReduction := GtGradHierarchicalHybirdCrossingReductionStage new model: model.
+	"crossingReduction execute"
 ]
 
 { #category : #'private-layout' }
@@ -212,7 +215,7 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 		model roots: self roots.
 		self cycleStage: model.
 		self layeringStage: model.
-		"self crossingStage."
+		self crossingStage: model.
 		"self layeringStage."
 		"initialX := self placementStage: parent initialX: initialX."
 	]
