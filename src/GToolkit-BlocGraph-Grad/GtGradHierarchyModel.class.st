@@ -180,7 +180,7 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 	(aVisitedNodesCollection includes: aRootNode)
 		ifFalse: [ 
 			visitor visit: aRootNode
-					  parent: parent
+					  parent: theParentNode
 					  connectingEdge: theConnectingEdge
 					  layer: theLayer
 					  visited: false.
@@ -196,7 +196,7 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 		]
 		ifTrue: [ 
 			visitor visit: aRootNode
-			 		  parent: parent
+			 		  parent: theParentNode
 					  connectingEdge: theConnectingEdge
 					  layer: theLayer
 					  visited: true.
