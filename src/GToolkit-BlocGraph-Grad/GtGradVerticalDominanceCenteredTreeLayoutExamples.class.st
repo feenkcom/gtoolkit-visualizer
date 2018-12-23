@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGradVerticalDominanceCenteredTreeLayoutExamples,
 	#superclass : #GtGradDominanceCenteredTreeLayoutExamples,
-	#category : #'GToolkit-BlocGraph-Grad'
+	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
 { #category : #'example - instance creation' }
