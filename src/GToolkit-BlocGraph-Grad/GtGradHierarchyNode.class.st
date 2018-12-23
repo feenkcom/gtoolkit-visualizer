@@ -18,12 +18,16 @@ GtGradHierarchyNode class >> on: anElement [
 
 { #category : #'api - layout' }
 GtGradHierarchyNode >> addIncomingEdge: anEdge [
-	self incomingEdges add: anEdge
+	(self incomingEdges includes: anEdge)
+		ifFalse: [ self incomingEdges add: anEdge ]
+
 ]
 
 { #category : #'api - layout' }
 GtGradHierarchyNode >> addOutgoingEdge: anEdge [
-	self outgoingEdges add: anEdge
+	(self outgoingEdges includes: anEdge)
+		ifFalse: [ self outgoingEdges add: anEdge ]
+
 ]
 
 { #category : #accessing }
@@ -49,8 +53,8 @@ GtGradHierarchyNode >> incomingEdges: anObject [
 { #category : #initialization }
 GtGradHierarchyNode >> initialize [
 	super initialize.
-	self outgoingEdges: Set new.
-	self incomingEdges: Set new.
+	self outgoingEdges: OrderedCollection new.
+	self incomingEdges: OrderedCollection new.
 	self layer: -1.
 ]
 
@@ -117,28 +121,31 @@ GtGradHierarchyNode >> positionOnLayer: layer position: position [
 
 { #category : #accessing }
 GtGradHierarchyNode >> previousLayerConnectedElementsOnLayer: aLayer [
-	Halt now.
 	self previousLayerConnectedElements isEmpty
 		ifTrue: [
-			self previousLayerConnectedElements add: OrderedCollection new.
+			| connectedElements |
+			connectedElements := OrderedCollection new.
+			self previousLayerConnectedElements at: 1 put: connectedElements.
 			self outgoingEdges do: [ :anEdge |
-				(anEdge minRank = -1 or: [ anEdge minRank = aLayer - 1 ])
+				(anEdge minRank = -1 or: [ anEdge minRank = (aLayer - 1) ])
 					ifTrue: [
-						 self previousLayerConnectedElements first add: anEdge target
+						 connectedElements add: anEdge target
 					]
 					ifFalse: [
 						"Edge spans at least two layers"
-						self previousLayerConnectedElements first  add: anEdge 
+						connectedElements add: anEdge 
 					].
 			].
 		].
-	^ self previousLayerConnectedElements first.
+	^ self previousLayerConnectedElements at: 1.
 		
 ]
 
 { #category : #accessing }
 GtGradHierarchyNode >> rankPositionsAt: aLayer [
-	self rankPositions at: 1.
+	self rankPositions isEmpty
+		ifTrue: [ self rankPositions at: 1 put: self layer].
+	^ self rankPositions at: 1.
 ]
 
 { #category : #accessing }

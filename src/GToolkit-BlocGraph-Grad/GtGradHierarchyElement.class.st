@@ -28,8 +28,8 @@ GtGradHierarchyElement >> element: anObject [
 
 { #category : #initialization }
 GtGradHierarchyElement >> initialize [
-	nextLayerConnectedElements := OrderedCollection new.
-	previousLayerConnectedElements := OrderedCollection new.
+	nextLayerConnectedElements := Dictionary new.
+	previousLayerConnectedElements := Dictionary new.
 	positionsPerLayer := Dictionary new.
 	maxRank := -1.
 	minRank := -1.

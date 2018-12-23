@@ -18,7 +18,7 @@ ${example:name=GtGradHorizontalDominanceCenteredTreeLayoutExamples>>#moreComplex
 Class {
 	#name : #GtGradDominanceCenteredTreeLayoutExamples,
 	#superclass : #GtGradAbstractTreeLayoutExamples,
-	#category : #'GToolkit-BlocGraph-Grad-Examples'
+	#category : #'GToolkit-BlocGraph-Grad'
 }
 
 { #category : #'example - instance creation' }

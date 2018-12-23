@@ -27,7 +27,9 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: theParentNode connectingEd
 					(self rankCollection at: aNode layer + 1) add: aNode.
 					aNode maxRank: aNode layer.
 					aNode minRank: aNode layer.
-					aNode layer: (self rankCollection at: aNode maxRank + 1) size - 1] ].
+					aNode layer: (self rankCollection at: aNode maxRank + 1) size - 1.
+					] 
+				].
 	(theParentNode isNotNil and: [ connectingEdge isNotNil ])
 		ifFalse: [ ^ self ].
 	parentNodeRankDifference := theParentNode maxRank - aNode maxRank.

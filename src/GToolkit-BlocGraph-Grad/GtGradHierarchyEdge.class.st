@@ -71,14 +71,16 @@ GtGradHierarchyEdge >> positionOnLayer: layer position: position [
 GtGradHierarchyEdge >> previousLayerConnectedElementsOnLayer: aLayer [
 	self previousLayerConnectedElements isEmpty
 		ifTrue: [ 
-			1 to: self rankPositions count do: [ :aNum | 
-				self previousLayerConnectedElements at: aNum add: OrderedCollection new.
-				aNum = self rankPositions count
-					ifTrue: [ self previousLayerConnectedElements add: self target ]
-					ifFalse: [ self previousLayerConnectedElements add: self ]
+			1 to: self rankPositions size do: [ :aNum |
+				| elementsCollection |
+				elementsCollection := OrderedCollection new.
+				self previousLayerConnectedElements at: aNum put: elementsCollection.
+				aNum = 1
+					ifTrue: [ elementsCollection add: self target ]
+					ifFalse: [ elementsCollection add: self ]
 			].
 		].
-	^ self previousLayerConnectedElements at: (aLayer - minRank)
+	^ self previousLayerConnectedElements at: (aLayer - minRank - 1)
 
 ]
 
