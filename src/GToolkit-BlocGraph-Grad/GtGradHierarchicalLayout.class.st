@@ -21,7 +21,7 @@ GtGradHierarchicalLayout class >> constraints [
 GtGradHierarchicalLayout >> crossingStage: model [
 	| crossingReduction |
 	crossingReduction := GtGradHierarchicalHybirdCrossingReductionStage new model: model.
-	crossingReduction execute
+	"crossingReduction execute"
 ]
 
 { #category : #'private-layout' }

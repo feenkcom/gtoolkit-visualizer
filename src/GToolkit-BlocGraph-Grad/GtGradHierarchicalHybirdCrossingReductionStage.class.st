@@ -278,8 +278,8 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 			| nudge |
 			loopIndex := loopIndex + 1.
 			improved := false.
-			nudge := mainLoopIndex odd and: [ loopIndex odd ].
-			model ranks do: [ :aRank |
+			nudge := mainLoopIndex even and: [ loopIndex even ].
+			model ranks doWithIndex: [ :aRank :aRankIndex |
 				| orderedElements leftElementsAboveConnections leftElementsBelowConnections
 				rightElementsAboveConnections rightElementsBelowConnections
 				leftElement rightElement leftAbovePositions leftBelowPositions
@@ -293,23 +293,25 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 				aRank doWithIndex: [ :anElement :anIndex |
 					orderedElements at: (anElement rankPositionsAt: anIndex) put: anElement.
 				].
-				1 to: aRank count - 1 do: [ :aLayer |
+				Halt now.
+				1 to: aRank size - 1 do: [ :aLayer |
 					| totalCurrentCrossings totalSwitchedCrossings |
 					"For each adjacent pair of elements, check if
 					swapping them would reduce the total number of edge crossings."	
+					Halt now.
 					aLayer = 1
 						ifTrue: [ 
 							leftElement := orderedElements at: aLayer.
-							leftElementsAboveConnections := leftElement nextLayerConnectedElementsOnLayer: aLayer.
-							leftElementsBelowConnections := leftElement previousLayerConnectedElementsOnLayer: aLayer.
+							leftElementsAboveConnections := leftElement nextLayerConnectedElementsOnLayer: aRankIndex.
+							leftElementsBelowConnections := leftElement previousLayerConnectedElementsOnLayer: aRankIndex.
 							leftAbovePositions := OrderedCollection new.
 							leftBelowPositions := OrderedCollection new.
 							
 							leftAbovePositions := leftElementsAboveConnections collect: [ :anElement |
-								anElement rankPositionsAt: aRank + 1.
+								anElement rankPositionsAt: (aRankIndex + 1).
 							].
 							leftBelowPositions := leftElementsBelowConnections collect: [ :anElement |
-								anElement rankPositionsAt: aRank - 1.
+								anElement rankPositionsAt: (aRankIndex - 1).
 							].
 						]
 						ifFalse: [
@@ -320,30 +322,36 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 							leftElement := rightElement.
 						].
 					rightElement := orderedElements at: aLayer + 1.
-					rightElementsAboveConnections := rightElement nextLayerConnectedElementsOnLayer: aRank.
-					rightElementsBelowConnections := rightElement previousLayerConnectedElementsOnLayer: aRank.
+					rightElementsAboveConnections := rightElement nextLayerConnectedElementsOnLayer: aRankIndex.
+					rightElementsBelowConnections := rightElement previousLayerConnectedElementsOnLayer: aRankIndex.
 					rightAbovePositions := rightElementsAboveConnections collect: [ :anElement |
-						anElement rankPositionsAt: aRank + 1.
+						anElement rankPositionsAt: aRankIndex + 1.
 					].
 					rightBelowPositions := rightElementsBelowConnections collect: [ :anElement |
-						anElement rankPositionsAt: aRank - 1.
+						anElement rankPositionsAt: aRankIndex - 1.
 					].
-				
+					Halt now.
 					totalCurrentCrossings := 0.
 					totalSwitchedCrossings := 0.
 					
-					leftAbovePositions with: rightAbovePositions do: [ :leftPosition :rightPosition |
-						leftPosition > rightPosition
-							ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
-						rightPosition > leftPosition
-							ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+					leftAbovePositions do: [ :leftPosition |
+						rightAbovePositions do: [ :rightPosition |										                                    leftPosition > rightPosition
+								ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
+							rightPosition > leftPosition
+								ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+						]			
 					].
-					leftBelowPositions with: rightBelowPositions do: [ :leftPosition :rightPosition |
-						leftPosition > rightPosition
-							ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
-						rightPosition > leftPosition
-							ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+
+					leftBelowPositions do: [ :leftPosition |
+						rightBelowPositions do: [ :rightPosition |										                                    leftPosition > rightPosition
+								ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
+							rightPosition > leftPosition
+								ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+						]			
 					].
+					Halt now.
+
+
 					(totalSwitchedCrossings < totalCurrentCrossings or: 
 						[ totalSwitchedCrossings = totalCurrentCrossings and: [ nudge ] ])
 						ifTrue: [ 
