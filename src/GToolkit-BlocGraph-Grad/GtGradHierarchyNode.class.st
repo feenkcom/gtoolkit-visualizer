@@ -84,19 +84,21 @@ GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
 GtGradHierarchyNode >> nextLayerConnectedElementsOnLayer: aLayer [
 	self nextLayerConnectedElements isEmpty
 		ifTrue: [
-			self nextLayerConnectedElements add: OrderedCollection new.
+			| connectedElements |
+			connectedElements := OrderedCollection new.
+			self nextLayerConnectedElements at: 1 put: connectedElements.
 			self incomingEdges do: [ :anEdge |
-				(anEdge maxRank = -1 or: [ anEdge maxRank = aLayer + 1 ])
+				(anEdge maxRank = -1 or: [ anEdge maxRank = aLayer ])
 					ifTrue: [
-						 self nextLayerConnectedElements first add: anEdge source 
+						 connectedElements add: anEdge source 
 					]
 					ifFalse: [
 						"Edge spans at least two layers"
-						self nextLayerConnectedElements first add: anEdge 
-					].
-			].
+						connectedElements add: anEdge 
+					]
+			]
 	].
-	^ self nextLayerConnectedElements first
+	^ self nextLayerConnectedElements at: 1.
 ]
 
 { #category : #accessing }

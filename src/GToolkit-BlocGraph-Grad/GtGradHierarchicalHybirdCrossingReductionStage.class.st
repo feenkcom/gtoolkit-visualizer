@@ -90,7 +90,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 	].
 	self iterationsWithoutImprovement: 0.
 	self currentBestCrossings: self calculateCrossings.
-	Halt now.
+
 	theCurrentIteration := 1.
 	[theCurrentIteration <= self maxIterations and: [
 		iterationsWithoutImprovement < self maxNoImprovementIterations
@@ -98,6 +98,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 		 whileTrue: [
 			| candidateCrossings |
 			self weightedMedian: theCurrentIteration.
+			Halt now.
 			self transpose: theCurrentIteration.
 			candidateCrossings := self calculateCrossings.
 			candidateCrossings < currentBestCrossings
@@ -184,6 +185,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 	
 	(self nestedBestRanks at: aRankLayer) do: [ :anElement |
 		| nextLevelConnectedElements nextRankLayer |
+
 		downwardSweep
 			ifTrue: [ 
 				nextLevelConnectedElements := anElement nextLayerConnectedElementsOnLayer: aRankLayer.
@@ -195,18 +197,21 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 			].
 		(nextLevelConnectedElements isNotNil and: [ nextLevelConnectedElements isNotEmpty ])
 			ifTrue: [ 
-				| medianValue |	
+				| medianValue |
 				medianValue := self medianValue: nextLevelConnectedElements rankLayer: nextRankLayer.
 				(elementsByMedianValueDictionary includesKey: medianValue)
 					ifFalse: [ 
 						elementsByMedianValueDictionary at: medianValue put: OrderedCollection new.
 					].
-				elementsByMedianValueDictionary at: medianValue add: anElement.
+				(elementsByMedianValueDictionary at: medianValue) add: anElement.
 			]
-			ifFalse: [ reservedPositions add: (anElement rankPositionsAt: aRankLayer)]
+			ifFalse: [ 
+				"nodes with no adjacent nodes should remain where they are"
+				reservedPositions add: (anElement rankPositionsAt: aRankLayer)
+				]
 		].
 		sortedMedianValues := elementsByMedianValueDictionary keys asSortedCollection.
-		"TODO need to check this, due to the first index being 0"
+
 		medianCounter := 1.
 		aCounter := 1.
 		[ aCounter <= (nestedBestRanks at: aRankLayer) size ] 
@@ -215,14 +220,13 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 				theCurrentMedian := sortedMedianValues at: medianCounter.
 				(elementsByMedianValueDictionary at: theCurrentMedian) do: [ :anElement |
 					(reservedPositions includes: aCounter)
-						ifFalse: [ 
+						ifFalse: [
 							anElement rankPositionsAt: aRankLayer value: aCounter.
 						].
 					aCounter := aCounter + 1.
 				].
 			medianCounter := medianCounter + 1.
 		]
-	
 		
 ]
 
@@ -235,11 +239,11 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianValue: aConnectedElement
 	medianValues := medianValues asSortedCollection.
 	medianCollectionCount := medianValues size.
 	medianCollectionCount odd
-		ifTrue: [ ^medianValues at: (medianCollectionCount / 2) ].
+		ifTrue: [ ^medianValues at: (medianCollectionCount // 2) + 1].
 	medianCollectionCount = 2
-		ifTrue: [ (medianValues first + medianValues second) / 2 ].
-	"TODO check indexes..."
-	medianPoint := medianCollectionCount / 2.
+		ifTrue: [ ^(medianValues first + medianValues second) / 2 ].
+	Halt now.
+	medianPoint := medianCollectionCount // 2.
 	leftMedian := medianValues at: medianPoint - medianValues first.
 	rightMedian := medianValues last - medianValues at: (medianPoint  + 1).
 	^ (((medianValues at: medianPoint) * rightMedian) + 
@@ -364,7 +368,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 { #category : #'layout - computations' }
 GtGradHierarchicalHybirdCrossingReductionStage >> weightedMedian: mainLoopIteration [
 	| downwardSweep |
-	downwardSweep := mainLoopIteration even.
+	downwardSweep := mainLoopIteration odd.
 	downwardSweep
 		ifTrue: [ 
 			model maxRank to: 1 by: -1 do: [ :aRankValue |

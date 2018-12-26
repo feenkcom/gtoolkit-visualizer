@@ -46,14 +46,16 @@ GtGradHierarchyEdge >> invert [
 GtGradHierarchyEdge >> nextLayerConnectedElementsOnLayer: aLayer [
 	self nextLayerConnectedElements isEmpty
 		ifTrue: [ 
-			1 to: self rankPositions count do: [ :aNum | 
-				self nextLayerConnectedElements at: aNum add: OrderedCollection new.
-				aNum = self rankPositions count
-					ifTrue: [ self nextLayerConnectedElements add: self source ]
-					ifFalse: [ self nextLayerConnectedElements add: self ]
-			].
+			1 to: self rankPositions size do: [ :aNum |
+				| elementsCollection |
+				elementsCollection := OrderedCollection new.
+				self nextLayerConnectedElements at: aNum put: elementsCollection.
+				aNum = self rankPositions size
+					ifTrue: [ elementsCollection add: self source ]
+					ifFalse: [ elementsCollection add: self ]
+			]
 		].
-	^ self nextLayerConnectedElements at: (aLayer - minRank)
+	^ self nextLayerConnectedElements at: (aLayer - minRank - 1)
 
 ]
 
