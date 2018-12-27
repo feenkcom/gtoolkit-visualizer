@@ -98,8 +98,8 @@ GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 		 whileTrue: [
 			| candidateCrossings |
 			self weightedMedian: theCurrentIteration.
-			Halt now.
 			self transpose: theCurrentIteration.
+			Halt now.
 			candidateCrossings := self calculateCrossings.
 			candidateCrossings < currentBestCrossings
 				ifTrue: [ 
@@ -290,17 +290,15 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 				rightAbovePositions := nil.
 				rightBelowPositions := nil.
 				rightElement := nil.
-				aRank doWithIndex: [ :anElement :anIndex |
-					orderedElements at: (anElement rankPositionsAt: anIndex) put: anElement.
+				aRank do: [ :anElement |
+					orderedElements at: (anElement rankPositionsAt: aRankIndex) put: anElement.
 				].
-				Halt now.
-				1 to: aRank size - 1 do: [ :aLayer |
+				1 to: (aRank size - 1) do: [ :aLayer |
 					| totalCurrentCrossings totalSwitchedCrossings |
 					"For each adjacent pair of elements, check if
 					swapping them would reduce the total number of edge crossings."	
-					Halt now.
 					aLayer = 1
-						ifTrue: [ 
+						ifTrue: [
 							leftElement := orderedElements at: aLayer.
 							leftElementsAboveConnections := leftElement nextLayerConnectedElementsOnLayer: aRankIndex.
 							leftElementsBelowConnections := leftElement previousLayerConnectedElementsOnLayer: aRankIndex.
@@ -312,7 +310,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 							].
 							leftBelowPositions := leftElementsBelowConnections collect: [ :anElement |
 								anElement rankPositionsAt: (aRankIndex - 1).
-							].
+							]
 						]
 						ifFalse: [
 							leftElementsAboveConnections := rightElementsAboveConnections.
@@ -325,12 +323,12 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 					rightElementsAboveConnections := rightElement nextLayerConnectedElementsOnLayer: aRankIndex.
 					rightElementsBelowConnections := rightElement previousLayerConnectedElementsOnLayer: aRankIndex.
 					rightAbovePositions := rightElementsAboveConnections collect: [ :anElement |
-						anElement rankPositionsAt: aRankIndex + 1.
+						anElement rankPositionsAt: (aRankIndex + 1).
 					].
 					rightBelowPositions := rightElementsBelowConnections collect: [ :anElement |
-						anElement rankPositionsAt: aRankIndex - 1.
+						anElement rankPositionsAt: (aRankIndex - 1).
 					].
-					Halt now.
+	
 					totalCurrentCrossings := 0.
 					totalSwitchedCrossings := 0.
 					
@@ -349,22 +347,20 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 								ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
 						]			
 					].
-					Halt now.
-
 
 					(totalSwitchedCrossings < totalCurrentCrossings or: 
 						[ totalSwitchedCrossings = totalCurrentCrossings and: [ nudge ] ])
 						ifTrue: [ 
 							| rankPosition |
-							rankPosition := leftElement rankPositionsAt: aRank.
-							leftElement rankPositionsAt: aRank value: (rightElement rankPositionsAt: aRank).
-							rightElement rankPositionsAt: aRank value: rankPosition.
+							rankPosition := leftElement rankPositionsAt: aRankIndex.
+							leftElement rankPositionsAt: aRankIndex value: (rightElement rankPositionsAt: aRankIndex).
+							rightElement rankPositionsAt: aRankIndex value: rankPosition.
 							rightElementsAboveConnections := leftElementsAboveConnections.
 							rightElementsBelowConnections := leftElementsBelowConnections.
 							rightAbovePositions := leftAbovePositions.
 							rightBelowPositions := leftBelowPositions.
 							rightElement := leftElement.
-							improved := nudge negated.
+							improved := nudge not.
 						]
 				]
 			]
