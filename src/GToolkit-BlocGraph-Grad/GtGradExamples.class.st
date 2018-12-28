@@ -67,7 +67,7 @@ GtGradExamples >> edgeFrom: fromElement to: toElement [
 
 { #category : #accessing }
 GtGradExamples >> nodeExtent [
-	^ 50@20
+	^ 30@30
 ]
 
 { #category : #'building - graph' }

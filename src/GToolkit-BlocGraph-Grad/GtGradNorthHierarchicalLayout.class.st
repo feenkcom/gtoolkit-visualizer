@@ -10,7 +10,10 @@ GtGradNorthHierarchicalLayout >> placementStage: model initialX: initialX [
 	coordinateAssignment := GtGradNorthHierarchicalCoordinateAssignmentStage new
 								 intraRankSpacing: self intraRankSpacing;
 								 interRanksSpacing: self interRanksSpacing;
-								 parallelEdgeSpacing: self parallelEdgeSpacing.
+								 parallelEdgeSpacing: self parallelEdgeSpacing;
+								 initialX: initialX;
+								 model: model.
+	"coordinateAssignment execute."
 
 
 ]

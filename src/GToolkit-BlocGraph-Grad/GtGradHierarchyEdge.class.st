@@ -128,10 +128,10 @@ GtGradHierarchyEdge >> target: anObject [
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer [
-	xPositions at: [ aLayer - minRank ]
+	self xPositions at: (aLayer - minRank)
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer value: aValue [
-	xPositions add: aValue  at: aLayer
+	self xPositions at: (aLayer - minRank) put: aValue  
 ]

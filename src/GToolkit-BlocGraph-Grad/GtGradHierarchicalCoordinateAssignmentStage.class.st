@@ -75,13 +75,15 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWeight: theCurrentNode n
 { #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 	| yValue lastRankMaxElementHeight distanceToNextRank |
+	Halt now.
 	yValue := self interRanksSpacing negated.
 	lastRankMaxElementHeight := 0.
-	self rankWidths: OrderedCollection new.
-	self rankYvalues: OrderedCollection new.
+	self rankWidths: (Array new: self model maxRank + 1).
+	self rankYvalues: (Array new: self model maxRank + 1).
 	"TODO check intexes"
-	self model maxRank to: 1 by: -1 do: [ :aRankValue |
+	(self model maxRank + 1) to: 1 by: -1 do: [ :aRankValue |
 		| maxElementHeight localX aRankSet |
+		Halt now.
 		maxElementHeight := 0.
 		aRankSet := model ranks at: aRankValue.
 		localX := self initialX.
@@ -89,6 +91,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 			"TODO remove isMemberOf
 			The code below is mostly the same as in rank coordinates
 			Create a method"
+			Halt now.
 			(aNode isMemberOf: GtGradHierarchyNode)
 			ifTrue: [ 
 				self setNodeWidthAndHeight: aNode.
@@ -101,17 +104,19 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 					ifTrue: [ numberOfEdges := aNode edges count ].
 				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
 			].
-			localX := localX + aNode width / 2.
+			localX := localX + (aNode width / 2).
 			aNode xPositionAt: aRankValue value: localX.
 			aNode rankPositionsAt: aRankValue value: localX.
-			localX := localX + aNode width / 2 + self intraRankSpacing.
+			localX := localX + (aNode width / 2) + self intraRankSpacing.
+			Halt now.
 			localX > self widestRankValue
-				ifTrue: [ 
+				ifTrue: [
 					self widestRankValue: localX.
 					self widestRank: aRankValue.	
 				].
+			Halt now.
 			self rankWidths at: aRankValue put: localX.
-			].
+		].
 		self rankYvalues at: aRankValue put: yValue.
 		distanceToNextRank := (maxElementHeight / 2) + 
 									(lastRankMaxElementHeight / 2) +
@@ -213,6 +218,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> initialize [
 	self minEdgeJetty: 12.
 	self channelBuffer: 4.
 	self jettyPositionsDictionary: IdentityDictionary new.
+	self widestRankValue: 0.
 	self fineTuning: true.
 
 	
