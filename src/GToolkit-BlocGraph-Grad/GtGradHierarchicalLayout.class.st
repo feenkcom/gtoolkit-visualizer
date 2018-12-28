@@ -2,12 +2,13 @@ Class {
 	#name : #GtGradHierarchicalLayout,
 	#superclass : #GtGradLayout,
 	#instVars : [
-		'intraCellSpacing',
-		'interRankCellSpacing',
+		'intraRankSpacing',
+		'interRanksSpacing',
 		'interHierarchySpacing',
 		'parallelEdgeSpacing',
 		'roots',
-		'positions'
+		'positions',
+		'placementStage'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -85,10 +86,11 @@ GtGradHierarchicalLayout >> findRoots: theNodes [
 { #category : #initialization }
 GtGradHierarchicalLayout >> initialize [
 	super initialize.
-	intraCellSpacing := 30.
-	interRankCellSpacing := 50.
-	interHierarchySpacing := 60.
-	parallelEdgeSpacing := 10.
+	self intraRankSpacing: 30.
+	self interRanksSpacing: 50.
+	self interHierarchySpacing: 60.
+	self parallelEdgeSpacing: 10
+
 	
 	
 ]
@@ -105,25 +107,23 @@ GtGradHierarchicalLayout >> interHierarchySpacing: anObject [
 ]
 
 { #category : #accessing }
-GtGradHierarchicalLayout >> interRankCellSpacing [
-	"Space betweeb cells on adjacent layers"
-	^ interRankCellSpacing
+GtGradHierarchicalLayout >> interRanksSpacing [
+	^ interRanksSpacing
 ]
 
 { #category : #accessing }
-GtGradHierarchicalLayout >> interRankCellSpacing: anObject [
-	interRankCellSpacing := anObject
+GtGradHierarchicalLayout >> interRanksSpacing: anObject [
+	interRanksSpacing := anObject
 ]
 
 { #category : #accessing }
-GtGradHierarchicalLayout >> intraCellSpacing [
-	"Space between cells on the same level"
-	^ intraCellSpacing
+GtGradHierarchicalLayout >> intraRankSpacing [
+	^ intraRankSpacing
 ]
 
 { #category : #accessing }
-GtGradHierarchicalLayout >> intraCellSpacing: anObject [
-	intraCellSpacing := anObject
+GtGradHierarchicalLayout >> intraRankSpacing: anObject [
+	intraRankSpacing := anObject
 ]
 
 { #category : #'private-layout' }
@@ -160,8 +160,30 @@ GtGradHierarchicalLayout >> parallelEdgeSpacing: anObject [
 	parallelEdgeSpacing := anObject
 ]
 
+{ #category : #accessing }
+GtGradHierarchicalLayout >> placementStage [
+	^ placementStage
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayout >> placementStage: anObject [
+	placementStage := anObject
+]
+
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> placementStage: parent initialX: initialX [
+GtGradHierarchicalLayout >> placementStage: model initialX: initialX [
+	self subclassResponsibility
+
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayout >> positions [
+	^ positions
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayout >> positions: anObject [
+	positions := anObject
 ]
 
 { #category : #accessing }
@@ -216,8 +238,7 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 		self cycleStage: model.
 		self layeringStage: model.
 		self crossingStage: model.
-		"self layeringStage."
-		"initialX := self placementStage: parent initialX: initialX."
+		initialX := self placementStage: model initialX: initialX
 	]
 
 ]
