@@ -259,7 +259,7 @@ GtGradHierarchyModel >> dfsCount: anObject [
 GtGradHierarchyModel >> fixRanks [
 	| aRootNodesCollection visitor |
 	self ranks: ((1 to: maxRank + 1) collect: [ :aNumber|
-		Set	 new.
+		OrderedCollection	new.
 	]).
 	
 	"Perform DFS to calculate initial ordering for each rank"

@@ -116,7 +116,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 				]
 				ifFalse: [ 
 					iterationsWithoutImprovement := iterationsWithoutImprovement + 1.
-					1 to: (self nestedBestRanks count) do: [ :anIndex |
+					1 to: (self nestedBestRanks size) do: [ :anIndex |
 					 	| aRank |
 						aRank := self model ranks at: anIndex.
 						aRank doWithIndex: [ :anElement :rankIndex |
@@ -182,10 +182,8 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 	| elementsByMedianValueDictionary reservedPositions sortedMedianValues aCounter medianCounter |
 	elementsByMedianValueDictionary := Dictionary new.
 	reservedPositions := OrderedCollection new.
-	
 	(self nestedBestRanks at: aRankLayer) do: [ :anElement |
 		| nextLevelConnectedElements nextRankLayer |
-
 		downwardSweep
 			ifTrue: [ 
 				nextLevelConnectedElements := anElement nextLayerConnectedElementsOnLayer: aRankLayer.
@@ -221,7 +219,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 				(elementsByMedianValueDictionary at: theCurrentMedian) do: [ :anElement |
 					(reservedPositions includes: aCounter)
 						ifFalse: [
-							anElement rankPositionsAt: aRankLayer value: aCounter.
+							anElement rankPositionsAt: aRankLayer value: (aCounter - 1).
 						].
 					aCounter := aCounter + 1.
 				].
@@ -291,7 +289,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 				rightBelowPositions := nil.
 				rightElement := nil.
 				aRank do: [ :anElement |
-					orderedElements at: (anElement rankPositionsAt: aRankIndex) put: anElement.
+					orderedElements at: (anElement rankPositionsAt: aRankIndex) + 1 put: anElement.
 				].
 				1 to: (aRank size - 1) do: [ :aLayer |
 					| totalCurrentCrossings totalSwitchedCrossings |

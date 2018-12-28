@@ -8,6 +8,15 @@ Class {
 }
 
 { #category : #accessing }
+GtGradFixRankHierarchyVisitor >> addTorankCollectionAt: anIndex value: aValue [
+	| nodesCollection |
+	nodesCollection := self rankCollection at: anIndex.
+	(nodesCollection includes: aValue)
+		ifFalse: [ nodesCollection add: aValue ]
+
+]
+
+{ #category : #accessing }
 GtGradFixRankHierarchyVisitor >> rankCollection [
 	^ rankCollection
 ]
@@ -24,7 +33,7 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: theParentNode connectingEd
 		ifFalse: [ (aNode maxRank < 0 and: [ aNode minRank < 0 ])
 				ifTrue: [
 					"it is necessary to add 1 because indexes start at 1"
-					(self rankCollection at: aNode layer + 1) add: aNode.
+					self addTorankCollectionAt: (aNode layer + 1) value: aNode.
 					aNode maxRank: aNode layer.
 					aNode minRank: aNode layer.
 					aNode layer: (self rankCollection at: aNode maxRank + 1) size - 1.
@@ -38,7 +47,7 @@ GtGradFixRankHierarchyVisitor >> visit: aNode parent: theParentNode connectingEd
 	connectingEdge maxRank: theParentNode maxRank.
 	connectingEdge minRank: aNode maxRank.
 	connectingEdge minRank + 2 to: connectingEdge maxRank do: [ :aNum |
-		(self rankCollection at: aNum) add: connectingEdge.
+		self addTorankCollectionAt: aNum value: connectingEdge.
 		connectingEdge rankPositionsAt: aNum value: (rankCollection at: aNum) size - 1
 		]
 ]
