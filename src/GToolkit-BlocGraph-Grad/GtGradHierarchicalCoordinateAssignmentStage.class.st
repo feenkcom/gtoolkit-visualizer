@@ -224,13 +224,11 @@ GtGradHierarchicalCoordinateAssignmentStage >> initializeCoordinates [
 	"sweep up and down from the widest rank"
 	
 	self widestRank to: 1 by: -1 do: [ :aRankValue |
-		Halt now.
-		aRankValue < self model maxRank
+		aRankValue < (self model maxRank + 1)
 			ifTrue: [ self rankCoordinates: aRankValue ]
 	].
-
-	self widestRank + 1 to: self model maxRank do: [ :aRankValue |
-		aRankValue > 0
+	self widestRank + 1 to: self model maxRank + 1 do: [ :aRankValue |
+		aRankValue > 1
 			ifTrue: [ self rankCoordinates: aRankValue  ]	
 	]
 		
@@ -572,13 +570,13 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankCoordinates: aRankValue [
 				| numberOfEdges |
 				numberOfEdges := 1.
 				aNode edges isNotNil
-					ifTrue: [ numberOfEdges := aNode edges count ].
+					ifTrue: [ numberOfEdges := aNode edges size ].
 				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
 			].
-			localX := localX + aNode width / 2.
+			localX := localX + (aNode width / 2).
 			aNode xPositionAt: aRankValue value: localX.
-			aNode rankPositionsAt: aRankValue value: localX.
-			localX := localX + aNode width / 2 + self intraRankSpacing
+			aNode rankPositionsAt: aRankValue value: localX rounded.
+			localX := localX + (aNode width / 2) + self intraRankSpacing
 		]
 	
 	

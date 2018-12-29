@@ -13,7 +13,7 @@ GtGradNorthHierarchicalLayout >> placementStage: model initialX: initialX [
 								 parallelEdgeSpacing: self parallelEdgeSpacing;
 								 initialX: initialX;
 								 model: model.
-	"coordinateAssignment execute."
+	coordinateAssignment execute.
 
 
 ]
