@@ -45,8 +45,9 @@ GtGradHierarchyElement >> initialize [
 	positionsPerLayer := Dictionary new.
 	maxRank := -1.
 	minRank := -1.
-	rankPositions := Dictionary new.
+	self rankPositions: Dictionary new.
 	self xPositions: Dictionary new.
+	self yPositions: Dictionary new.
 ]
 
 { #category : #accessing }
@@ -182,6 +183,16 @@ GtGradHierarchyElement >> xPositions [
 { #category : #accessing }
 GtGradHierarchyElement >> xPositions: anObject [
 	xPositions := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> yPositionAt: aLayer [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> yPositionAt: aLayer value: aValue [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

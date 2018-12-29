@@ -164,3 +164,13 @@ GtGradHierarchyNode >> xPositionAt: aLayer [
 GtGradHierarchyNode >> xPositionAt: aLayer value: aValue [
 	self xPositions at: 1 put: aValue
 ]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> yPositionAt: aLayer [
+	self yPositions at: 1
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> yPositionAt: aLayer value: aValue [
+	self yPositions at: 1 put: aValue
+]

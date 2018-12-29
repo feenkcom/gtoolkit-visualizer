@@ -135,3 +135,13 @@ GtGradHierarchyEdge >> xPositionAt: aLayer [
 GtGradHierarchyEdge >> xPositionAt: aLayer value: aValue [
 	self xPositions at: (aLayer - minRank) put: aValue  
 ]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> yPositionAt: aLayer [
+	self yPositions at: (aLayer - minRank)
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> yPositionAt: aLayer value: aValue [
+	self yPositions at: (aLayer - minRank) put: aValue  
+]

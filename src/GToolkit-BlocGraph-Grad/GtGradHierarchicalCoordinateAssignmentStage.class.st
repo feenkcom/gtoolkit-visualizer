@@ -75,15 +75,12 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWeight: theCurrentNode n
 { #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 	| yValue lastRankMaxElementHeight distanceToNextRank |
-	Halt now.
 	yValue := self interRanksSpacing negated.
 	lastRankMaxElementHeight := 0.
 	self rankWidths: (Array new: self model maxRank + 1).
 	self rankYvalues: (Array new: self model maxRank + 1).
-	"TODO check intexes"
 	(self model maxRank + 1) to: 1 by: -1 do: [ :aRankValue |
 		| maxElementHeight localX aRankSet |
-		Halt now.
 		maxElementHeight := 0.
 		aRankSet := model ranks at: aRankValue.
 		localX := self initialX.
@@ -91,7 +88,6 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 			"TODO remove isMemberOf
 			The code below is mostly the same as in rank coordinates
 			Create a method"
-			Halt now.
 			(aNode isMemberOf: GtGradHierarchyNode)
 			ifTrue: [ 
 				self setNodeWidthAndHeight: aNode.
@@ -101,20 +97,18 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 				| numberOfEdges |
 				numberOfEdges := 1.
 				aNode edges isNotNil
-					ifTrue: [ numberOfEdges := aNode edges count ].
+					ifTrue: [ numberOfEdges := aNode edges size ].
 				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
 			].
 			localX := localX + (aNode width / 2).
 			aNode xPositionAt: aRankValue value: localX.
-			aNode rankPositionsAt: aRankValue value: localX.
+			aNode rankPositionsAt: aRankValue value: localX rounded.
 			localX := localX + (aNode width / 2) + self intraRankSpacing.
-			Halt now.
 			localX > self widestRankValue
 				ifTrue: [
 					self widestRankValue: localX.
 					self widestRank: aRankValue.	
 				].
-			Halt now.
 			self rankWidths at: aRankValue put: localX.
 		].
 		self rankYvalues at: aRankValue put: yValue.
@@ -122,11 +116,11 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 									(lastRankMaxElementHeight / 2) +
 									self interRanksSpacing.
 		lastRankMaxElementHeight := maxElementHeight.
-		yValue := yValue + self distanceToNextRankIncrement: distanceToNextRank .
+		yValue := yValue + (self distanceToNextRankIncrement: distanceToNextRank).
 		aRankSet do:  [ :aNode |
-			aNode xPositionAt: aRankValue value: yValue.
-		]										
-	]
+			aNode yPositionAt: aRankValue value: yValue.
+		]									
+	].
 		
 		
 		
@@ -229,12 +223,13 @@ GtGradHierarchicalCoordinateAssignmentStage >> initializeCoordinates [
 	self calculateWidestRank.
 	"sweep up and down from the widest rank"
 	
-	self widestRank + 1 to: 1 by: -1 do: [ :aRankValue |
+	self widestRank to: 1 by: -1 do: [ :aRankValue |
+		Halt now.
 		aRankValue < self model maxRank
 			ifTrue: [ self rankCoordinates: aRankValue ]
 	].
 
-	self widestRank + 2 to: self model maxRank do: [ :aRankValue |
+	self widestRank + 1 to: self model maxRank do: [ :aRankValue |
 		aRankValue > 0
 			ifTrue: [ self rankCoordinates: aRankValue  ]	
 	]
