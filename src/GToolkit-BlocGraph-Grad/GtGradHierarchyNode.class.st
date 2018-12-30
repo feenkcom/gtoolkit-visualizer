@@ -157,7 +157,7 @@ GtGradHierarchyNode >> rankPositionsAt: aLayer value: aValue [
 
 { #category : #accessing }
 GtGradHierarchyNode >> xPositionAt: aLayer [
-	self xPositions at: 1
+	^ self xPositions at: 1
 ]
 
 { #category : #accessing }
