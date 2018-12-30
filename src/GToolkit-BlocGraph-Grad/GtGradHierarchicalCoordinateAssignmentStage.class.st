@@ -171,7 +171,6 @@ GtGradHierarchicalCoordinateAssignmentStage >> execute [
 					ifFalse: [
 						self minNode
 					].
-					Halt now.
 					self currentXDelta < bestXDelta
 						ifTrue: [
 							self model ranks doWithIndex: [ :aRankSet :anIndex | 
@@ -458,8 +457,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> minNode [
 					weightedElements removeFirst.
 					aWeightedElement visited: false.
 					triesCount := triesCount + 1
-		].
-	Halt now.
+		]
 	
 ]
 
@@ -525,8 +523,8 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionElements [
 GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
 	| anElement positionX positionY |
 	anElement := aNode element.
-	positionX := aNode xPositions first - (aNode width / 2).
-	positionY := aNode yPositions first - (aNode height / 2).
+	positionX := aNode xPositions at: 1 - (aNode width / 2).
+	positionY := aNode yPositions at: 1 - (aNode height / 2).
 	self topYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) min: positionY).
 	self bottomYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) max: (positionY + aNode height)).
 	self positionElement: anElement positionX: positionX positionY: positionY.
@@ -613,22 +611,19 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankMedianPosition: aRankValue ne
 				ifTrue: [ aNode previousLayerConnectedElementsOnLayer: aRankValue ]
 				ifFalse: [ aNode nextLayerConnectedElementsOnLayer: aRankValue ].
 			aWeightedElement
-				weight: (self calculateWeight: aNode nodes: nextLayerConnectedElements).
-		].
-
+				weight: (self calculateWeight: aNode nodes: nextLayerConnectedElements) ].
 	weightedElements asSortedCollection
-		do: [ :aWeightedElement | 
+		do: [ :aWeightedElement |
 			| nextLayerConnectedElements medianNextLevel aNode leftBuffer leftLimit rightBuffer rightLimit rankCounter |
 			medianNextLevel := 0.
-
 			aNode := aWeightedElement element.
 			nextLayerConnectedElements := theNextRankValue < aRankValue
-				ifTrue: [ aNode previousLayerConnectedElementsOnLayer: aRankValue ]
-				ifFalse: [ aNode nextLayerConnectedElementsOnLayer: aRankValue ].
+				ifTrue: [ (aNode previousLayerConnectedElementsOnLayer: aRankValue) ]
+				ifFalse: [ (aNode nextLayerConnectedElementsOnLayer: aRankValue ) ].
 			nextLayerConnectedElements isNotNil
-				ifTrue: [
-					medianNextLevel := nextLayerConnectedElements isNotEmpty
-						ifTrue: [ self
+				ifTrue: [ medianNextLevel := nextLayerConnectedElements isNotEmpty
+						ifTrue: [
+							 self
 								medianXValue: nextLayerConnectedElements
 								rankValue: theNextRankValue ]
 						ifFalse: [ aNode rankPositionsAt: aRankValue ] ].
@@ -636,50 +631,47 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankMedianPosition: aRankValue ne
 			leftLimit := -100000000.
 			rankCounter := aWeightedElement rankIndex - 1.
 			[ rankCounter >= 1 ]
-				whileTrue: [
-					(nodeWeightedElementDictionary includesKey: (rank at: rankCounter))
-						ifTrue: [ 
-							| weightedElement leftNode |
+				whileTrue: [ (nodeWeightedElementDictionary includesKey: (rank at: rankCounter))
+						ifTrue: [ | weightedElement leftNode |
 							leftNode := rank at: rankCounter.
 							weightedElement := nodeWeightedElementDictionary at: leftNode.
 							weightedElement visited
-								ifTrue: [ 
-									leftLimit := (leftNode rankPositionsAt: aRankValue) +
-									 (leftNode width / 2) + intraRankSpacing + leftBuffer
-										+ (aNode width / 2) ]
-								ifFalse:
-									[ leftBuffer := leftBuffer + leftNode width + intraRankSpacing ].
-							rankCounter := rankCounter - 1 ] ].
+								ifTrue: [ leftLimit := (leftNode rankPositionsAt: aRankValue)
+										+ (leftNode width / 2) + intraRankSpacing + leftBuffer
+										+ (aNode width / 2).
+										rankCounter := 0.
+										]
+								ifFalse: [ 
+									leftBuffer := leftBuffer + leftNode width + intraRankSpacing.
+									rankCounter := rankCounter - 1 
+									].
+							] ].
 			rightBuffer := 0.
 			rightLimit := 100000000.
 			rankCounter := aWeightedElement rankIndex + 1.
 			[ rankCounter <= weightedElements size ]
 				whileTrue: [ (nodeWeightedElementDictionary includesKey: (rank at: rankCounter))
-						ifTrue: [ 
-							| weightedElement rightNode |
+						ifTrue: [ | weightedElement rightNode |
 							rightNode := rank at: rankCounter.
 							weightedElement := nodeWeightedElementDictionary at: rightNode.
 							weightedElement visited
-								ifTrue: [ rightLimit := (rightNode rankPositionsAt: aRankValue) - (rightNode width / 2) - intraRankSpacing - rightBuffer - (aNode width / 2).
+								ifTrue: [ rightLimit := (rightNode rankPositionsAt: aRankValue)
+										- (rightNode width / 2) - intraRankSpacing - rightBuffer
+										- (aNode width / 2).
 									rankCounter := weightedElements size + 1 ]
 								ifFalse: [ rightBuffer := rightBuffer + rightNode width + intraRankSpacing.
-									rankCounter := rankCounter + 1 ] 
-					]
-			].
-			(medianNextLevel >= leftLimit and: [ medianNextLevel <= rightLimit ])
-				ifTrue: [ aNode rankPositionsAt: aRankValue value: medianNextLevel ].
+									rankCounter := rankCounter + 1 ] ] ].
+			(medianNextLevel between: leftLimit and: rightLimit)
+				ifTrue: [ aNode rankPositionsAt: aRankValue value: medianNextLevel rounded ].
 			medianNextLevel < leftLimit
-				ifTrue: [  
-					aNode rankPositionsAt: aRankValue value: leftLimit.
-					self currentXDelta: self currentXDelta + leftLimit - medianNextLevel
-					].
-			medianNextLevel > rightLimit
-				ifTrue: [ 
-					aNode rankPositionsAt: aRankValue value: rightLimit.
-					self currentXDelta: self currentXDelta +  medianNextLevel - rightLimit
-					].
-				aWeightedElement visited: true.
-		]
+				ifTrue: [ aNode rankPositionsAt: aRankValue value: leftLimit rounded.
+					self
+						currentXDelta: self currentXDelta + leftLimit - medianNextLevel ]. 
+				medianNextLevel > rightLimit
+				ifTrue: [ aNode rankPositionsAt: aRankValue value: rightLimit rounded.
+					self
+						currentXDelta: self currentXDelta + medianNextLevel - rightLimit ].
+			aWeightedElement visited: true.]
 ]
 
 { #category : #accessing }

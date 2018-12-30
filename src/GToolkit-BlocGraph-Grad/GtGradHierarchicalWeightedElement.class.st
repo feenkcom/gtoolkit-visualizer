@@ -13,7 +13,7 @@ Class {
 
 { #category : #testing }
 GtGradHierarchicalWeightedElement >> < otherWeightedElement [ 
-	^ self weight < otherWeightedElement weight
+	^ self weight > otherWeightedElement weight
 ]
 
 { #category : #comparing }
