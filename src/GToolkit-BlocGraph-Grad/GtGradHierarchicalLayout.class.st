@@ -89,7 +89,8 @@ GtGradHierarchicalLayout >> initialize [
 	self intraRankSpacing: 30.
 	self interRanksSpacing: 50.
 	self interHierarchySpacing: 60.
-	self parallelEdgeSpacing: 10
+	self parallelEdgeSpacing: 10.
+	self positions: IdentityDictionary new.
 
 	
 	
@@ -146,7 +147,11 @@ GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
 	theNodes := anElement children accountedByLayout
 		select: [ :aChildElement | aChildElement graph isNode ].
 
-	self run: theNodes
+	self run: theNodes.
+	
+	theNodes do: [ :aNodeElement |
+		aNodeElement measuredBounds position: (self positions at: aNodeElement)
+	]
 ]
 
 { #category : #accessing }
@@ -238,7 +243,7 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 		self cycleStage: model.
 		self layeringStage: model.
 		self crossingStage: model.
-		initialX := self placementStage: model initialX: initialX
+		initialX := self placementStage: model initialX: initialX.
 	]
 
 ]

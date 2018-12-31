@@ -191,7 +191,6 @@ GtGradHierarchicalCoordinateAssignmentStage >> execute [
 						self currentXDelta: 0 
 					].
 		].
-		Halt now.
 		self positionElements.
 ]
 
@@ -511,24 +510,29 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionElements [
 	For now, we are only positioning nodes
 	Also, this handles resizing parents, but we will skip that
 	for now as well"
-
-	self
-		topYPerRank: (model ranks collect: [ :aRank | SmallInteger maxVal ]).
-	self bottomYPerRank: OrderedCollection new.
+	self topYPerRank: (Array new: model ranks size).
+	self bottomYPerRank: (Array new: model ranks size).
+	1 to: self model ranks size do: [ :aNum |
+		topYPerRank at: aNum put: SmallInteger maxVal .
+		bottomYPerRank at: aNum put: SmallInteger maxVal.
+	].
+	self limitX: 0.
 	self model hierarchyNodesDictionary
 		valuesDo: [ :aNode | self positionNode: aNode ]
 ]
 
 { #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
-	| anElement positionX positionY |
+	| anElement positionX positionY yArrayIndex |
 	anElement := aNode element.
-	positionX := aNode xPositions at: 1 - (aNode width / 2).
-	positionY := aNode yPositions at: 1 - (aNode height / 2).
-	self topYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) min: positionY).
-	self bottomYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) max: (positionY + aNode height)).
+	positionX := (aNode xPositions at: 1) - (aNode width / 2).
+	positionY := (aNode yPositions at: 1) - (aNode height / 2).
+	"topYPerRank and bottomYPerRank are needed while positioning edges, so none of this is necesarry for now
+	yArrayIndex - check if + 1 is needed (I think that it is)"
+	yArrayIndex := aNode minRank + 1.
+	self topYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) min: positionY).
+	self bottomYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) max: (positionY + aNode height)).
 	self positionElement: anElement positionX: positionX positionY: positionY.
-	"limitX is needed while positioning edges, so this is not necesarry for now..."
 	self limitX: (self limitX max: positionX + aNode width)
 ]
 
