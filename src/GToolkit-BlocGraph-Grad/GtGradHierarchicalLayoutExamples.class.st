@@ -5,16 +5,19 @@ Class {
 }
 
 { #category : #examples }
+GtGradHierarchicalLayoutExamples >> layout [
+	self subclassResponsibility
+]
+
+{ #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExample [
-	<gtExample>
-	<noTest>
-	| view theNodes layout pairsOfNodes |
+	| view theNodes aLayout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
 	Just a way of gradually testing the code and making sure that
 	nothing explodes"
 	view := self view.
-	layout := GtGradNorthHierarchicalLayout new.
+	aLayout := self layout.
 	theNodes := self nodes: (1 to: 7). 
 	theNodes doWithIndex: [ :node :index |
 			node labeled: (index asString).
@@ -27,7 +30,7 @@ GtGradHierarchicalLayoutExamples >> simpleExample [
 	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
 	view addChildren: theNodes.
-	view layout: layout.
+	view layout: aLayout.
 	view forceLayout. 
 	
 	^ view
@@ -35,15 +38,13 @@ GtGradHierarchicalLayoutExamples >> simpleExample [
 
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
-	<gtExample>
-	<noTest>
-	| view theNodes layout pairsOfNodes |
+	| view theNodes aLayout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
 	Just a way of gradually testing the code and making sure that
 	nothing explodes"
 	view := self view.
-	layout := GtGradNorthHierarchicalLayout new.
+	aLayout := self layout.
 	theNodes := self nodes: (1 to: 7). 
 	theNodes doWithIndex: [ :node :index |
 			node labeled: (index asString).
@@ -55,7 +56,7 @@ GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
 	view addChildren: theNodes.
-	view layout: layout.
+	view layout: aLayout.
 	view forceLayout. 
 	
 	^ view
@@ -63,15 +64,13 @@ GtGradHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 
 { #category : #examples }
 GtGradHierarchicalLayoutExamples >> simpleExampleWhereAllNodesHaveIncomingEdges [
-	<gtExample>
-	<noTest>
-	| view theNodes layout pairsOfNodes |
+	| view theNodes aLayout pairsOfNodes |
 	
 	"At this moment, this examples will not result in anything
 	Just a way of gradually testing the code and making sure that
 	nothing explodes"
 	view := self view.
-	layout := GtGradNorthHierarchicalLayout new.
+	aLayout := self layout.
 	theNodes := self nodes: (1 to: 5). 
 	theNodes doWithIndex: [ :node :index |
 			node labeled: (index asString).
@@ -83,7 +82,7 @@ GtGradHierarchicalLayoutExamples >> simpleExampleWhereAllNodesHaveIncomingEdges 
 	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
 	view addChildren: theNodes.
-	view layout: layout.
+	view layout: aLayout.
 	view forceLayout. 
 	
 	^ view
