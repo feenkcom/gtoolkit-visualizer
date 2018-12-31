@@ -130,7 +130,6 @@ GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10EditorNodesAndLine [
 { #category : #'examples - layout' }
 GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10SimpleNodes [
 	<gtExample>
-	<noTest>
 	| aContainer theNodes theNodeExtents theNodePositions |
 
 	aContainer := self containerWithCircleLayout.
