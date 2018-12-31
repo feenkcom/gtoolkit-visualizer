@@ -22,6 +22,24 @@ GtGradNorthHierarchicalLayoutExamples >> simpleExampleDsiconnectedGraph [
 ]
 
 { #category : #examples }
+GtGradNorthHierarchicalLayoutExamples >> simpleExampleIncreasedInterHierarchySpacing [
+	<gtExample>
+	^ super simpleExampleIncreasedInterHierarchySpacing
+]
+
+{ #category : #examples }
+GtGradNorthHierarchicalLayoutExamples >> simpleExampleIncreasedInterRanksSpacing [
+	<gtExample>
+	^ super simpleExampleIncreasedInterRanksSpacing
+]
+
+{ #category : #examples }
+GtGradNorthHierarchicalLayoutExamples >> simpleExampleIncreasedIntraRankSpacing [
+	<gtExample>
+	^ super simpleExampleIncreasedIntraRankSpacing
+]
+
+{ #category : #examples }
 GtGradNorthHierarchicalLayoutExamples >> simpleExampleWhereAllNodesHaveIncomingEdges [
 	<gtExample>
 	^ super simpleExampleWhereAllNodesHaveIncomingEdges
