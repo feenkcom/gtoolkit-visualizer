@@ -33,20 +33,6 @@ GtGradHierarchicalLayout >> cycleStage: model [
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> filterDescendants: aNode [
-	| descendants |
-	
-	descendants := Set new.
-	aNode = self layoutParent
-		ifFalse: [ descendants add: aNode ].
-	aNode graph nodesAlongOutgoingEdges do: [ :aChildNode |
-		descendants addAll: (self filterDescendants: aChildNode)
-	].
-	^ descendants
-
-]
-
-{ #category : #'private-layout' }
 GtGradHierarchicalLayout >> findRoots: theNodes [
 	"""
 	Finds all nodes that do not have incoming edges.
@@ -150,7 +136,7 @@ GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
 	self run: theNodes.
 	
 	theNodes do: [ :aNodeElement |
-		aNodeElement measuredBounds position: (self positions at: aNodeElement)
+		aNodeElement measuredBounds position: (aNodeElement constraints gradHierarchical computedPosition)
 	]
 ]
 

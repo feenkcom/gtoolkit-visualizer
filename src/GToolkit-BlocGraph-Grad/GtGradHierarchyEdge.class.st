@@ -88,12 +88,12 @@ GtGradHierarchyEdge >> previousLayerConnectedElementsOnLayer: aLayer [
 
 { #category : #accessing }
 GtGradHierarchyEdge >> rankPositionsAt: aLayer [
-	^ self rankPositions at: (aLayer - self minRank).
+	^ self rankPositions at: (aLayer - self minRank - 1).
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> rankPositionsAt: aLayer value: aValue [
-	self rankPositions at: (aLayer - self minRank) put: aValue.
+	self rankPositions at: (aLayer - self minRank - 1) put: aValue.
 ]
 
 { #category : #accessing }
@@ -128,20 +128,20 @@ GtGradHierarchyEdge >> target: anObject [
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer [
-	self xPositions at: (aLayer - minRank)
+	self xPositions at: (aLayer - minRank - 1)
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer value: aValue [
-	self xPositions at: (aLayer - minRank) put: aValue  
+	self xPositions at: (aLayer - minRank - 1) put: aValue  
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> yPositionAt: aLayer [
-	self yPositions at: (aLayer - minRank)
+	self yPositions at: (aLayer - minRank - 1)
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> yPositionAt: aLayer value: aValue [
-	self yPositions at: (aLayer - minRank) put: aValue  
+	self yPositions at: (aLayer - minRank - 1) put: aValue  
 ]

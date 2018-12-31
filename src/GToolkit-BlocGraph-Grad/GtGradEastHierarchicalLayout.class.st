@@ -12,8 +12,7 @@ GtGradEastHierarchicalLayout >> placementStage: model initialX: initialX [
 								 interRanksSpacing: self interRanksSpacing;
 								 parallelEdgeSpacing: self parallelEdgeSpacing;
 								 initialX: initialX;
-								 model: model;
-								 layout: self.
+								 model: model.
 	coordinateAssignment execute.
 	^ coordinateAssignment limitX + self interHierarchySpacing.
 

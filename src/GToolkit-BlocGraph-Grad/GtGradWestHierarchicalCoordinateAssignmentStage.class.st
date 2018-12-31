@@ -11,7 +11,7 @@ GtGradWestHierarchicalCoordinateAssignmentStage >> distanceToNextRankIncrement: 
 
 { #category : #'layout - computations' }
 GtGradWestHierarchicalCoordinateAssignmentStage >> positionElement: anElement positionX: positionX positionY: positionY [
-	self layout positions at: anElement put: positionY@positionX
+	anElement constraints gradHierarchical computedPosition:  positionY@positionX
 ]
 
 { #category : #'layout - computations' }
