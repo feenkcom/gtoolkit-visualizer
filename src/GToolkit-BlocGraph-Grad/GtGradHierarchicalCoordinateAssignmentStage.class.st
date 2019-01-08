@@ -59,14 +59,14 @@ GtGradHierarchicalCoordinateAssignmentStage >> bottomYPerRank: anObject [
 GtGradHierarchicalCoordinateAssignmentStage >> calculateWeight: theCurrentNode nodes: aNodesCollection [
 	| totalWeight |
 	totalWeight := 0.
-	"TODO replace those is member of callse"
+	"TODO replace those is member of calls"
 	aNodesCollection do: [ :aNode |
 		((theCurrentNode isMemberOf: GtGradHierarchyNode) and: [ aNode isMemberOf: GtGradHierarchyNode])
-			ifTrue: [ totalWeight += totalWeight + 1 ]
+			ifTrue: [ totalWeight := totalWeight + 1 ]
 			ifFalse: [ 
 				((theCurrentNode isMemberOf: GtGradHierarchyEdge) and: [ aNode isMemberOf: GtGradHierarchyEdge])
-					ifTrue: [ totalWeight += totalWeight + 8 ]
-					ifFalse: [ totalWeight += totalWeight + 2 ]
+					ifTrue: [ totalWeight := totalWeight + 8 ]
+					ifFalse: [ totalWeight := totalWeight + 2 ]
 			]
 	].
 	^ totalWeight
@@ -77,10 +77,9 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 	| yValue lastRankMaxElementHeight distanceToNextRank |
 	yValue := self interRanksSpacing negated.
 	lastRankMaxElementHeight := 0.
-	self rankWidths: OrderedCollection new.
-	self rankYvalues: OrderedCollection new.
-	"TODO check intexes"
-	self model maxRank to: 1 by: -1 do: [ :aRankValue |
+	self rankWidths: (Array new: self model maxRank + 1).
+	self rankYvalues: (Array new: self model maxRank + 1).
+	(self model maxRank + 1) to: 1 by: -1 do: [ :aRankValue |
 		| maxElementHeight localX aRankSet |
 		maxElementHeight := 0.
 		aRankSet := model ranks at: aRankValue.
@@ -98,30 +97,30 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 				| numberOfEdges |
 				numberOfEdges := 1.
 				aNode edges isNotNil
-					ifTrue: [ numberOfEdges := aNode edges count ].
+					ifTrue: [ numberOfEdges := aNode edges size ].
 				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
 			].
-			localX := localX + aNode width / 2.
+			localX := localX + (aNode width / 2).
 			aNode xPositionAt: aRankValue value: localX.
-			aNode rankPositionsAt: aRankValue value: localX.
-			localX := localX + aNode width / 2 + self intraRankSpacing.
+			aNode rankPositionsAt: aRankValue value: localX rounded.
+			localX := localX + (aNode width / 2) + self intraRankSpacing.
 			localX > self widestRankValue
-				ifTrue: [ 
+				ifTrue: [
 					self widestRankValue: localX.
 					self widestRank: aRankValue.	
 				].
 			self rankWidths at: aRankValue put: localX.
-			].
+		].
 		self rankYvalues at: aRankValue put: yValue.
 		distanceToNextRank := (maxElementHeight / 2) + 
 									(lastRankMaxElementHeight / 2) +
 									self interRanksSpacing.
 		lastRankMaxElementHeight := maxElementHeight.
-		yValue := yValue + self distanceToNextRankIncrement: distanceToNextRank .
+		yValue := yValue + (self distanceToNextRankIncrement: distanceToNextRank).
 		aRankSet do:  [ :aNode |
-			aNode xPositionAt: aRankValue value: yValue.
-		]										
-	]
+			aNode yPositionAt: aRankValue value: yValue.
+		]									
+	].
 		
 		
 		
@@ -162,23 +161,37 @@ GtGradHierarchicalCoordinateAssignmentStage >> execute [
 	self initializeCoordinates.
 	bestXDelta := 100000000.
 	self fineTuning
-		ifTrue: [ 1 to: self maxIterations
-				do: [ :anIteration | 
-					anIteration > 1
-						ifTrue: [ self medianPositioning: anIteration ].
-					self minNode.
-					self model ranks
-						doWithIndex: [ :aRankSet :anIndex | 
-							aRankSet
-								do: [ :aNode | 
-									self currentXDelta < bestXDelta
-										ifTrue:
-											[ aNode xPositionAt: anIndex value: (aNode rankPositionsAt: anIndex) ]
-										ifFalse:
-											[ aNode rankPositionsAt: anIndex value: (aNode xPositionAt: anIndex) ].
-									bestXDelta := bestXDelta min: self currentXDelta ] ].
-					self minPath.
-					self currentXDelta: 0 ] ]
+		ifTrue: [
+			1 to: self maxIterations do: [ :anIteration | 
+				anIteration > 1
+					ifTrue: [ 
+						self medianPositioning: anIteration.
+						self minNode 
+					]
+					ifFalse: [
+						self minNode
+					].
+					self currentXDelta < bestXDelta
+						ifTrue: [
+							self model ranks doWithIndex: [ :aRankSet :anIndex | 
+								aRankSet do: [ :aNode |
+									aNode xPositionAt: anIndex value: (aNode rankPositionsAt: anIndex) 
+								].
+								bestXDelta  := self currentXDelta.
+							]
+						]
+						ifFalse: [
+							self model ranks doWithIndex: [ :aRankSet :anIndex | 
+								aRankSet do: [ :aNode |
+									aNode rankPositionsAt: anIndex value: (aNode xPositionAt: anIndex) 
+									].
+							] 
+						].
+						self minPath.
+						self currentXDelta: 0 
+					].
+		].
+		self positionElements.
 ]
 
 { #category : #accessing }
@@ -213,6 +226,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> initialize [
 	self minEdgeJetty: 12.
 	self channelBuffer: 4.
 	self jettyPositionsDictionary: IdentityDictionary new.
+	self widestRankValue: 0.
 	self fineTuning: true.
 
 	
@@ -223,13 +237,12 @@ GtGradHierarchicalCoordinateAssignmentStage >> initializeCoordinates [
 	self calculateWidestRank.
 	"sweep up and down from the widest rank"
 	
-	self widestRank + 1 to: 1 by: -1 do: [ :aRankValue |
-		aRankValue < self model maxRank
+	self widestRank to: 1 by: -1 do: [ :aRankValue |
+		aRankValue < (self model maxRank + 1)
 			ifTrue: [ self rankCoordinates: aRankValue ]
 	].
-
-	self widestRank + 2 to: self model maxRank do: [ :aRankValue |
-		aRankValue > 0
+	self widestRank + 1 to: self model maxRank + 1 do: [ :aRankValue |
+		aRankValue > 1
 			ifTrue: [ self rankCoordinates: aRankValue  ]	
 	]
 		
@@ -290,22 +303,18 @@ GtGradHierarchicalCoordinateAssignmentStage >> maxIterations: anObject [
 { #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> medianPositioning: theCurrentIteration [
 	| downwardSweep |
-	downwardSweep := theCurrentIteration even.
+	downwardSweep := theCurrentIteration odd.
 	downwardSweep
 		ifTrue: [ 
-			model maxRank to: 1 by: -1 do: [ :aRankValue |
+			model maxRank + 1 to: 2 by: -1 do: [ :aRankValue |
 				self rankMedianPosition: aRankValue - 1 nextValue: aRankValue.
 			]
 		]
 		ifFalse: [ 
-			 1 to: model maxRank - 1 do: [ :aRankValue |
+			 1 to: model maxRank do: [ :aRankValue |
 				self rankMedianPosition: aRankValue + 1 nextValue: aRankValue.
 			]
 		]
-]
-
-{ #category : #accessing }
-GtGradHierarchicalCoordinateAssignmentStage >> medianXValue: aConnectedElementsCollection layer: aLayerNum [
 ]
 
 { #category : #'layout - computations' }
@@ -316,15 +325,15 @@ GtGradHierarchicalCoordinateAssignmentStage >> medianXValue: aConnectedElementsC
 	
 	medianValues := (aConnectedElementsCollection collect: [ :aNode |
 		aNode rankPositionsAt: theRankValue.
-	]) asSortedCollection.
-
-	aConnectedElementsCollection count odd
+	]).
+	medianValues := medianValues asSortedCollection.
+	aConnectedElementsCollection size odd
 		ifTrue: [ 
-			^ medianValues at: ((aConnectedElementsCollection count / 2)  + 1).
+			^ medianValues at: ((aConnectedElementsCollection size // 2)  + 1).
 		]
 		ifFalse: [ 
 			| medianPoint leftMedian rightMedian |
-			medianPoint := aConnectedElementsCollection count / 2.
+			medianPoint := aConnectedElementsCollection size // 2.
 			leftMedian := medianValues at: medianPoint.
 			rightMedian := medianValues at: medianPoint + 1.
 			^ (leftMedian + rightMedian) / 2.
@@ -349,64 +358,64 @@ GtGradHierarchicalCoordinateAssignmentStage >> minNode [
 	| weightedElements nodeWeightedElementDictionary rank maxTries triesCount tolerance currentPosition elementMedian |
 	weightedElements := OrderedCollection new.
 	nodeWeightedElementDictionary := IdentityDictionary new.
-	rank := Array2D new.
+	rank := Dictionary new.
 	"TODO once again, think about indexes - just increased by one for npw"
 	1 to: (model maxRank + 1) do: [ :aRankValue |
 		| aRankSet |
 		aRankSet := model ranks at: aRankValue.
-		rank at: aRankValue put: aRankSet asCollection.
-		(aRankSet at: aRankValue) doWithIndex: [ :aNode :aRankIndex |
+		rank at: aRankValue put: aRankSet.
+		aRankSet doWithIndex: [ :aNode :aRankIndex |
 			| aWeightedElement |
 			aWeightedElement := GtGradHierarchicalWeightedElement new
-										element: aNode ;
+										element: aNode;
+										weight: aRankValue;
 										rankIndex: aRankIndex;
 										visited: true.
 			weightedElements add: aWeightedElement.
 			nodeWeightedElementDictionary at: aNode  put: aWeightedElement.
 		]
 	].
-	maxTries := weightedElements count * 10.
+	maxTries := weightedElements size * 10.
 	triesCount := 0.
 	tolerance := 1.
 	
 	[weightedElements isNotEmpty and: [ triesCount <= maxTries ]]
-		whileTrue: [ 
+		whileTrue: [
 			| aWeightedElement aNode rankValue rankIndex nextLayerConnectedElements previousLayerConnectedElements positionChanged |
 			aWeightedElement := weightedElements first.
 			aNode := aWeightedElement element.
 			rankValue := aWeightedElement weight.
 			rankIndex := aWeightedElement rankIndex.
-			nextLayerConnectedElements := aNode nextLayerConnectedElements: rankValue.
-			previousLayerConnectedElements := aNode previousLayerConnectedElements: rankValue.
+			nextLayerConnectedElements := aNode nextLayerConnectedElementsOnLayer: rankValue.
+			previousLayerConnectedElements := aNode previousLayerConnectedElementsOnLayer: rankValue.
 			currentPosition := aNode rankPositionsAt: rankValue.
 			elementMedian := currentPosition.
-			(nextLayerConnectedElements count > 0 or: [ previousLayerConnectedElements count > 0 ])
+			(nextLayerConnectedElements isNotEmpty or: [ previousLayerConnectedElements isNotEmpty ])
 				ifTrue: [
 					| medianNextLevel medianPreviousLevel |
-					medianNextLevel := self medianXValue: nextLayerConnectedElements layer: rankValue + 1. 
-					medianPreviousLevel := self medianXValue: previousLayerConnectedElements layer: rankValue -1.
-					elementMedian := ((medianNextLevel * nextLayerConnectedElements count)	+ (medianPreviousLevel * previousLayerConnectedElements count)) / (nextLayerConnectedElements count + previousLayerConnectedElements count ).
+					medianNextLevel := self medianXValue: nextLayerConnectedElements rankValue: rankValue + 1. 
+					medianPreviousLevel := self medianXValue: previousLayerConnectedElements rankValue: rankValue -1.
+					elementMedian := ((medianNextLevel * nextLayerConnectedElements size)	+ (medianPreviousLevel * previousLayerConnectedElements size)) / (nextLayerConnectedElements size + previousLayerConnectedElements size).
 			].
 			positionChanged := false.
 			elementMedian < (currentPosition - tolerance)
-				ifTrue: [ 
+				ifTrue: [
 					rankIndex = 1
 						ifTrue: [ 
-							aNode rankPositionsAt: rankValue value: elementMedian.
+							aNode rankPositionsAt: rankValue value: elementMedian rounded.
 							positionChanged := true.
 						]
 						ifFalse: [ 
 							| leftNode leftLimit |
 							leftNode := rank at: rankValue at: rankIndex - 1.
-							leftLimit := leftNode rankPositionsAt: rankValue + (leftNode width / 2) +
-											self intraRankSpacing + (aNode width / 2).
+							leftLimit := (leftNode rankPositionsAt: rankValue) + (leftNode width / 2) + self intraRankSpacing + (aNode width / 2).
 							leftLimit < elementMedian
 								ifTrue: [
-									aNode rankPositionsAt: rankValue value: elementMedian.
+									aNode rankPositionsAt: rankValue value: elementMedian rounded.
 									positionChanged := true.
 								]
 								ifFalse: [ 
-									leftLimit < (aNode rankPositionsAt: rankValue - tolerance)
+									leftLimit < ((aNode rankPositionsAt: rankValue) - tolerance)
 										ifTrue: [ 
 											aNode rankPositionsAt: rankValue value: leftLimit.
 											positionChanged := true.
@@ -414,25 +423,24 @@ GtGradHierarchicalCoordinateAssignmentStage >> minNode [
 								]
 						]
 				].
-			elementMedian > currentPosition + tolerance
+			elementMedian > (currentPosition + tolerance)
 				ifTrue: [ 
-						rankIndex = (rank at: rankValue) count
+						rankIndex = (rank at: rankValue) size
 							ifTrue: [ 
-								aNode rankPositionsAt: rankValue value: elementMedian.
+								aNode rankPositionsAt: rankValue value: elementMedian rounded.
 								positionChanged := true.
 							]
 							ifFalse: [ 
 								| rightNode rightLimit |
 								rightNode := rank at: rankValue at: rankIndex + 1.
-								rightLimit := rightNode rankPositionsAt: rankValue - (rightNode width / 2) -
-											self intraRankSpacing - (aNode width / 2).
+								rightLimit := (rightNode rankPositionsAt: rankValue) - (rightNode width / 2) - self intraRankSpacing - (aNode width / 2).
 								rightLimit > elementMedian
 									ifTrue: [
 										aNode rankPositionsAt: rankValue value: elementMedian.
 										positionChanged := true.
 									]
 									ifFalse: [ 
-										rightLimit > (aNode rankPositionsAt: rankValue + tolerance)
+										rightLimit > ((aNode rankPositionsAt: rankValue) + tolerance)
 											ifTrue: [ 
 												aNode rankPositionsAt: rankValue value: rightLimit.
 												positionChanged := true.
@@ -448,8 +456,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> minNode [
 					weightedElements removeFirst.
 					aWeightedElement visited: false.
 					triesCount := triesCount + 1
-		].
-
+		]
 	
 ]
 
@@ -503,24 +510,29 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionElements [
 	For now, we are only positioning nodes
 	Also, this handles resizing parents, but we will skip that
 	for now as well"
-
-	self
-		topYPerRank: (model ranks collect: [ :aRank | SmallInteger maxVal ]).
-	self bottomYPerRank: OrderedCollection new.
+	self topYPerRank: (Array new: model ranks size).
+	self bottomYPerRank: (Array new: model ranks size).
+	1 to: self model ranks size do: [ :aNum |
+		topYPerRank at: aNum put: SmallInteger maxVal .
+		bottomYPerRank at: aNum put: SmallInteger maxVal.
+	].
+	self limitX: 0.
 	self model hierarchyNodesDictionary
 		valuesDo: [ :aNode | self positionNode: aNode ]
 ]
 
 { #category : #'layout - computations' }
 GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
-	| anElement positionX positionY |
+	| anElement positionX positionY yArrayIndex |
 	anElement := aNode element.
-	positionX := aNode xPositions first - (aNode width / 2).
-	positionY := aNode yPositions first - (aNode height / 2).
-	self topYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) min: positionY).
-	self bottomYPerRank at: aNode minRank put: ((self topYPerRank at: aNode minRank) max: (positionY + aNode height)).
+	positionX := (aNode xPositions at: 1) - (aNode width / 2).
+	positionY := (aNode yPositions at: 1) - (aNode height / 2).
+	"topYPerRank and bottomYPerRank are needed while positioning edges, so none of this is necesarry for now
+	yArrayIndex - check if + 1 is needed (I think that it is)"
+	yArrayIndex := aNode minRank + 1.
+	self topYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) min: positionY).
+	self bottomYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) max: (positionY + aNode height)).
 	self positionElement: anElement positionX: positionX positionY: positionY.
-	"limitX is needed while positioning edges, so this is not necesarry for now..."
 	self limitX: (self limitX max: positionX + aNode width)
 ]
 
@@ -571,13 +583,13 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankCoordinates: aRankValue [
 				| numberOfEdges |
 				numberOfEdges := 1.
 				aNode edges isNotNil
-					ifTrue: [ numberOfEdges := aNode edges count ].
+					ifTrue: [ numberOfEdges := aNode edges size ].
 				aNode width: (numberOfEdges - 1) * self parallelEdgeSpacing.
 			].
-			localX := localX + aNode width / 2.
+			localX := localX + (aNode width / 2).
 			aNode xPositionAt: aRankValue value: localX.
-			aNode rankPositionsAt: aRankValue value: localX.
-			localX := localX + aNode width / 2 + self intraRankSpacing
+			aNode rankPositionsAt: aRankValue value: localX rounded.
+			localX := localX + (aNode width / 2) + self intraRankSpacing
 		]
 	
 	
@@ -587,7 +599,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankCoordinates: aRankValue [
 GtGradHierarchicalCoordinateAssignmentStage >> rankMedianPosition: aRankValue nextValue: theNextRankValue [
 	| weightedElements nodeWeightedElementDictionary rank |
 	"TODO of course, check indexes, is asOrderedCollection necessary"
-	rank := model ranks at: aRankValue asOrderedCollection.
+	rank := model ranks at: aRankValue.
 	weightedElements := OrderedCollection new.
 	nodeWeightedElementDictionary := IdentityDictionary new.
 	rank
@@ -595,78 +607,75 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankMedianPosition: aRankValue ne
 			| aWeightedElement nextLayerConnectedElements |
 			aWeightedElement := GtGradHierarchicalWeightedElement new
 				element: aNode;
-				rankIndex: aRankIndex.
+				rankIndex: aRankIndex;
+				visited: false.
 			nodeWeightedElementDictionary at: aNode put: aWeightedElement.
+			weightedElements add: aWeightedElement.
 			nextLayerConnectedElements := theNextRankValue < aRankValue
-				ifTrue: [ aNode previousLayerConnectedElements: aRankValue ]
-				ifFalse: [ aNode nextLayerConnectedElements: aRankValue ].
+				ifTrue: [ aNode previousLayerConnectedElementsOnLayer: aRankValue ]
+				ifFalse: [ aNode nextLayerConnectedElementsOnLayer: aRankValue ].
 			aWeightedElement
 				weight: (self calculateWeight: aNode nodes: nextLayerConnectedElements) ].
 	weightedElements asSortedCollection
-		do: [ :aWeightedElement | 
-			| nextLevelConnectionsCount nextLayerConnectedElements medianNextLevel aNode leftBuffer leftLimit rightBuffer rightLimit rankCounter |
-			nextLevelConnectionsCount := 0.
+		do: [ :aWeightedElement |
+			| nextLayerConnectedElements medianNextLevel aNode leftBuffer leftLimit rightBuffer rightLimit rankCounter |
 			medianNextLevel := 0.
 			aNode := aWeightedElement element.
 			nextLayerConnectedElements := theNextRankValue < aRankValue
-				ifTrue: [ aNode previousLayerConnectedElements: aRankValue ]
-				ifFalse: [ aNode nextLayerConnectedElements: aRankValue ].
+				ifTrue: [ (aNode previousLayerConnectedElementsOnLayer: aRankValue) ]
+				ifFalse: [ (aNode nextLayerConnectedElementsOnLayer: aRankValue ) ].
 			nextLayerConnectedElements isNotNil
-				ifTrue: [ nextLevelConnectionsCount := nextLayerConnectedElements count.
-					medianNextLevel := nextLevelConnectionsCount > 0
-						ifTrue: [ self
+				ifTrue: [ medianNextLevel := nextLayerConnectedElements isNotEmpty
+						ifTrue: [
+							 self
 								medianXValue: nextLayerConnectedElements
 								rankValue: theNextRankValue ]
 						ifFalse: [ aNode rankPositionsAt: aRankValue ] ].
 			leftBuffer := 0.
 			leftLimit := -100000000.
-			rankCounter := aWeightedElement rankIndex.
+			rankCounter := aWeightedElement rankIndex - 1.
 			[ rankCounter >= 1 ]
 				whileTrue: [ (nodeWeightedElementDictionary includesKey: (rank at: rankCounter))
-						ifTrue: [ | leftNode |
-							leftNode := nodeWeightedElementDictionary
-								at: (rank at: rankCounter) element.
-							leftNode visited
-								ifTrue: [ leftLimit := leftNode
-										rankPositionsAt:
-											aRankValue + (leftNode width / 2) + intraRankSpacing + leftBuffer
-												+ (aNode width / 2) ]
-								ifFalse:
-									[ leftBuffer := leftBuffer + leftNode width + intraRankSpacing ].
-							rankCounter := rankCounter - 1 ] ].
+						ifTrue: [ | weightedElement leftNode |
+							leftNode := rank at: rankCounter.
+							weightedElement := nodeWeightedElementDictionary at: leftNode.
+							weightedElement visited
+								ifTrue: [ leftLimit := (leftNode rankPositionsAt: aRankValue)
+										+ (leftNode width / 2) + intraRankSpacing + leftBuffer
+										+ (aNode width / 2).
+										rankCounter := 0.
+										]
+								ifFalse: [ 
+									leftBuffer := leftBuffer + leftNode width + intraRankSpacing.
+									rankCounter := rankCounter - 1 
+									].
+							] ].
 			rightBuffer := 0.
-			rightLimit := -100000000.
+			rightLimit := 100000000.
 			rankCounter := aWeightedElement rankIndex + 1.
-			[ rankCounter <= weightedElements count ]
+			[ rankCounter <= weightedElements size ]
 				whileTrue: [ (nodeWeightedElementDictionary includesKey: (rank at: rankCounter))
-						ifTrue: [ 
-							| rightNode |
-							rightNode := nodeWeightedElementDictionary
-								at: (rank at: rankCounter) element.
-							rightNode visited
-								ifTrue: [ leftLimit := rightNode
-										rankPositionsAt:
-											aRankValue - (rightNode width / 2) - intraRankSpacing - leftBuffer
-												- (aNode width / 2).
-									rankCounter := weightedElements count + 1 ]
-								ifFalse: [ leftBuffer := rightBuffer + rightNode width + intraRankSpacing.
-									rankCounter := rankCounter + 1 ] 
-					]
-			].
-			(medianNextLevel > leftLimit and: [ medianNextLevel <= rightLimit ])
-				ifTrue: [ aNode rankPositionsAt: aRankValue value: medianNextLevel ].
+						ifTrue: [ | weightedElement rightNode |
+							rightNode := rank at: rankCounter.
+							weightedElement := nodeWeightedElementDictionary at: rightNode.
+							weightedElement visited
+								ifTrue: [ rightLimit := (rightNode rankPositionsAt: aRankValue)
+										- (rightNode width / 2) - intraRankSpacing - rightBuffer
+										- (aNode width / 2).
+									rankCounter := weightedElements size + 1 ]
+								ifFalse: [ rightBuffer := rightBuffer + rightNode width + intraRankSpacing.
+									rankCounter := rankCounter + 1 ] ] ].
+			(medianNextLevel between: leftLimit and: rightLimit)
+				ifTrue: [ aNode rankPositionsAt: aRankValue value: medianNextLevel rounded ].
 			medianNextLevel < leftLimit
-				ifTrue: [  
-					aNode rankPositionsAt: aRankValue value: leftLimit.
-					self currentXDelta: self currentXDelta + leftLimit - medianNextLevel
-					].
-			medianNextLevel > rightLimit
-				ifTrue: [ 
-					aNode rankPositionsAt: aRankValue value: rightLimit.
-					self currentXDelta: self currentXDelta +  medianNextLevel - rightLimit
-					].
-				aNode visited: true.
-		]
+				ifTrue: [ aNode rankPositionsAt: aRankValue value: leftLimit rounded.
+					self
+						currentXDelta: self currentXDelta + leftLimit - medianNextLevel ]. 
+				medianNextLevel > rightLimit
+				ifTrue: [ aNode rankPositionsAt: aRankValue value: rightLimit rounded.
+					self
+						currentXDelta: self currentXDelta + medianNextLevel - rightLimit ].
+			aWeightedElement visited: true.]
 ]
 
 { #category : #accessing }

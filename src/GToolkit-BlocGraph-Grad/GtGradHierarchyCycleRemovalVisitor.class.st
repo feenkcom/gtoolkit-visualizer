@@ -9,8 +9,8 @@ Class {
 
 { #category : #visiting }
 GtGradHierarchyCycleRemovalVisitor >> visit: aNode parent: parent connectingEdge: connectingEdge layer: layer visited: visited [
-	(aNode isAncestorOf: parent)
-		ifTrue: [ 
+	(aNode isAncestorOfNode: parent)
+		ifTrue: [
 			connectingEdge invert.
 			parent outgoingEdges remove: connectingEdge.
 			parent incomingEdges add: connectingEdge.

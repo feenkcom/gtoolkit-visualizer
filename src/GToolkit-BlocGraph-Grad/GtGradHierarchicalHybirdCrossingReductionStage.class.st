@@ -15,8 +15,10 @@ Class {
 GtGradHierarchicalHybirdCrossingReductionStage >> calculateCrossings [
 	| totalCrossings |
 	totalCrossings := 0.
-	1 to: self model ranks count do: [ :aRankIndex |
-		totalCrossings := totalCrossings + self calculateRankCrossings: aRankIndex
+	2 to: self model ranks size do: [ :aRankIndex |
+		| rankCrossings |
+		rankCrossings := self calculateRankCrossings: aRankIndex. 
+		totalCrossings := totalCrossings + rankCrossings
 	].
 	
 	^ totalCrossings.
@@ -28,31 +30,32 @@ GtGradHierarchicalHybirdCrossingReductionStage >> calculateRankCrossings: aRanks
 	"ranks is a collection of sets"
 	currentRank := model ranks at: aRanksIndex.
 	previousRank := model ranks at: (aRanksIndex - 1).
-	connections := Array2D new.
+	connections := Array2D rows: currentRank size columns: previousRank size.
 	totalCrossings := 0.
 	
 	currentRank do: [ :anElement |
-		| rankPosition |
-		rankPosition := anElement rankPositionsAt: aRanksIndex.
-		anElement previousLayerConnectedElements do: [ :aConnectedElement |
+		| rankPosition previousLayerElements|
+		"Adding one because the indexes start at one"
+		rankPosition := (anElement rankPositionsAt: aRanksIndex) + 1.
+		previousLayerElements := anElement previousLayerConnectedElementsOnLayer: aRanksIndex.
+		previousLayerElements do: [ :aConnectedElement |
 			| otherRankPosition |
-			otherRankPosition := anElement rankPositionsAt: (aRanksIndex -1).
+			otherRankPosition := (aConnectedElement rankPositionsAt: (aRanksIndex - 1)) + 1.
 			connections at: rankPosition at: otherRankPosition put: SmallInteger maxVal.
-		].
+		]
 	].
-		
-	1 to: currentRank count do: [ :index1 |
-		1 to: previousRank count do: [ :index2 |
+	1 to: currentRank size do: [ :index1 |
+		1 to: previousRank size do: [ :index2 |
 			(connections at: index1 at: index2) = SmallInteger maxVal
 				ifTrue: [ 
-					index1 + 1 to: currentRank count do: [ :index12 |
-						1 to: index2 do: [ :index22 |
+					index1 + 1 to: currentRank size do: [ :index12 |
+						1 to: index2 -1 do: [ :index22 |
 							(connections at: index12 at: index22) = SmallInteger maxVal
 								ifTrue: [ totalCrossings := totalCrossings + 1 ]
 						 ]
-					].
-					1 to: index1 count do: [ :index12 |
-						index2 + 1 to: previousRank count do: [ :index22 |
+						].
+					1 to: index1 - 1 do: [ :index12 |
+						index2 + 1 to: previousRank size do: [ :index22 |
 							(connections at: index12 at: index22) = SmallInteger maxVal
 								ifTrue: [ totalCrossings := totalCrossings + 1 ]
 						 ]
@@ -80,15 +83,13 @@ GtGradHierarchicalHybirdCrossingReductionStage >> currentBestCrossings: anObject
 { #category : #'layout - computations' }
 GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 	| theCurrentIteration |
-	"TODO check indexes..."
-	self nestedBestRanks: Array2D new.
+	self nestedBestRanks: Dictionary new.
 	self model ranks doWithIndex: [ :aRank :anIndex |
-		(self nestedBestRanks at: anIndex) put: (aRank collect: [ :anElement |
-			anElement.	
-		])
+		self nestedBestRanks at: anIndex put: aRank copy.
 	].
 	self iterationsWithoutImprovement: 0.
 	self currentBestCrossings: self calculateCrossings.
+
 	theCurrentIteration := 1.
 	[theCurrentIteration <= self maxIterations and: [
 		iterationsWithoutImprovement < self maxNoImprovementIterations
@@ -99,35 +100,33 @@ GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 			self transpose: theCurrentIteration.
 			candidateCrossings := self calculateCrossings.
 			candidateCrossings < currentBestCrossings
-				ifTrue: [ 
+				ifTrue: [
 					currentBestCrossings := candidateCrossings.
 					iterationsWithoutImprovement := 0.
-					1 to: (self nestedBestRanks count) do: [ :anIndex |
+					1 to: (self nestedBestRanks size) do: [ :anIndex |
 					 	| aRank |
 						aRank := self model ranks at: anIndex.
 						aRank do: [ :anElement |
 							self nestedBestRanks at: anIndex at: 
-								(anElement rankPositionsAt: anIndex) put: anElement.
+								((anElement rankPositionsAt: anIndex) + 1) put: anElement.
 						]
-					]
+					].
 				]
-				ifFalse: [ 
+				ifFalse: [
 					iterationsWithoutImprovement := iterationsWithoutImprovement + 1.
-					1 to: (self nestedBestRanks count) do: [ :anIndex |
+					1 to: (self nestedBestRanks size) do: [ :anIndex |
 					 	| aRank |
 						aRank := self model ranks at: anIndex.
 						aRank doWithIndex: [ :anElement :rankIndex |
-							anElement rankPositionsAt: anIndex value: rankIndex.
+							anElement rankPositionsAt: anIndex value: (rankIndex - 1).
 						]
 					]		
-				]	
+				].
+				theCurrentIteration := theCurrentIteration + 1.
 			].
 
 	"update model ranks"
-	self model ranks removeAll.
-	self model ranks: (self nestedBestRanks collect: [ :aRankArray |
-			Set new withAll: aRankArray.
-		]).
+	self model ranks: self nestedBestRanks
 	
 	
 	
@@ -179,7 +178,6 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 	| elementsByMedianValueDictionary reservedPositions sortedMedianValues aCounter medianCounter |
 	elementsByMedianValueDictionary := Dictionary new.
 	reservedPositions := OrderedCollection new.
-	
 	(self nestedBestRanks at: aRankLayer) do: [ :anElement |
 		| nextLevelConnectedElements nextRankLayer |
 		downwardSweep
@@ -193,34 +191,36 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 			].
 		(nextLevelConnectedElements isNotNil and: [ nextLevelConnectedElements isNotEmpty ])
 			ifTrue: [ 
-				| medianValue |	
+				| medianValue |
 				medianValue := self medianValue: nextLevelConnectedElements rankLayer: nextRankLayer.
 				(elementsByMedianValueDictionary includesKey: medianValue)
 					ifFalse: [ 
 						elementsByMedianValueDictionary at: medianValue put: OrderedCollection new.
 					].
-				elementsByMedianValueDictionary at: medianValue add: anElement.
+				(elementsByMedianValueDictionary at: medianValue) add: anElement.
 			]
-			ifFalse: [ reservedPositions add: (anElement rankPositionsAt: aRankLayer)]
+			ifFalse: [ 
+				"nodes with no adjacent nodes should remain where they are"
+				reservedPositions add: (anElement rankPositionsAt: aRankLayer)
+				]
 		].
 		sortedMedianValues := elementsByMedianValueDictionary keys asSortedCollection.
-		"TODO need to check this, due to the first index being 0"
+
 		medianCounter := 1.
 		aCounter := 1.
-		[ aCounter <= (nestedBestRanks at: aRankLayer count) ] 
+		[ aCounter <= (nestedBestRanks at: aRankLayer) size ] 
 			whileTrue: [ 
 				| theCurrentMedian |
 				theCurrentMedian := sortedMedianValues at: medianCounter.
 				(elementsByMedianValueDictionary at: theCurrentMedian) do: [ :anElement |
 					(reservedPositions includes: aCounter)
-						ifFalse: [ 
-							anElement rankPositionsAt: aRankLayer value: aCounter.
+						ifFalse: [
+							anElement rankPositionsAt: aRankLayer value: (aCounter - 1).
 						].
 					aCounter := aCounter + 1.
 				].
 			medianCounter := medianCounter + 1.
 		]
-	
 		
 ]
 
@@ -231,13 +231,13 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianValue: aConnectedElement
 		anElement rankPositionsAt: aRankLayer
 	].
 	medianValues := medianValues asSortedCollection.
-	medianCollectionCount := medianValues count.
+	medianCollectionCount := medianValues size.
 	medianCollectionCount odd
-		ifTrue: [ ^medianValues at: (medianCollectionCount / 2) ].
+		ifTrue: [ ^medianValues at: (medianCollectionCount // 2) + 1].
 	medianCollectionCount = 2
-		ifTrue: [ (medianValues first + medianValues second) / 2 ].
-	"TODO check indexes..."
-	medianPoint := medianCollectionCount / 2.
+		ifTrue: [ ^(medianValues first + medianValues second) / 2 ].
+	Halt now.
+	medianPoint := medianCollectionCount // 2.
 	leftMedian := medianValues at: medianPoint - medianValues first.
 	rightMedian := medianValues last - medianValues at: (medianPoint  + 1).
 	^ (((medianValues at: medianPoint) * rightMedian) + 
@@ -272,8 +272,8 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 			| nudge |
 			loopIndex := loopIndex + 1.
 			improved := false.
-			nudge := mainLoopIndex odd and: [ loopIndex odd ].
-			model ranks do: [ :aRank |
+			nudge := mainLoopIndex even and: [ loopIndex even ].
+			model ranks doWithIndex: [ :aRank :aRankIndex |
 				| orderedElements leftElementsAboveConnections leftElementsBelowConnections
 				rightElementsAboveConnections rightElementsBelowConnections
 				leftElement rightElement leftAbovePositions leftBelowPositions
@@ -284,27 +284,27 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 				rightAbovePositions := nil.
 				rightBelowPositions := nil.
 				rightElement := nil.
-				aRank doWithIndex: [ :anElement :anIndex |
-					orderedElements at: (anElement rankPositionsAt: anIndex) put: anElement.
+				aRank do: [ :anElement |
+					orderedElements at: (anElement rankPositionsAt: aRankIndex) + 1 put: anElement.
 				].
-				1 to: aRank count - 1 do: [ :aLayer |
+				1 to: (aRank size - 1) do: [ :aLayer |
 					| totalCurrentCrossings totalSwitchedCrossings |
 					"For each adjacent pair of elements, check if
 					swapping them would reduce the total number of edge crossings."	
 					aLayer = 1
-						ifTrue: [ 
+						ifTrue: [
 							leftElement := orderedElements at: aLayer.
-							leftElementsAboveConnections := leftElement nextLayerConnectedElementsOnLayer: aLayer.
-							leftElementsBelowConnections := leftElement previousLayerConnectedElementsOnLayer: aLayer.
+							leftElementsAboveConnections := leftElement nextLayerConnectedElementsOnLayer: aRankIndex.
+							leftElementsBelowConnections := leftElement previousLayerConnectedElementsOnLayer: aRankIndex.
 							leftAbovePositions := OrderedCollection new.
 							leftBelowPositions := OrderedCollection new.
 							
 							leftAbovePositions := leftElementsAboveConnections collect: [ :anElement |
-								anElement rankPositionsAt: aRank + 1.
+								anElement rankPositionsAt: (aRankIndex + 1).
 							].
 							leftBelowPositions := leftElementsBelowConnections collect: [ :anElement |
-								anElement rankPositionsAt: aRank - 1.
-							].
+								anElement rankPositionsAt: (aRankIndex - 1).
+							]
 						]
 						ifFalse: [
 							leftElementsAboveConnections := rightElementsAboveConnections.
@@ -314,43 +314,47 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 							leftElement := rightElement.
 						].
 					rightElement := orderedElements at: aLayer + 1.
-					rightElementsAboveConnections := rightElement nextLayerConnectedElementsOnLayer: aRank.
-					rightElementsBelowConnections := rightElement previousLayerConnectedElementsOnLayer: aRank.
+					rightElementsAboveConnections := rightElement nextLayerConnectedElementsOnLayer: aRankIndex.
+					rightElementsBelowConnections := rightElement previousLayerConnectedElementsOnLayer: aRankIndex.
 					rightAbovePositions := rightElementsAboveConnections collect: [ :anElement |
-						anElement rankPositionsAt: aRank + 1.
+						anElement rankPositionsAt: (aRankIndex + 1).
 					].
 					rightBelowPositions := rightElementsBelowConnections collect: [ :anElement |
-						anElement rankPositionsAt: aRank - 1.
+						anElement rankPositionsAt: (aRankIndex - 1).
 					].
-				
+	
 					totalCurrentCrossings := 0.
 					totalSwitchedCrossings := 0.
 					
-					leftAbovePositions with: rightAbovePositions do: [ :leftPosition :rightPosition |
-						leftPosition > rightPosition
-							ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
-						rightPosition > leftPosition
-							ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+					leftAbovePositions do: [ :leftPosition |
+						rightAbovePositions do: [ :rightPosition |										                                    leftPosition > rightPosition
+								ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
+							rightPosition > leftPosition
+								ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+						]			
 					].
-					leftBelowPositions with: rightBelowPositions do: [ :leftPosition :rightPosition |
-						leftPosition > rightPosition
-							ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
-						rightPosition > leftPosition
-							ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+
+					leftBelowPositions do: [ :leftPosition |
+						rightBelowPositions do: [ :rightPosition |										                                    leftPosition > rightPosition
+								ifTrue: [ totalCurrentCrossings := totalCurrentCrossings  + 1 ].
+							rightPosition > leftPosition
+								ifTrue: [ totalSwitchedCrossings := totalSwitchedCrossings + 1 ].
+						]			
 					].
+
 					(totalSwitchedCrossings < totalCurrentCrossings or: 
 						[ totalSwitchedCrossings = totalCurrentCrossings and: [ nudge ] ])
 						ifTrue: [ 
 							| rankPosition |
-							rankPosition := leftElement rankPositionsAt: aRank.
-							leftElement rankPositionsAt: aRank value: (rightElement rankPositionsAt: aRank).
-							rightElement rankPositionsAt: aRank value: rankPosition.
+							rankPosition := leftElement rankPositionsAt: aRankIndex.
+							leftElement rankPositionsAt: aRankIndex value: (rightElement rankPositionsAt: aRankIndex).
+							rightElement rankPositionsAt: aRankIndex value: rankPosition.
 							rightElementsAboveConnections := leftElementsAboveConnections.
 							rightElementsBelowConnections := leftElementsBelowConnections.
 							rightAbovePositions := leftAbovePositions.
 							rightBelowPositions := leftBelowPositions.
 							rightElement := leftElement.
-							improved := nudge negated.
+							improved := nudge not.
 						]
 				]
 			]
@@ -362,7 +366,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 { #category : #'layout - computations' }
 GtGradHierarchicalHybirdCrossingReductionStage >> weightedMedian: mainLoopIteration [
 	| downwardSweep |
-	downwardSweep := mainLoopIteration even.
+	downwardSweep := mainLoopIteration odd.
 	downwardSweep
 		ifTrue: [ 
 			model maxRank to: 1 by: -1 do: [ :aRankValue |
@@ -370,7 +374,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> weightedMedian: mainLoopIterat
 			 ].
 		]
 		ifFalse: [ 
-			1 to: model maxRank do: [ :aRankValue|
+			2 to: model maxRank do: [ :aRankValue|
 				self medianRank: aRankValue downwardSweep: downwardSweep
 			 ].
 		]

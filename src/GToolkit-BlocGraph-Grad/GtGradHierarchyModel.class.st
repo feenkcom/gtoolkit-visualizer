@@ -7,7 +7,8 @@ Class {
 		'parent',
 		'maxRank',
 		'hierarchyNodesDictionary',
-		'hierarchyEdgesDictionary'
+		'hierarchyEdgesDictionary',
+		'dfsCount'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -29,7 +30,7 @@ GtGradHierarchyModel class >> directedToUndirectedRatio: aSourceElement target: 
 			ifTrue: [ 
 				undirectedCount := undirectedCount + 1.
 			]
-	].	
+	].
 	^ directedCount / undirectedCount
 
 
@@ -57,14 +58,14 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 					| otherElementConnectedElements |
 					connectedElementsDictionary at: anOutgoingElement ifAbsentPut: OrderedCollection new.
 					otherElementConnectedElements := connectedElementsDictionary at: anOutgoingElement.
-					((connectedElementsDictionary includes: anOutgoingElement) or: [ otherElementConnectedElements includes: anElement ])
+					((connectedElements includes: anOutgoingElement) or: [ otherElementConnectedElements includes: anElement ])
 						ifFalse: [ 
 							"All edges between this source and its targets need to be processed
 							If there are back edges which create loops, they are callected into one
 							hierarchical edge.
 							It is assumed that source -> target is the natural direction if at least half
 							of the edges are going in that direction."
-							 (self directedToUndirectedRatio: anElement target: anOutgoingElement) > 0.5
+							 (self directedToUndirectedRatio: anElement target: anOutgoingElement) >= 0.5
 								ifTrue: [
 									| hierarchyEdge targetHierarchyNode|
 									(nodesDictionary includesKey: anOutgoingElement)
@@ -92,20 +93,20 @@ GtGradHierarchyModel >> calculateInitialRank [
 	| startNodes startNodesCopy |
 	
 	startNodes := self rootNodes.
-	startNodesCopy := OrderedCollection new: startNodes.
+	startNodesCopy := startNodes copy.
 		
 	[ startNodes isNotEmpty ]
 		whileTrue: [ 
 			| layerValue loopCounter aNode layerDetermeningEdges edgesToBeMarked allEdgesVisited minimumLayer |
 			aNode := startNodes first.
-			layerDetermeningEdges := aNode incomingEdges.
+			layerDetermeningEdges := aNode incomingEdges asOrderedCollection.
 			edgesToBeMarked := aNode outgoingEdges.
 			allEdgesVisited := true.
-			minimumLayer :=  SmallInteger maxVal.
+			minimumLayer :=  100000000.
 			loopCounter := 1.
 			"TODO why this value?? - can this be a random value?"
 			layerValue := 5270620.
-			(allEdgesVisited and: [ loopCounter <= layerDetermeningEdges count ])
+			[allEdgesVisited and: [ loopCounter <= layerDetermeningEdges size ]]
 				whileTrue: [ 
 					| hierarchyEdge	|
 					hierarchyEdge := layerDetermeningEdges at: loopCounter.
@@ -117,7 +118,8 @@ GtGradHierarchyModel >> calculateInitialRank [
 						]
 						ifFalse: [ 
 							allEdgesVisited := false	
-						]
+						].
+					loopCounter := loopCounter + 1
 				 ].
 			allEdgesVisited
 				ifTrue: [ 
@@ -144,7 +146,7 @@ GtGradHierarchyModel >> calculateInitialRank [
 					| removedNode |
 					removedNode := startNodes removeFirst.
 					startNodes add: aNode.
-					(removedNode = aNode and: [ startNodes count = 1])
+					(removedNode = aNode and: [ startNodes size = 1])
 						ifTrue: [ 
 							"Error condition - break out of the loop"
 							startNodes removeAll.
@@ -155,18 +157,19 @@ GtGradHierarchyModel >> calculateInitialRank [
 	hierarchyNodesDictionary valuesDo: [ :aNode |
 		aNode layer: (aNode layer - self maxRank).
 	].
-	
+
 	startNodesCopy do: [ :aNode |
 		 | currentMaxLayer |
 		currentMaxLayer := 0.
-		aNode incomingEdges do: [ :anEdge |
+		aNode outgoingEdges do: [ :anEdge |
 			| otherNode |
-			otherNode := anEdge source.
-			aNode layer: (currentMaxLayer max: otherNode layer + 1).
+			otherNode := anEdge target.
+			aNode layer: (currentMaxLayer max: (otherNode layer + 1)).
 			currentMaxLayer := aNode layer.
 		].
 	].
-	self maxRank: (SmallInteger maxVal - self maxRank)
+
+	self maxRank: 100000000 - self maxRank
 	
 ]
 
@@ -177,7 +180,7 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 	(aVisitedNodesCollection includes: aRootNode)
 		ifFalse: [ 
 			visitor visit: aRootNode
-					  parent: parent
+					  parent: theParentNode
 					  connectingEdge: theConnectingEdge
 					  layer: theLayer
 					  visited: false.
@@ -193,7 +196,7 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 		]
 		ifTrue: [ 
 			visitor visit: aRootNode
-			 		  parent: parent
+			 		  parent: theParentNode
 					  connectingEdge: theConnectingEdge
 					  layer: theLayer
 					  visited: true.
@@ -201,15 +204,15 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 ]
 
 { #category : #'layout - computations' }
-GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection parentHashCode: theParentHashCode childHash: theChildHash layer: theLayer [
+GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: theConnectingEdge visitor: visitor visitedNodes: aVisitedNodesCollection parentHashCode: theParentHashCode childHashCode: theChildHashCode layer: theLayer [
 	aRootNode isNil
 		ifTrue: [ ^ self].
 	theParentNode isNotNil
 		ifTrue: [ 
 			(aRootNode hashCode isNil or: [ aRootNode hashCode first ~= theParentNode hashCode first ])
 				ifTrue: [ 
-					aRootNode hashCode: (OrderedCollection new: theParentNode hashCode).
-					aRootNode hashCode add: theChildHash.
+					aRootNode hashCode: theParentNode hashCode copy.
+					aRootNode hashCode add: theChildHashCode.
 				]
 			].
 		
@@ -222,43 +225,47 @@ GtGradHierarchyModel >> dfs: aRootNode parent: theParentNode connectingEdge: the
 						  visited: false.
 				aVisitedNodesCollection add: aRootNode.
 				aRootNode outgoingEdges doWithIndex: [ :anEdge :theIndex |
-						self dfs: anEdge destination 
+						self dfs: anEdge target 
 								 parent: aRootNode
 								 connectingEdge: anEdge
 								 visitor: visitor
 								 visitedNodes: aVisitedNodesCollection
 								 parentHashCode: aRootNode hashCode 
-								 childHash: theIndex
+								 childHashCode: theIndex
 								 layer: theLayer + 1
-					]
-						
-			].
-
+					]		
+			]
+		ifTrue: [
 			visitor visit: aRootNode
-			 		  parent: parent
+			 		  parent: theParentNode
 					  connectingEdge: theConnectingEdge
 					  layer: theLayer
-					  visited: true.
+					  visited: true
+			]
 
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> dfsCount [
+	^ dfsCount
+]
+
+{ #category : #accessing }
+GtGradHierarchyModel >> dfsCount: anObject [
+	dfsCount := anObject
 ]
 
 { #category : #'layout - computations' }
 GtGradHierarchyModel >> fixRanks [
-	| rootNodes visitor |
+	| aRootNodesCollection visitor |
 	self ranks: ((1 to: maxRank + 1) collect: [ :aNumber|
-		Set	 new.
+		OrderedCollection	new.
 	]).
 	
-	"Performm DFS to calculate initial ordering for each rank"
-	rootNodes := nil.
-	self roots isNotNil
-		ifTrue: [
-				rootNodes := self roots collect: [ :aRootElement |
-					 hierarchyNodesDictionary at: aRootElement
-				].
-		].
+	"Perform DFS to calculate initial ordering for each rank"
+	aRootNodesCollection := self rootNodes.
 	visitor := GtGradFixRankHierarchyVisitor new rankCollection: self ranks.
-	self visit: visitor dfsRoots: rootNodes trackAncestors: false visitedNodes: OrderedCollection new.
+	self visit: visitor dfsRoots: aRootNodesCollection trackAncestors: false visitedNodes: Set new.
 ]
 
 { #category : #accessing }
@@ -287,6 +294,7 @@ GtGradHierarchyModel >> initialize [
 	self maxRank: SmallInteger maxVal.
 	self hierarchyNodesDictionary: IdentityDictionary new.
 	self hierarchyEdgesDictionary: IdentityDictionary new.
+	self dfsCount: 1.
 ]
 
 { #category : #accessing }
@@ -349,14 +357,19 @@ GtGradHierarchyModel >> roots: anObject [
 GtGradHierarchyModel >> visit: visitor dfsRoots: aDfsRootsCollection trackAncestors: shouldTrackAncestors visitedNodes: aVisitedNodesCollection [
 	aDfsRootsCollection isNil
 		ifTrue: [ ^ self	].
-	aDfsRootsCollection do: [ :aDfsRoot|
-		| aRootNode |
-		(self hierarchyNodesDictionary includesKey: aDfsRoot)
-			ifTrue: [ 
-				aRootNode := self hierarchyNodesDictionary: aDfsRoot.
-				"TODO: if track ancestors - figure out what's up with that"
-				self dfs: aRootNode parent: nil connectingEdge: nil visitor: visitor  visitedNodes: aVisitedNodesCollection layer: 1.
+	aDfsRootsCollection doWithIndex: [ :aDfsRoot :anIndex |
+		"TODO: if track ancestors - figure out what's up with that"
+		shouldTrackAncestors
+			ifTrue: [
+				aDfsRoot hashCode: OrderedCollection new.
+				aDfsRoot hashCode add: self dfsCount.
+				aDfsRoot hashCode add: anIndex.
+				self dfs: aDfsRoot parent: nil connectingEdge: nil visitor: visitor visitedNodes:
+				aVisitedNodesCollection parentHashCode: aDfsRoot hashCode childHashCode: anIndex layer:1.
+			]
+			ifFalse: [
+				self dfs: aDfsRoot parent: nil connectingEdge: nil visitor: visitor  visitedNodes: aVisitedNodesCollection layer: 1.
 			].
-		
-	].
+		].
+	self dfsCount: self dfsCount + 1
 ]

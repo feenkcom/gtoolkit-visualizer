@@ -18,12 +18,16 @@ GtGradHierarchyNode class >> on: anElement [
 
 { #category : #'api - layout' }
 GtGradHierarchyNode >> addIncomingEdge: anEdge [
-	self incomingEdges add: anEdge
+	(self incomingEdges includes: anEdge)
+		ifFalse: [ self incomingEdges add: anEdge ]
+
 ]
 
 { #category : #'api - layout' }
 GtGradHierarchyNode >> addOutgoingEdge: anEdge [
-	self outgoingEdges add: anEdge
+	(self outgoingEdges includes: anEdge)
+		ifFalse: [ self outgoingEdges add: anEdge ]
+
 ]
 
 { #category : #accessing }
@@ -49,23 +53,24 @@ GtGradHierarchyNode >> incomingEdges: anObject [
 { #category : #initialization }
 GtGradHierarchyNode >> initialize [
 	super initialize.
-	self outgoingEdges: Set new.
-	self incomingEdges: Set new.
+	self outgoingEdges: OrderedCollection new.
+	self incomingEdges: OrderedCollection new.
 	self layer: -1.
 ]
 
 { #category : #'layout - computations' }
 GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
-	(self hashCode isNil or: [ anotherNode hashCode isNil ])
+	(self hashCode isNil or: [ anotherNode isNil or: [anotherNode hashCode isNil]])
 		ifTrue: [ ^ false ].
-	self hashCode count < anotherNode hashCode count
+	self hashCode size >= anotherNode hashCode size
 		ifTrue: [ ^ false ].
 	self hashCode = anotherNode hashCode
 		ifTrue: [  ^ true ].
 	
-	self hashCode with: anotherNode hashCode do: [ :hashCode1 :hashCode2|
-		hashCode1 = hashCode2
-			ifFalse: [ ^ false ]
+	"this code must match the start of the other nodes hash code"
+	self hashCode doWithIndex: [ :value :index |
+		value ~= (anotherNode hashCode at: index)
+			ifTrue: [ ^ false ]
 	].
 	
 	^ true.
@@ -79,19 +84,21 @@ GtGradHierarchyNode >> isAncestorOfNode: anotherNode [
 GtGradHierarchyNode >> nextLayerConnectedElementsOnLayer: aLayer [
 	self nextLayerConnectedElements isEmpty
 		ifTrue: [
-			self nextLayerConnectedElements add: OrderedCollection new.
+			| connectedElements |
+			connectedElements := OrderedCollection new.
+			self nextLayerConnectedElements at: 1 put: connectedElements.
 			self incomingEdges do: [ :anEdge |
-				(anEdge maxRank = -1 or: [ anEdge maxRank = aLayer + 1 ])
+				(anEdge maxRank = -1 or: [ anEdge maxRank = aLayer ])
 					ifTrue: [
-						 self nextLayerConnectedElements first add: anEdge source 
+						 connectedElements add: anEdge source 
 					]
 					ifFalse: [
 						"Edge spans at least two layers"
-						self nextLayerConnectedElements first add: anEdge 
-					].
-			].
+						connectedElements add: anEdge 
+					]
+			]
 	].
-	^ self nextLayerConnectedElements first
+	^ self nextLayerConnectedElements at: 1.
 ]
 
 { #category : #accessing }
@@ -118,25 +125,29 @@ GtGradHierarchyNode >> positionOnLayer: layer position: position [
 GtGradHierarchyNode >> previousLayerConnectedElementsOnLayer: aLayer [
 	self previousLayerConnectedElements isEmpty
 		ifTrue: [
-			self previousLayerConnectedElements add: OrderedCollection new.
+			| connectedElements |
+			connectedElements := OrderedCollection new.
+			self previousLayerConnectedElements at: 1 put: connectedElements.
 			self outgoingEdges do: [ :anEdge |
-				(anEdge minRank = -1 or: [ anEdge minRank = aLayer - 1 ])
+				(anEdge minRank = -1 or: [ anEdge minRank = (aLayer - 1) ])
 					ifTrue: [
-						 self previousLayerConnectedElements first add: anEdge target
+						 connectedElements add: anEdge target
 					]
 					ifFalse: [
 						"Edge spans at least two layers"
-						self previousLayerConnectedElements first  add: anEdge 
+						connectedElements add: anEdge 
 					].
 			].
 		].
-	^ self previousLayerConnectedElements first.
+	^ self previousLayerConnectedElements at: 1.
 		
 ]
 
 { #category : #accessing }
 GtGradHierarchyNode >> rankPositionsAt: aLayer [
-	self rankPositions at: 1.
+	self rankPositions isEmpty
+		ifTrue: [ self rankPositions at: 1 put: self layer].
+	^ self rankPositions at: 1.
 ]
 
 { #category : #accessing }
@@ -146,10 +157,20 @@ GtGradHierarchyNode >> rankPositionsAt: aLayer value: aValue [
 
 { #category : #accessing }
 GtGradHierarchyNode >> xPositionAt: aLayer [
-	xPositions first
+	^ self xPositions at: 1
 ]
 
 { #category : #accessing }
 GtGradHierarchyNode >> xPositionAt: aLayer value: aValue [
-	xPositions first: aValue.
+	self xPositions at: 1 put: aValue
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> yPositionAt: aLayer [
+	self yPositions at: 1
+]
+
+{ #category : #accessing }
+GtGradHierarchyNode >> yPositionAt: aLayer value: aValue [
+	self yPositions at: 1 put: aValue
 ]

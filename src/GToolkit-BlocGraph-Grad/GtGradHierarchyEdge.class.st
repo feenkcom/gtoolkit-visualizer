@@ -29,7 +29,8 @@ GtGradHierarchyEdge >> edges: anObject [
 
 { #category : #initialization }
 GtGradHierarchyEdge >> initialize [
-	super initialize
+	super initialize.
+	self reversed: false
 ]
 
 { #category : #calculating }
@@ -38,21 +39,23 @@ GtGradHierarchyEdge >> invert [
 	temp := self source.
 	self source: self target.
 	self target: temp.
-	self reversed: (self reversed) negated.
+	self reversed: (self reversed) not.
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> nextLayerConnectedElementsOnLayer: aLayer [
 	self nextLayerConnectedElements isEmpty
 		ifTrue: [ 
-			1 to: self rankPositions count do: [ :aNum | 
-				self nextLayerConnectedElements at: aNum add: OrderedCollection new.
-				aNum = self rankPositions count
-					ifTrue: [ self nextLayerConnectedElements add: self source ]
-					ifFalse: [ self nextLayerConnectedElements add: self ]
-			].
+			1 to: self rankPositions size do: [ :aNum |
+				| elementsCollection |
+				elementsCollection := OrderedCollection new.
+				self nextLayerConnectedElements at: aNum put: elementsCollection.
+				aNum = self rankPositions size
+					ifTrue: [ elementsCollection add: self source ]
+					ifFalse: [ elementsCollection add: self ]
+			]
 		].
-	^ self nextLayerConnectedElements at: (aLayer - minRank)
+	^ self nextLayerConnectedElements at: (aLayer - minRank - 1)
 
 ]
 
@@ -70,25 +73,27 @@ GtGradHierarchyEdge >> positionOnLayer: layer position: position [
 GtGradHierarchyEdge >> previousLayerConnectedElementsOnLayer: aLayer [
 	self previousLayerConnectedElements isEmpty
 		ifTrue: [ 
-			1 to: self rankPositions count do: [ :aNum | 
-				self previousLayerConnectedElements at: aNum add: OrderedCollection new.
-				aNum = self rankPositions count
-					ifTrue: [ self previousLayerConnectedElements add: self target ]
-					ifFalse: [ self previousLayerConnectedElements add: self ]
+			1 to: self rankPositions size do: [ :aNum |
+				| elementsCollection |
+				elementsCollection := OrderedCollection new.
+				self previousLayerConnectedElements at: aNum put: elementsCollection.
+				aNum = 1
+					ifTrue: [ elementsCollection add: self target ]
+					ifFalse: [ elementsCollection add: self ]
 			].
 		].
-	^ self previousLayerConnectedElements at: (aLayer - minRank)
+	^ self previousLayerConnectedElements at: (aLayer - minRank - 1)
 
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> rankPositionsAt: aLayer [
-	^ self rankPositions at: (aLayer - self minRank).
+	^ self rankPositions at: (aLayer - self minRank - 1).
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> rankPositionsAt: aLayer value: aValue [
-	self rankPositions at: (aLayer - self minRank) put: aValue.
+	self rankPositions at: (aLayer - self minRank - 1) put: aValue.
 ]
 
 { #category : #accessing }
@@ -123,10 +128,20 @@ GtGradHierarchyEdge >> target: anObject [
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer [
-	xPositions at: [ aLayer - minRank ]
+	self xPositions at: (aLayer - minRank - 1)
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer value: aValue [
-	xPositions add: aValue  at: aLayer
+	self xPositions at: (aLayer - minRank - 1) put: aValue  
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> yPositionAt: aLayer [
+	self yPositions at: (aLayer - minRank - 1)
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> yPositionAt: aLayer value: aValue [
+	self yPositions at: (aLayer - minRank - 1) put: aValue  
 ]

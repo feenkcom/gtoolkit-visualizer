@@ -10,15 +10,15 @@ GtGradHierarchicalCycleRemovalStage >> execute [
 	aVisitedNodesSet := Set new.
 	aRootNodesCollection := self model rootNodes.
 	visitor := GtGradHierarchyCycleRemovalVisitor new visitedNodes: aVisitedNodesSet.
-	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: nil.
+	self model visit: visitor dfsRoots: aRootNodesCollection trackAncestors: true visitedNodes: aVisitedNodesSet.
 	newRootsCandidates := Set new.
-	aVisitedNodesSet count < (self model hierarchyNodesDictionary count)
+	aVisitedNodesSet size < (self model hierarchyNodesDictionary size)
 		ifTrue: [
 			newRootsCandidates := (self model hierarchyNodesDictionary values)
-										 select: [ :aNode | (aVisitedNodesSet includes: aNode) negated ].
+										 select: [ :aNode | (aVisitedNodesSet includes: aNode) not ].
 		].
 
-	aVisitedNodesSetCopy := Set new: aVisitedNodesSet.
+	aVisitedNodesSetCopy := aVisitedNodesSet copy.
 	aRootNodesCollection removeAll.
 	newRootsCandidates isNotEmpty
 		ifTrue: [

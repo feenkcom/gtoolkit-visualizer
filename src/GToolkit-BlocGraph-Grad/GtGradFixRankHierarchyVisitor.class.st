@@ -8,6 +8,15 @@ Class {
 }
 
 { #category : #accessing }
+GtGradFixRankHierarchyVisitor >> addTorankCollectionAt: anIndex value: aValue [
+	| nodesCollection |
+	nodesCollection := self rankCollection at: anIndex.
+	(nodesCollection includes: aValue)
+		ifFalse: [ nodesCollection add: aValue ]
+
+]
+
+{ #category : #accessing }
 GtGradFixRankHierarchyVisitor >> rankCollection [
 	^ rankCollection
 ]
@@ -18,24 +27,27 @@ GtGradFixRankHierarchyVisitor >> rankCollection: anObject [
 ]
 
 { #category : #visiting }
-GtGradFixRankHierarchyVisitor >> visit: aNode parent: parent connectingEdge: connectingEdge layer: layer visited: visited [
+GtGradFixRankHierarchyVisitor >> visit: aNode parent: theParentNode connectingEdge: connectingEdge layer: layer visited: visited [
 	| parentNodeRankDifference |
 	visited
 		ifFalse: [ (aNode maxRank < 0 and: [ aNode minRank < 0 ])
-				ifTrue: [ 
-					(self rankCollection at: aNode layer) add: aNode.
+				ifTrue: [
+					"it is necessary to add 1 because indexes start at 1"
+					self addTorankCollectionAt: (aNode layer + 1) value: aNode.
 					aNode maxRank: aNode layer.
 					aNode minRank: aNode layer.
-					aNode layer: (self rankCollection at: aNode maxRank) count - 1 ] ].
-	(parent isNotNil and: [ connectingEdge isNotNil ])
+					aNode layer: (self rankCollection at: aNode maxRank + 1) size - 1.
+					] 
+				].
+	(theParentNode isNotNil and: [ connectingEdge isNotNil ])
 		ifFalse: [ ^ self ].
-	parentNodeRankDifference := parent maxRank - aNode maxRank.
+	parentNodeRankDifference := theParentNode maxRank - aNode maxRank.
 	parentNodeRankDifference > 1
 		ifFalse: [ ^ self ].
-	connectingEdge maxRank: parent maxRank.
+	connectingEdge maxRank: theParentNode maxRank.
 	connectingEdge minRank: aNode maxRank.
-	connectingEdge minRank + 1 to: connectingEdge maxRank - 1 do: [ :aNum |
-		self rankCollection at: aNum add: connectingEdge.
-		connectingEdge rankPositionsAt: aNum value: rankCollection count
+	connectingEdge minRank + 2 to: connectingEdge maxRank do: [ :aNum |
+		self addTorankCollectionAt: aNum value: connectingEdge.
+		connectingEdge rankPositionsAt: aNum value: (rankCollection at: aNum) size - 1
 		]
 ]
