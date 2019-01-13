@@ -236,7 +236,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianValue: aConnectedElement
 		ifTrue: [ ^medianValues at: (medianCollectionCount // 2) + 1].
 	medianCollectionCount = 2
 		ifTrue: [ ^(medianValues first + medianValues second) / 2 ].
-	Halt now.
+	self halt.
 	medianPoint := medianCollectionCount // 2.
 	leftMedian := medianValues at: medianPoint - medianValues first.
 	rightMedian := medianValues last - medianValues at: (medianPoint  + 1).
