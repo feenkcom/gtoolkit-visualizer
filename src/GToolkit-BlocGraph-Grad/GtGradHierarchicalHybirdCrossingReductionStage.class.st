@@ -89,7 +89,6 @@ GtGradHierarchicalHybirdCrossingReductionStage >> execute [
 	].
 	self iterationsWithoutImprovement: 0.
 	self currentBestCrossings: self calculateCrossings.
-
 	theCurrentIteration := 1.
 	[theCurrentIteration <= self maxIterations and: [
 		iterationsWithoutImprovement < self maxNoImprovementIterations
@@ -233,13 +232,12 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianValue: aConnectedElement
 	medianValues := medianValues asSortedCollection.
 	medianCollectionCount := medianValues size.
 	medianCollectionCount odd
-		ifTrue: [ ^medianValues at: (medianCollectionCount // 2) + 1].
+		ifTrue: [ ^medianValues at: ((medianCollectionCount // 2) + 1)].
 	medianCollectionCount = 2
 		ifTrue: [ ^(medianValues first + medianValues second) / 2 ].
-	self halt.
 	medianPoint := medianCollectionCount // 2.
-	leftMedian := medianValues at: medianPoint - medianValues first.
-	rightMedian := medianValues last - medianValues at: (medianPoint  + 1).
+	leftMedian := (medianValues at: medianPoint) - (medianValues first).
+	rightMedian := (medianValues last) - (medianValues at: (medianPoint  + 1)).
 	^ (((medianValues at: medianPoint) * rightMedian) + 
 	((medianValues at: (medianPoint  + 1)) * leftMedian)) / (leftMedian + rightMedian)
 	
