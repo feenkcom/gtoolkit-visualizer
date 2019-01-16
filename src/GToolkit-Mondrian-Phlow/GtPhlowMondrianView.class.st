@@ -5,9 +5,10 @@ Class {
 		'paintingStencilBuilder',
 		'mondrianInstanceBuilder',
 		'mondrianInstance',
-		'mondrianElement'
+		'mondrianElement',
+		'transformation'
 	],
-	#category : 'GToolkit-Mondrian-Phlow'
+	#category : #'GToolkit-Mondrian-Phlow'
 }
 
 { #category : #accessing }
@@ -18,10 +19,13 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 		when: BlClickEvent
 		do: [ :event | 
 			(event target graph isNode or: [ event target graph isEdge ])
-				ifTrue: [ mondrianElement
+				ifTrue: [ 
+					| transformedObject |
+					transformedObject := transformation cull: event target graph model.
+					mondrianElement
 						fireEvent:
 							(GtPhlowObjectToSpawn new
-								object: event target graph model;
+								object: transformedObject;
 								sourceElement: event target) ] ].
 	mondrianElement phlow beView; entity: self.
 	^ aBlock value: mondrianElement
@@ -32,6 +36,7 @@ GtPhlowMondrianView >> initialize [
 	super initialize.
 	mondrianInstance := GtMondrian new.
 	paintingStencilBuilder := [ :x | "do nothing by default" ].
+	transformation := [ :x | "by default there is no transformation" x ].
 	self actionStencil: [ 
 		BrButton new 
 			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
@@ -63,4 +68,9 @@ GtPhlowMondrianView >> initialize: aMondrian [
 { #category : #scripting }
 GtPhlowMondrianView >> painting: aBlock [
 	paintingStencilBuilder := aBlock
+]
+
+{ #category : #scripting }
+GtPhlowMondrianView >> send: aBlock [
+	transformation := aBlock
 ]
