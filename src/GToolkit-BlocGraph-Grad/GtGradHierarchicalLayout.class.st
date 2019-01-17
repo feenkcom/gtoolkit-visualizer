@@ -123,7 +123,16 @@ GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> layeringStage: model [
 	model calculateInitialRank.
-	model fixRanks
+	model fixRanks.
+	model hierarchyNodesDictionary do: [ :aNode | 
+		GtGradHierarchicalLayoutNodeLayerSignal new
+										element: aNode element;
+										layer: aNode layer;
+										maxRank: aNode maxRank;
+										minRank: aNode minRank;
+										emit.										
+	]
+	
 ]
 
 { #category : #measure }
@@ -224,6 +233,9 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 	initialX := 0.
 	aHierarchyNodesCollection do: [ :aHierarchySet |
 		| model |
+		GtGradHierarchicalLayoutCurrentComponentSignal new 
+								theCurrentComponent: aHierarchySet;
+								emit.
 		model := GtGradHierarchyModel from: aHierarchySet.
 		model roots: self roots.
 		self cycleStage: model.
