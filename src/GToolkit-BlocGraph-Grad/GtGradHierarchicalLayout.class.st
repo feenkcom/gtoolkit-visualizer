@@ -19,6 +19,16 @@ GtGradHierarchicalLayout class >> constraints [
 	^ GtGradHierarchicalConstraints new
 ]
 
+{ #category : #accessing }
+GtGradHierarchicalLayout >> alignment [
+	^ alignment
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayout >> alignment: anAlignment [
+	alignment := anAlignment
+]
+
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> crossingStage: model [
 	| crossingReduction |
