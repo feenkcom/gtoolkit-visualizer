@@ -8,7 +8,8 @@ Class {
 		'parallelEdgeSpacing',
 		'roots',
 		'positions',
-		'placementStage'
+		'placementStage',
+		'alignment'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -77,6 +78,7 @@ GtGradHierarchicalLayout >> initialize [
 	self interHierarchySpacing: 60.
 	self parallelEdgeSpacing: 10.
 	self positions: IdentityDictionary new.
+	self alignment: GtGradHierarchicalLayoutCenterAlignment new.
 
 	
 	

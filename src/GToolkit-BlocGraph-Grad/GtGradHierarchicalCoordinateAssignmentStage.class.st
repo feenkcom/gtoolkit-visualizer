@@ -23,7 +23,8 @@ Class {
 		'fineTuning',
 		'nextLayerConnectedElementsCache',
 		'previousLayerConnectedCache',
-		'widestRank'
+		'widestRank',
+		'alignment'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -43,6 +44,16 @@ GtGradHierarchicalCoordinateAssignmentStage >> addConnectedNodesToWeightedNodesL
 					]	
 				]		
 			]
+]
+
+{ #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> alignment [
+	^ alignment
+]
+
+{ #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> alignment: anObject [
+	alignment := anObject
 ]
 
 { #category : #accessing }
@@ -516,6 +527,20 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionElements [
 		topYPerRank at: aNum put: SmallInteger maxVal .
 		bottomYPerRank at: aNum put: SmallInteger maxVal.
 	].
+
+	self model ranks do: [ :aRank |
+		| maxNodeHeight |
+		maxNodeHeight := 0.
+		aRank do: [ :aNode | 
+			(aNode height isNotNil and: [ aNode height > maxNodeHeight])
+				ifTrue: [ 
+					maxNodeHeight := aNode height.
+				]
+			].
+		aRank do: [ :aNode |
+			aNode maxRankHeight: maxNodeHeight
+		]
+	 ].
 	self limitX: 0.
 	self model hierarchyNodesDictionary
 		valuesDo: [ :aNode | self positionNode: aNode ]
@@ -526,13 +551,21 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
 	| anElement positionX positionY yArrayIndex |
 	anElement := aNode element.
 	positionX := (aNode xPositions at: 1) - (aNode width / 2).
-	positionY := (aNode yPositions at: 1) - (aNode height / 2).
+	positionY := (aNode yPositions at: 1)
+		- (self alignment calculateAlignment: aNode).
 	"topYPerRank and bottomYPerRank are needed while positioning edges, so none of this is necesarry for now
 	yArrayIndex - check if + 1 is needed (I think that it is)"
 	yArrayIndex := aNode minRank + 1.
-	self topYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) min: positionY).
-	self bottomYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) max: (positionY + aNode height)).
-	self positionElement: anElement positionX: positionX positionY: positionY.
+	self topYPerRank
+		at: yArrayIndex
+		put: ((self topYPerRank at: yArrayIndex) min: positionY).
+	self bottomYPerRank
+		at: yArrayIndex
+		put: ((self topYPerRank at: yArrayIndex) max: positionY + aNode height).
+	self
+		positionElement: anElement
+		positionX: positionX
+		positionY: positionY.
 	self limitX: (self limitX max: positionX + aNode width)
 ]
 

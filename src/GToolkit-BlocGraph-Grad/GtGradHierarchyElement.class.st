@@ -13,7 +13,8 @@ Class {
 		'xPositions',
 		'yPositions',
 		'width',
-		'height'
+		'height',
+		'maxRankHeight'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -68,6 +69,16 @@ GtGradHierarchyElement >> maxRank [
 { #category : #accessing }
 GtGradHierarchyElement >> maxRank: anObject [
 	maxRank := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> maxRankHeight [
+	^ maxRankHeight
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> maxRankHeight: anObject [
+	maxRankHeight := anObject
 ]
 
 { #category : #accessing }
