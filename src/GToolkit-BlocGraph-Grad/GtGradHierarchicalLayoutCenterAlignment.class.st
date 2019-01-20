@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #calculating }
-GtGradHierarchicalLayoutCenterAlignment >> calculateAlignment: aNode [
+GtGradHierarchicalLayoutCenterAlignment >> calculateAlignmentCorrection: aNode [
 	^ aNode height / 2
 ]

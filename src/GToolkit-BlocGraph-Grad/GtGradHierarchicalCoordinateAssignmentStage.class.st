@@ -129,6 +129,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 		lastRankMaxElementHeight := maxElementHeight.
 		yValue := yValue + (self distanceToNextRankIncrement: distanceToNextRank).
 		aRankSet do:  [ :aNode |
+			self updateMaximumHeightPerRank: aNode rankValue: aRankValue.
 			aNode yPositionAt: aRankValue value: yValue.
 		]									
 	].
@@ -527,20 +528,6 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionElements [
 		topYPerRank at: aNum put: SmallInteger maxVal .
 		bottomYPerRank at: aNum put: SmallInteger maxVal.
 	].
-
-	self model ranks do: [ :aRank |
-		| maxNodeHeight |
-		maxNodeHeight := 0.
-		aRank do: [ :aNode | 
-			(aNode height isNotNil and: [ aNode height > maxNodeHeight])
-				ifTrue: [ 
-					maxNodeHeight := aNode height.
-				]
-			].
-		aRank do: [ :aNode |
-			aNode maxRankHeight: maxNodeHeight
-		]
-	 ].
 	self limitX: 0.
 	self model hierarchyNodesDictionary
 		valuesDo: [ :aNode | self positionNode: aNode ]
@@ -552,7 +539,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
 	anElement := aNode element.
 	positionX := (aNode xPositions at: 1) - (aNode width / 2).
 	positionY := (aNode yPositions at: 1)
-		- (self alignment calculateAlignment: aNode).
+		- (self alignment calculateAlignmentCorrection: aNode).
 	"topYPerRank and bottomYPerRank are needed while positioning edges, so none of this is necesarry for now
 	yArrayIndex - check if + 1 is needed (I think that it is)"
 	yArrayIndex := aNode minRank + 1.
@@ -783,6 +770,19 @@ GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank [
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank: anObject [
 	topYPerRank := anObject
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> updateMaximumHeightPerRank: aNode rankValue: aRankValue [
+	| currentMax |
+	currentMax := 0.
+	(self alignment maxNodeHeightPerRank includesKey: aRankValue)
+		ifTrue: [
+			currentMax := self alignment maxNodeHeightPerRank at: aRankValue
+ 	 ].
+	self alignment updateNodeHeightPerRankAt: aRankValue value: (currentMax max: aNode width)
+
+
 ]
 
 { #category : #accessing }
