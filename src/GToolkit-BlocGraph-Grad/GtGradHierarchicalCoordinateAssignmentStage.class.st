@@ -776,11 +776,13 @@ GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank: anObject [
 GtGradHierarchicalCoordinateAssignmentStage >> updateMaximumHeightPerRank: aNode rankValue: aRankValue [
 	| currentMax |
 	currentMax := 0.
+	aNode height isNil
+		ifTrue: [ ^ self ].
 	(self alignment maxNodeHeightPerRank includesKey: aRankValue)
 		ifTrue: [
 			currentMax := self alignment maxNodeHeightPerRank at: aRankValue
  	 ].
-	self alignment updateNodeHeightPerRankAt: aRankValue value: (currentMax max: aNode width)
+	self alignment updateNodeHeightPerRankAt: aRankValue value: (currentMax max: aNode height)
 
 
 ]

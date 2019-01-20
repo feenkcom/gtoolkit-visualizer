@@ -6,5 +6,7 @@ Class {
 
 { #category : #calculating }
 GtGradHierarchicalLayoutBottomAlignment >> calculateAlignmentCorrection: aNode [
-	^ aNode height - self  maxNodeHeightPerRank: (aNode minRank)
+	| maxHeight |
+	maxHeight := self maxNodeHeightPerRank at: (aNode minRank + 1).
+	^  aNode height - (maxHeight / 2)
 ]
