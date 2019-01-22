@@ -8,7 +8,8 @@ Class {
 		'parallelEdgeSpacing',
 		'roots',
 		'positions',
-		'placementStage'
+		'placementStage',
+		'alignment'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -16,6 +17,16 @@ Class {
 { #category : #constraints }
 GtGradHierarchicalLayout class >> constraints [
 	^ GtGradHierarchicalConstraints new
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayout >> alignment [
+	^ alignment
+]
+
+{ #category : #accessing }
+GtGradHierarchicalLayout >> alignment: anAlignment [
+	alignment := anAlignment
 ]
 
 { #category : #'private-layout' }
@@ -77,6 +88,7 @@ GtGradHierarchicalLayout >> initialize [
 	self interHierarchySpacing: 60.
 	self parallelEdgeSpacing: 10.
 	self positions: IdentityDictionary new.
+	self alignment: GtGradHierarchicalLayoutCenterAlignment new.
 
 	
 	
@@ -123,7 +135,16 @@ GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> layeringStage: model [
 	model calculateInitialRank.
-	model fixRanks
+	model fixRanks.
+	model hierarchyNodesDictionary do: [ :aNode | 
+		GtGradHierarchicalLayoutNodeLayerSignal new
+										element: aNode element;
+										layer: aNode layer;
+										maxRank: aNode maxRank;
+										minRank: aNode minRank;
+										emit.										
+	]
+	
 ]
 
 { #category : #measure }
@@ -224,6 +245,9 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 	initialX := 0.
 	aHierarchyNodesCollection do: [ :aHierarchySet |
 		| model |
+		GtGradHierarchicalLayoutCurrentComponentSignal new 
+								theCurrentComponent: aHierarchySet;
+								emit.
 		model := GtGradHierarchyModel from: aHierarchySet.
 		model roots: self roots.
 		self cycleStage: model.

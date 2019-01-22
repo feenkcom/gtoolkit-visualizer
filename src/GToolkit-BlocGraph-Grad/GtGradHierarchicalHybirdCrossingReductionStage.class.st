@@ -204,19 +204,21 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianRank: aRankLayer downwar
 				]
 		].
 		sortedMedianValues := elementsByMedianValueDictionary keys asSortedCollection.
-
 		medianCounter := 1.
 		aCounter := 1.
-		[ aCounter <= (nestedBestRanks at: aRankLayer) size ] 
+		[ aCounter <= (nestedBestRanks at: aRankLayer) size and: [ medianCounter <= sortedMedianValues size ]]
 			whileTrue: [ 
-				| theCurrentMedian |
-				theCurrentMedian := sortedMedianValues at: medianCounter.
-				(elementsByMedianValueDictionary at: theCurrentMedian) do: [ :anElement |
-					(reservedPositions includes: aCounter)
-						ifFalse: [
-							anElement rankPositionsAt: aRankLayer value: (aCounter - 1).
-						].
-					aCounter := aCounter + 1.
+				| theCurrentMedian theCurrentIndex |
+				theCurrentIndex := 1.
+				theCurrentMedian := elementsByMedianValueDictionary at: (sortedMedianValues at: medianCounter).
+				[theCurrentIndex <= theCurrentMedian size]
+					whileTrue: [  
+						(reservedPositions includes: aCounter - 1)
+							ifFalse: [
+								(theCurrentMedian at: theCurrentIndex) rankPositionsAt: aRankLayer value: (aCounter - 1).
+								theCurrentIndex := theCurrentIndex + 1
+							].
+						aCounter := aCounter + 1.
 				].
 			medianCounter := medianCounter + 1.
 		]
@@ -235,6 +237,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> medianValue: aConnectedElement
 		ifTrue: [ ^medianValues at: ((medianCollectionCount // 2) + 1)].
 	medianCollectionCount = 2
 		ifTrue: [ ^(medianValues first + medianValues second) / 2 ].
+
 	medianPoint := medianCollectionCount // 2.
 	leftMedian := (medianValues at: medianPoint) - (medianValues first).
 	rightMedian := (medianValues last) - (medianValues at: (medianPoint  + 1)).
@@ -276,7 +279,7 @@ GtGradHierarchicalHybirdCrossingReductionStage >> transpose: mainLoopIndex [
 				rightElementsAboveConnections rightElementsBelowConnections
 				leftElement rightElement leftAbovePositions leftBelowPositions
 				rightAbovePositions rightBelowPositions |
-				orderedElements := Dictionary new.
+				orderedElements := Array new: aRank size.
 				rightElementsAboveConnections := nil.
 				rightElementsBelowConnections := nil.
 				rightAbovePositions := nil.

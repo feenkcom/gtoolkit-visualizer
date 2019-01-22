@@ -23,7 +23,8 @@ Class {
 		'fineTuning',
 		'nextLayerConnectedElementsCache',
 		'previousLayerConnectedCache',
-		'widestRank'
+		'widestRank',
+		'alignment'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -43,6 +44,16 @@ GtGradHierarchicalCoordinateAssignmentStage >> addConnectedNodesToWeightedNodesL
 					]	
 				]		
 			]
+]
+
+{ #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> alignment [
+	^ alignment
+]
+
+{ #category : #accessing }
+GtGradHierarchicalCoordinateAssignmentStage >> alignment: anObject [
+	alignment := anObject
 ]
 
 { #category : #accessing }
@@ -118,6 +129,7 @@ GtGradHierarchicalCoordinateAssignmentStage >> calculateWidestRank [
 		lastRankMaxElementHeight := maxElementHeight.
 		yValue := yValue + (self distanceToNextRankIncrement: distanceToNextRank).
 		aRankSet do:  [ :aNode |
+			self updateMaximumHeightPerRank: aNode rankValue: aRankValue.
 			aNode yPositionAt: aRankValue value: yValue.
 		]									
 	].
@@ -526,13 +538,21 @@ GtGradHierarchicalCoordinateAssignmentStage >> positionNode: aNode [
 	| anElement positionX positionY yArrayIndex |
 	anElement := aNode element.
 	positionX := (aNode xPositions at: 1) - (aNode width / 2).
-	positionY := (aNode yPositions at: 1) - (aNode height / 2).
+	positionY := (aNode yPositions at: 1)
+		- (self alignment calculateAlignmentCorrection: aNode).
 	"topYPerRank and bottomYPerRank are needed while positioning edges, so none of this is necesarry for now
 	yArrayIndex - check if + 1 is needed (I think that it is)"
 	yArrayIndex := aNode minRank + 1.
-	self topYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) min: positionY).
-	self bottomYPerRank at: yArrayIndex put: ((self topYPerRank at: yArrayIndex) max: (positionY + aNode height)).
-	self positionElement: anElement positionX: positionX positionY: positionY.
+	self topYPerRank
+		at: yArrayIndex
+		put: ((self topYPerRank at: yArrayIndex) min: positionY).
+	self bottomYPerRank
+		at: yArrayIndex
+		put: ((self topYPerRank at: yArrayIndex) max: positionY + aNode height).
+	self
+		positionElement: anElement
+		positionX: positionX
+		positionY: positionY.
 	self limitX: (self limitX max: positionX + aNode width)
 ]
 
@@ -750,6 +770,21 @@ GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank [
 { #category : #accessing }
 GtGradHierarchicalCoordinateAssignmentStage >> topYPerRank: anObject [
 	topYPerRank := anObject
+]
+
+{ #category : #'layout - computations' }
+GtGradHierarchicalCoordinateAssignmentStage >> updateMaximumHeightPerRank: aNode rankValue: aRankValue [
+	| currentMax |
+	currentMax := 0.
+	aNode height isNil
+		ifTrue: [ ^ self ].
+	(self alignment maxNodeHeightPerRank includesKey: aRankValue)
+		ifTrue: [
+			currentMax := self alignment maxNodeHeightPerRank at: aRankValue
+ 	 ].
+	self alignment updateNodeHeightPerRankAt: aRankValue value: (currentMax max: aNode height)
+
+
 ]
 
 { #category : #accessing }
