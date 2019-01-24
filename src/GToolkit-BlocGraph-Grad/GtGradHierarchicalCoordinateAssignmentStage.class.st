@@ -183,13 +183,15 @@ GtGradHierarchicalCoordinateAssignmentStage >> execute [
 					ifFalse: [
 						self minNode
 					].
+
 					self currentXDelta < bestXDelta
 						ifTrue: [
 							self model ranks doWithIndex: [ :aRankSet :anIndex | 
 								aRankSet do: [ :aNode |
 									aNode xPositionAt: anIndex value: (aNode rankPositionsAt: anIndex) 
 								].
-								bestXDelta  := self currentXDelta.
+								anIteration > 1
+									ifTrue: [ bestXDelta  := self currentXDelta ].
 							]
 						]
 						ifFalse: [
@@ -687,15 +689,18 @@ GtGradHierarchicalCoordinateAssignmentStage >> rankMedianPosition: aRankValue ne
 									rankCounter := rankCounter + 1 ] ] ].
 			(medianNextLevel between: leftLimit and: rightLimit)
 				ifTrue: [ aNode rankPositionsAt: aRankValue value: medianNextLevel rounded ].
+
 			medianNextLevel < leftLimit
 				ifTrue: [ aNode rankPositionsAt: aRankValue value: leftLimit rounded.
 					self
-						currentXDelta: self currentXDelta + leftLimit - medianNextLevel ]. 
-				medianNextLevel > rightLimit
-				ifTrue: [ aNode rankPositionsAt: aRankValue value: rightLimit rounded.
-					self
-						currentXDelta: self currentXDelta + medianNextLevel - rightLimit ].
-			aWeightedElement visited: true.]
+						currentXDelta: self currentXDelta + leftLimit - medianNextLevel ]
+				ifFalse: [ 
+					medianNextLevel > rightLimit
+						ifTrue: [ aNode rankPositionsAt: aRankValue value: rightLimit rounded.
+							self
+								currentXDelta: self currentXDelta + medianNextLevel - rightLimit ].
+							].
+			aWeightedElement visited: true]
 ]
 
 { #category : #accessing }
