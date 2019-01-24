@@ -11,7 +11,9 @@ Class {
 		'layer',
 		'rankPositions',
 		'xPositions',
-		'yPositions'
+		'yPositions',
+		'width',
+		'height'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
@@ -26,6 +28,16 @@ GtGradHierarchyElement >> element: anObject [
 	element := anObject
 ]
 
+{ #category : #accessing }
+GtGradHierarchyElement >> height [
+	^ height
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> height: anObject [
+	height := anObject
+]
+
 { #category : #initialization }
 GtGradHierarchyElement >> initialize [
 	nextLayerConnectedElements := Dictionary new.
@@ -33,7 +45,9 @@ GtGradHierarchyElement >> initialize [
 	positionsPerLayer := Dictionary new.
 	maxRank := -1.
 	minRank := -1.
-	rankPositions := Dictionary new
+	self rankPositions: Dictionary new.
+	self xPositions: Dictionary new.
+	self yPositions: Dictionary new.
 ]
 
 { #category : #accessing }
@@ -141,6 +155,16 @@ GtGradHierarchyElement >> rankPositionsAt: aLayer value: aValue [
 ]
 
 { #category : #accessing }
+GtGradHierarchyElement >> width [
+	^ width
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> width: anObject [
+	width := anObject
+]
+
+{ #category : #accessing }
 GtGradHierarchyElement >> xPositionAt: aLayer [
 	self subclassResponsibility
 ]
@@ -159,6 +183,16 @@ GtGradHierarchyElement >> xPositions [
 { #category : #accessing }
 GtGradHierarchyElement >> xPositions: anObject [
 	xPositions := anObject
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> yPositionAt: aLayer [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGradHierarchyElement >> yPositionAt: aLayer value: aValue [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

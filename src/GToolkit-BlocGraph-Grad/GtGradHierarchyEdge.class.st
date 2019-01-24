@@ -46,14 +46,16 @@ GtGradHierarchyEdge >> invert [
 GtGradHierarchyEdge >> nextLayerConnectedElementsOnLayer: aLayer [
 	self nextLayerConnectedElements isEmpty
 		ifTrue: [ 
-			1 to: self rankPositions count do: [ :aNum | 
-				self nextLayerConnectedElements at: aNum add: OrderedCollection new.
-				aNum = self rankPositions count
-					ifTrue: [ self nextLayerConnectedElements add: self source ]
-					ifFalse: [ self nextLayerConnectedElements add: self ]
-			].
+			1 to: self rankPositions size do: [ :aNum |
+				| elementsCollection |
+				elementsCollection := OrderedCollection new.
+				self nextLayerConnectedElements at: aNum put: elementsCollection.
+				aNum = self rankPositions size
+					ifTrue: [ elementsCollection add: self source ]
+					ifFalse: [ elementsCollection add: self ]
+			]
 		].
-	^ self nextLayerConnectedElements at: (aLayer - minRank)
+	^ self nextLayerConnectedElements at: (aLayer - minRank - 1)
 
 ]
 
@@ -86,12 +88,12 @@ GtGradHierarchyEdge >> previousLayerConnectedElementsOnLayer: aLayer [
 
 { #category : #accessing }
 GtGradHierarchyEdge >> rankPositionsAt: aLayer [
-	^ self rankPositions at: (aLayer - self minRank).
+	^ self rankPositions at: (aLayer - self minRank - 1).
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> rankPositionsAt: aLayer value: aValue [
-	self rankPositions at: (aLayer - self minRank) put: aValue.
+	self rankPositions at: (aLayer - self minRank - 1) put: aValue.
 ]
 
 { #category : #accessing }
@@ -126,10 +128,20 @@ GtGradHierarchyEdge >> target: anObject [
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer [
-	xPositions at: [ aLayer - minRank ]
+	self xPositions at: (aLayer - minRank - 1)
 ]
 
 { #category : #accessing }
 GtGradHierarchyEdge >> xPositionAt: aLayer value: aValue [
-	xPositions add: aValue  at: aLayer
+	self xPositions at: (aLayer - minRank - 1) put: aValue  
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> yPositionAt: aLayer [
+	self yPositions at: (aLayer - minRank - 1)
+]
+
+{ #category : #accessing }
+GtGradHierarchyEdge >> yPositionAt: aLayer value: aValue [
+	self yPositions at: (aLayer - minRank - 1) put: aValue  
 ]
