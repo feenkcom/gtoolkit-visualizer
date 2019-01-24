@@ -183,16 +183,15 @@ GtGradHierarchicalCoordinateAssignmentStage >> execute [
 					ifFalse: [
 						self minNode
 					].
-
 					self currentXDelta < bestXDelta
 						ifTrue: [
 							self model ranks doWithIndex: [ :aRankSet :anIndex | 
 								aRankSet do: [ :aNode |
 									aNode xPositionAt: anIndex value: (aNode rankPositionsAt: anIndex) 
-								].
-								anIteration > 1
-									ifTrue: [ bestXDelta  := self currentXDelta ].
-							]
+								]
+							].
+							anIteration > 1 "or else bestXDelta would be set to 0"
+								ifTrue: [ bestXDelta  := self currentXDelta ].
 						]
 						ifFalse: [
 							self model ranks doWithIndex: [ :aRankSet :anIndex | 
