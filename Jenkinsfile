@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build gtoolkit') {
             steps {
-                build '/gtoolkit'
+                build(job: '../gtoolkit/master', wait: false)
             }
         }
     }
