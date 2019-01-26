@@ -6,7 +6,9 @@ Class {
 		'nodesDistance',
 		'componentsDistance',
 		'alignment',
-		'maxNumberOfTreeBackEdges'
+		'maxNumberOfTreeBackEdges',
+		'backEdgesCount',
+		'edgesCount'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Layouts'
 }
@@ -22,6 +24,16 @@ GtGradHierarchicalTreelLayout >> alignment: anAlignment [
 ]
 
 { #category : #accessing }
+GtGradHierarchicalTreelLayout >> backEdgesCount [
+	^ backEdgesCount
+]
+
+{ #category : #accessing }
+GtGradHierarchicalTreelLayout >> backEdgesCount: aNum [
+	backEdgesCount := aNum
+]
+
+{ #category : #accessing }
 GtGradHierarchicalTreelLayout >> componentsDistance [
 	^ componentsDistance
 ]
@@ -32,7 +44,48 @@ GtGradHierarchicalTreelLayout >> componentsDistance: aNum [
 ]
 
 { #category : #accessing }
+GtGradHierarchicalTreelLayout >> dfs: theCurrentElement visited: aVisitedList [
+
+	aVisitedList add: theCurrentElement.
+	theCurrentElement graph hasNodesAlongOutgoingEdges
+		ifTrue: [ theCurrentElement graph nodesAlongOutgoingEdges
+				do: [ :aConnectedElement | 
+					(aVisitedList includes: aConnectedElement)
+						ifFalse: [
+							self edgesCount: self edgesCount + 1.
+							self dfs: theCurrentElement visited: aVisitedList
+						]
+						ifTrue: [ 
+							self backEdgesCount: self backEdgesCount + 1
+						 ] ]
+				]
+]
+
+{ #category : #accessing }
+GtGradHierarchicalTreelLayout >> edgesCount [
+	^ edgesCount
+]
+
+{ #category : #accessing }
+GtGradHierarchicalTreelLayout >> edgesCount: aNum [
+	edgesCount := aNum
+]
+
+{ #category : #accessing }
 GtGradHierarchicalTreelLayout >> isATreeOrHasLessThanMaxBackEdges: anElementsCollection [
+
+	| aVisitedList |
+	aVisitedList := OrderedCollection new.
+	anElementsCollection
+		do: [ :anElement | 
+			((aVisitedList includes: anElement)
+				or: [ anElement graph hasNodesAlongIncomingEdges ])
+				ifFalse: [
+					self edgesCount: 0.
+					self backEdgesCount: 0.
+					self dfs: anElement visited: aVisitedList.
+				].
+			]
 ]
 
 { #category : #accessing }
