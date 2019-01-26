@@ -154,7 +154,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithBottomAlignment [
 		fromCenterBottom; 
 		toCenterTop;
 		connectFrom: [:x |x // 5].
-	mondrian layout horizontalTree nodesAlignment: GtGradTreeNodesBottomAlignment new.
+	mondrian layout horizontalTree nodesAlignment: GtGradTreeNodesLeafAlignment new.
 	^ mondrian
 ]
 
@@ -295,7 +295,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutWithBottomAlignment [
 		fromCenterBottom;
 		toCenterTop;
 		connectFrom: [:x |x // 5].
-	mondrian layout tree nodesAlignment: GtGradTreeNodesBottomAlignment new.
+	mondrian layout tree nodesAlignment: GtGradTreeNodesLeafAlignment new.
 	^ mondrian
 ]
 

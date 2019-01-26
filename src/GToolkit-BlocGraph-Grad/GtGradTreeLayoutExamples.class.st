@@ -482,7 +482,7 @@ GtGradTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
 ]
 
 { #category : #example }
-GtGradTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlignment [
+GtGradTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
 	^ self subclassResponsibility
 ]
 
