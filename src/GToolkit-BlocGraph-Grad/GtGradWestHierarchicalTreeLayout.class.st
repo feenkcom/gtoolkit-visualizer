@@ -14,7 +14,6 @@ GtGradWestHierarchicalTreeLayout >> constructLayoutAlgorithm: anElementsCollecti
 												 levelDistance: self levelDistance;
 												 nodeDistance: self nodesDistance;
 												 treesDistance: self componentsDistance;
-												 reverse: true;
 												 nodesAlignment: treeAlignment.
 		]
 		ifFalse: [ 

@@ -7,7 +7,8 @@ Class {
 		'componentsDistance',
 		'alignment',
 		'backEdgesCount',
-		'edgesCount'
+		'edgesCount',
+		'layout'
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Layouts'
 }
@@ -120,13 +121,13 @@ GtGradHierarchicalTreeLayout >> levelDistance: aNum [
 
 { #category : #measure }
 GtGradHierarchicalTreeLayout >> measurePositions: anElement with: anExtentSpec [
-	| anElementsCollection layout |
+	| anElementsCollection |
 
 	anElementsCollection := anElement children accountedByLayout
 		select: [ :aChildElement | aChildElement graph isNode ].
 
-	layout := self constructLayoutAlgorithm: anElementsCollection.
-	layout measurePositions: anElement  with: anExtentSpec 
+	self layout: (self constructLayoutAlgorithm: anElementsCollection).
+	self layout measurePositions: anElement  with: anExtentSpec 
 ]
 
 { #category : #accessing }
