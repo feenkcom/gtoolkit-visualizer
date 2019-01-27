@@ -89,7 +89,7 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 									| parentCenterDistance |
 									aTreeNode := aVisitedDictionary at: aChildElement.
 									parentCenterDistance := (((numOfNodesOnCurrentLevel + 1) / 2) - (nodesOnCurrentLevel indexOf: aTreeNode parent)) abs.
-									currentNodeCenterDistance  < parentCenterDistance
+									(currentNodeCenterDistance  < parentCenterDistance and: [ aTreeNode parent nodes size > 1 ])
 										ifTrue: [ 
 											"Move the tree node"
 											nodesOnNextLevel remove: aTreeNode.

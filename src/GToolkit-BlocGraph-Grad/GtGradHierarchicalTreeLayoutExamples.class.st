@@ -8,7 +8,7 @@ Class {
 GtGradHierarchicalTreeLayoutExamples >> constructGraphWithCycles [		
 	| theNodes  pairsOfNodes theEdges |
 	
-	theNodes := self nodes: (1 to: 7).
+	theNodes := self nodes: (1 to: 12).
 	theNodes doWithIndex: [ :node :index |
 			node labeled: (index asString).
 		].
@@ -18,11 +18,25 @@ GtGradHierarchicalTreeLayoutExamples >> constructGraphWithCycles [
 	add: (6->2); add: (5->3).
 	
 	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	self assert: theEdges size equals: 8.
 
 	^ theNodes -> theEdges
 
 	
  
+]
+
+{ #category : #example }
+GtGradHierarchicalTreeLayoutExamples >> graphWithCycles [
+	<gtExample>
+		
+	|  view theNodes aLayout |
+	
+	view := self view.
+	theNodes := self constructGraphWithCycles key.
+	aLayout := GtGradNorthHierarchicalTreeLayout new.
+	view addChildren: theNodes.
+	view layout: aLayout.
+	view forceLayout.
+	
+	^ view
 ]

@@ -16,7 +16,7 @@ GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictiona
 						ifTrue: [ | oldDepth |
 							aTreeNode := aVisitedDictionary at: aNodeElement.
 							oldDepth := aTreeNode parent depth.
-							currentDepth > oldDepth
+							(currentDepth > oldDepth and: [ aTreeNode parent nodes size > 1 ])
 								ifTrue: [ 
 									aTreeNode parent remove: aTreeNode.
 									theCurrentNode add: aTreeNode.
