@@ -43,6 +43,11 @@ GtGradHierarchicalTreeLayout >> componentsDistance: aNum [
 ]
 
 { #category : #'private-layout' }
+GtGradHierarchicalTreeLayout >> constructLayoutAlgorithm: anElementsCollection [
+	self subclassResponsibility
+]
+
+{ #category : #'private-layout' }
 GtGradHierarchicalTreeLayout >> dfs: theCurrentElement visited: aVisitedList [
 
 	aVisitedList add: theCurrentElement.
@@ -68,6 +73,16 @@ GtGradHierarchicalTreeLayout >> edgesCount [
 { #category : #accessing }
 GtGradHierarchicalTreeLayout >> edgesCount: aNum [
 	edgesCount := aNum
+]
+
+{ #category : #initialization }
+GtGradHierarchicalTreeLayout >> initialize [
+	super initialize.
+	self nodesDistance: 10.
+	self levelDistance: 30.
+	self componentsDistance: 40.
+	self alignment: GtGradHierarchicalTreeLayoutCenterAlignment new.
+
 ]
 
 { #category : #'private-layout' }

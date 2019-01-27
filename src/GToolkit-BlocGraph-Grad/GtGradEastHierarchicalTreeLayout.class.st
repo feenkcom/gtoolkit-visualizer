@@ -12,10 +12,10 @@ GtGradEastHierarchicalTreeLayout >> constructLayoutAlgorithm: anElementsCollecti
 			treeAlignment := self alignment constructTreeAlignment.
 			^ GtGradHorizontalDominanceTreeLayout new
 												 levelDistance: self levelDistance;
-												 nodesDistance: self nodesDistance;
+												 nodeDistance: self nodesDistance;
 												 treesDistance: self componentsDistance;
 												 reverse: true;
-												 alignment: treeAlignment.
+												 nodesAlignment: treeAlignment.
 		]
 		ifFalse: [ 
 			| hierarchicalAlignmetn |
