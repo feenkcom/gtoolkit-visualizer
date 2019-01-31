@@ -7,7 +7,6 @@ Class {
 { #category : #example }
 GtGradAbstractTreeCreationExamples >> centeredDominanceTreesCreation [
 	<gtExample>
-	<noTest>
 	| theNodes pairsOfNodes theEdges trees root level1Node1 level1Node2 level1Node3 level1Node4
 	  level2Node1 level2Node2 level3Node1 level3Node2 level3Node3|
 
@@ -465,7 +464,6 @@ GtGradAbstractTreeCreationExamples >> moreComplexDominanceTreeCreation [
 { #category : #example }
 GtGradAbstractTreeCreationExamples >> simpleDominanceTreeCreation [
 	<gtExample>
-	<noTest>
 	| theNodes pairsOfNodes theEdges trees root level1Node1 level1Node2 level2Node level3Node |
 
 	theNodes := self nodes: (1 to: 5).
