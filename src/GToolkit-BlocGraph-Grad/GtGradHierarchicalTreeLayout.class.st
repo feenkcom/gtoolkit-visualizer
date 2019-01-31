@@ -110,6 +110,16 @@ GtGradHierarchicalTreeLayout >> isATreeOrHasLessThanMaxBackEdges: anElementsColl
 ]
 
 { #category : #accessing }
+GtGradHierarchicalTreeLayout >> layout [
+	^ layout
+]
+
+{ #category : #accessing }
+GtGradHierarchicalTreeLayout >> layout: anObject [
+	layout := anObject
+]
+
+{ #category : #accessing }
 GtGradHierarchicalTreeLayout >> levelDistance [
 	^ levelDistance
 ]
