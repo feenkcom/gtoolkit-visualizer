@@ -71,7 +71,7 @@ GtGradAbstractTreeLayout >> initialize [
 	treesDistance := 30.
 	reverse := false.
 	separateSubtrees := false.
-	nodesAlignment := GtGradTreeNodesTopAlignment new.
+	nodesAlignment := GtGradTreeNodesRootAlignment new.
 ]
 
 { #category : #'api - accessing' }

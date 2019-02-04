@@ -1,10 +1,10 @@
 Class {
-	#name : #GtGradHierarchicalLayoutTopAlignment,
+	#name : #GtGradHierarchicalLayoutRootAlignment,
 	#superclass : #GtGradHierarchicalLayoutAlignment,
 	#category : #'GToolkit-BlocGraph-Grad-Hierarchical'
 }
 
 { #category : #calculating }
-GtGradHierarchicalLayoutTopAlignment >> calculateAlignmentCorrection: aNode [
+GtGradHierarchicalLayoutRootAlignment >> calculateAlignmentCorrection: aNode [
 	^ (self maxNodeHeightPerRank at: (aNode minRank + 1)) / 2
 ]

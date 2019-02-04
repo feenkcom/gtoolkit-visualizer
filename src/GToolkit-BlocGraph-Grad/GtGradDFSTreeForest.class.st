@@ -6,8 +6,6 @@ Class {
 
 { #category : #'private - depth-first-search' }
 GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
-	| elementSize |
-	elementSize := theCurrentNode element measuredBounds extent.
 
 	"aVisitedDictionary is a dictionary of already visited visual elements (element -> tree node)"
 	aVisitedDictionary at: theCurrentNode element put: theCurrentNode.

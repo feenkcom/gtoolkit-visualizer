@@ -311,25 +311,6 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeReversed [
 ]
 
 { #category : #example }
-GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeBottomAlignment [
-	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self treeLayout.
-	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
-	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout. 
-	view forceLayout.
-	 
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-	
-	^ view
-]
-
-{ #category : #example }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
 		
@@ -349,14 +330,33 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterA
 ]
 
 { #category : #example }
-GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeTopAlignment [
+GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafAlignment [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self treeLayout.
+	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
+	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
+	view addChildren: theNodes.
+	view layout: aTreeLayout. 
+	view forceLayout.
+	 
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+	
+	^ view
+]
+
+{ #category : #example }
+GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootAlignment [
 	<gtExample>
 		
 	| view theNodes aTreeLayout |
 	
 	view := self view.
 	aTreeLayout := self treeLayout. 
-	aTreeLayout nodesAlignment: GtGradTreeNodesTopAlignment new.
+	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
 	theNodes := self constructTreeWith10NodesOfIncreasingSize key.
 	view addChildren: theNodes.
 	aTreeLayout levelDistance: 30.
@@ -406,25 +406,6 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 ]
 
 { #category : #example }
-GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeBottomAlignment [
-	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self treeLayout. 
-	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
-	theNodes := self constructTreeWithNodesOfIncreasingSize key.
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout. 
-	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-
-	^ view
-]
-
-{ #category : #example }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
 		
@@ -444,14 +425,33 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAli
 ]
 
 { #category : #example }
-GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlignment [
+GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
 		
 	| view theNodes aTreeLayout |
 	
 	view := self view.
 	aTreeLayout := self treeLayout. 
-	aTreeLayout nodesAlignment: GtGradTreeNodesTopAlignment new.
+	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
+	theNodes := self constructTreeWithNodesOfIncreasingSize key.
+	view addChildren: theNodes. 
+	view layout: aTreeLayout.
+	view forceLayout. 
+	
+	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+
+	^ view
+]
+
+{ #category : #example }
+GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
+	<gtExample>
+		
+	| view theNodes aTreeLayout |
+	
+	view := self view.
+	aTreeLayout := self treeLayout. 
+	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
 	view addChildren: theNodes.
 	view layout: aTreeLayout.

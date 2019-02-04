@@ -355,14 +355,14 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 ]
 
 { #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingBottomAlignment [
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingLeafAlignment [
 	<gtExample>
 		
 	| view theNodes aTreeLayout |
 	
 	view := self view.
 	aTreeLayout := self treeLayout.
-	aTreeLayout nodesAlignment: GtGradTreeNodesBottomAlignment new.
+	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
 	view addChildren: theNodes. 
 	view layout: aTreeLayout.
@@ -391,14 +391,14 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterA
 ]
 
 { #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeTopAlignment [
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
 	<gtExample>
 		
 	| view theNodes aTreeLayout |
 	
 	view := self view. 
 	aTreeLayout := self treeLayout.
-	aTreeLayout nodesAlignment: GtGradTreeNodesTopAlignment new.
+	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
 	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
 	view addChildren: theNodes. 
 	view layout: aTreeLayout.

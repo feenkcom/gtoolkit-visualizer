@@ -35,7 +35,7 @@ GtGradAbstractTreeLayoutExamples >> calculateNodeAlignedPosition: aTreeNode alig
 	
 	nodePosition := self getNodeLevelConstantPosition: aTreeNode.
 	
-	( alignment isMemberOf: GtGradTreeNodesTopAlignment)
+	( alignment isMemberOf: GtGradTreeNodesRootAlignment)
 		ifTrue: [ 
 			"in case of top alignment all nodes on the same level should have the same position"
 			^ nodePosition
@@ -44,14 +44,14 @@ GtGradAbstractTreeLayoutExamples >> calculateNodeAlignedPosition: aTreeNode alig
 	parentPosition := self getNodeLevelConstantPosition: aTreeNode parent.
 	parentDimension := self getNodeLevelConstantAxisDimension: aTreeNode parent.
 
-	( alignment isMemberOf: GtGradTreeNodesBottomAlignment)
+	( alignment isMemberOf: GtGradTreeNodesLeafAlignment)
 		ifTrue: [ 
 			"in case of the bottom alignment positions of  nodes on the same level  - bottommost points
 			of their parents should be the same "
 			^ nodePosition - (parentPosition + parentDimension)
 		].
 	
-	( alignment isMemberOf: GtGradTreeNodesBottomAlignment)
+	( alignment isMemberOf: GtGradTreeNodesLeafAlignment)
 		ifTrue: [ 
 			"in case of the bottom alignment positions of  nodes on the same level  - bottommost points
 			of their parents / 2 should be the same "
