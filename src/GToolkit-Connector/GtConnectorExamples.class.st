@@ -107,7 +107,7 @@ GtConnectorExamples >> exampleMethodsExample [
 		vocalEditorContainer addChild: vocalVisualTarget.
 		vocalEditorContainer
 	].
-	gtconnector addEntity: (BlFrameLayoutExamples>>#example).
+	gtconnector addEntity: (BlFrameLayoutCompositionExamples>>#example).
 	^ gtconnector
 ]
 
