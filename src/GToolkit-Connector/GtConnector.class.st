@@ -75,6 +75,7 @@ GtConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
 
 { #category : #'private - adding / removing' }
 GtConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
+	
 	"Add a graph edge between two given elements.
 	Both elements must not be nil"
 	| anEdge |
@@ -313,7 +314,7 @@ GtConnector >> elementsVisualWithSource: aSource [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement connector isVisualSource
-				and: [ aChildElement connector model = aSource ])
+				and: [ aChildElement connector modelContains: aSource ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
@@ -326,7 +327,7 @@ GtConnector >> elementsVisualWithTarget: aSource [
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			
 			(aChildElement connector isVisualTarget
-				and: [ aChildElement connector model = aSource ])
+				and: [ aChildElement connector modelContains: aSource ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
@@ -430,13 +431,14 @@ GtConnector >> initialize [
 
 { #category : #initialization }
 GtConnector >> initializeListeners [
-	
 	self when: GtConnectorTargetElement do: [ :event | 
+		self link: event element.
 		self drawLines: event element.
-		self link: event element ].
+		 ].
 	self when: GtConnectorSourceElement do: [ :event | 
+		self link: event element.
 		self drawLines: event element.
-		self link: event element ].
+		 ].
 ]
 
 { #category : #accessing }
@@ -447,27 +449,19 @@ GtConnector >> link: anElement [
 		assert: [ anElement connector isNotNil ]
 		description: [ 'An element connector must not be nil' ].
 	
-	anElement connector isVisualTarget ifTrue: [ 
-		
+	anElement connector isVisualTarget ifTrue: [
 		targetLayoutElement := self goUpToTargetLayoutElement: anElement.
-		
-		(self elementsVisualWithSource: anElement connector model) do: [ :layoutSource |
-			
-			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
-		].
-	].
+		anElement connector modelDo: [ :modelObject | 
+			(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
+				sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
+				self addEdgeFrom: sourceLayoutElement to: targetLayoutElement ]]].
 	
 	anElement connector isVisualSource ifTrue: [
-		
 		sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
-		
-		(self elementsVisualWithTarget: anElement connector model) do: [ :layoutTarget |
-			
-			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-			self addEdgeFrom: sourceLayoutElement to: targetLayoutElement 
-		]
-	]
+		anElement connector modelDo: [ :modelObject |
+			(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
+				targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
+				self addEdgeFrom: sourceLayoutElement to: targetLayoutElement ]]]
 ]
 
 { #category : #private }
@@ -488,7 +482,7 @@ GtConnector >> sourceElementsWith: aTarget [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement connector isVisualSource
-				and: [ aChildElement connector model = aTarget ])
+				and: [ aChildElement connector modelContains: aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
@@ -522,8 +516,8 @@ GtConnector >> targetElementsWith: aTarget [
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement connector isVisualTarget
-				and: [ aChildElement connector model = aTarget ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
+				and: [ aChildElement connector modelContains: aTarget ])
+					ifTrue: [ aStream nextPut: aChildElement ]]]
 ]
 
 { #category : #search }
