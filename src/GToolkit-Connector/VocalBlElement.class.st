@@ -8,9 +8,9 @@ Class {
 VocalBlElement >> onAddedToSceneGraph [
 	super onAddedToSceneGraph.
 	self connector isVisualSource ifTrue: [
-	self fireEvent: (GtConnectorSourceElement new element: self)].
+		self fireEvent: (GtConnectorSourceElement new element: self)].
 	self connector isVisualTarget ifTrue: [
-		self fireEvent: (GtConnectorTargetElement new element: self) ].
+		self fireEvent: (GtConnectorTargetElement new element: self)].
 	
 ]
 

@@ -8,7 +8,8 @@ Class {
 		'isVisualSource',
 		'isVisualTarget',
 		'element',
-		'connectorConnections'
+		'connectorConnections',
+		'modelObjectList'
 	],
 	#category : #'GToolkit-Connector'
 }
@@ -18,6 +19,12 @@ GtConnectorElementContext class >> on: anElement [
 	^ self new 
 		element: anElement;
 		yourself
+]
+
+{ #category : #accessing }
+GtConnectorElementContext >> addToModelObjectList: anObject [
+	modelObjectList ifNil: [ modelObjectList := OrderedCollection new ].
+	modelObjectList add: anObject.
 ]
 
 { #category : #accessing }
@@ -123,4 +130,16 @@ GtConnectorElementContext >> model [
 { #category : #accessing }
 GtConnectorElementContext >> model: anObject [
 	model := anObject
+]
+
+{ #category : #accessing }
+GtConnectorElementContext >> modelContains: anObject [
+	model = anObject ifTrue: [ ^ true ].
+	^ modelObjectList isNotNil and: [modelObjectList includes: anObject].
+]
+
+{ #category : #accessing }
+GtConnectorElementContext >> modelDo: aBloc [
+	model ifNotNil:  [ aBloc value: model ].
+	modelObjectList ifNotNil: [ modelObjectList do: [:each | aBloc value: each]]
 ]
