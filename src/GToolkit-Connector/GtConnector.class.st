@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'stylerDoneListener',
 		'stylerListener',
-		'stencil'
+		'stencil',
+		'options'
 	],
 	#category : #'GToolkit-Connector'
 }
@@ -168,8 +169,8 @@ GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
 	
 	aSourceElement beConnectedTo: aTargetElement.
 	aTargetElement beConnectedTo: aSourceElement.
-
-	self addChild: aLineElement.
+	self options drawLines ifTrue: [ self addChild: aLineElement ]
+	
 	
 ]
 
@@ -425,7 +426,7 @@ GtConnector >> initialize [
 		c padding: (BlInsets all: 40) ].
 
 	self layout: (GtGradHorizontalTreeLayout new levelDistance: 200; nodeDistance: 40).
-	
+	self options: GtConnectorOptions new.
 	self initializeListeners
 ]
 
@@ -472,6 +473,16 @@ GtConnector >> openEntity: anEntity [
 		description: [ 'Can not open already opened enity' ].
 
 	self createAndAddElementForEntity: anEntity.
+]
+
+{ #category : #search }
+GtConnector >> options [ 
+	^ options 
+]
+
+{ #category : #search }
+GtConnector >> options: anOptionsObject [
+	options := anOptionsObject.
 ]
 
 { #category : #search }
