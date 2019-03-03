@@ -263,6 +263,6 @@ GtGradCircleLayoutExamples >> exampleWithLogger [
 		aContainer forceLayout.
 	].
 	
-	^ aContainer
+	^ logger
 
 ]
