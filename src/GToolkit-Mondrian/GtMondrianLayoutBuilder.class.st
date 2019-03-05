@@ -23,6 +23,11 @@ GtMondrianLayoutBuilder >> dominanceTree [
 	^ self custom: GtGradVerticalDominanceTreeLayout new
 ]
 
+{ #category : #accessing }
+GtMondrianLayoutBuilder >> explicit: aLayout [
+	self topStep layout: aLayout
+]
+
 { #category : #scripting }
 GtMondrianLayoutBuilder >> force [
 	^ self custom: GtGradKamadaKawaiLayout new
