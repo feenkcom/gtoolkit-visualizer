@@ -24,7 +24,7 @@ GtMondrianUMLClassElement class >> withDefaultContainer [
 GtMondrianUMLClassElement >> initialize [
 	super initialize.
 	label := BlTextElement new
-		text: '' asRopedText;
+		text: '' asRopedText glamorousRegularFontAndSize;
 		padding: (BlInsets all: 5);
 		constraintsDo: [ :c | c frame horizontal alignCenter ];
 		preventMouseEvents.
