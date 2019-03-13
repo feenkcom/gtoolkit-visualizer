@@ -31,7 +31,7 @@ GtGraphCellLayout >> centered [
 GtGraphCellLayout >> doExecute: elements [ 
 	
 	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights |
-	lineItemSize := self lineItemsCountBlock rtValue: elements.
+	lineItemSize := self lineItemsCountBlock value: elements.
 
 	"We compute the size of the grid"
 	columnCount := 1.
