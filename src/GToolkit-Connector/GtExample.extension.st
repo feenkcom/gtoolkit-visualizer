@@ -66,7 +66,7 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 	editor := BrTextEditor new.
 	editor styler: styler.
 	editorElement editor: editor.	
-	text := aMethod sourceCode asRopedText.
+	text := aMethod sourceCode asRopedText glamorousCodeFontDo: #beNotOverwritableByStyler.
 
 	"because we connect editors with lines based on styler we must change text
 	only after editor is added to the scene, otherwise events will be ignored"
