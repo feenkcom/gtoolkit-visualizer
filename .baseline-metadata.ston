@@ -1,1 +1,1 @@
-{	"repositories" : {		"github://pharo-project/pharo-beacon/repository" : "d982c76b6dc9b6dfbdaf65551b8cd1655a6515f6",		"github://feenkcom/Brick/src" : "v0.6.2",		"github://feenkcom/gtoolkit-phlow/src" : "v0.6.3"	}}
+{	"repositories" : {		"github://pharo-project/pharo-beacon/repository" : "d982c76b6dc9b6dfbdaf65551b8cd1655a6515f6",		"github://feenkcom/Brick/src" : "v0.6.3",		"github://feenkcom/gtoolkit-phlow/src" : "v0.6.4"	}}
