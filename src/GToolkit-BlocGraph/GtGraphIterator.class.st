@@ -41,8 +41,6 @@ GtGraphIterator >> do: aBlock [
 
 { #category : #'private - accessing' }
 GtGraphIterator >> graphElement [
-	<return: #GtGraphEement>
-
 	^ graphElement
 ]
 
