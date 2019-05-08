@@ -103,7 +103,7 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 	editor when: BrTextEditorCursorRemovedEvent do: block.
 	element 
 		background: Color white;
-		effect: (BlDropShadowEffect color: Color lightGray width: 10 offset: 10@10);
+		effect: (BlDropShadowEffect color: Color lightGray width: 5 offset: 10@10);
 		editor: editor;
 		constraintsDo: [ :c |
 				c horizontal matchParent.
@@ -115,7 +115,7 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 	elementsMondrian := BlElement new.
 	elementsMondrian 
 		background: Color white;
-		effect: (BlDropShadowEffect color: Color lightGray width: 10 offset: 10@10);
+		effect: (BlDropShadowEffect color: Color lightGray width: 5 offset: 10@10);
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent.].
@@ -124,7 +124,7 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 	ropeMondrian := BlElement new.
 	ropeMondrian 
 		background: Color white;
-		effect: (BlDropShadowEffect color: Color lightGray width: 10 offset: 10@10);
+		effect: (BlDropShadowEffect color: Color lightGray width: 5 offset: 10@10);
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent.].
