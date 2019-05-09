@@ -44,7 +44,7 @@ GtGraphLayoutBasicExamples >> elementsTreeWithEdges [
 		label := BlTextElement new
 			text: each gtDisplayString asRopedText;
 			background: Color white;
-			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 10 offset: 0@0).
+			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 0@0).
 		label userData at: #model put: each.
 		root children 
 			detect: [ :child | 
