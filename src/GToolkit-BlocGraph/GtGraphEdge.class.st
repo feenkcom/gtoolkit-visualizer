@@ -11,6 +11,13 @@ Class {
 	#category : 'GToolkit-BlocGraph'
 }
 
+{ #category : #'as yet unclassified' }
+GtGraphEdge class >> connecting: aFromElement to: aToElement [
+	<return: #GtGraphEdge>
+
+	^ aFromElement graph connectTo: aToElement
+]
+
 { #category : #comparing }
 GtGraphEdge >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
