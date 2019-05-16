@@ -26,6 +26,10 @@ ${example:GtMondrianVsBlocExplanation>>#blocWithMultipleNodes|previewExpanded=}$
 
 @@todo
 
+!!The graph extensions from Bloc
+
+By default, Bloc does not know about graphs. 
+
 
 "
 Class {
