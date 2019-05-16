@@ -66,6 +66,25 @@ GtGraphElementContext >> childrenContainers [
 ]
 
 { #category : #'api - graph' }
+GtGraphElementContext >> connectTo: anotherElement [
+	"I connect my element with a given element as an outgoing edge and return
+	a new instance of an edge"
+	<return: #GtGraphEdge>
+	| anEdge |
+
+	anEdge := GtGraphEdge new.
+	anEdge from: self element to: anotherElement.
+
+	self element constraints graph addConnectedEdge: anEdge.
+	anotherElement constraints graph addConnectedEdge: anEdge.
+
+	self beNode.
+	anotherElement graph beNode.
+
+	^ anEdge
+]
+
+{ #category : #'api - graph' }
 GtGraphElementContext >> connectedEdges [
 	<return: #GtGraphConnectedEdges>
 
