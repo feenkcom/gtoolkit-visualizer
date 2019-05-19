@@ -82,6 +82,9 @@ GtMondrianVsBlocExplanation >> graphNodeChildrenOfRoot [
 	root := self rootWithMultipleNodes.
 	nodeChildren := root graph nodeChildren.
 	self assert:nodeChildren size = 9.
+	nodeChildren do: [ :aChild| 
+		self assert: aChild graph isNode
+	].
 	^ nodeChildren 
 ]
 
