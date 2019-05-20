@@ -15,7 +15,7 @@ Mondrian does not have its own internal model for representing the graph. Instea
 
 ${example:GtMondrianVsBlocExplanation>>#rootWithMultipleNodes|previewExpanded=}$
 
-The root element holds the elements that represent our nodes. Mondrian is only a shallow builder of elements and this offers quite some flexibility in customizing the rendering. For example, if we want to specify a custom element for each onde, we can do that like this:
+The root element holds the elements that represent our nodes. Mondrian is only a shallow builder of elements and this offers quite some flexibility in customizing the rendering. For example, if we want to specify a custom element for each node, we can do that like this:
 
 ${example:GtMondrianVsBlocExplanation>>#multipleNodesWithStencil|previewExpanded=}$
 
