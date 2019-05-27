@@ -44,6 +44,14 @@ GtMondrianLayoutBuilder >> grid [
 ]
 
 { #category : #scripting }
+GtMondrianLayoutBuilder >> horizontal [
+	self topStep root constraintsDo: [ :c |
+			c horizontal fitContent.
+			c vertical fitContent ].
+	^ self custom: BlLinearLayout horizontal
+]
+
+{ #category : #scripting }
 GtMondrianLayoutBuilder >> horizontalDominanceTree [
 	^ self custom: GtGradHorizontalDominanceTreeLayout new
 ]
