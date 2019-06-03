@@ -113,11 +113,11 @@ GtGraphForceBasedLayout >> accumulate: aQuad [
 																cx := cx + (e charge * e cx).
 																cy := cy + (e charge * e cy) ] ] ].
 												
-	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node translateTo: aQuad node position + (random next - 0.5 @ ( random next - 0.5)) ].
+	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node measuredBounds position: aQuad node measuredBounds position + (random next - 0.5 @ ( random next - 0.5)) ].
 								k := alpha * (self chargeOf: aQuad node).
 								aQuad charge: aQuad charge + k.
-								cx := cx + (k * aQuad node position x). 
-								cy := cy + (k * aQuad node position y).].
+								cx := cx + (k * aQuad node measuredBounds position x). 
+								cy := cy + (k * aQuad node measuredBounds position y).].
 							
 	aQuad charge = 0 ifTrue: [ ^ self ].				
 	aQuad cx: cx / aQuad charge.
@@ -148,7 +148,7 @@ GtGraphForceBasedLayout >> addNodes: nodeElements [
 	nodeElements
 		do: [ :e | 
 			weights add: (Association key: e value: 0).
-			oldPositions add: (Association key: e value: e position) ].
+			oldPositions add: (Association key: e value: e measuredBounds position) ].
 
 ]
 
@@ -176,7 +176,7 @@ GtGraphForceBasedLayout >> doExecute: nodeElements [
 		ifTrue: [ self runLayoutInJob ]
 		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
-	nodes do: [ :e | translator translateTopLeftOf: e to: e position ]
+	"nodes do: [ :e | translator translateTopLeftOf: e to: e position ]"
 ]
 
 { #category : #configuration }
@@ -289,7 +289,7 @@ GtGraphForceBasedLayout >> prepareNodes: nodeElements [
 	nodes
 		do: [ :e | 
 			weights add: (Association key: e value: 0).
-			oldPositions add: (Association key: e value: e position) ].
+			oldPositions add: (Association key: e value: e measuredBounds position) ].
 	edges
 		do: [ :e | 
 			| from to |
@@ -321,8 +321,8 @@ GtGraphForceBasedLayout >> repulse: aNode from: aQuad [
 
 	| dx dy dn k p |
 	
-	dx := aQuad cx - aNode position x.
-	dy := aQuad cy - aNode position y.
+	dx := aQuad cx - aNode measuredBounds position x.
+	dy := aQuad cy - aNode measuredBounds position y.
 	
 	((dx closeTo: 0) and: [ dy closeTo: 0 ] ) ifFalse: [ 
 	
@@ -427,9 +427,9 @@ GtGraphForceBasedLayout >> step [
 	super step.
 	edges do: [ :e | 
 					from := e fromElement. 
-					fp := from position.
+					fp := from measuredBounds position.
 					to := e toElement. 
-					tp := to position.
+					tp := to measuredBounds position.
 					x := tp x - fp x.
 					y := tp y - fp y.
 					len := ((x * x) + (y * y)) sqrt.
@@ -438,17 +438,17 @@ GtGraphForceBasedLayout >> step [
 						x := x * len.
 						y := y * len.
 						k := (weights at: from) / (( weights at: from) +( weights at: to )).
-						to translateTo: ( tp x - (x * k) )@( tp y - (y * k) ).
+						to measuredBounds position: ( tp x - (x * k) )@( tp y - (y * k) ).
 						k := 1 -  k.
-						from translateTo: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
+						from measuredBounds position: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
 			
 		k := alpha * gravity.
 		((k closeTo: 0) not) ifTrue: [ 
 			x := center x.
 			y := center y.
 			nodes do: [ :ea | | pos |
-					pos := ea position.
-					ea translateTo: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
+					pos := ea measuredBounds position.
+					ea measuredBounds position: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
 				
 		quad := GtGraphQuadTree withAll: nodes.
 		self accumulate: quad.
@@ -458,8 +458,8 @@ GtGraphForceBasedLayout >> step [
 				ifTrue: [ translator translateTopLeftOf: e to: (fixedNodes at: e) ] ].
 
 		nodes do: [ :e | 
-			old := e position.
-			e translateTo: 
+			old := e measuredBounds position.
+			e measuredBounds position: 
 				(old x - (( (oldPositions at: e) x - old x ) * friction)) @ 
 				(old y - (( (oldPositions at: e) y - old y ) * friction)).
 			oldPositions at: e put: old.].
