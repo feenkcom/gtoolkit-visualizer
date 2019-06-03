@@ -226,7 +226,7 @@ GtGraphForceBasedLayout >> initialize [
 	theta := 0.8.
 	center := 200 @ 200.
 	alpha := 0.1.
-	self doNotUseProgressBar
+	self useProgressBar
 ]
 
 { #category : #testing }

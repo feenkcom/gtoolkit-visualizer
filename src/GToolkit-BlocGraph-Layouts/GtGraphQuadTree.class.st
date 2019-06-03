@@ -64,61 +64,47 @@ Class {
 
 { #category : #public }
 GtGraphQuadTree class >> withAll: aNodeCollection [
-	^ self
-		withAll: aNodeCollection
-		origin:
-			(aNodeCollection collect: [ :e | e measuredBounds position x ]) min
-				@ (aNodeCollection collect: [ :e | e measuredBounds position y ]) min
-		corner:
-			(aNodeCollection collect: [ :e | e measuredBounds position x ]) max
-				@ (aNodeCollection collect: [ :e | e measuredBounds position y ]) max
+
+	^ self withAll: aNodeCollection origin: (aNodeCollection collect: [:e | e position x]) min @ (aNodeCollection collect: [:e | e position y]) min corner: (aNodeCollection collect: [:e | e position x]) max @ (aNodeCollection collect: [:e | e position y]) max
 ]
 
 { #category : #public }
 GtGraphQuadTree class >> withAll: aNodeCollection origin: aPoint corner: anotherPoint [
+
 	| dx dy root |
+
 	dx := anotherPoint x - aPoint x.
 	dy := anotherPoint y - aPoint y.
-	(dx closeTo: dy)
-		ifTrue: [ root := self new.
-			root
-				origin: aPoint;
-				corner: anotherPoint.
-			aNodeCollection do: [ :e | root add: e ].
-			^ root ].
-	dx > dy
-		ifTrue: [ ^ self
-				withAll: aNodeCollection
-				origin: aPoint
-				corner: anotherPoint x @ (aPoint y + dx) ].
-	dy > dx
-		ifTrue: [ ^ self
-				withAll: aNodeCollection
-				origin: aPoint
-				corner: (aPoint x + dy) @ anotherPoint y ]
+
+
+	(dx closeTo: dy ) ifTrue: [ root := self new.
+										root origin: aPoint;
+											corner: anotherPoint.
+										aNodeCollection do: [ :e | root add: e ].
+										^ root ] .
+	
+	dx > dy ifTrue: [ ^ self withAll: aNodeCollection origin: aPoint corner: anotherPoint x @ (aPoint y + dx) ].
+	dy > dx ifTrue: [ ^ self withAll: aNodeCollection origin: aPoint corner: (aPoint x + dy) @ anotherPoint y ] .
 ]
 
 { #category : #adding }
 GtGraphQuadTree >> add: aNode [
 	| n |
-
 	leaf
-		ifFalse: [ ^ self addChild: aNode ].
-
-	x
-		ifNotNil: [ (x - aNode measuredBounds position x) abs + (y - aNode measuredBounds position y) abs < 0.01
-			ifTrue: [ self addChild: aNode ]
-			ifFalse: [ n := node.
-				x := nil.
-				y := nil.
-				node := nil.
-				self
-					addChild: aNode;
-					addChild: n ] ]
-		ifNil: [
-			x := aNode measuredBounds position x.
-			y := aNode measuredBounds position y.
-			node := aNode ]
+		ifTrue: [ x isNil
+				ifFalse: [ (x - aNode position x) abs + (y - aNode position y) abs < 0.01
+						ifTrue: [ self addChild: aNode ]
+						ifFalse: [ n := node.
+							x := nil.
+							y := nil.
+							node := nil.
+							self
+								addChild: aNode;
+								addChild: n ] ]
+				ifTrue: [ x := aNode position x.
+					y := aNode position y.
+					node := aNode ] ]
+		ifFalse: [ self addChild: aNode ]
 ]
 
 { #category : #adding }
@@ -127,8 +113,8 @@ GtGraphQuadTree >> addChild: aNode [
 	sx := (origin x + corner x) / 2.
 	sy := (origin y + corner y) / 2.
 	leaf := false.
-	aNode measuredBounds position x < sx
-		ifTrue: [ aNode measuredBounds position y < sy
+	aNode position x < sx
+		ifTrue: [ aNode position y < sy
 				ifTrue: [ (nodes at: 1) isNil
 						ifTrue: [ new := GtGraphQuadTree new.
 							new
