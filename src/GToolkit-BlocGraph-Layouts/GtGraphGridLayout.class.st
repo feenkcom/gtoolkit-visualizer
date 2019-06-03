@@ -32,9 +32,9 @@ GtGraphGridLayout >> doExecute: elements [
 	elements
 		do: [ :element | 
 			translator translateTopLeftOf: element to: pointer.
-			pointer := (pointer x + element width + self gapSize) @ pointer y.
+			pointer := (pointer x + element measuredBounds width + self gapSize) @ pointer y.
 			lineItemCount := lineItemCount + 1.
-			maxLastLineHeight := maxLastLineHeight max: element height.
+			maxLastLineHeight := maxLastLineHeight max: element measuredBounds height.
 			lineItemCount >= lineItemSize
 				ifTrue: [ 
 					pointer := originalGapLeft @ (pointer y + (self gapSize) + maxLastLineHeight).

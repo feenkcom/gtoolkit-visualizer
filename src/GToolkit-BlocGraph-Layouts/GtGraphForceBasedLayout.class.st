@@ -97,31 +97,37 @@ Class {
 }
 
 { #category : #algorithm }
-GtGraphForceBasedLayout >> accumulate: aQuad [ 
-
+GtGraphForceBasedLayout >> accumulate: aQuad [
 	| cx cy k random |
-	
 	cx := 0.
 	cy := 0.
-	
-	aQuad charge: 0; cx: 0; cy: 0.
-	
+	aQuad
+		charge: 0;
+		cx: 0;
+		cy: 0.
 	random := Random new.
-	
-	aQuad leaf ifFalse: [ aQuad nodes do: [ :e | e isNil ifFalse: [ self accumulate: e.
-																aQuad charge: aQuad charge + e charge.
-																cx := cx + (e charge * e cx).
-																cy := cy + (e charge * e cy) ] ] ].
-												
-	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node measuredBounds position: aQuad node measuredBounds position + (random next - 0.5 @ ( random next - 0.5)) ].
-								k := alpha * (self chargeOf: aQuad node).
-								aQuad charge: aQuad charge + k.
-								cx := cx + (k * aQuad node measuredBounds position x). 
-								cy := cy + (k * aQuad node measuredBounds position y).].
-							
-	aQuad charge = 0 ifTrue: [ ^ self ].				
+	aQuad leaf
+		ifFalse: [ aQuad nodes
+				do: [ :e | 
+					e isNil
+						ifFalse: [ self accumulate: e.
+							aQuad charge: aQuad charge + e charge.
+							cx := cx + (e charge * e cx).
+							cy := cy + (e charge * e cy) ] ] ].
+	aQuad node isNil
+		ifFalse: [ aQuad leaf
+				ifFalse: [ aQuad node measuredBounds
+						position:
+							aQuad node measuredBounds position
+								+ ((random next - 0.5) @ (random next - 0.5)) ].
+			k := alpha * (self chargeOf: aQuad node).
+			aQuad charge: aQuad charge + k.
+			cx := cx + (k * aQuad node measuredBounds position x).
+			cy := cy + (k * aQuad node measuredBounds position y) ].
+	aQuad charge = 0
+		ifTrue: [ ^ self ].
 	aQuad cx: cx / aQuad charge.
-	aQuad cy: cy / aQuad charge.
+	aQuad cy: cy / aQuad charge
 ]
 
 { #category : #updating }
@@ -318,25 +324,27 @@ GtGraphForceBasedLayout >> removeNode: node [
 
 { #category : #algorithm }
 GtGraphForceBasedLayout >> repulse: aNode from: aQuad [
-
 	| dx dy dn k p |
-	
+
 	dx := aQuad cx - aNode measuredBounds position x.
 	dy := aQuad cy - aNode measuredBounds position y.
-	
-	((dx closeTo: 0) and: [ dy closeTo: 0 ] ) ifFalse: [ 
-	
-	dn := 1 / ((dx * dx) + (dy * dy)) sqrt.
-	
-	p := oldPositions at: aNode.
-	aQuad node ~= aNode ifTrue: [ aQuad corner x - aQuad origin x * dn < theta ifTrue: [ k := aQuad charge * dn * dn.
-																							oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ).
-																							^ self].
-												
-									(aQuad node isNil not and: [ dn < 1e9 ]) ifTrue: [ k := (self chargeOf: aQuad node) * dn * dn * alpha.
-																					  oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ) ] ]. ].
-																			
-	(aQuad charge closeTo: 0) not ifTrue: [ aQuad nodes do: [ :e | e isNil ifFalse: [ self repulse: aNode from: e ] ] ]
+
+	((dx closeTo: 0) and: [ dy closeTo: 0 ])
+		ifFalse: [
+			dn := 1.0 / (dx * dx + (dy * dy)) sqrt.
+			p := oldPositions at: aNode.
+			aQuad node ~= aNode
+				ifTrue: [ (aQuad corner x - aQuad origin x) * dn < theta
+						ifTrue: [
+							k := aQuad charge * dn * dn.
+							oldPositions at: aNode put: (p x - (dx * k)) @ (p y - (dy * k)).
+							^ self ].
+					(aQuad node isNil not and: [ dn < 1e9 ])
+						ifTrue: [ k := (self chargeOf: aQuad node) * dn * dn * alpha.
+							oldPositions at: aNode put: (p x - (dx * k)) @ (p y - (dy * k)) ] ] ].
+	(aQuad charge closeTo: 0) not
+		ifTrue: [ aQuad nodes
+				do: [ :e | e ifNotNil: [ self repulse: aNode from: e ] ] ]
 ]
 
 { #category : #hook }
@@ -462,7 +470,7 @@ GtGraphForceBasedLayout >> step [
 			e measuredBounds position: 
 				(old x - (( (oldPositions at: e) x - old x ) * friction)) @ 
 				(old y - (( (oldPositions at: e) y - old y ) * friction)).
-			oldPositions at: e put: old.].
+			oldPositions at: e put: old.]
 ]
 
 { #category : #accessing }
