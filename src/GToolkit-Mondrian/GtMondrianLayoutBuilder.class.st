@@ -30,7 +30,7 @@ GtMondrianLayoutBuilder >> explicit: aLayout [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> force [
-	^ self custom: GtGradKamadaKawaiLayout new
+	^ self custom: GtGraphForceBasedLayout new
 ]
 
 { #category : #scripting }
