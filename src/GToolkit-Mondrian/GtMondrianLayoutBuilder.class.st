@@ -30,7 +30,7 @@ GtMondrianLayoutBuilder >> explicit: aLayout [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> force [
-	^ self custom: GtGradKamadaKawaiLayout new
+	^ self custom: GtGraphForceBasedLayout new
 ]
 
 { #category : #scripting }
@@ -58,7 +58,7 @@ GtMondrianLayoutBuilder >> horizontalDominanceTree [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> horizontalTree [
-	^ self custom: GtGradHorizontalTreeLayout new
+	^ self custom: GtGraphHorizontalTreeLayout new
 ]
 
 { #category : #scripting }
