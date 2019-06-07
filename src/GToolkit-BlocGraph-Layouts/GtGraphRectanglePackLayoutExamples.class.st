@@ -47,7 +47,7 @@ GtGraphRectanglePackLayoutExamples >> circles [
 		node layout: BlFrameLayout new ].
 	
 	view addChildren: nodes.
-	view layout: (GtGraphRectanglePackLayout new gap: 0).
+	view layout: GtGraphRectanglePackLayout new.
 	self applyLayoutIn: view.
 
 	^ view
@@ -87,7 +87,7 @@ GtGraphRectanglePackLayoutExamples >> circlesRaw [
 		
 		view addChild: node ].
 	
-	view layout: (GtGraphRectanglePackLayout new gap: 0).
+	view layout: (GtGraphRectanglePackLayout new).
 	view constraintsDo: [ :constraints |
 		constraints horizontal fitContent.
 		constraints vertical fitContent.
@@ -119,7 +119,7 @@ GtGraphRectanglePackLayoutExamples >> circlesSimplified [
 			BlTextForegroundAttribute paint: Color black .
 			BlFontSizeAttribute size: 10 } ].
 	
-	view layout: (GtGraphRectanglePackLayout new gap: 0).
+	view layout: (GtGraphRectanglePackLayout new).
 	self applyLayoutIn: view.
 
 	^ view
@@ -136,6 +136,27 @@ GtGraphRectanglePackLayoutExamples >> nodes: aDataCollection inView: aView forEa
 	nodes := self nodes: aDataCollection.
 	nodes do: aBlock.
 	aView addChildren: nodes.
+]
+
+{ #category : #example }
+GtGraphRectanglePackLayoutExamples >> powersOfTwo [
+	<gtExample>
+	
+	^ BlElement new
+		layout: GtGraphRectanglePackLayout new;
+		addChildren: ({
+			2 -> 256.
+			4 -> 128.
+			8 -> 64.
+			16 -> 32.
+			32 -> 16.
+			64 -> 8.
+			128 -> 4.
+			256 -> 2 } flatCollect: [ :eachSize | eachSize key
+				timesCollect: [ BlElement new
+					background: (Color gray alpha: 0.3);
+					border: (BlBorder paint: Color white width: 1);
+					size: eachSize value asPoint ] ])
 ]
 
 { #category : #example }

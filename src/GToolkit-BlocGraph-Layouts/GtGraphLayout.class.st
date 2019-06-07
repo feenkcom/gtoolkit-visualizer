@@ -71,8 +71,7 @@ GtGraphLayout >> initialize [
 
 { #category : #layout }
 GtGraphLayout >> measurePositions: anElement with: anExtentSpec [
-	
-	self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ])
+	self applyOn: anElement children accountedByLayout asArray
 ]
 
 { #category : #hook }
