@@ -8,7 +8,8 @@ Class {
 	#classTraits : 'TGtGraphLayoutUtils classTrait',
 	#instVars : [
 		'affectedNodes',
-		'translator'
+		'translator',
+		'isCached'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
@@ -66,13 +67,22 @@ GtGraphLayout >> groupBounds: aCollectionOfElements [
 { #category : #initialization }
 GtGraphLayout >> initialize [
 	super initialize.
-	translator := GtGraphLayoutTranslator default
+	translator := GtGraphLayoutTranslator default.
+	isCached := false
+]
+
+{ #category : #layout }
+GtGraphLayout >> measure: anElement with: anExtentSpec [
+	super measure: anElement with: anExtentSpec.
+	isCached := true
 ]
 
 { #category : #layout }
 GtGraphLayout >> measurePositions: anElement with: anExtentSpec [
 	
-	self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ])
+	isCached
+		ifFalse: [ self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ]) ]
+	
 ]
 
 { #category : #hook }
