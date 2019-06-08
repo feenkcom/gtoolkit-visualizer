@@ -58,7 +58,7 @@ GtMondrianLayoutBuilder >> horizontalDominanceTree [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> horizontalTree [
-	^ self custom: GtGradHorizontalTreeLayout new
+	^ self custom: GtGraphHorizontalTreeLayout new
 ]
 
 { #category : #scripting }

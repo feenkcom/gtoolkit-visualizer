@@ -69,6 +69,16 @@ GtGraphAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atL
 	^ x - aPoint x - self horizontalGap
 ]
 
+{ #category : #accessing }
+GtGraphAbstractVerticalTreeLayout >> levelDistance: aNumber [
+	self topGap: aNumber
+]
+
+{ #category : #accessing }
+GtGraphAbstractVerticalTreeLayout >> nodeDistance: aNumber [
+	self horizontalGap: aNumber
+]
+
 { #category : #private }
 GtGraphAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 	| cursor layerDepthSize |

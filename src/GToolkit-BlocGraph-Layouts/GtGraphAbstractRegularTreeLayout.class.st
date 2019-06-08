@@ -118,6 +118,16 @@ GtGraphAbstractRegularTreeLayout >> leftGap: anInteger [
 	leftGap := anInteger
 ]
 
+{ #category : #accessing }
+GtGraphAbstractRegularTreeLayout >> levelDistance: aNumber [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGraphAbstractRegularTreeLayout >> nodeDistance: aNumber [
+	self subclassResponsibility
+]
+
 { #category : #private }
 GtGraphAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
 	self subclassResponsibility
