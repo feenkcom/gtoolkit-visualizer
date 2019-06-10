@@ -60,8 +60,10 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-Connector' with: [
 				spec requires: #(#Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
 			package: 'GToolkit-Diagrammer' with: [
-				spec requires: #(#Brick ). ];
+				spec requires: #(#Brick). ];
+			package: 'GToolkit-TreeMap' with: [
+				spec requires: #(#Brick). ];
 			package: 'GToolkit-Plotter' with: [
-				spec requires: #(#Brick ). ]. ].
+				spec requires: #(#Brick). ]. ].
 
 ]
