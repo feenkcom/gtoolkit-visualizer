@@ -4,6 +4,18 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
+{ #category : #measure }
+GtGraphCirclePackLayout >> boundingBox: anElement [
+	| theBounds aSideLength aDeltaX aDeltaY |
+	
+	theBounds := super boundingBox: anElement.
+	aSideLength := theBounds extent max.
+	aDeltaX := (theBounds width - aSideLength) / 2.0.
+	aDeltaY := (theBounds height - aSideLength) / 2.0.
+	
+	^ theBounds expandBy: aDeltaX @ aDeltaY
+]
+
 { #category : #hook }
 GtGraphCirclePackLayout >> doExecute: theElements [
 	"Performs the layout"
