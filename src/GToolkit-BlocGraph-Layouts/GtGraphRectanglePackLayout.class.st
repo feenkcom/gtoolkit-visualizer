@@ -39,11 +39,6 @@ GtGraphRectanglePackLayout >> fit: anElement in: aRoot [
 	^ aNewRoot
 ]
 
-{ #category : #'initialize-release' }
-GtGraphRectanglePackLayout >> initialize [
-	super initialize
-]
-
 { #category : #hook }
 GtGraphRectanglePackLayout >> pickRoot: theElements [
 	| width height |
