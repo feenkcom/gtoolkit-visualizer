@@ -102,7 +102,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSeparateSubtrees [
    	         text: x asString asRopedText ];
     	with: (0 to: 20).
 	mondrian edges connectFrom: [ :x | x // 3 ].
-	mondrian layout horizontalTree separateSubtrees: true.
+	mondrian layout custom: (GtGradHorizontalTreeLayout new separateSubtrees: true).
 	
 	^ mondrian
 
@@ -128,7 +128,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeReversed [
 	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 15).
 	mondrian edges connect: { 1->2 . 1->3 . 2->4 . 2->5 . 3->6 . 3->7 . 4->8 .
 	4->9 . 4->10 . 5->11 . 6->12 . 6->13 . 6->14 . 6->15 } from: #key to: #value.
-	mondrian layout horizontalTree nodeDistance: 5; reverse: true.
+	mondrian layout custom: (GtGradHorizontalTreeLayout new nodeDistance: 5; reverse: true).
 	^ mondrian
 ]
 
@@ -154,7 +154,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithBottomAlignment [
 		fromCenterBottom; 
 		toCenterTop;
 		connectFrom: [:x |x // 5].
-	mondrian layout horizontalTree nodesAlignment: GtGradTreeNodesLeafAlignment new.
+	mondrian layout custom: (GtGradHorizontalTreeLayout new nodesAlignment: GtGradTreeNodesLeafAlignment new).
 	^ mondrian
 ]
 
@@ -168,7 +168,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithCenterAlignment [
 		fromCenterBottom;
 		toCenterTop;
 		connectFrom: [:x |x // 5].
-	mondrian layout horizontalTree nodesAlignment: GtGradTreeNodesCenterAlignment new.
+	mondrian layout custom: (GtGradHorizontalTreeLayout new nodesAlignment: GtGradTreeNodesCenterAlignment new).
 	^ mondrian
 ]
 
