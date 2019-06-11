@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'levelLayout',
 		'traversalBlock',
+		'leavesCreationBlock',
 		'leavesSizeBlock',
 		'roots'
 	],
@@ -14,37 +15,44 @@ Class {
 GtTreeMap >> create [
 	<return: #BlElement>
 	^ self 
-		createFor: { roots } 
-		withChildren: roots
+		createFor: roots 
+		withChildren: (traversalBlock value: roots)
 ]
 
 { #category : #'api - instantiation' }
 GtTreeMap >> createFor: anObject withChildren: children [
-	| element |
+	| element leaves |
 	element := BlElement new
 		geometry: BlEllipse new;
-		padding: (BlInsets all: 10);
-		border: (BlBorder paint: Color gray).
-	children isEmpty
+		when: BlClickEvent do: [ :e | e target phlow spawnObject: anObject. e consumed: true ];
+		border: (BlBorder paint: (Color gray alpha: 0.2)).
+	leaves := self createLeavesFor: anObject.
+	(children isEmpty and: [ leaves isEmpty ])
 		ifTrue: [ 
-			element
-				size: (leavesSizeBlock value: anObject) asPoint;
-				background: Color red ]
+			element size: 1 asPoint ]
 		ifFalse: [ 
-			element 
-				constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent ];
+			element
+				constraintsDo: [ :c | 
+					c horizontal fitContent.
+					c vertical fitContent ];
 				layout: GtGraphCirclePackLayout new;
-				addChildren: (self createForChildren: children) ].
+				addChildren: leaves;
+				addChildren: (children collect: [ :aChild | 
+					self 
+						createFor: aChild 
+						withChildren: (traversalBlock value: aChild) ]) ].
 	^ element
 ]
 
 { #category : #'api - instantiation' }
-GtTreeMap >> createForChildren: aCollection [
-	^ aCollection
-		collect: [ :anObject | 
-			| children |
-			children := traversalBlock value: anObject.
-			self createFor: anObject withChildren: children ]
+GtTreeMap >> createLeavesFor: anObject [
+	^ (leavesCreationBlock value: anObject) collect: [ :leaf |
+		BlElement new
+			geometry: BlEllipse new;
+			size: ((leavesSizeBlock value: leaf) max: 1) asPoint;
+			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
+			background: Color red;
+			border: (BlBorder paint: (Color gray alpha: 0.2))]
 ]
 
 { #category : #accessing }
@@ -57,7 +65,13 @@ GtTreeMap >> initialize [
 	super initialize.
 	levelLayout := GtGraphCirclePackLayout new.
 	leavesSizeBlock := [ :x | 10 ].
-	traversalBlock := [ :x | {  } ]
+	traversalBlock := [ :x | {  } ].
+	leavesCreationBlock := [ :x | {  } ]
+]
+
+{ #category : #accessing }
+GtTreeMap >> leaves: aBlock [
+	leavesCreationBlock := aBlock
 ]
 
 { #category : #accessing }
