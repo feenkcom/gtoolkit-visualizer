@@ -25,7 +25,7 @@ GtTreeMap >> createFor: anObject withChildren: children [
 	element := BlElement new
 		geometry: BlEllipse new;
 		when: BlClickEvent do: [ :e | e target phlow spawnObject: anObject. e consumed: true ];
-		border: (BlBorder paint: (Color gray alpha: 0.2)).
+		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
 	leaves := self createLeavesFor: anObject.
 	(children isEmpty and: [ leaves isEmpty ])
 		ifTrue: [ 
@@ -51,7 +51,7 @@ GtTreeMap >> createLeavesFor: anObject [
 			geometry: BlEllipse new;
 			size: ((leavesSizeBlock value: leaf) max: 1) asPoint;
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
-			background: Color red;
+			background: (Color red darker alpha: 0.7);
 			border: (BlBorder paint: (Color gray alpha: 0.2))]
 ]
 
