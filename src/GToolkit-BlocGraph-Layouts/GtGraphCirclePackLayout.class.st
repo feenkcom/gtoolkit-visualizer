@@ -9,7 +9,7 @@ GtGraphCirclePackLayout >> boundingBox: anElement [
 	| theBounds aSideLength aDeltaX aDeltaY |
 	
 	theBounds := super boundingBox: anElement.
-	aSideLength := theBounds extent max.
+	aSideLength := theBounds extent max * 1.1.
 	aDeltaX := (aSideLength - theBounds width) / 2.0.
 	aDeltaY := (aSideLength - theBounds height) / 2.0.
 	
