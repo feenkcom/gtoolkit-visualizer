@@ -1,19 +1,17 @@
 Class {
 	#name : #GtGraphCirclePackLayout,
 	#superclass : #GtGraphLayout,
+	#instVars : [
+		'enclosureCircle'
+	],
 	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
 { #category : #measure }
 GtGraphCirclePackLayout >> boundingBox: anElement [
-	| theBounds aSideLength aDeltaX aDeltaY |
-	
-	theBounds := super boundingBox: anElement.
-	aSideLength := theBounds extent max * 1.1.
-	aDeltaX := (aSideLength - theBounds width) / 2.0.
-	aDeltaY := (aSideLength - theBounds height) / 2.0.
-	
-	^ theBounds expandBy: aDeltaX @ aDeltaY
+	^ enclosureCircle
+		ifNil: [ 0@0 extent: 0@0 ]
+		ifNotNil: [ (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded ]
 ]
 
 { #category : #hook }
@@ -24,7 +22,8 @@ GtGraphCirclePackLayout >> doExecute: theElements [
 	sortedElements := self sorted: theElements.
 	aChain := self pickChain: sortedElements.
 
-	4 to: sortedElements size do: [ :eachIndex | self fit: (sortedElements at: eachIndex) in: aChain ]
+	4 to: sortedElements size do: [ :eachIndex | self fit: (sortedElements at: eachIndex) in: aChain ].
+	enclosureCircle := aChain enclosureCircle
 ]
 
 { #category : #hook }

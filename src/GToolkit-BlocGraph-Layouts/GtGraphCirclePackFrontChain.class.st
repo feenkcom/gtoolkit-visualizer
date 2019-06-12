@@ -71,7 +71,11 @@ GtGraphCirclePackFrontChain >> aroundLink: aLink do: block [
 ]
 
 { #category : #accessing }
-GtGraphCirclePackFrontChain >> enclosingCircle [
+GtGraphCirclePackFrontChain >> enclosureCircle [
+	| theCircles |
+	
+	theCircles := Array streamContents: [ :aStream | (self linksDo: [ :eachLink | aStream nextPut: eachLink circle ]) ].
+	^ (GtGraphCircleEnclosure new circles: theCircles) enclosureCircle
 ]
 
 { #category : #'gt-inspector-extension' }

@@ -57,6 +57,38 @@ GtGraphCircle >> center: aPoint [
 	center := aPoint
 ]
 
+{ #category : #geometry }
+GtGraphCircle >> encloses: anotherCircle [
+	<return: #Boolean>
+	| dr dx dy |
+	
+	dr := self outerRadius - anotherCircle outerRadius.
+	dx := anotherCircle center x - self center x.
+	dy := anotherCircle center y - self center y.
+	
+	
+	^ (dr < 0 or: [ (dr * dr) < ((dx * dx) + (dy * dy)) ]) not
+]
+
+{ #category : #geometry }
+GtGraphCircle >> enclosesWeak: anotherCircle [
+	<return: #Boolean>
+	| dr dx dy |
+	
+	dr := self outerRadius - anotherCircle outerRadius + 1.0e-6.
+	dx := anotherCircle center x - self center x.
+	dy := anotherCircle center y - self center y.
+	
+	^ dr > 0 and: [ (dr * dr) > ((dx * dx) + (dy * dy)) ]
+]
+
+{ #category : #geometry }
+GtGraphCircle >> enclosesWeakAll: theCircles [
+	<return: #Boolean>
+
+	^ theCircles allSatisfy: [ :eachCircle | self enclosesWeak: eachCircle ]
+]
+
 { #category : #'gt-inspector-extension' }
 GtGraphCircle >> gtPreviewFor: aView [
 	<gtView>
@@ -73,6 +105,16 @@ GtGraphCircle >> initialize [
 	radius := 0.
 	center := 0@0.
 	margin := 0.
+]
+
+{ #category : #geometry }
+GtGraphCircle >> intersects: anotherCircle [
+	| aCenterVector aMagnitude |
+	
+	aCenterVector := (self center - anotherCircle center).
+	aMagnitude := ( (aCenterVector x * aCenterVector x) + (aCenterVector y * aCenterVector y) ) sqrt.
+	
+	^ aMagnitude < (self radius + anotherCircle radius - 1.0e-6)
 ]
 
 { #category : #accessing }
