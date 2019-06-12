@@ -70,6 +70,10 @@ GtGraphCirclePackFrontChain >> aroundLink: aLink do: block [
 	] repeat
 ]
 
+{ #category : #accessing }
+GtGraphCirclePackFrontChain >> enclosingCircle [
+]
+
 { #category : #'gt-inspector-extension' }
 GtGraphCirclePackFrontChain >> gtPreviewFor: aView [
 	<gtView>

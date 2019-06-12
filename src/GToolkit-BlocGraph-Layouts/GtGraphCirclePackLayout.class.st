@@ -64,7 +64,12 @@ GtGraphCirclePackLayout >> pickChain: theElements [
 		
 	theElements size = 1
 		ifTrue: [
-			aChain add: ((GtGraphCirclePackNode for: theElements first) center: 0@0).
+			| aCircle |
+			
+			aCircle := GtGraphCirclePackNode for: theElements first.
+			aCircle center: (GtGraphCircleNeighbourhood computeNeighbourCenter: aCircle circle).
+			
+			aChain add: aCircle.
 			aChain nearestCircle: aChain firstLink ].
 
 	theElements size >= 2
@@ -74,8 +79,8 @@ GtGraphCirclePackLayout >> pickChain: theElements [
 			aFirstCircle := GtGraphCirclePackNode for: theElements first.
 			aSecondCircle := GtGraphCirclePackNode for: theElements second.
 			
-			aFirstCircle center: (aFirstCircle radius negated) @ 0.
-			aSecondCircle center: (aSecondCircle radius) @ 0.
+			aFirstCircle center: (GtGraphCircleNeighbourhood computeNeighbourCenter: aFirstCircle circle).
+			aSecondCircle center: (GtGraphCircleNeighbourhood computeNeighbourCenter: aFirstCircle circle near: aSecondCircle circle).
 			
 			aChain add: aFirstCircle.
 			aChain add: aSecondCircle.
