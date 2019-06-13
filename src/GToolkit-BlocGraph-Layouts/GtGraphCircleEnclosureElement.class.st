@@ -62,8 +62,8 @@ GtGraphCircleEnclosureElement >> initializeElement [
 	anEnclosureCircleElement relocate: anEnclosureCircle origin.
 	self embellishEnclosureCircle: anEnclosureCircleElement.
 	
+	self addChild: anEnclosureCircleElement.
 	self addChildren: theCircleElements.
-	self addChild: anEnclosureCircleElement
 ]
 
 { #category : #'private - elements' }

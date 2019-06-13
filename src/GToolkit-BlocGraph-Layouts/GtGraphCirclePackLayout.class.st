@@ -9,9 +9,7 @@ Class {
 
 { #category : #measure }
 GtGraphCirclePackLayout >> boundingBox: anElement [
-	^ enclosureCircle
-		ifNil: [ 0@0 extent: 0@0 ]
-		ifNotNil: [ (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded ]
+	^ (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded
 ]
 
 { #category : #hook }
@@ -51,6 +49,13 @@ GtGraphCirclePackLayout >> fit: anElement in: aFrontChain [
 
 	aFrontChain add: aNewCircle afterLink: aFrontChain nearestCircle.
 	aFrontChain nextCircle: aNewCircle
+]
+
+{ #category : #initialization }
+GtGraphCirclePackLayout >> initialize [
+	super initialize.
+	
+	enclosureCircle := GtGraphCircle new
 ]
 
 { #category : #hook }

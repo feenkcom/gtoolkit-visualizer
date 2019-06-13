@@ -47,6 +47,11 @@ GtGraphCircle >> asElement [
 	^ aContainer
 ]
 
+{ #category : #geometry }
+GtGraphCircle >> bounds [
+	^ self origin extent: (self outerRadius * 2.0) asPoint
+]
+
 { #category : #accessing }
 GtGraphCircle >> center [
 	^ center
@@ -129,7 +134,7 @@ GtGraphCircle >> margin: aNumber [
 
 { #category : #accessing }
 GtGraphCircle >> origin [
-	^ self center - (self radius + self margin) asPoint
+	^ self center - self outerRadius asPoint
 ]
 
 { #category : #accessing }
