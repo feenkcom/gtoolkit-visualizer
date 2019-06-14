@@ -28,7 +28,7 @@ GtGraphCircleEnclosureElement >> embellishEnclosureCircle: aCircleElement [
 
 	anActualCircle := aCircleElement childNamed: #circle.
 	anActualCircle
-		background: (BrGlamorousColors primaryBorderColor alpha: 0.1);
+		background: (BrGlamorousColors primaryBorderColor alpha: 0.3);
 		border: (anActualCircle border copyWithPaint: BrGlamorousColors primaryBorderColor).
 	(aCircleElement childNamed: #center) background: (Color transparent)
 ]

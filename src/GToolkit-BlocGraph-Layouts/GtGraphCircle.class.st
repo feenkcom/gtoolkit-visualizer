@@ -21,12 +21,14 @@ GtGraphCircle >> asElement [
 	aMarginCircle := BlElement new.
 	aMarginCircle geometry: BlEllipse new.
 	aMarginCircle size: (self radius + self margin) * 2 asPoint.
-	aMarginCircle border: (BlBorder builder dashedSmall paint: (Color gray alpha: 0.2); width: aBorderWidth; build).
+	aMarginCircle border: (BlBorder builder dashedSmall paint: (Color black alpha: 0.2); width: aBorderWidth; build).
+	aMarginCircle background: (Color white alpha: 0.4).
 
 	anActualCircle := BlElement new.
 	anActualCircle geometry: BlEllipse new.
 	anActualCircle size: self radius * 2 asPoint.
 	anActualCircle relocate: self margin asPoint.
+	anActualCircle background: (Color white alpha: 0.8).
 	anActualCircle border: (BlBorder paint: Color black width: aBorderWidth).
 	anActualCircle when: BlClickEvent do: [ :anEvent |
 		anEvent consumed: true.
