@@ -14,33 +14,38 @@ Class {
 { #category : #'api - instantiation' }
 GtTreeMap >> create [
 	<return: #BlElement>
-	^ self 
-		createFor: roots 
-		withChildren: (traversalBlock value: roots)
+	^ roots size = 1 
+		ifTrue: [ self createFor: roots anyOne ]
+		ifFalse: [
+			| element|
+			element := self createContainerFor: roots.
+			self 
+				setup: element 
+				withChildren: roots 
+				andLeaves: {}.
+			element ]
 ]
 
 { #category : #'api - instantiation' }
-GtTreeMap >> createFor: anObject withChildren: children [
-	| element leaves |
+GtTreeMap >> createContainerFor: anObject [
+	| element |
 	element := BlElement new
 		geometry: BlEllipse new;
-		when: BlClickEvent do: [ :e | e target phlow spawnObject: anObject. e consumed: true ];
+		when: BlClickEvent
+			do: [ :e | 
+			e target phlow spawnObject: anObject.
+			e consumed: true ];
 		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
+	^ element
+]
+
+{ #category : #'api - instantiation' }
+GtTreeMap >> createFor: anObject [
+	| element leaves children |
+	element := self createContainerFor: anObject.
 	leaves := self createLeavesFor: anObject.
-	(children isEmpty and: [ leaves isEmpty ])
-		ifTrue: [ 
-			element size: 1 asPoint ]
-		ifFalse: [ 
-			element
-				constraintsDo: [ :c | 
-					c horizontal fitContent.
-					c vertical fitContent ];
-				layout: GtGraphCirclePackLayout new;
-				addChildren: leaves;
-				addChildren: (children collect: [ :aChild | 
-					self 
-						createFor: aChild 
-						withChildren: (traversalBlock value: aChild) ]) ].
+	children := traversalBlock value: anObject.
+	self setup: element withChildren: children andLeaves: leaves.
 	^ element
 ]
 
@@ -86,4 +91,17 @@ GtTreeMap >> levelLayout: aLayout [
 { #category : #accessing }
 GtTreeMap >> roots: aCollection [
 	roots := aCollection
+]
+
+{ #category : #'api - instantiation' }
+GtTreeMap >> setup: element withChildren: children andLeaves: leaves [
+	(children isEmpty and: [ leaves isEmpty ])
+		ifTrue: [ element size: 1 asPoint ]
+		ifFalse: [ element
+				constraintsDo: [ :c | 
+					c horizontal fitContent.
+					c vertical fitContent ];
+				layout: GtGraphCirclePackLayout new;
+				addChildren: leaves;
+				addChildren: (children collect: [ :aChild | self createFor: aChild ]) ]
 ]
