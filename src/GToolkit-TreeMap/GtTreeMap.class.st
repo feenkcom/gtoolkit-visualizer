@@ -35,15 +35,16 @@ GtTreeMap >> create [
 
 { #category : #implementation }
 GtTreeMap >> createContainerFor: anObject [
-	| element |
-	element := BlElement new
+	| containerElement |
+	containerElement := BlElement new
 		geometry: BlEllipse new;
 		when: BlClickEvent
 			do: [ :e | 
 			e target phlow spawnObject: anObject.
 			e consumed: true ];
 		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
-	^ element
+	containerEllipseBlock cull: containerElement cull: anObject.
+	^ containerElement
 ]
 
 { #category : #implementation }
@@ -66,7 +67,7 @@ GtTreeMap >> createLeavesFor: anObject [
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
 			background: (Color red darker alpha: 0.7);
 			border: (BlBorder paint: (Color gray alpha: 0.2)).
-		leafEllipseBlock value: leafElement.
+		leafEllipseBlock cull: leafElement cull: leaf.
 		leafElement ]
 ]
 
