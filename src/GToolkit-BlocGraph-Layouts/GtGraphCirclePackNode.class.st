@@ -1,5 +1,5 @@
 "
-I represent a circle node in a circle pack front-chain. I know an element which I describe, its center, radius and a distance from the origin.
+I represent a circle node in a circle pack front-chain. I know an element which I describe, and a circle object that encapsulates radius, margin and center of the node.
 Since I am a part of the front-chain which is a double linked list I also know the next node after me
 "
 Class {
@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'circle'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #'instance creation' }
