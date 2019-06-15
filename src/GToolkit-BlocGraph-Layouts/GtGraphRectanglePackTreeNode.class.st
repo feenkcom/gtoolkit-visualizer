@@ -33,9 +33,14 @@ GtGraphRectanglePackTreeNode >> asElement [
 
 	(self isLeaf not or: [ self rectangle isNil ])
 		ifTrue: [
-			(aContainer childNamed: #rectangle) background: Color transparent.
-			(aContainer childNamed: #margin) background: Color transparent ]
-		ifFalse: [ (aContainer childNamed: #rectangle) background: (Color gray alpha: 0.2). ].
+			(aContainer childNamed: #rectangle) background: (Color gray alpha: 0.1).
+			(aContainer childNamed: #rectangle) border: BlBorder empty.
+			(aContainer childNamed: #margin) background: Color transparent.
+			(aContainer childNamed: #margin) border: BlBorder empty ]
+		ifFalse: [
+			(aContainer childNamed: #rectangle) background: (Color white).
+			(aContainer childNamed: #margin) background: (Color white alpha: 0.6).
+			(aContainer childNamed: #margin) border: BlBorder empty ].
 
 	^ aContainer
 ]
