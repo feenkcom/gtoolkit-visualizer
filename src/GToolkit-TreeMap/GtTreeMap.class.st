@@ -6,12 +6,19 @@ Class {
 		'traversalBlock',
 		'leavesCreationBlock',
 		'leavesSizeBlock',
-		'roots'
+		'roots',
+		'leafEllipseBlock',
+		'containerEllipseBlock'
 	],
 	#category : #'GToolkit-TreeMap'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : #api }
+GtTreeMap >> containerEllipse: aBlock [
+	containerEllipseBlock := aBlock
+]
+
+{ #category : #implementation }
 GtTreeMap >> create [
 	<return: #BlElement>
 	^ roots size = 1 
@@ -26,7 +33,7 @@ GtTreeMap >> create [
 			element ]
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : #implementation }
 GtTreeMap >> createContainerFor: anObject [
 	| element |
 	element := BlElement new
@@ -39,7 +46,7 @@ GtTreeMap >> createContainerFor: anObject [
 	^ element
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : #implementation }
 GtTreeMap >> createFor: anObject [
 	| element leaves children |
 	element := self createContainerFor: anObject.
@@ -49,18 +56,21 @@ GtTreeMap >> createFor: anObject [
 	^ element
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : #implementation }
 GtTreeMap >> createLeavesFor: anObject [
 	^ (leavesCreationBlock value: anObject) collect: [ :leaf |
-		BlElement new
+		| leafElement |
+		leafElement := BlElement new
 			geometry: BlEllipse new;
 			size: ((leavesSizeBlock value: leaf) max: 1) asPoint;
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
 			background: (Color red darker alpha: 0.7);
-			border: (BlBorder paint: (Color gray alpha: 0.2))]
+			border: (BlBorder paint: (Color gray alpha: 0.2)).
+		leafEllipseBlock value: leafElement.
+		leafElement ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 GtTreeMap >> deep: aBlock [
 	traversalBlock := aBlock
 ]
@@ -71,29 +81,36 @@ GtTreeMap >> initialize [
 	levelLayout := GtGraphCirclePackLayout new.
 	leavesSizeBlock := [ :x | 10 ].
 	traversalBlock := [ :x | {  } ].
-	leavesCreationBlock := [ :x | {  } ]
+	leavesCreationBlock := [ :x | {  } ].
+	containerEllipseBlock := [ :ellipse | ellipse ].
+	leafEllipseBlock := [ :ellipse | ellipse ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
+GtTreeMap >> leafEllipse: aBlock [
+	leafEllipseBlock := aBlock
+]
+
+{ #category : #api }
 GtTreeMap >> leaves: aBlock [
 	leavesCreationBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 GtTreeMap >> leavesSize: aBlock [
 	leavesSizeBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 GtTreeMap >> levelLayout: aLayout [
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 GtTreeMap >> roots: aCollection [
 	roots := aCollection
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : #implementation }
 GtTreeMap >> setup: element withChildren: children andLeaves: leaves [
 	(children isEmpty and: [ leaves isEmpty ])
 		ifTrue: [ element size: 1 asPoint ]
