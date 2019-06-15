@@ -62,8 +62,15 @@ GtGraphCircleEnclosure class >> enclosure: aCircle and: anotherCircle [
 	r21 := r2 - r1.
 	
 	l := ((x21 * x21) + (y21 * y21)) sqrt.
-	x := (x1 + x2 + (x21 / l * r21)) / 2.0.
-	y := (y1 + y2 + (y21 / l * r21)) / 2.0.
+
+	x := (l closeTo: 0)
+		ifTrue: [ (x1 + x2) / 2.0 ]
+		ifFalse: [ (x1 + x2 + (x21 / l * r21)) / 2.0 ].
+		
+	y := (l closeTo: 0)
+		ifTrue: [ (y1 + y2) / 2.0 ]
+		ifFalse: [ (y1 + y2 + (y21 / l * r21)) / 2.0 ].
+
 	r := (l + r1 + r2) / 2.0.
 	
 	^ GtGraphCircle new
@@ -150,7 +157,7 @@ GtGraphCircleEnclosure class >> enclosureAll: theCircles [
 				ifTrue: [ anIndex := anIndex + 1 ]
 				ifFalse: [
 					self extendBasis: aBasis with: eachCircle.
-					anEnclosureCircle := aBasis enclosureCircle.
+					anEnclosureCircle := aBasis basisEnclosureCircle.
 					anIndex := 1 ] ].
 
 	^ anEnclosureCircle
@@ -210,18 +217,8 @@ GtGraphCircleEnclosure >> averageRadius [
 	^ (self circles collect: #outerRadius) average
 ]
 
-{ #category : #accessing }
-GtGraphCircleEnclosure >> circles [
-	^ circles
-]
-
-{ #category : #accessing }
-GtGraphCircleEnclosure >> circles: aCollectionOfCircles [
-	circles := aCollectionOfCircles
-]
-
-{ #category : #algebra }
-GtGraphCircleEnclosure >> enclosureCircle [
+{ #category : #'private - algebra' }
+GtGraphCircleEnclosure >> basisEnclosureCircle [
 	<return: #GtGraphCircle>
 	
 	circles size = 0
@@ -235,6 +232,23 @@ GtGraphCircleEnclosure >> enclosureCircle [
 		
 	circles size = 3
 		ifTrue: [ ^ self class enclosure: circles first and: circles second and: circles third ].
+	
+	^ self class enclosureAll: circles
+]
+
+{ #category : #accessing }
+GtGraphCircleEnclosure >> circles [
+	^ circles
+]
+
+{ #category : #accessing }
+GtGraphCircleEnclosure >> circles: aCollectionOfCircles [
+	circles := aCollectionOfCircles
+]
+
+{ #category : #algebra }
+GtGraphCircleEnclosure >> enclosureCircle [
+	<return: #GtGraphCircle>
 	
 	^ self class enclosureAll: circles
 ]
