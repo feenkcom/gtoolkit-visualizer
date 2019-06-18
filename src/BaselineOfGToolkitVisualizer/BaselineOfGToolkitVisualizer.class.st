@@ -43,9 +43,9 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick/src' ];
+				spec repository: 'github://feenkcom/Brick:v0.6.36/src' ];
 			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
+				spec repository: 'github://feenkcom/pharo-beacon:3c832d41126da27c009bd1b803b9bc6b7c948e4d/repository' ].
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
 				spec requires: #(#Brick ). ];
@@ -60,10 +60,10 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-Connector' with: [
 				spec requires: #(#Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
 			package: 'GToolkit-Diagrammer' with: [
-				spec requires: #(#Brick). ];
+				spec requires: #(#Brick ). ];
 			package: 'GToolkit-TreeMap' with: [
-				spec requires: #(#Brick). ];
+				spec requires: #(#Brick ). ];
 			package: 'GToolkit-Plotter' with: [
-				spec requires: #(#Brick). ]. ].
+				spec requires: #(#Brick ). ]. ].
 
 ]
