@@ -6,10 +6,10 @@ Class {
 		'nearestCircle',
 		'nextCircle'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #enumeration }
 GtGraphCirclePackFrontChain >> aroundLink: aLink detect: aBlock ifFound: aFoundBlock ifNone: anExceptionBlock [
 	self aroundLink: aLink do: [ :eachLink :eachIndex |
 		(aBlock value: eachLink)
@@ -17,7 +17,7 @@ GtGraphCirclePackFrontChain >> aroundLink: aLink detect: aBlock ifFound: aFoundB
 	^ anExceptionBlock value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #enumeration }
 GtGraphCirclePackFrontChain >> aroundLink: aLink do: block [
 	"Execute block for each of the links that I hold internally
 	taking one to the left of the link, one to the right of the link"
@@ -68,6 +68,14 @@ GtGraphCirclePackFrontChain >> aroundLink: aLink do: block [
 	
 	
 	] repeat
+]
+
+{ #category : #accessing }
+GtGraphCirclePackFrontChain >> enclosureCircle [
+	| theCircles |
+	
+	theCircles := Array streamContents: [ :aStream | (self linksDo: [ :eachLink | aStream nextPut: eachLink circle ]) ].
+	^ (GtGraphCircleEnclosure new circles: theCircles) enclosureCircle
 ]
 
 { #category : #'gt-inspector-extension' }

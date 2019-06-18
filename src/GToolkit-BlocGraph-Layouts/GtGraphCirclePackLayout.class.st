@@ -1,19 +1,15 @@
 Class {
 	#name : #GtGraphCirclePackLayout,
 	#superclass : #GtGraphLayout,
+	#instVars : [
+		'enclosureCircle'
+	],
 	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
 { #category : #measure }
 GtGraphCirclePackLayout >> boundingBox: anElement [
-	| theBounds aSideLength aDeltaX aDeltaY |
-	
-	theBounds := super boundingBox: anElement.
-	aSideLength := theBounds extent max * 1.1.
-	aDeltaX := (aSideLength - theBounds width) / 2.0.
-	aDeltaY := (aSideLength - theBounds height) / 2.0.
-	
-	^ theBounds expandBy: aDeltaX @ aDeltaY
+	^ (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded
 ]
 
 { #category : #hook }
@@ -24,7 +20,8 @@ GtGraphCirclePackLayout >> doExecute: theElements [
 	sortedElements := self sorted: theElements.
 	aChain := self pickChain: sortedElements.
 
-	4 to: sortedElements size do: [ :eachIndex | self fit: (sortedElements at: eachIndex) in: aChain ]
+	4 to: sortedElements size do: [ :eachIndex | self fit: (sortedElements at: eachIndex) in: aChain ].
+	enclosureCircle := aChain enclosureCircle
 ]
 
 { #category : #hook }
@@ -54,6 +51,13 @@ GtGraphCirclePackLayout >> fit: anElement in: aFrontChain [
 	aFrontChain nextCircle: aNewCircle
 ]
 
+{ #category : #initialization }
+GtGraphCirclePackLayout >> initialize [
+	super initialize.
+	
+	enclosureCircle := GtGraphCircle new
+]
+
 { #category : #hook }
 GtGraphCirclePackLayout >> pickChain: theElements [
 	| aChain |
@@ -64,7 +68,12 @@ GtGraphCirclePackLayout >> pickChain: theElements [
 		
 	theElements size = 1
 		ifTrue: [
-			aChain add: ((GtGraphCirclePackNode for: theElements first) center: 0@0).
+			| aCircle |
+			
+			aCircle := GtGraphCirclePackNode for: theElements first.
+			aCircle center: (GtGraphCircleNeighbourhood computeNeighbourCenter: aCircle circle).
+			
+			aChain add: aCircle.
 			aChain nearestCircle: aChain firstLink ].
 
 	theElements size >= 2
@@ -74,8 +83,8 @@ GtGraphCirclePackLayout >> pickChain: theElements [
 			aFirstCircle := GtGraphCirclePackNode for: theElements first.
 			aSecondCircle := GtGraphCirclePackNode for: theElements second.
 			
-			aFirstCircle center: (aFirstCircle radius negated) @ 0.
-			aSecondCircle center: (aSecondCircle radius) @ 0.
+			aFirstCircle center: (GtGraphCircleNeighbourhood computeNeighbourCenter: aFirstCircle circle).
+			aSecondCircle center: (GtGraphCircleNeighbourhood computeNeighbourCenter: aFirstCircle circle near: aSecondCircle circle).
 			
 			aChain add: aFirstCircle.
 			aChain add: aSecondCircle.

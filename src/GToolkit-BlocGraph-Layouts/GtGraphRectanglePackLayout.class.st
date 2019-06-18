@@ -6,42 +6,27 @@ Class {
 
 { #category : #hook }
 GtGraphRectanglePackLayout >> doExecute: theElements [
-	| sortedElements aRoot |
-	
-	sortedElements := self sorted: theElements.
-	aRoot := self pickRoot: sortedElements.
+	| sortedElements aTree |
 
-	sortedElements do: [ :eachElement | aRoot := self fit: eachElement in: aRoot ]
+	sortedElements := self sorted: theElements.
+	
+	aTree := GtGraphRectanglePackTree new.
+	sortedElements do: [ :eachElement | self fit: eachElement in: aTree ]
 ]
 
 { #category : #hook }
-GtGraphRectanglePackLayout >> fit: anElement in: aRoot [
-	| aTargetNode aNewRoot |
-
-	aNewRoot := aRoot.
+GtGraphRectanglePackLayout >> fit: anElement in: aTree [
+	| aRectangle |
 	
-	aNewRoot
-		detect: anElement measuredExtent
-		ifFound: [ :aTreeNode | aTargetNode := aTreeNode ]
-		ifNone: [
-			"gives a new root"
-			(aNewRoot := aNewRoot grow: anElement measuredExtent)
-				detect: anElement measuredExtent
-				ifFound: [ :aTreeNode | aTargetNode := aTreeNode ]
-				ifNone: [ self error: 'Can not grow' ] ].
+	aRectangle := (GtGraphRectangle origin: 0@0 extent: anElement measuredExtent) margin: anElement margin.
+	aTree add: aRectangle.
 
-	self
-		assert: [ aTargetNode isNotNil ]
-		description: [ 'Target node must not be nil' ].
-
-	anElement measuredBounds position: (aTargetNode split: anElement measuredExtent) origin.
-	
-	^ aNewRoot
+	anElement measuredBounds position: aRectangle origin
 ]
 
 { #category : #hook }
 GtGraphRectanglePackLayout >> pickRoot: theElements [
-	| width height |
+	| width height margin |
 
 	width := theElements
 		ifEmpty: [ 0 ];
@@ -50,12 +35,13 @@ GtGraphRectanglePackLayout >> pickRoot: theElements [
 	height := theElements
 		ifEmpty: [ 0 ];
 		ifNotEmpty: [ theElements first measuredHeight ].
+		
+	margin := theElements
+		ifEmpty: [ BlInsets empty ];
+		ifNotEmpty: [ theElements first margin ].
 
-	^ GtGraphRectanglePackTree new
-		x: 0;
-		y: 0;
-		width: width;
-		height: height
+	^ GtGraphRectanglePackTreeNode new
+		rectangle: ((GtGraphRectangle x: 0 y: 0 width: width height: height) margin: margin)
 ]
 
 { #category : #hook }
@@ -63,7 +49,7 @@ GtGraphRectanglePackLayout >> sorted: theElements [
 	| sortedElements |
 
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
-		(larger measuredWidth + larger measuredHeight) > (smaller measuredWidth + larger measuredHeight) ].
+		larger measuredBounds perimeter > smaller measuredBounds perimeter ].
 	sortedElements addAll: theElements.
 
 	^ sortedElements

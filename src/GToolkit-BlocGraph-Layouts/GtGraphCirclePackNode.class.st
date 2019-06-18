@@ -1,15 +1,14 @@
 "
-I represent a circle node in a circle pack front-chain. I know an element which I describe, its center, radius and a distance from the origin.
+I represent a circle node in a circle pack front-chain. I know an element which I describe, and a circle object that encapsulates radius, margin and center of the node.
 Since I am a part of the front-chain which is a double linked list I also know the next node after me
 "
 Class {
 	#name : #GtGraphCirclePackNode,
 	#superclass : #DoubleLink,
 	#instVars : [
-		'center',
-		'radius'
+		'circle'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #'instance creation' }
@@ -24,7 +23,7 @@ GtGraphCirclePackNode class >> new [
 
 { #category : #geometry }
 GtGraphCirclePackNode >> alignTo: aCircle and: anotherCircle [
-	self center: (aCircle findCenterOf: self relativeTo: anotherCircle)
+	self center: (GtGraphCircleNeighbourhood computeNeighbourCenter: circle near: aCircle circle and: anotherCircle circle)
 ]
 
 { #category : #converting }
@@ -39,41 +38,23 @@ GtGraphCirclePackNode >> asElement [
 
 { #category : #accessing }
 GtGraphCirclePackNode >> center [
-	^ center
+	^ circle center
 ]
 
 { #category : #accessing }
 GtGraphCirclePackNode >> center: aPoint [
-	center := aPoint.
-	self element measuredBounds position: center - self radius asPoint
+	circle center: aPoint.
+	self element measuredBounds position: self center - self radius asPoint
+]
+
+{ #category : #accessing }
+GtGraphCirclePackNode >> circle [
+	^ circle
 ]
 
 { #category : #accessing }
 GtGraphCirclePackNode >> element [
 	^ self value
-]
-
-{ #category : #geometry }
-GtGraphCirclePackNode >> findCenterOf: aCircleNode relativeTo: anotherCircleNode [
-	<return: #Point>
-	"I calculate the center of aCircleNode according to its radius and the tangency of aCircleNode to me and anotherCircleNode"	
-	| r1 r2 r c1 c2 v c1c2 d h c |
-	
-	r := aCircleNode radius.
-	r1 := self radius.
-	r2 := anotherCircleNode radius.
-	
-	c1 := self center.
-	c2 := anotherCircleNode center.
-	v := (c2 - c1).
-	c1c2 := ((v x * v x) + (v y * v y)) sqrt.
-
-	d := ((r + r1) squared - (r + r2) squared + c1c2 squared) / ( 2 * c1c2).
-	h := ((r + r1) squared - d squared) sqrt.
-	
-	c := c1 + (d / c1c2 * v) + (h / c1c2 * v leftRotated).
-	
-	^ c
 ]
 
 { #category : #'gt-inspector-extension' }
@@ -103,7 +84,10 @@ GtGraphCirclePackNode >> index [
 { #category : #initialization }
 GtGraphCirclePackNode >> initializeWith: anElement [
 	value := anElement.
-	radius := anElement measuredExtent max / 2.0
+
+	circle := GtGraphCircle new.
+	circle radius: anElement measuredExtent max / 2.0.
+	circle margin: anElement margin max
 ]
 
 { #category : #geometry }
@@ -118,5 +102,7 @@ GtGraphCirclePackNode >> intersects: anotherCircle [
 
 { #category : #accessing }
 GtGraphCirclePackNode >> radius [
-	^ radius
+	<return: #Number>
+
+	^ circle radius
 ]
