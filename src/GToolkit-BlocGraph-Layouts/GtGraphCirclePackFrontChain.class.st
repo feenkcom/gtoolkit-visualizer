@@ -98,19 +98,20 @@ GtGraphCirclePackFrontChain >> gtPreviewFor: aView [
 					geometry: BlCircle new;
 					size: eachCircle radius * 2 asPoint;
 					relocate: eachCircle center - eachCircle radius asPoint;
-					border: (BlBorder paint: Color black width: 1);
-					addChild: (BlTextElement new text: eachIndex asRopedText; padding: (BlInsets all: 10)) ].
+					border: (BlBorder paint: (Color black alpha: 0.5) width: 2);
+					addChild: (BlTextElement new text: eachIndex asRopedText glamorousRegularFont; padding: (BlInsets all: 10)) ].
 				
 			theEdges := Array streamContents: [ :aStream | theCircleElements overlappingPairsDo: [ :from :to | 
-				aStream nextPut: (BlLineElement new
+				aStream nextPut: (BlParabollaArcElement new
+						curvatureFraction: 0.3;
 					constraintsDo: [ :c | c ignoreByLayout ];
 					fromAnchor: (BlElementCenterAnchor element: from);
 					toAnchor: (BlElementCenterAnchor element: to);
-					border: (BlBorder paint: (Color red alpha: 0.5) width: 1);
+					border: (BlBorder paint: (Color red alpha: 0.5) width: 3);
 					toHead: (BlArrowheadSimpleArrow new
 						arrowLengthFraction: 6;
 						arrowNoseAngle: 60;
-						border: (BlBorder paint: (Color red alpha: 0.5) width: 1);
+						border: (BlBorder paint: (Color red alpha: 0.5) width: 3);
 						background: (Color red alpha: 0.5))) ] ].
 			
 			aContainer := BlElement new.

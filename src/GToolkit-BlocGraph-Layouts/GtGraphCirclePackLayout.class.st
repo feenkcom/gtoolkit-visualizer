@@ -27,26 +27,29 @@ GtGraphCirclePackLayout >> doExecute: theElements [
 { #category : #hook }
 GtGraphCirclePackLayout >> fit: anElement in: aFrontChain [
 	| aNewCircle |
-
 	aNewCircle := GtGraphCirclePackNode for: anElement.
-	
-	aNewCircle alignTo: aFrontChain nearestCircle and: aFrontChain nextCircle.
-
+	aNewCircle 
+		alignTo: aFrontChain nearestCircle 
+		and: aFrontChain nextCircle.
 	aFrontChain
 		aroundLink: aFrontChain nextCircle
 		detect: [ :eachCircle | aNewCircle intersects: eachCircle ]
 		ifFound: [ :aCircle :anIndex |
 			anIndex > 0
 				ifTrue: [
-					aFrontChain removeFrom: aFrontChain nearestCircle to: aCircle.
+					aFrontChain 
+						removeFrom: aFrontChain nearestCircle
+						to: aCircle.
 					aFrontChain nextCircle: aCircle ]
 				ifFalse: [
-					aFrontChain removeFrom: aCircle to: aFrontChain nextCircle.
+					aFrontChain 
+						removeFrom: aCircle 
+						to: aFrontChain nextCircle.
 					aFrontChain nearestCircle: aCircle ].
-			
-			aNewCircle alignTo: aFrontChain nearestCircle and: aFrontChain nextCircle. ]
+			aNewCircle 
+				alignTo: aFrontChain nearestCircle 
+				and: aFrontChain nextCircle. ]
 		ifNone: [  ].
-
 	aFrontChain add: aNewCircle afterLink: aFrontChain nearestCircle.
 	aFrontChain nextCircle: aNewCircle
 ]
