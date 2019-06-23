@@ -1,17 +1,17 @@
 Class {
-	#name : #GtGraphCircleNeighbourhoodExample,
+	#name : #GtGraphCircleNeighbourhoodExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #'as yet unclassified' }
-GtGraphCircleNeighbourhoodExample >> emptyNeighborhood [
+GtGraphCircleNeighbourhoodExamples >> emptyNeighborhood [
 	<gtExample>
 	^ GtGraphCircleNeighbourhood new
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphCircleNeighbourhoodExample >> emptyNeighborhoodWithThreeCircles [
+GtGraphCircleNeighbourhoodExamples >> emptyNeighborhoodWithThreeCircles [
 	<gtExample>
 	| n |
 	n := GtGraphCircleNeighbourhood new.
@@ -28,7 +28,7 @@ GtGraphCircleNeighbourhoodExample >> emptyNeighborhoodWithThreeCircles [
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphCircleNeighbourhoodExample >> emptyNeighborhoodWithThreeCirclesAndSpace [
+GtGraphCircleNeighbourhoodExamples >> emptyNeighborhoodWithThreeCirclesAndSpace [
 	<gtExample>
 	| n |
 	n := GtGraphCircleNeighbourhood new.
