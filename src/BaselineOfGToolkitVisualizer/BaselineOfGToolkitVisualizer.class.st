@@ -43,9 +43,9 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.6.37/src' ];
+				spec repository: 'github://feenkcom/Brick:v0.6.38/src' ];
 			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon:2c533c8496def07e25e3d190c66785db7c324306/repository' ].
+				spec repository: 'github://feenkcom/pharo-beacon:3362a358ff6370b559e00566c84949ea7e3a1fde/repository' ].
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
 				spec requires: #(#Brick ). ];
