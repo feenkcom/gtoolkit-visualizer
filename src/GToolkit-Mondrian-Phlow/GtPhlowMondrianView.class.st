@@ -39,22 +39,22 @@ GtPhlowMondrianView >> initialize [
 	transformation := [ :x | "by default there is no transformation" x ].
 	self actionStencil: [ 
 		BrButton new 
-			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			look: BrGlamorousButtonWithIconLook;
 			icon: BrGlamorousIcons zoomin asElement ;
 			action: [ mondrianElement zoomIn ] ].
 	self actionStencil: [ 
 		BrButton new 
-			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			look: BrGlamorousButtonWithIconLook;
 			icon: BrGlamorousIcons zoomout asElement ;
 			action: [ mondrianElement zoomOut ] ].
 	self actionStencil: [ 
 		BrButton new 
-			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			look: BrGlamorousButtonWithIconLook;
 			icon: BrGlamorousIcons zoomtofit asElement ;
 			action: [ mondrianElement zoomToFit ] ].
 	self actionStencil: [ 
 		BrButton new
-			look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
+			look: BrGlamorousButtonWithIconLook;
 			icon: BrGlamorousIcons actualsize asElement;
 			action: [ mondrianElement zoomToActualSize ] ]
 	
