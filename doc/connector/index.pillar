@@ -1,1 +1,0 @@
-!ConnectorConnector aims to be an engine that represents objects as Bloc elements and highlights the inter-connections.Currently, it works only with ==GtExample== objjects. For example:[[[example=GtConnectorExamples>>#oneExampleMethod|height=400|expanded=true|noCode=true|show=gtLiveIn:]]]
