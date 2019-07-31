@@ -43,7 +43,7 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.7.17/src' ];
+				spec repository: 'github://feenkcom/Brick:v0.7.18/src' ];
 			baseline: 'Beacon' with: [
 				spec repository: 'github://feenkcom/pharo-beacon:e5853b9863a13169a6a5befae1946247f1dd1c55/repository' ].
 		spec 
