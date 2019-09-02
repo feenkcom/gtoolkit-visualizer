@@ -2,7 +2,6 @@ Class {
 	#name : #GtNestedTreeMap,
 	#superclass : #BrStencil,
 	#instVars : [
-		'levelLayout',
 		'traversalBlock',
 		'leavesCreationBlock',
 		'leavesSizeBlock',
@@ -79,7 +78,6 @@ GtNestedTreeMap >> deep: aBlock [
 { #category : #initialization }
 GtNestedTreeMap >> initialize [
 	super initialize.
-	levelLayout := GtGraphCirclePackLayout new.
 	leavesSizeBlock := [ :x | 10 ].
 	traversalBlock := [ :x | {  } ].
 	leavesCreationBlock := [ :x | {  } ].
@@ -100,10 +98,6 @@ GtNestedTreeMap >> leaves: aBlock [
 { #category : #api }
 GtNestedTreeMap >> leavesSize: aBlock [
 	leavesSizeBlock := aBlock
-]
-
-{ #category : #api }
-GtNestedTreeMap >> levelLayout: aLayout [
 ]
 
 { #category : #api }
