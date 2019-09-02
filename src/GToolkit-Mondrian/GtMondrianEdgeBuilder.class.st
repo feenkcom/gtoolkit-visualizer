@@ -66,7 +66,7 @@ GtMondrianEdgeBuilder >> connect: aCollection fromAll: aBlockOrSymbol [
 { #category : #scripting }
 GtMondrianEdgeBuilder >> connect: aCollection fromAll: aFromAllBlock to: aToBlock [
 	^ aCollection flatCollect: [ :each |
-		self connect: (aFromAllBlock value: each) from: [ :x | x ] to: [ :x | each ] ]
+		self connect: (aFromAllBlock value: each) from: [ :x | x ] to: [ :x | aToBlock value: each ] ]
 ]
 
 { #category : #scripting }
