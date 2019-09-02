@@ -32,27 +32,25 @@ GtMondrianEdgeBuilder >> connect: aCollection from: aBlockOrSymbol [
 { #category : #scripting }
 GtMondrianEdgeBuilder >> connect: aCollection from: aFromBlock to: aToBlock [
 	| elements |
-	elements := OrderedCollection new.
-	aCollection do: [ :each | 
-		| fromObject toObject fromElement toElement line |
-		fromObject := aFromBlock value: each.
-		toObject := aToBlock value: each.
-		fromElement := mondrian nodeAt: fromObject ifAbsent: [nil].
-		toElement := mondrian nodeAt: toObject ifAbsent: [nil].
-		(toElement notNil and: [ fromElement notNil ])
-			ifTrue: [ line := self edgeElementFor: each from: fromElement to: toElement.
-				self areEdgesPassive
-					ifFalse: [ self edgeConstraintsFrom: fromElement to: toElement ].
-				elements add: line ]
-			ifFalse: [ (GtMondrianEdgeNotCreated new fromElement: fromElement; toElement: toElement; model: each; fromModel: fromObject; toModel: toObject) emit ] ].
+	elements := self
+		privateConnect: aCollection
+		from: aToBlock
+		to: aFromBlock.
 	self topStep root addChildren: elements.
 	^ elements
 ]
 
 { #category : #scripting }
 GtMondrianEdgeBuilder >> connect: aCollection from: aFromBlock toAll: aToAllBlock [
-	^ aCollection flatCollect: [ :each |
-		self connect: (aToAllBlock value: each) from: [ :x | aFromBlock value: each ] to: [ :x | x ] ]
+"	^ aCollection flatCollect: [ :each |
+		self connect: (aToAllBlock value: each) from: [ :x | aFromBlock value: each ] to: [ :x | x ] ]"
+"connect: aCollection fromAll: aFromAllBlock to: aToBlock"
+	| elements |
+	elements := aCollection flatCollect: [ :each |
+		(aToAllBlock value: each) flatCollect: [ :to |
+			self connect: {each} from: [ :x | aFromBlock value: each ] to: [ :x | to ] ] ].
+	"self topStep root addChildren: elements."
+	^ elements
 ]
 
 { #category : #scripting }
@@ -65,8 +63,12 @@ GtMondrianEdgeBuilder >> connect: aCollection fromAll: aBlockOrSymbol [
 
 { #category : #scripting }
 GtMondrianEdgeBuilder >> connect: aCollection fromAll: aFromAllBlock to: aToBlock [
-	^ aCollection flatCollect: [ :each |
-		self connect: (aFromAllBlock value: each) from: [ :x | x ] to: [ :x | aToBlock value: each ] ]
+	| elements |
+	elements := aCollection flatCollect: [ :each |
+		(aFromAllBlock value: each) flatCollect: [ :from |
+			self connect: {each} from: [ :x | from ] to: [ :x | aToBlock value: each ] ] ].
+	"self topStep root addChildren: elements."
+	^ elements
 ]
 
 { #category : #scripting }
@@ -235,6 +237,31 @@ GtMondrianEdgeBuilder >> passive [
 	For example, this is useful if you have a tree as base layout,
 	but want to add extra edges on top that should not affect the base layout."
 	self areEdgesPassive: true
+]
+
+{ #category : #scripting }
+GtMondrianEdgeBuilder >> privateConnect: aCollection from: aToBlock to: aFromBlock [
+	| elements |
+	elements := OrderedCollection new.
+	aCollection
+		do: [ :each | 
+			| fromObject toObject fromElement toElement line |
+			fromObject := aFromBlock value: each.
+			toObject := aToBlock value: each.
+			fromElement := mondrian nodeAt: fromObject ifAbsent: [ nil ].
+			toElement := mondrian nodeAt: toObject ifAbsent: [ nil ].
+			(toElement notNil and: [ fromElement notNil ])
+				ifTrue: [ line := self edgeElementFor: each from: fromElement to: toElement.
+					self areEdgesPassive
+						ifFalse: [ self edgeConstraintsFrom: fromElement to: toElement ].
+					elements add: line ]
+				ifFalse: [ (GtMondrianEdgeNotCreated new
+						fromElement: fromElement;
+						toElement: toElement;
+						model: each;
+						fromModel: fromObject;
+						toModel: toObject) emit ] ].
+	^ elements
 ]
 
 { #category : #'scripting anchors' }
