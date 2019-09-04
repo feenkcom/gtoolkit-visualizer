@@ -9,7 +9,14 @@ Class {
 
 { #category : #measure }
 GtGraphCirclePackLayout >> boundingBox: anElement [
-	^ (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded
+	| anActualBoundingBox anActualSquaredBoundingBox aCircleBoundingBox |
+	
+	anActualBoundingBox := super boundingBox: anElement.
+	anActualSquaredBoundingBox := anActualBoundingBox expandBy: (anActualBoundingBox extent max - anActualBoundingBox extent) / 2.0.
+
+	aCircleBoundingBox := (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded.
+
+	^ anActualSquaredBoundingBox expandBy: aCircleBoundingBox extent - anActualSquaredBoundingBox extent
 ]
 
 { #category : #hook }
