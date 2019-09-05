@@ -80,7 +80,7 @@ GtConnectorExamples >> exampleMethodsExample [
 			c padding: (BlInsets all: 10) ].
 		editorElement
 			background: Color white;
-			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
+			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
 		vocalVisualTarget := VocalBlElement new.
 		vocalVisualTarget size: 400@200.
 
@@ -179,7 +179,7 @@ GtConnectorExamples >> rawObjectExample [
 		uml connector model: entity.
 		uml constraintsDo: [:c | c padding: (BlInsets top: 1 bottom: 1).].
 		uml background: Color white;
-			effect: (BlDropShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
+			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
 		uml connector beVisualTarget.
 		uml connector model: entity.
 
