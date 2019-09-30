@@ -17,10 +17,7 @@ GtExplainerExamples >> example [
 	subject := (42 gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
 	target := subject phlow firstChildWithView.
-	marker := BlElement new
-		size: 30 @ 30;
-		geometry: BlEllipse new;
-		background: (BrGlamorousColors primaryBorderColor alpha: 0.7);
+	marker := self marker
 		constraintsDo: [ :c | c ignoreByLayout ];
 		relocate: (container globalPointToLocal: (target localPointToGlobal: 10 @ 10)).
 	marker explainer
@@ -38,7 +35,9 @@ GtExplainerExamples >> example [
 							(BlNearestPositionTightCircleAnchor
 								referenceElement: marker
 								relatedTo: explanationElement);
-						toAnchor: (BlElementCenterAnchor element: explanationElement);
+						toAnchor: (BlNearestPositionTightCircleAnchor
+								referenceElement: explanationElement
+								relatedTo: marker);
 						zIndex: 10;
 						border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
 						constraintsDo: [ :c | c ignoreByLayout ];
@@ -67,25 +66,46 @@ GtExplainerExamples >> explanationText [
 	<gtExample>
 	| text |
 	text := 
-		'This is the ' asRopedText, 
-		('header' asRopedText attributes: {
-			BlTextUnderlineAttribute new paint: (BrGlamorousColors primaryBorderColor alpha: 0.7).
-			GtButtonAttribute new
-				beAppend;
-				stencil: [ 
-					| button |
-					button := BrButton new
-						background: (BrGlamorousColors primaryBorderColor alpha: 0.7);
-						geometry: BlEllipse new;
-						size: 10 @ 10.
-					button explainer isExplanation: true; model: #inspectorView.
-					button
-						when: BlMouseEnterEvent do:
-								[ :anEvent |  ];
-						when: BlMouseLeaveEvent
-							do: [ :anEvent |  ] ]}),
-		' of the inspector.' asRopedText.
+		'An inspector pane is made of several parts. The ' asRopedText, 
+		('header' asRopedText replacingAdornment: [ :aText :anEditorElement | 
+			| aContainer aTextPieceElement |
+			aContainer := BlElement new
+				clipChildren: false;
+				layout: BlLinearLayout vertical;
+				look: (BrInteractiveCommonLook new 
+					default: [ :aWidget | aWidget background: Color veryLightGray ];
+					hovered: [ :aWidget | aWidget background: BrGlamorousColors primaryBorderColor ] );
+				constraintsDo: [ :c |
+					c horizontal fitContent.
+					c vertical fitContent ].
+			aContainer explainer isExplanation: true; model: #inspectorView.
+			aTextPieceElement := (BrTextWordPieceStencilBuilder new
+				text: aText
+				start: (aText start - 1 max: 0)
+				end: (aText start - 1 max: 0) + aText size) asElement.
+			aContainer addEventHandler: (BlEventDelegator delegate: BrTextEditorRequest to: aTextPieceElement).
+			aContainer addChildren: { aTextPieceElement } ]),
+		' of the inspector shows the string representation of the inspected object.' asRopedText.
 	^ text 
 		glamorousRegularFont;
-		foreground: Color gray
+		foreground: Color black
+]
+
+{ #category : #example }
+GtExplainerExamples >> marker [
+	<gtExample>
+	| circle expand collapse pulsation |
+	circle := BlElement new
+    size: 30@30;
+    geometry: BlCircle new;
+    border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 4).
+    
+	expand := (BlTransformAnimation scale: 1.5) absolute.
+	collapse := (BlTransformAnimation scale: 1) absolute.
+
+	pulsation := BlSequentialAnimation with: { expand . collapse }.
+	pulsation beInfinite.
+
+	circle addAnimation: pulsation.
+	^ circle
 ]
