@@ -28,18 +28,10 @@ BlElement >> connectorSource [
 ]
 
 { #category : #'*GToolkit-Connector' }
-BlElement >> connectorSource: anObject [
-	self userData at: #connectorSource put: anObject
-]
-
-{ #category : #'*GToolkit-Connector' }
-BlElement >> connectorTarget [
-	^ self userData at: #connectorTarget
-]
-
-{ #category : #'*GToolkit-Connector' }
-BlElement >> connectorTarget: anObject [
-	self userData at: #connectorTarget put: anObject
+BlElement >> explainer [
+	^ self userData
+		at: #explainer 
+		ifAbsentPut: [ GtExplainerElementContext on: self ]
 ]
 
 { #category : #'*GToolkit-Connector' }

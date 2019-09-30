@@ -12,7 +12,7 @@ Object >> gtConnectionsFor: aView [
 			gtconnector stencil: [ :entity |
 				| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement aBottomResizer aRightResizer|
 				
-				uml := VocalBlElement new.
+				uml := BlVocalElement new.
 				uml size: 300@300.
 				uml layout: BlLinearLayout new beVertical.
 				uml connector beLayoutSource.
@@ -26,7 +26,7 @@ Object >> gtConnectionsFor: aView [
 				
 				tabGroup := (entity gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
 
-				header := VocalBlElement new.
+				header := BlVocalElement new.
 				header look: (BrLayoutLook linearVertical hMatchParent).
 				text := BlRopedText string: entity printString.
 				textElement := BlTextElement new text: text asRopedText.

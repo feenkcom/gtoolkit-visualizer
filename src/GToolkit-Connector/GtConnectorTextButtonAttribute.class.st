@@ -74,7 +74,7 @@ GtConnectorTextButtonAttribute >> link [
 GtConnectorTextButtonAttribute >> newButton [
 	<return: #BlElement>
 	| aButton |
-	aButton := VocalBlElement new
+	aButton := BlVocalElement new
 		size: 6 @ 6;
 		margin:
 			(BlInsets
