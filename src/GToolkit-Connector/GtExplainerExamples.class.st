@@ -7,7 +7,14 @@ Class {
 { #category : #example }
 GtExplainerExamples >> example [
 	<gtExample>
-	| container subject inspectorHeader editor inspectorView |
+	| container inspectorContainer subject inspectorHeader editor inspectorView |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		look: BrShadowLook.
 	container := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -18,7 +25,8 @@ GtExplainerExamples >> example [
 	subject forceLayout.
 	inspectorHeader := subject phlow firstChildWithView.
 	inspectorView := inspectorHeader viewContentElement phlow firstChildWithView.
-	container addChild: subject.
+	inspectorContainer addChild: subject.
+	container addChild: inspectorContainer.
 	container addChild: (BrButton new
 		constraintsDo: [ :c | c ignoreByLayout ];
 		size: 30@30;
@@ -30,7 +38,7 @@ GtExplainerExamples >> example [
 		size: 30@30;
 		geometry: BlCircle new;
 		look: (GtExplainerTargetLook new explanationModel: #view);
-		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 10 @ 10))).
+		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 30 @ 10))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self explanationText;
