@@ -41,14 +41,14 @@ GtExplainerExplanationAttribute >> affect: aText in: anEditorElement [
 							yourself.
 						aWidget 
 							firstCommonParent: explanationTargetElement
-							ifFound: [ :aCommonParent | 
-
-								aCommonParent addChild: line ]
+							ifFound: [ :aCommonParent | aCommonParent addChild: line ]
 							ifNone: [  ] ]  ] );
 		constraintsDo: [ :c |
 			c horizontal fitContent.
 			c vertical fitContent ].
-	aContainer explainer isExplanation: true; model: self explanationModel.
+	aContainer explainer
+		isExplanation: true;
+		model: self explanationModel.
 	aTextPieceElement := (BrTextWordPieceStencilBuilder new
 		text: aText
 		start: (aText start - 1 max: 0)
