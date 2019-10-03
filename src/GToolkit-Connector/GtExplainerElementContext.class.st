@@ -30,7 +30,7 @@ GtExplainerElementContext >> element: anObject [
 GtExplainerElementContext >> firstExplanationChildWithModel: aModel do: aBlock [
 	^ self element 
 		allChildrenBreadthFirstDetect: [ :child | child explainer isExplanation and: [ child explainer model = aModel ] ] 
-		ifFound: [ :child | aBlock value: child ]
+		ifFound: aBlock
 ]
 
 { #category : #accessing }
@@ -43,10 +43,10 @@ GtExplainerElementContext >> firstExplanationHolderParent [
 ]
 
 { #category : #accessing }
-GtExplainerElementContext >> firstTargetChildWithModel: aModel [
+GtExplainerElementContext >> firstTargetChildWithModel: aModel do: aBlock [
 	^ self element 
 		allChildrenBreadthFirstDetect: [ :child | child explainer isTarget and: [ child explainer model = aModel ] ] 
-		ifFound: [ :child | child ]
+		ifFound: aBlock
 ]
 
 { #category : #accessing }

@@ -24,29 +24,32 @@ GtExplainerExamples >> example [
 		isTarget: true;
 		model: #inspectorView.
 	marker
-		when: BlMouseEnterEvent
-			do: [ :e | 
-			self inform: 'enter'.
-			marker explainer firstExplanationHolderParent explainer
-				firstExplanationChildWithModel: marker explainer model
-				do: [ :explanationElement | 
-					line := BlLineElement new
-						fromAnchor:
-							(BlNearestPositionTightCircleAnchor
-								referenceElement: marker
-								relatedTo: explanationElement);
-						toAnchor: (BlNearestPositionTightCircleAnchor
-								referenceElement: explanationElement
-								relatedTo: marker);
-						zIndex: 10;
-						border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
-						constraintsDo: [ :c | c ignoreByLayout ];
-						yourself.
-					container addChild: line ] ];
-		when: BlMouseLeaveEvent
-			do: [ :e | 
-			self inform: 'leave'.
-			line ifNotNil: [ line removeFromParent ] ].
+		look: (BrInteractiveCommonLook new 
+			default: [ :aWidget | 
+				line ifNotNil: [ line removeFromParent ].
+				aWidget background: Color transparent ];
+			hovered: [ :aWidget | 
+				self inform: 'enter'.
+				aWidget background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
+				aWidget explainer firstExplanationHolderParent explainer
+					firstExplanationChildWithModel: aWidget explainer model
+					do: [ :explanationElement | 
+						line := BlLineElement new
+							fromAnchor: (BlNearestPositionTightCircleAnchor
+									referenceElement: aWidget
+									relatedTo: explanationElement);
+							toAnchor: (BlNearestPositionTightCircleAnchor
+									referenceElement: explanationElement
+									relatedTo: aWidget);
+							zIndex: 10;
+							border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
+							constraintsDo: [ :c | c ignoreByLayout ];
+							yourself.
+						aWidget 
+							firstCommonParent: explanationElement
+							ifFound: [ :aCommonParent | 
+								aCommonParent addChild: line ]
+							ifNone: [  ] ] ] ).
 	container addChild: subject.
 	container addChild: marker.
 	editor := BrEditor new
@@ -64,17 +67,47 @@ GtExplainerExamples >> example [
 { #category : #example }
 GtExplainerExamples >> explanationText [
 	<gtExample>
-	| text |
+	| text line |
 	text := 
 		'An inspector pane is made of several parts. The ' asRopedText, 
 		('header' asRopedText replacingAdornment: [ :aText :anEditorElement | 
 			| aContainer aTextPieceElement |
-			aContainer := BlElement new
+			aContainer := BrButton new
 				clipChildren: false;
 				layout: BlLinearLayout vertical;
+				geometry: (BlRectangle cornerRadius: 4);
+				padding: (BlInsets left: 4 right: 4);
+				margin: (BlInsets all: 0);
 				look: (BrInteractiveCommonLook new 
-					default: [ :aWidget | aWidget background: Color veryLightGray ];
-					hovered: [ :aWidget | aWidget background: BrGlamorousColors primaryBorderColor ] );
+					default: [ :aWidget | 
+						line ifNotNil: [ line removeFromParent ].
+						aWidget 
+							border: (BlBorder paint: BrGlamorousColors primaryBorderColor);
+							background: Color transparent ];
+					hovered: [ :aWidget | 
+						aWidget background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
+						aWidget explainer firstExplanationHolderParent explainer
+							firstTargetChildWithModel: aWidget explainer model
+							do: [ :explanationTargetElement | 
+								self inform: 'target found'.
+								line := BlLineElement new
+									fromAnchor:
+										(BlNearestPositionTightCircleAnchor
+											referenceElement: aWidget
+											relatedTo: explanationTargetElement);
+									toAnchor: (BlNearestPositionTightCircleAnchor
+											referenceElement: explanationTargetElement
+											relatedTo: aWidget);
+									zIndex: 10;
+									border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
+									constraintsDo: [ :c | c ignoreByLayout ];
+									yourself.
+								aWidget 
+									firstCommonParent: explanationTargetElement
+									ifFound: [ :aCommonParent | 
+
+										aCommonParent addChild: line ]
+									ifNone: [  ] ]  ] );
 				constraintsDo: [ :c |
 					c horizontal fitContent.
 					c vertical fitContent ].
@@ -95,17 +128,18 @@ GtExplainerExamples >> explanationText [
 GtExplainerExamples >> marker [
 	<gtExample>
 	| circle expand collapse pulsation |
-	circle := BlElement new
-    size: 30@30;
-    geometry: BlCircle new;
-    border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 4).
+	circle := BrButton new
+		size: 30@30;
+		geometry: BlCircle new;
+		border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 4);
+		background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
     
-	expand := (BlTransformAnimation scale: 1.5) absolute.
+"	expand := (BlTransformAnimation scale: 1.5) absolute.
 	collapse := (BlTransformAnimation scale: 1) absolute.
 
 	pulsation := BlSequentialAnimation with: { expand . collapse }.
 	pulsation beInfinite.
 
 	circle addAnimation: pulsation.
-	^ circle
+"	^ circle
 ]
