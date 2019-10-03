@@ -67,57 +67,10 @@ GtExplainerExamples >> example [
 { #category : #example }
 GtExplainerExamples >> explanationText [
 	<gtExample>
-	| text line |
+	| text |
 	text := 
 		'An inspector pane is made of several parts. The ' asRopedText, 
-		('header' asRopedText replacingAdornment: [ :aText :anEditorElement | 
-			| aContainer aTextPieceElement |
-			aContainer := BrButton new
-				clipChildren: false;
-				layout: BlLinearLayout vertical;
-				geometry: (BlRectangle cornerRadius: 4);
-				padding: (BlInsets left: 4 right: 4);
-				margin: (BlInsets all: 0);
-				look: (BrInteractiveCommonLook new 
-					default: [ :aWidget | 
-						line ifNotNil: [ line removeFromParent ].
-						aWidget 
-							border: (BlBorder paint: BrGlamorousColors primaryBorderColor);
-							background: Color transparent ];
-					hovered: [ :aWidget | 
-						aWidget background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
-						aWidget explainer firstExplanationHolderParent explainer
-							firstTargetChildWithModel: aWidget explainer model
-							do: [ :explanationTargetElement | 
-								self inform: 'target found'.
-								line := BlLineElement new
-									fromAnchor:
-										(BlNearestPositionTightCircleAnchor
-											referenceElement: aWidget
-											relatedTo: explanationTargetElement);
-									toAnchor: (BlNearestPositionTightCircleAnchor
-											referenceElement: explanationTargetElement
-											relatedTo: aWidget);
-									zIndex: 10;
-									border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
-									constraintsDo: [ :c | c ignoreByLayout ];
-									yourself.
-								aWidget 
-									firstCommonParent: explanationTargetElement
-									ifFound: [ :aCommonParent | 
-
-										aCommonParent addChild: line ]
-									ifNone: [  ] ]  ] );
-				constraintsDo: [ :c |
-					c horizontal fitContent.
-					c vertical fitContent ].
-			aContainer explainer isExplanation: true; model: #inspectorView.
-			aTextPieceElement := (BrTextWordPieceStencilBuilder new
-				text: aText
-				start: (aText start - 1 max: 0)
-				end: (aText start - 1 max: 0) + aText size) asElement.
-			aContainer addEventHandler: (BlEventDelegator delegate: BrTextEditorRequest to: aTextPieceElement).
-			aContainer addChildren: { aTextPieceElement } ]),
+		('header' asRopedText attribute: (GtExplainerExplanationAttribute new explanationModel: #inspectorView)),
 		' of the inspector shows the string representation of the inspected object.' asRopedText.
 	^ text 
 		glamorousRegularFont;
