@@ -7,7 +7,7 @@ Class {
 { #category : #example }
 GtExplainerExamples >> example [
 	<gtExample>
-	| container subject target marker editor line |
+	| container subject inspectorHeader editor inspectorView |
 	container := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -16,42 +16,21 @@ GtExplainerExamples >> example [
 	container explainer isExplanationHolder: true.
 	subject := (42 gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
-	target := subject phlow firstChildWithView.
-	marker := self marker
-		constraintsDo: [ :c | c ignoreByLayout ];
-		relocate: (container globalPointToLocal: (target localPointToGlobal: 10 @ 10)).
-	marker explainer
-		isTarget: true;
-		model: #inspectorView.
-	marker
-		look: (BrInteractiveCommonLook new 
-			default: [ :aWidget | 
-				line ifNotNil: [ line removeFromParent ].
-				aWidget background: Color transparent ];
-			hovered: [ :aWidget | 
-				self inform: 'enter'.
-				aWidget background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
-				aWidget explainer firstExplanationHolderParent explainer
-					firstExplanationChildWithModel: aWidget explainer model
-					do: [ :explanationElement | 
-						line := BlLineElement new
-							fromAnchor: (BlNearestPositionTightCircleAnchor
-									referenceElement: aWidget
-									relatedTo: explanationElement);
-							toAnchor: (BlNearestPositionTightCircleAnchor
-									referenceElement: explanationElement
-									relatedTo: aWidget);
-							zIndex: 10;
-							border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
-							constraintsDo: [ :c | c ignoreByLayout ];
-							yourself.
-						aWidget 
-							firstCommonParent: explanationElement
-							ifFound: [ :aCommonParent | 
-								aCommonParent addChild: line ]
-							ifNone: [  ] ] ] ).
+	inspectorHeader := subject phlow firstChildWithView.
+	inspectorView := inspectorHeader viewContentElement phlow firstChildWithView.
 	container addChild: subject.
-	container addChild: marker.
+	container addChild: (BrButton new
+		constraintsDo: [ :c | c ignoreByLayout ];
+		size: 30@30;
+		geometry: BlCircle new;
+		look: (GtExplainerTargetLook new explanationModel: #header);
+		relocate: (container globalPointToLocal: (inspectorHeader localPointToGlobal: 10 @ 10))).
+	container addChild: (BrButton new
+		constraintsDo: [ :c | c ignoreByLayout ];
+		size: 30@30;
+		geometry: BlCircle new;
+		look: (GtExplainerTargetLook new explanationModel: #view);
+		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 10 @ 10))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self explanationText;
@@ -69,30 +48,16 @@ GtExplainerExamples >> explanationText [
 	<gtExample>
 	| text |
 	text := 
-		'An inspector pane is made of several parts. The ' asRopedText, 
-		('header' asRopedText attribute: (GtExplainerExplanationAttribute new explanationModel: #inspectorView)),
-		' of the inspector shows the string representation of the inspected object.' asRopedText.
+		'An inspector pane is made of several parts.
+
+The ' asRopedText, 
+		('header' asRopedText glamorousExplanationFor: #header),
+		' shows the string representation of the inspected object.
+
+The inspector shows multiple ' asRopedText,
+		('views' asRopedText glamorousExplanationFor: #view),
+		' that are specific to the object' asRopedText.
 	^ text 
 		glamorousRegularFont;
 		foreground: Color black
-]
-
-{ #category : #example }
-GtExplainerExamples >> marker [
-	<gtExample>
-	| circle expand collapse pulsation |
-	circle := BrButton new
-		size: 30@30;
-		geometry: BlCircle new;
-		border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 4);
-		background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
-    
-"	expand := (BlTransformAnimation scale: 1.5) absolute.
-	collapse := (BlTransformAnimation scale: 1) absolute.
-
-	pulsation := BlSequentialAnimation with: { expand . collapse }.
-	pulsation beInfinite.
-
-	circle addAnimation: pulsation.
-"	^ circle
 ]
