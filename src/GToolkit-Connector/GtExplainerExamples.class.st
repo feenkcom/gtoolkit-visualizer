@@ -14,6 +14,7 @@ GtExplainerExamples >> example [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal;
 		background: Color white;
+		margin: (BlInsets all: 10);
 		look: BrShadowLook.
 	container := BlElement new
 		constraintsDo: [ :c | 
@@ -32,13 +33,13 @@ GtExplainerExamples >> example [
 		size: 30@30;
 		geometry: BlCircle new;
 		look: (GtExplainerTargetLook new explanationModel: #header);
-		relocate: (container globalPointToLocal: (inspectorHeader localPointToGlobal: 10 @ 10))).
+		relocate: (container globalPointToLocal: (inspectorHeader localPointToGlobal: 15 @ 15))).
 	container addChild: (BrButton new
 		constraintsDo: [ :c | c ignoreByLayout ];
 		size: 30@30;
 		geometry: BlCircle new;
 		look: (GtExplainerTargetLook new explanationModel: #view);
-		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 30 @ 10))).
+		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 30 @ 15))).
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self explanationText;
