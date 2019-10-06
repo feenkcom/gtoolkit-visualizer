@@ -31,7 +31,7 @@ GtExample >> buildBottomResizerFor: blankContainer [
 ]
 
 { #category : #'*GToolkit-Connector' }
-GtExample >> buildCloseButton: gtconnector. [ 
+GtExample >> buildCloseButton: gtconnector [. 
 	^ GtInspectorRoundButtonStencil new asElement
 		icon: (GtInspectorPlusIconStencil close asElement);
 		constraintsDo: [ :c |
