@@ -5,9 +5,28 @@ Class {
 }
 
 { #category : #example }
-GtExplainerExamples >> example [
+GtExplainerExamples >> inspectorExplanationText [
 	<gtExample>
-	| container inspectorContainer subject inspectorHeader editor inspectorView inspectorAction inspectorActionMarker |
+	| text |
+	text := 
+		'An inspector pane is made of several parts.
+
+The ' asRopedText, 
+		('header' asRopedText glamorousExplanationFor: #header),
+		' shows the string representation of the inspected object.
+
+The inspector shows multiple ' asRopedText,
+		('views' asRopedText glamorousExplanationFor: #view),
+		' that are specific to the object' asRopedText.
+	^ text 
+		glamorousRegularFont;
+		foreground: Color black
+]
+
+{ #category : #example }
+GtExplainerExamples >> inspectorOnOneObjectExample [
+	<gtExample>
+	| container inspectorContainer subject inspectorHeader editor inspectorView inspectorActionButton inspectorActionMarker |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -27,7 +46,7 @@ GtExplainerExamples >> example [
 	inspectorHeader := subject phlow firstChildWithView.
 	inspectorView := inspectorHeader viewContentElement phlow
 		firstChildWithView.
-	inspectorAction := subject phlow firstChildWithAction.
+	inspectorActionButton := subject phlow firstChildWithAction.
 	inspectorContainer addChild: subject.
 	inspectorContainer
 		addChild:
@@ -57,100 +76,11 @@ GtExplainerExamples >> example [
 		elevation: (BlRelativeElevation elevation: 10);
 		geometry: BlCircle new;
 		look: (GtExplainerTargetLook new explanationModel: #action);
-		relocate: (inspectorContainer globalPointToLocal: (inspectorAction localPointToGlobal: 0 @ 0)).
+		relocate: (inspectorContainer globalPointToLocal: (inspectorActionButton localPointToGlobal: 0 @ 0)).
 	inspectorContainer addChild: inspectorActionMarker.
-	inspectorAction
+	inspectorActionButton
 		addEventHandlerOn: BlElementPositionInSpaceChangedEvent
-			do: [ inspectorActionMarker relocate: (inspectorContainer globalPointToLocal: ((inspectorAction localPointToGlobal: (inspectorAction bounds center))) - ((inspectorActionMarker extent + inspectorActionMarker border width)  / 2)) ].
-	editor := BrEditor new
-		look: BrGlamorousRegularEditorLook;
-		text: self explanationText;
-		margin: (BlInsets all: 10);
-		constraintsDo: [ :c | 
-			c vertical matchParent.
-			c horizontal matchParent.
-			c linear weight: 0.3 ].
-	container addChild: editor.
-	container addChild: inspectorContainer.
-	^ container
-]
-
-{ #category : #example }
-GtExplainerExamples >> explanationText [
-	<gtExample>
-	| text |
-	text := 
-		'An inspector pane is made of several parts.
-
-The ' asRopedText, 
-		('header' asRopedText glamorousExplanationFor: #header),
-		' shows the string representation of the inspected object.
-
-The header also presents ' asRopedText, ('actions' asRopedText glamorousExplanationFor: #action), ' that are global to an object, such as inspect. 
-
-The inspector shows multiple ' asRopedText,
-		('views' asRopedText glamorousExplanationFor: #view),
-		' that are specific to the object' asRopedText.
-	^ text 
-		glamorousRegularFont;
-		foreground: Color black
-]
-
-{ #category : #example }
-GtExplainerExamples >> inspectorExplanationText [
-	<gtExample>
-	| text |
-	text := 
-		'An inspector pane is made of several parts.
-
-The ' asRopedText, 
-		('header' asRopedText glamorousExplanationFor: #header),
-		' shows the string representation of the inspected object.
-
-The inspector shows multiple ' asRopedText,
-		('views' asRopedText glamorousExplanationFor: #view),
-		' that are specific to the object' asRopedText.
-	^ text 
-		glamorousRegularFont;
-		foreground: Color black
-]
-
-{ #category : #example }
-GtExplainerExamples >> inspectorOnOneObjectExample [
-	<gtExample>
-	| container inspectorContainer subject inspectorHeader editor inspectorView |
-	inspectorContainer := BlElement new
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		layout: BlLinearLayout horizontal;
-		background: Color white;
-		margin: (BlInsets all: 10);
-		look: BrShadowLook.
-	container := BlElement new
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		layout: BlLinearLayout horizontal.
-	container explainer isExplanationHolder: true.
-	subject := (42 gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ].
-	subject forceLayout.
-	inspectorHeader := subject phlow firstChildWithView.
-	inspectorView := inspectorHeader viewContentElement phlow firstChildWithView.
-	inspectorContainer addChild: subject.
-	container addChild: inspectorContainer.
-	container addChild: (BrButton new
-		constraintsDo: [ :c | c ignoreByLayout ];
-		size: 30@30;
-		geometry: BlCircle new;
-		look: (GtExplainerTargetLook new explanationModel: #header);
-		relocate: (container globalPointToLocal: (inspectorHeader localPointToGlobal: 15 @ 15))).
-	container addChild: (BrButton new
-		constraintsDo: [ :c | c ignoreByLayout ];
-		size: 30@30;
-		geometry: BlCircle new;
-		look: (GtExplainerTargetLook new explanationModel: #view);
-		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 30 @ 15))).
+			do: [ inspectorActionMarker relocate: (inspectorContainer globalPointToLocal: ((inspectorActionButton localPointToGlobal: (inspectorActionButton bounds center))) - ((inspectorActionMarker extent + inspectorActionMarker border width)  / 2)) ].
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self inspectorExplanationText;
@@ -160,13 +90,29 @@ GtExplainerExamples >> inspectorOnOneObjectExample [
 			c horizontal matchParent.
 			c linear weight: 0.3 ].
 	container addChild: editor.
+	container addChild: inspectorContainer.
 	^ container
+]
+
+{ #category : #example }
+GtExplainerExamples >> playgroundExplanationText [
+	<gtExample>
+	| text |
+	text := 
+		'The playground is where you script.
+		
+It comes with snippets, and each snippet can be independently evaluated or ' asRopedText,
+		('inspected' asRopedText glamorousExplanationFor: #inspect),
+		' and the result is shown on an inspector to the right.' asRopedText.
+	^ text 
+		glamorousRegularFont;
+		foreground: Color black
 ]
 
 { #category : #example }
 GtExplainerExamples >> playgroundWithPreview [
 	<gtExample>
-	| container inspectorContainer subject inspectorHeader editor inspectorView playbook |
+	| container inspectorContainer subject editor playbook inspectAction inspectActionButton inspectActionMarker |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -183,32 +129,37 @@ GtExplainerExamples >> playgroundWithPreview [
 	container explainer isExplanationHolder: true.
 	playbook := GtPlayBook newDefault.
 	playbook pages first snippets first sourceCode: '41 + 1'.
-	subject := (GtInspector createOnPlayBook: playbook) asElementDo: [ :e | e ].
+	subject := (GtInspector createOnPlayBook: playbook).
 	subject forceLayout.
-	inspectorHeader := subject phlow firstChildWithView.
-	inspectorView := inspectorHeader viewContentElement phlow firstChildWithView.
 	inspectorContainer addChild: subject.
-	container addChild: inspectorContainer.
-	container addChild: (BrButton new
+	inspectAction := subject 
+		allChildrenBreadthFirstDetect: [:each | each isKindOf: GtCoderElement] 
+		ifFound: [ :coderElement | coderElement coder addOns mainActions detect: [:each | each title = 'Inspect'] ].
+	inspectActionButton := subject 
+		allChildrenBreadthFirstDetect: [:each | (each isKindOf: BrButton) and: [ each action = inspectAction ]] 
+		ifFound: [ :b | b ].
+	inspectActionMarker := BrButton new
 		constraintsDo: [ :c | c ignoreByLayout ];
-		size: 30@30;
+		size: 20 @ 20;
+		elevation: (BlRelativeElevation elevation: 10);
 		geometry: BlCircle new;
-		look: (GtExplainerTargetLook new explanationModel: #header);
-		relocate: (container globalPointToLocal: (inspectorHeader localPointToGlobal: 15 @ 15))).
-	container addChild: (BrButton new
-		constraintsDo: [ :c | c ignoreByLayout ];
-		size: 30@30;
-		geometry: BlCircle new;
-		look: (GtExplainerTargetLook new explanationModel: #view);
-		relocate: (container globalPointToLocal: (inspectorView localPointToGlobal: 30 @ 15))).
+		look: (GtExplainerTargetLook new explanationModel: #inspect);
+		relocate: (inspectorContainer globalPointToLocal: (inspectActionButton localPointToGlobal: 0 @ 0)).
+	inspectorContainer addChild: inspectActionMarker.
+	inspectActionButton
+		addEventHandlerOn: BlElementPositionInSpaceChangedEvent
+			do: [ inspectActionMarker relocate: (inspectorContainer globalPointToLocal: (inspectActionButton localPointToGlobal: ((inspectActionButton extent / 2) - ((inspectActionMarker extent + inspectActionMarker border width)  / 2))))
+			].
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
-		text: self inspectorExplanationText;
+		text: self playgroundExplanationText;
 		margin: (BlInsets all: 10);
 		constraintsDo: [ :c | 
 			c vertical matchParent.
 			c horizontal matchParent.
 			c linear weight: 0.3 ].
 	container addChild: editor.
+	container addChild: inspectorContainer.
+
 	^ container
 ]
