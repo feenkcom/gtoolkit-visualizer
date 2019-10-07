@@ -11,7 +11,7 @@ Class {
 		'toAnchorClass',
 		'areEdgesPassive'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #accessing }
@@ -68,6 +68,15 @@ GtMondrianEdgeBuilder >> connect: aCollection fromAll: aFromAllBlock to: aToBloc
 		(aFromAllBlock value: each) flatCollect: [ :from |
 			self connect: {each} from: [ :x | from ] to: [ :x | aToBlock value: each ] ] ].
 	"self topStep root addChildren: elements."
+	^ elements
+]
+
+{ #category : #scripting }
+GtMondrianEdgeBuilder >> connect: aCollection fromAll: aFromAllBlock toAll: aToAllBlock [
+	| elements |
+	elements := aCollection flatCollect: [ :each |
+		(aFromAllBlock value: each) flatCollect: [ :from |
+			self connect: {each} from: [ :x | from ] toAll: [ :x | aToAllBlock value: each ] ] ].
 	^ elements
 ]
 
