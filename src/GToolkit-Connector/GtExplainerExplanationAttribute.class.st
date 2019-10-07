@@ -20,7 +20,7 @@ GtExplainerExplanationAttribute >> affect: aText in: anEditorElement [
 			default: [ :aWidget | 
 				line ifNotNil: [ line removeFromParent ].
 				aWidget 
-					border: (BlBorder paint: BrGlamorousColors textHighlightColor);
+					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2);
 					background: Color transparent ];
 			hovered: [ :aWidget | 
 				aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
