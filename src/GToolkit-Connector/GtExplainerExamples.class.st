@@ -9,15 +9,17 @@ GtExplainerExamples >> inspectorExplanationText [
 	<gtExample>
 	| text |
 	text := 
-		'An inspector pane is made of several parts.
+		'An inspector is made of several parts.
 
 The ' asRopedText, 
 		('header' asRopedText glamorousExplanationFor: #header),
-		' shows the string representation of the inspected object.
+		' shows the string representation of the inspected object, and it offers ' asRopedText,
+		('actions' asRopedText glamorousExplanationFor: #action),
+		' that are specific to the object, such as inspecting the object again.
 
-The inspector shows multiple ' asRopedText,
+The inspector also shows multiple ' asRopedText,
 		('views' asRopedText glamorousExplanationFor: #view),
-		' that are specific to the object' asRopedText.
+		' that are specific to the object. Every object is allowed to specify such custom views.' asRopedText.
 	^ text 
 		glamorousRegularFont;
 		foreground: Color black
@@ -109,14 +111,16 @@ GtExplainerExamples >> oneTarget [
 			c horizontal matchParent.
 			c vertical matchParent ];
 		layout: BlFrameLayout new;
-		background: Color veryLightGray.
+		background: (Color white);
+		look: BrShadowLook;
+		margin: (BlInsets all: 10).
 	target := BlElement new 
 		constraintsDo: [ :c | 
 			c frame horizontal alignCenter.
 			c frame vertical alignCenter.
 			c horizontal exact: 140.
 			c vertical exact: 140 ];
-		background: Color orange.
+		background: Color gray.
 	marker := BrButton new
 		constraintsDo: [ :c | c ignoreByLayout ];
 		size: 20 @ 20;

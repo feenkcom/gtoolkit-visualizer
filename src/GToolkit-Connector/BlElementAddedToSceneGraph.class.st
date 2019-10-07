@@ -6,3 +6,13 @@ Class {
 	],
 	#category : #'GToolkit-Connector'
 }
+
+{ #category : #accessing }
+BlElementAddedToSceneGraph >> element [
+	^ element
+]
+
+{ #category : #accessing }
+BlElementAddedToSceneGraph >> element: anObject [
+	element := anObject
+]

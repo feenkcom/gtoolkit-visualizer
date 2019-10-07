@@ -24,10 +24,10 @@ GtExplainerTargetLook >> initialize [
 	self default: [ :aWidget | 
 			line ifNotNil: [ line removeFromParent ].
 			aWidget 
-				border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 4);
+				border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.7) width: 4);
 				background: Color transparent ];
 		hovered: [ :aWidget | 
-			aWidget background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
+			aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
 			aWidget explainer firstExplanationHolderParent explainer
 				firstExplanationChildWithModel: aWidget explainer model
 				do: [ :explanationElement | 
@@ -39,7 +39,7 @@ GtExplainerTargetLook >> initialize [
 								referenceElement: explanationElement
 								relatedTo: aWidget);
 						zIndex: 10;
-						border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
+						border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.7) width: 2);
 						constraintsDo: [ :c | c ignoreByLayout ];
 						yourself.
 					aWidget 
