@@ -35,6 +35,44 @@ BlElement >> explainer [
 ]
 
 { #category : #'*GToolkit-Connector' }
+BlElement >> gtExplainerTreeFor: aView [
+	<gtView>
+	self explainer isExplanationHolder ifFalse: [ ^ aView empty].
+	^ aView mondrian
+		title: 'Explainer';
+		painting: [ :m | 
+			m nodes 
+				stencil: [ :each | 
+					| el |
+					el := (each explainer isExplanation or: [ each explainer isTarget ])
+						ifTrue: [ BrLabel new look: BrGlamorousLabelLook; text: ((each explainer model asString) asRopedText foreground: Color white); geometry: (BlRectangle cornerRadius: 4); background: Color orange]
+						ifFalse: [ BlElement new geometry: BlEllipse new; border: (BlBorder paint: Color black); size: 10@10 ].
+					el when: BlClickEvent do: [:e | e target phlow spawnObject: each ] 
+				];
+				with: self withAllChildrenBreadthFirst.
+			m edges 
+				fromRightCenter;
+				toLeftCenter;
+				connectFrom: #parent.
+			m edges
+				passive;
+				fromRightCenter;
+				toRightCenter;
+				stencil: [ :e | 
+					BlParabollaArcElement new 
+						zIndex: 0;
+						curvatureFraction: 0.8;
+						border: (BlBorder paint: (Color orange alpha: 0.8) width: 2);
+						toHead: (BlArrowheadSimpleArrow new
+							border: (BlBorder builder paint: (Color orange alpha: 0.8); width: 2; build)) ];
+				connect: ((self withAllChildrenBreadthFirst select: [:each | each explainer model notNil]) groupedBy: [:each | each explainer model ]) values
+				fromAll: [:assoc | assoc select: [:el | el explainer isExplanation ] ]
+				toAll: [:assoc | assoc select: [:el | el explainer isTarget ] ].
+			m layout horizontalTree.
+			m ]
+]
+
+{ #category : #'*GToolkit-Connector' }
 BlElement >> isConnectedTo: anObject [
 	^ self connector 
 		isConnectedTo: anObject
