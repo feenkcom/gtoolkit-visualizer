@@ -9,15 +9,17 @@ GtExplainerExamples >> inspectorExplanationText [
 	<gtExample>
 	| text |
 	text := 
-		'An inspector pane is made of several parts.
+		'An inspector is made of several parts.
 
 The ' asRopedText, 
 		('header' asRopedText glamorousExplanationFor: #header),
-		' shows the string representation of the inspected object.
+		' shows the string representation of the inspected object, and it offers ' asRopedText,
+		('actions' asRopedText glamorousExplanationFor: #action),
+		' that are specific to the object, such as inspecting the object again.
 
-The inspector shows multiple ' asRopedText,
+The inspector also shows multiple ' asRopedText,
 		('views' asRopedText glamorousExplanationFor: #view),
-		' that are specific to the object' asRopedText.
+		' that are specific to the object. Every object is allowed to specify such custom views.' asRopedText.
 	^ text 
 		glamorousRegularFont;
 		foreground: Color black
