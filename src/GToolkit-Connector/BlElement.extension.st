@@ -46,7 +46,7 @@ BlElement >> gtExplainerTreeFor: aView [
 					| el |
 					el := (each explainer isExplanation or: [ each explainer isTarget ])
 						ifTrue: [ BrLabel new look: BrGlamorousLabelLook; text: ((each explainer model asString) asRopedText foreground: Color white); geometry: (BlRectangle cornerRadius: 4); background: Color orange]
-						ifFalse: [ BlElement new geometry: BlEllipse new; border: (BlBorder paint: Color black); size: 10@10 ].
+						ifFalse: [ BlElement new geometry: BlEllipse new; border: (BlBorder paint: Color black); size: 5@5 ].
 					el when: BlClickEvent do: [:e | e target phlow spawnObject: each ] 
 				];
 				with: self withAllChildrenBreadthFirst.
@@ -61,10 +61,10 @@ BlElement >> gtExplainerTreeFor: aView [
 				stencil: [ :e | 
 					BlParabollaArcElement new 
 						zIndex: 0;
-						curvatureFraction: 0.8;
+						curvatureFraction: 0.3;
 						border: (BlBorder paint: (Color orange alpha: 0.8) width: 2);
 						toHead: (BlArrowheadSimpleArrow new
-							border: (BlBorder builder paint: (Color orange alpha: 0.8); width: 2; build)) ];
+							border: (BlBorder builder paint: (Color orange alpha: 0.8); width: 4; build)) ];
 				connect: ((self withAllChildrenBreadthFirst select: [:each | each explainer model notNil]) groupedBy: [:each | each explainer model ]) values
 				fromAll: [:assoc | assoc select: [:el | el explainer isExplanation ] ]
 				toAll: [:assoc | assoc select: [:el | el explainer isTarget ] ].
