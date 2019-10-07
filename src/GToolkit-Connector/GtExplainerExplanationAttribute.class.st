@@ -20,10 +20,10 @@ GtExplainerExplanationAttribute >> affect: aText in: anEditorElement [
 			default: [ :aWidget | 
 				line ifNotNil: [ line removeFromParent ].
 				aWidget 
-					border: (BlBorder paint: BrGlamorousColors primaryBorderColor);
+					border: (BlBorder paint: BrGlamorousColors textHighlightColor);
 					background: Color transparent ];
 			hovered: [ :aWidget | 
-				aWidget background: (BrGlamorousColors primaryBorderColor alpha: 0.3).
+				aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
 				aWidget explainer firstExplanationHolderParent explainer
 					firstTargetChildWithModel: aWidget explainer model
 					do: [ :explanationTargetElement | 
@@ -36,7 +36,7 @@ GtExplainerExplanationAttribute >> affect: aText in: anEditorElement [
 									referenceElement: explanationTargetElement
 									relatedTo: aWidget);
 							zIndex: 10;
-							border: (BlBorder paint: (BrGlamorousColors primaryBorderColor alpha: 0.7) width: 2);
+							border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.7) width: 2);
 							constraintsDo: [ :c | c ignoreByLayout ];
 							yourself.
 						aWidget 

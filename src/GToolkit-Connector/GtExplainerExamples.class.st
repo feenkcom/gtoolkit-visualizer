@@ -111,14 +111,16 @@ GtExplainerExamples >> oneTarget [
 			c horizontal matchParent.
 			c vertical matchParent ];
 		layout: BlFrameLayout new;
-		background: Color veryLightGray.
+		background: (Color white);
+		look: BrShadowLook;
+		margin: (BlInsets all: 10).
 	target := BlElement new 
 		constraintsDo: [ :c | 
 			c frame horizontal alignCenter.
 			c frame vertical alignCenter.
 			c horizontal exact: 140.
 			c vertical exact: 140 ];
-		background: Color orange.
+		background: Color gray.
 	marker := BrButton new
 		constraintsDo: [ :c | c ignoreByLayout ];
 		size: 20 @ 20;
