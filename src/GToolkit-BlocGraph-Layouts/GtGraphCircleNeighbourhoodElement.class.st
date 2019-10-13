@@ -61,6 +61,9 @@ GtGraphCircleNeighbourhoodElement >> initializeElement [
 	| theCircleElements aNeighbourCircleElement theEdges |
 	
 	self layout: BlFitLayout new.
+	self constraintsDo: [ :c |
+		c horizontal fitContent.
+		c vertical fitContent ].
 	
 	self neighbourhood neighbourCircle
 		ifNil: [ ^ BlElement new ].
