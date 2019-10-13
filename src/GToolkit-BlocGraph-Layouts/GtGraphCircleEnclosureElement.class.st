@@ -49,6 +49,9 @@ GtGraphCircleEnclosureElement >> initializeElement [
 	| theCircleElements anEnclosureCircle anEnclosureCircleElement |
 	
 	self layout: BlFitLayout new.
+	self constraintsDo: [ :c |
+		c horizontal fitContent.
+		c vertical fitContent ].
 	
 	theCircleElements := self enclosure circles withIndexCollect: [ :eachCircle :anIndex |
 		| aCircleElement |

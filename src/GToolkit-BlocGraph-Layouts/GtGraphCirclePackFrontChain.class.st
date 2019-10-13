@@ -116,6 +116,9 @@ GtGraphCirclePackFrontChain >> gtPreviewFor: aView [
 			
 			aContainer := BlElement new.
 			aContainer layout: BlFitLayout new.
+			aContainer constraintsDo: [ :c |
+				c horizontal fitContent.
+				c vertical fitContent ].
 			aContainer addChildren: theCircleElements.
 			aContainer addChildren: theEdges.
 			aContainer asScalableElement ]
