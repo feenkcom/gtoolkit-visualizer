@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'stack'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #accessing }
@@ -80,8 +80,8 @@ GtMondrian >> initialize [
 				constraints horizontal fitContent.
 				constraints vertical fitContent.
 				constraints padding: (BlInsets all: 50) ];
-		background: Color white;
-		zIndex: 1)))
+			background: Color white;
+			zIndex: 1)))
 ]
 
 { #category : #scripting }
