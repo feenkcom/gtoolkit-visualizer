@@ -279,7 +279,7 @@ GtGradKamadaKawaiLayout >> initializeLayout: theNodes [
 	num := theNodes size.
 	dijkstra := DijkstrasShortestPath new.	
 
-	self distanceMatrix: (Matrix new: num tabulate: [ :i :j | 0 ]).
+	self distanceMatrix: (Array2D new: num tabulate: [ :i :j | 0 ]).
 	self randomlyPositionNodes: theNodes maxVerticalValue: self height maxHorizontalValue: self width.
 	
 	"Now we need to calculate the distances"
