@@ -8,7 +8,7 @@ Class {
 		'link',
 		'eventDispatcher'
 	],
-	#category : 'GToolkit-Connector'
+	#category : #'GToolkit-Connector'
 }
 
 { #category : #'instance creation' }
@@ -32,7 +32,7 @@ GtConnectorTextButtonAttribute >> actionBlock: aBlock [
 ]
 
 { #category : #initialization }
-GtConnectorTextButtonAttribute >> affect: aBrText in: anEditorElement [
+GtConnectorTextButtonAttribute >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
 	| aButton |
 	
 	aButton := self newButton.

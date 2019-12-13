@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-GtExplainerExplanationAttribute >> affect: aText in: anEditorElement [
+GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
 	| aContainer aTextPieceElement line |
 	aContainer := BrButton new
 		clipChildren: false;
@@ -49,10 +49,7 @@ GtExplainerExplanationAttribute >> affect: aText in: anEditorElement [
 	aContainer explainer
 		isExplanation: true;
 		model: self explanationModel.
-	aTextPieceElement := (BrTextWordPieceStencilBuilder new
-		text: aText
-		start: (aText start - 1 max: 0)
-		end: (aText start - 1 max: 0) + aText size) asElement.
+	aTextPieceElement := (BrTextWordPieceStencilBuilder new segmentPiece: aTBrTextEditorTextualPiece) asElement.
 	aContainer addEventHandler: (BlEventDelegator delegate: BrTextEditorRequest to: aTextPieceElement).
 	aContainer addChildren: { aTextPieceElement }.
 	^ aContainer
