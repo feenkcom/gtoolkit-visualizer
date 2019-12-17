@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #hook }
-GtGraphRectanglePackLayout >> doExecute: theElements [
+GtGraphRectanglePackLayout >> doExecute: theElements with: anExtentSpec [
 	| sortedElements aTree |
 
 	sortedElements := self sorted: theElements.

@@ -28,7 +28,22 @@ GtGraphLayout >> applyOn: elements [
 ]
 
 { #category : #hook }
+GtGraphLayout >> applyOn: elements with: anExtentSpec [
+	"Return quickly if there is nothing to do"
+	(elements isEmpty)
+		ifTrue: [ ^ self ].
+	self executeOnElements: elements with: anExtentSpec
+]
+
+{ #category : #hook }
 GtGraphLayout >> doExecute: elements [
+	"Performs the layout"
+
+	self subclassResponsibility
+]
+
+{ #category : #hook }
+GtGraphLayout >> doExecute: elements with: anExtentSpec [
 	"Performs the layout"
 
 	self subclassResponsibility
@@ -52,6 +67,15 @@ GtGraphLayout >> executeOnElements: elements [
 		
 	self doInitialize: elements.
 	self doExecute: elements.
+	self doPost: elements
+]
+
+{ #category : #hook }
+GtGraphLayout >> executeOnElements: elements with: anExtentSpec [
+	"Execute the layout, myself, on the elements"
+		
+	self doInitialize: elements.
+	self doExecute: elements with: anExtentSpec.
 	self doPost: elements
 ]
 
@@ -81,7 +105,7 @@ GtGraphLayout >> measure: anElement with: anExtentSpec [
 GtGraphLayout >> measurePositions: anElement with: anExtentSpec [
 	
 	isCached
-		ifFalse: [ self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ]) ]
+		ifFalse: [ self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ]) with: anExtentSpec ]
 	
 ]
 
