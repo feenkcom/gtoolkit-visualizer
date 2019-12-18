@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 GtGraphRectangleTreemapLayoutConstraints >> weight [
+	<return: #Number>
 	^ weight
 ]
 

@@ -11,6 +11,7 @@ GtGraphRectangleTreemapLayoutExamples >> numbers [
 	aView := self view.
 	theElements := self nodes: (1 to: 5).
 	theElements do: [ :eachElement | 
+		eachElement background: Color random.
 		eachElement constraintsDo: [ :c | 
 			c treemap weight: (eachElement userData at: #model) ] ].
 	aView addChildren: theElements.
@@ -24,6 +25,5 @@ GtGraphRectangleTreemapLayoutExamples >> view [
 	^ super view
 		constraintsDo: [ :constraints |
 			constraints horizontal matchParent.
-			constraints vertical matchParent ];
-		size: 300@500
+			constraints vertical matchParent ]
 ]
