@@ -20,7 +20,7 @@ GtGraphCirclePackLayout >> boundingBox: anElement [
 ]
 
 { #category : #hook }
-GtGraphCirclePackLayout >> doExecute: theElements [
+GtGraphCirclePackLayout >> doExecute: theElements with: anExtentSpec [
 	"Performs the layout"
 	| sortedElements aChain |
 	
