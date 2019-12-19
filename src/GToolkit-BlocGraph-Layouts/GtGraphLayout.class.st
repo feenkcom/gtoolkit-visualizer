@@ -46,7 +46,7 @@ GtGraphLayout >> doExecute: elements [
 GtGraphLayout >> doExecute: elements with: anExtentSpec [
 	"Performs the layout"
 
-	self subclassResponsibility
+	self doExecute: elements
 ]
 
 { #category : #hook }
