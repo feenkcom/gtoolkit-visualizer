@@ -24,6 +24,7 @@ GtGraphTreemapLayout >> doExecute: elements with: anExtentSpec [
 	| aTree aTotalWeight |
 	aTree := self treeFrom: anExtentSpec.
 	aTotalWeight := elements sum: [ :eachElement | eachElement constraints treemap weight ].
+	aTotalWeight isZero ifTrue: [ aTotalWeight := 1 ].
 	elements do: [ :eachElement | 
 		| aNode |
 		aNode := GtGraphTreemapNode new.
