@@ -33,6 +33,12 @@ GtGraphTreemapLayout >> doExecute: elements with: anExtentSpec [
 		eachElement measuredBounds position: aNode position; extent: aNode extent ].
 ]
 
+{ #category : #layout }
+GtGraphTreemapLayout >> measurePositions: anElement with: anExtentSpec [
+	isCached := false.
+	super measurePositions: anElement with: anExtentSpec
+]
+
 { #category : #'instance creation' }
 GtGraphTreemapLayout >> treeFrom: anExtentSpec [
 	<return: #GtGraphTreemapSlice>
