@@ -292,6 +292,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
 { #category : #'examples - squarify' }
 GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
 	<gtExample>
+	<noTest>
 	| aTree aNode |
 	aTree := self squarifyWithTwoNodes.
 	aNode := self node weight: 1/6 "4".
