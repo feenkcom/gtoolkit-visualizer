@@ -39,7 +39,8 @@ Class {
 		'leavesSizeBlock',
 		'roots',
 		'leafEllipseBlock',
-		'containerBlock'
+		'containerBlock',
+		'layoutIterator'
 	],
 	#category : #'GToolkit-TreeMap'
 }
@@ -68,9 +69,11 @@ GtNestedRectangleTreeMap >> create [
 GtNestedRectangleTreeMap >> createContainerFor: anObject [
 	| containerElement |
 	containerElement := BlElement new
-		layout: GtGraphTreemapLayout horizontalSlice;
+		layout: layoutIterator nextLayout;
 		geometry: BlRectangle new;
 		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent.
 			c treemap weight: (leavesSizeBlock value: anObject) ];
 		when: BlClickEvent
 			do: [ :e | 
@@ -98,6 +101,8 @@ GtNestedRectangleTreeMap >> createLeavesFor: anObject [
 		leafElement := BlElement new
 			geometry: BlRectangle new;
 			constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent.
 				c treemap weight: (leavesSizeBlock value: leaf) ];
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
 			background: (Color red darker alpha: 0.7);
@@ -118,7 +123,8 @@ GtNestedRectangleTreeMap >> initialize [
 	traversalBlock := [ :x | {  } ].
 	leavesCreationBlock := [ :x | {  } ].
 	containerBlock := [ :ellipse | ellipse ].
-	leafEllipseBlock := [ :ellipse | ellipse ]
+	leafEllipseBlock := [ :ellipse | ellipse ].
+	layoutIterator := GtNestedRectangleTreeMapContainerLayoutIterator new.
 ]
 
 { #category : #api }
@@ -146,10 +152,6 @@ GtNestedRectangleTreeMap >> setup: element withChildren: children andLeaves: lea
 	(children isEmpty and: [ leaves isEmpty ])
 		ifTrue: [ element size: 1 asPoint ]
 		ifFalse: [ element
-				constraintsDo: [ :c | 
-					c horizontal matchParent.
-					c vertical matchParent ];
-				layout: GtGraphTreemapLayout horizontalSlice;
 				addChildren: leaves;
 				addChildren: (children collect: [ :aChild | self createFor: aChild ]) ]
 ]
