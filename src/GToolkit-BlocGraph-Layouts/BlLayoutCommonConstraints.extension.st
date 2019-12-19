@@ -7,5 +7,5 @@ BlLayoutCommonConstraints >> graph [
 
 { #category : #'*GToolkit-BlocGraph-Layouts' }
 BlLayoutCommonConstraints >> treemap [
-	^ self at: GtGraphRectangleTreemapLayout
+	^ self at: GtGraphTreemapLayout
 ]

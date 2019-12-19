@@ -1,5 +1,5 @@
 Class {
-	#name : #GtGraphRectangleTreemapLayoutConstraints,
+	#name : #GtGraphTreemapLayoutConstraints,
 	#superclass : #BlLayoutConstraints,
 	#instVars : [
 		'weight'
@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #accessing }
-GtGraphRectangleTreemapLayoutConstraints >> weight [
+GtGraphTreemapLayoutConstraints >> weight [
 	<return: #Number>
 	^ weight
 ]
 
 { #category : #accessing }
-GtGraphRectangleTreemapLayoutConstraints >> weight: aNumber [
+GtGraphTreemapLayoutConstraints >> weight: aNumber [
 	weight := aNumber
 ]
