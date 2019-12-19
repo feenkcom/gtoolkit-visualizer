@@ -40,16 +40,23 @@ GtGraphTreemapLayoutExamples >> node [
 ]
 
 { #category : #'examples - numbers' }
-GtGraphTreemapLayoutExamples >> numbers [
+GtGraphTreemapLayoutExamples >> numberElements [
 	<gtExample>
-	| aView theElements |
-	aView := self view.
+	| theElements |
 	theElements := self nodes: (1 to: 5).
 	theElements do: [ :eachElement | 
 		eachElement background: Color random.
 		eachElement constraintsDo: [ :c | 
 			c treemap weight: (eachElement userData at: #model) ] ].
-	aView addChildren: theElements.
+	^ theElements
+]
+
+{ #category : #'examples - numbers' }
+GtGraphTreemapLayoutExamples >> numbers [
+	<gtExample>
+	| aView |
+	aView := self view.
+	aView addChildren: self numberElements.
 	^ aView
 ]
 
@@ -59,6 +66,19 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 	| aView |
 	aView := self numbers.
 	aView layout: GtGraphTreemapLayout horizontalSlice.
+	self applyLayoutIn: aView.
+	^ aView
+]
+
+{ #category : #'examples - numbers' }
+GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
+	<gtExample>
+	| aView |
+	aView := self numbers.
+	aView layout: GtGraphTreemapLayout horizontalSlice.
+	aView children last
+		addChildren: (self numberElements);
+		layout: GtGraphTreemapLayout verticalSlice.
 	self applyLayoutIn: aView.
 	^ aView
 ]

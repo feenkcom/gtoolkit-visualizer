@@ -39,14 +39,14 @@ Class {
 		'leavesSizeBlock',
 		'roots',
 		'leafEllipseBlock',
-		'containerEllipseBlock'
+		'containerBlock'
 	],
 	#category : #'GToolkit-TreeMap'
 }
 
 { #category : #api }
 GtNestedRectangleTreeMap >> containerEllipse: aBlock [
-	containerEllipseBlock := aBlock
+	containerBlock := aBlock
 ]
 
 { #category : #implementation }
@@ -68,13 +68,16 @@ GtNestedRectangleTreeMap >> create [
 GtNestedRectangleTreeMap >> createContainerFor: anObject [
 	| containerElement |
 	containerElement := BlElement new
+		layout: GtGraphTreemapLayout horizontalSlice;
 		geometry: BlRectangle new;
+		constraintsDo: [ :c | 
+			c treemap weight: (leavesSizeBlock value: anObject) ];
 		when: BlClickEvent
 			do: [ :e | 
 			e target phlow spawnObject: anObject.
 			e consumed: true ];
 		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
-	containerEllipseBlock cull: containerElement cull: anObject.
+	containerBlock cull: containerElement cull: anObject.
 	^ containerElement
 ]
 
@@ -94,7 +97,8 @@ GtNestedRectangleTreeMap >> createLeavesFor: anObject [
 		| leafElement |
 		leafElement := BlElement new
 			geometry: BlRectangle new;
-			size: ((leavesSizeBlock value: leaf) max: 1) asPoint;
+			constraintsDo: [ :c | 
+				c treemap weight: (leavesSizeBlock value: leaf) ];
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
 			background: (Color red darker alpha: 0.7);
 			border: (BlBorder paint: (Color gray alpha: 0.2)).
@@ -113,7 +117,7 @@ GtNestedRectangleTreeMap >> initialize [
 	leavesSizeBlock := [ :x | 10 ].
 	traversalBlock := [ :x | {  } ].
 	leavesCreationBlock := [ :x | {  } ].
-	containerEllipseBlock := [ :ellipse | ellipse ].
+	containerBlock := [ :ellipse | ellipse ].
 	leafEllipseBlock := [ :ellipse | ellipse ]
 ]
 
@@ -145,7 +149,7 @@ GtNestedRectangleTreeMap >> setup: element withChildren: children andLeaves: lea
 				constraintsDo: [ :c | 
 					c horizontal matchParent.
 					c vertical matchParent ];
-				layout: BlFlowLayout new;
+				layout: GtGraphTreemapLayout horizontalSlice;
 				addChildren: leaves;
 				addChildren: (children collect: [ :aChild | self createFor: aChild ]) ]
 ]

@@ -7,6 +7,12 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #initialization }
+GtGraphTreemapLayoutConstraints >> initialize [
+	super initialize.
+	weight := 0.
+]
+
 { #category : #accessing }
 GtGraphTreemapLayoutConstraints >> weight [
 	<return: #Number>
