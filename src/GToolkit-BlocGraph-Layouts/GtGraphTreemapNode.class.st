@@ -141,9 +141,10 @@ GtGraphTreemapNode >> position: anObject [
 
 { #category : #printing }
 GtGraphTreemapNode >> printOn: aStream [
-	aStream
-		nextPutAll: 'Node bounds: ';
-		print: self bounds
+	aStream nextPutAll: 'Node bounds: '.
+	(self position isNil or: [ self extent isNil ]) 
+		ifTrue: [ aStream nextPutAll: '<uninitialized>' ]
+		ifFalse: [ aStream print: self bounds ].
 ]
 
 { #category : #accessing }
