@@ -47,6 +47,8 @@ GtGraphTreemapLayoutExamples >> numberElements [
 	theElements do: [ :eachElement | 
 		eachElement background: Color random.
 		eachElement constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent.
 			c treemap weight: (eachElement userData at: #model) ] ].
 	^ theElements
 ]
@@ -80,6 +82,28 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
 		addChildren: (self numberElements);
 		layout: GtGraphTreemapLayout verticalSlice.
 	self applyLayoutIn: aView.
+	^ aView
+]
+
+{ #category : #'examples - numbers' }
+GtGraphTreemapLayoutExamples >> numbersSliceHorizontalWithMarginAndPadding [
+	<gtExample>
+	| aView |
+	aView := BlElement new
+		padding: (BlInsets all: 50);
+		constraintsDo: [ :c |
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: GtGraphTreemapSliceHorizontalLayout new;
+		addChildren: (10 timesCollect: [ :anIndex |
+			BlElement new
+				size: 30@30;
+				constraintsDo: [ :c |
+				c margin: (BlInsets all: 2).
+					c horizontal matchParent.
+					c vertical matchParent.
+					c treemap weight: anIndex ];
+				background: (Color indexedColors at: anIndex) ]).
 	^ aView
 ]
 

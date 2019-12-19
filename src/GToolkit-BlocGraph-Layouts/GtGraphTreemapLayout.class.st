@@ -1,6 +1,6 @@
 Class {
 	#name : #GtGraphTreemapLayout,
-	#superclass : #GtGraphLayout,
+	#superclass : #BlLayout,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
@@ -19,28 +19,58 @@ GtGraphTreemapLayout class >> verticalSlice [
 	^ GtGraphTreemapSliceVerticalLayout new
 ]
 
-{ #category : #hook }
-GtGraphTreemapLayout >> doExecute: elements with: anExtentSpec [
-	| aTree aTotalWeight |
-	aTree := self treeFrom: anExtentSpec.
-	aTotalWeight := elements sum: [ :eachElement | eachElement constraints treemap weight ].
-	aTotalWeight isZero ifTrue: [ aTotalWeight := 1 ].
-	elements do: [ :eachElement | 
-		| aNode |
-		aNode := GtGraphTreemapNode new.
-		aNode weight: (eachElement constraints treemap weight / aTotalWeight).
-		aTree addNode: aNode.
-		eachElement measuredBounds position: aNode position; extent: aNode extent ].
+{ #category : #layout }
+GtGraphTreemapLayout >> layout: anElement in: aRectangle [
+
+	anElement children accountedByLayout do: [ :child |
+		child applyLayoutIn: child measuredBounds asRectangle ].
+
+	self layoutIgnored: anElement
 ]
 
 { #category : #layout }
-GtGraphTreemapLayout >> measurePositions: anElement with: anExtentSpec [
-	isCached := false.
-	super measurePositions: anElement with: anExtentSpec
+GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
+	| aTree aTotalWeight |
+
+	"since the treemap layout does not support unspecified measurement spec (fitContent of the container)
+	we can directly compute the size of the parent"
+	anElement measuredExtent: (anExtentSpec sizeFor: 0@0).
+	
+	"create a tree for the computed extent taking padding into account"	
+	aTree := self treeFrom: anElement measuredExtent - anElement padding extent.
+	
+	"total weight should be a float to avoid Fractions"
+	aTotalWeight := 0.0.
+	self
+		measuredChildren: anElement
+		do: [ :eachChild | aTotalWeight := aTotalWeight + eachChild constraints treemap weight ].
+
+	aTotalWeight isZero
+		ifTrue: [ aTotalWeight := 1.0 ].
+	
+	"the main measurement pass"
+	self measuredChildren: anElement do: [ :eachChild |
+		| aNode |
+
+		aNode := GtGraphTreemapNode new.
+		aNode weight: (eachChild constraints treemap weight / aTotalWeight).
+		aTree addNode: aNode.
+
+		eachChild measuredBounds
+			position: aNode position + anElement padding topLeft.
+		
+		self
+			measureChild: eachChild
+			parentSpec: anExtentSpec
+			"we pass how much space is already used inside of the parent (the space a child can not occupy)"
+			widthUsed: anElement measuredWidth - (aNode extent x - eachChild margin width)
+			heightUsed: anElement measuredHeight - (aNode extent y - eachChild margin height) ].
+	
+	self measureIgnored: anElement with: anExtentSpec
 ]
 
 { #category : #'instance creation' }
-GtGraphTreemapLayout >> treeFrom: anExtentSpec [
+GtGraphTreemapLayout >> treeFrom: anExtent [
 	<return: #GtGraphTreemapSlice>
 	^ self subclassResponsibility
 ]
