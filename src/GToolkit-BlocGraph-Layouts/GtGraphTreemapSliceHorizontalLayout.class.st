@@ -5,8 +5,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtGraphTreemapSliceHorizontalLayout >> treeFrom: anExtentSpec [
-	| anExtent |
-	anExtent := anExtentSpec sizeFor: 0@0.
+GtGraphTreemapSliceHorizontalLayout >> treeFrom: anExtent [
 	^ GtGraphTreemapSlice horizontal length: anExtent x; breadth: anExtent y.
 ]
