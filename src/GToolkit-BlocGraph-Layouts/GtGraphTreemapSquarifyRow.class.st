@@ -62,13 +62,6 @@ GtGraphTreemapSquarifyRow >> occupiedArea [
 		ifEmpty: [ 0 ]
 ]
 
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRow >> squarify: aNode lenght: aLength [ 
-	| aNewRow |
-	aNewRow := GtGraphTreemapSquarifyRow new nodes: self nodes with: aNode.
-	self worst <= aNewRow worst
-]
-
 { #category : #accessing }
 GtGraphTreemapSquarifyRow >> worst [
 	"gives the highest aspect ratio"

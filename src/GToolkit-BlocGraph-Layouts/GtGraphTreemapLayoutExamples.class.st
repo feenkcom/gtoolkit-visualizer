@@ -290,6 +290,26 @@ GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
 ]
 
 { #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithTwoNodes.
+	aNode := self node weight: 1/6 "4".
+	aTree addNode: aNode.
+	self assert: aTree nodes size equals: 3.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes third equals: aNode.
+	self assert: aTree nodes third position equals: (800/3)@200.
+	self assert: aTree nodes third extent equals: 300@ (400/3).
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
 GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
 	<gtExample>
 	| aTree aNode |

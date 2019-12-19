@@ -92,7 +92,7 @@ GtGraphTreemapSquarify >> squarify: theNodes currentRow: aCurrentRow inRectangle
 		ifFalse: [ 
 			aRectangle layoutRow: aNewRow in: self.
 			theNodes size = 1 ifFalse: [ 
-				self squarify: theNodes currentRow: GtGraphTreemapSquarifyRow new inRectangle: aRectangle ] ]
+				self squarify: theNodes currentRow: GtGraphTreemapSquarifyRow new inRectangle: aRectangle remainingRectangle ] ]
 ]
 
 { #category : #'as yet unclassified' }
