@@ -3,7 +3,6 @@ Class {
 	#superclass : #GtGraphTreemap,
 	#instVars : [
 		'row',
-		'ratio',
 		'extent'
 	],
 	#classVars : [
@@ -24,7 +23,7 @@ GtGraphTreemapSquarify class >> initializePhi [
 
 { #category : #accessing }
 GtGraphTreemapSquarify >> extent [
-	^ extent
+	^ self row extent
 ]
 
 { #category : #accessing }
@@ -32,15 +31,13 @@ GtGraphTreemapSquarify >> extent: aPoint [
 	self 
 		assert: [ aPoint isNotNil ] 
 		description: [ 'Extent must be non-nil' ].
-	extent := aPoint.
+	self row extent: aPoint.
 	self area: aPoint x * aPoint y
 ]
 
 { #category : #initialization }
 GtGraphTreemapSquarify >> initialize [
 	super initialize.
-	extent := 0@0.
-	ratio := nil.
 	row := GtGraphTreemapSquarifyRow new nodes: self nodes.
 ]
 
@@ -59,19 +56,9 @@ GtGraphTreemapSquarify >> phi [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarify >> ratio [
-	^ ratio
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarify >> ratio: anObject [
-	ratio := anObject
-]
-
-{ #category : #accessing }
 GtGraphTreemapSquarify >> row [
 	<return: #GtGraphTreemapSquarifyRow>
-	row
+	^ row
 ]
 
 { #category : #'as yet unclassified' }
@@ -108,7 +95,7 @@ GtGraphTreemapSquarify >> squarify: aCollection inRectangle: aGtGraphTreemapSqua
 GtGraphTreemapSquarify >> updateNode: aNode [
 	| theNewNodes aRectangle |
 	theNewNodes := self nodes copyWith: aNode.
-	aRectangle := GtGraphTreemapSquarifyRectangle new position: 0@0; extent: self extent.
+	aRectangle := GtGraphTreemapSquarifyRectangle position: 0@0 extent: self extent.
 	self squarify: theNewNodes inRectangle: aRectangle.
 ]
 

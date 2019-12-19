@@ -9,6 +9,53 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #'instance creation' }
+GtGraphTreemapSquarifyRectangle class >> null [
+	^ GtGraphTreemapSquarifyNoRectangle uniqueInstance
+]
+
+{ #category : #'instance creation' }
+GtGraphTreemapSquarifyRectangle class >> position: aPosition extent: anExtent [
+	^ anExtent x > anExtent y
+		ifTrue: [ GtGraphTreemapSquarifyLandscapeRectangle new position: aPosition; extent: anExtent ] 
+		ifFalse: [ GtGraphTreemapSquarifyPortraitRectangle new position: aPosition; extent: anExtent ]
+]
+
+{ #category : #converting }
+GtGraphTreemapSquarifyRectangle >> asElement [
+	| anActualRectangle aBorderWidth |
+
+	aBorderWidth := (self width / 100.0) min: 0.5.
+
+	anActualRectangle := BlElement new.
+	anActualRectangle size: self extent.
+	anActualRectangle background: (Color white alpha: 0.8).
+	anActualRectangle border: (BlBorder paint: Color black width: aBorderWidth).
+	anActualRectangle when: BlClickEvent do: [ :anEvent |
+		anEvent consumed: true.
+		anEvent currentTarget phlow spawnObject: self ].
+
+	self remainingRectangle ifNotNil: [ :theRectangle |
+		anActualRectangle 
+			background: (Color gray alpha: 0.5);
+			addChild: (
+				theRectangle asElement
+					layout: BlFrameLayout new;
+					relocate: theRectangle position;
+					addChild: (BlTextElement new 
+						text: 'Free Area' asRopedText glamorousCodeFontAndSize;
+						constraintsDo: [ :c | 
+							c frame vertical alignCenter.
+							c frame horizontal alignCenter ])) ].
+
+	^ anActualRectangle
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyRectangle >> bounds [
+	^ self position extent: self extent
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyRectangle >> extent [
 	^ extent
@@ -19,60 +66,30 @@ GtGraphTreemapSquarifyRectangle >> extent: anObject [
 	extent := anObject
 ]
 
+{ #category : #'gt-inspector-extension' }
+GtGraphTreemapSquarifyRectangle >> gtPreviewFor: aView [
+	<gtView>
+	self position ifNil: [ ^ aView empty ].
+	self extent ifNil: [ ^ aView empty ].
+	^ aView explicit
+		title: 'Preview';
+		stencil: [ self asElement asScalableElement
+			margin: (BlInsets all: 10) ]
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyRectangle >> height [
 	^ self extent y
 ]
 
-{ #category : #testing }
-GtGraphTreemapSquarifyRectangle >> isPortrait [
-	<return: #Boolean>
-	^ self height >= self width
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> layoutHorizontalRow: aRow in: aTree [ 
-	| anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle |
-	anOccupiedArea := aRow occupiedArea asFloat.
-	anExtentToOccupy := self extent * (1 @ anOccupiedArea).
-	aNextNodePosition := self position.
-	aRow nodes do: [ :eachNode | 
-		| aHeight aWidth |
-		aWidth := anExtentToOccupy x.
-		aHeight := anExtentToOccupy y * eachNode weight / anOccupiedArea.
-		eachNode extent: (aWidth @ aHeight).
-		eachNode position: aNextNodePosition.
-		aNextNodePosition := eachNode bottomLeft ].
-	aRemainingRectangle := self class new
-		position: self position + (0 @ anExtentToOccupy y);
-		extent: self extent - (0 @ anExtentToOccupy y).
-	self remainingRectangle: aRemainingRectangle
-]
-
 { #category : #'as yet unclassified' }
 GtGraphTreemapSquarifyRectangle >> layoutRow: aGtGraphTreemapSquarifyRow in: aGtGraphTreemapSquarify [ 
-	self isPortrait
-		ifTrue: [ self layoutHorizontalRow: aGtGraphTreemapSquarifyRow in: aGtGraphTreemapSquarify ] 
-		ifFalse: [ self layoutVerticalRow: aGtGraphTreemapSquarifyRow in: aGtGraphTreemapSquarify ].
+	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> layoutVerticalRow: aRow in: aTree [ 
-	| anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle |
-	anOccupiedArea := aRow occupiedArea asFloat.
-	anExtentToOccupy := self extent * (anOccupiedArea @ 1).
-	aNextNodePosition := self position.
-	aRow nodes do: [ :eachNode | 
-		| aHeight aWidth |
-		aWidth := anExtentToOccupy x.
-		aHeight := anExtentToOccupy y * eachNode weight / anOccupiedArea.
-		eachNode extent: (aWidth @ aHeight).
-		eachNode position: aNextNodePosition.
-		aNextNodePosition := eachNode bottomLeft ].
-	aRemainingRectangle := self class new
-		position: self position + (anExtentToOccupy x @ 0);
-		extent: self extent - (anExtentToOccupy x @ 0).
-	self remainingRectangle: aRemainingRectangle
+{ #category : #accessing }
+GtGraphTreemapSquarifyRectangle >> name [
+	^ 'Rectangle'
 ]
 
 { #category : #accessing }
@@ -83,6 +100,14 @@ GtGraphTreemapSquarifyRectangle >> position [
 { #category : #accessing }
 GtGraphTreemapSquarifyRectangle >> position: anObject [
 	position := anObject
+]
+
+{ #category : #printing }
+GtGraphTreemapSquarifyRectangle >> printOn: aStream [
+	aStream nextPutAll: self name asString.
+	(self position isNotNil and: [ self extent isNotNil ])
+		ifTrue: [ aStream space; print: self bounds ]
+		ifFalse: [ aStream nextPutAll: '<uninitialized>' ]
 ]
 
 { #category : #'as yet unclassified' }

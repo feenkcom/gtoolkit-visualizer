@@ -2,7 +2,8 @@ Class {
 	#name : #GtGraphTreemapSquarifyRow,
 	#superclass : #Object,
 	#instVars : [
-		'nodes'
+		'nodes',
+		'rectangle'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
@@ -10,6 +11,16 @@ Class {
 { #category : #'as yet unclassified' }
 GtGraphTreemapSquarifyRow >> copyWithNode: aNode [ 
 	^ self class new nodes: self nodes with: aNode
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyRow >> extent [
+	^ rectangle extent
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyRow >> extent: aPoint [ 
+	rectangle := GtGraphTreemapSquarifyRectangle position: 0@0 extent: aPoint
 ]
 
 { #category : #'gt-extension' }
@@ -24,6 +35,7 @@ GtGraphTreemapSquarifyRow >> gtNodesFor: aView [
 GtGraphTreemapSquarifyRow >> initialize [
 	super initialize.
 	nodes := #().
+	rectangle := GtGraphTreemapSquarifyRectangle null.
 ]
 
 { #category : #accessing }
