@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'position',
-		'extent'
+		'extent',
+		'remainingRectangle'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
@@ -66,8 +67,13 @@ GtGraphTreemapSquarifyRectangle >> position: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+GtGraphTreemapSquarifyRectangle >> remainingRectangle [
+	<return: #GtGraphTreemapSquarifyRectangle>
+	^ remainingRectangle
+]
+
+{ #category : #'as yet unclassified' }
 GtGraphTreemapSquarifyRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
-	| remainingRectangle |
 	remainingRectangle := aGtGraphTreemapSquarifyRectangle
 ]
 

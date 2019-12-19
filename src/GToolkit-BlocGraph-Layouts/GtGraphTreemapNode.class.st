@@ -141,11 +141,10 @@ GtGraphTreemapNode >> position: anObject [
 
 { #category : #printing }
 GtGraphTreemapNode >> printOn: aStream [
-	self position ifNil: [ ^ super printOn: aStream ].
-	self extent ifNil: [ ^ super printOn: aStream ].
-	aStream
-		nextPutAll: 'Node bounds: ';
-		print: self bounds
+	aStream nextPutAll: 'Node bounds: '.
+	(self position isNil or: [ self extent isNil ]) 
+		ifTrue: [ aStream nextPutAll: '<uninitialized>' ]
+		ifFalse: [ aStream print: self bounds ].
 ]
 
 { #category : #accessing }
