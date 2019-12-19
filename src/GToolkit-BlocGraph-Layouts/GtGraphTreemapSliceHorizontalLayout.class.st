@@ -8,5 +8,5 @@ Class {
 GtGraphTreemapSliceHorizontalLayout >> treeFrom: anExtentSpec [
 	| anExtent |
 	anExtent := anExtentSpec sizeFor: 0@0.
-	^ GtGraphTreemapSlice horizontal remainingLength: anExtent x; breadth: anExtent y.
+	^ GtGraphTreemapSlice horizontal length: anExtent x; breadth: anExtent y.
 ]

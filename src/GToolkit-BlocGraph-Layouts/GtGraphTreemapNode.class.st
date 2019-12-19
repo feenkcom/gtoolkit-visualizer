@@ -92,6 +92,11 @@ GtGraphTreemapNode >> bottomRight [
 ]
 
 { #category : #accessing }
+GtGraphTreemapNode >> bounds [
+	^ self position extent: self extent
+]
+
+{ #category : #accessing }
 GtGraphTreemapNode >> extent [
 	^ extent
 ]
@@ -137,10 +142,8 @@ GtGraphTreemapNode >> position: anObject [
 { #category : #printing }
 GtGraphTreemapNode >> printOn: aStream [
 	aStream
-		nextPutAll: 'Node position: ';
-		print: self position;
-		nextPutAll: ' extent: ';
-		print: self extent
+		nextPutAll: 'Node bounds: ';
+		print: self bounds
 ]
 
 { #category : #accessing }

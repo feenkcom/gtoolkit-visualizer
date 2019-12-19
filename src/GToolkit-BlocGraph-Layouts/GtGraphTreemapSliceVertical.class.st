@@ -7,15 +7,22 @@ Class {
 { #category : #accessing }
 GtGraphTreemapSliceVertical >> extent [
 	<return: #Point>
-	^ self nodes 
-		ifEmpty: [ self breadth @ self remainingLength ]
-		ifNotEmpty: [ self nodes last position + self nodes last extent + (self breadth @ self remainingLength) ]
+	^ self breadth @ self length
 ]
 
 { #category : #accessing }
 GtGraphTreemapSliceVertical >> remainingExtent [
 	<return: #Point>
-	^ self breadth @ self remainingLength
+	^ self nodes 
+		ifNotEmpty: [ self extent - self nodes last bottomLeft ]
+		ifEmpty: [ self extent ]
+]
+
+{ #category : #updating }
+GtGraphTreemapSliceVertical >> updateExtentFor: aNode [
+	| aNodeLength |
+	aNodeLength := self length * aNode weight.
+	aNode extent: self breadth @ aNodeLength
 ]
 
 { #category : #updating }

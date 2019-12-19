@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'nodes',
 		'breadth',
-		'remainingLength'
+		'length'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
@@ -26,10 +26,7 @@ GtGraphTreemapSlice class >> vertical [
 
 { #category : #adding }
 GtGraphTreemapSlice >> addNode: aNode [
-	| aLength aBreadth |
-	aLength := self remainingLength * aNode weight.
-	aBreadth := self breadth.
-	aNode extent: aLength @ aBreadth.
+	self updateExtentFor: aNode.
 	self nodes 
 		ifEmpty: [ aNode position: 0@0 ]
 		ifNotEmpty: [ self updatePositionFor: aNode ].	
@@ -46,7 +43,32 @@ GtGraphTreemapSlice >> asElement [
 		border: (BlBorder paint: Color lightGray width: 1).
 	self nodes do: [ :eachNode | 
 		aContainer addChild: (eachNode asElement
-			background: Color random) ].
+			background: Color random;
+			relocate: eachNode position) ].
+	^ aContainer
+]
+
+{ #category : #converting }
+GtGraphTreemapSlice >> asElementWithInformation [
+	<return: #BlElement>
+	| aContainer |
+	aContainer := BlElement new
+		layout: (BlLinearLayout vertical cellSpacing: 3);
+		background: Color white;
+		constraintsDo: [ :c | 
+			c horizontal fitContent.
+			c vertical fitContent ].
+	aContainer addChild: (self asElement
+		constraintsDo: [ :c |
+			c linear horizontal alignCenter]).
+	aContainer addChild: (BlTextElement new
+		text: (('Extent: ', self extent rounded asString) asRopedText glamorousCodeFontAndSize);
+		constraintsDo: [ :c |
+			c linear horizontal alignCenter ]).
+	aContainer addChild: (BlTextElement new
+		text: (('Remaining Extent: ', self remainingExtent rounded asString) asRopedText glamorousCodeFontAndSize);
+		constraintsDo: [ :c |
+			c linear horizontal alignCenter ]).
 	^ aContainer
 ]
 
@@ -81,7 +103,7 @@ GtGraphTreemapSlice >> gtPreviewFor: aView [
 	self nodes ifNil: [ ^ aView empty ].
 	^ aView explicit
 		title: 'Preview';
-		stencil: [ self asElement asScalableElement
+		stencil: [ self asElementWithInformation asScalableElement
 			margin: (BlInsets all: 10) ]
 ]
 
@@ -90,7 +112,18 @@ GtGraphTreemapSlice >> initialize [
 	super initialize.
 	breadth := 0.
 	nodes := #().
-	remainingLength := 0.
+	length := 0.
+]
+
+{ #category : #accessing }
+GtGraphTreemapSlice >> length [
+	<return: #Number>
+	^ length
+]
+
+{ #category : #accessing }
+GtGraphTreemapSlice >> length: aNumber [
+	length := aNumber
 ]
 
 { #category : #accessing }
@@ -110,15 +143,9 @@ GtGraphTreemapSlice >> remainingExtent [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtGraphTreemapSlice >> remainingLength [
-	<return: #Number>
-	^ remainingLength
-]
-
-{ #category : #accessing }
-GtGraphTreemapSlice >> remainingLength: aNumber [
-	remainingLength := aNumber
+{ #category : #updating }
+GtGraphTreemapSlice >> updateExtentFor: aNode [
+	self subclassResponsibility
 ]
 
 { #category : #updating }

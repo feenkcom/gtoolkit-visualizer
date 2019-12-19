@@ -9,9 +9,11 @@ GtGraphTreemapLayoutExamples >> basicSliceHorizontal [
 	<gtExample>
 	| aSlice |
 	aSlice := GtGraphTreemapSlice horizontal.
-	self assert: aSlice remainingLength isZero.
+	self assert: aSlice length isZero.
 	self assert: aSlice breadth isZero.
 	self assert: aSlice nodes isEmpty.
+	self assert: aSlice extent equals: 0@0.
+	self assert: aSlice remainingExtent equals: 0@0.
 	^ aSlice
 ]
 
@@ -20,9 +22,11 @@ GtGraphTreemapLayoutExamples >> basicSliceVertical [
 	<gtExample>
 	| aSlice |
 	aSlice := GtGraphTreemapSlice vertical.
-	self assert: aSlice remainingLength isZero.
+	self assert: aSlice length isZero.
 	self assert: aSlice breadth isZero.
 	self assert: aSlice nodes isEmpty.
+	self assert: aSlice extent equals: 0@0.
+	self assert: aSlice remainingExtent equals: 0@0.
 	^ aSlice
 ]
 
@@ -74,10 +78,12 @@ GtGraphTreemapLayoutExamples >> sliceHorizontal [
 	<gtExample>
 	| aSlice |
 	aSlice := self basicSliceHorizontal.
-	aSlice remainingLength: 300; breadth: 50.
+	aSlice length: 300; breadth: 50.
 	self assert: aSlice nodes isEmpty.
-	self assert: aSlice remainingLength equals: 300.
+	self assert: aSlice length equals: 300.
 	self assert: aSlice breadth equals: 50.
+	self assert: aSlice extent equals: 300@50.
+	self assert: aSlice remainingExtent equals: 300@50.
 	^ aSlice
 ]
 
@@ -92,6 +98,28 @@ GtGraphTreemapLayoutExamples >> sliceHorizontalWithOneNode [
 	self assert: aSlice nodes first equals: aNode.
 	self assert: aNode position equals: 0@0.
 	self assert: aNode extent equals: 90@50.
+	self assert: aSlice extent equals: 300@50.
+	self assert: aSlice remainingExtent equals: 210@50.
+	^ aSlice
+]
+
+{ #category : #'examples - nodes' }
+GtGraphTreemapLayoutExamples >> sliceHorizontalWithThreeNodes [
+	<gtExample>
+	| aSlice aNode |
+	aSlice := self sliceHorizontalWithTwoNodes.
+	aNode := self node weight: 0.5.
+	aSlice addNode: aNode.
+	self assert: aSlice nodes size equals: 3.
+	self assert: aSlice nodes third equals: aNode.
+	self assert: aSlice nodes first position equals: 0@0.
+	self assert: aSlice nodes first extent equals: 90@50.
+	self assert: aSlice nodes second position equals: 90@0.
+	self assert: aSlice nodes second extent equals: 60@50.
+	self assert: aNode position equals: 150@0.
+	self assert: aNode extent equals: 150@50.
+	self assert: aSlice extent equals: 300@50.
+	self assert: aSlice remainingExtent equals: 0@50.
 	^ aSlice
 ]
 
@@ -108,6 +136,8 @@ GtGraphTreemapLayoutExamples >> sliceHorizontalWithTwoNodes [
 	self assert: aSlice nodes first extent equals: 90@50.
 	self assert: aNode position equals: 90@0.
 	self assert: aNode extent equals: 60@50.
+	self assert: aSlice extent equals: 300@50.
+	self assert: aSlice remainingExtent equals: 150@50.
 	^ aSlice
 ]
 
@@ -116,10 +146,64 @@ GtGraphTreemapLayoutExamples >> sliceVertical [
 	<gtExample>
 	| aSlice |
 	aSlice := self basicSliceVertical.
-	aSlice remainingLength: 200; breadth: 100.
+	aSlice length: 300; breadth: 50.
 	self assert: aSlice nodes isEmpty.
-	self assert: aSlice remainingLength equals: 200.
-	self assert: aSlice breadth equals: 100.
+	self assert: aSlice length equals: 300.
+	self assert: aSlice breadth equals: 50.
+	self assert: aSlice extent equals: 50@300.
+	self assert: aSlice remainingExtent equals: 50@300.
+	^ aSlice
+]
+
+{ #category : #'examples - nodes' }
+GtGraphTreemapLayoutExamples >> sliceVerticalWithOneNode [
+	<gtExample>
+	| aSlice aNode |
+	aSlice := self sliceVertical.
+	aNode := self node weight: 0.3.
+	aSlice addNode: aNode.
+	self assert: aSlice nodes size equals: 1.
+	self assert: aSlice nodes first equals: aNode.
+	self assert: aNode position equals: 0@0.
+	self assert: aNode extent equals: 50@90.
+	^ aSlice
+]
+
+{ #category : #'examples - nodes' }
+GtGraphTreemapLayoutExamples >> sliceVerticalWithThreeNodes [
+	<gtExample>
+	| aSlice aNode |
+	aSlice := self sliceVerticalWithTwoNodes.
+	aNode := self node weight: 0.5.
+	aSlice addNode: aNode.
+	self assert: aSlice nodes size equals: 3.
+	self assert: aSlice nodes third equals: aNode.
+	self assert: aSlice nodes first position equals: 0@0.
+	self assert: aSlice nodes first extent equals: 50@90.
+	self assert: aSlice nodes second position equals: 0@90.
+	self assert: aSlice nodes second extent equals: 50@60.
+	self assert: aNode position equals: 0@150.
+	self assert: aNode extent equals: 50@150.
+	self assert: aSlice extent equals: 50@300.
+	self assert: aSlice remainingExtent equals: 50@0.
+	^ aSlice
+]
+
+{ #category : #'examples - nodes' }
+GtGraphTreemapLayoutExamples >> sliceVerticalWithTwoNodes [
+	<gtExample>
+	| aSlice aNode |
+	aSlice := self sliceVerticalWithOneNode.
+	aNode := self node weight: 0.2.
+	aSlice addNode: aNode.
+	self assert: aSlice nodes size equals: 2.
+	self assert: aSlice nodes second equals: aNode.
+	self assert: aSlice nodes first position equals: 0@0.
+	self assert: aSlice nodes first extent equals: 50@90.
+	self assert: aNode position equals: 0@90.
+	self assert: aNode extent equals: 50@60.
+	self assert: aSlice extent equals: 50@300.
+	self assert: aSlice remainingExtent equals: 50@150.
 	^ aSlice
 ]
 
