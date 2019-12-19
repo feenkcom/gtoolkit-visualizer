@@ -4,3 +4,8 @@ Extension { #name : #BlLayoutCommonConstraints }
 BlLayoutCommonConstraints >> graph [
 	^ self at: GtGraphLayout
 ]
+
+{ #category : #'*GToolkit-BlocGraph-Layouts' }
+BlLayoutCommonConstraints >> treemap [
+	^ self at: GtGraphTreemapLayout
+]
