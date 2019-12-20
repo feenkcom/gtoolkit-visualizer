@@ -1,6 +1,9 @@
 Class {
 	#name : #GtGraphTreemapLayout,
 	#superclass : #BlLayout,
+	#instVars : [
+		'sortFunction'
+	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
@@ -22,6 +25,22 @@ GtGraphTreemapLayout class >> squarify [
 { #category : #factory }
 GtGraphTreemapLayout class >> verticalSlice [
 	^ GtGraphTreemapSliceVerticalLayout new
+]
+
+{ #category : #initialization }
+GtGraphTreemapLayout >> defaultSortFunction [
+	^ [ :theElements | theElements ]
+]
+
+{ #category : #'instance creation' }
+GtGraphTreemapLayout >> descendentSortFunction [
+	^ [ :theElements | theElements sort: [ :a :b | a constraints treemap weight > b constraints treemap weight ] ]
+]
+
+{ #category : #initialization }
+GtGraphTreemapLayout >> initialize [
+	super initialize.
+	sortFunction := self defaultSortFunction.
 ]
 
 { #category : #layout }
@@ -59,6 +78,7 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	].
 
 	"TODO: sort children"
+	self sortChildren: theChildren.
 	
 	"Measure children"
 	anAssoc := theChildren collect: [ :eachChild | 
@@ -84,6 +104,11 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	].
 	
 	self measureIgnored: anElement with: anExtentSpec
+]
+
+{ #category : #sorting }
+GtGraphTreemapLayout >> sortChildren: theChildren [
+	sortFunction value: theChildren
 ]
 
 { #category : #'instance creation' }
