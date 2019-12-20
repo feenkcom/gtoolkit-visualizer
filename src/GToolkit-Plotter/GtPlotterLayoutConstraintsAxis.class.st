@@ -2,10 +2,9 @@ Class {
 	#name : #GtPlotterLayoutConstraintsAxis,
 	#superclass : #BlLayoutConstraintsAxis,
 	#instVars : [
-		'axis',
-		'tick'
+		'axis'
 	],
-	#category : 'GToolkit-Plotter-Layout'
+	#category : #'GToolkit-Plotter-Layout'
 }
 
 { #category : #accessing }
@@ -34,22 +33,5 @@ GtPlotterLayoutConstraintsAxis >> isAxis [
 
 { #category : #testing }
 GtPlotterLayoutConstraintsAxis >> isTick [
-	"Return true if an element to which I assign represents a tick"
-	<return: #Boolean>
-
-	^ tick isNotNil
-]
-
-{ #category : #accessing }
-GtPlotterLayoutConstraintsAxis >> tick [
-	self
-		assert: [ tick isNotNil ]
-		description: [ 'Can not access tick if an element does not represent it' ].
-
-	^ tick
-]
-
-{ #category : #accessing }
-GtPlotterLayoutConstraintsAxis >> tick: anObject [
-	tick := anObject
+	^ false
 ]
