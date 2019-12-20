@@ -81,6 +81,12 @@ GtGraphTreemapRectangle >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtGraphTreemapRectangle >> hasBounds [
+	^ self position isNotNil and: [ 
+		self extent isNotNil ]
+]
+
 { #category : #accessing }
 GtGraphTreemapRectangle >> height [
 	^ self extent y

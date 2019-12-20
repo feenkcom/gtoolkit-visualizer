@@ -1,23 +1,28 @@
 Class {
-	#name : #GtGraphTreemapSquarifyPortraitRectangle,
+	#name : #GtGraphTreemapSquarifyPortraitHorizontalRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #'instance creation' }
+GtGraphTreemapSquarifyPortraitHorizontalRectangle class >> newOtherDirection [
+	^ GtGraphTreemapSquarifyPortraitVerticalRectangle new
+]
+
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
+GtGraphTreemapSquarifyPortraitHorizontalRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
 	| aLenght |
 	aLenght := aWeightRatio * anOccupiedExtent x.
 	^ (aLenght / anOccupiedExtent y) max: (anOccupiedExtent y / aLenght).
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> extentOccupiedBy: aRow [
+GtGraphTreemapSquarifyPortraitHorizontalRectangle >> extentOccupiedBy: aRow [
 	^ self extent * (1 @ aRow occupiedWeight)
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
+GtGraphTreemapSquarifyPortraitHorizontalRectangle >> layoutRow: aRow [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle anOccupiedRectangle |
 	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
 	anOriginalArea := self original volume.
@@ -44,13 +49,13 @@ GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyPortraitRectangle >> length [
+GtGraphTreemapSquarifyPortraitHorizontalRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
 	<return: #Number>
 	^ self width
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyPortraitRectangle >> name [
-	^ 'Portrait'
+GtGraphTreemapSquarifyPortraitHorizontalRectangle >> name [
+	^ 'Portrait Horizontal'
 ]

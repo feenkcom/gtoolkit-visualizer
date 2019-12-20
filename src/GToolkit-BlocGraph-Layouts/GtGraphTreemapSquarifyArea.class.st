@@ -27,6 +27,27 @@ GtGraphTreemapSquarifyArea >> areasDo: anOneArgBlock [
 	nextArea ifNotNil: [ :theNextRow | theNextRow areasDo: anOneArgBlock ]
 ]
 
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarifyArea >> asElementWithOccupiedArea [
+	| aContainer |
+	aContainer := BlElement new.
+	aContainer layout: BlFitLayout new.
+	aContainer constraintsDo: [ :c |
+		c horizontal fitContent.
+		c vertical fitContent ].
+	aContainer addChild: self rectangle asElementWithOccupiedArea.
+	self nodesDo: [ :eachNode | 
+		eachNode hasBounds ifTrue: [ 
+			| anElement |
+			anElement := eachNode asElement
+				size: eachNode extent asFloatPoint;
+				relocate: eachNode position asFloatPoint.
+			anElement allChildrenBreadthFirstDo: [ :eachChild | 
+				eachChild background: BlBackground transparent ]. 
+			aContainer addChild: anElement ] ].
+	^ aContainer
+]
+
 { #category : #copying }
 GtGraphTreemapSquarifyArea >> copyWithNode: aNode [ 
 	^ self class new 
@@ -70,7 +91,11 @@ GtGraphTreemapSquarifyArea >> gtNodesFor: aView [
 GtGraphTreemapSquarifyArea >> gtPreviewFor: aView [
 	<gtView>
 	self rectangle ifNil: [ ^ aView empty ].
-	^ self rectangle gtPreviewFor: aView
+	^ aView explicit
+		title: 'Preview';
+		priority: 1;
+		stencil: [ self asElementWithOccupiedArea asScalableElement
+			margin: (BlInsets all: 10) ]
 ]
 
 { #category : #initialization }
@@ -78,6 +103,11 @@ GtGraphTreemapSquarifyArea >> initialize [
 	super initialize.
 	nodes := #().
 	rectangle := GtGraphTreemapSquarifyAreaRectangle null.
+]
+
+{ #category : #layout }
+GtGraphTreemapSquarifyArea >> layoutNodes [
+	self rectangle layoutRow: self
 ]
 
 { #category : #accessing }
@@ -146,27 +176,39 @@ GtGraphTreemapSquarifyArea >> rectangleRemainingBounds [
 
 { #category : #squarifying }
 GtGraphTreemapSquarifyArea >> squarifyHereNode: aNode [ 
-	| aNewRow |
+	| aNewArea aSwitchedArea aBest |
 	self nodes ifEmpty: [ 
 		self addNode: aNode.
-		self rectangle layoutRow: self.
+		self layoutNodes.
 		^ self ].
-	aNewRow := self copyWithNode: aNode.
-	(self worst >= aNewRow worst)
-		ifTrue: [
-			"the spaect ratio is improved"
+	aNewArea := self copyWithNode: aNode.
+	aSwitchedArea := (self copyWithNode: aNode) switchDirection.
+	aBest := { self. aNewArea. aSwitchedArea } detectMin: [ :each | each worst ].
+	aBest == aNewArea ifTrue: [
+			"the aspect ratio is improved"
 			self addNode: aNode.
-			self rectangle layoutRow: self ]
-		ifFalse: [ 
+			self layoutNodes ].
+	aBest == aSwitchedArea ifTrue: [
+			"the aspect ratio is improved"
+			self switchDirection.
+			self addNode: aNode.
+			self layoutNodes ].
+	aBest == self ifTrue: [ 
+			"the aspect ratio is worst, let's create a new area"
 			nextArea := GtGraphTreemapSquarifyArea new.
 			nextArea rectangle: self rectangle remainingRectangle.
-			nextArea squarifyHereNode: aNode. ]
+			nextArea squarifyHereNode: aNode. ].
 ]
 
 { #category : #squarifying }
 GtGraphTreemapSquarifyArea >> squarifyNode: aNode [ 
 	nextArea ifNotNil: [ nextArea squarifyNode: aNode. ^ self ].
 	self squarifyHereNode: aNode.
+]
+
+{ #category : #converting }
+GtGraphTreemapSquarifyArea >> switchDirection [
+	self rectangle: self rectangle asOtherDirecton
 ]
 
 { #category : #accessing }
