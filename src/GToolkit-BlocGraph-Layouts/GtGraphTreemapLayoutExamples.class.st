@@ -4,6 +4,16 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> basicRow [
+	<gtExample>
+	| aRow |
+	aRow := GtGraphTreemapSquarifyRow new.
+	self assert: aRow allRows size equals: 1.
+	self assert: aRow allRows first equals: aRow.
+	^ aRow
+]
+
 { #category : #'examples - nodes' }
 GtGraphTreemapLayoutExamples >> basicSliceHorizontal [
 	<gtExample>
@@ -30,6 +40,16 @@ GtGraphTreemapLayoutExamples >> basicSliceVertical [
 	^ aSlice
 ]
 
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> basicSquarify [
+	<gtExample>
+	| aTree |
+	aTree := GtGraphTreemap squarify.
+	self assert: aTree area isZero.
+	self assert: aTree nodes isEmpty.
+	^ aTree
+]
+
 { #category : #'examples - nodes' }
 GtGraphTreemapLayoutExamples >> node [
 	<gtExample>
@@ -43,7 +63,7 @@ GtGraphTreemapLayoutExamples >> node [
 GtGraphTreemapLayoutExamples >> numberElements [
 	<gtExample>
 	| theElements |
-	theElements := self nodes: (1 to: 5).
+	theElements := self nodes: #(6 6 4 3 2 2 1).
 	theElements do: [ :eachElement | 
 		eachElement background: Color random.
 		eachElement constraintsDo: [ :c | 
@@ -115,6 +135,93 @@ GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	aView layout: GtGraphTreemapLayout verticalSlice.
 	self applyLayoutIn: aView.
 	^ aView
+]
+
+{ #category : #'examples - numbers' }
+GtGraphTreemapLayoutExamples >> numbersSquarified [
+	<gtExample>
+	| aView |
+	aView := self numbers.
+	aView layout: GtGraphTreemapLayout squarify.
+	self applyLayoutIn: aView.
+	^ aView
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> row [
+	<gtExample>
+	| aRow |
+	aRow := self basicRow.
+	aRow extent: 600 @ 400.
+	self assert: aRow extent equals: 600@400.
+	self assert: aRow allRows size equals: 1.
+	self assert: aRow allRows first equals: aRow.
+	^ aRow
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> rowWithOneNode [
+	<gtExample>
+	| aRow |
+	aRow := self row.
+	aRow addNode: (self node weight: 1/4) "6".
+	"aRow rectangle layoutRow: aRow."
+	self assert: aRow nodesCount equals: 1.
+	self assert: aRow extent equals: 600@400.
+	self assert: aRow allRows size equals: 1.
+	self assert: aRow allRows first equals: aRow.
+	self assert: aRow worst equals: 8/3 "2.6666666666666665".
+	^ aRow
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> rowWithThreeNodes [
+	<gtExample>
+	| aRow |
+	aRow := self rowWithTwoNodes.
+	aRow addNode: (self node weight: 1/6) "4".
+	aRow rectangle layoutRow: aRow.
+	self assert: aRow nodesCount equals: 3.
+	self assert: aRow extent equals: 600@400.
+	self assert: aRow allRows size equals: 1.
+	self assert: aRow allRows first equals: aRow.
+	self assert: aRow worst equals: 4.
+	^ aRow
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> rowWithTwoNodes [
+	<gtExample>
+	| aRow |
+	aRow := self rowWithOneNode.
+	aRow addNode: (self node weight: 1/4) "6".
+	aRow rectangle layoutRow: aRow.
+	self assert: aRow nodesCount equals: 2.
+	self assert: aRow extent equals: 600@400.
+	self assert: aRow allRows size equals: 1.
+	self assert: aRow allRows first equals: aRow.
+	self assert: aRow worst equals: 3/2.
+	^ aRow
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> rowWorstWithOneAndTwoNodes [
+	<gtExample>
+	|  aRowOne aRowTwo |
+	aRowOne := self rowWithOneNode.
+	aRowTwo := self rowWithTwoNodes.
+	self assert: aRowOne worst >= aRowTwo worst.
+	^ { aRowOne. aRowTwo }
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> rowWorstWithTwoAndThreeNodes [
+	<gtExample>
+	|  aRowOne aRowTwo |
+	aRowOne := self rowWithTwoNodes.
+	aRowTwo := self rowWithThreeNodes.
+	self assert: aRowOne worst < aRowTwo worst.
+	^ { aRowOne. aRowTwo }
 ]
 
 { #category : #'examples - nodes' }
@@ -249,6 +356,178 @@ GtGraphTreemapLayoutExamples >> sliceVerticalWithTwoNodes [
 	self assert: aSlice extent equals: 50@300.
 	self assert: aSlice remainingExtent equals: 50@150.
 	^ aSlice
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarify [
+	<gtExample>
+	| aTree |
+	aTree := GtGraphTreemap squarify.
+	aTree width: 600 height: 400.
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	self assert: aTree nodes isEmpty.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithFiveNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithFourNodes.
+	aNode := self node weight: 1/12 "2".
+	aTree addNode: aNode.
+	self assert: aTree allRows size equals: 3.
+	self assert: aTree nodes size equals: 5.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes third position equals: 300@0.
+	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
+	self assert: aTree nodes fourth position equals: ((3300/7)@0).
+	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
+	self assert: aTree nodes fifth equals: aNode.
+	self assert: aTree nodes fifth position equals: (300@(700/3)).
+	self assert: aTree nodes fifth extent equals: (120@(500/3)).
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithThreeNodes.
+	aNode := self node weight: 1/8 "3".
+	aTree addNode: aNode.
+	self assert: aTree allRows size equals: 2.
+	self assert: aTree nodes size equals: 4.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes third position equals: 300@0.
+	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
+	self assert: aTree nodes fourth equals: aNode.
+	self assert: aTree nodes fourth position equals: ((3300/7)@0).
+	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarify.
+	aNode := self node weight: 1/4 "6".
+	aTree addNode: aNode.
+	self assert: aTree nodes size equals: 1.
+	self assert: aTree nodes first equals: aNode.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 150@400.
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithSevenNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithSixNodes.
+	aNode := self node weight: 1/24 "1".
+	aTree addNode: aNode.
+	self assert: aTree allRows size equals: 4.
+	self assert: aTree nodes size equals: 7.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes third position equals: 300@0.
+	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
+	self assert: aTree nodes fourth position equals: ((3300/7)@0).
+	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
+	self assert: aTree nodes fifth position equals: (300@(700/3)).
+	self assert: aTree nodes fifth extent equals: (240@(250/3)).
+	self assert: aTree nodes sixth position equals: (300@(950/3)).
+	self assert: aTree nodes sixth extent equals: (240@(250/3)).
+	self assert: aTree nodes seventh equals: aNode.
+	self assert: aTree nodes seventh position equals: (540@(700/3)).
+	self assert: aTree nodes seventh extent equals: (60@(500/3)).
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithSixNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithFiveNodes.
+	aNode := self node weight: 1/12 "2".
+	aTree addNode: aNode.
+	self assert: aTree allRows size equals: 3.
+	self assert: aTree nodes size equals: 6.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes third position equals: 300@0.
+	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
+	self assert: aTree nodes fourth position equals: ((3300/7)@0).
+	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
+	self assert: aTree nodes fifth position equals: (300@(700/3)).
+	self assert: aTree nodes fifth extent equals: (240@(250/3)).
+	self assert: aTree nodes sixth equals: aNode.
+	self assert: aTree nodes sixth position equals: (300@(950/3)).
+	self assert: aTree nodes sixth extent equals: (240@(250/3)).
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithTwoNodes.
+	aNode := self node weight: 1/6 "4".
+	aTree addNode: aNode.
+	self assert: aTree allRows size equals: 2.
+	self assert: aTree nodes size equals: 3.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes third equals: aNode.
+	self assert: aTree nodes third position equals: 300@0.
+	self assert: aTree nodes third extent equals: 300@ (400/3).
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
+]
+
+{ #category : #'examples - squarify' }
+GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyWithOneNode.
+	aNode := self node weight: 1/4 "6".
+	aTree addNode: aNode.
+	self assert: aTree allRows size equals: 1.
+	self assert: aTree nodes size equals: 2.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes second equals: aNode.
+	self assert: aTree nodes second position equals: 0@200.
+	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree extent equals: 600@400.
+	self assert: aTree area equals: 600 * 400.
+	^ aTree
 ]
 
 { #category : #'building - graph' }

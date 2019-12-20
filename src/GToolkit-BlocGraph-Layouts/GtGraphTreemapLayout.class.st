@@ -15,6 +15,11 @@ GtGraphTreemapLayout class >> horizontalSlice [
 ]
 
 { #category : #factory }
+GtGraphTreemapLayout class >> squarify [
+	^ GtGraphTreemapSquarifiedLayout new
+]
+
+{ #category : #factory }
 GtGraphTreemapLayout class >> verticalSlice [
 	^ GtGraphTreemapSliceVerticalLayout new
 ]
@@ -71,6 +76,6 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 
 { #category : #'instance creation' }
 GtGraphTreemapLayout >> treeFrom: anExtent [
-	<return: #GtGraphTreemapSlice>
+	<return: #GtGraphTreemap>
 	^ self subclassResponsibility
 ]
