@@ -23,6 +23,31 @@ GtGraphTreemapSquarifyNoRectangle class >> uniqueInstance [
 ]
 
 { #category : #accessing }
+GtGraphTreemapSquarifyNoRectangle >> bounds [
+	^ 0@0 extent: 0@0
+]
+
+{ #category : #accessing }
 GtGraphTreemapSquarifyNoRectangle >> extent [
 	^ 0@0
+]
+
+{ #category : #'gt-inspector-extension' }
+GtGraphTreemapSquarifyNoRectangle >> gtPreviewFor: aView [
+	^ aView empty
+]
+
+{ #category : #testing }
+GtGraphTreemapSquarifyNoRectangle >> isDefined [
+	^ false
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyNoRectangle >> name [
+	^ 'Undefined'
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyNoRectangle >> remainingBounds [
+	^ self bounds
 ]

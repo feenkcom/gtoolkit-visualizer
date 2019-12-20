@@ -31,7 +31,7 @@ GtGraphTreemap class >> squarify [
 { #category : #adding }
 GtGraphTreemap >> addNode: aNode [
 	self updateNode: aNode.
-	self nodes: self nodes , { aNode }
+	self nodes: (self nodes copyWith: aNode)
 ]
 
 { #category : #accessing }
@@ -55,7 +55,8 @@ GtGraphTreemap >> asElement [
 	self nodes do: [ :eachNode | 
 		aContainer addChild: (eachNode asElement
 			background: Color random;
-			relocate: eachNode position) ].
+			size: eachNode extent asFloatPoint;
+			relocate: eachNode position asFloatPoint) ].
 	^ aContainer
 ]
 

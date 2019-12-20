@@ -5,22 +5,43 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow in: aTree [
-	| anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle |
-	anOccupiedArea := aRow occupiedArea asFloat.
-	anExtentToOccupy := self extent * (1 @ anOccupiedArea).
+GtGraphTreemapSquarifyPortraitRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
+	| aLenght |
+	aLenght := aWeightRatio * anOccupiedExtent x.
+	^ (aLenght / anOccupiedExtent y) max: (anOccupiedExtent y / aLenght).
+]
+
+{ #category : #'as yet unclassified' }
+GtGraphTreemapSquarifyPortraitRectangle >> extentOccupiedBy: aRow [
+	^ self extent * (1 @ aRow occupiedWeight)
+]
+
+{ #category : #'as yet unclassified' }
+GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
+	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle |
+	anOriginalArea := self original volume.
+	anOccupiedArea := anOriginalArea * aRow occupiedWeight.
+	anExtentToOccupy := self width @ (anOccupiedArea / self width).
 	aNextNodePosition := self position.
 	aRow nodes do: [ :eachNode | 
 		| aHeight aWidth |
-		aWidth := anExtentToOccupy x.
-		aHeight := anExtentToOccupy y * eachNode weight / anOccupiedArea.
+		aHeight := anExtentToOccupy y.
+		aWidth := anOriginalArea * eachNode weight / aHeight.
 		eachNode extent: (aWidth @ aHeight).
 		eachNode position: aNextNodePosition.
-		aNextNodePosition := eachNode bottomLeft ].
+		aNextNodePosition := eachNode topRight ].
 	aRemainingRectangle := self class
 		position: self position + (0 @ anExtentToOccupy y)
 		extent: self extent - (0 @ anExtentToOccupy y).
+	aRemainingRectangle original: self original.
 	self remainingRectangle: aRemainingRectangle
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyPortraitRectangle >> length [
+	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
+	<return: #Number>
+	^ self width
 ]
 
 { #category : #accessing }

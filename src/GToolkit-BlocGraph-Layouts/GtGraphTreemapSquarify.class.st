@@ -21,6 +21,11 @@ GtGraphTreemapSquarify class >> initializePhi [
 	Phi ifNil: [ Phi := (1 + 5 sqrt) / 2 ]
 ]
 
+{ #category : #enumerating }
+GtGraphTreemapSquarify >> allRows [
+	^ row allRows
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarify >> extent [
 	^ self row extent
@@ -33,6 +38,13 @@ GtGraphTreemapSquarify >> extent: aPoint [
 		description: [ 'Extent must be non-nil' ].
 	self row extent: aPoint.
 	self area: aPoint x * aPoint y
+]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarify >> gtAllRowsFor: aView [
+	<gtView>
+	row ifNil: [ ^ aView empty ].
+	^ row gtAllRowsFor: aView
 ]
 
 { #category : #initialization }
@@ -93,10 +105,7 @@ GtGraphTreemapSquarify >> squarify: aCollection inRectangle: aGtGraphTreemapSqua
 
 { #category : #'seas optimizations' }
 GtGraphTreemapSquarify >> updateNode: aNode [
-	| theNewNodes aRectangle |
-	theNewNodes := self nodes copyWith: aNode.
-	aRectangle := GtGraphTreemapSquarifyRectangle position: 0@0 extent: self extent.
-	self squarify: theNewNodes inRectangle: aRectangle.
+	self row squarifyNode: aNode
 ]
 
 { #category : #accessing }
