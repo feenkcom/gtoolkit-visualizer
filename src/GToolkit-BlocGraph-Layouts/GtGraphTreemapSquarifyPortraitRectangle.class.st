@@ -18,7 +18,7 @@ GtGraphTreemapSquarifyPortraitRectangle >> extentOccupiedBy: aRow [
 
 { #category : #'as yet unclassified' }
 GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
-	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle |
+	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle anOccupiedRectangle |
 	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
 	anOriginalArea := self original volume.
 	anOccupiedArea := anOriginalArea * aRow occupiedWeight.
@@ -35,7 +35,12 @@ GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
 		position: self position + (0 @ anExtentToOccupy y)
 		extent: self extent - (0 @ anExtentToOccupy y).
 	aRemainingRectangle original: self original.
-	self remainingRectangle: aRemainingRectangle
+	self remainingRectangle: aRemainingRectangle.
+	anOccupiedRectangle := self class
+		position: self position
+		extent: anExtentToOccupy.
+	anOccupiedRectangle original: self original.
+	self occupiedRectangle: anOccupiedRectangle.
 ]
 
 { #category : #accessing }
