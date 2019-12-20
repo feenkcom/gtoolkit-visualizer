@@ -18,7 +18,7 @@ GtGraphTreemapSquarifyRow >> addNode: aNode [
 GtGraphTreemapSquarifyRow >> allRows [
 	<return: #Array of: #GtGraphTreemapSquarifyRow>
 	^ Array streamContents: [ :aStream | 
-		self streamRowsTo: aStream ]
+		self rowsDo: [ :eachRow | aStream nextPut: eachRow ] ]
 ]
 
 { #category : #copying }
@@ -106,6 +106,11 @@ GtGraphTreemapSquarifyRow >> nodesCount [
 	^ self nodes size
 ]
 
+{ #category : #enumerating }
+GtGraphTreemapSquarifyRow >> nodesDo: anOneArgBlock [
+	self nodes do: anOneArgBlock
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyRow >> occupiedWeight [
 	^ self nodes 
@@ -138,6 +143,12 @@ GtGraphTreemapSquarifyRow >> rectangleRemainingBounds [
 	^ self rectangle remainingBounds
 ]
 
+{ #category : #enumerating }
+GtGraphTreemapSquarifyRow >> rowsDo: anOneArgBlock [
+	anOneArgBlock cull: self.
+	nextRow ifNotNil: [ :theNextRow | theNextRow rowsDo: anOneArgBlock ]
+]
+
 { #category : #squarifying }
 GtGraphTreemapSquarifyRow >> squarifyHereNode: aNode [ 
 	| aNewRow |
@@ -161,12 +172,6 @@ GtGraphTreemapSquarifyRow >> squarifyHereNode: aNode [
 GtGraphTreemapSquarifyRow >> squarifyNode: aNode [ 
 	nextRow ifNotNil: [ nextRow squarifyNode: aNode. ^ self ].
 	self squarifyHereNode: aNode.
-]
-
-{ #category : #enumerating }
-GtGraphTreemapSquarifyRow >> streamRowsTo: aStream [
-	aStream nextPut: self.
-	nextRow ifNotNil: [ nextRow streamRowsTo: aStream ]
 ]
 
 { #category : #accessing }

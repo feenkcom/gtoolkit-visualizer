@@ -80,7 +80,7 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	"sort children"
 	self sortChildren: theChildren.
 	
-	"Measure children"
+	"measure children"
 	anAssoc := theChildren collect: [ :eachChild | 
 		| aNode |
 
