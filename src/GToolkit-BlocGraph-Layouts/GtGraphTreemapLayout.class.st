@@ -35,7 +35,7 @@ GtGraphTreemapLayout >> layout: anElement in: aRectangle [
 
 { #category : #layout }
 GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
-	| aTree aTotalWeight |
+	| aTree aTotalWeight theChildren anAssoc |
 
 	"since the treemap layout does not support unspecified measurement spec (fitContent of the container)
 	we can directly compute the size of the parent"
@@ -53,23 +53,35 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	aTotalWeight isZero
 		ifTrue: [ aTotalWeight := 1.0 ].
 	
-	"the main measurement pass"
-	self measuredChildren: anElement do: [ :eachChild |
+	"obtain children"
+	theChildren := Array streamContents: [ :aStream |
+		self measuredChildren: anElement do: [ :eachChild | aStream nextPut: eachChild ]
+	].
+
+	"TODO: sort children"
+	
+	"Measure children"
+	anAssoc := theChildren collect: [ :eachChild | 
 		| aNode |
 
 		aNode := GtGraphTreemapNode new.
 		aNode weight: (eachChild constraints treemap weight / aTotalWeight).
-		aTree addNode: aNode.
+		aTree addNode: aNode.	
+		eachChild -> aNode.
+	].
 
-		eachChild measuredBounds
-			position: aNode position + anElement padding topLeft.
-		
+	"the main measurement pass"
+	anAssoc do: [ :eachAssoc |
+		eachAssoc key measuredBounds
+			position: eachAssoc value position asFloatPoint + anElement padding topLeft.
+
 		self
-			measureChild: eachChild
+			measureChild: eachAssoc key
 			parentSpec: anExtentSpec
 			"we pass how much space is already used inside of the parent (the space a child can not occupy)"
-			widthUsed: anElement measuredWidth - (aNode extent x - eachChild margin width)
-			heightUsed: anElement measuredHeight - (aNode extent y - eachChild margin height) ].
+			widthUsed: anElement measuredWidth - (eachAssoc value extent x asFloat "- eachChild margin width")
+			heightUsed: anElement measuredHeight - (eachAssoc value extent y asFloat "- eachChild margin height")
+	].
 	
 	self measureIgnored: anElement with: anExtentSpec
 ]
