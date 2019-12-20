@@ -43,6 +43,7 @@ GtGraphTreemapSquarifyRow >> gtAllRowsFor: aView [
 	<gtView>
 	^ aView columnedList 
 		title: 'Rows';
+		priority: 3;
 		items: [ self allRows ];
 		column: 'Type' item: [ :aRow | aRow orientationName ] width: 100;
 		column: 'Bounds' item: [ :aRow | aRow rectangleBounds ];
@@ -55,7 +56,8 @@ GtGraphTreemapSquarifyRow >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
 	^ (self nodes gtItemsFor: aView)
-		title: 'Nodes'
+		title: 'Nodes';
+		priority: 2
 ]
 
 { #category : #'gt-extension' }

@@ -147,6 +147,50 @@ GtGraphTreemapLayoutExamples >> numbersSquarified [
 	^ aView
 ]
 
+{ #category : #'examples - utilities' }
+GtGraphTreemapLayoutExamples >> rectangle [
+	<gtExample>
+	| aRectangle |
+	aRectangle := GtGraphTreemapSquarifyRectangle new.
+	self assert: aRectangle position equals: 0 @ 0.
+	self assert: aRectangle extent equals: 0 @ 0.
+	self assert: aRectangle original equals: aRectangle.
+	^ aRectangle
+]
+
+{ #category : #'examples - utilities' }
+GtGraphTreemapLayoutExamples >> rectangleAsElementWithInformation [
+	<gtExample>
+	| aRectangle anElement |
+	aRectangle := self rectangle.
+	aRectangle 
+		position: 3@6; 
+		extent: 9@12.
+	anElement := aRectangle asElementWithInformation.
+	self assert: anElement isNotNil.
+	self assert: (anElement isKindOf: BlElement).
+	^ aRectangle
+]
+
+{ #category : #'examples - utilities' }
+GtGraphTreemapLayoutExamples >> rectangleWithOriginalAsElementWithInformation [
+	<gtExample>
+	| aRectangle anElement anOriginal |
+	anOriginal := self rectangle.
+	anOriginal 
+		position: 7@14; 
+		extent: 108@72.
+	aRectangle := self rectangle.
+	aRectangle 
+		original: anOriginal;
+		position: 14@21; 
+		extent: 21@12.
+	anElement := aRectangle asElementWithInformation.
+	self assert: anElement isNotNil.
+	self assert: (anElement isKindOf: BlElement).
+	^ aRectangle
+]
+
 { #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> row [
 	<gtExample>
