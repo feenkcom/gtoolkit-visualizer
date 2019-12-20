@@ -84,9 +84,20 @@ GtGraphTreemapSquarifyRectangle >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyRectangle >> hasSpace [
+	<return: #Boolean>
+	^ self width isZero or: [ self height isZero ]
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyRectangle >> height [
 	^ self extent y
+]
+
+{ #category : #testing }
+GtGraphTreemapSquarifyRectangle >> ifNoSpace: aBlockClosure [ 
+	^ self hasSpace ifTrue: aBlockClosure
 ]
 
 { #category : #initialization }
@@ -102,9 +113,17 @@ GtGraphTreemapSquarifyRectangle >> isDefined [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #measuring }
 GtGraphTreemapSquarifyRectangle >> layoutRow: aGtGraphTreemapSquarifyRow [
 	^ self subclassResponsibility
+]
+
+{ #category : #measuring }
+GtGraphTreemapSquarifyRectangle >> layoutRowInNoSpace: aRow [ 
+	aRow nodesDo: [ :eachNode | 
+		eachNode 
+			position: 0@0;
+			extent: 0@0 ]
 ]
 
 { #category : #accessing }
