@@ -1,6 +1,9 @@
 Class {
 	#name : #GtGraphTreemapLayout,
 	#superclass : #BlLayout,
+	#instVars : [
+		'sortFunction'
+	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
@@ -24,6 +27,22 @@ GtGraphTreemapLayout class >> verticalSlice [
 	^ GtGraphTreemapSliceVerticalLayout new
 ]
 
+{ #category : #initialization }
+GtGraphTreemapLayout >> defaultSortFunction [
+	^ [ :theElements | theElements ]
+]
+
+{ #category : #'instance creation' }
+GtGraphTreemapLayout >> descendentSortFunction [
+	^ [ :theElements | theElements sort: [ :a :b | a constraints treemap weight > b constraints treemap weight ] ]
+]
+
+{ #category : #initialization }
+GtGraphTreemapLayout >> initialize [
+	super initialize.
+	sortFunction := self defaultSortFunction.
+]
+
 { #category : #layout }
 GtGraphTreemapLayout >> layout: anElement in: aRectangle [
 
@@ -35,7 +54,7 @@ GtGraphTreemapLayout >> layout: anElement in: aRectangle [
 
 { #category : #layout }
 GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
-	| aTree aTotalWeight |
+	| aTree aTotalWeight theChildren anAssoc |
 
 	"since the treemap layout does not support unspecified measurement spec (fitContent of the container)
 	we can directly compute the size of the parent"
@@ -53,25 +72,43 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	aTotalWeight isZero
 		ifTrue: [ aTotalWeight := 1.0 ].
 	
-	"the main measurement pass"
-	self measuredChildren: anElement do: [ :eachChild |
+	"obtain children"
+	theChildren := Array streamContents: [ :aStream |
+		self measuredChildren: anElement do: [ :eachChild | aStream nextPut: eachChild ]
+	].
+
+	"sort children"
+	self sortChildren: theChildren.
+	
+	"Measure children"
+	anAssoc := theChildren collect: [ :eachChild | 
 		| aNode |
 
 		aNode := GtGraphTreemapNode new.
 		aNode weight: (eachChild constraints treemap weight / aTotalWeight).
-		aTree addNode: aNode.
+		aTree addNode: aNode.	
+		eachChild -> aNode.
+	].
 
-		eachChild measuredBounds
-			position: aNode position + anElement padding topLeft.
-		
+	"the main measurement pass"
+	anAssoc do: [ :eachAssoc |
+		eachAssoc key measuredBounds
+			position: eachAssoc value position asFloatPoint + anElement padding topLeft.
+
 		self
-			measureChild: eachChild
+			measureChild: eachAssoc key
 			parentSpec: anExtentSpec
 			"we pass how much space is already used inside of the parent (the space a child can not occupy)"
-			widthUsed: anElement measuredWidth - (aNode extent x - eachChild margin width)
-			heightUsed: anElement measuredHeight - (aNode extent y - eachChild margin height) ].
+			widthUsed: anElement measuredWidth - (eachAssoc value extent x asFloat - eachAssoc key margin width)
+			heightUsed: anElement measuredHeight - (eachAssoc value extent y asFloat - eachAssoc key margin height)
+	].
 	
 	self measureIgnored: anElement with: anExtentSpec
+]
+
+{ #category : #sorting }
+GtGraphTreemapLayout >> sortChildren: theChildren [
+	sortFunction value: theChildren
 ]
 
 { #category : #'instance creation' }
