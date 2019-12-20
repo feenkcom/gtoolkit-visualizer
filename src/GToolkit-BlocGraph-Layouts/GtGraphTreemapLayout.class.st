@@ -77,7 +77,7 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 		self measuredChildren: anElement do: [ :eachChild | aStream nextPut: eachChild ]
 	].
 
-	"TODO: sort children"
+	"sort children"
 	self sortChildren: theChildren.
 	
 	"Measure children"
@@ -99,8 +99,8 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 			measureChild: eachAssoc key
 			parentSpec: anExtentSpec
 			"we pass how much space is already used inside of the parent (the space a child can not occupy)"
-			widthUsed: anElement measuredWidth - (eachAssoc value extent x asFloat "- eachChild margin width")
-			heightUsed: anElement measuredHeight - (eachAssoc value extent y asFloat "- eachChild margin height")
+			widthUsed: anElement measuredWidth - (eachAssoc value extent x asFloat - eachAssoc key margin width)
+			heightUsed: anElement measuredHeight - (eachAssoc value extent y asFloat - eachAssoc key margin height)
 	].
 	
 	self measureIgnored: anElement with: anExtentSpec
