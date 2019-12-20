@@ -5,20 +5,12 @@ Class {
 		'row',
 		'extent'
 	],
-	#classVars : [
-		'Phi'
-	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #'class initialization' }
-GtGraphTreemapSquarify class >> initialize [
-	self initializePhi.
-]
-
-{ #category : #'class initialization' }
-GtGraphTreemapSquarify class >> initializePhi [
-	Phi ifNil: [ Phi := (1 + 5 sqrt) / 2 ]
+{ #category : #enumerating }
+GtGraphTreemapSquarify >> allRows [
+	^ row allRows
 ]
 
 { #category : #accessing }
@@ -33,6 +25,13 @@ GtGraphTreemapSquarify >> extent: aPoint [
 		description: [ 'Extent must be non-nil' ].
 	self row extent: aPoint.
 	self area: aPoint x * aPoint y
+]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarify >> gtAllRowsFor: aView [
+	<gtView>
+	row ifNil: [ ^ aView empty ].
+	^ row gtAllRowsFor: aView
 ]
 
 { #category : #initialization }
@@ -50,53 +49,14 @@ GtGraphTreemapSquarify >> nodeWeights [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarify >> phi [
-	<return: #Float>
-	^ Phi
-]
-
-{ #category : #accessing }
 GtGraphTreemapSquarify >> row [
 	<return: #GtGraphTreemapSquarifyRow>
 	^ row
 ]
 
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarify >> shortestSide [
-	^ self extent x min: self extent y
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarify >> squarify: theNodes currentRow: aCurrentRow inRectangle: aRectangle [ 
-	| aNode aNewRow |
-	aNode := theNodes first.
-	aNewRow := aCurrentRow copyWithNode: aNode.
-	(aCurrentRow worst < aNewRow worst)
-		ifTrue: [ 
-			theNodes size = 1 
-				ifTrue: [ aRectangle layoutRow: aNewRow in: self ]
-				ifFalse: [ self squarify: theNodes allButFirst currentRow: aNewRow inRectangle: aRectangle ] ]
-		ifFalse: [ 
-			aRectangle layoutRow: aNewRow in: self.
-			theNodes size = 1 ifFalse: [ 
-				self squarify: theNodes currentRow: GtGraphTreemapSquarifyRow new inRectangle: aRectangle remainingRectangle ] ]
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarify >> squarify: aCollection inRectangle: aGtGraphTreemapSquarifyRectangle [ 
-	aCollection ifEmpty: [ ^ self ].
-	self 
-		squarify: aCollection
-		currentRow: GtGraphTreemapSquarifyRow new
-		inRectangle: aGtGraphTreemapSquarifyRectangle
-]
-
 { #category : #'seas optimizations' }
 GtGraphTreemapSquarify >> updateNode: aNode [
-	| theNewNodes aRectangle |
-	theNewNodes := self nodes copyWith: aNode.
-	aRectangle := GtGraphTreemapSquarifyRectangle position: 0@0 extent: self extent.
-	self squarify: theNewNodes inRectangle: aRectangle.
+	self row squarifyNode: aNode
 ]
 
 { #category : #accessing }

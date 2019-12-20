@@ -15,6 +15,11 @@ GtGraphTreemapLayout class >> horizontalSlice [
 ]
 
 { #category : #factory }
+GtGraphTreemapLayout class >> squarify [
+	^ GtGraphTreemapSquarifiedLayout new
+]
+
+{ #category : #factory }
 GtGraphTreemapLayout class >> verticalSlice [
 	^ GtGraphTreemapSliceVerticalLayout new
 ]
