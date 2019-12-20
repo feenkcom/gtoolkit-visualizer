@@ -1,5 +1,5 @@
 Class {
-	#name : #GtGraphTreemapSquarifyRectangle,
+	#name : #GtGraphTreemapSquarifyAreaRectangle,
 	#superclass : #GtGraphTreemapRectangle,
 	#instVars : [
 		'rootRectangle',
@@ -10,19 +10,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtGraphTreemapSquarifyRectangle class >> null [
+GtGraphTreemapSquarifyAreaRectangle class >> null [
 	^ GtGraphTreemapSquarifyNoRectangle uniqueInstance
 ]
 
 { #category : #'instance creation' }
-GtGraphTreemapSquarifyRectangle class >> position: aPosition extent: anExtent [
+GtGraphTreemapSquarifyAreaRectangle class >> position: aPosition extent: anExtent [
 	^ anExtent x > anExtent y
 		ifTrue: [ GtGraphTreemapSquarifyLandscapeRectangle new position: aPosition; extent: anExtent ] 
 		ifFalse: [ GtGraphTreemapSquarifyPortraitRectangle new position: aPosition; extent: anExtent ]
 ]
 
 { #category : #converting }
-GtGraphTreemapSquarifyRectangle >> asElementWithInformation [
+GtGraphTreemapSquarifyAreaRectangle >> asElementWithInformation [
 	<return: #BlElement>
 	| anElement anOriginal aFontSize |
 	anElement := super asElementWithInformation.
@@ -42,7 +42,7 @@ GtGraphTreemapSquarifyRectangle >> asElementWithInformation [
 ]
 
 { #category : #converting }
-GtGraphTreemapSquarifyRectangle >> asElementWithOccupiedArea [ 
+GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [ 
 	<return: #BlElement>
 	^ self occupiedRectangle 
 		ifNotNil: [ :theRectangle |
@@ -51,12 +51,12 @@ GtGraphTreemapSquarifyRectangle >> asElementWithOccupiedArea [
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> extentOccupiedBy: aRow [
+GtGraphTreemapSquarifyAreaRectangle >> extentOccupiedBy: aRow [
 	^ self subclassResponsibility
 ]
 
 { #category : #'gt-extension' }
-GtGraphTreemapSquarifyRectangle >> gtPreviewFor: aView [
+GtGraphTreemapSquarifyAreaRectangle >> gtPreviewFor: aView [
 	self position ifNil: [ ^ aView empty ].
 	self extent ifNil: [ ^ aView empty ].
 	^ aView explicit
@@ -67,42 +67,42 @@ GtGraphTreemapSquarifyRectangle >> gtPreviewFor: aView [
 ]
 
 { #category : #testing }
-GtGraphTreemapSquarifyRectangle >> hasSpace [
+GtGraphTreemapSquarifyAreaRectangle >> hasSpace [
 	<return: #Boolean>
 	^ self width isZero or: [ self height isZero ]
 ]
 
 { #category : #testing }
-GtGraphTreemapSquarifyRectangle >> ifNoSpace: aBlockClosure [ 
+GtGraphTreemapSquarifyAreaRectangle >> ifNoSpace: aBlockClosure [ 
 	^ self hasSpace ifTrue: aBlockClosure
 ]
 
 { #category : #initialization }
-GtGraphTreemapSquarifyRectangle >> initialize [
+GtGraphTreemapSquarifyAreaRectangle >> initialize [
 	super initialize.
 	extent := position := 0@0.
-	remainingRectangle := GtGraphTreemapSquarifyRectangle null.
+	remainingRectangle := GtGraphTreemapSquarifyAreaRectangle null.
 	rootRectangle := self.
 ]
 
 { #category : #testing }
-GtGraphTreemapSquarifyRectangle >> isDefined [
+GtGraphTreemapSquarifyAreaRectangle >> isDefined [
 	^ true
 ]
 
 { #category : #testing }
-GtGraphTreemapSquarifyRectangle >> isRoot [
+GtGraphTreemapSquarifyAreaRectangle >> isRoot [
 	<return: #Boolean>
 	^ self original == self.
 ]
 
 { #category : #measuring }
-GtGraphTreemapSquarifyRectangle >> layoutRow: aGtGraphTreemapSquarifyRow [
+GtGraphTreemapSquarifyAreaRectangle >> layoutRow: aGtGraphTreemapSquarifyRow [
 	^ self subclassResponsibility
 ]
 
 { #category : #measuring }
-GtGraphTreemapSquarifyRectangle >> layoutRowInNoSpace: aRow [ 
+GtGraphTreemapSquarifyAreaRectangle >> layoutRowInNoSpace: aRow [ 
 	aRow nodesDo: [ :eachNode | 
 		eachNode 
 			position: 0@0;
@@ -110,47 +110,47 @@ GtGraphTreemapSquarifyRectangle >> layoutRowInNoSpace: aRow [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> length [
+GtGraphTreemapSquarifyAreaRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
 	<return: #Number>
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> name [
+GtGraphTreemapSquarifyAreaRectangle >> name [
 	^ 'Rectangle'
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> occupiedBounds [
+GtGraphTreemapSquarifyAreaRectangle >> occupiedBounds [
 	<return: #Rectangle>
 	^ self occupiedRectangle bounds
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> occupiedRectangle [
-	<return: #GtGraphTreemapSquarifyRectangle>
+GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle [
+	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ occupiedRectangle
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> occupiedRectangle: aRectangle [ 
+GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle: aRectangle [ 
 	occupiedRectangle := aRectangle
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> original [
-	<return: #GtGraphTreemapSquarifyRectangle>
+GtGraphTreemapSquarifyAreaRectangle >> original [
+	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ rootRectangle ifNil: [ self ]
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> original: aGtGraphTreemapSquarifyRectangle [
+GtGraphTreemapSquarifyAreaRectangle >> original: aGtGraphTreemapSquarifyRectangle [
 	rootRectangle := aGtGraphTreemapSquarifyRectangle
 ]
 
 { #category : #printing }
-GtGraphTreemapSquarifyRectangle >> printOn: aStream [
+GtGraphTreemapSquarifyAreaRectangle >> printOn: aStream [
 	aStream nextPutAll: self name asString.
 	(self position isNotNil and: [ self extent isNotNil ])
 		ifTrue: [ aStream space; print: self bounds ]
@@ -158,28 +158,28 @@ GtGraphTreemapSquarifyRectangle >> printOn: aStream [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> remainingBounds [
+GtGraphTreemapSquarifyAreaRectangle >> remainingBounds [
 	^ self remainingRectangle bounds
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> remainingRectangle [
-	<return: #GtGraphTreemapSquarifyRectangle>
+GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle [
+	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ remainingRectangle
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
+GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
 	remainingRectangle := aGtGraphTreemapSquarifyRectangle
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> shortestSide [
+GtGraphTreemapSquarifyAreaRectangle >> shortestSide [
 	^ self extent x min: self extent y
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRectangle >> volume [
+GtGraphTreemapSquarifyAreaRectangle >> volume [
 	<return: #Number>
 	^ self height * self width 
 ]
