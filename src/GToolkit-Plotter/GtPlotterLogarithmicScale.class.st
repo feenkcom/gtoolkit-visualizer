@@ -1,10 +1,10 @@
 Class {
 	#name : #GtPlotterLogarithmicScale,
-	#superclass : #GtPlotterScale,
+	#superclass : #GtPlotterContinuousScale,
 	#instVars : [
 		'base'
 	],
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #accessing }

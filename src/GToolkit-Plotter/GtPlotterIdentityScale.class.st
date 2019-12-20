@@ -1,5 +1,10 @@
 Class {
 	#name : #GtPlotterIdentityScale,
-	#superclass : #GtPlotterScale,
-	#category : 'GToolkit-Plotter-Scale'
+	#superclass : #GtPlotterContinuousScale,
+	#category : #'GToolkit-Plotter-Scale'
 }
+
+{ #category : #'operators-mapping' }
+GtPlotterIdentityScale >> transform: aDomainValue [
+	^ aDomainValue
+]

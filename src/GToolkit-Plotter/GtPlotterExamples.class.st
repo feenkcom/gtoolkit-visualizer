@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-Examples'
 }
 
 { #category : #examples }
