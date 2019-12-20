@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+GtGraphTreemapSquarifyAreaRectangle class >> newOtherDirection [
+	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
 GtGraphTreemapSquarifyAreaRectangle class >> null [
 	^ GtGraphTreemapSquarifyNoRectangle uniqueInstance
 ]
@@ -17,8 +22,8 @@ GtGraphTreemapSquarifyAreaRectangle class >> null [
 { #category : #'instance creation' }
 GtGraphTreemapSquarifyAreaRectangle class >> position: aPosition extent: anExtent [
 	^ anExtent x > anExtent y
-		ifTrue: [ GtGraphTreemapSquarifyLandscapeRectangle new position: aPosition; extent: anExtent ] 
-		ifFalse: [ GtGraphTreemapSquarifyPortraitRectangle new position: aPosition; extent: anExtent ]
+		ifTrue: [ GtGraphTreemapSquarifyLandscapeVerticalRectangle new position: aPosition; extent: anExtent ] 
+		ifFalse: [ GtGraphTreemapSquarifyPortraitHorizontalRectangle new position: aPosition; extent: anExtent ]
 ]
 
 { #category : #converting }
@@ -48,6 +53,14 @@ GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [
 		ifNotNil: [ :theRectangle |
 			theRectangle asElementWithInformation ]
 		ifNil: [ self asElementWithInformation ]
+]
+
+{ #category : #converting }
+GtGraphTreemapSquarifyAreaRectangle >> asOtherDirecton [
+	^ self class newOtherDirection
+		position: self position;
+		extent: self extent;
+		original: self original.
 ]
 
 { #category : #'as yet unclassified' }

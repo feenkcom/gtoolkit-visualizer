@@ -9,15 +9,19 @@ Class {
 
 { #category : #accessing }
 GtGraphTreemapNode >> aspectRatio [
-	^ self width / self height
+	^ (self width / self height) max: (self height / self width)
 ]
 
 { #category : #printing }
 GtGraphTreemapNode >> printOn: aStream [
 	aStream nextPutAll: 'Node bounds: '.
-	(self position isNil or: [ self extent isNil ]) 
-		ifTrue: [ aStream nextPutAll: '<uninitialized>' ]
-		ifFalse: [ aStream print: self bounds ].
+	self hasBounds
+		ifFalse: [ aStream nextPutAll: '<uninitialized>' ]
+		ifTrue: [ 
+				aStream 
+					print: self bounds;
+					nextPutAll: ', ratio ';
+					print: (self aspectRatio asFloat round: 1) ].
 ]
 
 { #category : #accessing }

@@ -95,7 +95,8 @@ GtGraphTreemap >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
 	^ (self nodes gtItemsFor: aView)
-		title: 'Nodes'
+		title: 'Nodes';
+		priority: 2
 ]
 
 { #category : #'gt-extension' }
@@ -104,6 +105,7 @@ GtGraphTreemap >> gtPreviewFor: aView [
 	self nodes ifNil: [ ^ aView empty ].
 	^ aView explicit
 		title: 'Preview';
+		priority: 1;
 		stencil: [ self asElementWithInformation asScalableElement
 			margin: (BlInsets all: 10) ]
 ]

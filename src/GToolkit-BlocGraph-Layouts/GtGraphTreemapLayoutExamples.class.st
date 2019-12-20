@@ -37,7 +37,7 @@ GtGraphTreemapLayoutExamples >> areaWithThreeNodes [
 	| aRow |
 	aRow := self areaWithTwoNodes.
 	aRow addNode: (self node weight: 1/6) "4".
-	aRow rectangle layoutRow: aRow.
+	aRow layoutNodes.
 	self assert: aRow nodesCount equals: 3.
 	self assert: aRow extent equals: 600@400.
 	self assert: aRow allAreas size equals: 1.
@@ -52,7 +52,7 @@ GtGraphTreemapLayoutExamples >> areaWithTwoNodes [
 	| aRow |
 	aRow := self areaWithOneNode.
 	aRow addNode: (self node weight: 1/4) "6".
-	aRow rectangle layoutRow: aRow.
+	aRow layoutNodes.
 	self assert: aRow nodesCount equals: 2.
 	self assert: aRow extent equals: 600@400.
 	self assert: aRow allAreas size equals: 1.
