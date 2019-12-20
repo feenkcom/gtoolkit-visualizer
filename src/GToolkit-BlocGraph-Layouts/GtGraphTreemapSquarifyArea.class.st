@@ -1,50 +1,56 @@
 Class {
-	#name : #GtGraphTreemapSquarifyRow,
+	#name : #GtGraphTreemapSquarifyArea,
 	#superclass : #Object,
 	#instVars : [
 		'nodes',
 		'rectangle',
-		'nextRow'
+		'nextArea'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> addNode: aNode [ 
+GtGraphTreemapSquarifyArea >> addNode: aNode [ 
 	self nodes: (self nodes copyWith: aNode)
 ]
 
 { #category : #enumerating }
-GtGraphTreemapSquarifyRow >> allRows [
-	<return: #Array of: #GtGraphTreemapSquarifyRow>
+GtGraphTreemapSquarifyArea >> allAreas [
+	<return: #Array of: #GtGraphTreemapSquarifyArea>
 	^ Array streamContents: [ :aStream | 
-		self rowsDo: [ :eachRow | aStream nextPut: eachRow ] ]
+		self areasDo: [ :eachRow | aStream nextPut: eachRow ] ]
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarifyArea >> areasDo: anOneArgBlock [
+	anOneArgBlock cull: self.
+	nextArea ifNotNil: [ :theNextRow | theNextRow areasDo: anOneArgBlock ]
 ]
 
 { #category : #copying }
-GtGraphTreemapSquarifyRow >> copyWithNode: aNode [ 
+GtGraphTreemapSquarifyArea >> copyWithNode: aNode [ 
 	^ self class new 
 		nodes: self nodes with: aNode;
 		rectangle: self rectangle
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> extent [
+GtGraphTreemapSquarifyArea >> extent [
 	^ rectangle extent
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> extent: aPoint [ 
-	rectangle := GtGraphTreemapSquarifyRectangle position: 0@0 extent: aPoint
+GtGraphTreemapSquarifyArea >> extent: aPoint [ 
+	rectangle := GtGraphTreemapSquarifyAreaRectangle position: 0@0 extent: aPoint
 ]
 
 { #category : #'gt-extension' }
-GtGraphTreemapSquarifyRow >> gtAllRowsFor: aView [
+GtGraphTreemapSquarifyArea >> gtAllAreasFor: aView [
 	<gtView>
 	^ aView columnedList 
 		title: 'Rows';
 		priority: 3;
-		items: [ self allRows ];
+		items: [ self allAreas ];
 		column: 'Type' item: [ :aRow | aRow orientationName ] width: 100;
 		column: 'Bounds' item: [ :aRow | aRow rectangleBounds ];
 		column: 'Remaining Bounds' item: [ :aRow | aRow rectangleRemainingBounds ];
@@ -52,7 +58,7 @@ GtGraphTreemapSquarifyRow >> gtAllRowsFor: aView [
 ]
 
 { #category : #'gt-extension' }
-GtGraphTreemapSquarifyRow >> gtNodesFor: aView [
+GtGraphTreemapSquarifyArea >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
 	^ (self nodes gtItemsFor: aView)
@@ -61,98 +67,85 @@ GtGraphTreemapSquarifyRow >> gtNodesFor: aView [
 ]
 
 { #category : #'gt-extension' }
-GtGraphTreemapSquarifyRow >> gtPreviewFor: aView [
+GtGraphTreemapSquarifyArea >> gtPreviewFor: aView [
 	<gtView>
 	self rectangle ifNil: [ ^ aView empty ].
 	^ self rectangle gtPreviewFor: aView
 ]
 
 { #category : #initialization }
-GtGraphTreemapSquarifyRow >> initialize [
+GtGraphTreemapSquarifyArea >> initialize [
 	super initialize.
 	nodes := #().
-	rectangle := GtGraphTreemapSquarifyRectangle null.
+	rectangle := GtGraphTreemapSquarifyAreaRectangle null.
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> maxArea [
-	^ self nodes 
-		ifNotEmpty: [ :theNodes | (theNodes detectMax: #weight) weight ]
-		ifEmpty: [ 0 ]
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> minArea [
-	^ self nodes 
-		ifNotEmpty: [ :theNodes | (theNodes detectMin: #weight) weight ]
-		ifEmpty: [ 0 ]
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> nodes [
+GtGraphTreemapSquarifyArea >> nodes [
 	^ nodes
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> nodes: anObject [
+GtGraphTreemapSquarifyArea >> nodes: anObject [
 	nodes := anObject
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> nodes: aCollectionOfNodes with: aNode [
+GtGraphTreemapSquarifyArea >> nodes: aCollectionOfNodes with: aNode [
 	self nodes: (aCollectionOfNodes copyWith: aNode)
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> nodesCount [
+GtGraphTreemapSquarifyArea >> nodesCount [
 	^ self nodes size
 ]
 
 { #category : #enumerating }
-GtGraphTreemapSquarifyRow >> nodesDo: anOneArgBlock [
+GtGraphTreemapSquarifyArea >> nodesDo: anOneArgBlock [
 	self nodes do: anOneArgBlock
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> occupiedWeight [
+GtGraphTreemapSquarifyArea >> occupiedWeight [
 	^ self nodes 
 		ifNotEmpty: [ :theNodes | theNodes sum: #weight ]
 		ifEmpty: [ 0 ]
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> orientationName [
+GtGraphTreemapSquarifyArea >> orientationName [
 	^ self rectangle name
 ]
 
+{ #category : #printing }
+GtGraphTreemapSquarifyArea >> printOn: aStream [
+	aStream 
+		nextPutAll: 'Area: ';
+		print: (self rectangle ifNil: [ 'uninitialized' ]).
+]
+
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> rectangle [
+GtGraphTreemapSquarifyArea >> rectangle [
 	^ rectangle
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> rectangle: anObject [
+GtGraphTreemapSquarifyArea >> rectangle: anObject [
 	rectangle := anObject
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> rectangleBounds [
+GtGraphTreemapSquarifyArea >> rectangleBounds [
 	^ self rectangle bounds
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> rectangleRemainingBounds [
+GtGraphTreemapSquarifyArea >> rectangleRemainingBounds [
 	^ self rectangle remainingBounds
 ]
 
-{ #category : #enumerating }
-GtGraphTreemapSquarifyRow >> rowsDo: anOneArgBlock [
-	anOneArgBlock cull: self.
-	nextRow ifNotNil: [ :theNextRow | theNextRow rowsDo: anOneArgBlock ]
-]
-
 { #category : #squarifying }
-GtGraphTreemapSquarifyRow >> squarifyHereNode: aNode [ 
+GtGraphTreemapSquarifyArea >> squarifyHereNode: aNode [ 
 	| aNewRow |
 	self nodes ifEmpty: [ 
 		self addNode: aNode.
@@ -165,19 +158,19 @@ GtGraphTreemapSquarifyRow >> squarifyHereNode: aNode [
 			self addNode: aNode.
 			self rectangle layoutRow: self ]
 		ifFalse: [ 
-			nextRow := GtGraphTreemapSquarifyRow new.
-			nextRow rectangle: self rectangle remainingRectangle.
-			nextRow squarifyHereNode: aNode. ]
+			nextArea := GtGraphTreemapSquarifyArea new.
+			nextArea rectangle: self rectangle remainingRectangle.
+			nextArea squarifyHereNode: aNode. ]
 ]
 
 { #category : #squarifying }
-GtGraphTreemapSquarifyRow >> squarifyNode: aNode [ 
-	nextRow ifNotNil: [ nextRow squarifyNode: aNode. ^ self ].
+GtGraphTreemapSquarifyArea >> squarifyNode: aNode [ 
+	nextArea ifNotNil: [ nextArea squarifyNode: aNode. ^ self ].
 	self squarifyHereNode: aNode.
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyRow >> worst [
+GtGraphTreemapSquarifyArea >> worst [
 	"gives the highest aspect ratio"
 	<return: #Number>
 	| anOccupiedWeight anOccupiedExtent aMinRatio aMaxRatio aMax aMin |

@@ -1,6 +1,6 @@
 Class {
 	#name : #GtGraphTreemapSquarifyPortraitRectangle,
-	#superclass : #GtGraphTreemapSquarifyRectangle,
+	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
