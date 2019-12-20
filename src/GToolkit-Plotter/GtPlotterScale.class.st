@@ -8,25 +8,42 @@ Class {
 		'range',
 		'domain'
 	],
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
+
+{ #category : #'api - polymorphism' }
+GtPlotterScale >> cull: anObject [
+	"To be polymorphic with blocks"
+
+	^ self interpolate: anObject
+]
 
 { #category : #accessing }
 GtPlotterScale >> domain [
+	<return: #GtPlotterScaleDomain>
+
 	^ domain
 ]
 
 { #category : #accessing }
-GtPlotterScale >> domain: anObject [
-	domain := anObject
+GtPlotterScale >> domain: aGtPlotterScaleDomain [
+	domain := aGtPlotterScaleDomain
+]
+
+{ #category : #initialization }
+GtPlotterScale >> initialize [
+	super initialize.
+	
+	domain := GtPlotterScaleUnitDomain new.
+	range := GtPlotterScaleUndefinedRange new
 ]
 
 { #category : #'operators-mapping' }
 GtPlotterScale >> interpolate: aValue [
 	| domainValue mappedValue |
-	
+
 	domainValue := self domain interpolate: aValue.
-	
+
 	^ domainValue
 	
 	"mappedValue := self map: domainValue.
@@ -35,17 +52,46 @@ GtPlotterScale >> interpolate: aValue [
 ]
 
 { #category : #'operators-mapping' }
-GtPlotterScale >> map: aValue [
+GtPlotterScale >> map: aDomainValue [
+	"I take an input (usually a number, date or category) and return a value (such as a coordinate, a colour, a length or a radius)"
 
-	^ self subclassResponsibility
+	^ range interpolate: (domain normalize: (self transform: aDomainValue))
 ]
 
 { #category : #accessing }
 GtPlotterScale >> range [
+	<return: #GtPlotterScaleRange>
+
 	^ range
 ]
 
 { #category : #accessing }
-GtPlotterScale >> range: anObject [
-	range := anObject
+GtPlotterScale >> range: aGtPlotterScaleRange [
+	range := aGtPlotterScaleRange
+]
+
+{ #category : #'api - ticks' }
+GtPlotterScale >> ticks [
+	<return: #Array of: #Object>
+
+	^ self ticks: 10
+]
+
+{ #category : #'api - ticks' }
+GtPlotterScale >> ticks: anAmount [
+	<return: #Array of: #Object>
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'operators-mapping' }
+GtPlotterScale >> transform: aDomainValue [
+	self subclassResponsibility
+]
+
+{ #category : #'api - polymorphism' }
+GtPlotterScale >> value: anObject [
+	"To be polymorphic with blocks"
+
+	^ self interpolate: anObject
 ]

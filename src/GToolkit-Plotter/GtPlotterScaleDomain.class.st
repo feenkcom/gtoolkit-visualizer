@@ -6,48 +6,32 @@ https://en.wikipedia.org/wiki/Domain_of_a_function
 Class {
 	#name : #GtPlotterScaleDomain,
 	#superclass : #Object,
-	#instVars : [
-		'interval'
-	],
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
-{ #category : #'as yet unclassified' }
-GtPlotterScaleDomain >> clamp: aValue [
-
-	aValue < self interval min
-		ifTrue: [ ^ self interval min ].
-		
-	aValue > self interval max
-		ifTrue: [ ^ self interval max ].
-		
-	^ aValue
+{ #category : #'api - polymorphism' }
+GtPlotterScaleDomain >> cull: aDomainValue [
+	^ self normalize: aDomainValue
 ]
 
-{ #category : #testing }
-GtPlotterScaleDomain >> includes: aValue [
-	"Return true if a given value lays within this domain"
-	<return: #Boolean>
-	
-	^ aValue >= self interval min and: [ aValue <= self interval max ]
+{ #category : #accessing }
+GtPlotterScaleDomain >> max [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtPlotterScaleDomain >> min [
+	^ self subclassResponsibility
 ]
 
 { #category : #interpolation }
-GtPlotterScaleDomain >> interpolate: aValue [
-	^ ((self clamp: aValue) - self interval min) / self length
+GtPlotterScaleDomain >> normalize: aDomainValue [
+	"I take a domain value x and return the corresponding parameter t in [0,1]."
+
+	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtPlotterScaleDomain >> interval [
-	^ interval
-]
-
-{ #category : #accessing }
-GtPlotterScaleDomain >> interval: anObject [
-	interval := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScaleDomain >> length [
-	^ self interval length
+{ #category : #'api - polymorphism' }
+GtPlotterScaleDomain >> value: aDomainValue [
+	^ self normalize: aDomainValue
 ]
