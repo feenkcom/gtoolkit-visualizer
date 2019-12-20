@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> basicRow [
 	<gtExample>
 	| aRow |
@@ -40,7 +40,7 @@ GtGraphTreemapLayoutExamples >> basicSliceVertical [
 	^ aSlice
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> basicSquarify [
 	<gtExample>
 	| aTree |
@@ -137,7 +137,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	^ aView
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - squarify layout' }
 GtGraphTreemapLayoutExamples >> numbersSquarified [
 	<gtExample>
 	| aView |
@@ -147,7 +147,7 @@ GtGraphTreemapLayoutExamples >> numbersSquarified [
 	^ aView
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> row [
 	<gtExample>
 	| aRow |
@@ -159,7 +159,7 @@ GtGraphTreemapLayoutExamples >> row [
 	^ aRow
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> rowWithOneNode [
 	<gtExample>
 	| aRow |
@@ -174,7 +174,7 @@ GtGraphTreemapLayoutExamples >> rowWithOneNode [
 	^ aRow
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> rowWithThreeNodes [
 	<gtExample>
 	| aRow |
@@ -189,7 +189,7 @@ GtGraphTreemapLayoutExamples >> rowWithThreeNodes [
 	^ aRow
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> rowWithTwoNodes [
 	<gtExample>
 	| aRow |
@@ -204,7 +204,7 @@ GtGraphTreemapLayoutExamples >> rowWithTwoNodes [
 	^ aRow
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> rowWorstWithOneAndTwoNodes [
 	<gtExample>
 	|  aRowOne aRowTwo |
@@ -214,7 +214,7 @@ GtGraphTreemapLayoutExamples >> rowWorstWithOneAndTwoNodes [
 	^ { aRowOne. aRowTwo }
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - rows' }
 GtGraphTreemapLayoutExamples >> rowWorstWithTwoAndThreeNodes [
 	<gtExample>
 	|  aRowOne aRowTwo |
@@ -358,7 +358,7 @@ GtGraphTreemapLayoutExamples >> sliceVerticalWithTwoNodes [
 	^ aSlice
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarify [
 	<gtExample>
 	| aTree |
@@ -370,7 +370,7 @@ GtGraphTreemapLayoutExamples >> squarify [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithFiveNodes [
 	<gtExample>
 	| aTree aNode |
@@ -395,7 +395,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithFiveNodes [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 	<gtExample>
 	| aTree aNode |
@@ -418,7 +418,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
 	<gtExample>
 	| aTree aNode |
@@ -434,7 +434,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithSevenNodes [
 	<gtExample>
 	| aTree aNode |
@@ -463,7 +463,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithSevenNodes [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithSixNodes [
 	<gtExample>
 	| aTree aNode |
@@ -490,7 +490,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithSixNodes [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
 	<gtExample>
 	| aTree aNode |
@@ -511,7 +511,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
 	^ aTree
 ]
 
-{ #category : #'examples - squarify' }
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
 	<gtExample>
 	| aTree aNode |
