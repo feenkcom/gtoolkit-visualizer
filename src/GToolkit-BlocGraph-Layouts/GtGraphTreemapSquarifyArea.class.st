@@ -48,7 +48,7 @@ GtGraphTreemapSquarifyArea >> extent: aPoint [
 GtGraphTreemapSquarifyArea >> gtAllAreasFor: aView [
 	<gtView>
 	^ aView columnedList 
-		title: 'Rows';
+		title: 'Areas';
 		priority: 3;
 		items: [ self allAreas ];
 		column: 'Type' item: [ :aRow | aRow orientationName ] width: 100;
