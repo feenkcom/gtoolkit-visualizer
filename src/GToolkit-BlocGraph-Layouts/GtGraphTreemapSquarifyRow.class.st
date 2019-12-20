@@ -158,14 +158,9 @@ GtGraphTreemapSquarifyRow >> squarifyHereNode: aNode [
 ]
 
 { #category : #squarifying }
-GtGraphTreemapSquarifyRow >> squarifyInTheLastRow: aNode [ 
-	nextRow ifNotNil: [ nextRow squarifyInTheLastRow: aNode. ^ self ].
-	self squarifyHereNode: aNode.
-]
-
-{ #category : #squarifying }
 GtGraphTreemapSquarifyRow >> squarifyNode: aNode [ 
-	self squarifyInTheLastRow: aNode.
+	nextRow ifNotNil: [ nextRow squarifyNode: aNode. ^ self ].
+	self squarifyHereNode: aNode.
 ]
 
 { #category : #enumerating }
@@ -178,7 +173,7 @@ GtGraphTreemapSquarifyRow >> streamRowsTo: aStream [
 GtGraphTreemapSquarifyRow >> worst [
 	"gives the highest aspect ratio"
 	<return: #Number>
-	| anOccupiedWeight anOccupiedExtent aMaxLenght aMinLenght aMinRatio aMaxRatio aSum aWidth aMax aMin |
+	| anOccupiedWeight anOccupiedExtent aMinRatio aMaxRatio aMax aMin |
 	anOccupiedWeight := self occupiedWeight.
 	anOccupiedExtent := self rectangle extentOccupiedBy: self.
 	aMaxRatio := self nodes detectMax: [ :eachNode | eachNode weight ].
@@ -186,73 +181,4 @@ GtGraphTreemapSquarifyRow >> worst [
 	aMax := self rectangle aspectRatioForWeightRatio: (aMaxRatio weight / anOccupiedWeight) occupiedExtent: anOccupiedExtent.
 	aMin := self rectangle aspectRatioForWeightRatio: (aMinRatio weight / anOccupiedWeight) occupiedExtent: anOccupiedExtent.
 	^ aMax max: aMin
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> worstAgain [
-	"gives the highest aspect ratio"
-	<return: #Number>
-	| aMinRatio aMaxRatio aSum aWidth aMax aMin |
-	aMaxRatio := self nodes detectMax: [ :eachNode | eachNode weight ].
-	aMinRatio := self nodes detectMin: [ :eachNode | eachNode weight ].
-	aSum := self rectangle original volume.
-	aWidth := self rectangle length.
-	aMax := aWidth squared * (aMaxRatio weight * aSum) / aSum squared.
-	aMin := aSum squared / (aWidth squared * (aMinRatio weight * aSum)).
-	^ aMax max: aMin
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> worstAnother [
-	"gives the highest aspect ratio"
-	<return: #Number>
-	| anOccupiedArea aMinArea aMaxArea aMinRatio aMaxRatio aLength |
-	anOccupiedArea := self occupiedWeight * self rectangle volume.
-	anOccupiedArea isZero ifTrue: [ ^ 0 ].
-	aLength := self rectangle length.
-	aMinArea := self minArea * self rectangle volume.
-	aMaxArea := self maxArea * self rectangle volume.
-	aMinRatio := aLength squared * aMinArea / anOccupiedArea squared.
-	aMaxRatio := aLength squared * aMaxArea / anOccupiedArea squared.
-	^ aMinRatio max: aMaxRatio
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> worstAspectRatio [
-	"gives the highest aspect ratio"
-	<return: #Number>
-	| aMinRatio aMaxRatio |
-	aMinRatio := self nodes detectMin: [ :eachNode | eachNode weight ].
-	aMaxRatio := self nodes detectMax: [ :eachNode | eachNode weight ].
-	^ (aMinRatio aspectRatio) max: (aMaxRatio aspectRatio)
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> worstOld [
-	"gives the highest aspect ratio"
-	<return: #Number>
-	| anOccupiedArea aMinArea aMaxArea aMinRatio aMaxRatio aRemaingSpace |
-	anOccupiedArea := self occupiedWeight.
-	anOccupiedArea isZero ifTrue: [ ^ 0 ].
-	aRemaingSpace := 1 - anOccupiedArea.
-	aMinArea := self minArea.
-	aMaxArea := self maxArea.
-	aMinRatio := aRemaingSpace squared * aMinArea / anOccupiedArea squared.
-	aMaxRatio := aRemaingSpace squared * aMaxArea / anOccupiedArea squared.
-	^ aMinRatio max: aMaxRatio
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyRow >> worstVolume [
-	"gives the highest aspect ratio"
-	<return: #Number>
-	| anOccupiedArea aMinArea aMaxArea aMinRatio aMaxRatio aRemaingSpace |
-	anOccupiedArea := self occupiedWeight.
-	anOccupiedArea isZero ifTrue: [ ^ 0 ].
-	aRemaingSpace := self rectangle volume - anOccupiedArea.
-	aMinArea := self minArea * self rectangle volume.
-	aMaxArea := self maxArea * self rectangle volume.
-	aMinRatio := aRemaingSpace squared * aMinArea / anOccupiedArea squared.
-	aMaxRatio := aRemaingSpace squared * aMaxArea / anOccupiedArea squared.
-	^ aMinRatio max: aMaxRatio
 ]

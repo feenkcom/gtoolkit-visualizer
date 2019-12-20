@@ -63,7 +63,7 @@ GtGraphTreemapLayoutExamples >> node [
 GtGraphTreemapLayoutExamples >> numberElements [
 	<gtExample>
 	| theElements |
-	theElements := self nodes: (1 to: 5).
+	theElements := self nodes: #(6 6 4 3 2 2 1).
 	theElements do: [ :eachElement | 
 		eachElement background: Color random.
 		eachElement constraintsDo: [ :c | 
@@ -133,6 +133,16 @@ GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	| aView |
 	aView := self numbers.
 	aView layout: GtGraphTreemapLayout verticalSlice.
+	self applyLayoutIn: aView.
+	^ aView
+]
+
+{ #category : #'examples - numbers' }
+GtGraphTreemapLayoutExamples >> numbersSquarified [
+	<gtExample>
+	| aView |
+	aView := self numbers.
+	aView layout: GtGraphTreemapLayout squarify.
 	self applyLayoutIn: aView.
 	^ aView
 ]

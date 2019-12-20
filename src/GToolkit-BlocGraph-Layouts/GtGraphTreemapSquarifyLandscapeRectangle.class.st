@@ -4,19 +4,19 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyLandscapeRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
 	| aLenght |
 	aLenght := aWeightRatio * anOccupiedExtent y.
 	^ (aLenght / anOccupiedExtent x) max: (anOccupiedExtent x / aLenght).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyLandscapeRectangle >> extentOccupiedBy: aRow [
 	^ self extent * (aRow occupiedWeight @ 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyLandscapeRectangle >> layoutRow: aRow [
 	| anExtentToOccupy aNextNodePosition aRemainingRectangle anOriginalArea anOccupiedArea |
 	anOriginalArea := self original volume.

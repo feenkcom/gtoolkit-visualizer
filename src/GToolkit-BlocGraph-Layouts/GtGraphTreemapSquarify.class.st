@@ -5,21 +5,8 @@ Class {
 		'row',
 		'extent'
 	],
-	#classVars : [
-		'Phi'
-	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
-
-{ #category : #'class initialization' }
-GtGraphTreemapSquarify class >> initialize [
-	self initializePhi.
-]
-
-{ #category : #'class initialization' }
-GtGraphTreemapSquarify class >> initializePhi [
-	Phi ifNil: [ Phi := (1 + 5 sqrt) / 2 ]
-]
 
 { #category : #enumerating }
 GtGraphTreemapSquarify >> allRows [
@@ -62,45 +49,9 @@ GtGraphTreemapSquarify >> nodeWeights [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarify >> phi [
-	<return: #Float>
-	^ Phi
-]
-
-{ #category : #accessing }
 GtGraphTreemapSquarify >> row [
 	<return: #GtGraphTreemapSquarifyRow>
 	^ row
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarify >> shortestSide [
-	^ self extent x min: self extent y
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarify >> squarify: theNodes currentRow: aCurrentRow inRectangle: aRectangle [ 
-	| aNode aNewRow |
-	aNode := theNodes first.
-	aNewRow := aCurrentRow copyWithNode: aNode.
-	(aCurrentRow worst < aNewRow worst)
-		ifTrue: [ 
-			theNodes size = 1 
-				ifTrue: [ aRectangle layoutRow: aNewRow in: self ]
-				ifFalse: [ self squarify: theNodes allButFirst currentRow: aNewRow inRectangle: aRectangle ] ]
-		ifFalse: [ 
-			aRectangle layoutRow: aNewRow in: self.
-			theNodes size = 1 ifFalse: [ 
-				self squarify: theNodes currentRow: GtGraphTreemapSquarifyRow new inRectangle: aRectangle remainingRectangle ] ]
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarify >> squarify: aCollection inRectangle: aGtGraphTreemapSquarifyRectangle [ 
-	aCollection ifEmpty: [ ^ self ].
-	self 
-		squarify: aCollection
-		currentRow: GtGraphTreemapSquarifyRow new
-		inRectangle: aGtGraphTreemapSquarifyRectangle
 ]
 
 { #category : #'seas optimizations' }
