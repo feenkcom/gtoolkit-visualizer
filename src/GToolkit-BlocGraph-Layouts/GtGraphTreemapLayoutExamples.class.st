@@ -624,10 +624,10 @@ GtGraphTreemapLayoutExamples >> worstAspectRatio [
 	<gtExample>
 	| aWorst |
 	aWorst := self basicWorstAspectRatio.
-	aWorst breadth: 600; length: 400.
-	self assert: aWorst breadth equals: 600.
+	aWorst totalArea: 600 * 400.
+	aWorst length: 400.
+	self assert: aWorst totalArea equals: 600 * 400.
 	self assert: aWorst length equals: 400.
-	self assert: aWorst extent equals: 600@400.
 	^ aWorst
 ]
 
@@ -638,6 +638,17 @@ GtGraphTreemapLayoutExamples >> worstAspectRatioWithOneNode [
 	aWorst := self worstAspectRatio.
 	aWorst addNode: (self node weight: 1/4) "6".
 	self assert: aWorst value equals: 400/150.
+	^ aWorst
+]
+
+{ #category : #'examples - squarify algorithm - worst' }
+GtGraphTreemapLayoutExamples >> worstAspectRatioWithOneNodeInSecondArea [
+	<gtExample>
+	| aWorst |
+	aWorst := self worstAspectRatio.
+	aWorst length: 300.
+	aWorst addNode: (self node weight: 1/6) "4".
+	self assert: aWorst value equals: 2.25.
 	^ aWorst
 ]
 

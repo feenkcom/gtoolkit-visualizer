@@ -33,7 +33,8 @@ GtGraphTreemapSquarifyWorstAspectRatio >> value [
 	^ self maxWeightNodeAspectRatio max: self minWeightNodeAspectRatio
 ]
 
-{ #category : #'computing area' }
+{ #category : #'accessing - nodes' }
 GtGraphTreemapSquarifyWorstAspectRatio >> worstValueForNode: aNode [
+	<return: #Number>
 	^ self aspectRatioForNode: aNode
 ]
