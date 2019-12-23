@@ -22,7 +22,7 @@ GtGraphTreemapLayoutExamples >> areaWithOneNode [
 	| aRow |
 	aRow := self area.
 	aRow addNode: (self node weight: 1/4) "6".
-	"aRow rectangle layoutRow: aRow."
+	aRow layoutNodes.
 	self assert: aRow nodesCount equals: 1.
 	self assert: aRow extent equals: 600@400.
 	self assert: aRow allAreas size equals: 1.
@@ -125,6 +125,15 @@ GtGraphTreemapLayoutExamples >> basicSquarify [
 	self assert: aTree area isZero.
 	self assert: aTree nodes isEmpty.
 	^ aTree
+]
+
+{ #category : #'examples - squarify algorithm - worst' }
+GtGraphTreemapLayoutExamples >> basicWorstAspectRatio [
+	<gtExample>
+	| aWorst |
+	aWorst := GtGraphTreemapSquarifyWorstAspectRatio new.
+	self assert: aWorst nodes isEmpty.
+	^ aWorst
 ]
 
 { #category : #'examples - nodes' }
@@ -608,4 +617,49 @@ GtGraphTreemapLayoutExamples >> view [
 		constraintsDo: [ :constraints |
 			constraints horizontal matchParent.
 			constraints vertical matchParent ]
+]
+
+{ #category : #'examples - squarify algorithm - worst' }
+GtGraphTreemapLayoutExamples >> worstAspectRatio [
+	<gtExample>
+	| aWorst |
+	aWorst := self basicWorstAspectRatio.
+	aWorst breadth: 600; length: 400.
+	self assert: aWorst breadth equals: 600.
+	self assert: aWorst length equals: 400.
+	self assert: aWorst extent equals: 600@400.
+	^ aWorst
+]
+
+{ #category : #'examples - squarify algorithm - worst' }
+GtGraphTreemapLayoutExamples >> worstAspectRatioWithOneNode [
+	<gtExample>
+	| aWorst |
+	aWorst := self worstAspectRatio.
+	aWorst addNode: (self node weight: 1/4) "6".
+	self assert: aWorst value equals: 400/150.
+	^ aWorst
+]
+
+{ #category : #'examples - squarify algorithm - worst' }
+GtGraphTreemapLayoutExamples >> worstAspectRatioWithThreeNodes [
+	<gtExample>
+	| aWorst |
+	aWorst := self worstAspectRatio.
+	aWorst addNode: (self node weight: 1/4) "6".
+	aWorst addNode: (self node weight: 1/4) "6".
+	aWorst addNode: (self node weight: 1/6) "4".
+	self assert: aWorst value equals: 4.
+	^ aWorst
+]
+
+{ #category : #'examples - squarify algorithm - worst' }
+GtGraphTreemapLayoutExamples >> worstAspectRatioWithTwoNodes [
+	<gtExample>
+	| aWorst |
+	aWorst := self worstAspectRatio.
+	aWorst addNode: (self node weight: 1/4) "6".
+	aWorst addNode: (self node weight: 1/4) "6".
+	self assert: aWorst value equals: 1.5.
+	^ aWorst
 ]

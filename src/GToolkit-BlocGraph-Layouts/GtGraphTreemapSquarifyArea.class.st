@@ -27,7 +27,7 @@ GtGraphTreemapSquarifyArea >> areasDo: anOneArgBlock [
 	nextArea ifNotNil: [ :theNextRow | theNextRow areasDo: anOneArgBlock ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : #converting }
 GtGraphTreemapSquarifyArea >> asElementWithOccupiedArea [
 	| aContainer |
 	aContainer := BlElement new.

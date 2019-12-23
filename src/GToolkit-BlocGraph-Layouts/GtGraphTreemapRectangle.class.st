@@ -10,33 +10,7 @@ Class {
 
 { #category : #converting }
 GtGraphTreemapRectangle >> asElement [
-	| aContainer aMarginRectangle anActualRectangle aBorderWidth aFloatExtent aFloatExtentAndMargin |
-
-	aBorderWidth := (self width / 100.0) min: 0.5.
-	aFloatExtent := self extent asFloatPoint.
-	aFloatExtentAndMargin := aFloatExtent + self margin extent asFloatPoint.
-
-	aContainer := BlElement new.
-	aContainer size: aFloatExtentAndMargin.
-
-	aMarginRectangle := BlElement new.
-	aMarginRectangle size: aFloatExtentAndMargin.
-	aMarginRectangle border: (BlBorder builder dashedSmall paint: (Color black alpha: 0.2); width: aBorderWidth; build).
-	aMarginRectangle background: (Color white alpha: 0.4).
-
-	anActualRectangle := BlElement new.
-	anActualRectangle size: aFloatExtent.
-	anActualRectangle relocate: self margin topLeft asFloatPoint.
-	anActualRectangle background: (Color white alpha: 0.8).
-	anActualRectangle border: (BlBorder paint: Color black width: aBorderWidth).
-	anActualRectangle when: BlClickEvent do: [ :anEvent |
-		anEvent consumed: true.
-		anEvent currentTarget phlow spawnObject: self ].
-
-	aContainer addChild: aMarginRectangle as: #margin.
-	aContainer addChild: anActualRectangle as: #rectangle.
-	
-	^ aContainer
+	^ GtGraphUtilities default rectangleOn: self extent: self extent margin: self margin
 ]
 
 { #category : #converting }

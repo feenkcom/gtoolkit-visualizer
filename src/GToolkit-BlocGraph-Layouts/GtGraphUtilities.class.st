@@ -27,7 +27,7 @@ GtGraphUtilities class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'factory - rectangle' }
 GtGraphUtilities >> informationForRectangle: aContainer bounds: aBounds [
 	| aFontSize aTopLeftLabel aTopRightLabel aBottomRightLabel aBottomLeftLabel |
 	
@@ -64,6 +64,37 @@ GtGraphUtilities >> informationForRectangle: aContainer bounds: aBounds [
 		c ignored horizontal alignLeft.
 		c ignored vertical alignBottom ].
 	(aContainer childNamed: #rectangle) addChild: aBottomLeftLabel.
+	
+	^ aContainer
+]
+
+{ #category : #'factory - rectangle' }
+GtGraphUtilities >> rectangleOn: anObject extent: anExtent margin: aMargin [
+	| aContainer aMarginRectangle anActualRectangle aBorderWidth aFloatExtent aFloatExtentAndMargin |
+
+	aBorderWidth := (anExtent x / 100.0) min: 0.5.
+	aFloatExtent := anExtent asFloatPoint.
+	aFloatExtentAndMargin := aFloatExtent + aMargin extent asFloatPoint.
+
+	aContainer := BlElement new.
+	aContainer size: aFloatExtentAndMargin.
+
+	aMarginRectangle := BlElement new.
+	aMarginRectangle size: aFloatExtentAndMargin.
+	aMarginRectangle border: (BlBorder builder dashedSmall paint: (Color black alpha: 0.2); width: aBorderWidth; build).
+	aMarginRectangle background: (Color white alpha: 0.4).
+
+	anActualRectangle := BlElement new.
+	anActualRectangle size: aFloatExtent.
+	anActualRectangle relocate: aMargin topLeft asFloatPoint.
+	anActualRectangle background: (Color white alpha: 0.8).
+	anActualRectangle border: (BlBorder paint: Color black width: aBorderWidth).
+	anActualRectangle when: BlClickEvent do: [ :anEvent |
+		anEvent consumed: true.
+		anEvent currentTarget phlow spawnObject: anObject ].
+
+	aContainer addChild: aMarginRectangle as: #margin.
+	aContainer addChild: anActualRectangle as: #rectangle.
 	
 	^ aContainer
 ]
