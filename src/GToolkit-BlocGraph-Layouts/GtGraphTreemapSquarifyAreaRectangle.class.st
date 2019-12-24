@@ -171,11 +171,6 @@ GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle: aGtGraphTreemapSquari
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyAreaRectangle >> shortestSide [
-	^ self extent x min: self extent y
-]
-
-{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> volume [
 	<return: #Number>
 	^ self height * self width 

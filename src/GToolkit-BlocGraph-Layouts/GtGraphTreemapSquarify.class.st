@@ -59,19 +59,6 @@ GtGraphTreemapSquarify >> initialize [
 	firstArea := GtGraphTreemapSquarifyArea new nodes: self nodes.
 ]
 
-{ #category : #initialization }
-GtGraphTreemapSquarify >> initializeNodes [
-	nodes := #()
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarify >> nodeWeights [
-	<return: #Number>
-	^ self nodes 
-		ifNotEmpty: [ :theNodes | theNodes sum: #weight ]
-		ifEmpty: [ 0 ]
-]
-
 { #category : #'seas optimizations' }
 GtGraphTreemapSquarify >> updateNode: aNode [
 	self firstArea squarifyNode: aNode

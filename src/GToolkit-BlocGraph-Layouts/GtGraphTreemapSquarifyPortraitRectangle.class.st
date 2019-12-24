@@ -15,7 +15,7 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #measuring }
 GtGraphTreemapSquarifyPortraitRectangle >> layoutArea: anArea [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle anOccupiedRectangle |
 	self ifNoSpace: [ ^ self layoutAreaInNoSpace: anArea ].
