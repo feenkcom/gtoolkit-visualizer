@@ -17,6 +17,15 @@ GtGraphTreemapNode >> aspectRatio [
 	^ (self width / self height) max: (self height / self width)
 ]
 
+{ #category : #'gt-extension' }
+GtGraphTreemapNode >> gtWeightFor: aView [
+	<gtView>
+	self weight ifNil: [ ^ aView empty ].
+	^ (self weight gtPreviewFor: aView)
+		priority: 1;
+		title: 'Weight'
+]
+
 { #category : #initialization }
 GtGraphTreemapNode >> initialize [
 	super initialize.
