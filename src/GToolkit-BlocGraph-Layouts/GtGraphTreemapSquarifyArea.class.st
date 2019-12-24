@@ -1,3 +1,20 @@
+"
+I represent an area in which ${class:GtGraphTreemapNode}$ nodes are alocated along with shorter rectangle size.
+I use ${class:GtGraphTreemapSquarifyAreaRectangle}$ to layout nodes.
+My main algorithm that split an orignal area into sub-areas is implemented in the ${method:GtGraphTreemapSquarifyArea>>#squarifyHereNode:}$ method.
+I use ${class:GtGraphTreemapSquarifyWorst}$ in order to decide whether a new node should be added to my area or rather a new area should be created.
+
+!! Example 
+
+In the following example, you can see one are with two nodes: 
+${example:GtGraphTreemapLayoutExamples>>#areaWithTwoNodes|codeExpanded=false|previewExpanded=true}$
+
+If we add another node, all area nodes get less squared:
+${example:GtGraphTreemapLayoutExamples>>#areaWithThreeNodes|codeExpanded=false|previewExpanded=true}$
+
+The algorithm therefore decides to rather create a new area with the third node and keeps the first two nodes in the existing area. A new node is added only if the worst aspect ratio (among all area nodes) is improved. Otherwise, the new node is added to a new area.
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyArea,
 	#superclass : #Object,
@@ -109,7 +126,7 @@ GtGraphTreemapSquarifyArea >> initialize [
 
 { #category : #layout }
 GtGraphTreemapSquarifyArea >> layoutNodes [
-	self rectangle layoutRow: self
+	self rectangle layoutArea: self
 ]
 
 { #category : #accessing }

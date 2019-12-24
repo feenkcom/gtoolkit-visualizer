@@ -1,10 +1,13 @@
+"
+I am a ${class:BlLayoutConstraints}$ for ${class:GtGraphTreemapSquarifiedLayout}$ layout.
+"
 Class {
 	#name : #GtGraphTreemapLayoutConstraints,
 	#superclass : #BlLayoutConstraints,
 	#instVars : [
 		'weight'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
 { #category : #initialization }

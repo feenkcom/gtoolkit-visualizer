@@ -1,3 +1,13 @@
+"
+I split an area horizontally according to ${method:GtGraphTreemapNode>>#weight}$ node values.
+
+!! Example 
+
+The following example shows an area with three nodes: 
+${example:GtGraphTreemapLayoutExamples>>#sliceHorizontalWithThreeNodes|codeExpanded=false|previewExpanded=true}$.
+
+
+"
 Class {
 	#name : #GtGraphTreemapSliceHorizontal,
 	#superclass : #GtGraphTreemapSlice,

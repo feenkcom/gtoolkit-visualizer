@@ -1,3 +1,14 @@
+"
+I represent a rectangle. My width is smaller than my height.
+I layout ${class:GtGraphTreemapNode}$ along my shorter side (width).
+I am used by ${class:GtGraphTreemapSquarifyArea}$.
+
+!! Example
+
+In the following example, I occupy top-right side of a total area with ${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesSecondArea|label=#nodesCount}$ nodes:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesSecondArea|noCode}$
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyPortraitRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
@@ -5,26 +16,14 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
-	| aLenght |
-	aLenght := aWeightRatio * anOccupiedExtent x.
-	^ (aLenght / anOccupiedExtent y) max: (anOccupiedExtent y / aLenght).
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> extentOccupiedBy: aRow [
-	^ self extent * (1 @ aRow occupiedWeight)
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
+GtGraphTreemapSquarifyPortraitRectangle >> layoutArea: anArea [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle anOccupiedRectangle |
-	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
+	self ifNoSpace: [ ^ self layoutAreaInNoSpace: anArea ].
 	anOriginalArea := self original volume.
-	anOccupiedArea := anOriginalArea * aRow occupiedWeight.
+	anOccupiedArea := anOriginalArea * anArea occupiedWeight.
 	anExtentToOccupy := self width @ (anOccupiedArea / self width).
 	aNextNodePosition := self position.
-	aRow nodes do: [ :eachNode | 
+	anArea nodes do: [ :eachNode | 
 		| aHeight aWidth |
 		aHeight := anExtentToOccupy y.
 		aWidth := anOriginalArea * eachNode weight / aHeight.
@@ -52,5 +51,5 @@ GtGraphTreemapSquarifyPortraitRectangle >> length [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyPortraitRectangle >> name [
-	^ 'Portrait Horizontal'
+	^ 'Portrait'
 ]

@@ -1,3 +1,11 @@
+"
+I represent an area in which ${class:GtGraphTreemapNode}$ nodes are added by ${class:GtGraphTreemapSquarifyArea}$.
+I know how to layout nodes using ${method:GtGraphTreemapSquarifyAreaRectangle>>#layoutArea:}$.
+
+See my subclasses for more details and examples: ${class:GtGraphTreemapSquarifyAreaRectangle|show=gtSubclassesFor:|expanded=true}$
+
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyAreaRectangle,
 	#superclass : #GtGraphTreemapRectangle,
@@ -50,11 +58,6 @@ GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [
 		ifNil: [ self asElementWithInformation ]
 ]
 
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyAreaRectangle >> extentOccupiedBy: aRow [
-	^ self subclassResponsibility
-]
-
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyAreaRectangle >> gtPreviewFor: aView [
 	self position ifNil: [ ^ aView empty ].
@@ -97,12 +100,12 @@ GtGraphTreemapSquarifyAreaRectangle >> isRoot [
 ]
 
 { #category : #measuring }
-GtGraphTreemapSquarifyAreaRectangle >> layoutRow: aGtGraphTreemapSquarifyRow [
+GtGraphTreemapSquarifyAreaRectangle >> layoutArea: aGtGraphTreemapSquarifyRow [
 	^ self subclassResponsibility
 ]
 
 { #category : #measuring }
-GtGraphTreemapSquarifyAreaRectangle >> layoutRowInNoSpace: aRow [ 
+GtGraphTreemapSquarifyAreaRectangle >> layoutAreaInNoSpace: aRow [ 
 	aRow nodesDo: [ :eachNode | 
 		eachNode 
 			position: 0@0;
@@ -121,12 +124,6 @@ GtGraphTreemapSquarifyAreaRectangle >> name [
 	^ 'Rectangle'
 ]
 
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyAreaRectangle >> occupiedBounds [
-	<return: #Rectangle>
-	^ self occupiedRectangle bounds
-]
-
 { #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
@@ -138,13 +135,13 @@ GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle: aRectangle [
 	occupiedRectangle := aRectangle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> original [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ rootRectangle ifNil: [ self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> original: aGtGraphTreemapSquarifyRectangle [
 	rootRectangle := aGtGraphTreemapSquarifyRectangle
 ]
@@ -162,13 +159,13 @@ GtGraphTreemapSquarifyAreaRectangle >> remainingBounds [
 	^ self remainingRectangle bounds
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ remainingRectangle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
 	remainingRectangle := aGtGraphTreemapSquarifyRectangle
 ]

@@ -1,3 +1,14 @@
+"
+I represent a rectangle. My height is smaller than my width.
+I layout ${class:GtGraphTreemapNode}$ along my shorter side (height).
+I am used by ${class:GtGraphTreemapSquarifyArea}$.
+
+!! Example
+
+In the following example, I occupy top-right side of a total area with ${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|label=#nodesCount}$ nodes:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|noCode}$
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyLandscapeRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
@@ -5,26 +16,14 @@ Class {
 }
 
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
-	| aLenght |
-	aLenght := aWeightRatio * anOccupiedExtent y.
-	^ (aLenght / anOccupiedExtent x) max: (anOccupiedExtent x / aLenght).
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> extentOccupiedBy: aRow [
-	^ self extent * (aRow occupiedWeight @ 1)
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> layoutRow: aRow [
+GtGraphTreemapSquarifyLandscapeRectangle >> layoutArea: anArea [
 	| anExtentToOccupy aNextNodePosition aRemainingRectangle anOriginalArea anOccupiedArea anOccupiedRectangle |
-	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
+	self ifNoSpace: [ ^ self layoutAreaInNoSpace: anArea ].
 	anOriginalArea := self original volume.
-	anOccupiedArea := anOriginalArea * aRow occupiedWeight.
+	anOccupiedArea := anOriginalArea * anArea occupiedWeight.
 	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
 	aNextNodePosition := self position.
-	aRow nodes do: [ :eachNode | 
+	anArea nodes do: [ :eachNode | 
 		| aHeight aWidth |
 		aWidth := anExtentToOccupy x.
 		aHeight := anOriginalArea * eachNode weight / aWidth.
@@ -52,5 +51,5 @@ GtGraphTreemapSquarifyLandscapeRectangle >> length [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyLandscapeRectangle >> name [
-	^ 'Landscape Vertical'
+	^ 'Landscape'
 ]

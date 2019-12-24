@@ -1,3 +1,9 @@
+"
+My subclasses implement treemap slice algorithms.
+See my subclasses for more details and examples: ${class:GtGraphTreemapSlice|show=gtSubclassesFor:|expanded=true}$
+
+
+"
 Class {
 	#name : #GtGraphTreemapSlice,
 	#superclass : #GtGraphTreemap,

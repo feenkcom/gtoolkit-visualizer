@@ -1,3 +1,8 @@
+"
+I represent a ${class:GtGraphTreemap}$ node.
+I keep my weight and the ${class:GtGraphTreemap}$ is responsible for computing my position and extent.
+
+"
 Class {
 	#name : #GtGraphTreemapNode,
 	#superclass : #GtGraphTreemapRectangle,
@@ -10,6 +15,12 @@ Class {
 { #category : #accessing }
 GtGraphTreemapNode >> aspectRatio [
 	^ (self width / self height) max: (self height / self width)
+]
+
+{ #category : #initialization }
+GtGraphTreemapNode >> initialize [
+	super initialize.
+	weight := 0.
 ]
 
 { #category : #printing }

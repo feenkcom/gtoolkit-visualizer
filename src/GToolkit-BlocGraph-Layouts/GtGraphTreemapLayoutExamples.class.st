@@ -139,16 +139,22 @@ GtGraphTreemapLayoutExamples >> basicWorstAspectRatio [
 	^ aWorst
 ]
 
+{ #category : #'examples - utilities' }
+GtGraphTreemapLayoutExamples >> graphUtilities [
+	<gtExample>
+	^ GtGraphUtilities default
+]
+
 { #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> node [
 	<gtExample>
 	| aNode |
 	aNode := GtGraphTreemapNode new.
-	self assert: aNode weight isNil.
+	self assert: aNode weight isZero.
 	^ aNode
 ]
 
-{ #category : #'examples - slice layout' }
+{ #category : #'building - graph' }
 GtGraphTreemapLayoutExamples >> numberElements [
 	<gtExample>
 	| theElements |
@@ -162,7 +168,7 @@ GtGraphTreemapLayoutExamples >> numberElements [
 	^ theElements
 ]
 
-{ #category : #'examples - slice layout' }
+{ #category : #'building - graph' }
 GtGraphTreemapLayoutExamples >> numbers [
 	<gtExample>
 	| aView |
@@ -171,7 +177,7 @@ GtGraphTreemapLayoutExamples >> numbers [
 	^ aView
 ]
 
-{ #category : #'examples - slice layout' }
+{ #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 	<gtExample>
 	| aView |
@@ -181,7 +187,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 	^ aView
 ]
 
-{ #category : #'examples - slice layout' }
+{ #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
 	<gtExample>
 	| aView |
@@ -194,7 +200,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
 	^ aView
 ]
 
-{ #category : #'examples - slice layout' }
+{ #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontalWithMarginAndPadding [
 	<gtExample>
 	| aView |
@@ -216,7 +222,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontalWithMarginAndPadding [
 	^ aView
 ]
 
-{ #category : #'examples - slice layout' }
+{ #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	<gtExample>
 	| aView |
@@ -226,7 +232,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	^ aView
 ]
 
-{ #category : #'examples - squarify layout' }
+{ #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSquarified [
 	<gtExample>
 	| aView |
@@ -259,6 +265,24 @@ GtGraphTreemapLayoutExamples >> rectangleAsElementWithInformation [
 	self assert: anElement isNotNil.
 	self assert: (anElement isKindOf: BlElement).
 	^ aRectangle
+]
+
+{ #category : #'examples - utilities' }
+GtGraphTreemapLayoutExamples >> rectangleWithMarginAndInformationUtility [
+	<gtExample>
+	| anElement |
+	anElement := self graphUtilities rectangleOn: self extent: 600@400 margin: (BlInsets all: 20).
+	self graphUtilities informationForRectangle: anElement bounds: (0@0 extent: 600@400).
+	^ anElement asScalableElement
+]
+
+{ #category : #'examples - utilities' }
+GtGraphTreemapLayoutExamples >> rectangleWithMarginUtility [
+	<gtExample>
+	| anElement |
+	anElement := self graphUtilities rectangleOn: self extent: 600@400 margin: (BlInsets all: 20).
+	self assert: anElement childrenCount equals: 2.
+	^ anElement asScalableElement
 ]
 
 { #category : #'examples - utilities' }
@@ -472,6 +496,24 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 	self assert: aTree extent equals: 600@400.
 	self assert: aTree area equals: 600 * 400.
 	^ aTree
+]
+
+{ #category : #'examples - squarify algorithm - core' }
+GtGraphTreemapLayoutExamples >> squarifyWithFourNodesFirstArea [
+	<gtExample>
+	| anArea |
+	anArea := self squarifyWithFourNodes allAreas first.
+	self assert: anArea nodesCount equals: 2.
+	^ anArea
+]
+
+{ #category : #'examples - squarify algorithm - core' }
+GtGraphTreemapLayoutExamples >> squarifyWithFourNodesSecondArea [
+	<gtExample>
+	| anArea |
+	anArea := self squarifyWithFourNodes allAreas second.
+	self assert: anArea nodesCount equals: 2.
+	^ anArea
 ]
 
 { #category : #'examples - squarify algorithm - core' }

@@ -1,3 +1,8 @@
+"
+I compute worst aspect ratio based on node height and weight.
+See ${class:GtGraphTreemapSquarifyWorst}$ for more details and examples.
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyWorstAspectRatio,
 	#superclass : #GtGraphTreemapSquarifyWorst,
