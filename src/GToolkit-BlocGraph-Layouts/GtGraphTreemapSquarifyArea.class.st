@@ -181,24 +181,18 @@ GtGraphTreemapSquarifyArea >> rectangleRemainingBounds [
 
 { #category : #squarifying }
 GtGraphTreemapSquarifyArea >> squarifyHereNode: aNode [ 
-	| aNewArea aSwitchedArea aBest |
+	| aNewArea |
 	self nodes ifEmpty: [ 
 		self addNode: aNode.
 		self layoutNodes.
 		^ self ].
 	aNewArea := self copyWithNode: aNode.
-	aSwitchedArea := (self copyWithNode: aNode) switchDirection.
-	aBest := { self. aNewArea. aSwitchedArea } detectMin: [ :each | each worst ].
-	aBest == aNewArea ifTrue: [
+	self worst >= aNewArea worst
+		ifTrue: [
 			"the aspect ratio is improved"
 			self addNode: aNode.
-			self layoutNodes ].
-	aBest == aSwitchedArea ifTrue: [
-			"the aspect ratio is improved"
-			self switchDirection.
-			self addNode: aNode.
-			self layoutNodes ].
-	aBest == self ifTrue: [ 
+			self layoutNodes ]
+		ifFalse: [ 
 			"the aspect ratio is worst, let's create a new area"
 			nextArea := GtGraphTreemapSquarifyArea new.
 			nextArea rectangle: self rectangle remainingRectangle.
@@ -209,11 +203,6 @@ GtGraphTreemapSquarifyArea >> squarifyHereNode: aNode [
 GtGraphTreemapSquarifyArea >> squarifyNode: aNode [ 
 	nextArea ifNotNil: [ nextArea squarifyNode: aNode. ^ self ].
 	self squarifyHereNode: aNode.
-]
-
-{ #category : #converting }
-GtGraphTreemapSquarifyArea >> switchDirection [
-	self rectangle: self rectangle asOtherDirecton
 ]
 
 { #category : #accessing }

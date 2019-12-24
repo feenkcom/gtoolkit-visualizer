@@ -31,7 +31,7 @@ GtGraphTreemap class >> squarify [
 { #category : #adding }
 GtGraphTreemap >> addNode: aNode [
 	self updateNode: aNode.
-	self nodes: (self nodes copyWithNode: aNode)
+	self nodes: (self nodes copyWith: aNode)
 ]
 
 { #category : #accessing }

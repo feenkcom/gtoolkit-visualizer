@@ -17,6 +17,11 @@ GtGraphTreemapSquarifyNodes >> at: anIndex [
 	^ self nodes at: anIndex
 ]
 
+{ #category : #'as yet unclassified' }
+GtGraphTreemapSquarifyNodes >> copyWith: aNode [ 
+	^ self copyWithNode: aNode
+]
+
 { #category : #copying }
 GtGraphTreemapSquarifyNodes >> copyWithNode: aNode [ 
 	^ self class new 
