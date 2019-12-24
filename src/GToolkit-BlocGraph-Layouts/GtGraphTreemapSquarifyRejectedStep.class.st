@@ -1,3 +1,7 @@
+"
+nextStep
+	^ self step nextStep
+"
 Class {
 	#name : #GtGraphTreemapSquarifyRejectedStep,
 	#superclass : #GtGraphTreemapSquarifyAbstractStep,
@@ -16,7 +20,11 @@ GtGraphTreemapSquarifyRejectedStep >> allSteps [
 { #category : #converting }
 GtGraphTreemapSquarifyRejectedStep >> asElementWithOccupiedArea [
 	<return: #BlElement>
-	^ self step asElementWithOccupiedArea
+	| anElement |
+	anElement := self step asElementWithOccupiedArea.
+	anElement padding: (BlInsets all: 5).
+	anElement border: (BlBorder paint: Color red width: 3).
+	^ anElement
 ]
 
 { #category : #converting }
@@ -25,8 +33,18 @@ GtGraphTreemapSquarifyRejectedStep >> asRejectedStep [
 ]
 
 { #category : #testing }
+GtGraphTreemapSquarifyRejectedStep >> hasNextStep [
+	^ self step hasNextStep
+]
+
+{ #category : #testing }
 GtGraphTreemapSquarifyRejectedStep >> isRejectedStep [
 	^ true
+]
+
+{ #category : #'accessing - step' }
+GtGraphTreemapSquarifyRejectedStep >> nextStep [
+	^ self step nextStep
 ]
 
 { #category : #accessing }

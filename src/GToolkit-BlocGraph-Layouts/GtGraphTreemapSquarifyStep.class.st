@@ -55,6 +55,11 @@ GtGraphTreemapSquarifyStep >> extent: aPoint [
 	self rectangle: (GtGraphTreemapSquarifyAreaRectangle position: 0@0 extent: aPoint).
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyStep >> hasNextStep [
+	^ self nextStep isDefinedStep
+]
+
 { #category : #initialization }
 GtGraphTreemapSquarifyStep >> initialize [
 	super initialize.

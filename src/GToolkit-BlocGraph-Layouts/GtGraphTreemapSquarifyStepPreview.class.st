@@ -22,7 +22,7 @@ GtGraphTreemapSquarifyStepPreview >> asElementWithOccupiedArea [
 	aContainer constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
-	aContainer addChild: self rectangle asElementWithOccupiedArea.
+	aContainer addChild: self rectangle asElementWithOccupiedArea as: #occupiedArea.
 	self nodesDo: [ :eachNode | 
 		eachNode hasBounds ifTrue: [ 
 			| anElement |

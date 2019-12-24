@@ -35,6 +35,37 @@ GtGraphTreemapSquarify >> allSteps [
 	^ firstStep allSteps
 ]
 
+{ #category : #converting }
+GtGraphTreemapSquarify >> asAllStepsPreview [
+	| aContainer theStepsToElements |
+	aContainer := BlElement new 
+		constraintsDo: [ :c | 
+			c horizontal fitContent.
+			c vertical fitContent ];
+		layout: (BlGridLayout new columnCount: 3; cellSpacing: 5).
+	theStepsToElements := IdentityDictionary new.
+	self allSteps do: [ :eachStep |
+		| anElement |
+		anElement := eachStep asElementWithOccupiedArea.
+		theStepsToElements at: eachStep put: anElement.
+		aContainer addChild: anElement ].
+	theStepsToElements associationsDo: [ :anAssoc |
+		| aNextStep aNextStepElement |
+		anAssoc key hasNextStep ifTrue: [ 
+			aNextStep := anAssoc key nextStep.
+			aNextStepElement := theStepsToElements at: aNextStep.
+			anAssoc value graph connectTo: aNextStepElement.
+			aContainer addChild: (BlLineElement new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				border: (BlBorder paint: (Color gray alpha: 0.3) width: 2);
+					zIndex: -2;
+					fromAnchor: (BlElementBottomCenterAnchor referenceElement: anAssoc value relatedTo: aNextStepElement);
+					toAnchor: (BlElementTopCenterAnchor referenceElement: aNextStepElement relatedTo: anAssoc value);
+					fromHead: (BlArrowheadSimpleArrow new border: (BlBorder builder paint: (Color gray darker alpha: 0.3); width: 5; build))) ]
+	].
+	^ aContainer
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarify >> extent [
 	^ self firstArea extent
@@ -59,6 +90,17 @@ GtGraphTreemapSquarify >> gtAllStepsFor: aView [
 	<gtView>
 	firstStep ifNil: [ ^ aView empty ].
 	^ firstStep gtAllStepsFor: aView
+]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarify >> gtAllStepsPreviewFor: aView [
+	<gtView>
+	self nodes ifNil: [ ^ aView empty ].
+	^ aView explicit
+		title: 'All Steps';
+		priority: 1.5;
+		stencil: [ self asAllStepsPreview asScalableElement
+			margin: (BlInsets all: 10) ]
 ]
 
 { #category : #initialization }

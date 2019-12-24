@@ -59,6 +59,11 @@ GtGraphTreemapSquarifyAbstractStep >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyAbstractStep >> isDefinedStep [
+	^ true
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyAbstractStep >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>

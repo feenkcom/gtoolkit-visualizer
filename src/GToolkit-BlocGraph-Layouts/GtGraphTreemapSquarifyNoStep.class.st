@@ -40,6 +40,11 @@ GtGraphTreemapSquarifyNoStep >> asElementWithOccupiedArea [
 		extent: 300@300
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyNoStep >> isDefinedStep [
+	^ false
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyNoStep >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
