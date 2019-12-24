@@ -81,8 +81,23 @@ GtGraphUtilities >> informationForRectangle: aContainer bounds: aBounds [
 	^ aContainer
 ]
 
+{ #category : #'printing - numberss' }
+GtGraphUtilities >> printNumber: aNumber [
+	"print a number as float or as an original number, plus float"
+	<return: #String>
+	aNumber isFloat ifTrue: [ ^ aNumber printString ].
+	^ aNumber printString, ' = ', (aNumber asFloat round: 4) printString
+]
+
+{ #category : #'factory - rectangle' }
+GtGraphUtilities >> rectangleOn: anObject extent: anExtent [
+	<return: #BlElement>
+	^ self rectangleOn: anObject extent: anExtent margin: (BlInsets all: 0)
+]
+
 { #category : #'factory - rectangle' }
 GtGraphUtilities >> rectangleOn: anObject extent: anExtent margin: aMargin [
+	<return: #BlElement>
 	| aContainer aMarginRectangle anActualRectangle aBorderWidth aFloatExtent aFloatExtentAndMargin |
 
 	aBorderWidth := (anExtent x / 100.0) min: 0.5.

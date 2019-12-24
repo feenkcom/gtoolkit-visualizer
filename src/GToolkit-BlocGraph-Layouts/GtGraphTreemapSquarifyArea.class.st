@@ -73,16 +73,6 @@ GtGraphTreemapSquarifyArea >> copyWithNode: aNode [
 		rectangle: self rectangle
 ]
 
-{ #category : #accessing }
-GtGraphTreemapSquarifyArea >> extent [
-	^ rectangle extent
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyArea >> extent: aPoint [ 
-	self rectangle: (GtGraphTreemapSquarifyAreaRectangle position: 0@0 extent: aPoint).
-]
-
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyArea >> gtAllAreasFor: aView [
 	<gtView>
@@ -122,11 +112,6 @@ GtGraphTreemapSquarifyArea >> initialize [
 	nodes := #().
 	rectangle := GtGraphTreemapSquarifyAreaRectangle null.
 	worst := GtGraphTreemapSquarifyWorstAspectRatio new.
-]
-
-{ #category : #layout }
-GtGraphTreemapSquarifyArea >> layoutNodes [
-	self rectangle layoutArea: self
 ]
 
 { #category : #accessing }
@@ -201,14 +186,14 @@ GtGraphTreemapSquarifyArea >> squarifyHereNode: aNode [
 	| aNewArea |
 	self nodes ifEmpty: [ 
 		self addNode: aNode.
-		self layoutNodes.
+		self squarifyNodes.
 		^ self ].
 	aNewArea := self copyWithNode: aNode.
 	self worst >= aNewArea worst
 		ifTrue: [
 			"the aspect ratio is improved"
 			self addNode: aNode.
-			self layoutNodes ]
+			self squarifyNodes ]
 		ifFalse: [ 
 			"the aspect ratio is worst, let's create a new area"
 			nextArea := GtGraphTreemapSquarifyArea new.
@@ -220,6 +205,11 @@ GtGraphTreemapSquarifyArea >> squarifyHereNode: aNode [
 GtGraphTreemapSquarifyArea >> squarifyNode: aNode [ 
 	nextArea ifNotNil: [ nextArea squarifyNode: aNode. ^ self ].
 	self squarifyHereNode: aNode.
+]
+
+{ #category : #layout }
+GtGraphTreemapSquarifyArea >> squarifyNodes [
+	self rectangle squarifyStep: self
 ]
 
 { #category : #accessing }

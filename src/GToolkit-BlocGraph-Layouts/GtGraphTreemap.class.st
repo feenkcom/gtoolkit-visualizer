@@ -87,7 +87,7 @@ GtGraphTreemap >> gtNodesFor: aView [
 	self nodes ifNil: [ ^ aView empty ].
 	^ (self nodes gtItemsFor: aView)
 		title: 'Nodes';
-		priority: 2
+		priority: 5
 ]
 
 { #category : #'gt-extension' }

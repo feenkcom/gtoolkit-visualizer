@@ -54,3 +54,8 @@ GtGraphTreemapSquarifyNoRectangle >> name [
 GtGraphTreemapSquarifyNoRectangle >> remainingBounds [
 	^ self bounds
 ]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyNoRectangle >> updateOccupiedArea: aStep [
+	"do nothing"
+]

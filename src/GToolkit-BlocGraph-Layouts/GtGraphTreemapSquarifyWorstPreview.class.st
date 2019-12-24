@@ -210,8 +210,7 @@ GtGraphTreemapSquarifyWorstPreview >> nodesBreadth [
 { #category : #printing }
 GtGraphTreemapSquarifyWorstPreview >> printNumber: aNumber [
 	<return: #String>
-	aNumber isFloat ifTrue: [ ^ aNumber printString ].
-	^ aNumber printString, ' = ', (aNumber asFloat round: 4) printString
+	^ GtGraphUtilities default printNumber: aNumber
 ]
 
 { #category : #'accessing - occupied area' }

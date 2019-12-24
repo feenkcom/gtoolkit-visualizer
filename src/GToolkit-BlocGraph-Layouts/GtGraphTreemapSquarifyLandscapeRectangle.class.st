@@ -16,14 +16,26 @@ Class {
 }
 
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> layoutArea: anArea [
+GtGraphTreemapSquarifyLandscapeRectangle >> length [
+	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
+	<return: #Number>
+	^ self height
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyLandscapeRectangle >> name [
+	^ 'Landscape'
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyLandscapeRectangle >> squarifyStep: aStep [
 	| anExtentToOccupy aNextNodePosition aRemainingRectangle anOriginalArea anOccupiedArea anOccupiedRectangle |
-	self ifNoSpace: [ ^ self layoutAreaInNoSpace: anArea ].
+	self ifNoSpace: [ ^ self squarifyStepInNoSpace: aStep ].
 	anOriginalArea := self original volume.
-	anOccupiedArea := anOriginalArea * anArea occupiedWeight.
+	anOccupiedArea := anOriginalArea * aStep occupiedWeight.
 	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
 	aNextNodePosition := self position.
-	anArea nodes do: [ :eachNode | 
+	aStep nodesDo: [ :eachNode | 
 		| aHeight aWidth |
 		aWidth := anExtentToOccupy x.
 		aHeight := anOriginalArea * eachNode weight / aWidth.
@@ -42,14 +54,14 @@ GtGraphTreemapSquarifyLandscapeRectangle >> layoutArea: anArea [
 	self occupiedRectangle: anOccupiedRectangle.
 ]
 
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> length [
-	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
-	<return: #Number>
-	^ self height
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> name [
-	^ 'Landscape'
+{ #category : #squarifying }
+GtGraphTreemapSquarifyLandscapeRectangle >> updateOccupiedArea: aStep [
+	| anExtentToOccupy anOccupiedArea anOccupiedRectangle |
+	anOccupiedArea := self original volume * aStep occupiedWeight.
+	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
+	anOccupiedRectangle := self class
+		position: self position
+		extent: anExtentToOccupy.
+	anOccupiedRectangle original: self original.
+	self occupiedRectangle: anOccupiedRectangle.
 ]

@@ -24,6 +24,21 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #accessing }
+GtGraphTreemapSquarifyWorst class >> aspectRatio [
+	^ GtGraphTreemapSquarifyWorstAspectRatio new
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyWorst class >> default [
+	^ self aspectRatio
+]
+
+{ #category : #'as yet unclassified' }
+GtGraphTreemapSquarifyWorst >> >= aGtGraphTreemapSquarifyWorst [ 
+	^ self value >= aGtGraphTreemapSquarifyWorst value
+]
+
 { #category : #adding }
 GtGraphTreemapSquarifyWorst >> addNode: aNode [ 
 	self nodes: (self nodes copyWith: aNode)

@@ -99,19 +99,6 @@ GtGraphTreemapSquarifyAreaRectangle >> isRoot [
 	^ self original == self.
 ]
 
-{ #category : #measuring }
-GtGraphTreemapSquarifyAreaRectangle >> layoutArea: aGtGraphTreemapSquarifyRow [
-	^ self subclassResponsibility
-]
-
-{ #category : #measuring }
-GtGraphTreemapSquarifyAreaRectangle >> layoutAreaInNoSpace: aRow [ 
-	aRow nodesDo: [ :eachNode | 
-		eachNode 
-			position: 0@0;
-			extent: 0@0 ]
-]
-
 { #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
@@ -122,6 +109,12 @@ GtGraphTreemapSquarifyAreaRectangle >> length [
 { #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> name [
 	^ 'Rectangle'
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyAreaRectangle >> occupiedBounds [
+	<return: #Rectangle>
+	^ self occupiedRectangle bounds
 ]
 
 { #category : #accessing }
@@ -168,6 +161,24 @@ GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle [
 { #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
 	remainingRectangle := aGtGraphTreemapSquarifyRectangle
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyAreaRectangle >> squarifyStep: aStep [
+	^ self subclassResponsibility
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyAreaRectangle >> squarifyStepInNoSpace: aStep [ 
+	aStep nodesDo: [ :eachNode | 
+		eachNode 
+			position: 0@0;
+			extent: 0@0 ]
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyAreaRectangle >> updateOccupiedArea: aStep [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

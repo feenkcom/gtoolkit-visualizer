@@ -25,7 +25,7 @@ GtGraphTreemapLayoutExamples >> areaWithOneNode [
 	| anArea |
 	anArea := self area.
 	anArea addNode: (self node weight: 1/4) "6".
-	anArea layoutNodes.
+	anArea squarifyNodes.
 	self assert: anArea nodesCount equals: 1.
 	self assert: anArea extent equals: 600@400.
 	self assert: anArea allAreas size equals: 1.
@@ -40,7 +40,7 @@ GtGraphTreemapLayoutExamples >> areaWithThreeNodes [
 	| aRow |
 	aRow := self areaWithTwoNodes.
 	aRow addNode: (self node weight: 1/6) "4".
-	aRow layoutNodes.
+	aRow squarifyNodes.
 	self assert: aRow nodesCount equals: 3.
 	self assert: aRow extent equals: 600@400.
 	self assert: aRow allAreas size equals: 1.
@@ -55,7 +55,7 @@ GtGraphTreemapLayoutExamples >> areaWithTwoNodes [
 	| aRow |
 	aRow := self areaWithOneNode.
 	aRow addNode: (self node weight: 1/4) "6".
-	aRow layoutNodes.
+	aRow squarifyNodes.
 	self assert: aRow nodesCount equals: 2.
 	self assert: aRow extent equals: 600@400.
 	self assert: aRow allAreas size equals: 1.
@@ -453,22 +453,22 @@ GtGraphTreemapLayoutExamples >> squarifyWithFiveNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithFourNodes.
-	aNode := self node weight: 1/12 "2".
+	aNode := self node weight: 1 / 12.	"2"
 	aTree addNode: aNode.
-	self assert: aTree allAreas size equals: 3.
+	self assert: aTree allSteps size equals: 7.
 	self assert: aTree nodes size equals: 5.
-	self assert: aTree nodes first position equals: 0@0.
-	self assert: aTree nodes first extent equals: 300@200.
-	self assert: aTree nodes second position equals: 0@200.
-	self assert: aTree nodes second extent equals: 300@200.
-	self assert: aTree nodes third position equals: 300@0.
-	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
-	self assert: aTree nodes fourth position equals: ((3300/7)@0).
-	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
+	self assert: aTree nodes first position equals: 0 @ 0.
+	self assert: aTree nodes first extent equals: 300 @ 200.
+	self assert: aTree nodes second position equals: 0 @ 200.
+	self assert: aTree nodes second extent equals: 300 @ 200.
+	self assert: aTree nodes third position equals: 300 @ 0.
+	self assert: aTree nodes third extent equals: (1200 / 7) @ (700 / 3).
+	self assert: aTree nodes fourth position equals: (3300 / 7) @ 0.
+	self assert: aTree nodes fourth extent equals: (900 / 7) @ (700 / 3).
 	self assert: aTree nodes fifth equals: aNode.
-	self assert: aTree nodes fifth position equals: (300@(700/3)).
-	self assert: aTree nodes fifth extent equals: (120@(500/3)).
-	self assert: aTree extent equals: 600@400.
+	self assert: aTree nodes fifth position equals: 300 @ (700 / 3).
+	self assert: aTree nodes fifth extent equals: 120 @ (500 / 3).
+	self assert: aTree extent equals: 600 @ 400.
 	^ aTree
 ]
 
@@ -477,20 +477,20 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithThreeNodes.
-	aNode := self node weight: 1/8 "3".
+	aNode := self node weight: 1 / 8.	"3"
 	aTree addNode: aNode.
-	self assert: aTree allAreas size equals: 2.
+	self assert: aTree allSteps size equals: 5.
 	self assert: aTree nodes size equals: 4.
-	self assert: aTree nodes first position equals: 0@0.
-	self assert: aTree nodes first extent equals: 300@200.
-	self assert: aTree nodes second position equals: 0@200.
-	self assert: aTree nodes second extent equals: 300@200.
-	self assert: aTree nodes third position equals: 300@0.
-	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
+	self assert: aTree nodes first position equals: 0 @ 0.
+	self assert: aTree nodes first extent equals: 300 @ 200.
+	self assert: aTree nodes second position equals: 0 @ 200.
+	self assert: aTree nodes second extent equals: 300 @ 200.
+	self assert: aTree nodes third position equals: 300 @ 0.
+	self assert: aTree nodes third extent equals: (1200 / 7) @ (700 / 3).
 	self assert: aTree nodes fourth equals: aNode.
-	self assert: aTree nodes fourth position equals: ((3300/7)@0).
-	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
-	self assert: aTree extent equals: 600@400.
+	self assert: aTree nodes fourth position equals: (3300 / 7) @ 0.
+	self assert: aTree nodes fourth extent equals: (900 / 7) @ (700 / 3).
+	self assert: aTree extent equals: 600 @ 400.
 	^ aTree
 ]
 
@@ -532,26 +532,26 @@ GtGraphTreemapLayoutExamples >> squarifyWithSevenNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithSixNodes.
-	aNode := self node weight: 1/24 "1".
+	aNode := self node weight: 1 / 24.	"1"
 	aTree addNode: aNode.
-	self assert: aTree allAreas size equals: 5.
+	self assert: aTree allSteps size equals: 11.
 	self assert: aTree nodes size equals: 7.
-	self assert: aTree nodes first position equals: 0@0.
-	self assert: aTree nodes first extent equals: 300@200.
-	self assert: aTree nodes second position equals: 0@200.
-	self assert: aTree nodes second extent equals: 300@200.
-	self assert: aTree nodes third position equals: 300@0.
-	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
-	self assert: aTree nodes fourth position equals: ((3300/7)@0).
-	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
-	self assert: aTree nodes fifth position equals: (300@(700/3)).
-	self assert: aTree nodes fifth extent equals: (120@(500/3)).
-	self assert: aTree nodes sixth position equals: (420@(700/3)).
-	self assert: aTree nodes sixth extent equals: (120@(500/3)).
+	self assert: aTree nodes first position equals: 0 @ 0.
+	self assert: aTree nodes first extent equals: 300 @ 200.
+	self assert: aTree nodes second position equals: 0 @ 200.
+	self assert: aTree nodes second extent equals: 300 @ 200.
+	self assert: aTree nodes third position equals: 300 @ 0.
+	self assert: aTree nodes third extent equals: (1200 / 7) @ (700 / 3).
+	self assert: aTree nodes fourth position equals: (3300 / 7) @ 0.
+	self assert: aTree nodes fourth extent equals: (900 / 7) @ (700 / 3).
+	self assert: aTree nodes fifth position equals: 300 @ (700 / 3).
+	self assert: aTree nodes fifth extent equals: 120 @ (500 / 3).
+	self assert: aTree nodes sixth position equals: 420 @ (700 / 3).
+	self assert: aTree nodes sixth extent equals: 120 @ (500 / 3).
 	self assert: aTree nodes seventh equals: aNode.
-	self assert: aTree nodes seventh position equals: (540@(700/3)).
-	self assert: aTree nodes seventh extent equals: (60@(500/3)).
-	self assert: aTree extent equals: 600@400.
+	self assert: aTree nodes seventh position equals: 540 @ (700 / 3).
+	self assert: aTree nodes seventh extent equals: 60 @ (500 / 3).
+	self assert: aTree extent equals: 600 @ 400.
 	^ aTree
 ]
 
@@ -560,24 +560,24 @@ GtGraphTreemapLayoutExamples >> squarifyWithSixNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithFiveNodes.
-	aNode := self node weight: 1/12 "2".
+	aNode := self node weight: 1 / 12.	"2"
 	aTree addNode: aNode.
-	self assert: aTree allAreas size equals: 4.
+	self assert: aTree allSteps size equals: 9.
 	self assert: aTree nodes size equals: 6.
-	self assert: aTree nodes first position equals: 0@0.
-	self assert: aTree nodes first extent equals: 300@200.
-	self assert: aTree nodes second position equals: 0@200.
-	self assert: aTree nodes second extent equals: 300@200.
-	self assert: aTree nodes third position equals: 300@0.
-	self assert: aTree nodes third extent equals: ((1200/7)@(700/3)).
-	self assert: aTree nodes fourth position equals: ((3300/7)@0).
-	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
-	self assert: aTree nodes fifth position equals: (300@(700/3)).
-	self assert: aTree nodes fifth extent equals: (120@(500/3)).
+	self assert: aTree nodes first position equals: 0 @ 0.
+	self assert: aTree nodes first extent equals: 300 @ 200.
+	self assert: aTree nodes second position equals: 0 @ 200.
+	self assert: aTree nodes second extent equals: 300 @ 200.
+	self assert: aTree nodes third position equals: 300 @ 0.
+	self assert: aTree nodes third extent equals: (1200 / 7) @ (700 / 3).
+	self assert: aTree nodes fourth position equals: (3300 / 7) @ 0.
+	self assert: aTree nodes fourth extent equals: (900 / 7) @ (700 / 3).
+	self assert: aTree nodes fifth position equals: 300 @ (700 / 3).
+	self assert: aTree nodes fifth extent equals: 120 @ (500 / 3).
 	self assert: aTree nodes sixth equals: aNode.
-	self assert: aTree nodes sixth position equals: (420@(700/3)).
-	self assert: aTree nodes sixth extent equals: (120@(500/3)).
-	self assert: aTree extent equals: 600@400.
+	self assert: aTree nodes sixth position equals: 420 @ (700 / 3).
+	self assert: aTree nodes sixth extent equals: 120 @ (500 / 3).
+	self assert: aTree extent equals: 600 @ 400.
 	^ aTree
 ]
 
@@ -586,18 +586,18 @@ GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithTwoNodes.
-	aNode := self node weight: 1/6 "4".
+	aNode := self node weight: 1 / 6.	"4"
 	aTree addNode: aNode.
-	self assert: aTree allAreas size equals: 2.
+	self assert: aTree allSteps size equals: 4.
 	self assert: aTree nodes size equals: 3.
-	self assert: aTree nodes first position equals: 0@0.
-	self assert: aTree nodes first extent equals: 300@200.
-	self assert: aTree nodes second position equals: 0@200.
-	self assert: aTree nodes second extent equals: 300@200.
+	self assert: aTree nodes first position equals: 0 @ 0.
+	self assert: aTree nodes first extent equals: 300 @ 200.
+	self assert: aTree nodes second position equals: 0 @ 200.
+	self assert: aTree nodes second extent equals: 300 @ 200.
 	self assert: aTree nodes third equals: aNode.
-	self assert: aTree nodes third position equals: 300@0.
-	self assert: aTree nodes third extent equals: 300@ (400/3).
-	self assert: aTree extent equals: 600@400.
+	self assert: aTree nodes third position equals: 300 @ 0.
+	self assert: aTree nodes third extent equals: 300 @ (400 / 3).
+	self assert: aTree extent equals: 600 @ 400.
 	^ aTree
 ]
 
@@ -606,16 +606,16 @@ GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithOneNode.
-	aNode := self node weight: 1/4 "6".
+	aNode := self node weight: 1 / 4.	"6"
 	aTree addNode: aNode.
-	self assert: aTree allAreas size equals: 1.
+	self assert: aTree allSteps size equals: 2.
 	self assert: aTree nodes size equals: 2.
-	self assert: aTree nodes first position equals: 0@0.
-	self assert: aTree nodes first extent equals: 300@200.
+	self assert: aTree nodes first position equals: 0 @ 0.
+	self assert: aTree nodes first extent equals: 300 @ 200.
 	self assert: aTree nodes second equals: aNode.
-	self assert: aTree nodes second position equals: 0@200.
-	self assert: aTree nodes second extent equals: 300@200.
-	self assert: aTree extent equals: 600@400.
+	self assert: aTree nodes second position equals: 0 @ 200.
+	self assert: aTree nodes second extent equals: 300 @ 200.
+	self assert: aTree extent equals: 600 @ 400.
 	^ aTree
 ]
 

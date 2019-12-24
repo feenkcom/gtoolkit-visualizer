@@ -15,15 +15,27 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #measuring }
-GtGraphTreemapSquarifyPortraitRectangle >> layoutArea: anArea [
+{ #category : #accessing }
+GtGraphTreemapSquarifyPortraitRectangle >> length [
+	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
+	<return: #Number>
+	^ self width
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyPortraitRectangle >> name [
+	^ 'Portrait'
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyPortraitRectangle >> squarifyStep: anArea [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle anOccupiedRectangle |
-	self ifNoSpace: [ ^ self layoutAreaInNoSpace: anArea ].
+	self ifNoSpace: [ ^ self squarifyStepInNoSpace: anArea ].
 	anOriginalArea := self original volume.
 	anOccupiedArea := anOriginalArea * anArea occupiedWeight.
 	anExtentToOccupy := self width @ (anOccupiedArea / self width).
 	aNextNodePosition := self position.
-	anArea nodes do: [ :eachNode | 
+	anArea nodesDo: [ :eachNode | 
 		| aHeight aWidth |
 		aHeight := anExtentToOccupy y.
 		aWidth := anOriginalArea * eachNode weight / aHeight.
@@ -42,14 +54,14 @@ GtGraphTreemapSquarifyPortraitRectangle >> layoutArea: anArea [
 	self occupiedRectangle: anOccupiedRectangle.
 ]
 
-{ #category : #accessing }
-GtGraphTreemapSquarifyPortraitRectangle >> length [
-	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
-	<return: #Number>
-	^ self width
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyPortraitRectangle >> name [
-	^ 'Portrait'
+{ #category : #squarifying }
+GtGraphTreemapSquarifyPortraitRectangle >> updateOccupiedArea: aStep [
+	| anOccupiedArea anExtentToOccupy anOccupiedRectangle |
+	anOccupiedArea := self original volume * aStep occupiedWeight.
+	anExtentToOccupy := self width @ (anOccupiedArea / self width).
+	anOccupiedRectangle := self class
+		position: self position
+		extent: anExtentToOccupy.
+	anOccupiedRectangle original: self original.
+	self occupiedRectangle: anOccupiedRectangle.
 ]

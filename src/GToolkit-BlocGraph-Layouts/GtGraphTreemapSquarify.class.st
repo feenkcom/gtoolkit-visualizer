@@ -17,14 +17,22 @@ Class {
 	#superclass : #GtGraphTreemap,
 	#instVars : [
 		'extent',
-		'firstArea'
+		'firstStep'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #enumerating }
 GtGraphTreemapSquarify >> allAreas [
-	^ firstArea allAreas
+	self 
+		deprecated: 'Please use #allSteps instead.'
+		transformWith: '`@receiver allAreas' -> '`@receiver allSteps'.
+	^ firstStep allSteps
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarify >> allSteps [
+	^ firstStep allSteps
 ]
 
 { #category : #accessing }
@@ -43,20 +51,20 @@ GtGraphTreemapSquarify >> extent: aPoint [
 { #category : #accessing }
 GtGraphTreemapSquarify >> firstArea [
 	<return: #GtGraphTreemapSquarifyArea>
-	^ firstArea
+	^ firstStep
 ]
 
 { #category : #'gt-extension' }
-GtGraphTreemapSquarify >> gtAllAreasFor: aView [
+GtGraphTreemapSquarify >> gtAllStepsFor: aView [
 	<gtView>
-	firstArea ifNil: [ ^ aView empty ].
-	^ firstArea gtAllAreasFor: aView
+	firstStep ifNil: [ ^ aView empty ].
+	^ firstStep gtAllStepsFor: aView
 ]
 
 { #category : #initialization }
 GtGraphTreemapSquarify >> initialize [
 	super initialize.
-	firstArea := GtGraphTreemapSquarifyArea new nodes: self nodes.
+	firstStep := GtGraphTreemapSquarifyStep new nodes: self nodes.
 ]
 
 { #category : #'seas optimizations' }
