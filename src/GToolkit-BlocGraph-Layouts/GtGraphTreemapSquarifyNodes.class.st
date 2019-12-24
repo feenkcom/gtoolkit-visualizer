@@ -33,14 +33,24 @@ GtGraphTreemapSquarifyNodes >> detectMin: aBlockClosure [
 	^ self nodes detectMin: aBlockClosure
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #enumerating }
 GtGraphTreemapSquarifyNodes >> do: aBlockClosure [ 
 	self nodes do: aBlockClosure
 ]
 
 { #category : #accessing }
+GtGraphTreemapSquarifyNodes >> fifth [
+	^ self nodes fifth
+]
+
+{ #category : #accessing }
 GtGraphTreemapSquarifyNodes >> first [
 	^ self nodes first
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyNodes >> fourth [
+	^ self nodes fourth
 ]
 
 { #category : #'gt-extension' }
@@ -52,7 +62,7 @@ GtGraphTreemapSquarifyNodes >> gtNodesFor: aView [
 		priority: 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GtGraphTreemapSquarifyNodes >> ifEmpty: aBlockClosure [ 
 	^ self nodes ifEmpty: aBlockClosure
 ]
@@ -62,7 +72,7 @@ GtGraphTreemapSquarifyNodes >> ifNotEmpty: aBlockClosure [
 	^ self nodes ifNotEmpty: aBlockClosure
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GtGraphTreemapSquarifyNodes >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [ 
 	^ self nodes ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock
 ]
@@ -90,7 +100,27 @@ GtGraphTreemapSquarifyNodes >> nodes: anArray [
 ]
 
 { #category : #accessing }
+GtGraphTreemapSquarifyNodes >> second [
+	^ self nodes second
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyNodes >> seventh [
+	^ self nodes seventh
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyNodes >> sixth [
+	^ self nodes sixth
+]
+
+{ #category : #accessing }
 GtGraphTreemapSquarifyNodes >> size [
 	<return: #Integer>
 	^ self nodes size
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyNodes >> third [
+	^ self nodes third
 ]

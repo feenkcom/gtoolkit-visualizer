@@ -137,9 +137,13 @@ GtGraphTreemapSquarifyWorst >> gtNodesFor: aView [
 			item: [ :aNode | self worstValueForNode: aNode ] 
 			format: [ :aNumber | self printNumber: aNumber ];
 		column: 'Vertical Extent'
-			item: [ :aNode | self nodeExtent: aNode ];
+			item: [ :aNode | | anExtent | 
+				anExtent := (self nodeExtent: aNode) asFloatPoint.
+				anExtent x rounded @ anExtent y rounded ];
 		column: 'Horizontal Extent'
-			item: [ :aNode | self nodeReversedExtent: aNode ]
+			item: [ :aNode | | anExtent | 
+				anExtent := (self nodeReversedExtent: aNode) asFloatPoint.
+				anExtent x rounded @ anExtent y rounded ]
 ]
 
 { #category : #'gt-extension' }
@@ -231,6 +235,7 @@ GtGraphTreemapSquarifyWorst >> nodes [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyWorst >> nodes: aGtGraphTreemapSquarifyNodes [
+	self assert: [ aGtGraphTreemapSquarifyNodes isKindOf: GtGraphTreemapSquarifyNodes ].
 	nodes := aGtGraphTreemapSquarifyNodes
 ]
 

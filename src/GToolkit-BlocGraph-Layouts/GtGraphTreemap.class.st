@@ -31,7 +31,7 @@ GtGraphTreemap class >> squarify [
 { #category : #adding }
 GtGraphTreemap >> addNode: aNode [
 	self updateNode: aNode.
-	self nodes: (self nodes copyWith: aNode)
+	self nodes: (self nodes copyWithNode: aNode)
 ]
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ GtGraphTreemap >> extent [
 GtGraphTreemap >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
-	^ (self nodes gtItemsFor: aView)
+	^ (self nodes gtNodesFor: aView)
 		title: 'Nodes';
 		priority: 2
 ]
@@ -118,8 +118,13 @@ GtGraphTreemap >> height [
 { #category : #initialization }
 GtGraphTreemap >> initialize [
 	super initialize.
-	nodes := #().
-	area := 0.
+	self initializeNodes.
+	area := 0
+]
+
+{ #category : #initialization }
+GtGraphTreemap >> initializeNodes [
+	nodes := #()
 ]
 
 { #category : #testing }

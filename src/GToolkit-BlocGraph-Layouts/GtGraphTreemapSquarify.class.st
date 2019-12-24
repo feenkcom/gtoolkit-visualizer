@@ -46,6 +46,11 @@ GtGraphTreemapSquarify >> initialize [
 	firstArea := GtGraphTreemapSquarifyArea new nodes: self nodes.
 ]
 
+{ #category : #initialization }
+GtGraphTreemapSquarify >> initializeNodes [
+	nodes := GtGraphTreemapSquarifyNodes new.
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarify >> nodeWeights [
 	<return: #Number>

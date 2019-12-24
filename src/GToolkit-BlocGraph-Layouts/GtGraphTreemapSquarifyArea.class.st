@@ -4,14 +4,15 @@ Class {
 	#instVars : [
 		'nodes',
 		'rectangle',
-		'nextArea'
+		'nextArea',
+		'worst'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }
 GtGraphTreemapSquarifyArea >> addNode: aNode [ 
-	self nodes: (self nodes copyWith: aNode)
+	self nodes: (self nodes copyWithNode: aNode)
 ]
 
 { #category : #enumerating }
@@ -62,7 +63,7 @@ GtGraphTreemapSquarifyArea >> extent [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyArea >> extent: aPoint [ 
-	rectangle := GtGraphTreemapSquarifyAreaRectangle position: 0@0 extent: aPoint
+	self rectangle: (GtGraphTreemapSquarifyAreaRectangle position: 0@0 extent: aPoint).
 ]
 
 { #category : #'gt-extension' }
@@ -82,7 +83,7 @@ GtGraphTreemapSquarifyArea >> gtAllAreasFor: aView [
 GtGraphTreemapSquarifyArea >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
-	^ (self nodes gtItemsFor: aView)
+	^ (self nodes gtNodesFor: aView)
 		title: 'Nodes';
 		priority: 2
 ]
@@ -101,8 +102,9 @@ GtGraphTreemapSquarifyArea >> gtPreviewFor: aView [
 { #category : #initialization }
 GtGraphTreemapSquarifyArea >> initialize [
 	super initialize.
-	nodes := #().
+	nodes := GtGraphTreemapSquarifyNodes new.
 	rectangle := GtGraphTreemapSquarifyAreaRectangle null.
+	worst := GtGraphTreemapSquarifyWorstAspectRatio new.
 ]
 
 { #category : #layout }
@@ -116,13 +118,14 @@ GtGraphTreemapSquarifyArea >> nodes [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyArea >> nodes: anObject [
-	nodes := anObject
+GtGraphTreemapSquarifyArea >> nodes: aGtGraphTreemapSquarifyNodes [
+	nodes := aGtGraphTreemapSquarifyNodes.
+	worst nodes: aGtGraphTreemapSquarifyNodes.
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyArea >> nodes: aCollectionOfNodes with: aNode [
-	self nodes: (aCollectionOfNodes copyWith: aNode)
+GtGraphTreemapSquarifyArea >> nodes: aGtGraphTreemapSquarifyNodes with: aNode [
+	self nodes: (aGtGraphTreemapSquarifyNodes copyWithNode: aNode)
 ]
 
 { #category : #accessing }
@@ -160,8 +163,10 @@ GtGraphTreemapSquarifyArea >> rectangle [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyArea >> rectangle: anObject [
-	rectangle := anObject
+GtGraphTreemapSquarifyArea >> rectangle: aGtGraphTreemapSquarifyAreaRectangle [
+	rectangle := aGtGraphTreemapSquarifyAreaRectangle.
+	worst totalArea: rectangle original height * rectangle original width.
+	worst length: rectangle length.
 ]
 
 { #category : #accessing }
@@ -215,12 +220,5 @@ GtGraphTreemapSquarifyArea >> switchDirection [
 GtGraphTreemapSquarifyArea >> worst [
 	"gives the highest aspect ratio"
 	<return: #Number>
-	| anOccupiedWeight anOccupiedExtent aMinRatio aMaxRatio aMax aMin |
-	anOccupiedWeight := self occupiedWeight.
-	anOccupiedExtent := self rectangle extentOccupiedBy: self.
-	aMaxRatio := self nodes detectMax: [ :eachNode | eachNode weight ].
-	aMinRatio := self nodes detectMin: [ :eachNode | eachNode weight ].
-	aMax := self rectangle aspectRatioForWeightRatio: (aMaxRatio weight / anOccupiedWeight) occupiedExtent: anOccupiedExtent.
-	aMin := self rectangle aspectRatioForWeightRatio: (aMinRatio weight / anOccupiedWeight) occupiedExtent: anOccupiedExtent.
-	^ aMax max: aMin
+	^ worst value
 ]
