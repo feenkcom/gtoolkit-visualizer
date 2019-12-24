@@ -11,7 +11,7 @@ Class {
 
 { #category : #adding }
 GtGraphTreemapSquarifyWorst >> addNode: aNode [ 
-	self nodes addNode: aNode
+	self nodes: (self nodes copyWith: aNode)
 ]
 
 { #category : #'accessing - occupied area' }
@@ -182,7 +182,7 @@ GtGraphTreemapSquarifyWorst >> gtWorstValueFor: aView [
 { #category : #initialization }
 GtGraphTreemapSquarifyWorst >> initialize [
 	super initialize.
-	nodes := GtGraphTreemapSquarifyNodes new.
+	nodes := #()
 ]
 
 { #category : #accessing }
@@ -229,14 +229,13 @@ GtGraphTreemapSquarifyWorst >> nodeReversedExtent: aNode [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyWorst >> nodes [
-	<return: #GtGraphTreemapSquarifyNodes>
+	<return: #Array of: #GtGraphTreemapNode>
 	^ nodes
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyWorst >> nodes: aGtGraphTreemapSquarifyNodes [
-	self assert: [ aGtGraphTreemapSquarifyNodes isKindOf: GtGraphTreemapSquarifyNodes ].
-	nodes := aGtGraphTreemapSquarifyNodes
+GtGraphTreemapSquarifyWorst >> nodes: anArray [
+	nodes := anArray
 ]
 
 { #category : #'accessing - nodes' }

@@ -94,7 +94,7 @@ GtGraphTreemap >> extent [
 GtGraphTreemap >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
-	^ (self nodes gtNodesFor: aView)
+	^ (self nodes gtItemsFor: aView)
 		title: 'Nodes';
 		priority: 2
 ]

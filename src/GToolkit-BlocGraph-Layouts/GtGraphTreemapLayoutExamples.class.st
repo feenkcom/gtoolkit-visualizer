@@ -1,3 +1,6 @@
+"
+I exemplify ${class:GtGraphTreemap}$ layout algorithm.
+"
 Class {
 	#name : #GtGraphTreemapLayoutExamples,
 	#superclass : #GtGraphLayoutExamples,
@@ -91,7 +94,7 @@ GtGraphTreemapLayoutExamples >> basicArea [
 	^ aRow
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> basicSliceHorizontal [
 	<gtExample>
 	| aSlice |
@@ -104,7 +107,7 @@ GtGraphTreemapLayoutExamples >> basicSliceHorizontal [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> basicSliceVertical [
 	<gtExample>
 	| aSlice |
@@ -136,7 +139,7 @@ GtGraphTreemapLayoutExamples >> basicWorstAspectRatio [
 	^ aWorst
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> node [
 	<gtExample>
 	| aNode |
@@ -145,7 +148,7 @@ GtGraphTreemapLayoutExamples >> node [
 	^ aNode
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - slice layout' }
 GtGraphTreemapLayoutExamples >> numberElements [
 	<gtExample>
 	| theElements |
@@ -159,7 +162,7 @@ GtGraphTreemapLayoutExamples >> numberElements [
 	^ theElements
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - slice layout' }
 GtGraphTreemapLayoutExamples >> numbers [
 	<gtExample>
 	| aView |
@@ -168,7 +171,7 @@ GtGraphTreemapLayoutExamples >> numbers [
 	^ aView
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - slice layout' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 	<gtExample>
 	| aView |
@@ -178,7 +181,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 	^ aView
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - slice layout' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
 	<gtExample>
 	| aView |
@@ -191,7 +194,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
 	^ aView
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - slice layout' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontalWithMarginAndPadding [
 	<gtExample>
 	| aView |
@@ -213,7 +216,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontalWithMarginAndPadding [
 	^ aView
 ]
 
-{ #category : #'examples - numbers' }
+{ #category : #'examples - slice layout' }
 GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	<gtExample>
 	| aView |
@@ -277,7 +280,7 @@ GtGraphTreemapLayoutExamples >> rectangleWithOriginalAsElementWithInformation [
 	^ aRectangle
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceHorizontal [
 	<gtExample>
 	| aSlice |
@@ -291,7 +294,7 @@ GtGraphTreemapLayoutExamples >> sliceHorizontal [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceHorizontalWithOneNode [
 	<gtExample>
 	| aSlice aNode |
@@ -307,7 +310,7 @@ GtGraphTreemapLayoutExamples >> sliceHorizontalWithOneNode [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceHorizontalWithThreeNodes [
 	<gtExample>
 	| aSlice aNode |
@@ -327,7 +330,7 @@ GtGraphTreemapLayoutExamples >> sliceHorizontalWithThreeNodes [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceHorizontalWithTwoNodes [
 	<gtExample>
 	| aSlice aNode |
@@ -345,7 +348,7 @@ GtGraphTreemapLayoutExamples >> sliceHorizontalWithTwoNodes [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceVertical [
 	<gtExample>
 	| aSlice |
@@ -359,7 +362,7 @@ GtGraphTreemapLayoutExamples >> sliceVertical [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceVerticalWithOneNode [
 	<gtExample>
 	| aSlice aNode |
@@ -373,7 +376,7 @@ GtGraphTreemapLayoutExamples >> sliceVerticalWithOneNode [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceVerticalWithThreeNodes [
 	<gtExample>
 	| aSlice aNode |
@@ -393,7 +396,7 @@ GtGraphTreemapLayoutExamples >> sliceVerticalWithThreeNodes [
 	^ aSlice
 ]
 
-{ #category : #'examples - nodes' }
+{ #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceVerticalWithTwoNodes [
 	<gtExample>
 	| aSlice aNode |
