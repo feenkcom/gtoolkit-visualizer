@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 GtGraphTreemapSquarifyArea >> addNode: aNode [ 
-	self nodes: (self nodes copyWithNode: aNode)
+	self nodes: (self nodes copyWith: aNode)
 ]
 
 { #category : #enumerating }
@@ -83,7 +83,7 @@ GtGraphTreemapSquarifyArea >> gtAllAreasFor: aView [
 GtGraphTreemapSquarifyArea >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
-	^ (self nodes gtNodesFor: aView)
+	^ (self nodes gtItemsFor: aView)
 		title: 'Nodes';
 		priority: 2
 ]
@@ -102,7 +102,7 @@ GtGraphTreemapSquarifyArea >> gtPreviewFor: aView [
 { #category : #initialization }
 GtGraphTreemapSquarifyArea >> initialize [
 	super initialize.
-	nodes := GtGraphTreemapSquarifyNodes new.
+	nodes := #().
 	rectangle := GtGraphTreemapSquarifyAreaRectangle null.
 	worst := GtGraphTreemapSquarifyWorstAspectRatio new.
 ]
@@ -124,8 +124,8 @@ GtGraphTreemapSquarifyArea >> nodes: aGtGraphTreemapSquarifyNodes [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyArea >> nodes: aGtGraphTreemapSquarifyNodes with: aNode [
-	self nodes: (aGtGraphTreemapSquarifyNodes copyWithNode: aNode)
+GtGraphTreemapSquarifyArea >> nodes: anArray with: aNode [
+	self nodes: (anArray copyWith: aNode)
 ]
 
 { #category : #accessing }

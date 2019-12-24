@@ -48,7 +48,7 @@ GtGraphTreemapSquarify >> initialize [
 
 { #category : #initialization }
 GtGraphTreemapSquarify >> initializeNodes [
-	nodes := GtGraphTreemapSquarifyNodes new.
+	nodes := #()
 ]
 
 { #category : #accessing }
