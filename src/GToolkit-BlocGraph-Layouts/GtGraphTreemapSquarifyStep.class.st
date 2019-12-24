@@ -30,23 +30,7 @@ GtGraphTreemapSquarifyStep >> allSteps [
 
 { #category : #converting }
 GtGraphTreemapSquarifyStep >> asElementWithOccupiedArea [
-	| aContainer |
-	aContainer := BlElement new.
-	aContainer layout: BlFitLayout new.
-	aContainer constraintsDo: [ :c |
-		c horizontal fitContent.
-		c vertical fitContent ].
-	aContainer addChild: self rectangle asElementWithOccupiedArea.
-	self nodesDo: [ :eachNode | 
-		eachNode hasBounds ifTrue: [ 
-			| anElement |
-			anElement := eachNode asElement
-				size: eachNode extent asFloatPoint;
-				relocate: eachNode position asFloatPoint.
-			anElement allChildrenBreadthFirstDo: [ :eachChild | 
-				eachChild background: BlBackground transparent ]. 
-			aContainer addChild: anElement ] ].
-	^ aContainer
+	^ self asPreviewStep asElementWithOccupiedArea
 ]
 
 { #category : #converting }

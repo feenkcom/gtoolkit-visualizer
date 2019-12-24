@@ -16,6 +16,11 @@ GtGraphTreemapSquarifyAbstractStep >> asElementWithOccupiedArea [
 	^ self subclassResponsibility
 ]
 
+{ #category : #converting }
+GtGraphTreemapSquarifyAbstractStep >> asPreviewStep [
+	^ GtGraphTreemapSquarifyStepPreview new step: self
+]
+
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> gtAllStepsFor: aView [
 	<gtView>

@@ -27,6 +27,11 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #testing }
+GtGraphTreemapSquarifyArea class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyArea >> addNode: aNode [ 
 	self nodes: (self nodes copyWith: aNode)
