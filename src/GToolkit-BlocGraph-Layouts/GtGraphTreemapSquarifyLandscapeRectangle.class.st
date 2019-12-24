@@ -1,28 +1,23 @@
 Class {
-	#name : #GtGraphTreemapSquarifyLandscapeVerticalRectangle,
+	#name : #GtGraphTreemapSquarifyLandscapeRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #'instance creation' }
-GtGraphTreemapSquarifyLandscapeVerticalRectangle class >> newOtherDirection [
-	^ GtGraphTreemapSquarifyLandscapeHorizontalRectangle new
-]
-
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeVerticalRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
+GtGraphTreemapSquarifyLandscapeRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
 	| aLenght |
 	aLenght := aWeightRatio * anOccupiedExtent y.
 	^ (aLenght / anOccupiedExtent x) max: (anOccupiedExtent x / aLenght).
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeVerticalRectangle >> extentOccupiedBy: aRow [
+GtGraphTreemapSquarifyLandscapeRectangle >> extentOccupiedBy: aRow [
 	^ self extent * (aRow occupiedWeight @ 1)
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeVerticalRectangle >> layoutRow: aRow [
+GtGraphTreemapSquarifyLandscapeRectangle >> layoutRow: aRow [
 	| anExtentToOccupy aNextNodePosition aRemainingRectangle anOriginalArea anOccupiedArea anOccupiedRectangle |
 	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
 	anOriginalArea := self original volume.
@@ -49,13 +44,13 @@ GtGraphTreemapSquarifyLandscapeVerticalRectangle >> layoutRow: aRow [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeVerticalRectangle >> length [
+GtGraphTreemapSquarifyLandscapeRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
 	<return: #Number>
 	^ self height
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyLandscapeVerticalRectangle >> name [
+GtGraphTreemapSquarifyLandscapeRectangle >> name [
 	^ 'Landscape Vertical'
 ]

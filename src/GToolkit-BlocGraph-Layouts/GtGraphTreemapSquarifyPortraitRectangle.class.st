@@ -1,28 +1,23 @@
 Class {
-	#name : #GtGraphTreemapSquarifyPortraitHorizontalRectangle,
+	#name : #GtGraphTreemapSquarifyPortraitRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #'instance creation' }
-GtGraphTreemapSquarifyPortraitHorizontalRectangle class >> newOtherDirection [
-	^ GtGraphTreemapSquarifyPortraitVerticalRectangle new
-]
-
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitHorizontalRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
+GtGraphTreemapSquarifyPortraitRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
 	| aLenght |
 	aLenght := aWeightRatio * anOccupiedExtent x.
 	^ (aLenght / anOccupiedExtent y) max: (anOccupiedExtent y / aLenght).
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitHorizontalRectangle >> extentOccupiedBy: aRow [
+GtGraphTreemapSquarifyPortraitRectangle >> extentOccupiedBy: aRow [
 	^ self extent * (1 @ aRow occupiedWeight)
 ]
 
 { #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyPortraitHorizontalRectangle >> layoutRow: aRow [
+GtGraphTreemapSquarifyPortraitRectangle >> layoutRow: aRow [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition aRemainingRectangle anOccupiedRectangle |
 	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
 	anOriginalArea := self original volume.
@@ -49,13 +44,13 @@ GtGraphTreemapSquarifyPortraitHorizontalRectangle >> layoutRow: aRow [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyPortraitHorizontalRectangle >> length [
+GtGraphTreemapSquarifyPortraitRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
 	<return: #Number>
 	^ self width
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyPortraitHorizontalRectangle >> name [
+GtGraphTreemapSquarifyPortraitRectangle >> name [
 	^ 'Portrait Horizontal'
 ]
