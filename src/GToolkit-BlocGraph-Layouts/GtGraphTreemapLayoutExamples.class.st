@@ -22,16 +22,16 @@ GtGraphTreemapLayoutExamples >> area [
 { #category : #'examples - squarify algorithm - areas' }
 GtGraphTreemapLayoutExamples >> areaWithOneNode [
 	<gtExample>
-	| aRow |
-	aRow := self area.
-	aRow addNode: (self node weight: 1/4) "6".
-	aRow layoutNodes.
-	self assert: aRow nodesCount equals: 1.
-	self assert: aRow extent equals: 600@400.
-	self assert: aRow allAreas size equals: 1.
-	self assert: aRow allAreas first equals: aRow.
-	self assert: aRow worst equals: 8/3 "2.6666666666666665".
-	^ aRow
+	| anArea |
+	anArea := self area.
+	anArea addNode: (self node weight: 1/4) "6".
+	anArea layoutNodes.
+	self assert: anArea nodesCount equals: 1.
+	self assert: anArea extent equals: 600@400.
+	self assert: anArea allAreas size equals: 1.
+	self assert: anArea allAreas first equals: anArea.
+	self assert: anArea worst equals: 8/3 "2.6666666666666665".
+	^ anArea
 ]
 
 { #category : #'examples - squarify algorithm - areas' }
@@ -125,7 +125,6 @@ GtGraphTreemapLayoutExamples >> basicSquarify [
 	<gtExample>
 	| aTree |
 	aTree := GtGraphTreemap squarify.
-	self assert: aTree area isZero.
 	self assert: aTree nodes isEmpty.
 	^ aTree
 ]
@@ -445,7 +444,6 @@ GtGraphTreemapLayoutExamples >> squarify [
 	aTree := self basicSquarify.
 	aTree width: 600 height: 400.
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	self assert: aTree nodes isEmpty.
 	^ aTree
 ]
@@ -471,7 +469,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithFiveNodes [
 	self assert: aTree nodes fifth position equals: (300@(700/3)).
 	self assert: aTree nodes fifth extent equals: (120@(500/3)).
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -494,7 +491,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 	self assert: aTree nodes fourth position equals: ((3300/7)@0).
 	self assert: aTree nodes fourth extent equals: ((900/7)@(700/3)).
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -528,7 +524,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
 	self assert: aTree nodes first position equals: 0@0.
 	self assert: aTree nodes first extent equals: 150@400.
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -557,7 +552,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithSevenNodes [
 	self assert: aTree nodes seventh position equals: (540@(700/3)).
 	self assert: aTree nodes seventh extent equals: (60@(500/3)).
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -584,7 +578,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithSixNodes [
 	self assert: aTree nodes sixth position equals: (420@(700/3)).
 	self assert: aTree nodes sixth extent equals: (120@(500/3)).
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -605,7 +598,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
 	self assert: aTree nodes third position equals: 300@0.
 	self assert: aTree nodes third extent equals: 300@ (400/3).
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -624,7 +616,6 @@ GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
 	self assert: aTree nodes second position equals: 0@200.
 	self assert: aTree nodes second extent equals: 300@200.
 	self assert: aTree extent equals: 600@400.
-	self assert: aTree area equals: 600 * 400.
 	^ aTree
 ]
 
@@ -635,7 +626,6 @@ GtGraphTreemapLayoutExamples >> squarifyZeroWidth [
 	aTree := self basicSquarify.
 	aTree width: 0 height: 400.
 	self assert: aTree extent equals: 0@400.
-	self assert: aTree area equals: 0 * 400.
 	self assert: aTree nodes isEmpty.
 	^ aTree
 ]
@@ -652,7 +642,6 @@ GtGraphTreemapLayoutExamples >> squarifyZeroWidthWithOneNode [
 	self assert: aTree nodes first position equals: 0@0.
 	self assert: aTree nodes first extent equals: 0@0.
 	self assert: aTree extent equals: 0@400.
-	self assert: aTree area equals: 0 * 400.
 	^ aTree
 ]
 

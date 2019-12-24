@@ -38,7 +38,6 @@ GtGraphTreemapSquarify >> extent: aPoint [
 		assert: [ aPoint isNotNil ] 
 		description: [ 'Extent must be non-nil' ].
 	self firstArea extent: aPoint.
-	self area: aPoint x * aPoint y
 ]
 
 { #category : #accessing }

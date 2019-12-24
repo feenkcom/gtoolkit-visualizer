@@ -8,7 +8,8 @@ Class {
 	#name : #GtGraphTreemapSlice,
 	#superclass : #GtGraphTreemap,
 	#instVars : [
-		'breadth'
+		'breadth',
+		'length'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
@@ -32,19 +33,7 @@ GtGraphTreemapSlice class >> vertical [
 GtGraphTreemapSlice >> asElementWithInformation [
 	<return: #BlElement>
 	| aContainer |
-	aContainer := BlElement new
-		layout: (BlLinearLayout vertical cellSpacing: 3);
-		background: Color white;
-		constraintsDo: [ :c | 
-			c horizontal fitContent.
-			c vertical fitContent ].
-	aContainer addChild: (self asElement
-		constraintsDo: [ :c |
-			c linear horizontal alignCenter]).
-	aContainer addChild: (BlTextElement new
-		text: (('Extent: ', self extent rounded asString) asRopedText glamorousCodeFontAndSize);
-		constraintsDo: [ :c |
-			c linear horizontal alignCenter ]).
+	aContainer := super asElementWithInformation.
 	aContainer addChild: (BlTextElement new
 		text: (('Remaining Extent: ', self remainingExtent rounded asString) asRopedText glamorousCodeFontAndSize);
 		constraintsDo: [ :c |
@@ -67,17 +56,18 @@ GtGraphTreemapSlice >> breadth: aNumber [
 GtGraphTreemapSlice >> initialize [
 	super initialize.
 	breadth := 0.
+	length := 0.
 ]
 
 { #category : #accessing }
 GtGraphTreemapSlice >> length [
 	<return: #Number>
-	^ area
+	^ length
 ]
 
 { #category : #accessing }
 GtGraphTreemapSlice >> length: aNumber [
-	area := aNumber
+	length := aNumber
 ]
 
 { #category : #accessing }

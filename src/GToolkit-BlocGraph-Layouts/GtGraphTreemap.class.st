@@ -8,8 +8,7 @@ Class {
 	#name : #GtGraphTreemap,
 	#superclass : #Object,
 	#instVars : [
-		'nodes',
-		'area'
+		'nodes'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
@@ -38,16 +37,6 @@ GtGraphTreemap class >> squarify [
 GtGraphTreemap >> addNode: aNode [
 	self updateNode: aNode.
 	self nodes: (self nodes copyWith: aNode)
-]
-
-{ #category : #accessing }
-GtGraphTreemap >> area [
-	^ area
-]
-
-{ #category : #accessing }
-GtGraphTreemap >> area: anObject [
-	area := anObject
 ]
 
 { #category : #converting }
@@ -83,10 +72,6 @@ GtGraphTreemap >> asElementWithInformation [
 		text: (('Extent: ', self extent rounded asString) asRopedText glamorousCodeFontAndSize);
 		constraintsDo: [ :c |
 			c linear horizontal alignCenter ]).
-	"aContainer addChild: (BlTextElement new
-		text: (('Remaining Extent: ', self remainingExtent rounded asString) asRopedText glamorousCodeFontAndSize);
-		constraintsDo: [ :c |
-			c linear horizontal alignCenter ])."
 	^ aContainer
 ]
 
@@ -125,7 +110,6 @@ GtGraphTreemap >> height [
 GtGraphTreemap >> initialize [
 	super initialize.
 	self initializeNodes.
-	area := 0
 ]
 
 { #category : #initialization }
