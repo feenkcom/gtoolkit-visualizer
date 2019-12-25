@@ -1,6 +1,6 @@
 "
-I represent an area in which ${class:GtGraphTreemapNode}$ nodes are added by ${class:GtGraphTreemapSquarifyArea}$.
-I know how to layout nodes using ${method:GtGraphTreemapSquarifyAreaRectangle>>#layoutArea:}$.
+I represent an area in which ${class:GtGraphTreemapNode}$ nodes are added by ${class:GtGraphTreemapSquarifyStep}$.
+I know how to layout nodes using ${method:GtGraphTreemapSquarifyAreaRectangle>>#squarifyStep:}$.
 
 See my subclasses for more details and examples: ${class:GtGraphTreemapSquarifyAreaRectangle|show=gtSubclassesFor:|expanded=true}$
 
