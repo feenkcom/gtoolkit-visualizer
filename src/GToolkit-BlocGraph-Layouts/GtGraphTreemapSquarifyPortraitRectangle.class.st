@@ -1,7 +1,7 @@
 "
 I represent a rectangle. My width is smaller than my height.
 I layout ${class:GtGraphTreemapNode}$ along my shorter side (width).
-I am used by ${class:GtGraphTreemapSquarifyArea}$.
+I am used by ${class:GtGraphTreemapSquarifyStep}$.
 
 !! Example
 

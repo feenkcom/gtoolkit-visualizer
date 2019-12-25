@@ -1,14 +1,14 @@
 "
 I am an abstract ==worst()== function defined in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*]. The function ==worst()== gives the highest aspect ratio of a list of rectangles, given the length of the side along which they are to be laid out. 
 
-I am used by ${class:GtGraphTreemapSquarifyArea}$.
+I am used by ${class:GtGraphTreemapSquarifyStep}$.
 
 !! Example
 
 For ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#nodesCount}$ nodes that are located along the side of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#length}$ length, and with total are size of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#totalArea}$, the worst aspect ratio is ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#value}$:
 ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|previewShow=#gtPreviewFor:|previewExpanded=true|codeExpanded=falsec}$
 
-If we add to the same area another node, we end up with ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|label=#nodesCount}$ nodes and the worst aspect ratio of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|label=#value}$ value. As this value is bigger then the previous one, ${class:GtGraphTreemapSquarifyArea}$ decides to pass the new node to a new area:
+If we add to the same area another node, we end up with ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|label=#nodesCount}$ nodes and the worst aspect ratio of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|label=#value}$ value. As this value is bigger then the previous one, ${class:GtGraphTreemapSquarifyStep}$ decides to pass the new node to a new area:
 ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|previewShow=#gtPreviewFor:|previewExpanded=true|codeExpanded=false}$
 
 

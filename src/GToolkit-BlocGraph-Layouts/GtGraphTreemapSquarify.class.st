@@ -1,7 +1,7 @@
 "
 I split an area into rectangles that are close to squares (aspect ratio 1) as much as possible.
 I use ${method:GtGraphTreemapNode>>#weight}$ node values to split an area into.
-I use ${class:GtGraphTreemapSquarifyArea}$ to split area into sub-areas and measure ${class:GtGraphTreemapNode}$ positions and extends.
+I use ${class:GtGraphTreemapSquarifyStep}$ to split area into sub-areas and measure ${class:GtGraphTreemapNode}$ positions and extends.
 
 The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*].
 
