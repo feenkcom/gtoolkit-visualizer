@@ -32,18 +32,11 @@ GtGraphTreemapSquarifyAreaRectangle class >> position: aPosition extent: anExten
 { #category : #converting }
 GtGraphTreemapSquarifyAreaRectangle >> asElementWithInformation [
 	<return: #BlElement>
-	| anElement anOriginal aFontSize |
+	| anElement anOriginal |
 	anElement := super asElementWithInformation.
 	self isRoot ifTrue: [ ^ anElement ].
-	aFontSize := self extent min / 20.0.
 	anElement background: (Color blue alpha: 0.5).
 	anElement relocate: self position asFloatPoint.
-	anElement addChild: (BlTextElement new
-		text: ('Occupied Area' asRopedText glamorousRegularFont fontSize: aFontSize);
-		constraintsDo: [ :c | 
-			c ignoreByLayout.
-			c ignored horizontal alignCenter.
-			c ignored vertical alignCenter ]).
 	anOriginal := self original asElementWithInformation.
 	anOriginal addChild: anElement.
 	^ anOriginal

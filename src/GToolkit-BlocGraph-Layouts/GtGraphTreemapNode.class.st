@@ -7,10 +7,23 @@ Class {
 	#name : #GtGraphTreemapNode,
 	#superclass : #GtGraphTreemapRectangle,
 	#instVars : [
-		'weight'
+		'weight',
+		'value',
+		'totalValue'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
+
+{ #category : #converting }
+GtGraphTreemapNode >> asElement [
+	^ super asElement addChild: (BrLabel new
+		look: BrGlamorousLabelLook;
+		text: (self value asRopedText foreground: Color lightGray);
+		constraintsDo: [ :c | 
+			c ignoreByLayout.
+			c ignored horizontal alignCenter.
+			c ignored vertical alignCenter ])
+]
 
 { #category : #accessing }
 GtGraphTreemapNode >> aspectRatio [
@@ -45,7 +58,38 @@ GtGraphTreemapNode >> printOn: aStream [
 ]
 
 { #category : #accessing }
+GtGraphTreemapNode >> totalValue [
+	"Return a sum of all nodes values involved in treemap layout computation"
+	<return: #Number>
+	^ totalValue
+]
+
+{ #category : #accessing }
+GtGraphTreemapNode >> totalValue: aNumber [
+	self
+		assert: [ aNumber >= 0 ]
+		description: [ 'Treemap node total value must be a positive number' ].
+	totalValue := aNumber
+]
+
+{ #category : #accessing }
+GtGraphTreemapNode >> value [
+	<return: #Number>
+	^ value
+]
+
+{ #category : #accessing }
+GtGraphTreemapNode >> value: aNumber [
+	self
+		assert: [ aNumber >= 0 ]
+		description: [ 'Treemap node value must be a positive number' ].
+	value := aNumber
+]
+
+{ #category : #accessing }
 GtGraphTreemapNode >> weight [
+	"Return a number in the interval [0..1] that represent percentage that a node should occupy"
+	<return: #Number>
 	^ weight
 ]
 

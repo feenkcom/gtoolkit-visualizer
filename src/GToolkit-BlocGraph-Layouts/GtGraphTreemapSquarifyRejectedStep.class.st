@@ -23,7 +23,7 @@ GtGraphTreemapSquarifyRejectedStep >> asElementWithOccupiedArea [
 	| anElement |
 	anElement := self step asElementWithOccupiedArea.
 	anElement padding: (BlInsets all: 5).
-	anElement border: (BlBorder paint: Color red width: 3).
+	anElement border: (BlBorder paint: BrGlamorousColors errorBorderColor width: 3).
 	^ anElement
 ]
 
@@ -75,6 +75,11 @@ GtGraphTreemapSquarifyRejectedStep >> rectangle [
 GtGraphTreemapSquarifyRejectedStep >> rectangleBounds [
 	<return: #Rectangle>
 	^ self step rectangleBounds
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyRejectedStep >> rejectedStep [
+	^ GtGraphTreemapSquarifyStep null
 ]
 
 { #category : #accessing }

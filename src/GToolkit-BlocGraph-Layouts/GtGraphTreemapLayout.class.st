@@ -96,6 +96,8 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 
 		aNode := GtGraphTreemapNode new.
 		aNode weight: (eachChild constraints treemap weight / aTotalWeight).
+		aNode value: eachChild constraints treemap weight.
+		aNode totalValue: aTotalWeight.
 		aTree addNode: aNode.	
 		eachChild -> aNode.
 	].

@@ -379,7 +379,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithFiveNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithFourNodes.
-	aNode := self node weight: 1 / 12.	"2"
+	aNode := self node value: 2; totalValue: 24; weight: 1 / 12. "2"
 	aTree addNode: aNode.
 	self assert: aTree allSteps size equals: 7.
 	self assert: aTree nodes size equals: 5.
@@ -403,7 +403,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithThreeNodes.
-	aNode := self node weight: 1 / 8.	"3"
+	aNode := self node value: 3; totalValue: 24; weight: 1 / 8.	"3"
 	aTree addNode: aNode.
 	self assert: aTree allSteps size equals: 5.
 	self assert: aTree nodes size equals: 4.
@@ -443,7 +443,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithOneNode [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarify.
-	aNode := self node weight: 1/4 "6".
+	aNode := self node value: 6; totalValue: 24; weight: 1/4 "6".
 	aTree addNode: aNode.
 	self assert: aTree nodes size equals: 1.
 	self assert: aTree nodes first equals: aNode.
@@ -458,7 +458,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithSevenNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithSixNodes.
-	aNode := self node weight: 1 / 24.	"1"
+	aNode := self node value: 1; totalValue: 24; weight: 1 / 24.	"1"
 	aTree addNode: aNode.
 	self assert: aTree allSteps size equals: 11.
 	self assert: aTree nodes size equals: 7.
@@ -486,7 +486,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithSixNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithFiveNodes.
-	aNode := self node weight: 1 / 12.	"2"
+	aNode := self node value: 2; totalValue: 24; weight: 1 / 12.	"2"
 	aTree addNode: aNode.
 	self assert: aTree allSteps size equals: 9.
 	self assert: aTree nodes size equals: 6.
@@ -512,7 +512,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithThreeNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithTwoNodes.
-	aNode := self node weight: 1 / 6.	"4"
+	aNode := self node value: 4; totalValue: 24; weight: 1 / 6.	"4"
 	aTree addNode: aNode.
 	self assert: aTree allSteps size equals: 4.
 	self assert: aTree nodes size equals: 3.
@@ -532,7 +532,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyWithOneNode.
-	aNode := self node weight: 1 / 4.	"6"
+	aNode := self node value: 6; totalValue: 24; weight: 1 / 4.	"6"
 	aTree addNode: aNode.
 	self assert: aTree allSteps size equals: 2.
 	self assert: aTree nodes size equals: 2.
@@ -561,7 +561,7 @@ GtGraphTreemapLayoutExamples >> squarifyZeroHeightWithOneNode [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyZeroHeight.
-	aNode := self node weight: 1/4 "6".
+	aNode := self node value: 6; totalValue: 24; weight: 1/4 "6".
 	aTree addNode: aNode.
 	self assert: aTree nodes size equals: 1.
 	self assert: aTree nodes first equals: aNode.
@@ -587,7 +587,7 @@ GtGraphTreemapLayoutExamples >> squarifyZeroWidthWithOneNode [
 	<gtExample>
 	| aTree aNode |
 	aTree := self squarifyZeroWidth.
-	aNode := self node weight: 1/4 "6".
+	aNode := self node value: 6; totalValue: 24; weight: 1/4 "6".
 	aTree addNode: aNode.
 	self assert: aTree nodes size equals: 1.
 	self assert: aTree nodes first equals: aNode.

@@ -47,6 +47,7 @@ GtGraphTreemapSquarify >> asAllStepsPreview [
 	self allSteps do: [ :eachStep |
 		| anElement |
 		anElement := eachStep asElementWithOccupiedArea.
+		anElement margin: (BlInsets all: 10).
 		theStepsToElements at: eachStep put: anElement.
 		aContainer addChild: anElement ].
 	theStepsToElements associationsDo: [ :anAssoc |
@@ -89,7 +90,28 @@ GtGraphTreemapSquarify >> firstArea [
 GtGraphTreemapSquarify >> gtAllStepsFor: aView [
 	<gtView>
 	firstStep ifNil: [ ^ aView empty ].
-	^ firstStep gtAllStepsFor: aView
+	^ (firstStep gtAllStepsFor: aView)
+		title: 'Steps List'
+]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarify >> gtAllStepsMondrianPreviewFor: aView [
+	<gtView>
+	self nodes ifNil: [ ^ aView empty ].
+	^ aView mondrian
+		title: 'Mondrian';
+		painting: [ :aMondrian |
+			aMondrian nodes
+				shape: [ :eachStep | eachStep asElementWithOccupiedArea
+					margin: (BlInsets all: 10) ];
+				with: self allSteps.
+			aMondrian edges
+				fromCenterBottom;
+				toCenterTop;
+				connectFrom: #yourself
+				toAll: [ :eachStep | { eachStep rejectedStep. eachStep nextStep } ].
+			aMondrian layout horizontalTree
+		]
 ]
 
 { #category : #'gt-extension' }
@@ -97,7 +119,7 @@ GtGraphTreemapSquarify >> gtAllStepsPreviewFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
 	^ aView explicit
-		title: 'All Steps';
+		title: 'Steps Figure';
 		priority: 1.5;
 		stencil: [ self asAllStepsPreview asScalableElement
 			margin: (BlInsets all: 10) ]
