@@ -1,3 +1,9 @@
+"
+I am an abstract rectangle and I know my position and extent.
+See my subclasses for more details and examples: ${class:GtGraphTreemapRectangle|show=gtSubclassesFor:|expanded=true}$
+
+
+"
 Class {
 	#name : #GtGraphTreemapRectangle,
 	#superclass : #Object,
@@ -55,7 +61,7 @@ GtGraphTreemapRectangle >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GtGraphTreemapRectangle >> hasBounds [
 	^ self position isNotNil and: [ 
 		self extent isNotNil ]

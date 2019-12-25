@@ -1,3 +1,13 @@
+"
+I split an area vertically according to ${method:GtGraphTreemapNode>>#weight}$ node values.
+
+!! Example 
+
+The following example shows an area with three nodes: 
+${example:GtGraphTreemapLayoutExamples>>#sliceVerticalWithThreeNodes|codeExpanded=false|previewExpanded=true}$.
+
+
+"
 Class {
 	#name : #GtGraphTreemapSliceVertical,
 	#superclass : #GtGraphTreemapSlice,

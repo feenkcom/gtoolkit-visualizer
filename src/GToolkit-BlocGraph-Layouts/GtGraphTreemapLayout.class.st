@@ -1,10 +1,20 @@
+"
+My subclasses implement treemap algorithms.
+Given ${class:BlElement}$ children must define a weight using ${method:GtGraphTreemapLayoutConstraints>>#weight:}$.
+
+Here is an example of a such definition: ${example:GtGraphTreemapLayoutExamples>>#numberElements}$
+
+See my subclasses for more details and examples: ${class:GtGraphTreemapLayout|show=gtSubclassesFor:|expanded=true}$
+
+
+"
 Class {
 	#name : #GtGraphTreemapLayout,
 	#superclass : #BlLayout,
 	#instVars : [
 		'sortFunction'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
 { #category : #constraints }
@@ -86,6 +96,8 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 
 		aNode := GtGraphTreemapNode new.
 		aNode weight: (eachChild constraints treemap weight / aTotalWeight).
+		aNode value: eachChild constraints treemap weight.
+		aNode totalValue: aTotalWeight.
 		aTree addNode: aNode.	
 		eachChild -> aNode.
 	].

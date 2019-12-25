@@ -1,3 +1,11 @@
+"
+I represent an area in which ${class:GtGraphTreemapNode}$ nodes are added by ${class:GtGraphTreemapSquarifyStep}$.
+I know how to layout nodes using ${method:GtGraphTreemapSquarifyAreaRectangle>>#squarifyStep:}$.
+
+See my subclasses for more details and examples: ${class:GtGraphTreemapSquarifyAreaRectangle|show=gtSubclassesFor:|expanded=true}$
+
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyAreaRectangle,
 	#superclass : #GtGraphTreemapRectangle,
@@ -24,18 +32,11 @@ GtGraphTreemapSquarifyAreaRectangle class >> position: aPosition extent: anExten
 { #category : #converting }
 GtGraphTreemapSquarifyAreaRectangle >> asElementWithInformation [
 	<return: #BlElement>
-	| anElement anOriginal aFontSize |
+	| anElement anOriginal |
 	anElement := super asElementWithInformation.
 	self isRoot ifTrue: [ ^ anElement ].
-	aFontSize := self extent min / 20.0.
 	anElement background: (Color blue alpha: 0.5).
 	anElement relocate: self position asFloatPoint.
-	anElement addChild: (BlTextElement new
-		text: ('Occupied Area' asRopedText glamorousRegularFont fontSize: aFontSize);
-		constraintsDo: [ :c | 
-			c ignoreByLayout.
-			c ignored horizontal alignCenter.
-			c ignored vertical alignCenter ]).
 	anOriginal := self original asElementWithInformation.
 	anOriginal addChild: anElement.
 	^ anOriginal
@@ -48,11 +49,6 @@ GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [
 		ifNotNil: [ :theRectangle |
 			theRectangle asElementWithInformation ]
 		ifNil: [ self asElementWithInformation ]
-]
-
-{ #category : #'as yet unclassified' }
-GtGraphTreemapSquarifyAreaRectangle >> extentOccupiedBy: aRow [
-	^ self subclassResponsibility
 ]
 
 { #category : #'gt-extension' }
@@ -96,19 +92,6 @@ GtGraphTreemapSquarifyAreaRectangle >> isRoot [
 	^ self original == self.
 ]
 
-{ #category : #measuring }
-GtGraphTreemapSquarifyAreaRectangle >> layoutRow: aGtGraphTreemapSquarifyRow [
-	^ self subclassResponsibility
-]
-
-{ #category : #measuring }
-GtGraphTreemapSquarifyAreaRectangle >> layoutRowInNoSpace: aRow [ 
-	aRow nodesDo: [ :eachNode | 
-		eachNode 
-			position: 0@0;
-			extent: 0@0 ]
-]
-
 { #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
@@ -121,7 +104,7 @@ GtGraphTreemapSquarifyAreaRectangle >> name [
 	^ 'Rectangle'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> occupiedBounds [
 	<return: #Rectangle>
 	^ self occupiedRectangle bounds
@@ -138,13 +121,13 @@ GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle: aRectangle [
 	occupiedRectangle := aRectangle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> original [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ rootRectangle ifNil: [ self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> original: aGtGraphTreemapSquarifyRectangle [
 	rootRectangle := aGtGraphTreemapSquarifyRectangle
 ]
@@ -162,20 +145,33 @@ GtGraphTreemapSquarifyAreaRectangle >> remainingBounds [
 	^ self remainingRectangle bounds
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ remainingRectangle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
 	remainingRectangle := aGtGraphTreemapSquarifyRectangle
 ]
 
-{ #category : #accessing }
-GtGraphTreemapSquarifyAreaRectangle >> shortestSide [
-	^ self extent x min: self extent y
+{ #category : #squarifying }
+GtGraphTreemapSquarifyAreaRectangle >> squarifyStep: aStep [
+	^ self subclassResponsibility
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyAreaRectangle >> squarifyStepInNoSpace: aStep [ 
+	aStep nodesDo: [ :eachNode | 
+		eachNode 
+			position: 0@0;
+			extent: 0@0 ]
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyAreaRectangle >> updateOccupiedArea: aStep [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

@@ -1,47 +1,19 @@
+"
+I represent a rectangle. My height is smaller than my width.
+I layout ${class:GtGraphTreemapNode}$ along my shorter side (height).
+I am used by ${class:GtGraphTreemapSquarifyStep}$.
+
+!! Example
+
+In the following example, I occupy top-right side of a total area with ${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|label=#nodesCount}$ nodes:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|noCode}$
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyLandscapeRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> aspectRatioForWeightRatio: aWeightRatio occupiedExtent: anOccupiedExtent [ 
-	| aLenght |
-	aLenght := aWeightRatio * anOccupiedExtent y.
-	^ (aLenght / anOccupiedExtent x) max: (anOccupiedExtent x / aLenght).
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> extentOccupiedBy: aRow [
-	^ self extent * (aRow occupiedWeight @ 1)
-]
-
-{ #category : #accessing }
-GtGraphTreemapSquarifyLandscapeRectangle >> layoutRow: aRow [
-	| anExtentToOccupy aNextNodePosition aRemainingRectangle anOriginalArea anOccupiedArea anOccupiedRectangle |
-	self ifNoSpace: [ ^ self layoutRowInNoSpace: aRow ].
-	anOriginalArea := self original volume.
-	anOccupiedArea := anOriginalArea * aRow occupiedWeight.
-	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
-	aNextNodePosition := self position.
-	aRow nodes do: [ :eachNode | 
-		| aHeight aWidth |
-		aWidth := anExtentToOccupy x.
-		aHeight := anOriginalArea * eachNode weight / aWidth.
-		eachNode extent: (aWidth @ aHeight).
-		eachNode position: aNextNodePosition.
-		aNextNodePosition := eachNode bottomLeft ].
-	aRemainingRectangle := self class
-		position: self position + (anExtentToOccupy x @ 0)
-		extent: self extent - (anExtentToOccupy x @ 0).
-	aRemainingRectangle original: self original.
-	self remainingRectangle: aRemainingRectangle.
-	anOccupiedRectangle := self class
-		position: self position
-		extent: anExtentToOccupy.
-	anOccupiedRectangle original: self original.
-	self occupiedRectangle: anOccupiedRectangle.
-]
 
 { #category : #accessing }
 GtGraphTreemapSquarifyLandscapeRectangle >> length [
@@ -52,5 +24,42 @@ GtGraphTreemapSquarifyLandscapeRectangle >> length [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyLandscapeRectangle >> name [
-	^ 'Landscape Vertical'
+	^ 'Landscape'
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyLandscapeRectangle >> squarifyStep: aStep [
+	| anExtentToOccupy aNextNodePosition anOriginalArea anOccupiedArea |
+	self ifNoSpace: [ ^ self squarifyStepInNoSpace: aStep ].
+	anOriginalArea := self original volume.
+	anOccupiedArea := anOriginalArea * aStep occupiedWeight.
+	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
+	aNextNodePosition := self position.
+	aStep nodesDo: [ :eachNode | 
+		| aHeight aWidth |
+		aWidth := anExtentToOccupy x.
+		aHeight := anOriginalArea * eachNode weight / aWidth.
+		eachNode extent: (aWidth @ aHeight).
+		eachNode position: aNextNodePosition.
+		aNextNodePosition := eachNode bottomLeft ].
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyLandscapeRectangle >> updateOccupiedArea: aStep [
+	| anExtentToOccupy anOccupiedArea anOccupiedRectangle aRemainingRectangle |
+	anOccupiedArea := self original volume * aStep occupiedWeight.
+	anExtentToOccupy := anOccupiedArea isZero
+		ifTrue: [ 0@0 ]
+		ifFalse: [ (anOccupiedArea / self height) @ self height ].
+	anOccupiedRectangle := self class
+		position: self position
+		extent: anExtentToOccupy.
+	anOccupiedRectangle original: self original.
+	self occupiedRectangle: anOccupiedRectangle.
+	aRemainingRectangle := self class
+		position: self position + (anExtentToOccupy x @ 0)
+		extent: self extent - (anExtentToOccupy x @ 0).
+	aRemainingRectangle original: self original.
+	self remainingRectangle: aRemainingRectangle.
+
 ]

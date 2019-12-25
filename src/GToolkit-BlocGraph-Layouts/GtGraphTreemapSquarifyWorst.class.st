@@ -1,3 +1,18 @@
+"
+I am an abstract ==worst()== function defined in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*]. The function ==worst()== gives the highest aspect ratio of a list of rectangles, given the length of the side along which they are to be laid out. 
+
+I am used by ${class:GtGraphTreemapSquarifyStep}$.
+
+!! Example
+
+For ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#nodesCount}$ nodes that are located along the side of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#length}$ length, and with total are size of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#totalArea}$, the worst aspect ratio is ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|label=#value}$:
+${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithTwoNodes|previewShow=#gtPreviewFor:|previewExpanded=true|codeExpanded=falsec}$
+
+If we add to the same area another node, we end up with ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|label=#nodesCount}$ nodes and the worst aspect ratio of ${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|label=#value}$ value. As this value is bigger then the previous one, ${class:GtGraphTreemapSquarifyStep}$ decides to pass the new node to a new area:
+${example:GtGraphTreemapLayoutExamples>>#worstAspectRatioWithThreeNodes|previewShow=#gtPreviewFor:|previewExpanded=true|codeExpanded=false}$
+
+
+"
 Class {
 	#name : #GtGraphTreemapSquarifyWorst,
 	#superclass : #Object,
@@ -9,6 +24,21 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #accessing }
+GtGraphTreemapSquarifyWorst class >> aspectRatio [
+	^ GtGraphTreemapSquarifyWorstAspectRatio new
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyWorst class >> default [
+	^ self aspectRatio
+]
+
+{ #category : #comparing }
+GtGraphTreemapSquarifyWorst >> >= aGtGraphTreemapSquarifyWorst [ 
+	^ self value >= aGtGraphTreemapSquarifyWorst value
+]
+
 { #category : #adding }
 GtGraphTreemapSquarifyWorst >> addNode: aNode [ 
 	self nodes: (self nodes copyWith: aNode)
@@ -19,170 +49,48 @@ GtGraphTreemapSquarifyWorst >> area [
 	^ self weight * self totalArea
 ]
 
-{ #category : #converting }
-GtGraphTreemapSquarifyWorst >> asElement [
-	^ GtGraphUtilities default 
-		rectangleOn: self 
-		extent: self extent 
-		margin: (BlInsets all: 0)
-]
-
-{ #category : #converting }
-GtGraphTreemapSquarifyWorst >> asElementWithInformation [
-	^ GtGraphUtilities default 
-		informationForRectangle: self asElement 
-		bounds: self bounds
-]
-
-{ #category : #converting }
-GtGraphTreemapSquarifyWorst >> asElementWithNodes [
-	| aContainer aNextNodePosition |
-	aContainer := BlElement new.
-	aContainer layout: BlFitLayout new.
-	aContainer constraintsDo: [ :c |
-		c horizontal fitContent.
-		c vertical fitContent ].
-	aContainer addChild: self asElementWithInformation.
-	aNextNodePosition := 0@0.
-	self nodes do: [ :eachNode | 
-		| anExtent anElement |
-		anExtent := self nodeExtent: eachNode.
-		anElement := GtGraphUtilities default 
-			rectangleOn: eachNode 
-			extent: anExtent 
-			margin: (BlInsets all: 0).
-		GtGraphUtilities default 
-			informationForRectangle: anElement 
-			bounds: (aNextNodePosition extent: anExtent).
-		anElement
-			background: (Color random alpha: 0.5);
-			size: anExtent asFloatPoint;
-			relocate: aNextNodePosition asFloatPoint.
-		aContainer addChild: anElement.
-		aNextNodePosition := aNextNodePosition + (0 @ anExtent y) ].
-	^ aContainer
-]
-
-{ #category : #converting }
-GtGraphTreemapSquarifyWorst >> asReversedElement [
-	^ GtGraphUtilities default 
-		rectangleOn: self 
-		extent: self reversedExtent 
-		margin: (BlInsets all: 0)
-]
-
-{ #category : #converting }
-GtGraphTreemapSquarifyWorst >> asReversedElementWithInformation [
-	^ GtGraphUtilities default 
-		informationForRectangle: self asReversedElement 
-		bounds: self reversedBounds
-]
-
-{ #category : #converting }
-GtGraphTreemapSquarifyWorst >> asReversedElementWithNodes [
-	| aContainer aNextNodePosition |
-	aContainer := BlElement new.
-	aContainer layout: BlFitLayout new.
-	aContainer constraintsDo: [ :c |
-		c horizontal fitContent.
-		c vertical fitContent ].
-	aContainer addChild: self asReversedElementWithInformation.
-	aNextNodePosition := 0@0.
-	self nodes do: [ :eachNode | 
-		| anExtent anElement |
-		anExtent := self nodeReversedExtent: eachNode.
-		anElement := GtGraphUtilities default 
-			rectangleOn: eachNode 
-			extent: anExtent 
-			margin: (BlInsets all: 0).
-		GtGraphUtilities default 
-			informationForRectangle: anElement 
-			bounds: (aNextNodePosition extent: anExtent).
-		anElement
-			background: (Color random alpha: 0.5);
-			size: anExtent asFloatPoint;
-			relocate: aNextNodePosition asFloatPoint.
-		aContainer addChild: anElement.
-		aNextNodePosition := aNextNodePosition + (anExtent x @ 0) ].
-	^ aContainer
-]
-
-{ #category : #'accessing - occupied area' }
-GtGraphTreemapSquarifyWorst >> bounds [
-	^ 0@0 extent: self extent
-]
-
 { #category : #'accessing - occupied area' }
 GtGraphTreemapSquarifyWorst >> breadth [
 	^ self area / self length
 ]
 
-{ #category : #'accessing - occupied area' }
-GtGraphTreemapSquarifyWorst >> extent [
-	<return: #Point>
-	^ self breadth @ self length
-]
-
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtNodesFor: aView [
 	<gtView>
-	self nodes ifNil: [ ^ aView empty ].
-	^ aView columnedList 
-		title: 'Nodes';
-		items: [ self nodes ];
-		column: 'Weight' 
-			item: [ :aNode | aNode weight ] 
-			format: [ :aNumber | self printNumber: aNumber ];
-		column: 'Worst Value' 
-			item: [ :aNode | self worstValueForNode: aNode ] 
-			format: [ :aNumber | self printNumber: aNumber ];
-		column: 'Vertical Extent'
-			item: [ :aNode | | anExtent | 
-				anExtent := (self nodeExtent: aNode) asFloatPoint.
-				anExtent x rounded @ anExtent y rounded ];
-		column: 'Horizontal Extent'
-			item: [ :aNode | | anExtent | 
-				anExtent := (self nodeReversedExtent: aNode) asFloatPoint.
-				anExtent x rounded @ anExtent y rounded ]
+	^ GtGraphTreemapSquarifyWorstPreview new
+		worst: self;
+		gtNodesFor: aView
 ]
 
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtPreviewFor: aView [
 	<gtView>
-	self length ifNil: [ ^ aView empty ].
-	self breadth ifNil: [ ^ aView empty ].
-	^ aView explicit
-		title: 'Vertical Preview';
-		priority: 1;
-		stencil: [ self asElementWithNodes asScalableElement
-			margin: (BlInsets all: 10) ]
+	^ GtGraphTreemapSquarifyWorstPreview new
+		worst: self;
+		gtPreviewFor: aView
 ]
 
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtReversedPreviewFor: aView [
 	<gtView>
-	self length ifNil: [ ^ aView empty ].
-	self breadth ifNil: [ ^ aView empty ].
-	^ aView explicit
-		title: 'Horizontal Preview';
-		priority: 2;
-		stencil: [ self asReversedElementWithNodes asScalableElement
-			margin: (BlInsets all: 10) ]
+	^ GtGraphTreemapSquarifyWorstPreview new
+		worst: self;
+		gtReversedPreviewFor: aView
 ]
 
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtWorstValueFor: aView [
 	<gtView>
-	self nodes ifNil: [ ^ aView empty ].
-	self nodes ifEmpty: [ ^ aView empty ].
-	^ (self value gtPreviewFor: aView)
-		title: 'Value'
+	^ GtGraphTreemapSquarifyWorstPreview new
+		worst: self;
+		gtWorstValueFor: aView
 ]
 
 { #category : #initialization }
 GtGraphTreemapSquarifyWorst >> initialize [
 	super initialize.
-	nodes := #()
+	nodes := #().
+	totalArea := 0.
 ]
 
 { #category : #accessing }
@@ -207,26 +115,6 @@ GtGraphTreemapSquarifyWorst >> minWeightNode [
 	^ self nodes detectMin: [ :eachNode | eachNode weight ].
 ]
 
-{ #category : #'accessing - nodes' }
-GtGraphTreemapSquarifyWorst >> nodeArea: aNode [
-	^ aNode weight * self totalArea
-]
-
-{ #category : #'accessing - nodes' }
-GtGraphTreemapSquarifyWorst >> nodeExtent: aNode [
-	^ self nodesBreadth @ (self nodeLength: aNode)
-]
-
-{ #category : #'accessing - nodes' }
-GtGraphTreemapSquarifyWorst >> nodeLength: aNode [
-	^ (self nodeArea: aNode) / self nodesBreadth
-]
-
-{ #category : #'accessing - nodes' }
-GtGraphTreemapSquarifyWorst >> nodeReversedExtent: aNode [
-	^ (self nodeLength: aNode) @ self nodesBreadth
-]
-
 { #category : #accessing }
 GtGraphTreemapSquarifyWorst >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
@@ -247,24 +135,6 @@ GtGraphTreemapSquarifyWorst >> nodesBreadth [
 GtGraphTreemapSquarifyWorst >> nodesCount [
 	<return: #Integer>
 	^ self nodes size
-]
-
-{ #category : #printing }
-GtGraphTreemapSquarifyWorst >> printNumber: aNumber [
-	<return: #String>
-	aNumber isFloat ifTrue: [ ^ aNumber printString ].
-	^ aNumber printString, ' = ', (aNumber asFloat round: 4) printString
-]
-
-{ #category : #'accessing - occupied area' }
-GtGraphTreemapSquarifyWorst >> reversedBounds [
-	^ 0@0 extent: self reversedExtent
-]
-
-{ #category : #'accessing - occupied area' }
-GtGraphTreemapSquarifyWorst >> reversedExtent [
-	<return: #Point>
-	^ self length @ self breadth
 ]
 
 { #category : #accessing }
