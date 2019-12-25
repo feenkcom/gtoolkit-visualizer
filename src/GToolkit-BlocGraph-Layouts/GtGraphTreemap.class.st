@@ -117,6 +117,13 @@ GtGraphTreemap >> initializeNodes [
 	nodes := #()
 ]
 
+{ #category : #enumerating }
+GtGraphTreemap >> nodeValues [
+	<return: #Array of: #Number>
+	^ Array streamContents: [ :aStream |
+		self nodesDo: [ :eachNode | aStream nextPut: eachNode value ] ]
+]
+
 { #category : #accessing }
 GtGraphTreemap >> nodes [
 	<return: #Array>
@@ -126,6 +133,11 @@ GtGraphTreemap >> nodes [
 { #category : #accessing }
 GtGraphTreemap >> nodes: anObject [
 	nodes := anObject
+]
+
+{ #category : #enumerating }
+GtGraphTreemap >> nodesDo: aBlock [
+	self nodes do: aBlock
 ]
 
 { #category : #'seas optimizations' }

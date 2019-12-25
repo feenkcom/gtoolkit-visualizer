@@ -97,3 +97,9 @@ GtGraphTreemapSquarifyAbstractStep >> worstValue [
 	<return: #Number>
 	^ self subclassResponsibility
 ]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarifyAbstractStep >> worstValueRounded [
+	<return: #Number>
+	^ self worstValue asFloat round: 2
+]

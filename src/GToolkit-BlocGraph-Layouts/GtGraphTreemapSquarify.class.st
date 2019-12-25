@@ -5,10 +5,37 @@ I use ${class:GtGraphTreemapSquarifyArea}$ to split area into sub-areas and meas
 
 The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*].
 
-!! Example 
+!! Algorithm Explanation
 
-The following example shows an area with seven nodes: 
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|codeExpanded=false|previewExpanded=true}$.
+This is an adapted extract from the paper Squarified Treemaps mentioned above. Suppose we have a rectangle with width ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#width}$ and height ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#height}$, and furthermore suppose that this rectangle must be subdivided in seven rectangles with areas ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#nodeValues}$. The area will be subdivided as follows:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:}$
+
+The *first step* of our algorithm is to split the initial rectangle. We choose for a horizontal subdivision, because the original rectangle is wider than high. We next fill the left half. First we add a single rectangle. The aspect ratio of this first rectangle is ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFirstStep|label=#worstValueRounded}$.
+
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFirstStep|previewExpanded=true|noCode}$
+
+Next we add a second rectangle, above the first. The worst aspect ratio improves to ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSecondStep|label=#worstValueRounded}$.
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSecondStep|previewExpanded=true|noCode}$
+
+However, if we add the next (area 4) above these original rectangles, the aspect ratio of this rectangle is ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesThirdStep|label=#worstValueRounded}$.
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesThirdStep|previewExpanded=true|noCode}$
+
+Therefore, we decide that we have reached an optimum for the left half in step two, and start processing the right half. The initial subdivision we choose here is vertical, because the rectangle is higher than wider. In step 4 we add the rectangle with area 4:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFourthStep|previewExpanded=true|noCode}$
+
+In the next step, we add area 3. The worst aspect ratio decreases from ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFourthStep|label=#worstValueRounded}$ to ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|label=#worstValueRounded}$: 
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|previewExpanded=true|noCode}$
+
+Addition of the next (area 2) however does not improve the result as the worst aspect ratio increases from ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|label=#worstValueRounded}$ to ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSixthStep|label=#worstValueRounded}$:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSixthStep|previewExpanded=true|noCode}$
+
+So we reject the previous step and start to fill the right top partition:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSeventhStep|previewExpanded=true|noCode}$
+ 
+These steps are repeated until all rectangles have been processed. The final result is the following:
+${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true}$.
+
+An optimal result can not be guaranteed, and counterexamples can be set up. The order in which the rectangles are processed is important. We found that a decreasing order usually gives the best results. The initially large rectangle is then filled in first with the larger subrectangles.
 
 
 "
@@ -125,6 +152,11 @@ GtGraphTreemapSquarify >> gtAllStepsPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
+{ #category : #accessing }
+GtGraphTreemapSquarify >> height [
+	^ self extent y
+]
+
 { #category : #initialization }
 GtGraphTreemapSquarify >> initialize [
 	super initialize.
@@ -134,6 +166,11 @@ GtGraphTreemapSquarify >> initialize [
 { #category : #'seas optimizations' }
 GtGraphTreemapSquarify >> updateNode: aNode [
 	self firstArea squarifyNode: aNode
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarify >> width [
+	^ self extent x
 ]
 
 { #category : #accessing }
