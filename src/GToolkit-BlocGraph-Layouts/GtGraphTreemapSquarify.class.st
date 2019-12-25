@@ -109,7 +109,7 @@ GtGraphTreemapSquarify >> extent: aPoint [
 
 { #category : #accessing }
 GtGraphTreemapSquarify >> firstArea [
-	<return: #GtGraphTreemapSquarifyArea>
+	<return: #GtGraphTreemapSquarifyStep>
 	^ firstStep
 ]
 
