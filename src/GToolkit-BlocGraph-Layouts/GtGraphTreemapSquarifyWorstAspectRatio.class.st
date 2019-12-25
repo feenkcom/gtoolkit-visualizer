@@ -13,6 +13,7 @@ Class {
 GtGraphTreemapSquarifyWorstAspectRatio >> aspectRatioForNode: aNode [
 	<return: #Number>
 	| aNodeArea aNodeLength anOccupiedBreadth |
+	self area isZero ifTrue: [ ^ Float nan ].
 	anOccupiedBreadth := self nodesBreadth.
 	aNodeArea := aNode weight * self totalArea.
 	aNodeLength := aNodeArea / anOccupiedBreadth.

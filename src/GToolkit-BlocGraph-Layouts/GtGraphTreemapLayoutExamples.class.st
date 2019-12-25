@@ -7,93 +7,6 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> area [
-	<gtExample>
-	| aRow |
-	aRow := self basicArea.
-	aRow extent: 600 @ 400.
-	self assert: aRow extent equals: 600@400.
-	self assert: aRow allAreas size equals: 1.
-	self assert: aRow allAreas first equals: aRow.
-	^ aRow
-]
-
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> areaWithOneNode [
-	<gtExample>
-	| anArea |
-	anArea := self area.
-	anArea addNode: (self node weight: 1/4) "6".
-	anArea squarifyNodes.
-	self assert: anArea nodesCount equals: 1.
-	self assert: anArea extent equals: 600@400.
-	self assert: anArea allAreas size equals: 1.
-	self assert: anArea allAreas first equals: anArea.
-	self assert: anArea worst equals: 8/3 "2.6666666666666665".
-	^ anArea
-]
-
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> areaWithThreeNodes [
-	<gtExample>
-	| aRow |
-	aRow := self areaWithTwoNodes.
-	aRow addNode: (self node weight: 1/6) "4".
-	aRow squarifyNodes.
-	self assert: aRow nodesCount equals: 3.
-	self assert: aRow extent equals: 600@400.
-	self assert: aRow allAreas size equals: 1.
-	self assert: aRow allAreas first equals: aRow.
-	self assert: aRow worst equals: 4.
-	^ aRow
-]
-
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> areaWithTwoNodes [
-	<gtExample>
-	| aRow |
-	aRow := self areaWithOneNode.
-	aRow addNode: (self node weight: 1/4) "6".
-	aRow squarifyNodes.
-	self assert: aRow nodesCount equals: 2.
-	self assert: aRow extent equals: 600@400.
-	self assert: aRow allAreas size equals: 1.
-	self assert: aRow allAreas first equals: aRow.
-	self assert: aRow worst equals: 3/2.
-	^ aRow
-]
-
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> areaWorstWithOneAndTwoNodes [
-	<gtExample>
-	|  aRowOne aRowTwo |
-	aRowOne := self areaWithOneNode.
-	aRowTwo := self areaWithTwoNodes.
-	self assert: aRowOne worst >= aRowTwo worst.
-	^ { aRowOne. aRowTwo }
-]
-
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> areaWorstWithTwoAndThreeNodes [
-	<gtExample>
-	|  aRowOne aRowTwo |
-	aRowOne := self areaWithTwoNodes.
-	aRowTwo := self areaWithThreeNodes.
-	self assert: aRowOne worst < aRowTwo worst.
-	^ { aRowOne. aRowTwo }
-]
-
-{ #category : #'examples - squarify algorithm - areas' }
-GtGraphTreemapLayoutExamples >> basicArea [
-	<gtExample>
-	| aRow |
-	aRow := GtGraphTreemapSquarifyArea new.
-	self assert: aRow allAreas size equals: 1.
-	self assert: aRow allAreas first equals: aRow.
-	^ aRow
-]
-
 { #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> basicSliceHorizontal [
 	<gtExample>
@@ -127,6 +40,19 @@ GtGraphTreemapLayoutExamples >> basicSquarify [
 	aTree := GtGraphTreemap squarify.
 	self assert: aTree nodes isEmpty.
 	^ aTree
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> basicStep [
+	<gtExample>
+	| aStep |
+	aStep := GtGraphTreemapSquarifyStep new.
+	self assert: aStep extent equals: 0@0.
+	self assert: aStep allSteps size equals: 1.
+	self assert: aStep allSteps first equals: aStep.
+	self assert: aStep nodes isEmpty.
+	self assert: aStep worstValue isNaN.
+	^ aStep
 ]
 
 { #category : #'examples - squarify algorithm - worst' }
@@ -498,8 +424,8 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodes [
 GtGraphTreemapLayoutExamples >> squarifyWithFourNodesFirstArea [
 	<gtExample>
 	| anArea |
-	anArea := self squarifyWithFourNodes allAreas first.
-	self assert: anArea nodesCount equals: 2.
+	anArea := self squarifyWithFourNodes allSteps first.
+	self assert: anArea nodesCount equals: 1.
 	^ anArea
 ]
 
@@ -507,7 +433,7 @@ GtGraphTreemapLayoutExamples >> squarifyWithFourNodesFirstArea [
 GtGraphTreemapLayoutExamples >> squarifyWithFourNodesSecondArea [
 	<gtExample>
 	| anArea |
-	anArea := self squarifyWithFourNodes allAreas second.
+	anArea := self squarifyWithFourNodes allSteps second.
 	self assert: anArea nodesCount equals: 2.
 	^ anArea
 ]
@@ -620,6 +546,32 @@ GtGraphTreemapLayoutExamples >> squarifyWithTwoNodes [
 ]
 
 { #category : #'examples - squarify algorithm - core' }
+GtGraphTreemapLayoutExamples >> squarifyZeroHeight [
+	<gtExample>
+	| aTree |
+	aTree := self basicSquarify.
+	aTree width: 600 height: 0.
+	self assert: aTree extent equals: 600@0.
+	self assert: aTree nodes isEmpty.
+	^ aTree
+]
+
+{ #category : #'examples - squarify algorithm - core' }
+GtGraphTreemapLayoutExamples >> squarifyZeroHeightWithOneNode [
+	<gtExample>
+	| aTree aNode |
+	aTree := self squarifyZeroHeight.
+	aNode := self node weight: 1/4 "6".
+	aTree addNode: aNode.
+	self assert: aTree nodes size equals: 1.
+	self assert: aTree nodes first equals: aNode.
+	self assert: aTree nodes first position equals: 0@0.
+	self assert: aTree nodes first extent equals: 0@0.
+	self assert: aTree extent equals: 600@0.
+	^ aTree
+]
+
+{ #category : #'examples - squarify algorithm - core' }
 GtGraphTreemapLayoutExamples >> squarifyZeroWidth [
 	<gtExample>
 	| aTree |
@@ -643,6 +595,83 @@ GtGraphTreemapLayoutExamples >> squarifyZeroWidthWithOneNode [
 	self assert: aTree nodes first extent equals: 0@0.
 	self assert: aTree extent equals: 0@400.
 	^ aTree
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> step [
+	<gtExample>
+	| aStep |
+	aStep := self basicStep.
+	aStep extent: 600 @ 400.
+	self assert: aStep extent equals: 600@400.
+	self assert: aStep allSteps size equals: 1.
+	self assert: aStep allSteps first equals: aStep.
+	^ aStep
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> stepWithOneNode [
+	<gtExample>
+	| aStep |
+	aStep := self step.
+	aStep addNode: (self node weight: 1 / 4).	"6"
+	aStep squarifyNodes.
+	self assert: aStep nodesCount equals: 1.
+	self assert: aStep extent equals: 600 @ 400.
+	self assert: aStep allSteps size equals: 1.
+	self assert: aStep allSteps first equals: aStep.
+	self assert: aStep worstValue equals: 8 / 3.	"2.6666666666666665"
+	^ aStep
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> stepWithThreeNodes [
+	<gtExample>
+	| aStep |
+	aStep := self stepWithTwoNodes.
+	aStep addNode: (self node weight: 1 / 6).	"4"
+	aStep squarifyNodes.
+	self assert: aStep nodesCount equals: 3.
+	self assert: aStep extent equals: 600 @ 400.
+	self assert: aStep allSteps size equals: 1.
+	self assert: aStep allSteps first equals: aStep.
+	self assert: aStep worstValue equals: 4.
+	^ aStep
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> stepWithTwoNodes [
+	<gtExample>
+	| aStep |
+	aStep := self stepWithOneNode.
+	aStep addNode: (self node weight: 1 / 4).	"6"
+	aStep squarifyNodes.
+	self assert: aStep nodesCount equals: 2.
+	self assert: aStep extent equals: 600 @ 400.
+	self assert: aStep allSteps size equals: 1.
+	self assert: aStep allSteps first equals: aStep.
+	self assert: aStep worstValue equals: 3 / 2.
+	^ aStep
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> stepWorstWithOneAndTwoNodes [
+	<gtExample>
+	|  aStepOne aStepTwo |
+	aStepOne := self stepWithOneNode.
+	aStepTwo := self stepWithTwoNodes.
+	self assert: aStepOne worst >= aStepTwo worst.
+	^ { aStepOne. aStepTwo }
+]
+
+{ #category : #'examples - squarify algorithm - steps' }
+GtGraphTreemapLayoutExamples >> stepWorstWithTwoAndThreeNodes [
+	<gtExample>
+	|  aStepOne aStepTwo |
+	aStepOne := self stepWithTwoNodes.
+	aStepTwo := self stepWithThreeNodes.
+	self assert: aStepTwo worst >= aStepOne worst.
+	^ { aStepOne. aStepTwo }
 ]
 
 { #category : #'building - graph' }

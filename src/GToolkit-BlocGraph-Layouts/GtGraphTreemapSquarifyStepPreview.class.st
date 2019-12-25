@@ -80,3 +80,9 @@ GtGraphTreemapSquarifyStepPreview >> step: anObject [
 	step := anObject.
 	self squarifyNodes.
 ]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarifyStepPreview >> worstValue [
+	<return: #Number>
+	^ self step worstValue
+]

@@ -25,6 +25,18 @@ GtGraphTreemapSquarifyNoRectangle class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
+{ #category : #squarifying }
+GtGraphTreemapSquarifyNoRectangle >> asElementWithOccupiedArea [
+	^ (GtGraphUtilities default rectangleOn: self extent: 100@50)
+		addChild: (BrLabel new
+			look: BrGlamorousLabelLook;
+			text: ('Uninitialized' asRopedText foreground: Color lightGray);
+			constraintsDo: [ :c | 
+				c ignoreByLayout.
+				c ignored horizontal alignCenter.
+				c ignored vertical alignCenter ])
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyNoRectangle >> bounds [
 	^ 0@0 extent: 0@0
@@ -53,6 +65,11 @@ GtGraphTreemapSquarifyNoRectangle >> name [
 { #category : #accessing }
 GtGraphTreemapSquarifyNoRectangle >> remainingBounds [
 	^ self bounds
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyNoRectangle >> squarifyStep: aStep [
+	"do nothing"
 ]
 
 { #category : #squarifying }

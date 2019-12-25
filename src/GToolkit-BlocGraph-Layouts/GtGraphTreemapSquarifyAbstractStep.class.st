@@ -4,6 +4,14 @@ Class {
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
+{ #category : #enumerating }
+GtGraphTreemapSquarifyAbstractStep >> allAreas [
+	self 
+		deprecated: 'Please use #allSteps instead.'
+		transformWith: '`@receiver allAreas' -> '`@receiver allSteps'.
+	^ self allSteps
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyAbstractStep >> allSteps [
 	<return: #Array of: #GtGraphTreemapSquarifyAbstractStep>
@@ -59,6 +67,14 @@ GtGraphTreemapSquarifyAbstractStep >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarifyAbstractStep >> gtWorstValueFor: aView [
+	<gtView>
+	^ (self worstValue gtPreviewFor: aView)
+		title: 'Worst Aspect Ratio';
+		priority: 5
+]
+
 { #category : #testing }
 GtGraphTreemapSquarifyAbstractStep >> isDefinedStep [
 	^ true
@@ -73,5 +89,11 @@ GtGraphTreemapSquarifyAbstractStep >> nodes [
 { #category : #accessing }
 GtGraphTreemapSquarifyAbstractStep >> rectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
+	^ self subclassResponsibility
+]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarifyAbstractStep >> worstValue [
+	<return: #Number>
 	^ self subclassResponsibility
 ]

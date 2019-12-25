@@ -34,7 +34,7 @@ GtGraphTreemapSquarifyWorst class >> default [
 	^ self aspectRatio
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #comparing }
 GtGraphTreemapSquarifyWorst >> >= aGtGraphTreemapSquarifyWorst [ 
 	^ self value >= aGtGraphTreemapSquarifyWorst value
 ]
@@ -89,7 +89,8 @@ GtGraphTreemapSquarifyWorst >> gtWorstValueFor: aView [
 { #category : #initialization }
 GtGraphTreemapSquarifyWorst >> initialize [
 	super initialize.
-	nodes := #()
+	nodes := #().
+	totalArea := 0.
 ]
 
 { #category : #accessing }

@@ -66,3 +66,9 @@ GtGraphTreemapSquarifyNoStep >> squarifyNode: aGtGraphTreemapNode in: aGtGraphTr
 GtGraphTreemapSquarifyNoStep >> stepsDo: anOneArgBlock [
 	"do nothing"
 ]
+
+{ #category : #'gt-extension' }
+GtGraphTreemapSquarifyNoStep >> worstValue [
+	<return: #Number>
+	^ Float nan
+]

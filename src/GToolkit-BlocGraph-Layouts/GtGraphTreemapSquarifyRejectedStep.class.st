@@ -102,3 +102,8 @@ GtGraphTreemapSquarifyRejectedStep >> successName [
 GtGraphTreemapSquarifyRejectedStep >> worstString [
 	^ self step worstString
 ]
+
+{ #category : #'accessing - worst' }
+GtGraphTreemapSquarifyRejectedStep >> worstValue [
+	^ self step worstValue
+]

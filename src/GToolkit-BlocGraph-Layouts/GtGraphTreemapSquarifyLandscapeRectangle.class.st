@@ -48,7 +48,9 @@ GtGraphTreemapSquarifyLandscapeRectangle >> squarifyStep: aStep [
 GtGraphTreemapSquarifyLandscapeRectangle >> updateOccupiedArea: aStep [
 	| anExtentToOccupy anOccupiedArea anOccupiedRectangle aRemainingRectangle |
 	anOccupiedArea := self original volume * aStep occupiedWeight.
-	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
+	anExtentToOccupy := anOccupiedArea isZero
+		ifTrue: [ 0@0 ]
+		ifFalse: [ (anOccupiedArea / self height) @ self height ].
 	anOccupiedRectangle := self class
 		position: self position
 		extent: anExtentToOccupy.
