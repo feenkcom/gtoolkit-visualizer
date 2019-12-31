@@ -1,9 +1,14 @@
+"
+My subclasses implement treemap algorithms.
+See my subclasses for more details and examples: ${class:GtGraphTreemap|show=gtSubclassesFor:|expanded=true}$
+
+
+"
 Class {
 	#name : #GtGraphTreemap,
 	#superclass : #Object,
 	#instVars : [
-		'nodes',
-		'area'
+		'nodes'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
@@ -32,16 +37,6 @@ GtGraphTreemap class >> squarify [
 GtGraphTreemap >> addNode: aNode [
 	self updateNode: aNode.
 	self nodes: (self nodes copyWith: aNode)
-]
-
-{ #category : #accessing }
-GtGraphTreemap >> area [
-	^ area
-]
-
-{ #category : #accessing }
-GtGraphTreemap >> area: anObject [
-	area := anObject
 ]
 
 { #category : #converting }
@@ -77,10 +72,6 @@ GtGraphTreemap >> asElementWithInformation [
 		text: (('Extent: ', self extent rounded asString) asRopedText glamorousCodeFontAndSize);
 		constraintsDo: [ :c |
 			c linear horizontal alignCenter ]).
-	"aContainer addChild: (BlTextElement new
-		text: (('Remaining Extent: ', self remainingExtent rounded asString) asRopedText glamorousCodeFontAndSize);
-		constraintsDo: [ :c |
-			c linear horizontal alignCenter ])."
 	^ aContainer
 ]
 
@@ -95,7 +86,8 @@ GtGraphTreemap >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
 	^ (self nodes gtItemsFor: aView)
-		title: 'Nodes'
+		title: 'Nodes';
+		priority: 5
 ]
 
 { #category : #'gt-extension' }
@@ -104,6 +96,7 @@ GtGraphTreemap >> gtPreviewFor: aView [
 	self nodes ifNil: [ ^ aView empty ].
 	^ aView explicit
 		title: 'Preview';
+		priority: 1;
 		stencil: [ self asElementWithInformation asScalableElement
 			margin: (BlInsets all: 10) ]
 ]
@@ -116,14 +109,19 @@ GtGraphTreemap >> height [
 { #category : #initialization }
 GtGraphTreemap >> initialize [
 	super initialize.
-	nodes := #().
-	area := 0.
+	self initializeNodes.
 ]
 
-{ #category : #testing }
-GtGraphTreemap >> isPortrait [
-	<return: #Boolean>
-	^ self height >= self width
+{ #category : #initialization }
+GtGraphTreemap >> initializeNodes [
+	nodes := #()
+]
+
+{ #category : #enumerating }
+GtGraphTreemap >> nodeValues [
+	<return: #Array of: #Number>
+	^ Array streamContents: [ :aStream |
+		self nodesDo: [ :eachNode | aStream nextPut: eachNode value ] ]
 ]
 
 { #category : #accessing }
@@ -135,6 +133,11 @@ GtGraphTreemap >> nodes [
 { #category : #accessing }
 GtGraphTreemap >> nodes: anObject [
 	nodes := anObject
+]
+
+{ #category : #enumerating }
+GtGraphTreemap >> nodesDo: aBlock [
+	self nodes do: aBlock
 ]
 
 { #category : #'seas optimizations' }

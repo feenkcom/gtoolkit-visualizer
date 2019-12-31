@@ -1,3 +1,6 @@
+"
+I represent a ==nil== value of a ${class:GtGraphTreemapSquarifyAreaRectangle}$.
+"
 Class {
 	#name : #GtGraphTreemapSquarifyNoRectangle,
 	#superclass : #Object,
@@ -20,6 +23,18 @@ GtGraphTreemapSquarifyNoRectangle class >> resetUniqueInstance [
 { #category : #accessing }
 GtGraphTreemapSquarifyNoRectangle class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyNoRectangle >> asElementWithOccupiedArea [
+	^ (GtGraphUtilities default rectangleOn: self extent: 100@50)
+		addChild: (BrLabel new
+			look: BrGlamorousLabelLook;
+			text: ('Uninitialized' asRopedText foreground: Color lightGray);
+			constraintsDo: [ :c | 
+				c ignoreByLayout.
+				c ignored horizontal alignCenter.
+				c ignored vertical alignCenter ])
 ]
 
 { #category : #accessing }
@@ -50,4 +65,14 @@ GtGraphTreemapSquarifyNoRectangle >> name [
 { #category : #accessing }
 GtGraphTreemapSquarifyNoRectangle >> remainingBounds [
 	^ self bounds
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyNoRectangle >> squarifyStep: aStep [
+	"do nothing"
+]
+
+{ #category : #squarifying }
+GtGraphTreemapSquarifyNoRectangle >> updateOccupiedArea: aStep [
+	"do nothing"
 ]
