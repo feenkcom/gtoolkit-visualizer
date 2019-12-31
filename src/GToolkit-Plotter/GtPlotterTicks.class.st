@@ -2,10 +2,11 @@ Class {
 	#name : #GtPlotterTicks,
 	#superclass : #Object,
 	#instVars : [
-		'start',
-		'stop',
+		'from',
+		'to',
 		'count',
-		'ticks'
+		'ticks',
+		'format'
 	],
 	#category : #'GToolkit-Plotter-Tick'
 }
@@ -27,10 +28,20 @@ GtPlotterTicks >> computedTicks [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+GtPlotterTicks >> format: aFormatBlock [
+	format := aFormatBlock
+]
+
+{ #category : #accessing }
+GtPlotterTicks >> formattedTick: anObject [
+	^ format cull: anObject
+]
+
 { #category : #initialization }
 GtPlotterTicks >> from: aStart to: aStop count: aCount [
-	start := aStart.
-	stop := aStop.
+	from := aStart.
+	to := aStop.
 	count := aCount
 ]
 
@@ -38,13 +49,17 @@ GtPlotterTicks >> from: aStart to: aStop count: aCount [
 GtPlotterTicks >> gtPreviewFor: aView [
 	<gtView>
 	
+	self ticks
+		ifEmpty: [ ^ aView empty ].
+	
 	^ aView explicit
 		title: 'Preview';
 		priority: 4;
 		stencil: [
 			| aContainer theTicks aLength |
 			theTicks := self asArray.
-			aLength := theTicks last - theTicks first. 
+			aLength := (from - to) abs.
+			aLength isZero ifTrue: [ aLength := 1 ].
 			
 			aContainer := BlElement new
 				layout: BlFrameLayout new;
@@ -57,19 +72,26 @@ GtPlotterTicks >> gtPreviewFor: aView [
 					constraintsDo: [ :c |
 						c horizontal matchParent.
 						c vertical exact: 1 ]);
+				addChildren: ({ from . to } collect: [ :eachTick |
+					BlElement new
+						background: Color gray;
+						constraintsDo: [ :c |
+							c frame horizontal alignCenterAt: (eachTick - from) / aLength.
+							c horizontal exact: 1.
+							c vertical exact: 10 ] ]);
 				addChildren: (theTicks collect: [ :eachTick |
 					BlElement new
 						background: Color gray;
 						constraintsDo: [ :c |
-							c frame horizontal alignCenterAt: (eachTick - theTicks first) / aLength.
+							c frame horizontal alignCenterAt: (eachTick - from) / aLength.
 							c horizontal exact: 1.
 							c vertical exact: 10 ] ]);
 				addChildren: (theTicks collect: [ :eachTick |
 					BlTextElement  new
-						text: ((eachTick printShowingDecimalPlaces: 1) asString asRopedText thin fontSize: 9);
+						text: ((self formattedTick: eachTick) asRopedText thin fontSize: 9);
 						margin: (BlInsets top: 13);
 						constraintsDo: [ :c |
-							c frame horizontal alignCenterAt: (eachTick - theTicks first) / aLength ] ]).
+							c frame horizontal alignCenterAt: (eachTick - from) / aLength ] ]).
 			aContainer
 		]
 ]
@@ -84,9 +106,22 @@ GtPlotterTicks >> gtTicksFor: aView [
 		items: [ self asArray ]
 ]
 
+{ #category : #initialization }
+GtPlotterTicks >> initialize [
+	super initialize.
+	
+	format := #printString
+]
+
 { #category : #accessing }
 GtPlotterTicks >> ticks [
 	<return: #Collection of: #Object>
 
-	^ ticks ifNil: [ ticks := self computedTicks ]
+	^ ticks ifNil: [ ticks := 
+		count isZero
+			ifTrue: [ #() ]
+			ifFalse: [
+				(from = to and: [ count > 0 ])
+					ifTrue: [ { from } ]
+					ifFalse: [ self computedTicks ] ] ]
 ]

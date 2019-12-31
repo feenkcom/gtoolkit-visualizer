@@ -19,11 +19,11 @@ GtPlotterNumberTicks class >> initialize [
 ]
 
 { #category : #private }
-GtPlotterNumberTicks >> computedTickIncrement: aStart stop: aStop count: aCount [
+GtPlotterNumberTicks class >> tickIncrement: aStart stop: aStop count: aCount [
 	<return: #Number>
 	| aStep aPower anError anErrorFactor |
 	
-	count isZero
+	aCount isZero
 		ifTrue: [ ^ 0 ].
 
 	aStep := (aStop - aStart) / aCount.
@@ -45,14 +45,14 @@ GtPlotterNumberTicks >> computedTickIncrement: aStart stop: aStop count: aCount 
 ]
 
 { #category : #private }
-GtPlotterNumberTicks >> computedTickStep [
+GtPlotterNumberTicks class >> tickStep: aStart stop: aStop count: aCount [
 	<return: #Number>
 	| aStep0 aStep1 anError |
 
-	count isZero
+	aCount isZero
 		ifTrue: [ ^ 0 ].
 		
-	aStep0 := (stop - start) abs / count.
+	aStep0 := (aStop - aStart) abs / aCount.
 	aStep1 := 10 raisedTo: (aStep0 log / ln10) floor.
 	
 	anError := aStep0 / aStep1.
@@ -64,7 +64,7 @@ GtPlotterNumberTicks >> computedTickStep [
 			ifFalse: [ anError >= e2
 				ifTrue: [ aStep1 := aStep1 * 2 ] ] ].
 		
-	^ stop < start
+	^ aStop < aStart
 		ifTrue: [ aStep1 negated ]
 		ifFalse: [ aStep1 ]
 ]
@@ -72,26 +72,20 @@ GtPlotterNumberTicks >> computedTickStep [
 { #category : #private }
 GtPlotterNumberTicks >> computedTicks [
 	| isReverse aStart aStop aStep theTicks |
-	
-	count isZero
-		ifTrue: [ ^ { } ].
 
-	(start = stop and: [ count > 0 ])
-		ifTrue: [ ^ { start } ].
-		
-	aStart := start.
-	aStop := stop.
+	aStart := from.
+	aStop := to.
 
-	isReverse := stop < start.
+	isReverse := to < from.
 	isReverse
 		ifTrue: [
-			aStart := stop.
-			aStop := start ]
+			aStart := to.
+			aStop := from ]
 		ifFalse: [
-			aStart := start.
-			aStop := stop ].
+			aStart := from.
+			aStop := to ].
 
-	aStep := self computedTickIncrement: aStart stop: aStop count: count.
+	aStep := self class tickIncrement: aStart stop: aStop count: count.
 	aStep isZero
 		ifTrue: [ ^ #() ].
 
