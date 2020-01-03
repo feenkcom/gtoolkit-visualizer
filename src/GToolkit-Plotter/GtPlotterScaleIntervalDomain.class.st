@@ -59,7 +59,9 @@ GtPlotterScaleIntervalDomain >> normalize: aValue [
 
 { #category : #private }
 GtPlotterScaleIntervalDomain >> normalize: aValue between: aStart and: anEnd [
-	^ (aValue - aStart) / anEnd
+	<return: #Number>
+
+	^ self subclassResponsibility
 ]
 
 { #category : #printing }

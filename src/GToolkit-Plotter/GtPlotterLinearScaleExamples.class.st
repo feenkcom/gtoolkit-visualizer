@@ -1,6 +1,6 @@
 Class {
 	#name : #GtPlotterLinearScaleExamples,
-	#superclass : #Object,
+	#superclass : #GtPlotterScaleExamples,
 	#category : #'GToolkit-Plotter-Examples'
 }
 
@@ -12,7 +12,7 @@ GtPlotterLinearScaleExamples >> defaultLinearScale [
 	aScale := GtPlotterLinearScale new.
 
 	self assert: aScale domain equals: GtPlotterScaleUnitDomain new.
-	self assert: aScale range equals: GtPlotterScaleUndefinedRange new.
+	self assert: aScale range equals: GtPlotterScaleUnitRange new.
 	
 	self assert: (aScale map: -100) equals: -100.
 	self assert: (aScale map: 0) equals: 0.
@@ -24,6 +24,7 @@ GtPlotterLinearScaleExamples >> defaultLinearScale [
 { #category : #'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 	<gtExample>
+	<noTest>
 	| aScale |
 	
 	aScale := self defaultLinearScale.
@@ -43,6 +44,7 @@ GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 { #category : #'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainAndRange [
 	<gtExample>
+	<noTest>
 	| aScale |
 	
 	aScale := self defaultLinearScale.	
@@ -58,22 +60,6 @@ GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainAndRange [
 	self assert: (aScale map: 5) equals: 50.
 	self assert: (aScale map: 10) equals: 100.
 	self assert: (aScale map: 20) equals: 200.
-	
-	^ aScale
-]
-
-{ #category : #'instance creation' }
-GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainForDuration [
-	<gtExample>
-	| aScale |
-	
-	aScale := self defaultLinearScale.
-	aScale domain: (GtPlotterScaleIntervalDomain from: 0 years to: 4 years).
-
-	self assert: (aScale map: 0 years) equals: 0.
-	self assert: (aScale map: 1 year) equals: 0.25.
-	self assert: (aScale map: 2 years) equals: 0.5.
-	self assert: (aScale map: 4 years) equals: 1.
 	
 	^ aScale
 ]

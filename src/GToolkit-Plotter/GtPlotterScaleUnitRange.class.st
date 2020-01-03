@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterScaleUndefinedRange,
+	#name : #GtPlotterScaleUnitRange,
 	#superclass : #GtPlotterScaleRange,
 	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #comparing }
-GtPlotterScaleUndefinedRange >> = anObject [
+GtPlotterScaleUnitRange >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -13,20 +13,20 @@ GtPlotterScaleUndefinedRange >> = anObject [
 ]
 
 { #category : #comparing }
-GtPlotterScaleUndefinedRange >> hash [
+GtPlotterScaleUnitRange >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ self class hash
 ]
 
 { #category : #interpolation }
-GtPlotterScaleUndefinedRange >> interpolate: aParameterValue [
+GtPlotterScaleUnitRange >> interpolate: aParameterValue [
 	^ aParameterValue
 ]
 
 { #category : #printing }
-GtPlotterScaleUndefinedRange >> printOn: aStream [
+GtPlotterScaleUnitRange >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
-	aStream nextPutAll: 'Undefined range'
+	aStream nextPutAll: 'Unit ([0, 1])'
 ]

@@ -35,20 +35,7 @@ GtPlotterScale >> initialize [
 	super initialize.
 	
 	domain := GtPlotterScaleUnitDomain new.
-	range := GtPlotterScaleUndefinedRange new
-]
-
-{ #category : #'operators-mapping' }
-GtPlotterScale >> interpolate: aValue [
-	| domainValue mappedValue |
-
-	domainValue := self domain interpolate: aValue.
-
-	^ domainValue
-	
-	"mappedValue := self map: domainValue.
-	
-	^ self range interpolate: mappedValue"
+	range := GtPlotterScaleUnitRange new
 ]
 
 { #category : #'operators-mapping' }
