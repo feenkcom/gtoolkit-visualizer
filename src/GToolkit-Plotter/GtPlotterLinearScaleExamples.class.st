@@ -24,6 +24,7 @@ GtPlotterLinearScaleExamples >> defaultLinearScale [
 { #category : #'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 	<gtExample>
+	<noTest>
 	| aScale |
 	
 	aScale := self defaultLinearScale.
@@ -43,6 +44,7 @@ GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 { #category : #'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainAndRange [
 	<gtExample>
+	<noTest>
 	| aScale |
 	
 	aScale := self defaultLinearScale.	
