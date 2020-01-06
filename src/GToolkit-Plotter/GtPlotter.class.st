@@ -4,8 +4,13 @@ Class {
 	#instVars : [
 		'stack'
 	],
-	#category : 'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter'
 }
+
+{ #category : #'api - builders' }
+GtPlotter >> horizontalBarChart [
+	^ GtPlotterHorizontalBarChartBuilder plotter: self
+]
 
 { #category : #initialization }
 GtPlotter >> initialize [

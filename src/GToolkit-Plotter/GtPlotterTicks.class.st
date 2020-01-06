@@ -5,8 +5,10 @@ Class {
 		'from',
 		'to',
 		'count',
-		'ticks',
-		'format'
+		'ticks'
+	],
+	#classVars : [
+		'timeIntervals'
 	],
 	#category : #'GToolkit-Plotter-Tick'
 }
@@ -14,6 +16,29 @@ Class {
 { #category : #'instance creation' }
 GtPlotterTicks class >> from: aStart to: aStop count: aCount [
 	^ self new from: aStart to: aStop count: aCount
+]
+
+{ #category : #'class initialization' }
+GtPlotterTicks class >> initialize [
+	timeIntervals := {
+		1 second -> (GtPlotterTimeEverySecond step: 1).
+		5 seconds -> (GtPlotterTimeEverySecond step: 5).
+		15 seconds -> (GtPlotterTimeEverySecond step: 15).
+		30 seconds -> (GtPlotterTimeEverySecond step: 30).
+		1 minute -> (GtPlotterTimeEveryMinute step: 1).
+		5 minutes -> (GtPlotterTimeEveryMinute step: 5).
+		15 minutes -> (GtPlotterTimeEveryMinute step: 15).
+		30 minutes -> (GtPlotterTimeEveryMinute step: 30).
+		1 hours -> (GtPlotterTimeEveryHour step: 1).
+		3 hours -> (GtPlotterTimeEveryHour step: 3).
+		6 hours -> (GtPlotterTimeEveryHour step: 6).
+		12 hours -> (GtPlotterTimeEveryHour step: 12).
+		1 day -> (GtPlotterTimeEveryDay step: 1).
+		2 days -> (GtPlotterTimeEveryDay step: 2).
+		1 week -> (GtPlotterTimeEveryWeek step: 1).
+		30 days -> (GtPlotterTimeEveryMonth step: 1).
+		90 days -> (GtPlotterTimeEveryMonth step: 3).
+		1 year ->  (GtPlotterTimeEveryYear step: 1) }
 ]
 
 { #category : #converting }
@@ -26,16 +51,6 @@ GtPlotterTicks >> asArray [
 { #category : #private }
 GtPlotterTicks >> computedTicks [
 	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-GtPlotterTicks >> format: aFormatBlock [
-	format := aFormatBlock
-]
-
-{ #category : #accessing }
-GtPlotterTicks >> formattedTick: anObject [
-	^ format cull: anObject
 ]
 
 { #category : #initialization }
@@ -88,7 +103,7 @@ GtPlotterTicks >> gtPreviewFor: aView [
 							c vertical exact: 10 ] ]);
 				addChildren: (theTicks collect: [ :eachTick |
 					BlTextElement  new
-						text: ((self formattedTick: eachTick) asRopedText thin fontSize: 9);
+						text: (eachTick printString asRopedText thin fontSize: 9);
 						margin: (BlInsets top: 13);
 						constraintsDo: [ :c |
 							c frame horizontal alignCenterAt: (eachTick - from) / aLength ] ]).
@@ -104,13 +119,6 @@ GtPlotterTicks >> gtTicksFor: aView [
 		title: 'Ticks';
 		priority: 5;
 		items: [ self asArray ]
-]
-
-{ #category : #initialization }
-GtPlotterTicks >> initialize [
-	super initialize.
-	
-	format := #printString
 ]
 
 { #category : #accessing }
