@@ -5,6 +5,20 @@ Class {
 }
 
 { #category : #'instance creation' }
+GtPlotterTimeEveryMonth >> durationsFrom: aStartDuration to: anEndDuration do: aBlock [
+	| aCounter aCeilStart aFloorEnd |
+
+	aCounter := 0.
+	aCeilStart := (aStartDuration / 30 days) ceiling.
+	aFloorEnd := (anEndDuration / 30 days) floor.
+
+	aCeilStart to: aFloorEnd do: [ :anAmountOfMonths |
+			aCounter % step = 0
+				ifTrue: [ aBlock value: (GtPlotterDuration months: anAmountOfMonths) ].
+			aCounter := aCounter + 1 ]
+]
+
+{ #category : #'instance creation' }
 GtPlotterTimeEveryMonth >> from: aStartDateAndTime to: anEndDate do: aBlock [
 	| aCounter aCeilStart |
 	

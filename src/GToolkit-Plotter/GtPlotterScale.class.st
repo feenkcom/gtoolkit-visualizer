@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'range',
-		'domain'
+		'domain',
+		'tickFormat'
 	],
 	#category : #'GToolkit-Plotter-Scale'
 }
@@ -15,7 +16,7 @@ Class {
 GtPlotterScale >> cull: anObject [
 	"To be polymorphic with blocks"
 
-	^ self interpolate: anObject
+	^ self map: anObject
 ]
 
 { #category : #accessing }
@@ -30,12 +31,28 @@ GtPlotterScale >> domain: aGtPlotterScaleDomain [
 	domain := aGtPlotterScaleDomain
 ]
 
+{ #category : #'api - ticks' }
+GtPlotterScale >> formattedTick: anObject [
+	^ tickFormat cull: anObject
+]
+
+{ #category : #'gt-extension' }
+GtPlotterScale >> gtTicksFor: aView [
+	<gtView>
+	
+	^ aView list
+		title: 'Ticks';
+		priority: 5;
+		items: [ self ticks asArray ]
+]
+
 { #category : #initialization }
 GtPlotterScale >> initialize [
 	super initialize.
 	
 	domain := GtPlotterScaleUnitDomain new.
-	range := GtPlotterScaleUnitRange new
+	range := GtPlotterScaleUnitRange new.
+	tickFormat := #printString
 ]
 
 { #category : #'operators-mapping' }
@@ -55,6 +72,11 @@ GtPlotterScale >> range [
 { #category : #accessing }
 GtPlotterScale >> range: aGtPlotterScaleRange [
 	range := aGtPlotterScaleRange
+]
+
+{ #category : #'api - ticks' }
+GtPlotterScale >> tickFormat: aFormatBlock [
+	tickFormat := aFormatBlock
 ]
 
 { #category : #'api - ticks' }
@@ -80,5 +102,10 @@ GtPlotterScale >> transform: aDomainValue [
 GtPlotterScale >> value: anObject [
 	"To be polymorphic with blocks"
 
-	^ self interpolate: anObject
+	^ self map: anObject
+]
+
+{ #category : #'api - ticks' }
+GtPlotterScale >> valuedTick: aTickObject [
+	^ aTickObject
 ]

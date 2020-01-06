@@ -5,6 +5,37 @@ Class {
 }
 
 { #category : #private }
+GtPlotterTimeTicks class >> tickInterval: aStartDateAndTime stop: aStopDateAndTime count: aCount [
+	| aTargetDuration anIndex aPlotterTimeInterval |
+
+	aTargetDuration := (aStopDateAndTime - aStartDateAndTime) abs / aCount.
+	anIndex := (timeIntervals collect:  [ :eachAssociation | eachAssociation key asNanoSeconds ])
+		findBinaryIndex: [ :aDurationInNanoSeconds | aTargetDuration asNanoSeconds - aDurationInNanoSeconds  ]
+		ifNone: [ :a :b | b ].
+	
+	anIndex > timeIntervals size
+		ifTrue: [
+			| aStep |
+			aStep := GtPlotterNumberTicks tickStep: 0 stop: (aStopDateAndTime - aStartDateAndTime) / 1 year count: aCount.
+			aPlotterTimeInterval := GtPlotterTimeEveryYear step: aStep ]
+		ifFalse: [
+			anIndex = 1
+				ifTrue: [
+					| aStep |
+					aStep := GtPlotterNumberTicks tickStep: aStartDateAndTime / 1 milliSecond stop: aStopDateAndTime / 1 milliSecond count: aCount.
+					aPlotterTimeInterval := GtPlotterTimeEveryMillisecond step: (aStep max: 1) ]
+				ifFalse: [
+					| anAssociation |
+					anIndex := (aTargetDuration / (timeIntervals at: anIndex - 1) key < ((timeIntervals at: anIndex) key / aTargetDuration)
+						ifTrue: [ anIndex - 1 ]
+						ifFalse: [ anIndex ]).
+					anAssociation := timeIntervals at: anIndex.
+					aPlotterTimeInterval := anAssociation value ] ].
+
+	^ aPlotterTimeInterval
+]
+
+{ #category : #private }
 GtPlotterTimeTicks >> computedTicks [
 	| isReverse aStart aStop anInterval theTicks |
 
@@ -20,7 +51,7 @@ GtPlotterTimeTicks >> computedTicks [
 			aStart := from.
 			aStop := to ].
 	
-	anInterval := GtPlotterDurationTicks tickInterval: aStart stop: aStop count: count.
+	anInterval := self class tickInterval: aStart stop: aStop count: count.
 	theTicks := Array streamContents: [ :aStream |
 		anInterval from: aStart to: aStop do: [ :eachDuration |
 			aStream nextPut: eachDuration ] ].

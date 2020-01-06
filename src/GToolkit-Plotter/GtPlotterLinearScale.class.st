@@ -4,16 +4,6 @@ Class {
 	#category : #'GToolkit-Plotter-Scale'
 }
 
-{ #category : #'gt-extension' }
-GtPlotterLinearScale >> gtTicksFor: aView [
-	<gtView>
-	
-	^ aView list
-		title: 'Ticks';
-		priority: 5;
-		items: [ self ticks asArray ]
-]
-
 { #category : #'api - ticks' }
 GtPlotterLinearScale >> ticks: anAmount [
 	<return: #Array of: #Object>
