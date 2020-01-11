@@ -421,8 +421,8 @@ GtConnector >> initialize [
 	super initialize.
 
 	self constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent.
+		c horizontal fitContent.
+		c vertical fitContent.
 		c padding: (BlInsets all: 40) ].
 
 	self layout: (GtGradHorizontalTreeLayout new levelDistance: 200; nodeDistance: 40).
