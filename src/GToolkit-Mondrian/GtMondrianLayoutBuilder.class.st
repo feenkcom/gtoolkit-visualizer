@@ -4,7 +4,7 @@ I am a builder for layouts.
 Class {
 	#name : #GtMondrianLayoutBuilder,
 	#superclass : #GtMondrianBuilder,
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #scripting }
@@ -58,7 +58,7 @@ GtMondrianLayoutBuilder >> horizontalDominanceTree [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> horizontalTree [
-	^ self custom: GtGraphHorizontalTreeLayout new
+	^ self custom: GtGradHorizontalTreeLayout new
 ]
 
 { #category : #scripting }
