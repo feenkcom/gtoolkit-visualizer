@@ -20,19 +20,19 @@ GtPlotterHorizontalBarChartBuilderExamples >> barChart [
 	].
 	barChart barWidthScale: (GtPlotterDurationScale new domainFrom: 0 minutes to: 20 minutes).
 	barChart barHeightScale: (GtPlotterLinearScale new
-		domainFrom: 0 to: (self data max: #third);
+		domainFrom: 0 to: (self websiteVisits max: #third);
 		rangeFrom: 10 to: 50).
 	barChart ticks: 2.
 	barChart barLabelFormat: [ :eachDataItem | eachDataItem first ].
 	barChart barWidthData: [ :eachDataItem | eachDataItem second ].
 	barChart barHeightData: [ :eachDataItem | eachDataItem third ].
-	barChart with: self data.
+	barChart with: self websiteVisits.
 
 	^ aPlotter root
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBarChartBuilderExamples >> data [
+GtPlotterHorizontalBarChartBuilderExamples >> websiteVisits [
 	^ { 
 		{ 'Google.com'. (Duration days: 0 hours: 0 minutes: 12 seconds: 09). 14.66 }.
 		{ 'Youtube.com'. (Duration days: 0 hours: 0 minutes: 11 seconds: 40). 6.67 }.
