@@ -41,7 +41,7 @@ GtNestedTreemapExamples >> groupByColorBuilder [
 	| aBuilder |
 	aBuilder := self noGroupingBuilder.
 	aBuilder groupBy: [ :anItem | anItem second ].
-	self assert: aBuilder groupBy isNotNil.
+	self assert: aBuilder step groupBy isNotNil.
 	self assert: aBuilder step allSteps size equals: 2.
 	^ aBuilder
 ]
@@ -110,6 +110,56 @@ GtNestedTreemapExamples >> oneRandomModel [
 	^ Array 
 		with: (1 to: 50) atRandom 
 		with: { Color green. Color blue. Color red. Color yellow } atRandom
+]
+
+{ #category : #'examples - rejecting' }
+GtNestedTreemapExamples >> rejectingSix [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self rejectingSixBuilder.
+	aBuilder data: self sevenModel.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	self assert: aResult weight isNumber.
+	self assert: aResult numberOfNodes equals: 5.
+	self assert: aResult nodes isEmpty.
+	self assert: aResult leaves size equals: 5.
+	^ aResult
+]
+
+{ #category : #'examples - rejecting' }
+GtNestedTreemapExamples >> rejectingSixAndAnna [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self rejectingSixAndAnnaBuilder.
+	aBuilder data: self sevenModel.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	self assert: aResult weight isNumber.
+	self assert: aResult numberOfNodes equals: 3.
+	self assert: aResult nodes isEmpty.
+	self assert: aResult leaves size equals: 3.
+	^ aResult
+]
+
+{ #category : #'examples - tree builder' }
+GtNestedTreemapExamples >> rejectingSixAndAnnaBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self rejectingSixBuilder.
+	aBuilder reject: [ :anItem | anItem third = 'anna' ].
+	self assert: aBuilder step allSteps size equals: 3.
+	^ aBuilder
+]
+
+{ #category : #'examples - tree builder' }
+GtNestedTreemapExamples >> rejectingSixBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self noGroupingBuilder.
+	aBuilder reject: [ :anItem | anItem first = 6 ].
+	self assert: aBuilder step allSteps size equals: 2.
+	^ aBuilder
 ]
 
 { #category : #'examples - grouping' }

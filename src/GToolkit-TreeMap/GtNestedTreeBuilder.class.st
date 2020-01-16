@@ -25,11 +25,6 @@ GtNestedTreeBuilder >> data: anObject [
 ]
 
 { #category : #accessing }
-GtNestedTreeBuilder >> groupBy [
-	^ self step groupBy
-]
-
-{ #category : #accessing }
 GtNestedTreeBuilder >> groupBy: anObject [
 	self step groupBy: anObject in: self
 ]
@@ -59,6 +54,11 @@ GtNestedTreeBuilder >> newLeaf [
 { #category : #'instance creation' }
 GtNestedTreeBuilder >> newNode [
 	^ GtNestedTreeNode new
+]
+
+{ #category : #accessing }
+GtNestedTreeBuilder >> reject: anObject [
+	self step reject: anObject in: self
 ]
 
 { #category : #accessing }

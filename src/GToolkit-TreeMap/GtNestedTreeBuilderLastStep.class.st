@@ -1,6 +1,6 @@
 Class {
 	#name : #GtNestedTreeBuilderLastStep,
-	#superclass : #GtNestedTreeBuilderAction,
+	#superclass : #GtNestedTreeBuilderStep,
 	#classInstVars : [
 		'uniqueInstance'
 	],
@@ -38,14 +38,19 @@ GtNestedTreeBuilderLastStep >> fill: aTreeItem withContext: aStepContext [
 	aTreeItem leaves: (self newLeavesFrom: aStepContext)
 ]
 
-{ #category : #building }
-GtNestedTreeBuilderLastStep >> groupBy: aBlockClosure in: aStepOrBuilder [ 
-	aStepOrBuilder step: (self newStep groupBy: aBlockClosure)
+{ #category : #configuration }
+GtNestedTreeBuilderLastStep >> groupBy: aBlockClosure in: aBuilderOrStep [ 
+	aBuilderOrStep step: (self newGroupByStep groupBy: aBlockClosure)
 ]
 
 { #category : #accessing }
 GtNestedTreeBuilderLastStep >> name [
-	^ 'no grouping'
+	^ 'Leaves'
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilderLastStep >> reject: aBlockClosure in: aBuilderOrStep [
+	aBuilderOrStep step: (self newRejectStep reject: aBlockClosure)
 ]
 
 { #category : #private }
