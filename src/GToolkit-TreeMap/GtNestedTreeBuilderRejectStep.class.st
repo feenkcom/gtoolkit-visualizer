@@ -24,11 +24,6 @@ GtNestedTreeBuilderRejectStep >> description [
 	^ self reject printString
 ]
 
-{ #category : #building }
-GtNestedTreeBuilderRejectStep >> fill: aTreeItem withContext: aStepContext [
-	^ self shouldNotImplement
-]
-
 { #category : #configuration }
 GtNestedTreeBuilderRejectStep >> groupBy: aBlockClosure in: aBuilderOrStep [
 	self step groupBy: aBlockClosure in: self
@@ -46,6 +41,12 @@ GtNestedTreeBuilderRejectStep >> name [
 	^ 'Reject'
 ]
 
+{ #category : #'instance creation' }
+GtNestedTreeBuilderRejectStep >> newItemNamed: aName withContext: aStepContext [ 
+	<return: #GtNestedTreeItem>
+	^ self shouldNotImplement
+]
+
 { #category : #accessing }
 GtNestedTreeBuilderRejectStep >> reject [
 	^ reject
@@ -59,4 +60,9 @@ GtNestedTreeBuilderRejectStep >> reject: anObject [
 { #category : #configuration }
 GtNestedTreeBuilderRejectStep >> reject: aBlockClosure in: aBuilderOrStep [ 
 	self step reject: aBlockClosure in: self
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilderRejectStep >> summarizeIn: aBuilderOrStep [
+	self step summarizeIn: self
 ]

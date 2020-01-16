@@ -34,14 +34,6 @@ GtNestedTreeLeaf >> item: anObject [
 	item := anObject
 ]
 
-{ #category : #accessing }
-GtNestedTreeLeaf >> items: anArray [
-	self 
-		assert: [ anArray isArray ]
-		description: [ 'Items must be an array collection' ].
-	item := anArray
-]
-
 { #category : #printing }
 GtNestedTreeLeaf >> printOn: aStream [
 	self item ifNil: [ ^ super printOn: aStream ].

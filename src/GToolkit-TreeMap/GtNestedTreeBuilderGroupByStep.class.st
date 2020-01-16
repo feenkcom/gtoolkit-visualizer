@@ -9,10 +9,8 @@ Class {
 
 { #category : #building }
 GtNestedTreeBuilderGroupByStep >> buildRoot: aStepContext [
-	| aRootNode |
-	aRootNode := self newRootNode.
-	self fill: aRootNode withContext: aStepContext.
-	^ aRootNode
+	<return: #GtNestedTreeItem>
+	^ self newItemNamed: 'Root' withContext: aStepContext
 ]
 
 { #category : #initialization }
@@ -23,25 +21,6 @@ GtNestedTreeBuilderGroupByStep >> defaultGroupBy [
 { #category : #accessing }
 GtNestedTreeBuilderGroupByStep >> description [
 	^ self groupBy printString
-]
-
-{ #category : #building }
-GtNestedTreeBuilderGroupByStep >> fill: aTreeItem withContext: aStepContext [
-	| aData theNodes |
-	aData := aStepContext data groupedBy: groupBy.
-	theNodes := Array
-		new: aData size
-		streamContents: [ :aStream | 
-			aData
-				keysAndValuesDo: [ :aKey :aValue | 
-					| aNode |
-					aNode := self newNode.
-					aNode name: aKey.
-					self step
-						fill: aNode
-						withContext: (aStepContext copyWithData: aValue).
-					aStream nextPut: aNode ] ].
-	aTreeItem nodes: theNodes
 ]
 
 { #category : #accessing }
@@ -70,10 +49,32 @@ GtNestedTreeBuilderGroupByStep >> name [
 	^ 'GroupBy'
 ]
 
+{ #category : #'instance creation' }
+GtNestedTreeBuilderGroupByStep >> newItemNamed: aName withContext: aStepContext [ 
+	<return: #GtNestedTreeItem>
+	| aTreeItem aData theNodes |
+	aTreeItem := self newNode name: aName.
+	aData := aStepContext data groupedBy: groupBy.
+	theNodes := Array
+		new: aData size
+		streamContents: [ :aStream | 
+			aData
+				keysAndValuesDo: [ :aKey :aValue | 
+					| aNode |
+					aNode := self step newItemNamed: aKey withContext: (aStepContext copyWithData: aValue).
+					aStream nextPut: aNode ] ].
+	^ aTreeItem nodes: theNodes
+]
+
 { #category : #configuration }
 GtNestedTreeBuilderGroupByStep >> reject: aBlockClosure in: aBuilderOrStep [ 
 	| aRejectStep |
 	aRejectStep := self newRejectStep reject: aBlockClosure.
 	aRejectStep step: self.
 	aBuilderOrStep step: aRejectStep.
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilderGroupByStep >> summarizeIn: aBuilderOrStep [
+	self step summarizeIn: self
 ]

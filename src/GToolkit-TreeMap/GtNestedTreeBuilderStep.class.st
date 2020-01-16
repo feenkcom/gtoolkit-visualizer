@@ -15,15 +15,16 @@ GtNestedTreeBuilderStep >> allSteps [
 		self stepsTo: aStream ]
 ]
 
+{ #category : #building }
+GtNestedTreeBuilderStep >> buildRoot: aStepContext [
+	<return: #GtNestedTreeNode>
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 GtNestedTreeBuilderStep >> description [
 	<return: #String>
 	^ ''
-]
-
-{ #category : #building }
-GtNestedTreeBuilderStep >> fill: aTreeItem withContext: aStepContext [
-	^ self subclassResponsibility
 ]
 
 { #category : #configuration }
@@ -54,6 +55,12 @@ GtNestedTreeBuilderStep >> newGroupByStep [
 ]
 
 { #category : #'instance creation' }
+GtNestedTreeBuilderStep >> newItemNamed: aName withContext: aStepContext [ 
+	<return: #GtNestedTreeItem>
+	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
 GtNestedTreeBuilderStep >> newLeaf [
 	^ GtNestedTreeLeaf new
 ]
@@ -81,6 +88,16 @@ GtNestedTreeBuilderStep >> newRootNode [
 	^ GtNestedTreeRoot new
 ]
 
+{ #category : #'instance creation' }
+GtNestedTreeBuilderStep >> newSummarizeStep [
+	^ GtNestedTreeBuilderSummaryStep new
+]
+
+{ #category : #'instance creation' }
+GtNestedTreeBuilderStep >> newSummaryLeaf [
+	^ GtNestedTreeSummaryLeaf new
+]
+
 { #category : #configuration }
 GtNestedTreeBuilderStep >> reject: aBlockClosure in: aBuilderOrStep [
 	self subclassResponsibility
@@ -88,5 +105,10 @@ GtNestedTreeBuilderStep >> reject: aBlockClosure in: aBuilderOrStep [
 
 { #category : #private }
 GtNestedTreeBuilderStep >> stepsTo: aStream [
+	self subclassResponsibility
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilderStep >> summarizeIn: aBuilderOrStep [
 	self subclassResponsibility
 ]
