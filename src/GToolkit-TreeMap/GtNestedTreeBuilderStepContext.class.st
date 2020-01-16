@@ -33,6 +33,16 @@ GtNestedTreeBuilderStepContext >> defaultWeight [
 	^ [ :anItem | anItem isNumber ifTrue: [ anItem ] ifFalse: [ 1 ] ]
 ]
 
+{ #category : #'gt-extension' }
+GtNestedTreeBuilderStepContext >> gtDataFor: aView [
+	<gtView>
+	self data ifNil: [ ^ aView empty ].
+	^ aView forward
+		title: 'Data';
+		object: [ self data ];
+		view: #gtItemsFor:
+]
+
 { #category : #initialization }
 GtNestedTreeBuilderStepContext >> initialize [
 	super initialize.

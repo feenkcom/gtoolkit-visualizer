@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
+{ #category : #testing }
+GtNestedTreeBuilderInnerStep class >> isAbstract [
+	^ self name = #GtNestedTreeBuilderInnerStep 
+]
+
 { #category : #initialization }
 GtNestedTreeBuilderInnerStep >> initialize [
 	super initialize.

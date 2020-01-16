@@ -29,13 +29,7 @@ GtNestedTreeBuilderLastStep class >> uniqueInstance [
 
 { #category : #building }
 GtNestedTreeBuilderLastStep >> buildRoot: aStepContext [ 
-	^ self newNode
-		leaves: (self newLeavesFrom: aStepContext)
-]
-
-{ #category : #building }
-GtNestedTreeBuilderLastStep >> fill: aTreeItem withContext: aStepContext [ 
-	aTreeItem leaves: (self newLeavesFrom: aStepContext)
+	^ self newItemNamed: 'Root' withContext: aStepContext
 ]
 
 { #category : #configuration }
@@ -48,6 +42,15 @@ GtNestedTreeBuilderLastStep >> name [
 	^ 'Leaves'
 ]
 
+{ #category : #'instance creation' }
+GtNestedTreeBuilderLastStep >> newItemNamed: aName withContext: aStepContext [ 
+	<return: #GtNestedTreeItem>
+	| aTreeItem |
+	aTreeItem := self newNode name: aName.
+	aTreeItem leaves: (self newLeavesFrom: aStepContext).
+	^ aTreeItem
+]
+
 { #category : #configuration }
 GtNestedTreeBuilderLastStep >> reject: aBlockClosure in: aBuilderOrStep [
 	aBuilderOrStep step: (self newRejectStep reject: aBlockClosure)
@@ -56,4 +59,9 @@ GtNestedTreeBuilderLastStep >> reject: aBlockClosure in: aBuilderOrStep [
 { #category : #private }
 GtNestedTreeBuilderLastStep >> stepsTo: aStream [
 	aStream nextPut: self
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilderLastStep >> summarizeIn: aBuilderOrStep [
+	aBuilderOrStep step: self newSummarizeStep
 ]

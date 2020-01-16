@@ -24,7 +24,7 @@ GtNestedTreeBuilder >> data: anObject [
 	self stepContext data: anObject
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 GtNestedTreeBuilder >> groupBy: anObject [
 	self step groupBy: anObject in: self
 ]
@@ -56,7 +56,7 @@ GtNestedTreeBuilder >> newNode [
 	^ GtNestedTreeNode new
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 GtNestedTreeBuilder >> reject: anObject [
 	self step reject: anObject in: self
 ]
@@ -79,6 +79,11 @@ GtNestedTreeBuilder >> stepContext [
 { #category : #accessing }
 GtNestedTreeBuilder >> stepContext: anObject [
 	stepContext := anObject
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilder >> summarize [
+	self step summarizeIn: self
 ]
 
 { #category : #accessing }
