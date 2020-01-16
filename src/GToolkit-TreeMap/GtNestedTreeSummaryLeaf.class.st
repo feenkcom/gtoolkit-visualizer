@@ -46,6 +46,11 @@ GtNestedTreeSummaryLeaf >> items: aCollection [
 	items := aCollection
 ]
 
+{ #category : #stream }
+GtNestedTreeSummaryLeaf >> itemsTo: aStream [
+	aStream nextPutAll: self items.
+]
+
 { #category : #accessing }
 GtNestedTreeSummaryLeaf >> name [
 	^ name

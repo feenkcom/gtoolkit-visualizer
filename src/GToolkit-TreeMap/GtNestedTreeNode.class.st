@@ -9,11 +9,6 @@ Class {
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : #'as yet unclassified' }
-GtNestedTreeNode >> addLeaf: aCollection [ 
-	self shouldBeImplemented.
-]
-
 { #category : #'accessing - computed' }
 GtNestedTreeNode >> children [
 	^ Array 
@@ -28,6 +23,12 @@ GtNestedTreeNode >> initialize [
 	super initialize.
 	leaves := #().
 	nodes := #().
+]
+
+{ #category : #stream }
+GtNestedTreeNode >> itemsTo: aStream [
+	self nodes do: [ :eachNode | eachNode itemsTo: aStream ].
+	self leaves do: [ :eachLeaf | eachLeaf itemsTo: aStream ].
 ]
 
 { #category : #accessing }
@@ -65,7 +66,7 @@ GtNestedTreeNode >> nodes: anArray [
 	nodes := anArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #convenience }
 GtNestedTreeNode >> numberOfNodes [
 	<return: #Integer>
 	^ self nodes size + self leaves size
