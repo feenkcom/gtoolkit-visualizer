@@ -123,6 +123,18 @@ GtNestedTreemapExamples >> oneRandomModel [
 		with: { Color green. Color blue. Color red. Color yellow } atRandom
 ]
 
+{ #category : #'examples - tree builder' }
+GtNestedTreemapExamples >> rejectPeterGroupByColorBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self noGroupingBuilder.
+	aBuilder reject: [ :anItem | anItem third = 'peter' ].
+	aBuilder groupBy: [ :anItem | anItem second ].
+	self assert: aBuilder step isNotNil.
+	self assert: aBuilder step allSteps size equals: 3.
+	^ aBuilder
+]
+
 { #category : #'examples - rejecting' }
 GtNestedTreemapExamples >> rejectingSix [
 	<gtExample>

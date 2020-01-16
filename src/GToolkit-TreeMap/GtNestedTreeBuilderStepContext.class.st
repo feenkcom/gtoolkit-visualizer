@@ -30,7 +30,7 @@ GtNestedTreeBuilderStepContext >> defaultData [
 
 { #category : #initialization }
 GtNestedTreeBuilderStepContext >> defaultWeight [
-	^ [ :anItem | anItem yourself ]
+	^ [ :anItem | anItem isNumber ifTrue: [ anItem ] ifFalse: [ 1 ] ]
 ]
 
 { #category : #initialization }

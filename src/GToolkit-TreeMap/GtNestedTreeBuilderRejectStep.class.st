@@ -31,7 +31,7 @@ GtNestedTreeBuilderRejectStep >> fill: aTreeItem withContext: aStepContext [
 
 { #category : #configuration }
 GtNestedTreeBuilderRejectStep >> groupBy: aBlockClosure in: aBuilderOrStep [
-	self shouldNotImplement
+	self step groupBy: aBlockClosure in: self
 ]
 
 { #category : #initialization }

@@ -36,6 +36,7 @@ GtNestedTreeBuilderGroupByStep >> fill: aTreeItem withContext: aStepContext [
 				keysAndValuesDo: [ :aKey :aValue | 
 					| aNode |
 					aNode := self newNode.
+					aNode name: aKey.
 					self step
 						fill: aNode
 						withContext: (aStepContext copyWithData: aValue).

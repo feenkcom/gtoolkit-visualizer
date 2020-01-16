@@ -2,6 +2,7 @@ Class {
 	#name : #GtNestedTreeNode,
 	#superclass : #GtNestedTreeCollection,
 	#instVars : [
+		'name',
 		'leaves',
 		'nodes'
 	],
@@ -37,10 +38,17 @@ GtNestedTreeNode >> leaves [
 
 { #category : #accessing }
 GtNestedTreeNode >> leaves: anArray [
-	self 
-		assert: [ anArray isArray ]
-		description: [ 'Leaves must be an array collection' ].
 	leaves := anArray
+]
+
+{ #category : #accessing }
+GtNestedTreeNode >> name [
+	^ name
+]
+
+{ #category : #accessing }
+GtNestedTreeNode >> name: anObject [
+	name := anObject
 ]
 
 { #category : #accessing }
@@ -67,6 +75,7 @@ GtNestedTreeNode >> numberOfNodes [
 GtNestedTreeNode >> printOn: aStream [
 	self nodes ifNil: [ ^ super printOn: aStream ].
 	self leaves ifNil: [ ^ super printOn: aStream ].
+	self name ifNotNil: [ aStream nextPutAll: self name asString; nextPut: $:; space ].
 	aStream
 		print: self nodes size;
 		nextPutAll: ' nodes and ';
