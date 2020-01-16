@@ -2,9 +2,8 @@ Class {
 	#name : #GtNestedTreeBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'data',
-		'groupBy',
-		'weight'
+		'step',
+		'stepContext'
 	],
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
@@ -12,58 +11,44 @@ Class {
 { #category : #building }
 GtNestedTreeBuilder >> build [
 	<return: #GtNestedTreeNode>
-	| aDictionary theNodes |
-	aDictionary := self data groupedBy: self groupBy.
-	theNodes := Array new: aDictionary size streamContents: [ :aStream |
-		aDictionary keysAndValuesDo: [ :aKey :aValue | 
-			| aNode |
-			aNode := self newNode.
-			aNode leaves: (self newLeavesFrom: aValue).
-			aStream nextPut: aNode ] ].
-	^ GtNestedTreeRoot new nodes: theNodes.
+	^ self step buildRoot: self stepContext
 ]
 
 { #category : #accessing }
 GtNestedTreeBuilder >> data [
-	^ data
+	^ self stepContext data
 ]
 
 { #category : #accessing }
 GtNestedTreeBuilder >> data: anObject [
-	data := anObject
-]
-
-{ #category : #initialization }
-GtNestedTreeBuilder >> defaultData [
-	^ #()
-]
-
-{ #category : #initialization }
-GtNestedTreeBuilder >> defaultGroupBy [
-	^ [ :anItem | anItem yourself ]
-]
-
-{ #category : #initialization }
-GtNestedTreeBuilder >> defaultWeight [
-	^ [ :anItem | anItem yourself ]
+	self stepContext data: anObject
 ]
 
 { #category : #accessing }
 GtNestedTreeBuilder >> groupBy [
-	^ groupBy
+	^ self step groupBy
 ]
 
 { #category : #accessing }
 GtNestedTreeBuilder >> groupBy: anObject [
-	groupBy := anObject
+	self step groupBy: anObject in: self
+]
+
+{ #category : #'gt-extension' }
+GtNestedTreeBuilder >> gtStepsFor: aView [
+	<gtView>
+	self step ifNil: [ ^ aView empty ].
+	^ aView forward 
+		title: 'Steps';
+		object: [ self step ];
+		view: #gtStepsFor:
 ]
 
 { #category : #initialization }
 GtNestedTreeBuilder >> initialize [
 	super initialize.
-	data := self defaultData.
-	groupBy := self defaultGroupBy.
-	weight := self defaultWeight.
+	step := GtNestedTreeBuilderStep null.
+	stepContext := GtNestedTreeBuilderStepContext new.
 ]
 
 { #category : #'instance creation' }
@@ -72,24 +57,36 @@ GtNestedTreeBuilder >> newLeaf [
 ]
 
 { #category : #'instance creation' }
-GtNestedTreeBuilder >> newLeavesFrom: aCollection [ 
-	^ aCollection collect: [ :eachItem | 
-		self newLeaf 
-			item: eachItem;
-			weight: self weight ]
-]
-
-{ #category : #'instance creation' }
 GtNestedTreeBuilder >> newNode [
 	^ GtNestedTreeNode new
 ]
 
 { #category : #accessing }
+GtNestedTreeBuilder >> step [
+	^ step
+]
+
+{ #category : #accessing }
+GtNestedTreeBuilder >> step: anObject [
+	step := anObject
+]
+
+{ #category : #accessing }
+GtNestedTreeBuilder >> stepContext [
+	^ stepContext
+]
+
+{ #category : #accessing }
+GtNestedTreeBuilder >> stepContext: anObject [
+	stepContext := anObject
+]
+
+{ #category : #accessing }
 GtNestedTreeBuilder >> weight [
-	^ weight
+	^ self stepContext weight
 ]
 
 { #category : #accessing }
 GtNestedTreeBuilder >> weight: anObject [
-	weight := anObject
+	self stepContext weight: anObject
 ]

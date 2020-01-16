@@ -8,6 +8,11 @@ Class {
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
+{ #category : #'as yet unclassified' }
+GtNestedTreeNode >> addLeaf: aCollection [ 
+	self shouldBeImplemented.
+]
+
 { #category : #'accessing - computed' }
 GtNestedTreeNode >> children [
 	^ Array 
@@ -50,6 +55,12 @@ GtNestedTreeNode >> nodes: anArray [
 		assert: [ anArray isArray ]
 		description: [ 'Nodes must be an array collection' ].
 	nodes := anArray
+]
+
+{ #category : #'as yet unclassified' }
+GtNestedTreeNode >> numberOfNodes [
+	<return: #Integer>
+	^ self nodes size + self leaves size
 ]
 
 { #category : #printing }

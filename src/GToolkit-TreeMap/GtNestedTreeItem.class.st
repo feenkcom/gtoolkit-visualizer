@@ -46,8 +46,12 @@ GtNestedTreeItem >> gtTreeFor: aView [
 		column: 'Name' item: [ :anItem | anItem ];
 		column: 'Weight' item: [ :anItem | anItem weight asFloat round: 2 ] width: 80;
 		column: 'Porcentage' 
-			item: [ :anItem | ((anItem weight / self weight) * 100) asFloat round: 2 ]
-			format: [ :aNumber | aNumber asString, '%' ]
+			item: [ :anItem | 
+				| aWeight |
+				aWeight := self weight.
+				aWeight isZero
+					ifFalse: [ (((anItem weight / self weight) * 100) asFloat round: 2) asString, '%' ]
+					ifTrue: [ '' ] ]
 			width: 80
 ]
 
