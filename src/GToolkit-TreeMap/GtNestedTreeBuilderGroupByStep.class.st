@@ -68,3 +68,11 @@ GtNestedTreeBuilderGroupByStep >> initialize [
 GtNestedTreeBuilderGroupByStep >> name [
 	^ 'GroupBy'
 ]
+
+{ #category : #configuration }
+GtNestedTreeBuilderGroupByStep >> reject: aBlockClosure in: aBuilderOrStep [ 
+	| aRejectStep |
+	aRejectStep := self newRejectStep reject: aBlockClosure.
+	aRejectStep step: self.
+	aBuilderOrStep step: aRejectStep.
+]

@@ -24,6 +24,16 @@ GtNestedTreeBuilderRejectStep >> description [
 	^ self reject printString
 ]
 
+{ #category : #building }
+GtNestedTreeBuilderRejectStep >> fill: aTreeItem withContext: aStepContext [
+	^ self shouldNotImplement
+]
+
+{ #category : #configuration }
+GtNestedTreeBuilderRejectStep >> groupBy: aBlockClosure in: aBuilderOrStep [
+	self shouldNotImplement
+]
+
 { #category : #initialization }
 GtNestedTreeBuilderRejectStep >> initialize [
 	super initialize.

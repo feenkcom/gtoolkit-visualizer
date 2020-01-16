@@ -46,6 +46,17 @@ GtNestedTreemapExamples >> groupByColorBuilder [
 	^ aBuilder
 ]
 
+{ #category : #'examples - tree builder' }
+GtNestedTreemapExamples >> groupByColorRejectPeterBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self groupByColorBuilder.
+	aBuilder reject: [ :anItem | anItem third = 'peter' ].
+	self assert: aBuilder step isNotNil.
+	self assert: aBuilder step allSteps size equals: 3.
+	^ aBuilder
+]
+
 { #category : #'examples - grouping' }
 GtNestedTreemapExamples >> hundredByColor [
 	<gtExample>
