@@ -42,7 +42,7 @@ Class {
 		'containerBlock',
 		'layoutIterator'
 	],
-	#category : #'GToolkit-TreeMap'
+	#category : #'GToolkit-TreeMap-Core'
 }
 
 { #category : #api }

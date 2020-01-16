@@ -5,14 +5,30 @@ Class {
 		'layoutClasses',
 		'nextLayoutIndex'
 	],
-	#category : #'GToolkit-TreeMap'
+	#category : #'GToolkit-TreeMap-Core'
 }
+
+{ #category : #initialization }
+GtNestedRectangleTreeMapContainerLayoutIterator >> beAlternateHorizontalAndVerticalSlice [
+	self layoutClasses: { GtGraphTreemapSliceHorizontalLayout. GtGraphTreemapSliceVerticalLayout }
+	
+]
+
+{ #category : #initialization }
+GtNestedRectangleTreeMapContainerLayoutIterator >> beSquarified [
+	self layoutClasses: { GtGraphTreemapSquarifiedLayout }
+]
 
 { #category : #initialization }
 GtNestedRectangleTreeMapContainerLayoutIterator >> initialize [
 	super initialize.
-	layoutClasses := { GtGraphTreemapSliceHorizontalLayout. GtGraphTreemapSliceVerticalLayout }.
 	nextLayoutIndex := 1.
+	self beSquarified.
+]
+
+{ #category : #accessing }
+GtNestedRectangleTreeMapContainerLayoutIterator >> layoutClasses: anArray [
+	layoutClasses := anArray
 ]
 
 { #category : #accessing }

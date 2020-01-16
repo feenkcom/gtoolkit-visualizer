@@ -9,7 +9,7 @@ Class {
 		'leafEllipseBlock',
 		'containerEllipseBlock'
 	],
-	#category : #'GToolkit-TreeMap'
+	#category : #'GToolkit-TreeMap-Core'
 }
 
 { #category : #api }
