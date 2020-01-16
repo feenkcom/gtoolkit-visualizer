@@ -8,7 +8,7 @@ Class {
 		'toPositions',
 		'shouldSetDefaultAttachPoint'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }
@@ -135,6 +135,25 @@ GtGraphEdgeDrivenLayout >> executeOnElements: elements [
 			self edges: flat ].
 		
 	super executeOnElements: elements
+]
+
+{ #category : #hook }
+GtGraphEdgeDrivenLayout >> executeOnElements: elements with: anExtentSpec [
+	"Execute the layout, myself, on the elements"
+
+	self userDefinedEdges isNil 
+		ifTrue: [ self setEdgesFromElements: elements ]
+		ifFalse: 
+			[ | flat |
+			flat := OrderedCollection new.
+			self userDefinedEdges do: 
+				[ :each | 
+				each isCollection 
+					ifTrue: [ flat addAll: each ]
+					ifFalse: [ flat add: each ] ].
+			self edges: flat ].
+		
+	super executeOnElements: elements with: anExtentSpec
 ]
 
 { #category : #private }

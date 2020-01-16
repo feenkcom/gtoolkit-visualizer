@@ -21,6 +21,14 @@ GtGraphOptimizedForceBasedLayout >> executeOnElements: elements [
 	mockElements do: #applyToRealElement
 ]
 
+{ #category : #hook }
+GtGraphOptimizedForceBasedLayout >> executeOnElements: elements with: anExtentSpec [
+	"The argument is the set of Roassal elements"
+	mockElements := elements collect: [ :e | GtGraphMockElement new realElement: e ].
+	super executeOnElements: mockElements with: anExtentSpec.
+	mockElements do: #applyToRealElement
+]
+
 { #category : #accessing }
 GtGraphOptimizedForceBasedLayout >> prepareNodes: nodeElements [
 	"Probably something has to be done here"
