@@ -9,7 +9,10 @@ Class {
 		'barHeightScale',
 		'barWidthScale',
 		'barLabelFormat',
-		'barLabelStencil'
+		'barLabelStencil',
+		'barWidthDataBlock',
+		'barHeightDataBlock',
+		'barStencil'
 	],
 	#category : #'GToolkit-Plotter'
 }
@@ -24,6 +27,11 @@ GtPlotterHorizontalBarChartBuilder >> axisX [
 { #category : #accessing }
 GtPlotterHorizontalBarChartBuilder >> axisX: aGtPlotterAxisElement [
 	axisX := aGtPlotterAxisElement
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBarChartBuilder >> barHeightData: aBlock [
+	barHeightDataBlock := aBlock
 ]
 
 { #category : #accessing }
@@ -45,7 +53,17 @@ GtPlotterHorizontalBarChartBuilder >> barLabelFormat: aBlock [
 
 { #category : #accessing }
 GtPlotterHorizontalBarChartBuilder >> barLabelStencil: aBrColumnCellStencilBuilder [
-	barLabelStencil := aBrColumnCellStencilBuilder
+	barLabelStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBarChartBuilder >> barStencil: aBrColumnCellStencilBuilder [
+	barStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBarChartBuilder >> barWidthData: aBlock [
+	barWidthDataBlock := aBlock
 ]
 
 { #category : #accessing }
@@ -67,13 +85,17 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 	axisWidth := 150.
 
 	barHeightScale := GtPlotterLinearScale new.
+	barHeightDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
 	barWidthScale := GtPlotterLinearScale new.
+	barWidthDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
 
 	axisX := GtPlotterHorizontalAxisElement new
 		padding: (BlInsets left: axisWidth);
 		labelStencil: [ :aLabel | BrLabel new look: BrGlamorousLabelLook; text: aLabel ].
 
 	ticks := 10.
+	
+	barStencil := [ :eachDataItem :eachDataItemIndex :eachColumnIndex | BlElement new background: Color gray ] asStencilBuilder: BrColumnCellStencilBuilder.
 	barLabelFormat := [ :eachDataItem :eachDataItemIndex | eachDataItem asString ].
 	barLabelStencil := [ :eachBarLabel | BrColumnCellLabelStencil new text: eachBarLabel ] asStencilBuilder: BrColumnCellStencilBuilder.
 	
@@ -82,13 +104,40 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 
 	dataList column
 		title: 'Axis';
-		stencil: [ :eachDataItem :eachDataItemIndex |  ];
+		stencil: [ :eachDataItem :eachDataItemIndex :eachColumnIndex |
+			(barLabelStencil
+				rowValue: (barLabelFormat cull: eachDataItem cull: eachDataItemIndex);
+				rowIndex: eachDataItemIndex;
+				columnIndex: eachColumnIndex) build ];
 		width: axisWidth.
 
 	dataList column
 		title: 'Bars';
-		stencil: [ :aCollectionOfDomainValues |
-			BlElement new
+		stencil: [ :eachDataItem :eachDataItemIndex :eachColumnIndex |
+			| aContainer aBarWidthValue aBarHeightValue aBarElement |
+
+			aContainer := BlElement new
+				layout: BlFrameLayout new;
+				constraintsDo: [ :c |
+					c horizontal matchParent.
+					c vertical fitContent ].
+				
+			aBarWidthValue := barWidthDataBlock cull: eachDataItem cull: eachDataItemIndex.
+			aBarHeightValue := barHeightDataBlock cull: eachDataItem cull: eachDataItemIndex.
+			
+			aBarElement := ((barStencil
+					rowValue: eachDataItem;
+					rowIndex: eachDataItemIndex;
+					columnIndex: eachColumnIndex) asElement)
+				constraintsDo: [ :c |
+					c frame horizontal weight: (barWidthScale map: aBarWidthValue).
+					c horizontal matchParent.
+					c vertical exact: (barHeightScale map: aBarHeightValue)
+				].
+			
+			aContainer addChild: aBarElement.
+			
+			aContainer
 		].
 
 	

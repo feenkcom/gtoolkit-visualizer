@@ -73,7 +73,7 @@ GtGraphLayout >> executeOnElements: elements [
 { #category : #hook }
 GtGraphLayout >> executeOnElements: elements with: anExtentSpec [
 	"Execute the layout, myself, on the elements"
-		
+
 	self doInitialize: elements.
 	self doExecute: elements with: anExtentSpec.
 	self doPost: elements
