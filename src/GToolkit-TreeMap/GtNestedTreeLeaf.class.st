@@ -34,12 +34,9 @@ GtNestedTreeLeaf >> item: anObject [
 	item := anObject
 ]
 
-{ #category : #accessing }
-GtNestedTreeLeaf >> items: anArray [
-	self 
-		assert: [ anArray isArray ]
-		description: [ 'Items must be an array collection' ].
-	item := anArray
+{ #category : #stream }
+GtNestedTreeLeaf >> itemsTo: aStream [
+	aStream nextPut: self item
 ]
 
 { #category : #printing }
