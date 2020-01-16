@@ -34,6 +34,11 @@ GtNestedTreeLeaf >> item: anObject [
 	item := anObject
 ]
 
+{ #category : #stream }
+GtNestedTreeLeaf >> itemsTo: aStream [
+	aStream nextPut: self item
+]
+
 { #category : #printing }
 GtNestedTreeLeaf >> printOn: aStream [
 	self item ifNil: [ ^ super printOn: aStream ].
