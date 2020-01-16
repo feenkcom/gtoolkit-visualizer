@@ -12,9 +12,20 @@ GtPlotterHorizontalBarChartBuilderExamples >> barChart [
 	aPlotter := GtPlotter new.
 
 	barChart := aPlotter horizontalBarChart.
-	barChart barWidthScale: (GtPlotterDurationScale new domainFrom: 0 minutes to: 30 minutes).
+	barChart barStencil: [
+		BlElement new
+			geometry: BlStadium new;
+			margin: (BlInsets top: 4 bottom: 4);
+			background: (Color gray alpha: 0.5)
+	].
+	barChart barWidthScale: (GtPlotterDurationScale new domainFrom: 0 minutes to: 20 minutes).
+	barChart barHeightScale: (GtPlotterLinearScale new
+		domainFrom: 0 to: (self data max: #third);
+		rangeFrom: 10 to: 50).
 	barChart ticks: 2.
 	barChart barLabelFormat: [ :eachDataItem | eachDataItem first ].
+	barChart barWidthData: [ :eachDataItem | eachDataItem second ].
+	barChart barHeightData: [ :eachDataItem | eachDataItem third ].
 	barChart with: self data.
 
 	^ aPlotter root
