@@ -4,6 +4,16 @@ Class {
 	#category : #'GToolkit-Plotter-Scale'
 }
 
+{ #category : #'api - domain' }
+GtPlotterLinearScale >> domainFrom: aStartMagnitude to: anEndMagnitude [
+	domain := GtPlotterScaleMagnitudeDomain from: aStartMagnitude to: anEndMagnitude
+]
+
+{ #category : #'api - range' }
+GtPlotterLinearScale >> rangeFrom: aStartMagnitude to: anEndMagnitude [
+	range := GtPlotterScaleIntervalRange from: aStartMagnitude to: anEndMagnitude
+]
+
 { #category : #'api - ticks' }
 GtPlotterLinearScale >> ticks: anAmount [
 	<return: #Array of: #Object>
