@@ -21,8 +21,8 @@ GtNestedTreeCollection >> gtSquarifiedTreemapFor: aView [
 				deep: [ :anItem | anItem nodes ];
 				leaves: [ :anItem | anItem leaves ];
 				leavesSize: [ :aLeaf | aLeaf weight ];
-				containerElement: [ :anElement :aLeafContext | 
-					anElement border: (BlBorder paint: (Color gray alpha: 0.5 / aLeafContext level) width: 2).
+				containerElement: [ :anElement :aNodeContext | 
+					anElement border: (BlBorder paint: (Color gray alpha: 0.5 / aNodeContext level) width: 2).
 					anElement padding: (BlInsets all: 2) ];
 				leafElement: [ :anElement :aLeafContext | 
 					anElement border: (BlBorder paint: (Color gray alpha: 0.5 / aLeafContext level) width: 2).

@@ -24,20 +24,6 @@ GtNestedTreemapExamples >> basicTreeBuilder [
 	^ aBuilder
 ]
 
-{ #category : #'examples - grouping' }
-GtNestedTreemapExamples >> groupByColorAndNameAndInstrument [
-	<gtExample>
-	| aBuilder aResult |
-	aBuilder := self groupByColorAndNameAndInstrumentBuilder.
-	aBuilder data: self hundredRandomModels.
-	aResult := aBuilder build.
-	self assert: aResult isNotNil.
-	"We have at most 4 different colors"
-	self assert: aResult numberOfNodes <= 4.
-	self assert: aResult weight isNumber.
-	^ aResult
-]
-
 { #category : #'examples - tree builder' }
 GtNestedTreemapExamples >> groupByColorAndNameAndInstrumentBuilder [
 	<gtExample>
@@ -60,27 +46,6 @@ GtNestedTreemapExamples >> groupByColorAndNameBuilder [
 	^ aBuilder
 ]
 
-{ #category : #'examples - grouping' }
-GtNestedTreemapExamples >> groupByColorAndNameSummarize [
-	<gtExample>
-	| aBuilder aResult |
-	aBuilder := self groupByColorAndNameSummarizeBuilder.
-	aBuilder data: self sevenModel.
-	aResult := aBuilder build.
-	self assert: aResult isNotNil.
-	"We have at most 3 different colors"
-	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 3.
-	self assert: aResult numberOfLeaves equals: 0.
-	self assert: aResult nodes first numberOfNodes equals: 0.
-	self assert: aResult nodes first numberOfLeaves equals: 2.
-	self assert: aResult nodes second numberOfNodes equals: 0.
-	self assert: aResult nodes second numberOfLeaves equals: 2.
-	self assert: aResult nodes third numberOfNodes equals: 0.
-	self assert: aResult nodes third numberOfLeaves equals: 2.
-	^ aResult
-]
-
 { #category : #'examples - tree builder' }
 GtNestedTreemapExamples >> groupByColorAndNameSummarizeBuilder [
 	<gtExample>
@@ -89,23 +54,6 @@ GtNestedTreemapExamples >> groupByColorAndNameSummarizeBuilder [
 	aBuilder summarize.
 	self assert: aBuilder step allSteps size equals: 3.
 	^ aBuilder
-]
-
-{ #category : #'examples - grouping' }
-GtNestedTreemapExamples >> groupByColorAndSummarize [
-	<gtExample>
-	| aBuilder aResult |
-	aBuilder := self groupByColorAndSummarizeBuilder.
-	aBuilder data: self sevenModel.
-	aResult := aBuilder build.
-	self assert: aResult isNotNil.
-	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 0.
-	self assert: aResult numberOfLeaves equals: 3.
-	self assert: aResult leaves first items size equals: 3.
-	self assert: aResult leaves second items size equals: 2.
-	self assert: aResult leaves third items size equals: 2.
-	^ aResult
 ]
 
 { #category : #'examples - tree builder' }
@@ -168,6 +116,20 @@ GtNestedTreemapExamples >> hundredByColorAndName [
 	^ aResult
 ]
 
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> hundredGroupByColorAndNameAndInstrument [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self groupByColorAndNameAndInstrumentBuilder.
+	aBuilder data: self hundredRandomModels.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	"We have at most 4 different colors"
+	self assert: aResult numberOfNodes <= 4.
+	self assert: aResult weight isNumber.
+	^ aResult
+]
+
 { #category : #'examples - ui' }
 GtNestedTreemapExamples >> hundredNestedRectangleTreemap [
 	<gtExample>
@@ -187,20 +149,6 @@ GtNestedTreemapExamples >> hundredRandomModels [
 	^ 100 timesCollect: [ self oneRandomModel ]
 ]
 
-{ #category : #'examples - grouping' }
-GtNestedTreemapExamples >> noGrouping [
-	<gtExample>
-	| aBuilder aResult |
-	aBuilder := self noGroupingBuilder.
-	aBuilder data: self sevenModel.
-	aResult := aBuilder build.
-	self assert: aResult isNotNil.
-	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 0.
-	self assert: aResult numberOfLeaves equals: 7.
-	^ aResult
-]
-
 { #category : #'examples - tree builder' }
 GtNestedTreemapExamples >> noGroupingBuilder [
 	<gtExample>
@@ -209,19 +157,6 @@ GtNestedTreemapExamples >> noGroupingBuilder [
 	aBuilder weight: [ :anItem | anItem first ].
 	self assert: aBuilder weight isNotNil.
 	^ aBuilder
-]
-
-{ #category : #'examples - grouping' }
-GtNestedTreemapExamples >> noGroupingSummarize [
-	<gtExample>
-	| aBuilder aResult |
-	aBuilder := self noGroupingSummarizeBuilder.
-	aBuilder data: self sevenModel.
-	aResult := aBuilder build.
-	self assert: aResult isNotNil.
-	self assert: aResult weight isNumber.
-	self assert: aResult items size equals: 7.
-	^ aResult
 ]
 
 { #category : #'examples - tree builder' }
@@ -343,6 +278,44 @@ GtNestedTreemapExamples >> sevenByColorAndName [
 	^ aResult
 ]
 
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> sevenGroupByColorAndNameSummarize [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self groupByColorAndNameSummarizeBuilder.
+	aBuilder data: self sevenModel.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	"We have at most 3 different colors"
+	self assert: aResult weight isNumber.
+	self assert: aResult numberOfNodes equals: 3.
+	self assert: aResult numberOfLeaves equals: 0.
+	self assert: aResult nodes first numberOfNodes equals: 0.
+	self assert: aResult nodes first numberOfLeaves equals: 2.
+	self assert: aResult nodes second numberOfNodes equals: 0.
+	self assert: aResult nodes second numberOfLeaves equals: 2.
+	self assert: aResult nodes third numberOfNodes equals: 0.
+	self assert: aResult nodes third numberOfLeaves equals: 2.
+	^ aResult
+]
+
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> sevenGroupByColorAndSummarize [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self groupByColorAndSummarizeBuilder.
+	aBuilder data: self sevenModel.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	self assert: aResult weight isNumber.
+	self assert: aResult numberOfNodes equals: 0.
+	self assert: aResult numberOfLeaves equals: 3.
+	self assert: aResult leaves first items size equals: 3.
+	self assert: aResult leaves second items size equals: 2.
+	self assert: aResult leaves third items size equals: 2.
+	^ aResult
+]
+
 { #category : #'examples - model' }
 GtNestedTreemapExamples >> sevenModel [
 	<gtExample>
@@ -379,4 +352,31 @@ GtNestedTreemapExamples >> sevenNestedRectangleTreemap [
 						c vertical matchParent.
 						c horizontal matchParent ]) ].
 	^ aBuilder asElement 
+]
+
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> sevenNoGrouping [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self noGroupingBuilder.
+	aBuilder data: self sevenModel.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	self assert: aResult weight isNumber.
+	self assert: aResult numberOfNodes equals: 0.
+	self assert: aResult numberOfLeaves equals: 7.
+	^ aResult
+]
+
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> sevenNoGroupingSummarize [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self noGroupingSummarizeBuilder.
+	aBuilder data: self sevenModel.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	self assert: aResult weight isNumber.
+	self assert: aResult items size equals: 7.
+	^ aResult
 ]
