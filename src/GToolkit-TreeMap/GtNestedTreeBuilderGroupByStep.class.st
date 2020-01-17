@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
+{ #category : #adding }
+GtNestedTreeBuilderGroupByStep >> addItems: anArray to: aTreeItem [
+	aTreeItem nodes: anArray
+]
+
 { #category : #building }
 GtNestedTreeBuilderGroupByStep >> buildRoot: aStepContext [
 	<return: #GtNestedTreeItem>
@@ -63,7 +68,8 @@ GtNestedTreeBuilderGroupByStep >> newItemNamed: aName withContext: aStepContext 
 					| aNode |
 					aNode := self step newItemNamed: aKey withContext: (aStepContext copyWithData: aValue).
 					aStream nextPut: aNode ] ].
-	^ aTreeItem nodes: theNodes
+	self step addItems: theNodes to: aTreeItem.
+	^ aTreeItem
 ]
 
 { #category : #configuration }

@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
+{ #category : #adding }
+GtNestedTreeBuilderRejectStep >> addItems: anArray to: aTreeItem [
+	self shouldNotImplement
+]
+
 { #category : #building }
 GtNestedTreeBuilderRejectStep >> buildRoot: aStepContext [
 	| aFilteredData |

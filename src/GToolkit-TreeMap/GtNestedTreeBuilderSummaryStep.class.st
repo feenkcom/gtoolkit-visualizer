@@ -4,6 +4,11 @@ Class {
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
+{ #category : #adding }
+GtNestedTreeBuilderSummaryStep >> addItems: anArray to: aTreeItem [
+	aTreeItem leaves: anArray
+]
+
 { #category : #building }
 GtNestedTreeBuilderSummaryStep >> buildRoot: aStepContext [ 
 	^ self newItemNamed: 'Summary' withContext: aStepContext
