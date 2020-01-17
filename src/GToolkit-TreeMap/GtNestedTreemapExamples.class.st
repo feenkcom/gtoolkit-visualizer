@@ -24,6 +24,31 @@ GtNestedTreemapExamples >> basicTreeBuilder [
 	^ aBuilder
 ]
 
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> groupByColorAndNameAndInstrument [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self groupByColorAndNameAndInstrumentBuilder.
+	aBuilder data: self hundredRandomModels.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	"We have at most 4 different colors"
+	self assert: aResult numberOfNodes <= 4.
+	self assert: aResult weight isNumber.
+	^ aResult
+]
+
+{ #category : #'examples - tree builder' }
+GtNestedTreemapExamples >> groupByColorAndNameAndInstrumentBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self groupByColorAndNameBuilder.
+	aBuilder groupBy: [ :anItem | anItem fourth ].
+	self assert: aBuilder weight isNotNil.
+	self assert: aBuilder step allSteps size equals: 4.
+	^ aBuilder
+]
+
 { #category : #'examples - tree builder' }
 GtNestedTreemapExamples >> groupByColorAndNameBuilder [
 	<gtExample>
@@ -129,6 +154,20 @@ GtNestedTreemapExamples >> hundredByColor [
 	^ aResult
 ]
 
+{ #category : #'examples - grouping' }
+GtNestedTreemapExamples >> hundredByColorAndName [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self groupByColorAndNameBuilder.
+	aBuilder data: self hundredRandomModels.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	"We have at most 4 different colors"
+	self assert: aResult numberOfNodes <= 4.
+	self assert: aResult weight isNumber.
+	^ aResult
+]
+
 { #category : #'examples - ui' }
 GtNestedTreemapExamples >> hundredNestedRectangleTreemap [
 	<gtExample>
@@ -201,6 +240,8 @@ GtNestedTreemapExamples >> oneRandomModel [
 	^ Array 
 		with: (1 to: 50) atRandom 
 		with: { Color green. Color blue. Color red. Color yellow } atRandom
+		with: #( 'peter' 'anna' 'natasha' ) atRandom
+		with: #( 'guitar' 'violine' 'saxophone' 'piano')
 ]
 
 { #category : #'examples - tree builder' }

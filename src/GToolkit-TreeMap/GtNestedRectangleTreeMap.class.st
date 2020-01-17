@@ -46,7 +46,7 @@ Class {
 }
 
 { #category : #api }
-GtNestedRectangleTreeMap >> containerEllipse: aBlock [
+GtNestedRectangleTreeMap >> containerElement: aBlock [
 	containerBlock := aBlock
 ]
 
@@ -130,7 +130,7 @@ GtNestedRectangleTreeMap >> initialize [
 ]
 
 { #category : #api }
-GtNestedRectangleTreeMap >> leafEllipse: aBlock [
+GtNestedRectangleTreeMap >> leafElement: aBlock [
 	leafEllipseBlock := aBlock
 ]
 
