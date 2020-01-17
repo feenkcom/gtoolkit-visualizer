@@ -163,6 +163,11 @@ GtNestedRectangleTreeMap >> newLeafBoder [
 ]
 
 { #category : #api }
+GtNestedRectangleTreeMap >> root: anObject [
+	self roots: { anObject }
+]
+
+{ #category : #api }
 GtNestedRectangleTreeMap >> roots: aCollection [
 	roots := aCollection
 ]

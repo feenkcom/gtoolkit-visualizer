@@ -24,7 +24,7 @@ GtNestedTreemapExamples >> basicTreeBuilder [
 	^ aBuilder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'utilities - disk content' }
 GtNestedTreemapExamples >> createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels in: aDirectory [ 
 	aMaxLevels <= 0 ifTrue: [ ^ self ].
 	self createDirectories: (aMaxDirectories // 2 to: aMaxDirectories) atRandom in: aDirectory.
@@ -33,13 +33,13 @@ GtNestedTreemapExamples >> createDirectories: aMaxDirectories files: aMaxFiles u
 		self createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels - 1 in: eachDirectory ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'utilities - disk content' }
 GtNestedTreemapExamples >> createDirectories: aNumberOfDirectories in: aDirectory [ 
 	aNumberOfDirectories timesCollect: [ :anIndex | 
 		(aDirectory / ('dir-', anIndex asString)) ensureCreateDirectory ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'utilities - disk content' }
 GtNestedTreemapExamples >> createFiles: aNumberOfFiles in: aDirectory [ 
 	aNumberOfFiles timesCollect: [ :anIndex | 
 		(aDirectory / ('file-', anIndex asString, '.txt')) writeStreamEncoded: #utf8 do: [ :aStream | 
