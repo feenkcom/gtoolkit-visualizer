@@ -54,19 +54,21 @@ GtNestedRectangleTreeMap >> containerEllipse: aBlock [
 GtNestedRectangleTreeMap >> create [
 	<return: #BlElement>
 	^ roots size = 1 
-		ifTrue: [ self createFor: roots anyOne ]
+		ifTrue: [ self createFor: (GtNestedTreeMapContext new model: roots anyOne; level: 1) ]
 		ifFalse: [
-			| element|
-			element := self createContainerFor: roots.
+			| aModelContext anElement |
+			aModelContext := GtNestedTreeMapContext new model: roots anyOne; level: 1.
+			anElement := self createContainerFor: roots.
 			self 
-				setup: element 
+				setup: anElement
+				context: aModelContext
 				withChildren: roots 
 				andLeaves: {}.
-			element ]
+			anElement ]
 ]
 
 { #category : #implementation }
-GtNestedRectangleTreeMap >> createContainerFor: anObject [
+GtNestedRectangleTreeMap >> createContainerFor: aModelContext [
 	| containerElement |
 	containerElement := BlElement new
 		layout: layoutIterator nextLayout;
@@ -74,41 +76,41 @@ GtNestedRectangleTreeMap >> createContainerFor: anObject [
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent.
-			c treemap weight: (leavesSizeBlock value: anObject) ];
+			c treemap weight: (leavesSizeBlock value: aModelContext model) ];
 		when: BlClickEvent
 			do: [ :e | 
-			e target phlow spawnObject: anObject.
+			e target phlow spawnObject: aModelContext model.
 			e consumed: true ];
-		border: (BlBorder paint: (Color gray alpha: 0.5) width: 2).
-	containerBlock cull: containerElement cull: anObject.
+		border: self newContainterBorder.
+	containerBlock cull: containerElement cull: aModelContext.
 	^ containerElement
 ]
 
 { #category : #implementation }
-GtNestedRectangleTreeMap >> createFor: anObject [
-	| element leaves children |
-	element := self createContainerFor: anObject.
-	leaves := self createLeavesFor: anObject.
-	children := traversalBlock value: anObject.
-	self setup: element withChildren: children andLeaves: leaves.
-	^ element
+GtNestedRectangleTreeMap >> createFor: aModelContext [
+	| anElement theModelLeaves theModelNodes |
+	anElement := self createContainerFor: aModelContext.
+	theModelLeaves := self createLeavesFor: aModelContext.
+	theModelNodes := traversalBlock value: aModelContext model.
+	self setup: anElement context: aModelContext withChildren: theModelNodes andLeaves: theModelLeaves.
+	^ anElement
 ]
 
 { #category : #implementation }
-GtNestedRectangleTreeMap >> createLeavesFor: anObject [
-	^ (leavesCreationBlock value: anObject) collect: [ :leaf |
-		| leafElement |
-		leafElement := BlElement new
+GtNestedRectangleTreeMap >> createLeavesFor: aModelContext [
+	^ (leavesCreationBlock value: aModelContext model) collect: [ :aLeaf |
+		| aLeafElement aLeafContext |
+		aLeafContext := aModelContext copyWithModel: aLeaf.
+		aLeafElement := BlElement new
 			geometry: BlRectangle new;
 			constraintsDo: [ :c | 
 				c horizontal matchParent.
 				c vertical matchParent.
-				c treemap weight: (leavesSizeBlock value: leaf) ];
-			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
-			"background: (Color red darker alpha: 0.7);"
-			border: (BlBorder paint: (Color gray alpha: 0.2)).
-		leafEllipseBlock cull: leafElement cull: leaf.
-		leafElement ]
+				c treemap weight: (leavesSizeBlock value: aLeaf) ];
+			when: BlClickEvent do: [ :e | e target phlow spawnObject: aLeaf. e consumed: true ];
+			border: self newLeafBoder.
+		leafEllipseBlock cull: aLeafElement cull: aLeafContext.
+		aLeafElement ]
 ]
 
 { #category : #api }
@@ -119,11 +121,11 @@ GtNestedRectangleTreeMap >> deep: aBlock [
 { #category : #initialization }
 GtNestedRectangleTreeMap >> initialize [
 	super initialize.
-	leavesSizeBlock := [ :x | 10 ].
-	traversalBlock := [ :x | {  } ].
-	leavesCreationBlock := [ :x | {  } ].
-	containerBlock := [ :ellipse | ellipse ].
-	leafEllipseBlock := [ :ellipse | ellipse ].
+	leavesSizeBlock := [ :aModel | 10 ].
+	traversalBlock := [ :aModel | {  } ].
+	leavesCreationBlock := [ :aModel | {  } ].
+	containerBlock := [ :anElement :aModelContext | anElement ].
+	leafEllipseBlock := [ :anElement :aModelContext | anElement ].
 	layoutIterator := GtNestedRectangleTreeMapContainerLayoutIterator new.
 ]
 
@@ -142,18 +144,37 @@ GtNestedRectangleTreeMap >> leavesSize: aBlock [
 	leavesSizeBlock := aBlock
 ]
 
+{ #category : #'instance creation' }
+GtNestedRectangleTreeMap >> newContainterBorder [
+	^ BlBorder paint: (Color gray alpha: 0.5) width: 2
+]
+
+{ #category : #'instance creation' }
+GtNestedRectangleTreeMap >> newLeafBoder [
+	^ BlBorder paint: (Color gray alpha: 0.2) width: 2
+]
+
 { #category : #api }
 GtNestedRectangleTreeMap >> roots: aCollection [
 	roots := aCollection
 ]
 
 { #category : #implementation }
-GtNestedRectangleTreeMap >> setup: element withChildren: children andLeaves: leaves [
-	(children isEmpty and: [ leaves isEmpty ])
-		ifTrue: [ element size: 1 asPoint ]
-		ifFalse: [ element
-				addChildren: leaves;
-				addChildren: (children collect: [ :aChild | self createFor: aChild ]) ]
+GtNestedRectangleTreeMap >> setup: anElement context: aModelContext withChildren: theChildren andLeaves: theLeaves [
+	(theChildren isEmpty and: [ theLeaves isEmpty ])
+		ifTrue: [ anElement size: 1 asPoint ]
+		ifFalse: [ anElement
+				addChildren: theLeaves;
+				addChildren: (theChildren collect: [ :aChild | self createFor: (aModelContext copyWithModel: aChild) ]) ]
+]
+
+{ #category : #implementation }
+GtNestedRectangleTreeMap >> setup: anElement withChildren: theChildren andLeaves: theLeaves [
+	(theChildren isEmpty and: [ theLeaves isEmpty ])
+		ifTrue: [ anElement size: 1 asPoint ]
+		ifFalse: [ anElement
+				addChildren: theLeaves;
+				addChildren: (theChildren collect: [ :aChild | self createFor: aChild ]) ]
 ]
 
 { #category : #api }

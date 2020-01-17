@@ -1,6 +1,6 @@
 Class {
 	#name : #GtNestedTreeSummaryLeaf,
-	#superclass : #GtNestedTreeItem,
+	#superclass : #GtNestedTreeLeaf,
 	#instVars : [
 		'name',
 		'weight',
@@ -8,11 +8,6 @@ Class {
 	],
 	#category : #'GToolkit-TreeMap-Data Structures'
 }
-
-{ #category : #'accessing - computed' }
-GtNestedTreeSummaryLeaf >> children [
-	^ #()
-]
 
 { #category : #ui }
 GtNestedTreeSummaryLeaf >> gtItemsFor: aView [

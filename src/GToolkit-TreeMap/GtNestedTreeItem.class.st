@@ -20,29 +20,6 @@ GtNestedTreeItem >> children [
 ]
 
 { #category : #'gt-extension' }
-GtNestedTreeItem >> gtSquarifiedTreemapFor: aView [
-	<gtView>
-	^ aView explicit
-		title: 'Squarified';
-		priority: 2;
-		stencil: [ 
-			GtNestedRectangleTreeMap new
-				tree: self;
-				deep: [ :anItem | anItem nodes ];
-				leaves: [ :anItem | anItem leaves ];
-				leavesSize: [ :aLeaf | aLeaf weight ];
-				leafEllipse: [ :anElement :aLeaf | 
-					anElement 
-						addChild: (BlElement new
-							"border: (BlBorder paint: Color black width: 1);"
-							background: (BlBackground transparent);
-							constraintsDo: [ :c | 
-								c vertical matchParent.
-								c horizontal matchParent ]) ]
-			]
-]
-
-{ #category : #'gt-extension' }
 GtNestedTreeItem >> gtTreeFor: aView [
 	<gtView>
 	^ aView columnedTree
@@ -66,6 +43,16 @@ GtNestedTreeItem >> gtTreeFor: aView [
 { #category : #stream }
 GtNestedTreeItem >> itemsTo: aStream [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtNestedTreeItem >> leaves [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtNestedTreeItem >> nodes [
+	^ self subclassResponsibility
 ]
 
 { #category : #'accessing - computed' }

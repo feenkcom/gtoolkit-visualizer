@@ -67,7 +67,7 @@ GtNestedTreeBuilderStep >> newItemNamed: aName withContext: aStepContext [
 
 { #category : #'instance creation' }
 GtNestedTreeBuilderStep >> newLeaf [
-	^ GtNestedTreeLeaf new
+	^ GtNestedTreeItemLeaf new
 ]
 
 { #category : #'instance creation' }

@@ -48,7 +48,7 @@ GtNestedTreeBuilder >> initialize [
 
 { #category : #'instance creation' }
 GtNestedTreeBuilder >> newLeaf [
-	^ GtNestedTreeLeaf new
+	^ GtNestedTreeItemLeaf new
 ]
 
 { #category : #'instance creation' }
