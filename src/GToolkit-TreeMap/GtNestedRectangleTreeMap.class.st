@@ -105,7 +105,7 @@ GtNestedRectangleTreeMap >> createLeavesFor: anObject [
 				c vertical matchParent.
 				c treemap weight: (leavesSizeBlock value: leaf) ];
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
-			background: (Color red darker alpha: 0.7);
+			"background: (Color red darker alpha: 0.7);"
 			border: (BlBorder paint: (Color gray alpha: 0.2)).
 		leafEllipseBlock cull: leafElement cull: leaf.
 		leafElement ]
@@ -154,4 +154,9 @@ GtNestedRectangleTreeMap >> setup: element withChildren: children andLeaves: lea
 		ifFalse: [ element
 				addChildren: leaves;
 				addChildren: (children collect: [ :aChild | self createFor: aChild ]) ]
+]
+
+{ #category : #api }
+GtNestedRectangleTreeMap >> tree: aNestedTreeNode [
+	self roots: { aNestedTreeNode }
 ]

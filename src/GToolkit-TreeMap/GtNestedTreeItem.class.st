@@ -27,14 +27,15 @@ GtNestedTreeItem >> gtSquarifiedTreemapFor: aView [
 		priority: 2;
 		stencil: [ 
 			GtNestedRectangleTreeMap new
-				roots: self children;
+				tree: self;
 				deep: [ :anItem | anItem nodes ];
 				leaves: [ :anItem | anItem leaves ];
 				leavesSize: [ :aLeaf | aLeaf weight ];
 				leafEllipse: [ :anElement :aLeaf | 
 					anElement 
 						addChild: (BlElement new
-							background: (Color veryLightGray alpha: 0.5);
+							"border: (BlBorder paint: Color black width: 1);"
+							background: (BlBackground transparent);
 							constraintsDo: [ :c | 
 								c vertical matchParent.
 								c horizontal matchParent ]) ]
