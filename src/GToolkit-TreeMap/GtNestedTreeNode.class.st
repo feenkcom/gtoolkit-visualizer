@@ -67,9 +67,15 @@ GtNestedTreeNode >> nodes: anArray [
 ]
 
 { #category : #convenience }
+GtNestedTreeNode >> numberOfLeaves [
+	<return: #Integer>
+	^ self leaves size
+]
+
+{ #category : #convenience }
 GtNestedTreeNode >> numberOfNodes [
 	<return: #Integer>
-	^ self nodes size + self leaves size
+	^ self nodes size
 ]
 
 { #category : #printing }

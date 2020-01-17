@@ -46,12 +46,13 @@ GtNestedTreemapExamples >> groupByColorAndNameSummarize [
 	"We have at most 3 different colors"
 	self assert: aResult weight isNumber.
 	self assert: aResult numberOfNodes equals: 3.
-	self assert: aResult nodes first nodes size equals: 2.
-	self assert: aResult nodes first leaves size equals: 0.
-	self assert: aResult nodes second nodes size equals: 2.
-	self assert: aResult nodes second leaves size equals: 0.
-	self assert: aResult nodes third nodes size equals: 2.
-	self assert: aResult nodes third leaves size equals: 0.
+	self assert: aResult numberOfLeaves equals: 0.
+	self assert: aResult nodes first numberOfNodes equals: 0.
+	self assert: aResult nodes first numberOfLeaves equals: 2.
+	self assert: aResult nodes second numberOfNodes equals: 0.
+	self assert: aResult nodes second numberOfLeaves equals: 2.
+	self assert: aResult nodes third numberOfNodes equals: 0.
+	self assert: aResult nodes third numberOfLeaves equals: 2.
 	^ aResult
 ]
 
@@ -74,10 +75,11 @@ GtNestedTreemapExamples >> groupByColorAndSummarize [
 	aResult := aBuilder build.
 	self assert: aResult isNotNil.
 	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 3.
-	self assert: aResult nodes first items size equals: 3.
-	self assert: aResult nodes second items size equals: 2.
-	self assert: aResult nodes third items size equals: 2.
+	self assert: aResult numberOfNodes equals: 0.
+	self assert: aResult numberOfLeaves equals: 3.
+	self assert: aResult leaves first items size equals: 3.
+	self assert: aResult leaves second items size equals: 2.
+	self assert: aResult leaves third items size equals: 2.
 	^ aResult
 ]
 
@@ -155,9 +157,8 @@ GtNestedTreemapExamples >> noGrouping [
 	aResult := aBuilder build.
 	self assert: aResult isNotNil.
 	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 7.
-	self assert: aResult nodes isEmpty.
-	self assert: aResult leaves size equals: 7.
+	self assert: aResult numberOfNodes equals: 0.
+	self assert: aResult numberOfLeaves equals: 7.
 	^ aResult
 ]
 
@@ -223,9 +224,8 @@ GtNestedTreemapExamples >> rejectingSix [
 	aResult := aBuilder build.
 	self assert: aResult isNotNil.
 	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 5.
-	self assert: aResult nodes isEmpty.
-	self assert: aResult leaves size equals: 5.
+	self assert: aResult numberOfNodes equals: 0.
+	self assert: aResult numberOfLeaves equals: 5.
 	^ aResult
 ]
 
@@ -238,9 +238,8 @@ GtNestedTreemapExamples >> rejectingSixAndAnna [
 	aResult := aBuilder build.
 	self assert: aResult isNotNil.
 	self assert: aResult weight isNumber.
-	self assert: aResult numberOfNodes equals: 3.
-	self assert: aResult nodes isEmpty.
-	self assert: aResult leaves size equals: 3.
+	self assert: aResult numberOfNodes equals: 0.
+	self assert: aResult numberOfLeaves equals: 3.
 	^ aResult
 ]
 

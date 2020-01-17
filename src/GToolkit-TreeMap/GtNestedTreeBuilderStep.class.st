@@ -9,6 +9,11 @@ GtNestedTreeBuilderStep class >> null [
 	^ GtNestedTreeBuilderLastStep default
 ]
 
+{ #category : #adding }
+GtNestedTreeBuilderStep >> addItems: anArray to: aTreeItem [
+	self subclassResponsibility
+]
+
 { #category : #enumerating }
 GtNestedTreeBuilderStep >> allSteps [
 	^ Array streamContents: [ :aStream | 
@@ -81,11 +86,6 @@ GtNestedTreeBuilderStep >> newNode [
 { #category : #'instance creation' }
 GtNestedTreeBuilderStep >> newRejectStep [
 	^ GtNestedTreeBuilderRejectStep new
-]
-
-{ #category : #'instance creation' }
-GtNestedTreeBuilderStep >> newRootNode [
-	^ GtNestedTreeRoot new
 ]
 
 { #category : #'instance creation' }

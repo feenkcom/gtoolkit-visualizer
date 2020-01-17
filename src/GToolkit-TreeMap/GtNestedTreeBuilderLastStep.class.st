@@ -27,6 +27,11 @@ GtNestedTreeBuilderLastStep class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
+{ #category : #adding }
+GtNestedTreeBuilderLastStep >> addItems: anArray to: aTreeItem [
+	aTreeItem nodes: anArray
+]
+
 { #category : #building }
 GtNestedTreeBuilderLastStep >> buildRoot: aStepContext [ 
 	^ self newItemNamed: 'Root' withContext: aStepContext
