@@ -24,6 +24,62 @@ GtNestedTreemapExamples >> basicTreeBuilder [
 	^ aBuilder
 ]
 
+{ #category : #'as yet unclassified' }
+GtNestedTreemapExamples >> createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels in: aDirectory [ 
+	aMaxLevels <= 0 ifTrue: [ ^ self ].
+	self createDirectories: (aMaxDirectories // 2 to: aMaxDirectories) atRandom in: aDirectory.
+	self createFiles: (aMaxFiles // 2 to: aMaxDirectories) atRandom in: aDirectory.
+	aDirectory directories do: [ :eachDirectory | 
+		self createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels - 1 in: eachDirectory ]
+]
+
+{ #category : #'as yet unclassified' }
+GtNestedTreemapExamples >> createDirectories: aNumberOfDirectories in: aDirectory [ 
+	aNumberOfDirectories timesCollect: [ :anIndex | 
+		(aDirectory / ('dir-', anIndex asString)) ensureCreateDirectory ]
+]
+
+{ #category : #'as yet unclassified' }
+GtNestedTreemapExamples >> createFiles: aNumberOfFiles in: aDirectory [ 
+	aNumberOfFiles timesCollect: [ :anIndex | 
+		(aDirectory / ('file-', anIndex asString, '.txt')) writeStreamEncoded: #utf8 do: [ :aStream | 
+			aStream nextPutAll: (String loremIpsum: (50 to: 100) atRandom) ] ]
+]
+
+{ #category : #'examples - model' }
+GtNestedTreemapExamples >> directory [
+	<gtExample>
+	| aFileSystem |
+	aFileSystem := FileSystem memory.
+	self createDirectories: 5 files: 5 upTo: 3 in: aFileSystem workingDirectory.
+	^ aFileSystem workingDirectory
+]
+
+{ #category : #'examples - tree builder' }
+GtNestedTreemapExamples >> directoryBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self basicTreeBuilder.
+	aBuilder collectNodes: [ :aDir | aDir directories ] leaves: [ :aDir | aDir files ].
+	aBuilder weight: [ :aFile | aFile size ].
+	self assert: aBuilder weight isNotNil.
+	^ aBuilder
+]
+
+{ #category : #'examples - collect nodes and leaves' }
+GtNestedTreemapExamples >> directoryStructure [
+	<gtExample>
+	| aBuilder aResult |
+	aBuilder := self directoryBuilder.
+	aBuilder data: self directory.
+	aResult := aBuilder build.
+	self assert: aResult isNotNil.
+	self assert: aResult weight isNumber.
+	self assert: aResult numberOfNodes <= 5.
+	self assert: aResult numberOfLeaves <= 5.
+	^ aResult
+]
+
 { #category : #'examples - tree builder' }
 GtNestedTreemapExamples >> groupByColorAndNameAndInstrumentBuilder [
 	<gtExample>

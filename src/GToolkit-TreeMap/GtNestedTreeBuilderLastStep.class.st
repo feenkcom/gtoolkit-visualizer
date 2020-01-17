@@ -38,6 +38,11 @@ GtNestedTreeBuilderLastStep >> buildRoot: aStepContext [
 ]
 
 { #category : #configuration }
+GtNestedTreeBuilderLastStep >> collectNodes: aNodesBlock leaves: aLeavesBlock in: aBuilderOrStep [
+	aBuilderOrStep step: (self newCollectStep nodes: aNodesBlock; leaves: aLeavesBlock; step: self)
+]
+
+{ #category : #configuration }
 GtNestedTreeBuilderLastStep >> groupBy: aBlockClosure in: aBuilderOrStep [ 
 	aBuilderOrStep step: (self newGroupByStep groupBy: aBlockClosure)
 ]
