@@ -194,7 +194,7 @@ GtNestedTreemapExamples >> hundredNestedRectangleTreemap [
 	aBuilder
 		roots: self hundredRandomModels;
 		leavesSize: [ :anArray | anArray first ];
-		leafEllipse: [ :anElement :anArray | 
+		leafElement: [ :anElement :anArray | 
 			anElement background: anArray second ].
 	^ aBuilder asElement 
 ]
@@ -393,14 +393,14 @@ GtNestedTreemapExamples >> sevenNestedRectangleTreemap [
 	aBuilder
 		roots: self sevenModel;
 		leavesSize: [ :anArray | anArray first ];
-		containerEllipse: [ :anElement :anArray | 
+		containerElement: [ :anElement :anArray | 
 			anElement 
 				addChild: (BlElement new
 					background: Color veryLightGray;
 					constraintsDo: [ :c | 
 						c vertical matchParent.
 						c horizontal matchParent ]) ];
-		leafEllipse: [ :anElement :anArray | 
+		leafElement: [ :anElement :anArray | 
 			anElement 
 				addChild: (BlElement new
 					background: anArray second;

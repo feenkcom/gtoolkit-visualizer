@@ -58,7 +58,7 @@ GtNestedRectangleTreeMap >> create [
 		ifFalse: [
 			| aModelContext anElement |
 			aModelContext := GtNestedTreeMapContext new model: roots anyOne; level: 1.
-			anElement := self createContainerFor: roots.
+			anElement := self createContainerFor: aModelContext.
 			self 
 				setup: anElement
 				context: aModelContext
