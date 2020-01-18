@@ -33,6 +33,7 @@ GtGraphTreemapSquarifyLandscapeRectangle >> squarifyStep: aStep [
 	self ifNoSpace: [ ^ self squarifyStepInNoSpace: aStep ].
 	anOriginalArea := self original volume.
 	anOccupiedArea := anOriginalArea * aStep occupiedWeight.
+	anOccupiedArea isZero ifTrue: [ ^ self squarifyStepInNoSpace: aStep ].
 	anExtentToOccupy := (anOccupiedArea / self height) @ self height.
 	aNextNodePosition := self position.
 	aStep nodesDo: [ :eachNode | 
