@@ -26,6 +26,11 @@ GtNestedTreeBuilderStep >> buildRoot: aStepContext [
 	^ self subclassResponsibility
 ]
 
+{ #category : #configuration }
+GtNestedTreeBuilderStep >> collectNodes: aNodesBlock leaves: aLeavesBlock in: aBuilderOrStep [ 
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 GtNestedTreeBuilderStep >> description [
 	<return: #String>
@@ -55,6 +60,11 @@ GtNestedTreeBuilderStep >> name [
 ]
 
 { #category : #'instance creation' }
+GtNestedTreeBuilderStep >> newCollectStep [
+	^ GtNestedTreeBuilderCollectStep new
+]
+
+{ #category : #'instance creation' }
 GtNestedTreeBuilderStep >> newGroupByStep [
 	^ GtNestedTreeBuilderGroupByStep new
 ]
@@ -67,7 +77,7 @@ GtNestedTreeBuilderStep >> newItemNamed: aName withContext: aStepContext [
 
 { #category : #'instance creation' }
 GtNestedTreeBuilderStep >> newLeaf [
-	^ GtNestedTreeLeaf new
+	^ GtNestedTreeItemLeaf new
 ]
 
 { #category : #'instance creation' }
@@ -81,6 +91,13 @@ GtNestedTreeBuilderStep >> newLeavesFrom: aStepContext [
 { #category : #'instance creation' }
 GtNestedTreeBuilderStep >> newNode [
 	^ GtNestedTreeNode new
+]
+
+{ #category : #'instance creation' }
+GtNestedTreeBuilderStep >> newNodesFrom: aStepContext [ 
+	^ aStepContext data collect: [ :eachItem | 
+		self newNode 
+			name: eachItem ]
 ]
 
 { #category : #'instance creation' }

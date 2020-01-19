@@ -28,14 +28,15 @@ GtGraphTreemapSquarifyPortraitRectangle >> name [
 ]
 
 { #category : #squarifying }
-GtGraphTreemapSquarifyPortraitRectangle >> squarifyStep: anArea [
+GtGraphTreemapSquarifyPortraitRectangle >> squarifyStep: aStep [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition |
-	self ifNoSpace: [ ^ self squarifyStepInNoSpace: anArea ].
+	self ifNoSpace: [ ^ self squarifyStepInNoSpace: aStep ].
 	anOriginalArea := self original volume.
-	anOccupiedArea := anOriginalArea * anArea occupiedWeight.
+	anOccupiedArea := anOriginalArea * aStep occupiedWeight.
+	anOccupiedArea isZero ifTrue: [ ^ self squarifyStepInNoSpace: aStep ].
 	anExtentToOccupy := self width @ (anOccupiedArea / self width).
 	aNextNodePosition := self position.
-	anArea nodesDo: [ :eachNode | 
+	aStep nodesDo: [ :eachNode | 
 		| aHeight aWidth |
 		aHeight := anExtentToOccupy y.
 		aWidth := anOriginalArea * eachNode weight / aHeight.

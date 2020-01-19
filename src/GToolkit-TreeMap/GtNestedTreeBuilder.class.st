@@ -14,6 +14,11 @@ GtNestedTreeBuilder >> build [
 	^ self step buildRoot: self stepContext
 ]
 
+{ #category : #'as yet unclassified' }
+GtNestedTreeBuilder >> collectNodes: aNodesBlock leaves: aLeavesBlock [ 
+	^ self step collectNodes: aNodesBlock leaves: aLeavesBlock in: self
+]
+
 { #category : #accessing }
 GtNestedTreeBuilder >> data [
 	^ self stepContext data
@@ -48,7 +53,7 @@ GtNestedTreeBuilder >> initialize [
 
 { #category : #'instance creation' }
 GtNestedTreeBuilder >> newLeaf [
-	^ GtNestedTreeLeaf new
+	^ GtNestedTreeItemLeaf new
 ]
 
 { #category : #'instance creation' }
