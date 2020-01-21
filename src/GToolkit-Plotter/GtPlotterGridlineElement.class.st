@@ -5,7 +5,7 @@ Class {
 		'scale',
 		'amountOfTicks'
 	],
-	#category : #'GToolkit-Plotter-Gridline - Element'
+	#category : #'GToolkit-Plotter-Elements - Gridline'
 }
 
 { #category : #initialization }

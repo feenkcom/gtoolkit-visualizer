@@ -4,12 +4,15 @@ Class {
 	#instVars : [
 		'lineStencil'
 	],
-	#category : #'GToolkit-Plotter-Gridline - Element'
+	#category : #'GToolkit-Plotter-Elements - Gridline'
 }
 
 { #category : #initialization }
 GtPlotterVerticalGridlineElement >> initialize [
 	super initialize.
+	
+	lineStencil := [ BlElement new
+		constraintsDo: [ :c  ] ]
 ]
 
 { #category : #accessing }
