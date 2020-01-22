@@ -8,3 +8,73 @@ Class {
 GtPlotterScaleBasedElementExamples class >> normalDistribution [
 	^ #(0.0 0.0897 0.18130000000000002 0.2222 0.3211 0.3249 0.3317 0.33680000000000004 0.33790000000000003 0.3587 0.35950000000000004 0.365 0.39180000000000004 0.3947 0.3987 0.40280000000000005 0.4038 0.40940000000000004 0.4118 0.4171 0.4184 0.43520000000000003 0.441 0.4495 0.4509 0.454 0.4559 0.4559 0.4562 0.4575 0.45880000000000004 0.4602 0.4743 0.47840000000000005 0.4812 0.4888 0.48910000000000003 0.4897 0.4913 0.506 0.5159 0.5205000000000001 0.5213 0.5225000000000001 0.5236000000000001 0.5312 0.5361 0.5474 0.5596 0.5645 0.5654 0.5661 0.5662 0.5730000000000001 0.5767 0.5799000000000001 0.5835 0.5936 0.5942000000000001 0.5958 0.597 0.602 0.6025 0.6072000000000001 0.609 0.6097 0.6141 0.6146 0.6204000000000001 0.6225 0.6231 0.6358 0.6386000000000001 0.6489 0.6724 0.6751 0.6779000000000001 0.6784 0.6833 0.6858000000000001 0.7059000000000001 0.7103 0.7139 0.7177 0.7189 0.7295 0.7307 0.7428 0.7565000000000001 0.7701 0.773 0.7774000000000001 0.8072 0.8165 0.8385 0.8553000000000001 0.8591000000000001 0.8676 0.8764000000000001 1.0)
 ]
+
+{ #category : #examples }
+GtPlotterScaleBasedElementExamples >> composite [
+	<gtExample>
+	
+	^ BrFrame new
+		hMatchParent;
+		vExact: 70;
+		padding: (BlInsets all: 10);
+		addChildren: { 
+			self fineGrainedTicks.
+			self rareTicks.
+			self tickLabels.
+			self valueProjections }
+]
+
+{ #category : #examples }
+GtPlotterScaleBasedElementExamples >> fineGrainedTicks [
+	<gtExample>
+	
+	^ GtPlotterHorizontalTicksElement new
+		weight: 0.5;
+		padding: (BlInsets left: 10 right: 10);
+		tickStyle: [ :anElement :a :b :_ :anIndex |
+			anElement background: (
+				(anIndex % 10) isZero not
+					ifTrue: [ Color black ]
+					ifFalse: [ Color transparent ]);
+				constraintsDo: [ :c | c frame vertical alignBottom ] ];
+		ticks: 50
+]
+
+{ #category : #examples }
+GtPlotterScaleBasedElementExamples >> rareTicks [
+	<gtExample>
+	
+	^ GtPlotterHorizontalTicksElement new
+		weight: 1;
+		padding: (BlInsets left: 10 right: 10);
+		tickStyle: [ :anElement | anElement background: Color black; width: 2 ];
+		ticks: 4
+]
+
+{ #category : #examples }
+GtPlotterScaleBasedElementExamples >> tickLabels [
+	<gtExample>
+	
+	^ GtPlotterHorizontalTickLabelsElement new
+		padding: (BlInsets left: 10 right: 10);
+		labelFormat: [ :aValue | aValue printShowingDecimalPlaces: 1 ];
+		labelStyle: [ :anElement |
+			(anElement background: Color white)
+				constraintsDo: [ :c |
+					c frame vertical alignTop.
+					c horizontal fitContent.
+					c vertical fitContent ] ]
+]
+
+{ #category : #examples }
+GtPlotterScaleBasedElementExamples >> valueProjections [
+	<gtExample>
+	
+	^ GtPlotterHorizontalValueProjectionsElement new
+		weight: 0.3;
+		padding: (BlInsets left: 10 right: 10);
+		valueStyle: [ :anElement | anElement
+			background: Color gray;
+			constraintsDo: [ :c | c frame vertical alignBottom ] ];
+		values: GtPlotterScaleBasedElementExamples normalDistribution
+]
