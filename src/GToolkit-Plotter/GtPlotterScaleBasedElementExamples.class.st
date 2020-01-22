@@ -9,14 +9,19 @@ GtPlotterScaleBasedElementExamples class >> normalDistribution [
 	^ #(0.0 0.0897 0.18130000000000002 0.2222 0.3211 0.3249 0.3317 0.33680000000000004 0.33790000000000003 0.3587 0.35950000000000004 0.365 0.39180000000000004 0.3947 0.3987 0.40280000000000005 0.4038 0.40940000000000004 0.4118 0.4171 0.4184 0.43520000000000003 0.441 0.4495 0.4509 0.454 0.4559 0.4559 0.4562 0.4575 0.45880000000000004 0.4602 0.4743 0.47840000000000005 0.4812 0.4888 0.48910000000000003 0.4897 0.4913 0.506 0.5159 0.5205000000000001 0.5213 0.5225000000000001 0.5236000000000001 0.5312 0.5361 0.5474 0.5596 0.5645 0.5654 0.5661 0.5662 0.5730000000000001 0.5767 0.5799000000000001 0.5835 0.5936 0.5942000000000001 0.5958 0.597 0.602 0.6025 0.6072000000000001 0.609 0.6097 0.6141 0.6146 0.6204000000000001 0.6225 0.6231 0.6358 0.6386000000000001 0.6489 0.6724 0.6751 0.6779000000000001 0.6784 0.6833 0.6858000000000001 0.7059000000000001 0.7103 0.7139 0.7177 0.7189 0.7295 0.7307 0.7428 0.7565000000000001 0.7701 0.773 0.7774000000000001 0.8072 0.8165 0.8385 0.8553000000000001 0.8591000000000001 0.8676 0.8764000000000001 1.0)
 ]
 
-{ #category : #examples }
-GtPlotterScaleBasedElementExamples >> composite [
+{ #category : #accessing }
+GtPlotterScaleBasedElementExamples class >> points [
+	<script: 'self points'>
+	^ #(4.175 6.65 4.325 8.3 5.925 4.15 7.075 9.5 7.775 8.05 9.325 11.6 9.325 6.55 11.975 6.65 12.025 8.8 11.675 9.85 10.025 9.9 8.825 12.75 12.225 13.25 13.325 10.2 15.125 8.15 15.125 8.15 15.825 9.35 18.775 8.25 18.825 8.7 18.825 13.75 16.325 14 14.175 10.7 16.075 12.1 15.025 14.2 19.075 17 20.325 16.1 20.475 15.2 20.175 11.1 17.575 11.25 21.125 13.7 24.325 15.45 26.375 15.75 25.325 17.15 24.625 18.5 21.975 16.5 20.825 11.25 22.475 14.35 21.075 13.55 12.225 12.95 12.075 11.9 9.825 8.85 7.475 6.4 5.425 5.55 6.725 7.65 3.875 4.95 2.775 6.95 2.825 4.75) pairsCollect: [ :a :b | a @ b ]
+]
+
+{ #category : #'examples - axis' }
+GtPlotterScaleBasedElementExamples >> compositeAxis [
 	<gtExample>
 	
 	^ BrFrame new
 		hMatchParent;
-		vExact: 70;
-		padding: (BlInsets all: 10);
+		vExact: 50;
 		addChildren: { 
 			self fineGrainedTicks.
 			self rareTicks.
@@ -24,40 +29,86 @@ GtPlotterScaleBasedElementExamples >> composite [
 			self valueProjections }
 ]
 
-{ #category : #examples }
+{ #category : #'examples - axis' }
 GtPlotterScaleBasedElementExamples >> fineGrainedTicks [
 	<gtExample>
 	
 	^ GtPlotterHorizontalTicksElement new
-		weight: 0.5;
-		padding: (BlInsets left: 10 right: 10);
-		tickStyle: [ :anElement :a :b :_ :anIndex |
+		weight: 0.4;
+		padding: self padding;
+		tickStyle: [ :anElement :aGtPlotterScaleContext |
 			anElement background: (
-				(anIndex % 10) isZero not
-					ifTrue: [ Color black ]
+				(aGtPlotterScaleContext index % 4) isZero not
+					ifTrue: [ Color gray alpha: 0.3 ]
 					ifFalse: [ Color transparent ]);
 				constraintsDo: [ :c | c frame vertical alignBottom ] ];
-		ticks: 50
+		ticks: 25
 ]
 
-{ #category : #examples }
+{ #category : #'examples - gridline' }
+GtPlotterScaleBasedElementExamples >> horizontalGridlines [
+	<gtExample>
+
+	^ GtPlotterHorizontalTicksElement new
+		weight: 1;
+		padding: self padding;
+		tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5) ];
+		ticks: 4
+]
+
+{ #category : #'examples - markers' }
+GtPlotterScaleBasedElementExamples >> markers [
+	<gtExample>
+	
+	^ GtPlotterMarkersElement new
+		x: [ :each | each x ];
+		y: [ :each | each y ];
+		padding: self padding;
+		values: (self class normalDistribution with: self class normalDistribution shuffled collect: [ :x :y | x @ y ])
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedElementExamples >> padding [
+	^ BlInsets left: 10 right: 10
+]
+
+{ #category : #'examples - plot' }
+GtPlotterScaleBasedElementExamples >> plot [
+	<gtExample>
+	
+	^ BrVerticalPane new
+		matchParent;
+		padding: (BlInsets all: 10);
+		addChildren: {
+			self compositeAxis.
+			BrFrame new
+				matchParent;
+				addChildren: { 
+					self horizontalGridlines.
+					self verticalGridlines.
+					self markers
+				}
+			 }
+]
+
+{ #category : #'examples - axis' }
 GtPlotterScaleBasedElementExamples >> rareTicks [
 	<gtExample>
 	
 	^ GtPlotterHorizontalTicksElement new
 		weight: 1;
-		padding: (BlInsets left: 10 right: 10);
-		tickStyle: [ :anElement | anElement background: Color black; width: 2 ];
+		padding: self padding;
+		tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5); width: 1 ];
 		ticks: 4
 ]
 
-{ #category : #examples }
+{ #category : #'examples - axis' }
 GtPlotterScaleBasedElementExamples >> tickLabels [
 	<gtExample>
 	
-	^ GtPlotterHorizontalTickLabelsElement new
-		padding: (BlInsets left: 10 right: 10);
-		labelFormat: [ :aValue | aValue printShowingDecimalPlaces: 1 ];
+	^ GtPlotterTickLabelsElement new
+		padding: self padding;
+		labelFormat: [ :aValue | (aValue printShowingDecimalPlaces: 1 ) asRopedText foreground: Color darkGray ];
 		labelStyle: [ :anElement |
 			(anElement background: Color white)
 				constraintsDo: [ :c |
@@ -66,15 +117,26 @@ GtPlotterScaleBasedElementExamples >> tickLabels [
 					c vertical fitContent ] ]
 ]
 
-{ #category : #examples }
+{ #category : #'examples - axis' }
 GtPlotterScaleBasedElementExamples >> valueProjections [
 	<gtExample>
 	
-	^ GtPlotterHorizontalValueProjectionsElement new
+	^ GtPlotterValueProjectionsElement new
 		weight: 0.3;
-		padding: (BlInsets left: 10 right: 10);
+		padding: self padding;
 		valueStyle: [ :anElement | anElement
 			background: Color gray;
 			constraintsDo: [ :c | c frame vertical alignBottom ] ];
 		values: GtPlotterScaleBasedElementExamples normalDistribution
+]
+
+{ #category : #'examples - gridline' }
+GtPlotterScaleBasedElementExamples >> verticalGridlines [
+	<gtExample>
+
+	^ GtPlotterVerticalTicksElement new
+		weight: 1;
+		padding: self padding;
+		tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5) ];
+		ticks: 4
 ]

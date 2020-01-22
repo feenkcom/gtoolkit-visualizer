@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'element'
 	],
-	#category : #'GToolkit-Plotter-Elements - Core'
+	#category : #'GToolkit-Plotter-Core - Stencils'
 }
 
 { #category : #'api - instantiation' }

@@ -1,18 +1,18 @@
 Class {
-	#name : #GtPlotterHorizontalTicksElement,
+	#name : #GtPlotterVerticalTicksElement,
 	#superclass : #GtPlotterTicksElement,
 	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
-GtPlotterHorizontalTicksElement >> defaultTickLayout [
+GtPlotterVerticalTicksElement >> defaultTickLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
-			c horizontal exact: 1.
-			c vertical matchParent.
-			c frame vertical
+			c vertical exact: 1.
+			c horizontal matchParent.
+			c frame horizontal
 				weight: weight;
 				alignCenter.
-			c frame horizontal alignCenterAt: aGtPlotterScaleContext mappedValue ]
+			c frame vertical alignCenterAt: aGtPlotterScaleContext mappedValue ]
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
