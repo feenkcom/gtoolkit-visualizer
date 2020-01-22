@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'mappedValue',
 		'originalValue',
-		'scale'
+		'scale',
+		'index'
 	],
 	#category : #'GToolkit-Plotter-Elements - Core'
 }
@@ -14,6 +15,16 @@ GtPlotterScaleBasedStencilBuilder >> buildDefault [
 	<return: #BrStencil or: #BlElement>
 
 	^ BlElement new
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedStencilBuilder >> index [
+	^ index
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedStencilBuilder >> index: anObject [
+	index := anObject
 ]
 
 { #category : #initialization }
@@ -28,6 +39,9 @@ GtPlotterScaleBasedStencilBuilder >> initialize [
 	
 	"an already mapped value"
 	mappedValue := 0.
+	
+	"an index of the element (can be a projection, tick or label index)"
+	index := 1.
 ]
 
 { #category : #accessing }
@@ -53,9 +67,10 @@ GtPlotterScaleBasedStencilBuilder >> originalValue: anObject [
 { #category : #'api - instantiation' }
 GtPlotterScaleBasedStencilBuilder >> paramsOn: aStencilExecutor [
 	aStencilExecutor
-		push: self mappedValue;
 		push: self originalValue;
-		push: self scale
+		push: self scale;
+		push: self mappedValue;
+		push: self index
 ]
 
 { #category : #accessing }

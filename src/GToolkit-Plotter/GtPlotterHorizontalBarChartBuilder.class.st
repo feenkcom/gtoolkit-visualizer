@@ -14,7 +14,7 @@ Class {
 		'barHeightDataBlock',
 		'barStencil'
 	],
-	#category : #'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #accessing }
