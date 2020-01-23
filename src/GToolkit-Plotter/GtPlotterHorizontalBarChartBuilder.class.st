@@ -82,7 +82,7 @@ GtPlotterHorizontalBarChartBuilder >> barWidthScale: aGtPlotterScale [
 GtPlotterHorizontalBarChartBuilder >> initialize [
 	super initialize.
 	
-	axisWidth := 150.
+	axisWidth := 120.
 
 	barHeightScale := GtPlotterLinearScale new.
 	barHeightDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
@@ -90,7 +90,7 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 	barWidthDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
 
 	axisX := GtPlotterHorizontalAxisElement new
-		padding: (BlInsets left: axisWidth);
+		padding: (BlInsets left: axisWidth + 20);
 		labelStencil: [ :aLabel | BrLabel new look: BrGlamorousLabelLook; text: aLabel ].
 
 	ticks := 10.
@@ -164,5 +164,15 @@ GtPlotterHorizontalBarChartBuilder >> with: aCollectionOfAssociations [
 
 	self topStep root
 		layout: BlLinearLayout vertical;
-		addChildren: { axisX . dataList }.
+		addChildren: { axisX .
+			BrFrame new
+				matchParent;
+				addChildren: {
+					dataList.
+					GtPlotterHorizontalTicksElement new
+						preventMeAndChildrenMouseEvents;
+						padding: (BlInsets left: axisWidth + 20);
+						scale: barWidthScale;
+						tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5) ];
+						ticks: ticks } }.
 ]
