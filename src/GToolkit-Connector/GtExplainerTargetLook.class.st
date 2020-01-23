@@ -19,19 +19,21 @@ GtExplainerTargetLook >> explanationModel: anObject [
 
 { #category : #initialization }
 GtExplainerTargetLook >> initialize [
-	| line |
+	| lines |
 	super initialize.
+	lines := OrderedCollection new.
 	self default: [ :aWidget | 
-			line ifNotNil: [ line removeFromParent ].
+			lines do: [:each | each removeFromParent ].
+			lines removeAll.
 			aWidget 
-				border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.7) width: 4);
+				"border: (BlBorder paint: (Color transparent) width: 4);"
 				background: Color transparent ];
 		hovered: [ :aWidget | 
 			aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
 			aWidget explainer firstExplanationHolderParent explainer
-				firstExplanationChildWithModel: aWidget explainer model
-				do: [ :explanationElement | 
-					line := BlLineElement new
+				allExplanationChildrenWithModel: aWidget explainer model 
+				do: [ :explanationElement |
+					lines add: (BlLineElement new
 						fromAnchor: (BlNearestPositionTightCircleAnchor
 								referenceElement: aWidget
 								relatedTo: explanationElement);
@@ -41,11 +43,11 @@ GtExplainerTargetLook >> initialize [
 						zIndex: 10;
 						border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.7) width: 2);
 						constraintsDo: [ :c | c ignoreByLayout ];
-						yourself.
+						yourself).
 					aWidget 
 						firstCommonParent: explanationElement
 						ifFound: [ :aCommonParent | 
-							aCommonParent addChild: line ]
+							aCommonParent addChild: (lines at: (lines size)) ]
 						ifNone: [  ] ] ]
 ]
 
