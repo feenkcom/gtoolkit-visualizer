@@ -100,20 +100,43 @@ GtPlotterTickLabelsElement >> labels: anAmountOfLabels [
 
 { #category : #layout }
 GtPlotterTickLabelsElement >> onLayout: aBounds [
-	| aLastVisibleLabel |
+	| aFirstVisibleLabel aLastVisibleLabel aLeftHalfOfElements aRightHalfOfElements |
 	super onLayout: aBounds.
 
 	elements
 		ifEmpty: [ ^ self ].
-		
+
 	elements do: [ :each | each visibility: BlVisibility visible ].
 	
-	aLastVisibleLabel := elements first.
+	aFirstVisibleLabel := elements first.
+	aLastVisibleLabel := elements last.
+	
+	aLeftHalfOfElements := (2 to: 1 + ((elements size - 2) / 2) ceiling)
+		collect: [ :anIndex | elements at: anIndex ].
+	
+	aRightHalfOfElements := ((elements size - 1) to: (elements size - ((elements size - 2) / 2) ceiling) by: -1)
+		collect: [ :anIndex | elements at: anIndex ].
+		
+	aLeftHalfOfElements with: aRightHalfOfElements do: [ :aLeftElement :aRightElement |
+		| isLeftVisible isRightVisible |
+		
+		isLeftVisible := aFirstVisibleLabel == aLeftElement or: [ 
+			(aFirstVisibleLabel bounds inParent bounds
+				intersects: aLeftElement bounds inParent bounds) not ].
+		
+		isLeftVisible
+			ifTrue: [ aFirstVisibleLabel := aLeftElement ]
+			ifFalse: [ aLeftElement visibility: BlVisibility hidden ].
 
-	"labels may overlap here"
-	elements allButFirstDo: [ :aCurrentLabel |
-		(aLastVisibleLabel bounds inParent bounds
-			intersects: aCurrentLabel bounds inParent bounds)
-				ifTrue: [ aCurrentLabel visibility: BlVisibility hidden ]
-				ifFalse: [ aLastVisibleLabel := aCurrentLabel ] ].
+		isRightVisible := aLastVisibleLabel == aRightElement or: [
+			(aLastVisibleLabel bounds inParent bounds
+				intersects: aRightElement bounds inParent bounds) not ].
+			
+		isRightVisible
+			ifTrue: [ aLastVisibleLabel := aRightElement ]
+			ifFalse: [ aRightElement visibility: BlVisibility hidden ].
+
+		(aLeftElement == aRightElement or: [ (aLeftElement bounds inParent bounds
+			intersects: aRightElement bounds inParent bounds) not ])
+				ifFalse: [ aRightElement visibility: BlVisibility hidden ] ].
 ]
