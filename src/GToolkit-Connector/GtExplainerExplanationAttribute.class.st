@@ -9,7 +9,8 @@ Class {
 
 { #category : #accessing }
 GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
-	| aContainer aTextPieceElement line |
+	| aContainer aTextPieceElement lines |
+	lines := OrderedCollection new.
 	aContainer := BrButton new
 		clipChildren: false;
 		layout: BlLinearLayout vertical;
@@ -17,17 +18,19 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 		padding: (BlInsets left: 4 right: 4);
 		margin: (BlInsets all: 0);
 		look: (BrInteractiveCommonLook new 
-			default: [ :aWidget | 
-				line ifNotNil: [ line removeFromParent ].
+			default: [ :aWidget |
+				lines do: [ :each | each removeFromParent ].
+				lines removeAll.
 				aWidget 
-					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2);
+					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 1);
 					background: Color transparent ];
-			hovered: [ :aWidget | 
+			hovered: [ :aWidget |
+				aWidget border: (BlBorder paint: (Color transparent)).
 				aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
 				aWidget explainer firstExplanationHolderParent explainer
-					firstTargetChildWithModel: aWidget explainer model
+					allTargetChildrenWithModel: aWidget explainer model
 					do: [ :explanationTargetElement | 
-						line := BlLineElement new
+						lines add: (BlLineElement new
 							fromAnchor:
 								(BlNearestPositionTightCircleAnchor
 									referenceElement: aWidget
@@ -38,10 +41,11 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 							zIndex: 10;
 							border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.7) width: 2);
 							constraintsDo: [ :c | c ignoreByLayout ];
-							yourself.
+							yourself).
 						aWidget 
 							firstCommonParent: explanationTargetElement
-							ifFound: [ :aCommonParent | aCommonParent addChild: line ]
+							ifFound: [ :aCommonParent |
+								aCommonParent addChild: (lines at: (lines size)) ]
 							ifNone: [  ] ]  ] );
 		constraintsDo: [ :c |
 			c horizontal fitContent.

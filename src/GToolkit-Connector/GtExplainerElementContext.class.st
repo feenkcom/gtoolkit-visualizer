@@ -16,6 +16,22 @@ GtExplainerElementContext class >> on: anElement [
 	^ self new element: anElement
 ]
 
+{ #category : #'as yet unclassified' }
+GtExplainerElementContext >> allExplanationChildrenWithModel: aModel do: aBlock [
+	| children |
+	children := self element
+		allChildrenBreadthFirstSelect: [ :child | child explainer isExplanation and: [child explainer model = aModel ]].
+	children do: aBlock.
+]
+
+{ #category : #'as yet unclassified' }
+GtExplainerElementContext >> allTargetChildrenWithModel: aModel do: aBlock [
+	| children |
+	children := self element
+		allChildrenBreadthFirstSelect: [ :child | child explainer isTarget and: [child explainer model = aModel ]].
+	children do: aBlock.
+]
+
 { #category : #accessing }
 GtExplainerElementContext >> element [
 	^ element

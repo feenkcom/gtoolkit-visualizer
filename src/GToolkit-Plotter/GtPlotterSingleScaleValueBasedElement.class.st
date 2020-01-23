@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPlotterValueProjectionsElement,
+	#name : #GtPlotterSingleScaleValueBasedElement,
 	#superclass : #GtPlotterSingleScaleBasedElement,
 	#instVars : [
 		'values',
@@ -11,30 +11,35 @@ Class {
 }
 
 { #category : #initialization }
-GtPlotterValueProjectionsElement >> initialize [
+GtPlotterSingleScaleValueBasedElement >> defaultValueElement [
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+GtPlotterSingleScaleValueBasedElement >> defaultValueLayout [
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+GtPlotterSingleScaleValueBasedElement >> defaultValueStyle [
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+GtPlotterSingleScaleValueBasedElement >> initialize [
 	super initialize.
 
 	values := #().
 
-	valueElement := [ :aGtPlotterScaleContext | BlElement new
-			constraintsDo: [ :c |
-				c horizontal exact: 1.
-				c vertical matchParent ] ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
-	valueStyle := [ :anElement :aGtPlotterScaleContext | anElement background: (Color gray alpha: 0.8) ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
-	valueLayout := [ :anElement :aGtPlotterScaleContext |
-		anElement constraintsDo: [ :c |
-			c frame
-				vertical weight: weight;
-				alignCenter.
-			c frame horizontal alignCenterAt: aGtPlotterScaleContext mappedValue ];
-			yourself
-	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
+	valueElement := self defaultValueElement.
+	valueStyle := self defaultValueStyle.
+	valueLayout := self defaultValueLayout.
 
 	self initializeElements
 ]
 
 { #category : #'private - initialization' }
-GtPlotterValueProjectionsElement >> initializeElements [
+GtPlotterSingleScaleValueBasedElement >> initializeElements [
 	| aScaleContext |
 
 	aScaleContext := GtPlotterSingleScaleContext new.
@@ -42,13 +47,13 @@ GtPlotterValueProjectionsElement >> initializeElements [
 	self removeChildren: elements.
 	self addChildren: (elements := self values collectWithIndex: [ :eachValue :anIndex |
 		| eachElement |
-		
+
 		aScaleContext
 			scale: scale;
 			originalValue: eachValue;
 			mappedValue: (scale map: eachValue);
 			index: anIndex - 1.
-		
+
 		eachElement := (valueElement scaleContext: aScaleContext) asElement.
 
 		eachElement := (valueLayout
@@ -61,47 +66,47 @@ GtPlotterValueProjectionsElement >> initializeElements [
 ]
 
 { #category : #accessing }
-GtPlotterValueProjectionsElement >> valueElement [
+GtPlotterSingleScaleValueBasedElement >> valueElement [
 	^ valueElement
 ]
 
 { #category : #'api - values' }
-GtPlotterValueProjectionsElement >> valueElement: aBlockOrStencil [
+GtPlotterSingleScaleValueBasedElement >> valueElement: aBlockOrStencil [
 	valueElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder..
 	self initializeElements
 ]
 
 { #category : #accessing }
-GtPlotterValueProjectionsElement >> valueLayout [
+GtPlotterSingleScaleValueBasedElement >> valueLayout [
 	^ valueLayout
 ]
 
 { #category : #'api - values' }
-GtPlotterValueProjectionsElement >> valueLayout: anObject [
+GtPlotterSingleScaleValueBasedElement >> valueLayout: anObject [
 	valueLayout := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
 { #category : #accessing }
-GtPlotterValueProjectionsElement >> valueStyle [
+GtPlotterSingleScaleValueBasedElement >> valueStyle [
 	^ valueStyle
 ]
 
 { #category : #'api - values' }
-GtPlotterValueProjectionsElement >> valueStyle: anObject [
+GtPlotterSingleScaleValueBasedElement >> valueStyle: anObject [
 	valueStyle := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
 { #category : #accessing }
-GtPlotterValueProjectionsElement >> values [
+GtPlotterSingleScaleValueBasedElement >> values [
 	<return: #Collection of: #Object>
 
 	^ values
 ]
 
 { #category : #'api - values' }
-GtPlotterValueProjectionsElement >> values: aCollectionOfScaleValues [
+GtPlotterSingleScaleValueBasedElement >> values: aCollectionOfScaleValues [
 	values := aCollectionOfScaleValues.
 	self initializeElements
 ]
