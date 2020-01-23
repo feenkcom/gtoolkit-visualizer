@@ -25,7 +25,7 @@ GtPlotterScaleBasedElementExamples >> compositeAxis [
 		addChildren: { 
 			self fineGrainedTicks.
 			self rareTicks.
-			self tickLabels.
+			self horizontalTickLabels.
 			self valueProjections }
 ]
 
@@ -51,9 +51,29 @@ GtPlotterScaleBasedElementExamples >> horizontalGridlines [
 
 	^ GtPlotterHorizontalTicksElement new
 		weight: 1;
-		padding: self padding;
+		padding: self horizontalPadding;
 		tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5) ];
 		ticks: 4
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedElementExamples >> horizontalPadding [
+	^ BlInsets left: 10 right: 10
+]
+
+{ #category : #'examples - axis' }
+GtPlotterScaleBasedElementExamples >> horizontalTickLabels [
+	<gtExample>
+	
+	^ GtPlotterHorizontalTickLabelsElement new
+		padding: self padding;
+		labelFormat: [ :aValue | (aValue printShowingDecimalPlaces: 1 ) asRopedText foreground: Color darkGray ];
+		labelStyle: [ :anElement |
+			(anElement background: Color white)
+				constraintsDo: [ :c |
+					c frame vertical alignTop.
+					c horizontal fitContent.
+					c vertical fitContent ] ]
 ]
 
 { #category : #'examples - markers' }
@@ -102,26 +122,30 @@ GtPlotterScaleBasedElementExamples >> rareTicks [
 		ticks: 4
 ]
 
-{ #category : #'examples - axis' }
-GtPlotterScaleBasedElementExamples >> tickLabels [
+{ #category : #'examples - bar' }
+GtPlotterScaleBasedElementExamples >> singleBar [
 	<gtExample>
-	
-	^ GtPlotterTickLabelsElement new
-		padding: self padding;
-		labelFormat: [ :aValue | (aValue printShowingDecimalPlaces: 1 ) asRopedText foreground: Color darkGray ];
-		labelStyle: [ :anElement |
-			(anElement background: Color white)
-				constraintsDo: [ :c |
-					c frame vertical alignTop.
-					c horizontal fitContent.
-					c vertical fitContent ] ]
+
+	^ GtPlotterHorizontalValueBarsElement new
+		height: 30;
+		valueElement: [ BlElement new ];
+		valueStyle: [ :anElement :aGtScaleContext |
+			| aNumber |
+			aNumber := aGtScaleContext originalValue.
+			
+			anElement
+				geometry: BlStadium new;
+				background: (aNumber < 0.5
+					ifTrue: [ Color red alpha: aNumber * 2 ]
+					ifFalse: [ Color blue alpha: (aNumber - 0.5)  * 2 ]) ];
+		values: #(0.2 0.7) reversed
 ]
 
 { #category : #'examples - axis' }
 GtPlotterScaleBasedElementExamples >> valueProjections [
 	<gtExample>
 	
-	^ GtPlotterValueProjectionsElement new
+	^ GtPlotterHorizontalValueProjectionsElement new
 		weight: 0.3;
 		padding: self padding;
 		valueStyle: [ :anElement | anElement
@@ -136,7 +160,27 @@ GtPlotterScaleBasedElementExamples >> verticalGridlines [
 
 	^ GtPlotterVerticalTicksElement new
 		weight: 1;
-		padding: self padding;
+		padding: self horizontalPadding;
 		tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5) ];
 		ticks: 4
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedElementExamples >> verticalPadding [
+	^ BlInsets top: 10 bottom: 10
+]
+
+{ #category : #'examples - axis' }
+GtPlotterScaleBasedElementExamples >> verticalTickLabels [
+	<gtExample>
+	
+	^ GtPlotterVerticalTickLabelsElement new
+		padding: self padding;
+		labelFormat: [ :aValue | (aValue printShowingDecimalPlaces: 1 ) asRopedText foreground: Color darkGray ];
+		labelStyle: [ :anElement |
+			(anElement background: Color white)
+				constraintsDo: [ :c |
+					c frame horizontal alignLeft.
+					c horizontal fitContent.
+					c vertical fitContent ] ]
 ]

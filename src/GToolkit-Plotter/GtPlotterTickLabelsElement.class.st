@@ -11,22 +11,31 @@ Class {
 }
 
 { #category : #initialization }
+GtPlotterTickLabelsElement >> defaultLabelElement [
+	^ [ :aGtPlotterScaleContext |
+		BlTextElement new text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) asRopedText ]
+			asStencilBuilder: GtPlotterScaleBasedStencilBuilder
+]
+
+{ #category : #initialization }
+GtPlotterTickLabelsElement >> defaultLabelLayout [
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+GtPlotterTickLabelsElement >> defaultLabelStyle [
+	^ [ :anElement :aGtPlotterScaleContext | anElement ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
+]
+
+{ #category : #initialization }
 GtPlotterTickLabelsElement >> initialize [
 	super initialize.
 
 	labels := 5.
 	
-	labelElement := [ :aGtPlotterScaleContext |
-		BlTextElement new text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) asRopedText ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
-	labelStyle := [ :anElement :aGtPlotterScaleContext | anElement ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
-	labelLayout := [ :anElement :aGtPlotterScaleContext |
-		anElement constraintsDo: [ :c |
-			c frame vertical
-				weight: weight;
-				alignCenter.
-			c frame horizontal alignCenterAt: aGtPlotterScaleContext mappedValue ];
-			yourself.
-	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
+	labelElement := self defaultLabelElement.
+	labelStyle := self defaultLabelStyle.
+	labelLayout := self defaultLabelLayout.
 
 	self initializeElements
 ]
