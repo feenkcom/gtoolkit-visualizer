@@ -97,3 +97,23 @@ GtPlotterTickLabelsElement >> labels: anAmountOfLabels [
 	labels := anAmountOfLabels.
 	self initializeElements
 ]
+
+{ #category : #layout }
+GtPlotterTickLabelsElement >> onLayout: aBounds [
+	| aLastVisibleLabel |
+	super onLayout: aBounds.
+
+	elements
+		ifEmpty: [ ^ self ].
+		
+	elements do: [ :each | each visibility: BlVisibility visible ].
+	
+	aLastVisibleLabel := elements first.
+
+	"labels may overlap here"
+	elements allButFirstDo: [ :aCurrentLabel |
+		(aLastVisibleLabel bounds inParent bounds
+			intersects: aCurrentLabel bounds inParent bounds)
+				ifTrue: [ aCurrentLabel visibility: BlVisibility hidden ]
+				ifFalse: [ aLastVisibleLabel := aCurrentLabel ] ].
+]
