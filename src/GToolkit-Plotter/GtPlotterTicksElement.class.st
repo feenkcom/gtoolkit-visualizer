@@ -1,6 +1,6 @@
 Class {
 	#name : #GtPlotterTicksElement,
-	#superclass : #GtPlotterSingleScaleBasedElement,
+	#superclass : #GtPlotterSingleScaleProportionalElement,
 	#instVars : [
 		'ticks',
 		'tickElement',
