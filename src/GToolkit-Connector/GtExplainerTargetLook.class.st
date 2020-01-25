@@ -25,11 +25,9 @@ GtExplainerTargetLook >> initialize [
 	self default: [ :aWidget | 
 			lines do: [:each | each removeFromParent ].
 			lines removeAll.
-			aWidget 
-				"border: (BlBorder paint: (Color transparent) width: 4);"
-				background: Color transparent ];
+			aWidget background: BrGlamorousColors textHighlightColor ];
 		hovered: [ :aWidget | 
-			aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
+			aWidget background: (BrGlamorousColors textHighlightColor).
 			aWidget explainer firstExplanationHolderParent explainer
 				allExplanationChildrenWithModel: aWidget explainer model 
 				do: [ :explanationElement |
@@ -46,8 +44,7 @@ GtExplainerTargetLook >> initialize [
 						yourself).
 					aWidget 
 						firstCommonParent: explanationElement
-						ifFound: [ :aCommonParent | 
-							aCommonParent addChild: (lines at: (lines size)) ]
+						ifFound: [ :aCommonParent | aCommonParent addChild: lines last ]
 						ifNone: [  ] ] ]
 ]
 
