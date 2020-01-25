@@ -29,7 +29,7 @@ GtPlotterScaleBasedElementExamples >> compositeAxis [
 			self valueProjections }
 ]
 
-{ #category : #'examples - axis' }
+{ #category : #'examples - ticks' }
 GtPlotterScaleBasedElementExamples >> fineGrainedTicks [
 	<gtExample>
 	
@@ -61,7 +61,7 @@ GtPlotterScaleBasedElementExamples >> horizontalPadding [
 	^ BlInsets left: 10 right: 10
 ]
 
-{ #category : #'examples - axis' }
+{ #category : #'examples - labels' }
 GtPlotterScaleBasedElementExamples >> horizontalTickLabels [
 	<gtExample>
 	
@@ -74,6 +74,39 @@ GtPlotterScaleBasedElementExamples >> horizontalTickLabels [
 					c frame vertical alignTop.
 					c horizontal fitContent.
 					c vertical fitContent ] ]
+]
+
+{ #category : #'examples - list' }
+GtPlotterScaleBasedElementExamples >> listOfHorizontalBars [
+	<gtExample>
+	| theData aScrollable aHeightScale |
+	
+	theData := self listOfHorizontalBarsData.
+	theData := theData collect: [ :eachArray | eachArray sorted ].
+	theData := theData sorted: [ :a :b | a size > b size ].
+	
+	aHeightScale := GtPlotterLinearScale new
+		domainFrom: 0 to: theData first size;
+		rangeFrom: 10 to: 30.
+	
+	aScrollable := GtPlotterSingleScaleScrollElement new.
+	aScrollable stencil: [ :eachCollectionOfItems |
+			GtPlotterHorizontalValueBarsElement new
+				height: (aHeightScale map: eachCollectionOfItems size);
+				valueStyle: [ :anElement :aGtScaleContext |
+					anElement
+						geometry: BlStadium new;
+						background: (Color gray alpha: 0.2) ];
+				values: eachCollectionOfItems ].
+
+	aScrollable values: theData.
+	
+	^ aScrollable
+]
+
+{ #category : #'examples - list' }
+GtPlotterScaleBasedElementExamples >> listOfHorizontalBarsData [
+	^ #(#(0.7 0.3 0.25 0.95 0.85 0.95 0.35) #(0.7 1.0 0.15 0.95 0.6 0.75 0.1) #(0.85) #(0.4 0.25 0.4 0.7 0.25 0.95 1.0) #(0.25 0.2 0.15 0.35 1.0 0.1) #(0.05 0.1 0.05 0.25 0.65 0.6) #(0.7 0.25 0.35 0.05) #(0.65 1.0) #(0.75 0.45 0.65 0.25) #(0.3) #(0.25 0.45 0.9 0.15) #(0.9) #(0.4 1.0 0.45 0.55 0.8 0.45 0.65) #(0.7 0.5 0.45 0.85 0.3 0.4 0.05) #(0.45 0.5 0.65) #(0.3 0.45 0.35 0.25 0.05 0.1 0.65) #(0.5) #(0.5 0.4 0.6 0.55 0.2 0.3 0.25 0.35) #(0.45 0.95 0.25 0.2 0.6 0.15 0.95 0.35) #(0.8 0.55 0.35 0.2) #(1.0 0.7 0.45 0.35 0.15 0.9 0.45) #(0.15 0.7 0.95 0.1 0.6) #(1.0 0.65 0.8 0.1 0.8 0.65) #(0.2 0.4 0.85 0.5 0.55 0.7) #(0.3 0.25 0.55 0.4 0.95 0.55 0.6) #(0.75 0.25 0.7 0.4 0.2 0.55) #(0.7) #(0.6 0.15 0.05) #(0.6 0.25 0.15 0.45) #(0.1 1.0 0.75 0.3 0.4 0.3 0.9) #(0.55 0.35 0.7) #(0.1 0.4 0.5 0.1 0.65 0.85) #(0.7 0.5 0.35 0.9 1.0 0.6) #(0.3 0.2 0.3 1.0 0.75) #(0.05 0.85 0.15 0.6 0.7) #(0.3) #(0.8 1.0) #(0.55 0.15 1.0 0.2) #(0.5 0.05 0.75 0.3 0.65) #(0.7 0.25) #(0.8 0.1 0.75) #(0.4 0.8 0.85 0.05 0.75 0.4 0.3) #(0.7 0.65 0.2 0.4 0.7 0.45 0.1 0.8) #(0.95 0.65 1.0 0.6 0.1 0.9) #(0.65 0.7 0.75 0.8 0.55 0.5 0.2 0.6) #(0.5 0.85 0.05 0.65 0.4 0.65 0.35 0.9) #(0.05 0.7 0.3 0.2 0.9 0.95 0.7) #(0.05 0.5 0.55 0.6 0.9) #(0.6) #(0.75) #(0.3) #(0.15 0.05 0.5 0.15 0.65 0.7 0.5 0.25) #(0.2 0.2 0.65 0.65) #(0.65 0.25 0.55 0.95 0.9 0.05) #(0.75) #(0.9 0.75) #(0.85 0.3) #(0.45 0.95 0.5 0.5 0.15 0.6 0.3) #(0.4 0.05 0.7) #(0.25 0.7 0.85 0.9 0.3 0.65 0.55 0.3) #(0.65 0.65 0.3 0.45 0.1 0.35 0.3) #(0.65 0.05 0.95 0.95 0.45) #(0.45 0.8 0.85 0.55 0.85) #(0.5 1.0 0.6 1.0 0.05) #(0.8 0.75 0.45 0.45) #(0.75 0.85 0.9) #(0.6 0.85 0.6 0.3) #(0.25 0.65 0.1 0.1 0.05 1.0 0.05 0.7) #(0.45 1.0 0.8 0.1) #(0.05 1.0 0.8 0.25 0.95 0.55) #(0.1 0.15 0.95 0.75 0.8 0.35 0.05) #(0.95) #(0.8 0.65 0.65 1.0 0.65 0.8 0.7) #(0.8 0.2 0.85 0.65 0.9 0.45 0.15) #(0.4 0.8 0.75 0.5 0.2 0.8) #(0.25 0.2 1.0 0.7 0.65 0.8 0.15 0.65) #(0.75) #(0.85 0.3 0.05 0.1) #(0.95 0.25 0.55 0.05 0.35 0.3) #(0.6 0.2 0.3 0.45 0.9 0.9 0.75) #(0.05 0.45 0.35) #(0.7 0.85 0.15 0.8 0.75 0.7 0.7) #(0.25 0.1) #(0.95 0.05 0.45 0.05 0.95 0.8 0.45 0.2) #(0.9 0.6) #(0.8) #(0.1 0.4 0.45 0.2 0.35 0.05 0.5) #(0.6) #(0.7 0.15 0.05) #(0.65 0.2 0.45 0.85 0.4 0.2 0.5 0.55) #(0.95) #(0.55) #(0.6 0.05 0.45 0.25 0.7) #(0.3 0.3 0.55 0.25 0.5 0.45 0.05 0.15) #(0.65 0.4 0.75) #(0.05 0.55 0.35 0.6 0.65 0.2 0.6) #(0.1 0.95 0.9 0.15 0.15 0.15 0.55) #(0.8) #(0.05 0.05 1.0 0.1 0.15) #(0.25 0.15 0.1 0.1))
 ]
 
 { #category : #'examples - markers' }
@@ -111,7 +144,7 @@ GtPlotterScaleBasedElementExamples >> plot [
 			 }
 ]
 
-{ #category : #'examples - axis' }
+{ #category : #'examples - ticks' }
 GtPlotterScaleBasedElementExamples >> rareTicks [
 	<gtExample>
 	
@@ -141,7 +174,7 @@ GtPlotterScaleBasedElementExamples >> singleBar [
 		values: #(0.2 0.7) reversed
 ]
 
-{ #category : #'examples - axis' }
+{ #category : #'examples - ticks' }
 GtPlotterScaleBasedElementExamples >> valueProjections [
 	<gtExample>
 	
@@ -170,7 +203,7 @@ GtPlotterScaleBasedElementExamples >> verticalPadding [
 	^ BlInsets top: 10 bottom: 10
 ]
 
-{ #category : #'examples - axis' }
+{ #category : #'examples - labels' }
 GtPlotterScaleBasedElementExamples >> verticalTickLabels [
 	<gtExample>
 	

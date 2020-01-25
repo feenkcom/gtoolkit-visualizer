@@ -1,6 +1,6 @@
 Class {
 	#name : #GtPlotterSingleScaleValueBasedElement,
-	#superclass : #GtPlotterSingleScaleBasedElement,
+	#superclass : #GtPlotterSingleScaleProportionalElement,
 	#instVars : [
 		'values',
 		'valueStyle',
@@ -40,19 +40,29 @@ GtPlotterSingleScaleValueBasedElement >> initialize [
 
 { #category : #'private - initialization' }
 GtPlotterSingleScaleValueBasedElement >> initializeElements [
-	| aScaleContext |
+	| aScaleContext theChildren |
 
 	aScaleContext := GtPlotterSingleScaleContext new.
 
 	self removeChildren: elements.
-	self addChildren: (elements := self values collectWithIndex: [ :eachValue :anIndex |
-		| eachElement |
+	
+	"we could use collectWithIndex:, however we would like to use as generic
+	collection API as possible to accomodate custom or domain specific collections"
+	theChildren := OrderedCollection new.
+	self values do: [ :eachValue |
+		| eachIndex eachElement aScaledValue |
+		
+		"intentionally starts with 0"
+		eachIndex := theChildren size.
+		
+		aScaledValue := scaleData value: eachValue.
 
 		aScaleContext
 			scale: scale;
 			originalValue: eachValue;
-			mappedValue: (scale map: eachValue);
-			index: anIndex - 1.
+			scaledValue: aScaledValue;
+			mappedValue: (scale map: aScaledValue);
+			index: eachIndex.
 
 		eachElement := (valueElement scaleContext: aScaleContext) asElement.
 
@@ -60,9 +70,13 @@ GtPlotterSingleScaleValueBasedElement >> initializeElements [
 			element: eachElement;
 			scaleContext: aScaleContext) asElement.
 
-		(valueStyle
+		eachElement := (valueStyle
 			element: eachElement;
-			scaleContext: aScaleContext) asElement ])
+			scaleContext: aScaleContext) asElement.
+		
+		theChildren add: eachElement ].
+	
+	self addChildren: theChildren
 ]
 
 { #category : #accessing }

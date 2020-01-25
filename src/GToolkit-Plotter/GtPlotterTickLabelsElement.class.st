@@ -1,6 +1,6 @@
 Class {
 	#name : #GtPlotterTickLabelsElement,
-	#superclass : #GtPlotterSingleScaleBasedElement,
+	#superclass : #GtPlotterSingleScaleProportionalElement,
 	#instVars : [
 		'labels',
 		'labelElement',
@@ -49,12 +49,15 @@ GtPlotterTickLabelsElement >> initializeElements [
 
 	self removeChildren: elements.
 	self addChildren: (elements := theTicks collectWithIndex: [ :eachTickValue :anIndex |
-		| eachElement |
+		| eachElement aScaledValue |
+		
+		aScaledValue := scale valuedTick: eachTickValue.
 		
 		aScaleContext
 			scale: scale;
 			originalValue: eachTickValue;
-			mappedValue: (scale map: eachTickValue);
+			scaledValue: aScaledValue;
+			mappedValue: (scale map: aScaledValue);
 			index: anIndex - 1.
 		
 		eachElement := (labelElement scaleContext: aScaleContext) asElement.
@@ -96,4 +99,47 @@ GtPlotterTickLabelsElement >> labelStyle: anObject [
 GtPlotterTickLabelsElement >> labels: anAmountOfLabels [
 	labels := anAmountOfLabels.
 	self initializeElements
+]
+
+{ #category : #layout }
+GtPlotterTickLabelsElement >> onLayout: aBounds [
+	| aFirstVisibleLabel aLastVisibleLabel aLeftHalfOfElements aRightHalfOfElements |
+	super onLayout: aBounds.
+
+	elements
+		ifEmpty: [ ^ self ].
+
+	elements do: [ :each | each visibility: BlVisibility visible ].
+	
+	aFirstVisibleLabel := elements first.
+	aLastVisibleLabel := elements last.
+	
+	aLeftHalfOfElements := (2 to: 1 + ((elements size - 2) / 2) ceiling)
+		collect: [ :anIndex | elements at: anIndex ].
+	
+	aRightHalfOfElements := ((elements size - 1) to: (elements size - ((elements size - 2) / 2) ceiling) by: -1)
+		collect: [ :anIndex | elements at: anIndex ].
+		
+	aLeftHalfOfElements with: aRightHalfOfElements do: [ :aLeftElement :aRightElement |
+		| isLeftVisible isRightVisible |
+		
+		isLeftVisible := aFirstVisibleLabel == aLeftElement or: [ 
+			(aFirstVisibleLabel bounds inParent bounds
+				intersects: aLeftElement bounds inParent bounds) not ].
+		
+		isLeftVisible
+			ifTrue: [ aFirstVisibleLabel := aLeftElement ]
+			ifFalse: [ aLeftElement visibility: BlVisibility hidden ].
+
+		isRightVisible := aLastVisibleLabel == aRightElement or: [
+			(aLastVisibleLabel bounds inParent bounds
+				intersects: aRightElement bounds inParent bounds) not ].
+			
+		isRightVisible
+			ifTrue: [ aLastVisibleLabel := aRightElement ]
+			ifFalse: [ aRightElement visibility: BlVisibility hidden ].
+
+		(aLeftElement == aRightElement or: [ (aLeftElement bounds inParent bounds
+			intersects: aRightElement bounds inParent bounds) not ])
+				ifFalse: [ aRightElement visibility: BlVisibility hidden ] ].
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #GtPlotterTicksElement,
-	#superclass : #GtPlotterSingleScaleBasedElement,
+	#superclass : #GtPlotterSingleScaleProportionalElement,
 	#instVars : [
 		'ticks',
 		'tickElement',
@@ -54,7 +54,7 @@ GtPlotterTicksElement >> initializeElements [
 		aScaleContext
 			scale: scale;
 			originalValue: eachTickValue;
-			mappedValue: (scale map: eachTickValue);
+			mappedValue: (scale map: (scale valuedTick: eachTickValue));
 			index: anIndex - 1.
 		
 		eachElement := (tickElement scaleContext: aScaleContext) asElement.
