@@ -22,11 +22,11 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 				lines do: [ :each | each removeFromParent ].
 				lines removeAll.
 				aWidget 
-					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 1);
+					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2);
 					background: Color transparent ];
 			hovered: [ :aWidget |
-				aWidget border: (BlBorder paint: (Color transparent)).
-				aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.3).
+				aWidget border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2).
+				aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.5).
 				aWidget explainer firstExplanationHolderParent explainer
 					allTargetChildrenWithModel: aWidget explainer model
 					do: [ :explanationTargetElement | 
