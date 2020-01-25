@@ -43,7 +43,7 @@ GtExplainerExamples >> inspectorOnOneObjectExample [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := (42 gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ].
+	subject := (GtABCartoonAddressBookExample new cartoonAddressBook gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ].
 	subject forceLayout.
 	inspectorHeader := subject phlow firstChildWithView.
 	inspectorView := inspectorHeader viewContentElement phlow
@@ -84,7 +84,7 @@ GtExplainerExamples >> inspectorOnOneObjectExample [
 		addEventHandlerOn: BlElementPositionInSpaceChangedEvent
 			do: [ inspectorActionMarker relocate: (inspectorContainer globalPointToLocal: ((inspectorActionButton localPointToGlobal: (inspectorActionButton bounds center))) - ((inspectorActionMarker extent + inspectorActionMarker border width)  / 2)) ].
 	editor := BrEditor new
-		look: BrGlamorousRegularEditorLook;
+		look: (BrGlamorousRegularEditorLook new fontSize: 16);
 		text: self inspectorExplanationText;
 		margin: (BlInsets all: 10);
 		constraintsDo: [ :c | 
