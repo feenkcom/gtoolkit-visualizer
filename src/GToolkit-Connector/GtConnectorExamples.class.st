@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TBlExample',
 	#classTraits : 'TBlExample classTrait',
-	#category : 'GToolkit-Connector'
+	#category : #'GToolkit-Connector'
 }
 
 { #category : #examples }
@@ -15,10 +15,9 @@ GtConnectorExamples >> anotherSimpleExample [
 	gtconnector stencil: [ :data |
 		| labelButton container dotButton buttonElement buttonContainer |
 		container := BlVocalElement new.
-		container geometry: (BlEllipse diameter: 30).
-		container
-		background: (Color gray alpha: 0.1);
-		border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
+		container geometry: BlEllipse new.
+		container background: (Color gray alpha: 0.1).
+		container border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
 
 		labelButton := BrButton new.
 		labelButton look: BrTextLabelLook.
@@ -37,7 +36,7 @@ GtConnectorExamples >> anotherSimpleExample [
 		buttonContainer := BlVocalElement new.
 		buttonContainer size: 5 @ 5.
 
-		buttonElement := (BlEllipse diameter: 5) asElement background: (Color black).
+		buttonElement := (BlEllipse new extent: 10 asPoint) asElement background: (Color black).
 		dotButton := BrButton new.
 		dotButton icon: buttonElement.
 		dotButton look: BrIconLook.
