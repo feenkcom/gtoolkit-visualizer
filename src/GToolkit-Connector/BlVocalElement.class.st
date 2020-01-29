@@ -3,14 +3,13 @@ I am an element that sends explicit events for the addition and removal from the
 "
 Class {
 	#name : #BlVocalElement,
-	#superclass : #BlElement,
+	#superclass : #BlSceneInformingElement,
 	#category : #'GToolkit-Connector'
 }
 
 { #category : #'hooks - children' }
 BlVocalElement >> onAddedToSceneGraph [
 	super onAddedToSceneGraph.
-	self fireEvent: (BlElementAddedToSceneGraph new element: self).
 	
 	"to remove the rest"
 	self connector isVisualSource ifTrue: [
@@ -23,7 +22,6 @@ BlVocalElement >> onAddedToSceneGraph [
 { #category : #'hooks - children' }
 BlVocalElement >> onRemovedFromSceneGraph [
 	super onRemovedFromSceneGraph.
-	self fireEvent: (BlElementRemovedFromSceneGraph new element: self).
 
 	"to remove the rest"
 	self connector isVisualSource ifTrue: [
