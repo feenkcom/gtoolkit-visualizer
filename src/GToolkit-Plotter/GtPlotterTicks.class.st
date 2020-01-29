@@ -38,6 +38,7 @@ GtPlotterTicks class >> initialize [
 		1 week -> (GtPlotterTimeEveryWeek step: 1).
 		30 days -> (GtPlotterTimeEveryMonth step: 1).
 		90 days -> (GtPlotterTimeEveryMonth step: 3).
+		180 days -> (GtPlotterTimeEveryMonth step: 6).
 		1 year ->  (GtPlotterTimeEveryYear step: 1) }
 ]
 

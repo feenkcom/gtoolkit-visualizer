@@ -5,7 +5,7 @@ Class {
 		'originalValue',
 		'index'
 	],
-	#category : #'GToolkit-Plotter-Core - Stencils'
+	#category : #'GToolkit-Plotter-Core - Context'
 }
 
 { #category : #accessing }
