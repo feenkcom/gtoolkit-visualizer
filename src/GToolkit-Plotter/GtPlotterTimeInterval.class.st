@@ -18,7 +18,7 @@ GtPlotterTimeInterval >> durationsFrom: aStartDuration to: anEndDuration do: aBl
 ]
 
 { #category : #'instance creation' }
-GtPlotterTimeInterval >> from: aStartDate to: anEndDate do: aBlock [
+GtPlotterTimeInterval >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock [
 	^ self subclassResponsibility
 ]
 

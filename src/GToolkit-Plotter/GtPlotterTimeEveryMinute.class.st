@@ -19,12 +19,12 @@ GtPlotterTimeEveryMinute >> durationsFrom: aStartDuration to: anEndDuration do: 
 ]
 
 { #category : #'instance creation' }
-GtPlotterTimeEveryMinute >> from: aStartDateAndTime to: anEndDate do: aBlock [
+GtPlotterTimeEveryMinute >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock [
 	| aCeilStart |
 	
 	aCeilStart := (aStartDateAndTime seconds isZero)
 		ifTrue: [ aStartDateAndTime ]
 		ifFalse: [ aStartDateAndTime rounded ].
 		
-	(aCeilStart to: anEndDate by: step minutes) scheduleDo: aBlock
+	(aCeilStart to: anEndDateAndTime by: step minutes) scheduleDo: aBlock
 ]

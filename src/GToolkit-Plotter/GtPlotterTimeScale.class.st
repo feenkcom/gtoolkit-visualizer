@@ -4,6 +4,11 @@ Class {
 	#category : #'GToolkit-Plotter-Scale'
 }
 
+{ #category : #'api - domain' }
+GtPlotterTimeScale >> domainFrom: aStartDuration to: anEndDuration [
+	domain := GtPlotterScaleTimeDomain from: aStartDuration to: anEndDuration
+]
+
 { #category : #initialization }
 GtPlotterTimeScale >> initialize [
 	super initialize.

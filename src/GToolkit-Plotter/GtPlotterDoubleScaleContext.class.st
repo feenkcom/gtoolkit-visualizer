@@ -7,7 +7,7 @@ Class {
 		'scaleX',
 		'scaleY'
 	],
-	#category : #'GToolkit-Plotter-Core - Stencils'
+	#category : #'GToolkit-Plotter-Core - Context'
 }
 
 { #category : #accessing }
