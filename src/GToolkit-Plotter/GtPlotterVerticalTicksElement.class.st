@@ -10,7 +10,7 @@ GtPlotterVerticalTicksElement >> defaultTickLayout [
 		anElement constraintsDo: [ :c |
 			c vertical exact: 1.
 			c horizontal matchParent.
-			c frame horizontal
+			c frame vertical
 				weight: weight;
 				alignCenter.
 			c frame vertical alignCenterAt: aGtPlotterScaleContext mappedValue ]
