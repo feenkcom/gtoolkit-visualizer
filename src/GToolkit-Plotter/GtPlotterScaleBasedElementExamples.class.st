@@ -61,6 +61,25 @@ GtPlotterScaleBasedElementExamples >> horizontalPadding [
 	^ BlInsets left: 10 right: 10
 ]
 
+{ #category : #'examples - bar' }
+GtPlotterScaleBasedElementExamples >> horizontalSingleBar [
+	<gtExample>
+
+	^ GtPlotterHorizontalValueBarsElement new
+		height: 30;
+		valueElement: [ BlElement new ];
+		valueStyle: [ :anElement :aGtScaleContext |
+			| aNumber |
+			aNumber := aGtScaleContext originalValue.
+			
+			anElement
+				geometry: BlStadium new;
+				background: (aNumber < 0.5
+					ifTrue: [ Color red alpha: aNumber * 2 ]
+					ifFalse: [ Color blue alpha: (aNumber - 0.5)  * 2 ]) ];
+		values: #(0.2 0.7) reversed
+]
+
 { #category : #'examples - labels' }
 GtPlotterScaleBasedElementExamples >> horizontalTickLabels [
 	<gtExample>
@@ -201,6 +220,25 @@ GtPlotterScaleBasedElementExamples >> verticalGridlines [
 { #category : #accessing }
 GtPlotterScaleBasedElementExamples >> verticalPadding [
 	^ BlInsets top: 10 bottom: 10
+]
+
+{ #category : #'examples - bar' }
+GtPlotterScaleBasedElementExamples >> verticalSingleBar [
+	<gtExample>
+
+	^ GtPlotterVerticalValueBarsElement new
+		width: 30;
+		valueElement: [ BlElement new ];
+		valueStyle: [ :anElement :aGtScaleContext |
+			| aNumber |
+			aNumber := aGtScaleContext originalValue.
+			
+			anElement
+				geometry: (BlRectangle cornerRadius: 15);
+				background: (aNumber < 0.5
+					ifTrue: [ Color red alpha: aNumber * 2 ]
+					ifFalse: [ Color blue alpha: (aNumber - 0.5)  * 2 ]) ];
+		values: #(0.2 0.7) reversed
 ]
 
 { #category : #'examples - labels' }
