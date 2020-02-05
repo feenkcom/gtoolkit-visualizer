@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphAbstractVerticalTreeLayout,
 	#superclass : #GtGraphAbstractRegularTreeLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }
@@ -71,7 +71,7 @@ GtGraphAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atL
 
 { #category : #accessing }
 GtGraphAbstractVerticalTreeLayout >> levelDistance: aNumber [
-	self topGap: aNumber
+	self verticalGap: aNumber
 ]
 
 { #category : #accessing }

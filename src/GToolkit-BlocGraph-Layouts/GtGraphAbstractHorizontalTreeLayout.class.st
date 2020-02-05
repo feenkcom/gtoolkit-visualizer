@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphAbstractHorizontalTreeLayout,
 	#superclass : #GtGraphAbstractRegularTreeLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }
@@ -83,7 +83,7 @@ GtGraphAbstractHorizontalTreeLayout >> levelDistance: aNumber [
 
 { #category : #accessing }
 GtGraphAbstractHorizontalTreeLayout >> nodeDistance: aNumber [
-	self topGap: aNumber
+	self verticalGap: aNumber
 ]
 
 { #category : #private }
