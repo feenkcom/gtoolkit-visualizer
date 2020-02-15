@@ -7,6 +7,14 @@ Class {
 	#category : #'GToolkit-Plotter'
 }
 
+{ #category : #initialization }
+GtPlotter >> gtLiveFor: aView [
+	<gtView>
+	^ aView explicit 
+		title: 'Live';
+		stencil: [ self root ]
+]
+
 { #category : #'api - builders' }
 GtPlotter >> horizontalBarChart [
 	^ GtPlotterHorizontalBarChartBuilder plotter: self

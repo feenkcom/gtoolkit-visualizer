@@ -16,8 +16,7 @@ GtPlotterHorizontalBarChartBuilderExamples >> barChart [
 		BlElement new
 			geometry: BlStadium new;
 			margin: (BlInsets top: 4 bottom: 4);
-			background: (Color gray alpha: 0.5)
-	].
+			background: (Color gray alpha: 0.5)].
 	barChart barWidthScale: (GtPlotterDurationScale new domainFrom: 0 minutes to: 20 minutes).
 	barChart barHeightScale: (GtPlotterLinearScale new
 		domainFrom: 0 to: (self websiteVisits max: #third);
@@ -28,7 +27,7 @@ GtPlotterHorizontalBarChartBuilderExamples >> barChart [
 	barChart barHeightData: [ :eachDataItem | eachDataItem third ].
 	barChart with: self websiteVisits.
 
-	^ aPlotter root
+	^ aPlotter
 ]
 
 { #category : #accessing }
