@@ -59,3 +59,8 @@ GtPlotter >> topStep [
 GtPlotter >> verticalBarChart [
 	^ GtPlotterVerticalBarChartBuilder plotter: self
 ]
+
+{ #category : #'api - builders' }
+GtPlotter >> verticalTimeline [
+	^ GtPlotterVerticalTimelineBuilder plotter: self
+]

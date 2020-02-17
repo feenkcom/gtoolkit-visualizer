@@ -76,7 +76,7 @@ GtPlotterSingleScaleValueBasedElement >> initializeElements [
 		
 		theChildren add: eachElement ].
 	
-	self addChildren: theChildren
+	self addChildren: (elements := theChildren)
 ]
 
 { #category : #accessing }
