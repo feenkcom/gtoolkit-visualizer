@@ -34,7 +34,7 @@ GtPlotterVerticalTimelineBuilder >> createAxisLabelProjections: aCollectionOfDom
 		scaleData: #key;
 		constraintsDo: [ :c | c horizontal fitContent ];
 		hideOverlapping;
-		valueElement: [ :aGtPlotterSingleScaleContext | BlTextElement new text: (timelineLabelFormat value: aGtPlotterSingleScaleContext scaledValue) asRopedText ];
+		valueElement: [ :aGtPlotterSingleScaleContext | BlTextElement new text: (timelineLabelFormat value: aGtPlotterSingleScaleContext scaledValue) asRopedText glamorousRegularFont ];
 		valueStyle: [ :anElement | anElement background: BlBackground transparent ];
 		valueLayout: [ :anElement :aGtPlotterScaleContext |
 			anElement constraintsDo: [ :c |
@@ -74,7 +74,7 @@ GtPlotterVerticalTimelineBuilder >> createProjections: aCollectionOfDomainObject
 						constraintsDo: [ :c | c horizontal matchParent ].
 					BlTextElement new
 						margin: (BlInsets left: self spacing);
-						text: (projectionLabelFormat value: (projectionDataBlock value: aGtPlotterSingleScaleContext originalValue) asRopedText)
+						text: (projectionLabelFormat value: (projectionDataBlock value: aGtPlotterSingleScaleContext originalValue) asRopedText glamorousRegularFont)
 				} ];
 		valueStyle: [ :anElement | anElement ];
 		valueLayout: [ :anElement :aGtPlotterScaleContext |
@@ -105,9 +105,9 @@ GtPlotterVerticalTimelineBuilder >> createTimelineDots: aCollectionOfDomainObjec
 		constraintsDo: [ :c | c horizontal fitContent ];
 		markerStyle: [ :anElement |
 			anElement
-				size: 16@16;
-				border: (BlBorder paint: Color lightGray width: 2);
-				background: Color white ];
+				size: 10@10;
+				border: (BlBorder paint: Color black width: 2);
+				background: Color black ];
 		values: aCollectionOfDomainObjects
 ]
 
@@ -127,7 +127,7 @@ GtPlotterVerticalTimelineBuilder >> initialize [
 	timelineLabelFormat := [ :eachDateAndTime | (eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) asRopedText glamorousRegularFontAndSize foreground: Color darkGray ].
 
 	projectionDataBlock := [ :eachDataItem | eachDataItem ].
-	projectionLabelFormat := [ :eachObject | eachObject asRopedText glamorousRegularFontAndSize foreground: Color darkGray ].
+	projectionLabelFormat := [ :eachObject | eachObject asRopedText glamorousRegularFontAndSize foreground: Color black ].
 
 	timelineStencil := [ BlElement new
 		width: 2;
