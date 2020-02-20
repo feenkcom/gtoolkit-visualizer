@@ -1,11 +1,32 @@
 Class {
 	#name : #GtPlotter,
-	#superclass : #Object,
+	#superclass : #BrStencil,
 	#instVars : [
-		'stack'
+		'plots'
 	],
-	#category : #'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-! Plotter'
 }
+
+{ #category : #'private - plots' }
+GtPlotter >> addPlot: aPlotterBuilder [
+	<return: #GtPlotterBuilder>
+	
+	plots add: aPlotterBuilder.
+	^ aPlotterBuilder
+]
+
+{ #category : #'api - instantiation' }
+GtPlotter >> create [
+	<return: #Object>
+	| aContainer |
+
+	aContainer := BlElement new.
+	aContainer constraintsDo: [ :c |
+		c horizontal matchParent.
+		c vertical matchParent ].
+	aContainer addChildren: (plots collect: [ :eachPlot | eachPlot asElement ]).
+	^ aContainer
+]
 
 { #category : #initialization }
 GtPlotter >> gtLiveFor: aView [
@@ -17,50 +38,37 @@ GtPlotter >> gtLiveFor: aView [
 
 { #category : #'api - builders' }
 GtPlotter >> horizontalBarChart [
-	^ GtPlotterHorizontalBarChartBuilder plotter: self
+	^ self addPlot: GtPlotterHorizontalBarChartBuilder new
 ]
 
 { #category : #initialization }
 GtPlotter >> initialize [
-	stack := Stack new.
+	super initialize.
 	
-	stack push: (GtPlotterStep new 
-		root: ((BlElement new
-			layout: GtPlotterLayout new;
-			clipChildren: false;
-			constraintsDo: [ :constraints |
-				constraints horizontal matchParent.
-				constraints vertical matchParent ];
-			background: Color white;
-			zIndex: 1)))
+	plots := OrderedCollection new
 ]
 
 { #category : #'api - builders' }
 GtPlotter >> line [
-	^ GtPlotterLineDiagramBuilder plotter: self
+	^ self addPlot: GtPlotterLineDiagramBuilder new
 ]
 
 { #category : #accessing }
 GtPlotter >> root [
-	^ self topStep root
+	^ self asElement
 ]
 
 { #category : #'api - builders' }
 GtPlotter >> timeLine [
-	^ GtPlotterTimeLineDiagramBuilder plotter: self
-]
-
-{ #category : #stack }
-GtPlotter >> topStep [
-	^ stack top
+	^ self addPlot: GtPlotterTimeLineDiagramBuilder new
 ]
 
 { #category : #'api - builders' }
 GtPlotter >> verticalBarChart [
-	^ GtPlotterVerticalBarChartBuilder plotter: self
+	^ self addPlot: GtPlotterVerticalBarChartBuilder new
 ]
 
 { #category : #'api - builders' }
 GtPlotter >> verticalTimeline [
-	^ GtPlotterVerticalTimelineBuilder plotter: self
+	^ self addPlot: GtPlotterVerticalTimelineBuilder new
 ]
