@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterVerticalTimelineBuilderExamples,
 	#superclass : #Object,
-	#category : #'GToolkit-Plotter-Example - Charts'
+	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
 { #category : #'examples - timeline' }

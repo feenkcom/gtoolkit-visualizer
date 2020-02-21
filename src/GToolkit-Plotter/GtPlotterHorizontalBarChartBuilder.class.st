@@ -18,7 +18,9 @@ Class {
 		'barLabelWidth',
 		'amountOfTicks',
 		'tickLabelLookStencil',
-		'barLabelColor'
+		'barLabelColor',
+		'barLabelLookStencil',
+		'data'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
@@ -81,6 +83,16 @@ GtPlotterHorizontalBarChartBuilder >> barLabelFormat: aBlock [
 	barLabelFormat := aBlock
 ]
 
+{ #category : #'api - bars' }
+GtPlotterHorizontalBarChartBuilder >> barLabelLookStencil [
+	^ barLabelLookStencil
+]
+
+{ #category : #'api - bars' }
+GtPlotterHorizontalBarChartBuilder >> barLabelLookStencil: aStencil [
+	barLabelLookStencil := aStencil asStencil
+]
+
 { #category : #accessing }
 GtPlotterHorizontalBarChartBuilder >> barLabelStencil: aBrColumnCellStencilBuilder [
 	barLabelStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
@@ -98,6 +110,11 @@ GtPlotterHorizontalBarChartBuilder >> barLabelWidth: aNumber [
 	barLabelWidth := aNumber
 ]
 
+{ #category : #'api - layout' }
+GtPlotterHorizontalBarChartBuilder >> barMargin [
+	^ 5
+]
+
 { #category : #accessing }
 GtPlotterHorizontalBarChartBuilder >> barStencil: aBrColumnCellStencilBuilder [
 	barStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
@@ -108,14 +125,14 @@ GtPlotterHorizontalBarChartBuilder >> barWidthData: aBlock [
 	barWidthDataBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #'api - scale' }
 GtPlotterHorizontalBarChartBuilder >> barWidthScale [
 	<return: #GtPlotterScale>
 
 	^ barWidthScale
 ]
 
-{ #category : #accessing }
+{ #category : #'api - scale' }
 GtPlotterHorizontalBarChartBuilder >> barWidthScale: aGtPlotterScale [
 	barWidthScale := aGtPlotterScale
 ]
@@ -126,7 +143,9 @@ GtPlotterHorizontalBarChartBuilder >> create [
 	| aContainer theBars |
 
 	aContainer := BlElement new
-		layout: BlLinearLayout new;
+		layout: BlLinearLayout vertical;
+		clipChildren: false;
+		padding: (BlInsets right: 20);
 		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ].
@@ -142,59 +161,139 @@ GtPlotterHorizontalBarChartBuilder >> create [
 				look: (self tickLabelLook create foreground: self tickLabelColor);
 				text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) ];
 		labels: self amountOfTicks).
-		
-	
-	theBars := GtPlotterSingleScaleScrollElement new.
-	theBars stencil: [ :eachDurationGroup |
-		| aGroupLabel |
-						
-		aGroupLabel := ''.
-		eachDurationGroup labelDo: [ :aLabel | aGroupLabel := aLabel ].
-		
-		BrHorizontalPane new
-			hMatchParent;
-			vFitContent;
-			margin: (BlInsets top: self gridlineOffset / 2.0 bottom: self gridlineOffset / 2.0);
-			addChildren: {
-				BrVerticalPane new
-					vMatchParent;
-					hExact: self tickLabelFormat;
-					alignCenterRight;
-					addChild: (BrLabel new
-						look: (SoPolypolyLabelLook new foreground: self labelColor; sociatorRegularFont);
-						padding: (BlInsets right: 5);
-						text: aGroupLabel).
 
-				BlElement new
+	theBars := GtPlotterSingleScaleScrollElement new.
+	theBars stencil: [ :eachGroup | self createBarRowFor: eachGroup ].
+	theBars values: data.
+	
+	aContainer addChild: theBars.
+
+	^ aContainer
+]
+
+{ #category : #'private - instance creation' }
+GtPlotterHorizontalBarChartBuilder >> createBarRowFor: aGtPlotterDataEntity [
+	| aRowLabel isGrouping aContainer aRowLabelElement |
+
+	aRowLabel := aGtPlotterDataEntity label.
+	isGrouping := aGtPlotterDataEntity grouping.
+
+	aContainer := BrHorizontalPane new
+		hMatchParent;
+		vFitContent.
+
+	aRowLabelElement := BrLabel new
+		padding: (BlInsets right: 5);
+		hExact: self barLabelWidth - (isGrouping asBit * self gridlineOffset);
+		vMatchParent;
+		text: aRowLabel;
+		alignCenterRight;
+		look: (self barLabelLookStencil create).
+	
+	aContainer addChild: aRowLabelElement.
+	
+	isGrouping ifTrue: [
+		aContainer
+			margin: (BlInsets top: self groupMargin / 2.0 bottom: self groupMargin / 2.0);
+			addChild: (self createVerticalSeparator margin: (BlInsets left: self gridlineOffset / 2.0 right: self gridlineOffset / 2.0)) ].
+	
+	aContainer addChild: (self createGroupBarsFor: aGtPlotterDataEntity).
+
+	^ aContainer
+]
+
+{ #category : #'private - instance creation' }
+GtPlotterHorizontalBarChartBuilder >> createGroupBarsFor: aGtPlotterDataEntity [
+	|  isStacking theBars aContainer |
+	
+	aGtPlotterDataEntity isComposite
+		ifFalse: [ ^ self createLeafBarsFor: aGtPlotterDataEntity ].
+	
+	isStacking := aGtPlotterDataEntity stacking.
+	
+	theBars := Array streamContents: [ :aStream | aGtPlotterDataEntity groups do: [ :eachEntity | aStream nextPut: (self createGroupBarsFor: eachEntity) ] ].
+	
+	aContainer := BlElement new
+		layout: BlFrameLayout new;
+		constraintsDo: [ :c |
+			c horizontal matchParent.
+			c vertical fitContent ].
+
+	isStacking
+		ifTrue: [ aContainer layout: BlFrameLayout new ]
+		ifFalse: [ aContainer layout: (BlLinearLayout vertical cellSpacing: aGtPlotterDataEntity grouping asBit * self groupMargin) ].
+
+	aContainer addChildren: theBars.
+
+	^ aContainer
+]
+
+{ #category : #'private - instance creation' }
+GtPlotterHorizontalBarChartBuilder >> createLeafBarsFor: aGtPlotterDataEntity [
+	"Create non composite bars"
+	|  isStacking |
+	
+	isStacking := aGtPlotterDataEntity stacking.
+	
+	^ isStacking
+		ifTrue: [
+			GtPlotterHorizontalValueBarsElement new
+				constraintsDo: [ :c | c vertical fitContent ];
+				scale: barWidthScale;
+				scaleData: barWidthDataBlock;
+				margin: (BlInsets top: self barMargin / 2.0 bottom: self barMargin / 2.0);
+				valueStyle: [ :anElement :aContext | anElement background: aGtPlotterDataEntity color ];
+				valueLayout: [ :anElement :aGtPlotterScaleContext |
+					anElement constraintsDo: [ :c |
+						c horizontal matchParent.
+						c vertical exact: (barHeightScale map: (barHeightDataBlock gtValue: aGtPlotterScaleContext originalValue)).
+						c frame vertical alignCenter.
+						c frame horizontal weight: aGtPlotterScaleContext mappedValue ];
+						yourself ];
+				values: aGtPlotterDataEntity values ]
+			ifFalse: [
+				| aContainer |
+
+				aContainer := BlElement new
+					layout: (BlLinearLayout vertical cellSpacing: self barMargin);
 					constraintsDo: [ :c |
-						c vertical matchParent.
-						c horizontal exact: 2 ];
-					margin: (BlInsets left: self gridlineOffset right: self gridlineOffset);
-					background: SoPolypolyColors mediumGray.
-			
-				BrVerticalPane new
-					hMatchParent;
-					vMatchParent;
-					addChildren: (eachDurationGroup collect: [ :eachVisitedGroup |
-						| aBarColor |
-						
-						aBarColor := Color gray.
-						eachVisitedGroup colorDo: [ :aColor | aBarColor := aColor ].
-						
-						BlElement new
-							"constraintsDo: [ :c |
+						c horizontal matchParent.
+						c vertical fitContent ].
+				
+				aContainer addChildren: (aGtPlotterDataEntity values collect: [ :eachValue |
+					GtPlotterHorizontalValueBarsElement new
+						constraintsDo: [ :c | c vertical fitContent ];
+						scale: barWidthScale;
+						scaleData: barWidthDataBlock;
+						valueLayout: [ :anElement :aGtPlotterScaleContext |
+							anElement constraintsDo: [ :c |
 								c horizontal matchParent.
-								c vertical exact: (aGroupHeightScale map: eachVisitedGroup size) ];
-							geometry: (BlHistogram new
-								beLeftToRight;
-								values: ((eachVisitedGroup
-									sorted: [ :a :b | a validityDuration > b validityDuration ])
-									collect: [ :eachCookie | (aBarWidthScale map: eachCookie validityDuration) min: 1 ]));
-							background: (BlLinearGradientPaint horizontal stops: {
-								0.6 -> aBarColor.
-								1 -> (aBarColor alpha: 0.0) })" ])
-			} ].
-	"theBars values: cookieGroups."
+								c vertical exact: (barHeightScale map: (barHeightDataBlock gtValue: aGtPlotterScaleContext originalValue)).
+								c frame vertical alignCenter.
+								c frame horizontal weight: aGtPlotterScaleContext mappedValue ];
+								yourself ];
+						valueStyle: [ :anElement | anElement background: aGtPlotterDataEntity color ];
+						values: { eachValue }
+				]) ]
+]
+
+{ #category : #'private - instance creation' }
+GtPlotterHorizontalBarChartBuilder >> createVerticalSeparator [
+	^ BlElement new
+		constraintsDo: [ :c |
+			c vertical matchParent.
+			c horizontal exact: 2 ];
+		background: Color gray
+]
+
+{ #category : #'api - layout' }
+GtPlotterHorizontalBarChartBuilder >> gridlineOffset [
+	^ 20
+]
+
+{ #category : #'api - layout' }
+GtPlotterHorizontalBarChartBuilder >> groupMargin [
+	^ 20
 ]
 
 { #category : #initialization }
@@ -212,10 +311,13 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 	barLabelWidth := 120.
 	barLabelColor := Color gray.
 
-	barHeightScale := GtPlotterLinearScale new.
+	barHeightScale := GtPlotterConstantScale new constant: 30.
 	barHeightDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
 	barWidthScale := GtPlotterLinearScale new.
 	barWidthDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
+	barLabelLookStencil := [ BrGlamorousLabelLook new glamorousRegularFontAndSize ] asStencil.
+
+	data := GtPlotterDataGroup new.
 
 	axisX := GtPlotterHorizontalAxisElement new
 		padding: (BlInsets left: axisWidth + 20);
@@ -326,9 +428,12 @@ GtPlotterHorizontalBarChartBuilder >> ticks: anAmountOfTicks [
 	self amountOfTicks: anAmountOfTicks
 ]
 
-{ #category : #'instance creation' }
-GtPlotterHorizontalBarChartBuilder >> with: aCollectionOfAssociations [
-	self topStep removeChildren.
+{ #category : #accessing }
+GtPlotterHorizontalBarChartBuilder >> with: aGtPlotterDataGroup [
+	
+	data := aGtPlotterDataGroup
+	
+	"self topStep removeChildren.
 
 	dataList display: aCollectionOfAssociations.
 	axisX scale: barWidthScale ticks: ticks.
@@ -345,5 +450,5 @@ GtPlotterHorizontalBarChartBuilder >> with: aCollectionOfAssociations [
 						padding: (BlInsets left: axisWidth + 20);
 						scale: barWidthScale;
 						tickStyle: [ :anElement | anElement background: (Color gray alpha: 0.5) ];
-						ticks: ticks } }.
+						ticks: ticks } }."
 ]

@@ -12,6 +12,11 @@ GtPlotterDataGroups >> at: anIndex [
 	^ self entities at: anIndex
 ]
 
+{ #category : #accessing }
+GtPlotterDataGroups >> children [
+	^ self entities
+]
+
 { #category : #enumerating }
 GtPlotterDataGroups >> collect: aBlock [
 	^ self entities collect: aBlock
@@ -28,17 +33,14 @@ GtPlotterDataGroups >> decorate: aGroupDecorator [
 GtPlotterDataGroups >> decorated: aBlock [
 	<return: #GtPlotterDaraGroups>
 
-	^ self class new groups: (self collect: aBlock)
+	^ self class new entities: (self collect: [ :eachEntity | eachEntity decorated: aBlock ])
 ]
 
-{ #category : #'api - decoration' }
-GtPlotterDataGroups >> decoratedWith: aGroupDecoratorBlock suchAs: aBlock [
-	^ self decorated: [ :eachGroup | eachGroup decoratedWith: aGroupDecoratorBlock suchAs: aBlock ]
-]
-
-{ #category : #enumerating }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroups >> do: aBlock [
-	self groupsDo: aBlock
+	"Evaluate a given block with each of my direct entities"
+
+	self entities do: aBlock
 ]
 
 { #category : #accessing }
@@ -52,16 +54,34 @@ GtPlotterDataGroups >> entities: aCollectionOfEntities [
 ]
 
 { #category : #grouping }
-GtPlotterDataGroups >> groupedBy: aBlock decorated: aDecorationBlock [
+GtPlotterDataGroups >> groupedBy: aBlock sorted: aSortBlock decorated: aDecorationBlock [
 	<return: #GtPlotterDataGroups>
 	| anArrayOfGroups |
 	
-	anArrayOfGroups := self entities collect: [ :eachGroupOrGroups | eachGroupOrGroups groupedBy: aBlock decorated: aDecorationBlock ].
+	anArrayOfGroups := self entities collect: [ :eachGroupOrGroups | eachGroupOrGroups groupedBy: aBlock sorted: aSortBlock decorated: aDecorationBlock ].
+	^ self class new entities: anArrayOfGroups
+]
+
+{ #category : #'api - grouping' }
+GtPlotterDataGroups >> groupedBy: aBlock then: eachGroupBlock [
+	<return: #GtPlotterDataGroups>
+	| anArrayOfGroups |
+	
+	anArrayOfGroups := self entities collect: [ :eachGroupOrGroups | eachGroupOrGroups groupedBy: aBlock then: eachGroupBlock ].
 	^ self class new entities: anArrayOfGroups
 ]
 
 { #category : #accessing }
+GtPlotterDataGroups >> groups [
+	<return: #GtPlotterDataGroups>
+
+	^ self
+]
+
+{ #category : #'api - enumerating' }
 GtPlotterDataGroups >> groupsDo: aBlock [
+	"Evaluate a block with all groups (containers of values)"
+
 	self entities do: [ :eachGroupOrGroups | eachGroupOrGroups groupsDo: aBlock ]
 ]
 
@@ -74,7 +94,7 @@ GtPlotterDataGroups >> gtGroupsFor: aView [
 		priority: 35;
 		expandAll;
 		items: [ { self } ];
-		children: #entities
+		children: #children
 ]
 
 { #category : #'gt-extension' }
@@ -86,11 +106,8 @@ GtPlotterDataGroups >> gtItemsFor: aView [
 
 { #category : #enumerating }
 GtPlotterDataGroups >> inject: thisValue into: binaryBlock [ 
-	"Accumulate a running value associated with evaluating the argument, binaryBlock, with the current value of the argument, thisValue, and the receiver as block arguments."
-	
-	"( #(1 2 3) inject: 0 into: [ :sum :each | sum + each ] ) >>> 6"
-
 	| nextValue |
+	
 	nextValue := thisValue.
 	self groupsDo: [ :each | nextValue := binaryBlock value: nextValue value: each ].
 	^ nextValue
@@ -115,4 +132,21 @@ GtPlotterDataGroups >> size [
 	<return: #Number>
 
 	^ self entities size
+]
+
+{ #category : #sorting }
+GtPlotterDataGroups >> sorted: aSortBlock [
+	<return: #GtPlotterDataGroups>
+
+	^ self class new entities: (self entities sorted: aSortBlock)
+]
+
+{ #category : #'api - enumerating' }
+GtPlotterDataGroups >> values [
+	^ Array streamContents: [ :aStream | self entities do: [ :eachEntity | aStream nextPutAll: eachEntity values ] ]
+]
+
+{ #category : #'api - enumerating' }
+GtPlotterDataGroups >> valuesDo: aBlock [
+	self entities do: [ :eachEntity | eachEntity valuesDo: aBlock ]
 ]

@@ -10033,6 +10033,11 @@ GtPlotterDataGroupExamples class >> browserData [
 	)
 ]
 
+{ #category : #accessing }
+GtPlotterDataGroupExamples class >> browsers [
+	^ { 'Chrome' . 'Safari' . 'Firefox' . 'Opera' . 'Edge' }
+]
+
 { #category : #'raw data' }
 GtPlotterDataGroupExamples >> browserData [
 	<gtExample>
@@ -10085,13 +10090,41 @@ GtPlotterDataGroupExamples >> groupByBrowserThenByDangerWithColor [
 		colored: [ :aDangerValue | theColors at: aDangerValue ]
 ]
 
-{ #category : #'examples - colored' }
+{ #category : #'examples - labelled' }
 GtPlotterDataGroupExamples >> groupByBrowserWithLabel [
 	<gtExample>
-	
-	^ self browserDataGroup
+	| theGroups theLabels |
+
+	theGroups := self browserDataGroup
 		groupedBy: [ :eachItem | eachItem at: #browser ]
-		labelled: [ :aBrowserName | aBrowserName ]
+		labelled: [ :aBrowserName | aBrowserName ].
+
+	theLabels := Array streamContents: [ :aStream |
+		theGroups do: [ :eachGroup | eachGroup labelDo: [ :aLabel | aStream nextPut: aLabel ] ] ].
+
+	self assert: theGroups size equals: 5.
+	self assert: theLabels size equals: 5.
+	self assert: theLabels asSet equals: self class browsers asSet.
+
+	^ theGroups
+]
+
+{ #category : #'examples - labelled' }
+GtPlotterDataGroupExamples >> groupByBrowserWithLabelSorted [
+	<gtExample>
+	| theGroups theLabels |
+
+	theGroups := self groupByBrowserWithLabel
+		sorted: [ :aGroup :anotherGroup | aGroup label < anotherGroup label ].
+		
+	theLabels := Array streamContents: [ :aStream |
+		theGroups do: [ :eachGroup | eachGroup labelDo: [ :aLabel | aStream nextPut: aLabel ] ] ].
+
+	self assert: theGroups size equals: 5.
+	self assert: theLabels size equals: 5.
+	self assert: theLabels equals: self class browsers sorted.
+
+	^ theGroups
 ]
 
 { #category : #'examples - named grouping' }

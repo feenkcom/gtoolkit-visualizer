@@ -7,9 +7,67 @@ Class {
 	#category : #'GToolkit-Plotter-Data'
 }
 
+{ #category : #'api - utility' }
+GtPlotterDataGroup class >> groupByDecorator: aCollectionOfDecorators [
+	| aPreviousDecorator theGroups |
+	aCollectionOfDecorators size <= 1
+		ifTrue: [ ^ aCollectionOfDecorators ].
+	
+	theGroups := OrderedCollection new.
+	
+	aPreviousDecorator := nil.
+	aCollectionOfDecorators do: [ :eachDecorator |
+		aPreviousDecorator = eachDecorator
+			ifTrue: [ theGroups last value addAll: eachDecorator entity values ]
+			ifFalse: [ theGroups add: (eachDecorator -> (OrderedCollection withAll: eachDecorator entity values)) ].
+		aPreviousDecorator := eachDecorator ].
+	
+	^ theGroups
+		collect: [ :eachAssociation | eachAssociation key copy entity: (self new values: eachAssociation value asArray) ]
+		as: Array
+]
+
+{ #category : #accessing }
+GtPlotterDataGroup >> at: anIndex [
+	^ self class new values: { self values at: anIndex }
+]
+
+{ #category : #accessing }
+GtPlotterDataGroup >> children [
+	^ #()
+]
+
 { #category : #enumerating }
 GtPlotterDataGroup >> collect: aBlock [
 	^ self values collect: aBlock
+]
+
+{ #category : #'api - decorators' }
+GtPlotterDataGroup >> decorated: aDecorationBlock [
+	| theDecoratedValues theGroups |
+	<return: #GtPlotterDataGroups>
+	
+	self size isZero
+		ifTrue: [ ^ self ].
+	
+	(aDecorationBlock isKindOf: GtPlotterDataGroupDecorator)
+		ifTrue: [ ^ aDecorationBlock copy entity: self ].
+
+	theDecoratedValues := self values collect: [ :eachValue |
+		| aGroup aDecorator |
+		aGroup := self class new values: { eachValue }.
+		aDecorator := aDecorationBlock cull: eachValue cull: aGroup.
+		aDecorator entity: aGroup ].
+
+	theGroups := self class groupByDecorator: theDecoratedValues.
+	^ theGroups size = 1
+		ifTrue: [ theGroups first ]
+		ifFalse: [ GtPlotterDataGroups new entities: theGroups ]
+]
+
+{ #category : #'api - enumerating' }
+GtPlotterDataGroup >> do: aBlock [
+	aBlock value: self
 ]
 
 { #category : #accessing }
@@ -29,30 +87,50 @@ GtPlotterDataGroup >> groupIntervals [
 ]
 
 { #category : #'api - grouping' }
-GtPlotterDataGroup >> groupedBy: aBlock decorated: aDecorationBlock [
+GtPlotterDataGroup >> groupedBy: aBlock sorted: aSortBlock decorated: aDecorationBlock [
 	<return: #GtPlotterDataGroups>
-	| theGroupedValues theGroups |
+	| theGroupedValues theAssociations theGroups |
 
 	theGroupedValues := self values groupedBy: aBlock.
 	
-	theGroups := theGroupedValues associations collect: [ :anAssociation |
-		| aDecoration aGroup |
+	theAssociations := theGroupedValues associations.
+	aSortBlock
+		ifNotNil: [ theAssociations := theAssociations sorted: [ :a :b | aSortBlock value: a key value: b key ] ].
+	
+	theGroups := theAssociations collect: [ :anAssociation |
+		| aGroup aDecorator |
 		aGroup := self class new values: anAssociation value.
-		aDecoration := aDecorationBlock cull: anAssociation key cull: anAssociation value.
-		aDecoration isCollection
-			ifTrue: [
-				| anArray |
-				anArray := aDecoration asArray reversed.
-				aDecoration := anArray inject: aGroup into: [ :aPreviousDecorator :aNextDecorator |
-					aNextDecorator entity: aPreviousDecorator.
-					aNextDecorator ].
-				anArray last ]
-			ifFalse: [ aDecoration entity: aGroup ] ].
+		aDecorator := aDecorationBlock cull: anAssociation key cull: anAssociation value.
+		GtPlotterDataGroupWithGrouping new entity: (self class decorate: aGroup with: aDecorator) ].
 
 	^ GtPlotterDataGroups new entities: theGroups
 ]
 
-{ #category : #enumerating }
+{ #category : #'api - grouping' }
+GtPlotterDataGroup >> groupedBy: aBlock then: eachGroupBlock [
+	<return: #GtPlotterDataGroups>
+	| theGroupedValues theAssociations theGroups |
+
+	theGroupedValues := self values groupedBy: aBlock.
+	theAssociations := theGroupedValues associations.
+
+	theGroups := theAssociations collect: [ :anAssociation |
+		| aGroup aModifiedGroup |
+		aGroup := self class new values: anAssociation value.
+		aModifiedGroup := eachGroupBlock cull: aGroup cull: anAssociation key cull: anAssociation value.
+		GtPlotterDataGroupWithGrouping new entity: aModifiedGroup ].
+
+	^ GtPlotterDataGroups new entities: theGroups
+]
+
+{ #category : #accessing }
+GtPlotterDataGroup >> groups [
+	<return: #GtPlotterDataGroups>
+
+	^ GtPlotterDataGroups new entities: { self }
+]
+
+{ #category : #'api - enumerating' }
 GtPlotterDataGroup >> groupsDo: aBlock [
 	aBlock value: self
 ]
@@ -81,6 +159,11 @@ GtPlotterDataGroup >> initialize [
 	values := #()
 ]
 
+{ #category : #testing }
+GtPlotterDataGroup >> isComposite [
+	^ false
+]
+
 { #category : #printing }
 GtPlotterDataGroup >> printOn: aStream [
 	aStream
@@ -98,7 +181,7 @@ GtPlotterDataGroup >> size [
 
 { #category : #enumerating }
 GtPlotterDataGroup >> sorted: aBlock [
-	^ self class new cookies: (self values sorted: aBlock)
+	^ self class new values: (self values sorted: aBlock)
 ]
 
 { #category : #accessing }
@@ -111,4 +194,9 @@ GtPlotterDataGroup >> values [
 { #category : #accessing }
 GtPlotterDataGroup >> values: aCollection [
 	values := aCollection
+]
+
+{ #category : #'api - enumerating' }
+GtPlotterDataGroup >> valuesDo: aBlock [
+	self values do: aBlock
 ]
