@@ -48,7 +48,7 @@ GtPlotterDataEntity >> groupedBy: aBlock colored: aColorBlock [
 
 	^ self
 		groupedBy: aBlock
-		decorated: [ :eachCriteria | GtPlotterDataGroupWithColor new color: (aColorBlock cull: eachCriteria) ]
+		decorated: [ :eachCriteria | GtPlotterDataGroupWithColor new color: (aColorBlock gtValue: eachCriteria) ]
 ]
 
 { #category : #'api - grouping' }
@@ -56,6 +56,15 @@ GtPlotterDataEntity >> groupedBy: aBlock decorated: aDecorationBlock [
 	<return: #GtPlotterDataGroups>
 
 	^ self subclassResponsibility
+]
+
+{ #category : #'api - grouping' }
+GtPlotterDataEntity >> groupedBy: aBlock labelled: aLabelBlock [
+	<return: #GtPlotterDataGroups>
+
+	^ self
+		groupedBy: aBlock
+		decorated: [ :eachCriteria | GtPlotterDataGroupWithLabel new label: (aLabelBlock gtValue: eachCriteria) ]
 ]
 
 { #category : #'api - grouping' }

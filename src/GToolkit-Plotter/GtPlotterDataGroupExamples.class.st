@@ -10056,17 +10056,42 @@ GtPlotterDataGroupExamples >> browserDataGroup [
 ]
 
 { #category : #'examples - grouping' }
-GtPlotterDataGroupExamples >> groupBrowserDataByBrowser [
+GtPlotterDataGroupExamples >> groupByBrowser [
 	<gtExample>
 
 	^ self browserDataGroup groupedBy: [ :eachItem | eachItem at: #browser ]
 ]
 
 { #category : #'examples - grouping' }
-GtPlotterDataGroupExamples >> groupBrowserDataByBrowserThenByDanger [
+GtPlotterDataGroupExamples >> groupByBrowserThenByDanger [
 	<gtExample>
 	
-	^ self groupBrowserDataByBrowser groupedBy: [ :eachItem | eachItem at: #danger ]
+	^ self groupByBrowser groupedBy: [ :eachItem | eachItem at: #danger ]
+]
+
+{ #category : #'examples - colored' }
+GtPlotterDataGroupExamples >> groupByBrowserThenByDangerWithColor [
+	<gtExample>
+	| theColors |
+
+	theColors := {
+		#low -> Color gray.
+		#medium -> Color orange.
+		#high -> Color red
+	 } asDictionary.
+
+	^ self groupByBrowserWithLabel
+		groupedBy: [ :eachItem | eachItem at: #danger ]
+		colored: [ :aDangerValue | theColors at: aDangerValue ]
+]
+
+{ #category : #'examples - colored' }
+GtPlotterDataGroupExamples >> groupByBrowserWithLabel [
+	<gtExample>
+	
+	^ self browserDataGroup
+		groupedBy: [ :eachItem | eachItem at: #browser ]
+		labelled: [ :aBrowserName | aBrowserName ]
 ]
 
 { #category : #'examples - named grouping' }
