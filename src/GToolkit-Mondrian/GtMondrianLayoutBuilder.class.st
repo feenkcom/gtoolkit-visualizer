@@ -73,7 +73,7 @@ GtMondrianLayoutBuilder >> rectanglePack [
 
 { #category : #scripting }
 GtMondrianLayoutBuilder >> tree [
-	^ self custom: GtGradVerticalTreeLayout new
+	^ self custom: GtGraphTreeLayout new
 ]
 
 { #category : #scripting }
