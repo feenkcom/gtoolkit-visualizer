@@ -7,7 +7,7 @@ Class {
 		'contents',
 		'grid'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #'as yet unclassified' }
@@ -50,7 +50,7 @@ GtMondrianUMLClassElement >> initialize [
 
 { #category : #accessing }
 GtMondrianUMLClassElement >> label: aString [
-	label text: aString asRopedText
+	label text: aString asRopedText glamorousRegularFont
 ]
 
 { #category : #accessing }
