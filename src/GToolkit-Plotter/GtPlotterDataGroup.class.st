@@ -62,7 +62,7 @@ GtPlotterDataGroup >> decorated: aDecorationBlock [
 	theGroups := self class groupByDecorator: theDecoratedValues.
 	^ theGroups size = 1
 		ifTrue: [ theGroups first ]
-		ifFalse: [ GtPlotterDataGroups new entities: theGroups ]
+		ifFalse: [ GtPlotterDataVirtualGroups new entities: theGroups ]
 ]
 
 { #category : #'api - enumerating' }
@@ -101,9 +101,9 @@ GtPlotterDataGroup >> groupedBy: aBlock sorted: aSortBlock decorated: aDecoratio
 		| aGroup aDecorator |
 		aGroup := self class new values: anAssociation value.
 		aDecorator := aDecorationBlock cull: anAssociation key cull: anAssociation value.
-		GtPlotterDataGroupWithGrouping new entity: (self class decorate: aGroup with: aDecorator) ].
+		self class decorate: aGroup with: aDecorator ].
 
-	^ GtPlotterDataGroups new entities: theGroups
+	^ GtPlotterDataLogicalGroups new entities: theGroups
 ]
 
 { #category : #'api - grouping' }
@@ -118,16 +118,16 @@ GtPlotterDataGroup >> groupedBy: aBlock then: eachGroupBlock [
 		| aGroup aModifiedGroup |
 		aGroup := self class new values: anAssociation value.
 		aModifiedGroup := eachGroupBlock cull: aGroup cull: anAssociation key cull: anAssociation value.
-		GtPlotterDataGroupWithGrouping new entity: aModifiedGroup ].
+		aModifiedGroup ].
 
-	^ GtPlotterDataGroups new entities: theGroups
+	^ GtPlotterDataLogicalGroups new entities: theGroups
 ]
 
 { #category : #accessing }
 GtPlotterDataGroup >> groups [
 	<return: #GtPlotterDataGroups>
 
-	^ GtPlotterDataGroups new entities: { self }
+	^ GtPlotterDataVirtualGroups new entities: { self }
 ]
 
 { #category : #'api - enumerating' }

@@ -197,13 +197,6 @@ GtPlotterDataEntity >> grouping [
 ]
 
 { #category : #'api - decorators' }
-GtPlotterDataEntity >> grouping: aBoolean [
-	<return: #GtPlotterDataGroups>
-
-	^ self decorated: (GtPlotterDataGroupWithGrouping new isGrouping: aBoolean)
-]
-
-{ #category : #'api - decorators' }
 GtPlotterDataEntity >> groupingDo: aBlock [
 	self
 		detectDecoratorType: GtPlotterDataGroupWithGrouping
@@ -215,6 +208,11 @@ GtPlotterDataEntity >> groups [
 	<return: #GtPlotterDataGroups>
 
 	^ self subclassResponsibility
+]
+
+{ #category : #'api - enumerating' }
+GtPlotterDataEntity >> groupsCollect: aBlock [
+	^ Array streamContents: [ :aStream | self groupsDo: [ :eachGroup | aStream nextPut: (aBlock value: eachGroup) ] ]
 ]
 
 { #category : #'api - enumerating' }
@@ -248,6 +246,11 @@ GtPlotterDataEntity >> isComposite [
 
 { #category : #testing }
 GtPlotterDataEntity >> isDecorator [
+	^ false
+]
+
+{ #category : #testing }
+GtPlotterDataEntity >> isLogicalGroup [
 	^ false
 ]
 

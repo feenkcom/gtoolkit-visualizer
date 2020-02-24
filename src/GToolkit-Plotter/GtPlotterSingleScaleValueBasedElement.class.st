@@ -86,7 +86,7 @@ GtPlotterSingleScaleValueBasedElement >> valueElement [
 
 { #category : #'api - values' }
 GtPlotterSingleScaleValueBasedElement >> valueElement: aBlockOrStencil [
-	valueElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder..
+	valueElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 	self initializeElements
 ]
 

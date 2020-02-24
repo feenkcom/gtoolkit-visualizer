@@ -22,13 +22,6 @@ GtPlotterDataGroups >> collect: aBlock [
 	^ self entities collect: aBlock
 ]
 
-{ #category : #'instance creation' }
-GtPlotterDataGroups >> decorate: aGroupDecorator [
-	"Apply a given decorator on top of the cookies group as the last decorator"
-
-	^ aGroupDecorator cookiesGroup: self
-]
-
 { #category : #'api - decoration' }
 GtPlotterDataGroups >> decorated: aBlock [
 	<return: #GtPlotterDaraGroups>
@@ -91,7 +84,7 @@ GtPlotterDataGroups >> gtGroupsFor: aView [
 
 	^ aView tree
 		title: 'Groups';
-		priority: 35;
+		priority: 1;
 		expandAll;
 		items: [ { self } ];
 		children: #children
@@ -116,6 +109,25 @@ GtPlotterDataGroups >> inject: thisValue into: binaryBlock [
 { #category : #testing }
 GtPlotterDataGroups >> isComposite [
 	^ true
+]
+
+{ #category : #testing }
+GtPlotterDataGroups >> isLogical [
+	<return: #Boolean>
+
+	^ false
+]
+
+{ #category : #testing }
+GtPlotterDataGroups >> isLogicalGroup [
+	^ self isLogical
+]
+
+{ #category : #testing }
+GtPlotterDataGroups >> isVirtual [
+	<return: #Boolean>
+
+	^ false
 ]
 
 { #category : #printing }

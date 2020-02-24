@@ -31,6 +31,13 @@ GtPlotterDataGroupDecorator >> decorated: aDecorationBlock [
 	^ self copy entity: (self entity decorated: aDecorationBlock)
 ]
 
+{ #category : #accessing }
+GtPlotterDataGroupDecorator >> decoratedEntity [
+	^ self entity isDecorator
+		ifTrue: [ self entity decoratedEntity ]
+		ifFalse: [ self entity ]
+]
+
 { #category : #enumerating }
 GtPlotterDataGroupDecorator >> detectDecorator: aBlock ifFound: aFoundBlock ifNone: anExceptionBlock [
 	^ self entity
@@ -79,20 +86,24 @@ GtPlotterDataGroupDecorator >> groupedBy: aBlock then: eachGroupBlock [
 GtPlotterDataGroupDecorator >> groups [
 	<return: #GtPlotterDataGroups>
 
-	^ GtPlotterDataGroups new entities: (self entities collect: [ :eachEntity | self copyWithDeepestEntity: eachEntity ])
+	^ GtPlotterDataVirtualGroups new entities: (self entities collect: [ :eachEntity | self copyWithDeepestEntity: eachEntity ])
 ]
 
 { #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> groupsDo: aBlock [
-	self entity groupsDo: aBlock
+	self decoratedEntity groupsDo: [ :eachGroup | aBlock value: (self copyWithDeepestEntity: eachGroup) ]
 ]
 
 { #category : #'gt-extension' }
 GtPlotterDataGroupDecorator >> gtGroupsFor: aView [
 	<gtView>
 
-	^ self entity
-		gtGroupsFor: aView
+	^ aView tree
+		title: 'Groups';
+		priority: 1;
+		expandAll;
+		items: [ { self } ];
+		children: #children
 ]
 
 { #category : #'gt-extension' }
@@ -118,6 +129,11 @@ GtPlotterDataGroupDecorator >> isComposite [
 { #category : #testing }
 GtPlotterDataGroupDecorator >> isDecorator [
 	^ true
+]
+
+{ #category : #testing }
+GtPlotterDataGroupDecorator >> isLogicalGroup [
+	^ self entity isLogicalGroup
 ]
 
 { #category : #copying }
