@@ -38,7 +38,7 @@ GtPlotter >> gtLiveFor: aView [
 
 { #category : #'api - builders' }
 GtPlotter >> horizontalBarChart [
-	^ self addPlot: GtPlotterHorizontalBarChartBuilder new
+	^ self addPlot: GtPlotterHorizontalBarChart new
 ]
 
 { #category : #initialization }

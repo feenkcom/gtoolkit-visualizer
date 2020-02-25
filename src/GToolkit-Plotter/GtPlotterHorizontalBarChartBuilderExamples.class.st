@@ -31,7 +31,7 @@ GtPlotterHorizontalBarChartBuilderExamples >> browserDataChart [
 	aMaxDuration := theData inject: 0 days intoValues: [ :aDuration :eachValue | aDuration max: (eachValue at: #duration) ].
 	aBarWidthScale := GtPlotterDurationScale new domainFrom: 0 minutes to: (aMaxDuration / 1 year) ceiling years.
 
-	barChart := GtPlotterHorizontalBarChartBuilder new.
+	barChart := GtPlotterHorizontalBarChart new.
 	barChart barElement: [ BlElement new geometry: BlStadium new ].
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #duration ].
@@ -104,7 +104,7 @@ GtPlotterHorizontalBarChartBuilderExamples >> sequoiaSearchResults [
 	aMaxPages := theData inject: 0 intoValues: [ :anAmount :eachValue | anAmount max: (eachValue at: #pages) ].
 	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: aMaxPages.
 
-	barChart := GtPlotterHorizontalBarChartBuilder new.
+	barChart := GtPlotterHorizontalBarChart new.
 	barChart barLabelWidth: 185.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
@@ -135,7 +135,7 @@ GtPlotterHorizontalBarChartBuilderExamples >> sequoiaSearchResultsGroupedByGenus
 	aMaxPages := theData inject: 0 intoValues: [ :anAmount :eachValue | anAmount max: (eachValue at: #pages) ].
 	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: aMaxPages.
 
-	barChart := GtPlotterHorizontalBarChartBuilder new.
+	barChart := GtPlotterHorizontalBarChart new.
 	barChart barElement: [ :aGtPlotterContext | BlElement new look: ((BrGlamorousWithTooltipLook2 content: [
 			BrLabel new
 				text: (aGtPlotterContext originalValue at: #species);
@@ -143,6 +143,47 @@ GtPlotterHorizontalBarChartBuilderExamples >> sequoiaSearchResultsGroupedByGenus
 	barChart barLabelWidth: 125.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
+	barChart amountOfTicks: 4.
+	barChart with: theData.
+
+	^ barChart
+]
+
+{ #category : #'example - sequoia' }
+GtPlotterHorizontalBarChartBuilderExamples >> sequoiaSearchResultsGroupedByGenusAndExtinctAsAdjacentBars [
+	<gtExample>
+	| theData barChart aMaxPages aBarWidthScale aBarHeightScale |
+		
+	theData := GtPlotterDataGroup new values: self sequoias.
+	
+	theData := theData sorted: [ :a :b | (a at: #pages) > (b at: #pages) ].
+	
+	theData := theData
+		groupedBy: [ :each | each at: #genus ]
+		sorted: [ :a :b | a < b ]
+		labelled: [ :eachGenus | eachGenus ].
+	
+	theData := theData
+		groupedBy: [ :each | each at: #extinct ]
+		sorted: [ :a :b | a not ]
+		colored: [ :isExtinct | isExtinct
+			ifTrue: [ Color r: 216 g: 55 b: 62 range: 255 ]
+			ifFalse: [ Color r: 66 g: 188 b: 238 range: 255 ] ].
+
+	aMaxPages := theData inject: 0 intoValues: [ :anAmount :eachValue | anAmount max: (eachValue at: #pages) ].
+	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: aMaxPages.
+	aBarHeightScale := GtPlotterLinearScale new
+		domainFrom: 0 to: theData size;
+		rangeFrom: 10 to: 60.
+
+	barChart := GtPlotterHorizontalBarChart new.
+	barChart withAdjacentBars.
+	barChart groupSpacing: 5.
+	barChart barLabelWidth: 125.
+	barChart barWidthScale: aBarWidthScale.
+	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
+	barChart barHeightScale: aBarHeightScale.
+	barChart barHeightData: [ :eachGroup | eachGroup size ].
 	barChart amountOfTicks: 4.
 	barChart with: theData.
 
@@ -161,7 +202,7 @@ GtPlotterHorizontalBarChartBuilderExamples >> websiteVisitsChartFromData: theDat
 		domainFrom: 0 to: aMaxFrequency;
 		rangeFrom: 10 to: 40.
 
-	barChart := GtPlotterHorizontalBarChartBuilder new
+	barChart := GtPlotterHorizontalBarChart new
 		barLabelWidth: 120;
 		barGap: 6;
 		barWidthScale: aBarWidthScale;

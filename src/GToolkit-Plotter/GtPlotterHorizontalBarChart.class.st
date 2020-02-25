@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPlotterHorizontalBarChartBuilder,
+	#name : #GtPlotterHorizontalBarChart,
 	#superclass : #GtPlotterBuilder,
 	#instVars : [
 		'axisWidth',
@@ -19,127 +19,135 @@ Class {
 		'barLabelLookStencil',
 		'data',
 		'barGap',
-		'barElementStencil'
+		'barElementStencil',
+		'barGroupStencil',
+		'groupSpacing'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> amountOfTicks [
+GtPlotterHorizontalBarChart >> amountOfTicks [
 	<return: #Number>
 
 	^ amountOfTicks
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> amountOfTicks: aNumber [
+GtPlotterHorizontalBarChart >> amountOfTicks: aNumber [
 	amountOfTicks := aNumber
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barElement: aStencil [
+GtPlotterHorizontalBarChart >> barElement: aStencil [
 	"[ :aGtPlotterSingleScaleContext | BlElement new ]"
-	barElementStencil := aStencil
+	barElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
 { #category : #'api - layout' }
-GtPlotterHorizontalBarChartBuilder >> barGap [
+GtPlotterHorizontalBarChart >> barGap [
 	<return: #Number>
 
 	^ barGap
 ]
 
 { #category : #'api - layout' }
-GtPlotterHorizontalBarChartBuilder >> barGap: aNumber [
+GtPlotterHorizontalBarChart >> barGap: aNumber [
 	barGap := aNumber
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barHeightData: aBlock [
+GtPlotterHorizontalBarChart >> barGroupStencil: aGtPlotterHorizontalBarGroupStencilBuilder [
+	"[ :aGtPlotterBar :aGtPlotterDataEntity | ]"
+	barGroupStencil := aGtPlotterHorizontalBarGroupStencilBuilder asStencilBuilder: GtPlotterHorizontalBarGroupStencilBuilder
+]
+
+{ #category : #'api - bars' }
+GtPlotterHorizontalBarChart >> barHeightData: aBlock [
 	barHeightDataBlock := aBlock
 ]
 
 { #category : #'api - scale' }
-GtPlotterHorizontalBarChartBuilder >> barHeightScale [
+GtPlotterHorizontalBarChart >> barHeightScale [
 	<return: #GtPlotterScale>
 
 	^ barHeightScale
 ]
 
 { #category : #'api - scale' }
-GtPlotterHorizontalBarChartBuilder >> barHeightScale: aGtPlotterScale [
+GtPlotterHorizontalBarChart >> barHeightScale: aGtPlotterScale [
 	barHeightScale := aGtPlotterScale
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barLabelColor [
+GtPlotterHorizontalBarChart >> barLabelColor [
 	<return: #Color>
 	
 	^ barLabelColor
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barLabelColor: aColor [	
+GtPlotterHorizontalBarChart >> barLabelColor: aColor [	
 	barLabelColor := aColor
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBarChartBuilder >> barLabelFormat: aBlock [
+GtPlotterHorizontalBarChart >> barLabelFormat: aBlock [
 	barLabelFormat := aBlock
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barLabelLookStencil [
+GtPlotterHorizontalBarChart >> barLabelLookStencil [
 	^ barLabelLookStencil
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barLabelLookStencil: aStencil [
+GtPlotterHorizontalBarChart >> barLabelLookStencil: aStencil [
 	barLabelLookStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBarChartBuilder >> barLabelStencil: aBrColumnCellStencilBuilder [
+GtPlotterHorizontalBarChart >> barLabelStencil: aBrColumnCellStencilBuilder [
 	barLabelStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
 ]
 
 { #category : #'api - layout' }
-GtPlotterHorizontalBarChartBuilder >> barLabelWidth [
+GtPlotterHorizontalBarChart >> barLabelWidth [
 	<return: #Number>
 
 	^ barLabelWidth
 ]
 
 { #category : #'api - layout' }
-GtPlotterHorizontalBarChartBuilder >> barLabelWidth: aNumber [
+GtPlotterHorizontalBarChart >> barLabelWidth: aNumber [
 	barLabelWidth := aNumber
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barStencil: aGtPlotterHorizontalBarStencilBuilder [
+GtPlotterHorizontalBarChart >> barStencil: aGtPlotterHorizontalBarStencilBuilder [
 	"[ :aGtPlotterBar :anObject :aGtPlotterDataEntity | ]"
 	barStencil := aGtPlotterHorizontalBarStencilBuilder asStencilBuilder: GtPlotterHorizontalBarStencilBuilder
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChartBuilder >> barWidthData: aBlock [
+GtPlotterHorizontalBarChart >> barWidthData: aBlock [
 	barWidthDataBlock := aBlock
 ]
 
 { #category : #'api - scale' }
-GtPlotterHorizontalBarChartBuilder >> barWidthScale [
+GtPlotterHorizontalBarChart >> barWidthScale [
 	<return: #GtPlotterScale>
 
 	^ barWidthScale
 ]
 
 { #category : #'api - scale' }
-GtPlotterHorizontalBarChartBuilder >> barWidthScale: aGtPlotterScale [
+GtPlotterHorizontalBarChart >> barWidthScale: aGtPlotterScale [
 	barWidthScale := aGtPlotterScale
 ]
 
 { #category : #'api - instantiation' }
-GtPlotterHorizontalBarChartBuilder >> create [
+GtPlotterHorizontalBarChart >> create [
 	<return: #Object>
 	| aContainer theBars |
 
@@ -173,7 +181,7 @@ GtPlotterHorizontalBarChartBuilder >> create [
 ]
 
 { #category : #'private - instance creation' }
-GtPlotterHorizontalBarChartBuilder >> createBarRowFor: aGtPlotterDataEntity grouping: shouldGroup [
+GtPlotterHorizontalBarChart >> createBarRowFor: aGtPlotterDataEntity grouping: shouldGroup [
 	| aRowLabel aContainer aRowLabelElement |
 
 	aRowLabel := aGtPlotterDataEntity label.
@@ -194,7 +202,7 @@ GtPlotterHorizontalBarChartBuilder >> createBarRowFor: aGtPlotterDataEntity grou
 	
 	shouldGroup ifTrue: [
 		aContainer
-			margin: (BlInsets top: self groupMargin / 2.0 bottom: self groupMargin / 2.0);
+			margin: (BlInsets top: self groupSpacing / 2.0 bottom: self groupSpacing / 2.0);
 			addChild: (self createVerticalSeparator margin: (BlInsets left: self gridlineOffset / 2.0 right: self gridlineOffset / 2.0)) ].
 	
 	aContainer addChild: (self createGroupBarsFor: aGtPlotterDataEntity).
@@ -203,7 +211,7 @@ GtPlotterHorizontalBarChartBuilder >> createBarRowFor: aGtPlotterDataEntity grou
 ]
 
 { #category : #'private - instance creation' }
-GtPlotterHorizontalBarChartBuilder >> createGroupBarsFor: aGtPlotterDataEntity [
+GtPlotterHorizontalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	|  isStacking theBars aContainer |
 	
 	aGtPlotterDataEntity isLogicalGroup
@@ -221,7 +229,7 @@ GtPlotterHorizontalBarChartBuilder >> createGroupBarsFor: aGtPlotterDataEntity [
 
 	isStacking
 		ifTrue: [ aContainer layout: BlFrameLayout new ]
-		ifFalse: [ aContainer layout: (BlLinearLayout vertical cellSpacing: aGtPlotterDataEntity isLogicalGroup asBit * self groupMargin) ].
+		ifFalse: [ aContainer layout: (BlLinearLayout vertical cellSpacing: aGtPlotterDataEntity isLogicalGroup asBit * self groupSpacing) ].
 
 	aContainer addChildren: theBars.
 
@@ -229,7 +237,7 @@ GtPlotterHorizontalBarChartBuilder >> createGroupBarsFor: aGtPlotterDataEntity [
 ]
 
 { #category : #'private - instance creation' }
-GtPlotterHorizontalBarChartBuilder >> createLeafBarsFor: aGtPlotterDataEntity [
+GtPlotterHorizontalBarChart >> createLeafBarsFor: aGtPlotterDataEntity [
 	"Create non composite bars"
 	|  isStacking aContainer |
 
@@ -245,24 +253,22 @@ GtPlotterHorizontalBarChartBuilder >> createLeafBarsFor: aGtPlotterDataEntity [
 		ifFalse: [ aContainer layout: BlLinearLayout vertical ].
 
 	aContainer addChildren: (aGtPlotterDataEntity groupsCollect: [ :eachGroup |
-		eachGroup values collect: [ :eachValue |
-			(barStencil
-				group: eachGroup;
-				value: eachValue;
-				bar: (GtPlotterBar new
-					stencil: barElementStencil;
-					widthScale: barWidthScale;
-					widthData: barWidthDataBlock;
-					heightScale: barHeightScale;
-					heightData: barHeightDataBlock;
-					paint: eachGroup color;
-					gap: self barGap)) asElement ] ]) flattened.
-			
+		(barGroupStencil
+			group: eachGroup;
+			barStencil: barStencil;
+			bar: (GtPlotterBar new
+				stencil: barElementStencil;
+				widthScale: barWidthScale;
+				widthData: barWidthDataBlock;
+				heightScale: barHeightScale;
+				heightData: barHeightDataBlock;
+				gap: self barGap)) asElement ]).
+
 	^ aContainer
 ]
 
 { #category : #'private - instance creation' }
-GtPlotterHorizontalBarChartBuilder >> createVerticalSeparator [
+GtPlotterHorizontalBarChart >> createVerticalSeparator [
 	^ BlElement new
 		constraintsDo: [ :c |
 			c vertical matchParent.
@@ -271,17 +277,22 @@ GtPlotterHorizontalBarChartBuilder >> createVerticalSeparator [
 ]
 
 { #category : #'api - layout' }
-GtPlotterHorizontalBarChartBuilder >> gridlineOffset [
+GtPlotterHorizontalBarChart >> gridlineOffset [
 	^ 20
 ]
 
 { #category : #'api - layout' }
-GtPlotterHorizontalBarChartBuilder >> groupMargin [
-	^ 20
+GtPlotterHorizontalBarChart >> groupSpacing [
+	^ groupSpacing
+]
+
+{ #category : #'api - layout' }
+GtPlotterHorizontalBarChart >> groupSpacing: aNumber [
+	groupSpacing := aNumber
 ]
 
 { #category : #initialization }
-GtPlotterHorizontalBarChartBuilder >> initialize [
+GtPlotterHorizontalBarChart >> initialize [
 	super initialize.
 	
 	axisWidth := 120.
@@ -291,6 +302,7 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 	tickLabelLookStencil := [ BrGlamorousLabelLook new glamorousRegularFontAndSize ] asStencil.
 
 	amountOfTicks := 10.
+	groupSpacing := 20.
 	
 	barGap := 6.
 	barLabelWidth := 120.
@@ -302,8 +314,9 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 	barWidthDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
 	barLabelLookStencil := [ BrGlamorousLabelLook new glamorousRegularFontAndSize ] asStencil.
 
+	barGroupStencil := GtPlotterHorizontalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterHorizontalBarStencilBuilder new.
-	barElementStencil := [ :aGtPlotterSingleScaleContext | BlElement new ].
+	barElementStencil := [ :aGtPlotterSingleScaleContext | BlElement new ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 
 	data := GtPlotterDataGroup new.
 
@@ -314,43 +327,43 @@ GtPlotterHorizontalBarChartBuilder >> initialize [
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> tickLabelColor [
+GtPlotterHorizontalBarChart >> tickLabelColor [
 	<return: #Color>
 	
 	^ tickLabelColor
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> tickLabelColor: aColor [
+GtPlotterHorizontalBarChart >> tickLabelColor: aColor [
 	tickLabelColor := aColor
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> tickLabelFormat [
+GtPlotterHorizontalBarChart >> tickLabelFormat [
 	<return: #BlockClosure>
 
 	^ tickLabelFormat
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> tickLabelFormat: aBlock [
+GtPlotterHorizontalBarChart >> tickLabelFormat: aBlock [
 	tickLabelFormat := aBlock
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> tickLabelLook [
+GtPlotterHorizontalBarChart >> tickLabelLook [
 	<return: #BrStencil>
 
 	^ tickLabelLookStencil
 ]
 
 { #category : #'api - ticks' }
-GtPlotterHorizontalBarChartBuilder >> tickLabelLook: aStencil [
+GtPlotterHorizontalBarChart >> tickLabelLook: aStencil [
 	tickLabelLookStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBarChartBuilder >> ticks [
+GtPlotterHorizontalBarChart >> ticks [
 	<return: #Number>
 	
 	self
@@ -361,7 +374,7 @@ GtPlotterHorizontalBarChartBuilder >> ticks [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBarChartBuilder >> ticks: anAmountOfTicks [
+GtPlotterHorizontalBarChart >> ticks: anAmountOfTicks [
 
 	self
 		deprecated: 'Please use amountOfTicks* methods instead.'
@@ -373,6 +386,16 @@ GtPlotterHorizontalBarChartBuilder >> ticks: anAmountOfTicks [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBarChartBuilder >> with: aGtPlotterDataGroup [
+GtPlotterHorizontalBarChart >> with: aGtPlotterDataGroup [
 	data := aGtPlotterDataGroup
+]
+
+{ #category : #'api - bars' }
+GtPlotterHorizontalBarChart >> withAdjacentBars [
+	self barGroupStencil: GtPlotterHorizontalAdjacentBarGroupStencilBuilder new
+]
+
+{ #category : #'api - bars' }
+GtPlotterHorizontalBarChart >> withSeparateBars [
+	self barGroupStencil: GtPlotterHorizontalSeparateBarGroupStencilBuilder new
 ]

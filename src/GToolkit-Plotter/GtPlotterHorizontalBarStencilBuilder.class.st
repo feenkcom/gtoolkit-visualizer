@@ -29,7 +29,7 @@ GtPlotterHorizontalBarStencilBuilder >> buildDefault [
 		scaleData: self bar widthData;
 		margin: (BlInsets top: self bar gap / 2.0 bottom: self bar gap / 2.0);
 		valueElement: self bar stencil;
-		valueStyle: [ :anElement | anElement background: self bar paint ];
+		valueStyle: [ :anElement | anElement background: self group color ];
 		valueLayout: [ :anElement :aGtPlotterScaleContext |
 			anElement constraintsDo: [ :c |
 				c horizontal matchParent.

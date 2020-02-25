@@ -2,7 +2,6 @@ Class {
 	#name : #GtPlotterBar,
 	#superclass : #Object,
 	#instVars : [
-		'paint',
 		'widthScale',
 		'widthData',
 		'heightScale',
@@ -41,16 +40,6 @@ GtPlotterBar >> heightScale [
 { #category : #accessing }
 GtPlotterBar >> heightScale: anObject [
 	heightScale := anObject
-]
-
-{ #category : #accessing }
-GtPlotterBar >> paint [
-	^ paint
-]
-
-{ #category : #accessing }
-GtPlotterBar >> paint: anObject [
-	paint := anObject
 ]
 
 { #category : #accessing }

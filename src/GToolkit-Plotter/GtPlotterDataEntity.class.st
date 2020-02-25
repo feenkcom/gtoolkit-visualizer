@@ -154,6 +154,16 @@ GtPlotterDataEntity >> groupedBy: aBlock named: aNameStringOrSymbol [
 ]
 
 { #category : #'api - grouping' }
+GtPlotterDataEntity >> groupedBy: aBlock sorted: aSortBlock [
+	<return: #GtPlotterDataGroups>
+
+	^ self
+		groupedBy: aBlock
+		sorted: aSortBlock
+		decorated: [ :eachCriteria | GtPlotterDataGroupWithCriteria new criteria: eachCriteria ]
+]
+
+{ #category : #'api - grouping' }
 GtPlotterDataEntity >> groupedBy: aBlock sorted: aSortBlock colored: aColorBlock [
 	<return: #GtPlotterDataGroups>
 
