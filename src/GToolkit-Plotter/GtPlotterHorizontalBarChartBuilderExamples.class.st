@@ -136,7 +136,8 @@ GtPlotterHorizontalBarChartBuilderExamples >> sequoiaSearchResultsGroupedByGenus
 	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: aMaxPages.
 
 	barChart := GtPlotterHorizontalBarChart new.
-	barChart barElement: [ :aGtPlotterContext | BlElement new look: ((BrGlamorousWithTooltipLook2 content: [
+	barChart barElement: [ :aGtPlotterContext | BlElement new
+		look: ((BrGlamorousWithTooltipLook2 content: [
 			BrLabel new
 				text: (aGtPlotterContext originalValue at: #species);
 				look: (BrGlamorousLabelLook new padding: (BlInsets all: 5)) ]) hideDelay: 0; showDelay: 0) ].

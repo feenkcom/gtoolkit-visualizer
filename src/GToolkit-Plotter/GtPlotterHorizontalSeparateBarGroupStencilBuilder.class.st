@@ -25,7 +25,11 @@ GtPlotterHorizontalSeparateBarGroupStencilBuilder >> buildDefault [
 		(barStencil
 			group: self group;
 			value: eachValue;
-			bar: self bar) asElement ]) flattened.
+			bar: self bar) asElement
+				when: BlClickEvent do: [ :anEvent |
+					anEvent consumed: true.
+					anEvent currentTarget phlow spawnObject: eachValue ]
+			]) flattened.
 
 	^ aContainer
 ]
