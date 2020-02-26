@@ -35,32 +35,63 @@ GtExampleGroup >> gtInspectorMondrianMapIn: composite [
 ]
 
 { #category : #'*GToolkit-Mondrian' }
-GtExampleGroup >> paintMapWith: view [
-	view nodes
-		umlClassShapeWithName: [ :each | each key name ];
-		with: (self examples groupedBy: #methodClass) associations 
-		forEach: [ :assoc | 
-			view nodes
-				stencil: [ :each |
-					BlElement new
+GtExampleGroup >> paintMapWith: m [
+	| grouped all local |
+	local := self examples collect: #example.
+	all := local withDeepCollect: #directDependencies as: Set.
+	grouped := all groupedBy: [:each | each method methodClass ].
+	m nodes 
+		stencil: [:assoc | 
+			| pane default |
+			pane := BlElement new
+				constraintsDo: [:c | 
+					c horizontal fitContent.
+					c vertical fitContent ];
+				layout: BlLinearLayout vertical alignCenter;
+				background: Color white;
+				look: BrShadowLook;
+				margin: (BlInsets all: 10);
+				padding: (BlInsets top: 0 left: 10 bottom: 10 right: 10).
+			default := BlElement new
+				constraintsDo: [:c | 
+					c horizontal fitContent.
+					c vertical fitContent ].
+			default graph beChildrenContainer: #default.
+			pane addChild: (BrLabel new text: assoc key name; look: (BrGlamorousLabelLook new foreground: Color gray); margin: (BlInsets bottom: 10)).
+			pane addChild: default.
+			pane ];
+		with: grouped associations;
+		forEach: [:assoc | 
+			m nodes 
+				stencil: [ :each | | element |
+					element := BlElement new
 						geometry: BlEllipse new;
-						border: (BlBorder paint: Color black);
-						zIndex: 5;
+						constraintsDo: [:c | c horizontal fitContent. c vertical fitContent];
+						border: (BlBorder paint: Color black width: 2);
 						size: 20@20;
-						constraintsDo: [ :constraints | constraints padding: (BlInsets all: 10) ] ];
-				with: assoc value.
-			view layout tree levelDistance: 100 ].
-	view edges 
-		fromCenterBottom;
-		toCenterTop;
+						when: BlClickEvent do: [:e | e target phlow spawnObject: each];
+						look: (BrGlamorousWithTooltipLook2 new 
+							contentStencil: [ | container |
+							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: each) expanded: true) asElement.
+							container 
+								when: GtPhlowObjectToSpawn do: [:e | 
+								element fireEvent: (GtPhlowObjectToSpawn new object: e object; sourceElement: e target)]];
+								preferredExtent: 200@200;
+								showDelay: 100 milliSeconds;
+								hideDelay: 200 milliSeconds ).
+					(local includes: each) ifFalse: [element border: (BlBorder paint: Color gray width: 2)].
+					element ];
+		with: assoc value. 
+	m layout horizontalDominanceTree nodeDistance: 2; treesDistance: 4; levelDistance: 10.].
+	m edges 
+		fromNearestTightCircle;
+		toNearestTightCircle;
 		stencil: [ :each | 
-			BlLineElement new
-				zIndex: 4;
-				border: (BlBorder paint: (Color gray alpha: 0.2) width: 2) ];
-		connect: self examples 
-		from: #yourself 
-		toAll: [:each | 
-			self examples select: [:exampleWithResult | 
-				each example directDependencies anySatisfy: [ :dependency | exampleWithResult example = dependency ]] ].
-	view layout custom: (BlGridLayout horizontal columnCount: 10)
+			BlParabollaArcElement new curvatureFraction: 0.1;
+						border: (BlBorder paint: (Color gray alpha: 0.2) width: 2);
+						toHead: (BlArrowheadSimpleArrow new
+							border: (BlBorder builder paint: (Color gray alpha: 0.2); width: 2; build))];
+		connect: all toAll: #directDependencies.
+	m layout rectanglePack.
+m
 ]
