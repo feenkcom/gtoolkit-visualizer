@@ -28,7 +28,7 @@ GtPlotterHorizontalSparkline >> create [
 		theVertices := aGroup values collect: [ :eachValue | (scaleX map: (scaleDataBlockX cull: eachValue)) @ (scaleY map: (scaleDataBlockY cull: eachValue)) ].
 		
 		BlElement new
-			geometry: (BlSparkline vertices: theVertices);
+			geometry: (BlNormalizedPolyline vertices: theVertices);
 			border: (BlBorder paint: aGroup color width: self lineWidth);
 			outskirts: BlOutskirts centered;
 			constraintsDo: [ :c |
