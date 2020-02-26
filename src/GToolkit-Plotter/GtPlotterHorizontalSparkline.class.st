@@ -25,7 +25,7 @@ GtPlotterHorizontalSparkline >> create [
 	aContainer addChildren: (data groupsCollect: [ :aGroup |
 		| theVertices |
 		
-		theVertices := aGroup values collect: [ :eachValue | (scaleX map: (scaleDataBlockX cull: eachValue)) @ (scaleY map: (scaleDataBlockY cull: eachValue)) ].
+		theVertices := aGroup values collect: [ :eachValue | ((scaleX map: (scaleDataBlockX cull: eachValue)) @ (1 - (scaleY map: (scaleDataBlockY cull: eachValue)))) ].
 		
 		BlElement new
 			geometry: (BlNormalizedPolyline vertices: theVertices);
