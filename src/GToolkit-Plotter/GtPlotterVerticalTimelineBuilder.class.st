@@ -10,7 +10,8 @@ Class {
 		'projectionDataBlock',
 		'projectionLabelFormat',
 		'timelineStencil',
-		'projectionLineStencil'
+		'projectionLineStencil',
+		'data'
 	],
 	#classVars : [
 		'AxisProjection',
@@ -25,6 +26,26 @@ GtPlotterVerticalTimelineBuilder class >> initialize [
 	
 	AxisProjection := #projection.
 	AxisTicks := #ticks
+]
+
+{ #category : #'api - instantiation' }
+GtPlotterVerticalTimelineBuilder >> create [
+	<return: #Object>	
+	| anAxisElement |
+
+	anAxisElement := (axisType = AxisProjection)
+		ifTrue: [ self createAxisLabelProjections: data ]
+		ifFalse: [ axisType = AxisTicks
+			ifTrue: [ self createAxisLabelTicks ]
+			ifFalse: [ self error: ('Unknown axis type: {1}' format: { axisType }) ] ].
+	
+	^ BrHorizontalPane new
+			matchParent;
+			padding: (BlInsets all: 15);
+			addChildren: { 
+				anAxisElement.
+				self createTimeline: data.
+				self createProjections: data }
 ]
 
 { #category : #private }
@@ -188,24 +209,7 @@ GtPlotterVerticalTimelineBuilder >> timelineStencil: aStencil [
 
 { #category : #'api - instance creation' }
 GtPlotterVerticalTimelineBuilder >> with: aCollectionOfDomainObjects [
-	| anAxisElement |
-	self topStep removeChildren.
-	
-	anAxisElement := (axisType = AxisProjection)
-		ifTrue: [ self createAxisLabelProjections: aCollectionOfDomainObjects ]
-		ifFalse: [ axisType = AxisTicks
-			ifTrue: [ self createAxisLabelTicks ]
-			ifFalse: [ self error: ('Unknown axis type: {1}' format: { axisType }) ] ].
-	
-	self topStep root
-		layout: BlFrameLayout new;
-		addChild: (BrHorizontalPane new
-			matchParent;
-			padding: (BlInsets all: 15);
-			addChildren: { 
-				anAxisElement.
-				self createTimeline: aCollectionOfDomainObjects.
-				self createProjections: aCollectionOfDomainObjects })
+	data := aCollectionOfDomainObjects
 ]
 
 { #category : #'api - builder' }

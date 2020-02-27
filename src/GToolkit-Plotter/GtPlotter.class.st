@@ -55,6 +55,10 @@ GtPlotter >> line [
 
 { #category : #accessing }
 GtPlotter >> root [
+	self
+		deprecated: 'Use #description instead.'
+		transformWith: '`@receiver root' -> '`@receiver asElement'.
+
 	^ self asElement
 ]
 
