@@ -1,58 +1,33 @@
 Class {
 	#name : #GtPlotterVerticalTimelineExamples,
-	#superclass : #GtPlotterTimelineExamples,
-	#category : #'GToolkit-Plotter-Example - Charts'
+	#superclass : #GtPlotterBuilderExamples,
+	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalTimelineExamples >> dots [
+GtPlotterVerticalTimelineExamples >> exampleVersions [
 	<gtExample>
+	| aPlotter |
 	
-	^ GtPlotterMarkersElement new
-		scaleY: self scale;
-		x: [ :each | 0.5 ];
-		y: #key;
-		constraintsDo: [ :c | c horizontal fitContent ];
-		markerStyle: [ :anElement |
-			anElement
-				size: 16@16;
-				border: (BlBorder paint: Color gray width: 2);
-				background: Color white ];
-		values: self versions
-]
-
-{ #category : #'examples - axis' }
-GtPlotterVerticalTimelineExamples >> labels [
-	<gtExample>
-	
-	^ GtPlotterVerticalTickLabelsElement new
-		scale: self scale;
-		labelFormat: [ :eachDateAndTime | (eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) asRopedText foreground: Color darkGray ];
-		constraintsDo: [ :c | c horizontal fitContent ];
-		clipChildren: false;
-		labels: 10
-]
-
-{ #category : #'examples - timeline' }
-GtPlotterVerticalTimelineExamples >> line [
-	<gtExample>
-	
-	^ BlElement new
-		width: 2;
-		background: (Color veryVeryLightGray);
-		constraintsDo: [ :c | 
-			c vertical matchParent.
-			c frame horizontal alignCenterAt: 0.5 ]
-]
-
-{ #category : #'examples - timeline' }
-GtPlotterVerticalTimelineExamples >> timeline [
-	<gtExample>
-	
-	^ BrFrame new
-		hFitContent;
-		vMatchParent;
-		addChildren: {
-			self line.
-			self dots }
+	aPlotter := GtPlotter new.
+	aPlotter verticalTimeline
+		withProjectionAxis;
+		timelineData: #key;
+		projectionData: #value;
+		timelineFrom: 2015 asYear to: 2019 asYear;
+		with: { 
+			(Date year: 2015 month: 10 day: 5) -> 'v1.0.0'.
+			(Date year: 2015 month: 12 day: 1) -> 'v1.1.0'.
+			(Date year: 2015 month: 12 day: 15) -> 'v1.1.1'.
+			(Date year: 2016 month: 3 day: 10) -> 'v1.2.0'.
+			(Date year: 2016 month: 3 day: 23) -> 'v1.2.1'.
+			(Date year: 2016 month: 4 day: 7) -> 'v1.2.2'.
+			(Date year: 2016 month: 4 day: 19) -> 'v1.2.3'.
+			(Date year: 2016 month: 8 day: 3) -> 'v1.3.0'.
+			(Date year: 2017 month: 9 day: 15) -> 'v1.4.0'.
+			(Date year: 2017 month: 10 day: 6) -> 'v1.4.1'.
+			(Date year: 2017 month: 11 day: 11) -> 'v1.4.2'.
+			(Date year: 2018 month: 2 day: 28) -> 'v1.4.3'
+		}.
+	^ aPlotter
 ]

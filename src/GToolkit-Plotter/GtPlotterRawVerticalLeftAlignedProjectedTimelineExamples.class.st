@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterVerticalLeftAlignedProjectedTimelineExamples,
-	#superclass : #GtPlotterVerticalTimelineExamples,
+	#name : #GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples,
+	#superclass : #GtPlotterRawVerticalTimelineExamples,
 	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'examples - axis' }
-GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> axis [
+GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples >> axis [
 	<gtExample>
 
 	^ BrHorizontalPane new
@@ -16,7 +16,7 @@ GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> axis [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> axisLabels [
+GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples >> axisLabels [
 	<gtExample>
 
 	^ GtPlotterVerticalValueProjectionsElement new
@@ -35,7 +35,7 @@ GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> axisLabels [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> content [
+GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples >> content [
 	<gtExample>
 	
 	^ BrFrame new
@@ -46,7 +46,7 @@ GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> content [
 ]
 
 { #category : #'examples - plot' }
-GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> plot [
+GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples >> plot [
 	<gtExample>
 	
 	^ BrHorizontalPane new
@@ -61,7 +61,7 @@ GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> plot [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> projectionLabels [
+GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples >> projectionLabels [
 	<gtExample>
 
 	^ GtPlotterVerticalValueProjectionsElement new
@@ -75,7 +75,7 @@ GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> projectionLabels [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedProjectedTimelineExamples >> projections [
+GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples >> projections [
 	<gtExample>
 
 	^ GtPlotterVerticalValueProjectionsElement new

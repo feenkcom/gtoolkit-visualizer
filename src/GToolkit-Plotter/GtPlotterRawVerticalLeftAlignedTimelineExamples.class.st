@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterVerticalLeftAlignedTimelineExamples,
-	#superclass : #GtPlotterVerticalTimelineExamples,
+	#name : #GtPlotterRawVerticalLeftAlignedTimelineExamples,
+	#superclass : #GtPlotterRawVerticalTimelineExamples,
 	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'examples - axis' }
-GtPlotterVerticalLeftAlignedTimelineExamples >> axis [
+GtPlotterRawVerticalLeftAlignedTimelineExamples >> axis [
 	<gtExample>
 
 	^ BrHorizontalPane new
@@ -16,7 +16,7 @@ GtPlotterVerticalLeftAlignedTimelineExamples >> axis [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedTimelineExamples >> content [
+GtPlotterRawVerticalLeftAlignedTimelineExamples >> content [
 	<gtExample>
 	
 	^ BrFrame new
@@ -27,7 +27,7 @@ GtPlotterVerticalLeftAlignedTimelineExamples >> content [
 ]
 
 { #category : #'examples - plot' }
-GtPlotterVerticalLeftAlignedTimelineExamples >> plot [
+GtPlotterRawVerticalLeftAlignedTimelineExamples >> plot [
 	<gtExample>
 	
 	^ BrHorizontalPane new
@@ -42,7 +42,7 @@ GtPlotterVerticalLeftAlignedTimelineExamples >> plot [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedTimelineExamples >> projectionLabels [
+GtPlotterRawVerticalLeftAlignedTimelineExamples >> projectionLabels [
 	<gtExample>
 
 	^ GtPlotterVerticalValueProjectionsElement new
@@ -56,7 +56,7 @@ GtPlotterVerticalLeftAlignedTimelineExamples >> projectionLabels [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalLeftAlignedTimelineExamples >> projections [
+GtPlotterRawVerticalLeftAlignedTimelineExamples >> projections [
 	<gtExample>
 
 	^ GtPlotterVerticalValueProjectionsElement new

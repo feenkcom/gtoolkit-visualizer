@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterVerticalCenteredTimelineExamples,
-	#superclass : #GtPlotterVerticalTimelineExamples,
+	#name : #GtPlotterRawVerticalCenteredTimelineExamples,
+	#superclass : #GtPlotterRawVerticalTimelineExamples,
 	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'examples - axis' }
-GtPlotterVerticalCenteredTimelineExamples >> axis [
+GtPlotterRawVerticalCenteredTimelineExamples >> axis [
 	<gtExample>
 
 	^ BrHorizontalPane new
@@ -19,7 +19,7 @@ GtPlotterVerticalCenteredTimelineExamples >> axis [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalCenteredTimelineExamples >> content [
+GtPlotterRawVerticalCenteredTimelineExamples >> content [
 	<gtExample>
 	
 	^ BrFrame new
@@ -30,7 +30,7 @@ GtPlotterVerticalCenteredTimelineExamples >> content [
 ]
 
 { #category : #'examples - plot' }
-GtPlotterVerticalCenteredTimelineExamples >> plot [
+GtPlotterRawVerticalCenteredTimelineExamples >> plot [
 	<gtExample>
 	
 	^ BrHorizontalPane new
@@ -42,7 +42,7 @@ GtPlotterVerticalCenteredTimelineExamples >> plot [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterVerticalCenteredTimelineExamples >> projections [
+GtPlotterRawVerticalCenteredTimelineExamples >> projections [
 	<gtExample>
 	
 	^ GtPlotterVerticalValueProjectionsElement new
@@ -62,7 +62,7 @@ GtPlotterVerticalCenteredTimelineExamples >> projections [
 ]
 
 { #category : #'examples - axis' }
-GtPlotterVerticalCenteredTimelineExamples >> ticks [
+GtPlotterRawVerticalCenteredTimelineExamples >> ticks [
 	<gtExample>
 	
 	^ GtPlotterVerticalTicksElement new

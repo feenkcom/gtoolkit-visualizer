@@ -6,7 +6,7 @@ Class {
 		'maxY',
 		'minY'
 	],
-	#category : #'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-!Plotter - Stencils'
 }
 
 { #category : #'api - instantiation' }

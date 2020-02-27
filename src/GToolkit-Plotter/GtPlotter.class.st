@@ -48,11 +48,6 @@ GtPlotter >> initialize [
 	plots := OrderedCollection new
 ]
 
-{ #category : #'api - builders' }
-GtPlotter >> line [
-	^ self addPlot: GtPlotterLineDiagramBuilder new
-]
-
 { #category : #accessing }
 GtPlotter >> root [
 	self
@@ -63,16 +58,11 @@ GtPlotter >> root [
 ]
 
 { #category : #'api - builders' }
-GtPlotter >> timeLine [
-	^ self addPlot: GtPlotterTimeLineDiagramBuilder new
-]
-
-{ #category : #'api - builders' }
 GtPlotter >> verticalBarChart [
-	^ self addPlot: GtPlotterVerticalBarChartBuilder new
+	^ self addPlot: nil
 ]
 
 { #category : #'api - builders' }
 GtPlotter >> verticalTimeline [
-	^ self addPlot: GtPlotterVerticalTimelineBuilder new
+	^ self addPlot: GtPlotterVerticalTimeline new
 ]

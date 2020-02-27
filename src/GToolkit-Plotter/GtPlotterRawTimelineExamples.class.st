@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterTimelineExamples,
+	#name : #GtPlotterRawTimelineExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'examples - scale' }
-GtPlotterTimelineExamples >> scale [
+GtPlotterRawTimelineExamples >> scale [
 	<gtExample>
 
 	^ GtPlotterTimeScale new
@@ -13,7 +13,7 @@ GtPlotterTimelineExamples >> scale [
 ]
 
 { #category : #accessing }
-GtPlotterTimelineExamples >> versions [
+GtPlotterRawTimelineExamples >> versions [
 	<gtExample>
 
 	^ { 

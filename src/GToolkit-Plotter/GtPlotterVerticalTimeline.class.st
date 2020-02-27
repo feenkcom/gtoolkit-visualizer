@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPlotterVerticalTimelineBuilder,
+	#name : #GtPlotterVerticalTimeline,
 	#superclass : #GtPlotterBuilder,
 	#instVars : [
 		'axisType',
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'class initialization' }
-GtPlotterVerticalTimelineBuilder class >> initialize [
+GtPlotterVerticalTimeline class >> initialize [
 	super initialize.
 	
 	AxisProjection := #projection.
@@ -29,7 +29,7 @@ GtPlotterVerticalTimelineBuilder class >> initialize [
 ]
 
 { #category : #'api - instantiation' }
-GtPlotterVerticalTimelineBuilder >> create [
+GtPlotterVerticalTimeline >> create [
 	<return: #Object>	
 	| anAxisElement |
 
@@ -49,7 +49,7 @@ GtPlotterVerticalTimelineBuilder >> create [
 ]
 
 { #category : #private }
-GtPlotterVerticalTimelineBuilder >> createAxisLabelProjections: aCollectionOfDomainObjects [
+GtPlotterVerticalTimeline >> createAxisLabelProjections: aCollectionOfDomainObjects [
 	^ GtPlotterVerticalValueProjectionsElement new
 		scale: timeScale;
 		scaleData: #key;
@@ -66,7 +66,7 @@ GtPlotterVerticalTimelineBuilder >> createAxisLabelProjections: aCollectionOfDom
 ]
 
 { #category : #private }
-GtPlotterVerticalTimelineBuilder >> createAxisLabelTicks [
+GtPlotterVerticalTimeline >> createAxisLabelTicks [
 	^ GtPlotterVerticalTickLabelsElement new
 		scale: timeScale;
 		labelFormat: timelineLabelFormat;
@@ -76,7 +76,7 @@ GtPlotterVerticalTimelineBuilder >> createAxisLabelTicks [
 ]
 
 { #category : #private }
-GtPlotterVerticalTimelineBuilder >> createProjections: aCollectionOfDomainObjects [
+GtPlotterVerticalTimeline >> createProjections: aCollectionOfDomainObjects [
 	<gtExample>
 
 	^ GtPlotterVerticalValueProjectionsElement new
@@ -107,7 +107,7 @@ GtPlotterVerticalTimelineBuilder >> createProjections: aCollectionOfDomainObject
 ]
 
 { #category : #private }
-GtPlotterVerticalTimelineBuilder >> createTimeline: aCollectionOfDomainObjects [
+GtPlotterVerticalTimeline >> createTimeline: aCollectionOfDomainObjects [
 	^ BrFrame new
 		hFitContent;
 		vMatchParent;
@@ -118,7 +118,7 @@ GtPlotterVerticalTimelineBuilder >> createTimeline: aCollectionOfDomainObjects [
 ]
 
 { #category : #private }
-GtPlotterVerticalTimelineBuilder >> createTimelineDots: aCollectionOfDomainObjects [
+GtPlotterVerticalTimeline >> createTimelineDots: aCollectionOfDomainObjects [
 	^ GtPlotterMarkersElement new
 		scaleY: timeScale;
 		x: [ :each | 0.5 ];
@@ -133,7 +133,7 @@ GtPlotterVerticalTimelineBuilder >> createTimelineDots: aCollectionOfDomainObjec
 ]
 
 { #category : #private }
-GtPlotterVerticalTimelineBuilder >> createTimelineLine [	
+GtPlotterVerticalTimeline >> createTimelineLine [	
 	^ timelineStencil asElement
 		constraintsDo: [ :c | 
 			c vertical matchParent.
@@ -141,7 +141,7 @@ GtPlotterVerticalTimelineBuilder >> createTimelineLine [
 ]
 
 { #category : #initialization }
-GtPlotterVerticalTimelineBuilder >> initialize [
+GtPlotterVerticalTimeline >> initialize [
 	super initialize.
 	
 	timelineDataBlock := [ :eachDataItem | eachDataItem ].
@@ -164,61 +164,61 @@ GtPlotterVerticalTimelineBuilder >> initialize [
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> projectionData: aBlock [
+GtPlotterVerticalTimeline >> projectionData: aBlock [
 	projectionDataBlock := aBlock
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> projectionLabelFormat: aBlock [
+GtPlotterVerticalTimeline >> projectionLabelFormat: aBlock [
 	projectionLabelFormat := aBlock
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> projectionLineStencil: aStencil [
+GtPlotterVerticalTimeline >> projectionLineStencil: aStencil [
 	"Set a stencil used to create a horizontal line of the data point projections"
 
 	projectionLineStencil := aStencil asStencil
 ]
 
 { #category : #initialization }
-GtPlotterVerticalTimelineBuilder >> spacing [
+GtPlotterVerticalTimeline >> spacing [
 	^ 15
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> timelineData: aBlock [
+GtPlotterVerticalTimeline >> timelineData: aBlock [
 	timelineDataBlock := aBlock
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> timelineFrom: aFromDate to: aToDate [
+GtPlotterVerticalTimeline >> timelineFrom: aFromDate to: aToDate [
 	timeScale domainFrom: aFromDate to: aToDate
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> timelineLabelFormat: aBlock [
+GtPlotterVerticalTimeline >> timelineLabelFormat: aBlock [
 	timelineLabelFormat := aBlock
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> timelineStencil: aStencil [
+GtPlotterVerticalTimeline >> timelineStencil: aStencil [
 	"Set a stencil used to create a vertical timeline line on which we display data points"
 
 	timelineStencil := aStencil asStencil
 ]
 
 { #category : #'api - instance creation' }
-GtPlotterVerticalTimelineBuilder >> with: aCollectionOfDomainObjects [
+GtPlotterVerticalTimeline >> with: aCollectionOfDomainObjects [
 	data := aCollectionOfDomainObjects
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> withProjectionAxis [
+GtPlotterVerticalTimeline >> withProjectionAxis [
 	axisType := AxisProjection
 ]
 
 { #category : #'api - builder' }
-GtPlotterVerticalTimelineBuilder >> withTickAxis: anAmountOfTicks [
+GtPlotterVerticalTimeline >> withTickAxis: anAmountOfTicks [
 	axisType := AxisTicks.
 	amountOfTicks := anAmountOfTicks
 ]
