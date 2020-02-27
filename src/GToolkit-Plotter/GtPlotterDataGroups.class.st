@@ -24,7 +24,7 @@ GtPlotterDataGroups >> collect: aBlock [
 
 { #category : #'api - decoration' }
 GtPlotterDataGroups >> decorated: aBlock [
-	<return: #GtPlotterDaraGroups>
+	<return: #GtPlotterDataGroups>
 
 	^ self class new entities: (self collect: [ :eachEntity | eachEntity decorated: aBlock ])
 ]
