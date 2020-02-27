@@ -6,38 +6,50 @@ Class {
 		'maxY',
 		'minY'
 	],
-	#category : #'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-!Plotter - Stencils'
 }
 
 { #category : #'api - instantiation' }
 GtHorizontalSparklineStencil >> create [
 	<return: #Object>
-	| aPlotter aLine |
+	| theData aMinY aMaxY aMinX aMaxX aScaleX aScaleY |
 
-	aPlotter := GtPlotter new.
-	aLine := aPlotter line
-		x: #key;
-		y: #value;
-		minY: self minY.
+	theData := GtPlotterDataGroup new values: values.
+	
+	aMinX := theData inject: Float infinity intoValues: [ :eachMin :eachValue | eachMin min: eachValue value ].
+	aMaxX := theData inject: Float negativeInfinity intoValues: [ :eachMax :eachValue | eachMax max: eachValue value ].
 
-	maxY ifNotNil: [ :theMax | aLine maxY: theMax ].
+	aMinX isInfinite
+		ifTrue: [ aMinX := 0 ].
+	aMaxX isInfinite
+		ifTrue: [ aMaxX := 0 ].
 
-	aLine with: self values.
+	aMinY := minY ifNil: [ theData inject: Float infinity intoValues: [ :eachMin :eachValue | eachMin min: eachValue key ] ].
+	aMaxY := maxY ifNil: [ theData inject: Float negativeInfinity intoValues: [ :eachMax :eachValue | eachMax max: eachValue key ] ].
 
-	^ BlElement new
-		layout: BlFrameLayout new;
-		constraintsDo: [ :c |
-			c horizontal matchParent.
-			c vertical matchParent ];
-		padding: (BlInsets all: 1);
-		addChild: aPlotter root
+	aMinY isInfinite
+		ifTrue: [ aMinY := 0 ].
+	aMaxY isInfinite
+		ifTrue: [ aMaxY := 0 ].
+
+	aScaleX := GtPlotterLinearScale new domainFrom: aMinX to: aMaxX.
+	aScaleY := GtPlotterLinearScale new domainFrom: aMinY to: aMaxY.
+
+	^ (GtPlotterHorizontalSparkline new
+		lineWidth: 1;
+		scaleX: aScaleX;
+		scaleDataX: [ :eachItem | eachItem value ];
+		scaleY: aScaleY;
+		scaleDataY: [ :eachItem | eachItem key ];
+		with: theData) asElement
 ]
 
 { #category : #initialization }
 GtHorizontalSparklineStencil >> initialize [
 	super initialize.
 	
-	minY := 0.
+	minY := nil.
+	maxY := nil.
 	values := #()
 ]
 

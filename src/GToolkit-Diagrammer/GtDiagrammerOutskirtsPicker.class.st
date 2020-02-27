@@ -31,7 +31,7 @@ GtDiagrammerOutskirtsPicker >> initialize [
 				outskirts: theOutskirts;
 				background: (Color gray alpha: 0.3);
 				geometry: BlEllipse new;
-				border: (BlBorder builder paint: (Color blue alpha: 0.2); width: borderWidth; build);
+				border: (BlBorder paint: (Color blue alpha: 0.2) width: borderWidth);
 				constraintsDo: [ :c |
 					c frame horizontal alignCenter.
 					c frame vertical alignCenter ];
