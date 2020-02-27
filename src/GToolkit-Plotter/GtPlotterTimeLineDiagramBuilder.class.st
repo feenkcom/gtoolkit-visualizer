@@ -7,7 +7,7 @@ Class {
 		'task',
 		'limit'
 	],
-	#category : 'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-Builder - Sparkline'
 }
 
 { #category : #updating }

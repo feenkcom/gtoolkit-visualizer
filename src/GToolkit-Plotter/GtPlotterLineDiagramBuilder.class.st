@@ -7,7 +7,7 @@ Class {
 		'lineBlock',
 		'dotBlock'
 	],
-	#category : 'GToolkit-Plotter'
+	#category : #'GToolkit-Plotter-Builder - Sparkline'
 }
 
 { #category : #'private - instance creation' }
