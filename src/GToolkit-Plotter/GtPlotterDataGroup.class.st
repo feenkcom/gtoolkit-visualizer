@@ -95,7 +95,7 @@ GtPlotterDataGroup >> groupedBy: aBlock sorted: aSortBlock decorated: aDecoratio
 	
 	theAssociations := theGroupedValues associations.
 	aSortBlock
-		ifNotNil: [ theAssociations := theAssociations sorted: [ :a :b | aSortBlock value: a key value: b key ] ].
+		ifNotNil: [ theAssociations := theAssociations sorted: [ :a :b | aSortBlock value: a value: b ] ].
 	
 	theGroups := theAssociations collect: [ :anAssociation |
 		| aGroup aDecorator |
