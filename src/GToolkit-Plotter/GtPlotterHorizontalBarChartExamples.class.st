@@ -161,12 +161,12 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenusAndExti
 	
 	theData := theData
 		groupedBy: [ :each | each at: #genus ]
-		sorted: [ :a :b | a < b ]
+		sorted: [ :a :b | a key < b key ]
 		labelled: [ :eachGenus | eachGenus ].
 	
 	theData := theData
 		groupedBy: [ :each | each at: #extinct ]
-		sorted: [ :a :b | a not ]
+		sorted: [ :a :b | a key not ]
 		colored: [ :isExtinct | isExtinct
 			ifTrue: [ Color r: 216 g: 55 b: 62 range: 255 ]
 			ifFalse: [ Color r: 66 g: 188 b: 238 range: 255 ] ].
