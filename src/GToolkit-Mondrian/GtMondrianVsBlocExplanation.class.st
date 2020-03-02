@@ -144,5 +144,5 @@ GtMondrianVsBlocExplanation >> rootWithMultipleNodes [
 	m := self multipleNodes.
 	self assert: (m root isKindOf: BlElement).
 	self assert: m root children size = 9.
-	^ m root
+	^ m root asScalableElement
 ]
