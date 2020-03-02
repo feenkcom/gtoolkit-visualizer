@@ -25,7 +25,7 @@ BlVocalElement >> onRemovedFromSceneGraph [
 
 	"to remove the rest"
 	self connector isVisualSource ifTrue: [
-		self dispatchEvent: (BlElementRemovedEvent target: self)].
+		self dispatchEvent: (BlElementRemovedFromParentEvent target: self)].
 	self connector isVisualTarget ifTrue: [
-		self dispatchEvent: (BlElementRemovedEvent target: self)].
+		self dispatchEvent: (BlElementRemovedFromParentEvent target: self)].
 ]
