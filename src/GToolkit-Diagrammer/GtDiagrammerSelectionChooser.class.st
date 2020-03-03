@@ -17,13 +17,13 @@ Selection can not dive-in of the elements marked as selection leaf:
 "
 Class {
 	#name : #GtDiagrammerSelectionChooser,
-	#superclass : #BlElementEventListener,
+	#superclass : #BlEventListener,
 	#instVars : [
 		'selectionTool',
 		'currentSelection',
 		'mouseDownPosition'
 	],
-	#category : 'GToolkit-Diagrammer-Tools - Selection'
+	#category : #'GToolkit-Diagrammer-Tools - Selection'
 }
 
 { #category : #'instance creation' }
