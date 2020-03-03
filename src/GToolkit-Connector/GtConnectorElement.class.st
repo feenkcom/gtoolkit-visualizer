@@ -2,13 +2,13 @@
 I am an element that sends explicit events for the addition and removal from the scene graph.
 "
 Class {
-	#name : #BlVocalElement,
-	#superclass : #BlSceneInformingElement,
+	#name : #GtConnectorElement,
+	#superclass : #BlElement,
 	#category : #'GToolkit-Connector'
 }
 
 { #category : #'hooks - children' }
-BlVocalElement >> onAddedToSceneGraph [
+GtConnectorElement >> onAddedToSceneGraph [
 	super onAddedToSceneGraph.
 	
 	"to remove the rest"
@@ -20,7 +20,7 @@ BlVocalElement >> onAddedToSceneGraph [
 ]
 
 { #category : #'hooks - children' }
-BlVocalElement >> onRemovedFromSceneGraph [
+GtConnectorElement >> onRemovedFromSceneGraph [
 	super onRemovedFromSceneGraph.
 
 	"to remove the rest"
