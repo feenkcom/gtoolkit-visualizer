@@ -3,7 +3,7 @@ Extension { #name : #GtExample }
 { #category : #'*GToolkit-Connector' }
 GtExample >> buildBlankContainer: method [
 	|container|
-	container := BlVocalElement new.
+	container := GtConnectorElement new.
 	container 
 		connector 
 			beLayoutSource; 
@@ -47,7 +47,7 @@ GtExample >> buildCloseButton: gtconnector [.
 { #category : #'*GToolkit-Connector' }
 GtExample >> buildEditor: aMethod for: gtconnector [
 	| vocalVisualTarget styler editorElement editor text |
-	vocalVisualTarget:= BlVocalElement new.
+	vocalVisualTarget:= GtConnectorElement new.
 	vocalVisualTarget
 		constraintsDo: [ :c |
 		c horizontal matchParent.
@@ -175,7 +175,7 @@ GtExample >> gtConnectionsFor: aView [
 { #category : #'*GToolkit-Connector' }
 GtExample >> vocalEditorContainer [
 	|vocalEditorContainer|
-	vocalEditorContainer := BlVocalElement new.
+	vocalEditorContainer := GtConnectorElement new.
 	vocalEditorContainer constraintsDo: [ :c | c vertical matchParent. c horizontal matchParent. ].
 	vocalEditorContainer layout: BlLinearLayout new.
 	^ vocalEditorContainer

@@ -52,7 +52,7 @@ GtConnectorTextButtonAttribute >> eventDispatcher [
 GtConnectorTextButtonAttribute >> initialize [
 	super initialize.
 	
-	eventDispatcher := BlBubblingEventDispatcher on: self.
+	eventDispatcher := BlDirectEventDispatcher on: self.
 	actionBlock := [  ].
 	
 	self beAppend
@@ -74,7 +74,7 @@ GtConnectorTextButtonAttribute >> link [
 GtConnectorTextButtonAttribute >> newButton [
 	<return: #BlElement>
 	| aButton |
-	aButton := BlVocalElement new
+	aButton := GtConnectorElement new
 		size: 6 @ 6;
 		margin:
 			(BlInsets

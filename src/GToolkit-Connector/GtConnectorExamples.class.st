@@ -14,7 +14,7 @@ GtConnectorExamples >> anotherSimpleExample [
 
 	gtconnector stencil: [ :data |
 		| labelButton container dotButton buttonElement buttonContainer |
-		container := BlVocalElement new.
+		container := GtConnectorElement new.
 		container geometry: BlEllipse new.
 		container background: (Color gray alpha: 0.1).
 		container border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
@@ -33,7 +33,7 @@ GtConnectorExamples >> anotherSimpleExample [
 		container connector beVisualTarget.
 		container connector model: data.
 
-		buttonContainer := BlVocalElement new.
+		buttonContainer := GtConnectorElement new.
 		buttonContainer size: 5 @ 5.
 
 		buttonElement := (BlEllipse new extent: 10 asPoint) asElement background: (Color black).
@@ -65,7 +65,7 @@ GtConnectorExamples >> exampleMethodsExample [
 	gtconnector := GtConnector new.
 	gtconnector stencil: [ :method |
 		| editorElement styler text editor vocalEditorContainer vocalVisualTarget|
-		vocalEditorContainer := BlVocalElement new.
+		vocalEditorContainer := GtConnectorElement new.
 		vocalEditorContainer connector beLayoutSource.
 		vocalEditorContainer connector beLayoutTarget.
 		vocalEditorContainer connector model: method.
@@ -80,7 +80,7 @@ GtConnectorExamples >> exampleMethodsExample [
 		editorElement
 			background: Color white;
 			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
-		vocalVisualTarget := BlVocalElement new.
+		vocalVisualTarget := GtConnectorElement new.
 		vocalVisualTarget size: 400@200.
 
 		vocalVisualTarget connector beVisualTarget.
@@ -133,7 +133,7 @@ GtConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
 			text := aNode label asRopedText.
 			textElement :=  (BrColumnCellLabelStencil matchParent: text) asElement.
 			textElement constraintsDo: [ :c | c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
-			vocal := BlVocalElement new.
+			vocal := GtConnectorElement new.
 			vocal layout: BlLinearLayout vertical alignCenter.
 			vocal addChild: textElement.
 			vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent].
@@ -148,7 +148,7 @@ GtConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
 				textElement := (BrColumnCellLabelStencil fitContent: text) asElement.
 				textElement constraintsDo: [ :c | c padding: (BlInsets right: 10) ].
 
-				vocal := BlVocalElement new.
+				vocal := GtConnectorElement new.
 				vocal layout: BlLinearLayout vertical.
 				vocal addChild: textElement.
 				vocal connector beVisualSource.
@@ -170,7 +170,7 @@ GtConnectorExamples >> rawObjectExample [
 	gtconnector stencil: [ :entity |
 		| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement aBottomResizer aRightResizer|
 
-		uml := BlVocalElement new.
+		uml := GtConnectorElement new.
 		uml size: 300@300.
 		uml layout: BlLinearLayout new beVertical.
 		uml connector beLayoutSource.
@@ -184,7 +184,7 @@ GtConnectorExamples >> rawObjectExample [
 
 		tabGroup := (entity gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
 
-		header := BlVocalElement new.
+		header := GtConnectorElement new.
 		header look: (BrLayoutLook linearVertical hMatchParent).
 		text := BlRopedText string: entity printString.
 		text attributes: {

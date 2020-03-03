@@ -57,7 +57,7 @@ GtConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
 	"Line should disappear when any of source or target elements is deleted"
 	aDeleteListener := nil.
 	"we should not forget to remove event handlers before removing a line"
-	aDeleteListener := BlEventHandler on: BlElementRemovedEvent do: [ :anEvent |
+	aDeleteListener := BlEventHandler on: BlElementRemovedFromParentEvent do: [ :anEvent |
 		aSourceElement removeEventHandler: aDeleteListener.
 		aTargetElement removeEventHandler: aDeleteListener.
 		aSourceElement beNotConnectedTo: aTargetElement.
@@ -157,7 +157,7 @@ GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
 	"Line should disappear when any of source or target elements is deleted"
 	aDeleteListener := nil.
 	"we should not forget to remove event handlers before removing a line"
-	aDeleteListener := BlEventHandler on: BlElementRemovedEvent do: [ :anEvent |
+	aDeleteListener := BlEventHandler on: BlElementRemovedFromParentEvent do: [ :anEvent |
 		aSourceElement removeEventHandler: aDeleteListener.
 		aTargetElement removeEventHandler: aDeleteListener.
 		aSourceElement beNotConnectedTo: aTargetElement.
