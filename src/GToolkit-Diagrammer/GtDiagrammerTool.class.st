@@ -1,11 +1,11 @@
 Class {
 	#name : #GtDiagrammerTool,
-	#superclass : #BlElementEventListener,
+	#superclass : #BlEventListener,
 	#instVars : [
 		'style',
 		'diagrammer'
 	],
-	#category : 'GToolkit-Diagrammer-Tools'
+	#category : #'GToolkit-Diagrammer-Tools'
 }
 
 { #category : #comparing }
