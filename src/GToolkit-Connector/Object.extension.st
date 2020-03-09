@@ -27,11 +27,13 @@ Object >> gtConnectionsFor: aView [
 				tabGroup := (entity gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
 
 				header := GtConnectorElement new.
-				header look: (BrLayoutLook linearVertical hMatchParent).
+				header layout: BlLinearLayout vertical alignCenter.
+				header constraintsDo: [ :c |
+					c horizontal matchParent.
+					c vertical fitContent ].
 				text := BlRopedText string: entity printString.
+
 				textElement := BlTextElement new text: text asRopedText.
-				
-				textElement look: (BrLayoutLook fitContent alignCenter).
 			
 				header addChild: textElement.
 				textElement constraintsDo: [ :c | c padding: (BlInsets top:25) ].	

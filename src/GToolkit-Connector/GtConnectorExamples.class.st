@@ -185,13 +185,15 @@ GtConnectorExamples >> rawObjectExample [
 		tabGroup := (entity gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
 
 		header := GtConnectorElement new.
-		header look: (BrLayoutLook linearVertical hMatchParent).
+		header layout: BlLinearLayout vertical alignCenter.
+				header constraintsDo: [ :c |
+					c horizontal matchParent.
+					c vertical fitContent ].
 		text := BlRopedText string: entity printString.
 		text attributes: {
 		BlFontSizeAttribute size: 12.
 		BlTextForegroundAttribute paint: Color gray.}.
 		textElement := BlTextElement new text: text asRopedText.
-		textElement look: (BrLayoutLook fitContent alignCenter).
 		header addChild: textElement.
 		textElement constraintsDo: [ :c | c padding: (BlInsets new top: 20 right: 0 bottom: 0 left: 20) ].
 
