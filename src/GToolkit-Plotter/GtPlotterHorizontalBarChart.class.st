@@ -222,10 +222,9 @@ GtPlotterHorizontalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	theBars := Array streamContents: [ :aStream | aGtPlotterDataEntity groups do: [ :eachEntity | aStream nextPut: (self createGroupBarsFor: eachEntity) ] ].
 	
 	aContainer := BlElement new
-		layout: BlFrameLayout new;
 		constraintsDo: [ :c |
 			c horizontal matchParent.
-			c vertical fitContent ].
+			c vertical matchParent ].
 
 	isStacking
 		ifTrue: [ aContainer layout: BlFrameLayout new ]
@@ -246,11 +245,11 @@ GtPlotterHorizontalBarChart >> createLeafBarsFor: aGtPlotterDataEntity [
 	aContainer := BlElement new
 		constraintsDo: [ :c |
 			c horizontal matchParent.
-			c vertical fitContent ].
+			c vertical matchParent ].
 
 	isStacking
 		ifTrue: [ aContainer layout: BlFrameLayout new ]
-		ifFalse: [ aContainer layout: BlLinearLayout vertical ].
+		ifFalse: [ aContainer layout: BlLinearLayout vertical alignCenterLeft ].
 
 	aContainer addChildren: (aGtPlotterDataEntity groupsCollect: [ :eachGroup |
 		(barGroupStencil
