@@ -11,7 +11,9 @@ GtPlotterVerticalTickLabelsElement >> defaultLabelLayout [
 			c frame horizontal
 				weight: weight;
 				alignCenter.
-			c frame vertical alignCenterAt: aGtPlotterScaleContext mappedValue ];
+			c frame vertical alignCenterAt: (inversed
+				ifTrue: [ 1.0 - aGtPlotterScaleContext mappedValue ]
+				ifFalse: [ aGtPlotterScaleContext mappedValue ]) ];
 			yourself.
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]

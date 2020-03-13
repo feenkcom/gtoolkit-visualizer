@@ -5,7 +5,8 @@ Class {
 		'ticks',
 		'tickElement',
 		'tickStyle',
-		'tickLayout'
+		'tickLayout',
+		'inversed'
 	],
 	#category : #'GToolkit-Plotter-Core - Elements'
 }
@@ -32,6 +33,7 @@ GtPlotterTicksElement >> initialize [
 	super initialize.
 
 	ticks := 0.
+	inversed := false.
 
 	tickElement := self defaultTickElement.
 	tickStyle := self defaultTickStyle.
@@ -66,6 +68,12 @@ GtPlotterTicksElement >> initializeElements [
 		(tickStyle
 			element: eachElement;
 			scaleContext: aScaleContext) asElement ])
+]
+
+{ #category : #initialization }
+GtPlotterTicksElement >> inverse [
+	inversed := true.
+	self initializeElements
 ]
 
 { #category : #accessing }
