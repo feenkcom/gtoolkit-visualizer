@@ -7,6 +7,11 @@ Class {
 { #category : #private }
 GtPlotterScaleTimeDomain >> normalize: aValue between: aStart and: anEnd [
 	<return: #Number>
+	| aLength |
 
-	^ (aValue - aStart) / (anEnd - aStart)
+	aLength := anEnd - aStart.
+	aLength isZero
+		ifTrue: [ ^ 1.0 ].
+
+	^ (aValue - aStart) / aLength
 ]
