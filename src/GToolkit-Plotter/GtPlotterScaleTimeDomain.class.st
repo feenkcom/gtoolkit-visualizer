@@ -11,7 +11,7 @@ GtPlotterScaleTimeDomain >> normalize: aValue between: aStart and: anEnd [
 
 	aLength := anEnd - aStart.
 	aLength isZero
-		ifTrue: [ ^ 1.0 ].
+		ifTrue: [ ^ 0.0 ].
 
 	^ (aValue - aStart) / aLength
 ]

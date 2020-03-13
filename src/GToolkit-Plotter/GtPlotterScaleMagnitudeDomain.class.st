@@ -9,7 +9,7 @@ GtPlotterScaleMagnitudeDomain >> normalize: aValue between: aStart and: anEnd [
 	<return: #Number>
 	
 	(aStart closeTo: anEnd)
-		ifTrue: [ ^ 1.0 ].
+		ifTrue: [ ^ 0.0 ].
 
 	^ (aValue - aStart) / (anEnd - aStart)
 ]
