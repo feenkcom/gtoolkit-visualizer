@@ -21,3 +21,19 @@ GtPlotterTimeScaleExamples >> defaultTimeScale [
 
 	^ aScale
 ]
+
+{ #category : #'instance creation' }
+GtPlotterTimeScaleExamples >> everyWeek [
+	<gtExample>
+	| aScale |
+	
+	aScale := GtPlotterTimeScale new.
+	aScale
+		domainFrom: (DateAndTime year: 2000 month: 1 day: 1)
+		to: (DateAndTime year: 2000 month: 3 day: 18).
+	
+	self assert: (aScale map: (DateAndTime year: 2000 month: 1 day: 1)) equals: 0.
+	self assert: (aScale map: (DateAndTime year: 2000 month: 3 day: 18)) equals: 1.
+
+	^ aScale
+]

@@ -1,16 +1,60 @@
+"
+!Visualizing class hierarchies
+
+This is a tutorial for using Mondrian to visualize a class hierarchy using a horizontal tree layout. It goes step by step thorugh different ways to render and connect classes, while discussing and exemplifying various design decisions in Mondrian. 
+
+As a target class we use the class ${class:GtPhlowView}$. It subclasses can be used to create inspector views.
+
+!!An initial canvas
+When using Mondrian we start by instantiating a new canvas. A canvas is an instance of the class ${class:GtMondrian}$. Initially the canvas is empty and does not contain any graphical elements.
+${example:GtMondrianClassHierarcyExamples>>#emptyView}$
+
+!!Adding nodes to the canvas 
+Next step is to place on the canvas each object that we want to visualize. For our example that consists in the class ${class:GtPhlowView}$ together with all of its subclassess. We can obtain a collection with these data by sending the message ${method:Behavior>>#withAllSubclasses}$ to the class.
+ 
+To place the nodes we ask the canvas for a node builder (${class:GtMondrianNodeBuilder}$) to which we give the list of nodes that we want to display (${method:GtMondrianNodeBuilder>>#with:}$). By default all nodes are displayes as rectangles with a fixed size.
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyNodesOnly}$
+
+!!Adding edges
+To create a tree layout we need to add edges. We need to add edges between every class and all its direct subclases.
+
+Like with nodes, we first ask the canvas for an edge builder (${class:GtMondrianEdgeBuilder}$). Then we can use the ${method:GtMondrianEdgeBuilder>>#connectToAll:}$. This method goes through every objects in our model and connects it to all the objects obtained by sending the given message to the object (the argument can also be a block). In this case it will connect a class with all its subclasses.
+
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTree}$
+
+!!Specifying a layout
+
+"
 Class {
 	#name : #GtMondrianClassHierarcyExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-Mondrian-Examples'
 }
 
+{ #category : #examples }
+GtMondrianClassHierarcyExamples >> assertEmptyView: aView [
+	self assert: aView topStep root children isEmpty.
+]
+
 { #category : #assertions }
 GtMondrianClassHierarcyExamples >> assertNumberOfElementsIn: view [
 	| mainElement expectedNumberOfElements |
 	mainElement := view topStep root.
-	"In he root space there should be an element and a line for each subclasses. 
+	"In the root space there should be an element and a line for each subclasses. 
 	There is no line for the superclass."
 	expectedNumberOfElements := self targetClass allSubclasses size * 2 + 1.
+	self 
+		assert: mainElement children size  
+		equals: expectedNumberOfElements
+
+	
+]
+
+{ #category : #assertions }
+GtMondrianClassHierarcyExamples >> assertNumberOfNodesIn: view [
+	| mainElement expectedNumberOfElements |
+	mainElement := view topStep root.
+	expectedNumberOfElements := self targetClass allSubclasses size + 1.
 	self 
 		assert: mainElement children size  
 		equals: expectedNumberOfElements
@@ -244,12 +288,24 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	^ view 
 ]
 
+{ #category : #'tutorial - nesting' }
+GtMondrianClassHierarcyExamples >> classHierarchyNodesOnly [
+	<gtExample>
+	| targetClass view |
+	targetClass := self targetClass.
+	view := self emptyView.
+	view nodes
+		with: targetClass withAllSubclasses.
+	self assertNumberOfNodesIn: view.
+	^ view
+]
+
 { #category : #examples }
 GtMondrianClassHierarcyExamples >> emptyView [
 	<gtExample>
 	| view |
 	view := GtMondrian new.
-	self assert: view topStep root children isEmpty.
+	self assertEmptyView: view.
 	^ view
 ]
 

@@ -28,6 +28,11 @@ GtPlotterDuration class >> months: aNumber [
 ]
 
 { #category : #'instance creation' }
+GtPlotterDuration class >> weeks: aNumber [
+	^ GtPlotterDurationWeek amount: aNumber
+]
+
+{ #category : #'instance creation' }
 GtPlotterDuration class >> years: aNumber [
 	^ GtPlotterDurationYear amount: aNumber
 ]

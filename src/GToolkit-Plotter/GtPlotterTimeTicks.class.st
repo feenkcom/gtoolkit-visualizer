@@ -50,6 +50,9 @@ GtPlotterTimeTicks >> computedTicks [
 		ifFalse: [
 			aStart := from.
 			aStop := to ].
+		
+	aStart := aStart asDateAndTime.
+	aStop := aStop asDateAndTime.
 	
 	anInterval := self class tickInterval: aStart stop: aStop count: count.
 	theTicks := Array streamContents: [ :aStream |
