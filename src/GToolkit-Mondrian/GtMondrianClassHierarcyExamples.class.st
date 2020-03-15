@@ -39,13 +39,37 @@ Currently edges do not look right as by default they connect the center of eleme
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithInBetweenEdges}$
 
 !!Customising shapes
-Up until now we use identical shapes for all classes. When building views we often want to show nodes differently based on the object that  they represent. To support this the block passed to the ${method:GtMondrianGraphBuilder>>#shape:}$ method gets as parameter the model object for which that shape is being created. 
+Up until now we used identical shapes for all classes. When building views we often want to show nodes differently based on the object that  they represent. To support this the block passed to the ${method:GtMondrianGraphBuilder>>#shape:}$ method gets as parameter the model object for which that shape is being created. 
 
 In our example we use this to set the size of of a shape based on the number of methods in a class. We can customise any other property of the graphical element this way.
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithBasicShapeWithSize}$
 
 Another way in which we could customise the shape, is by returning a different graphical element. For example, below we use a ${class:BlTextElement}$ to show the name of each class.
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames}$
+
+!!Composing shapes 
+The previous examples started from a set of classes and created shapes to represent those classes. Next we would like to show for each class the methods that it contains. For that we can use composition: for each class we specify a script using Mondrian that creates the content of that shape.
+
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithNestedMethods}$
+
+In the example above ${method:GtMondrianNodeBuilder>>#forEach:}$ is applied for each class and creates the content of the corresponding shape. Within the block passed to this method we can a specify a Mondrian script, just like we did when creating shapes for classes. 
+
+We can customize the shape of a method in the same way as we customized the shape of a class. Below we set the the size of a method based on the number of lines of code in that method.
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithNestedMethodsWithSize}$
+
+!!Guiding composition
+When composing shapes we might want to have more complex graphical elements. A problem that arrises in this case is where within a shape to place the the child shapes. For example in the example below we have a more complex shape for displaying a class; this shape has a label and an element that should contain the methods. Just because we named the element ==methodsElement==, Mondrian cannot guess that methods should be placed there. We have to explicitly tell Mondrian where to place the child shapes. For that we can use ${method:GtGraphElementContext>>#beChildrenContainer}$. Using this method tells Mondrian where to place the shapes for methodss within the class shape.
+
+${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithNestedMethodsAndClassNames}$
+
+
+
+
+
+
+
+
+
 "
 Class {
 	#name : #GtMondrianClassHierarcyExamples,
@@ -218,6 +242,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 				constraintsDo: [ :c |
 					c padding: (BlInsets all: 5) ] ]; 
 		with: targetClass withAllSubclasses;
+		"Builds the content of each class shape."
 		forEach: [ :aClass |
 			view nodes
 				shape: [ 
@@ -242,7 +267,8 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 	view := self emptyView.
 	view nodes
 		shape: [ :aClass |
-			|classNameText containerElement labelElement methodsElement|
+			| containerElement labelElement methodsElement |
+			"We create a container to hold the label and the methods."
 			containerElement := BlElement new
 				layout: BlLinearLayout vertical;
 				border: (BlBorder paint: Color gray width: 1);
@@ -250,17 +276,18 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 					c padding: (BlInsets all: 5).
 					c horizontal fitContent.
 					c vertical fitContent ].
-			classNameText := aClass name asRopedText.
-			classNameText attributes: {
-				BlFontSizeAttribute size: 10 }.
-			labelElement := BlTextElement new
-				text: classNameText;
+			labelElement := BrLabel new
+				text: aClass name;
+				look: (BrLabelLook new 
+					fontSize: 10);
 				constraintsDo: [ :c | 
 					c padding: (BlInsets all: 5).
 					c linear horizontal alignCenter ].
+			"We create the element that will hold the methods."
 			methodsElement := BlElement new
 				constraintsDo: [ :c | 
 					c linear horizontal alignCenter ].
+			"We tell mMndrian to add all child shapes to this element."
 			methodsElement graph beChildrenContainer.
 			containerElement
 				addChild: labelElement;
