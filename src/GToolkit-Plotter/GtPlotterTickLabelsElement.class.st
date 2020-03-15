@@ -5,7 +5,8 @@ Class {
 		'labels',
 		'labelElement',
 		'labelStyle',
-		'labelLayout'
+		'labelLayout',
+		'inversed'
 	],
 	#category : #'GToolkit-Plotter-Core - Elements'
 }
@@ -32,6 +33,7 @@ GtPlotterTickLabelsElement >> initialize [
 	super initialize.
 
 	labels := 5.
+	inversed := false.
 	
 	labelElement := self defaultLabelElement.
 	labelStyle := self defaultLabelStyle.
@@ -71,6 +73,12 @@ GtPlotterTickLabelsElement >> initializeElements [
 		(labelStyle
 			element: eachElement;
 			scaleContext: aScaleContext) asElement ])
+]
+
+{ #category : #'api - labels' }
+GtPlotterTickLabelsElement >> inverse [
+	inversed := true.
+	self initializeElements
 ]
 
 { #category : #'api - labels' }
