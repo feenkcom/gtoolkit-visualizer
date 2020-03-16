@@ -4,12 +4,18 @@ I am an element for displaying a class. I show the name of the class and have a 
 Class {
 	#name : #GtMondrianClassHierarcyExampleElement,
 	#superclass : #BlElement,
+	#instVars : [
+		'labelElement',
+		'methodsElement'
+	],
 	#category : #'GToolkit-Mondrian-Examples'
 }
 
 { #category : #'building widgets' }
 GtMondrianClassHierarcyExampleElement >> buildLabelElement [
-	^ BlTextElement new
+	^ BrLabel new
+		look: (BrLabelLook new
+			fontSize: 10);
 		constraintsDo: [ :c | 
 			c padding: (BlInsets all: 5).
 			c linear horizontal alignCenter ]
@@ -24,16 +30,11 @@ GtMondrianClassHierarcyExampleElement >> buildMethodsElement [
 
 { #category : #accessing }
 GtMondrianClassHierarcyExampleElement >> className: aClassName [
-	| classNameText |
-	classNameText := aClassName asRopedText.
-	classNameText attributes: {
-		BlFontSizeAttribute size: 10 }.
-	self labelElement text: classNameText
+	self labelElement text: aClassName
 ]
 
 { #category : #initialization }
 GtMondrianClassHierarcyExampleElement >> initialize [ 
-	| labelElement methodsElement|
 	super initialize.
 	self 
 		layout: BlLinearLayout vertical;
@@ -52,5 +53,5 @@ GtMondrianClassHierarcyExampleElement >> initialize [
 
 { #category : #accessing }
 GtMondrianClassHierarcyExampleElement >> labelElement [
-	^ self children first
+	^ labelElement
 ]
