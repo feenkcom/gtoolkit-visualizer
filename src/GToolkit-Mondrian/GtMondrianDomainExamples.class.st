@@ -232,7 +232,7 @@ GtMondrianDomainExamples >> exampleDependencies [
 			((GtMethodCoder forMethod: each method) expanded: true; asElement)
 				constraintsDo: [ :c | 
 					c horizontal exact: 200.
-				   c vertical exact: 200 ] ];
+					c vertical exact: 200 ] ];
 		with: ((BlBezierElementExamples>>#quadraticCurveWithAnchors) gtExample withDeepCollect: #directDependencies) asSet.
 	view edges 
 		fromNearestCircle;
