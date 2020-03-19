@@ -19,7 +19,9 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 		margin: (BlInsets all: 0);
 		look: (BrInteractiveCommonLook new 
 			default: [ :aWidget |
-				lines do: [ :each | each removeFromParent ].
+				lines do: [ :each |
+					each toAnchor fireEvent: GtExplanationLinkDisconnectedEvent new.
+					each removeFromParent ].
 				lines removeAll.
 				aWidget 
 					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2);
@@ -30,6 +32,7 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 				aWidget explainer firstExplanationHolderParent explainer
 					allTargetChildrenWithModel: aWidget explainer model
 					do: [ :explanationTargetElement | 
+						explanationTargetElement fireEvent: GtExplanationLinkConnectedEvent new.
 						lines add: (BlLineElement new
 							fromAnchor:
 								(BlNearestPositionTightCircleAnchor
