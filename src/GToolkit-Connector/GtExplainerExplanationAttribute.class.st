@@ -53,7 +53,7 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 	aContainer explainer
 		isExplanation: true;
 		model: self explanationModel.
-	aTextPieceElement := (BrTextWordPieceStencilBuilder new segmentPiece: aTBrTextEditorTextualPiece) asElement.
+	aTextPieceElement := (BrTextEditableWordPieceStencilBuilder new segmentPiece: aTBrTextEditorTextualPiece) asElement.
 	aContainer addEventHandler: (BlEventDelegator delegate: BrTextEditorRequest to: aTextPieceElement).
 	aContainer addChildren: { aTextPieceElement }.
 	^ aContainer
