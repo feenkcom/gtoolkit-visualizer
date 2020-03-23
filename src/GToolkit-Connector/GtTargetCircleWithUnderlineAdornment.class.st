@@ -31,7 +31,7 @@ GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: a
 			(aText
 				from: start
 				to: stop)
-			attributes: {BlTextUnderlineAttribute new paint: BrGlamorousColors textHighlightColor}].
+			attributes: {BlTextHighlightAttribute new paint: BrGlamorousColors textHighlightColor}].
 		
 	circleElement addEventHandlerOn: GtExplanationLinkConnectedEvent
 		do: [ :anEvent |
