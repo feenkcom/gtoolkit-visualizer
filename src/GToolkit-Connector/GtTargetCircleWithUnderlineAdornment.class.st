@@ -4,14 +4,13 @@ Class {
 	#instVars : [
 		'identifier',
 		'circleSize',
-		'text',
 		'start',
 		'stop',
 		'coder',
 		'node'
 	],
 	#classVars : [
-		'underlines'
+		'highlights'
 	],
 	#category : #'GToolkit-Connector'
 }
@@ -36,8 +35,8 @@ GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: a
 	circleElement addEventHandlerOn: GtExplanationLinkConnectedEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
-			underlines add: rule.
-			underlineRules := GtCompositeHighlighter forHighlighters: underlines.
+			highlights add: rule.
+			underlineRules := GtCompositeHighlighter forHighlighters: highlights.
 			coder highlighter: underlineRules ].
 	circleElement addEventHandlerOn: GtExplanationLinkDisconnectedEvent 
 		do: [ :anEvent |
@@ -72,8 +71,7 @@ GtTargetCircleWithUnderlineAdornment >> initialize [
 	
 	circleSize := 3.
 	start := stop := 1.
-	text := '' asRopedText.
-	underlines := OrderedCollection new.
+	highlights := OrderedCollection new.
 ]
 
 { #category : #accessing }
