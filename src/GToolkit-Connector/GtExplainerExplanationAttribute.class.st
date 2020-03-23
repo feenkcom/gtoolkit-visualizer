@@ -20,7 +20,7 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 		look: (BrInteractiveCommonLook new 
 			default: [ :aWidget |
 				lines do: [ :each | 
-					each toAnchor fireEvent: GtExplanationLinkDisconnectedEvent new.
+					each toAnchor referenceElement fireEvent: GtExplanationLinkDisconnectedEvent new.
 					each removeFromParent ].
 				lines removeAll.
 				aWidget 
