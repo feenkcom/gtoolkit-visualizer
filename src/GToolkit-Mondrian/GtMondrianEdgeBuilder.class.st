@@ -65,8 +65,14 @@ GtMondrianEdgeBuilder >> connect: aCollection fromAll: aBlockOrSymbol [
 GtMondrianEdgeBuilder >> connect: aCollection fromAll: aFromAllBlock to: aToBlock [
 	| elements |
 	elements := aCollection flatCollect: [ :each |
-		(aFromAllBlock value: each) flatCollect: [ :from |
-			self connect: {each} from: [ :x | from ] to: [ :x | aToBlock value: each ] ] ].
+		| currentEdges |
+		currentEdges := OrderedCollection new.
+		(aFromAllBlock value: each) do: [ :from |
+			currentEdges addAll: (self 
+				connect: {each} 
+				from: [ :x | from ] 
+				to: [ :x | aToBlock value: each ]) ].
+		currentEdges ].
 	"self topStep root addChildren: elements."
 	^ elements
 ]
