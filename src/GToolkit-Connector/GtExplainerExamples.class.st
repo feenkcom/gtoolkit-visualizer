@@ -4,6 +4,62 @@ Class {
 	#category : #'GToolkit-Connector'
 }
 
+{ #category : #'as yet unclassified' }
+GtExplainerExamples >> inspectorContainerElement [
+	<gtExample>
+	| inspectorContainer subject inspectorHeader inspectorView inspectorActionButton |
+	inspectorContainer := BlElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		layout: BlLinearLayout horizontal;
+		background: Color white;
+		margin: (BlInsets all: 10);
+		look: BrShadowLook.
+
+	subject := BlUseAsyncFeatures
+		disableDuring: [ (GtABCartoonAddressBookExample new cartoonAddressBook gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ] ].
+	subject forceLayout.
+	inspectorHeader := subject phlow firstChildWithView.
+	inspectorView := inspectorHeader viewContentElement phlow
+		firstChildWithView.
+	inspectorActionButton := subject phlow firstChildWithAction.
+	inspectorContainer addChild: subject.
+		
+	inspectorHeader
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 5 @ 5;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #header);
+				relocate:
+					(5 @ inspectorHeader extent y / 2)). 
+	inspectorView
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 5 @ 5;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #view);
+				relocate:
+					(5 @ inspectorView extent y / 2)).
+	inspectorActionButton
+		addChild:
+			(BrButton new
+				constraintsDo: [ :c | c ignoreByLayout ];
+				size: 5 @ 5;
+				elevation: (BlRelativeElevation elevation: 10);
+				geometry: BlCircle new;
+				look: (GtExplainerTargetLook new explanationModel: #action);
+				relocate:
+					(5 @ inspectorActionButton extent y / 2)).
+					
+	^ inspectorContainer.
+]
+
 { #category : #example }
 GtExplainerExamples >> inspectorExplanationText [
 	<gtExample>
@@ -22,67 +78,22 @@ The inspector also shows multiple ' asRopedText,
 		' that are specific to the object. Every object is allowed to specify such custom views.' asRopedText.
 	^ text 
 		glamorousRegularFont;
+		fontSize: 20;
 		foreground: Color black
 ]
 
 { #category : #example }
 GtExplainerExamples >> inspectorOnOneObjectExample [
 	<gtExample>
-	| container inspectorContainer subject inspectorHeader editor inspectorView inspectorActionButton inspectorActionMarker |
-	inspectorContainer := BlElement new
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		layout: BlLinearLayout horizontal;
-		background: Color white;
-		margin: (BlInsets all: 10);
-		look: BrShadowLook.
+	| container editor |
+	
 	container := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	subject := (GtABCartoonAddressBookExample new cartoonAddressBook gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ].
-	subject forceLayout.
-	inspectorHeader := subject phlow firstChildWithView.
-	inspectorView := inspectorHeader viewContentElement phlow
-		firstChildWithView.
-	inspectorActionButton := subject phlow firstChildWithAction.
-	inspectorContainer addChild: subject.
-	inspectorContainer
-		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				geometry: BlCircle new;
-				size: 30 @ 30;
-				elevation: (BlRelativeElevation elevation: 10);
-				look: (GtExplainerTargetLook new explanationModel: #header);
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (inspectorHeader localPointToGlobal: 10 @ 5))).
-	inspectorContainer
-		addChild:
-			(BrButton new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				size: 30 @ 30;
-				elevation: (BlRelativeElevation elevation: 10);
-				geometry: BlCircle new;
-				look: (GtExplainerTargetLook new explanationModel: #view);
-				relocate:
-					(inspectorContainer
-						globalPointToLocal: (inspectorView localPointToGlobal: 20 @ 5))).
-	inspectorActionMarker := BrButton new
-		constraintsDo: [ :c | c ignoreByLayout ];
-		size: 30 @ 30;
-		elevation: (BlRelativeElevation elevation: 10);
-		geometry: BlCircle new;
-		look: (GtExplainerTargetLook new explanationModel: #action);
-		relocate: (inspectorContainer globalPointToLocal: (inspectorActionButton localPointToGlobal: 0 @ 0)).
-	inspectorContainer addChild: inspectorActionMarker.
-	inspectorActionButton
-		addEventHandlerOn: BlElementPositionInSpaceChangedEvent
-			do: [ inspectorActionMarker relocate: (inspectorContainer globalPointToLocal: ((inspectorActionButton localPointToGlobal: (inspectorActionButton bounds center))) - ((inspectorActionMarker extent + inspectorActionMarker border width)  / 2)) ].
+					
 	editor := BrEditor new
 		look: (BrGlamorousRegularEditorLook new fontSize: 16);
 		text: self inspectorExplanationText;
@@ -92,7 +103,7 @@ GtExplainerExamples >> inspectorOnOneObjectExample [
 			c horizontal matchParent.
 			c linear weight: 0.3 ].
 	container addChild: editor.
-	container addChild: inspectorContainer.
+	container addChild: self inspectorContainerElement.
 	^ container
 ]
 
