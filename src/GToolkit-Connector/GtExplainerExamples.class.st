@@ -78,6 +78,7 @@ The inspector also shows multiple ' asRopedText,
 		' that are specific to the object. Every object is allowed to specify such custom views.' asRopedText.
 	^ text 
 		glamorousRegularFont;
+		fontSize: 20;
 		foreground: Color black
 ]
 
