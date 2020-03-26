@@ -181,7 +181,7 @@ GtExplainerExamples >> playgroundWithPreview [
 	container explainer isExplanationHolder: true.
 	playbook := GtPlayBook newDefault.
 	playbook pages first snippets first sourceCode: '41 + 1'.
-	subject := (GtInspector createOnPlayBook: playbook).
+	subject := (GtInspector withToolOn: playbook).
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectAction := subject 
