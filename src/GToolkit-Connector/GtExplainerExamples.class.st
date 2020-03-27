@@ -78,6 +78,7 @@ The inspector also shows multiple ' asRopedText,
 		' that are specific to the object. Every object is allowed to specify such custom views.' asRopedText.
 	^ text 
 		glamorousRegularFont;
+		fontSize: 20;
 		foreground: Color black
 ]
 
@@ -191,7 +192,7 @@ GtExplainerExamples >> playgroundWithPreview [
 	container explainer isExplanationHolder: true.
 	playbook := GtPlayBook newDefault.
 	playbook pages first snippets first sourceCode: '41 + 1'.
-	subject := (GtInspector createOnPlayBook: playbook).
+	subject := (GtInspector withToolOn: playbook).
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectAction := subject 
