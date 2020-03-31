@@ -26,6 +26,13 @@ GtGraphElementContext >> addChildren: aCollection inChildrenContainer: aSymbol [
 	^ ((self childrenContainers) at: aSymbol ifAbsent: [self element]) addChildren: aCollection
 ]
 
+{ #category : #'api - graph model' }
+GtGraphElementContext >> allNodeChildrenDo: aBlock [
+	self element allChildrenBreadthFirstDo: [ :eachElement |
+		(eachElement graph isNode)
+			ifTrue: [ aBlock value: eachElement ] ]
+]
+
 { #category : #deprecated }
 GtGraphElementContext >> beChildrenContainer [
 	self beChildrenContainer: #default
@@ -40,6 +47,12 @@ GtGraphElementContext >> beChildrenContainer: aSymbol [
 GtGraphElementContext >> beEdge [
 	isEdge := true.
 	isNode := false
+]
+
+{ #category : #api }
+GtGraphElementContext >> beEdge: aGtGraphEdge [
+	self model: aGtGraphEdge.
+	self beEdge
 ]
 
 { #category : #api }
@@ -65,6 +78,22 @@ GtGraphElementContext >> childrenContainers [
 		ifAbsentPut: [ Dictionary new ]
 ]
 
+{ #category : #'api - graph model' }
+GtGraphElementContext >> connectAsModel: anObject [
+	"Make myself a node of a given object that expects connections to it"
+	
+	self beNode.
+	self model: anObject.
+
+	self
+		element
+			when: BlElementAddedToSceneGraphEvent
+			do: [ :anEvent | anEvent currentTarget graph readyToConnectAsModel: anObject ].
+
+	self element isAttachedToSceneGraph
+		ifTrue: [ self readyToConnectAsModel: anObject ]
+]
+
 { #category : #'api - graph' }
 GtGraphElementContext >> connectTo: anotherElement [
 	"I connect my element with a given element as an outgoing edge and return
@@ -82,6 +111,24 @@ GtGraphElementContext >> connectTo: anotherElement [
 	anotherElement graph beNode.
 
 	^ anEdge
+]
+
+{ #category : #'api - graph model' }
+GtGraphElementContext >> connectToModel: anObject [
+	"Make myself a node that wants to be connected to the other node with a given object as a model"
+	
+	self beNode.
+
+	self element
+		when: BlElementAddedToSceneGraphEvent
+			do: [ :anEvent | anEvent currentTarget graph readyToConnectToModel: anObject ];
+		when: GtGraphTryConnectToModel
+			do: [ :anEvent |
+				anObject = anEvent model
+					ifTrue: [ self readyToConnectToModel: anObject ] ].	
+
+	self element isAttachedToSceneGraph
+		ifTrue: [ self readyToConnectToModel: anObject ]
 ]
 
 { #category : #'api - graph' }
@@ -120,6 +167,22 @@ GtGraphElementContext >> element [
 { #category : #accessing }
 GtGraphElementContext >> element: anElement [
 	element := anElement
+]
+
+{ #category : #'api - graph model' }
+GtGraphElementContext >> findAllEdgeChildren: aGtEdge [
+	^ Array streamContents: [ :aStream |
+		self element allChildrenBreadthFirstDo: [ :eachElement |
+			(eachElement graph isEdge and: [ eachElement graph model = aGtEdge ])
+				ifTrue: [ aStream nextPut: eachElement ] ] ]
+]
+
+{ #category : #'api - graph model' }
+GtGraphElementContext >> findAllNodeChildren: aModel [
+	^ Array streamContents: [ :aStream |
+		self element allChildrenBreadthFirstDo: [ :eachElement |
+			(eachElement graph isNode and: [ eachElement graph model = aModel ])
+				ifTrue: [ aStream nextPut: eachElement ] ] ]
 ]
 
 { #category : #accessing }
@@ -177,6 +240,16 @@ GtGraphElementContext >> isChildrenContainer [
 	^ self userData at: #isMondrianChildrenContainer 
 		ifPresent: [ :name | true ]
 		ifAbsent: [ false ]
+]
+
+{ #category : #'api - testing' }
+GtGraphElementContext >> isConnectedTo: anOtherElement [
+	<return: #Boolean>
+	self connectedNodes do: [ :eachConnectedElement |
+		eachConnectedElement = anOtherElement
+			ifTrue: [ ^ true ] ].
+		
+	^ false
 ]
 
 { #category : #'api - testing' }
@@ -260,6 +333,23 @@ GtGraphElementContext >> nodesAlongOutgoingEdgesCount [
 	<return: #Number>
 
 	^ self nodesAlongOutgoingEdges size
+]
+
+{ #category : #'api - graph model' }
+GtGraphElementContext >> readyToConnectAsModel: anObject [
+	self element fireEvent: (GtGraphConnectAsModel new model: anObject)
+]
+
+{ #category : #'api - graph model' }
+GtGraphElementContext >> readyToConnectToModel: anObject [
+	self element fireEvent: (GtGraphConnectToModel new
+		toModel: anObject;
+		fromModel: self model)
+]
+
+{ #category : #'api - graph model' }
+GtGraphElementContext >> tryToConnectChildrenToModel: anObject [
+	self allNodeChildrenDo: [ :eachNode | eachNode dispatchEvent: (GtGraphTryConnectToModel new model: anObject) ]
 ]
 
 { #category : #accessing }

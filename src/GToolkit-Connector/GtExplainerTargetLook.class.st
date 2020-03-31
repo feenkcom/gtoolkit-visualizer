@@ -51,6 +51,14 @@ GtExplainerTargetLook >> initialize [
 ]
 
 { #category : #'api - hooks' }
+GtExplainerTargetLook >> onAttachedTo: anElement [
+	super onAttachedTo: anElement.
+	anElement explainer
+		isTarget: true;
+		model: self explanationModel
+]
+
+{ #category : #'api - hooks' }
 GtExplainerTargetLook >> onInstalledIn: anElement [
 	super onInstalledIn: anElement.
 	anElement explainer
