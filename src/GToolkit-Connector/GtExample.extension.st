@@ -81,7 +81,7 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 GtExample >> buildInspectButton: vocalEditorContainer [
 	| aGoButton |
 	aGoButton := GtInspectorRoundButtonStencil new asElement
-		icon: (BrGlamorousIcons inspect asElement);
+		icon: (BrGlamorousVectorIcons inspect);
 		constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: 0).
