@@ -41,7 +41,7 @@ Object >> gtConnectionsFor: aView [
 				connectorTable := GtConnectorExamples new rawObjectConnectorTableFor: entity in: gtconnector.
 				
 				aCloseButton := GtInspectorRoundButtonStencil new asElement
-					icon: (GtInspectorPlusIconStencil close asElement);
+					icon: (GtInspectorPlusIconStencil close);
 					constraintsDo: [ :c |
 						c ignoreByLayout.
 						c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
@@ -58,7 +58,7 @@ Object >> gtConnectionsFor: aView [
 						c ignored vertical alignTop ].
 				
 				aDetailsButton := GtInspectorRoundButtonStencil new asElement
-					icon: (BrGlamorousIcons inspect asElement);
+					icon: (BrGlamorousVectorIcons inspect);
 					constraintsDo: [ :c |
 						c ignoreByLayout.
 						c margin: (BlInsets top: -10 left: 0 bottom: 0 right: -10).
