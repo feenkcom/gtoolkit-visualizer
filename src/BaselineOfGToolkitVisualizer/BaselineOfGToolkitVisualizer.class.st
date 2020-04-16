@@ -48,22 +48,22 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 				spec repository: 'github://feenkcom/pharo-beacon:5d39dadf5d6f039ef6ba24ba8823069925717b84/repository' ].
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
-				spec requires: #(#Brick ). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-BlocGraph-Grad' with: [
 				spec requires: #('GToolkit-BlocGraph' ). ];
 			package: 'GToolkit-BlocGraph-Layouts' with: [
 				spec requires: #('GToolkit-BlocGraph' ). ];
 			package: 'GToolkit-Mondrian' with: [
-				spec requires: #(#Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon' ). ];
+				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon' ). ];
 			package: 'GToolkit-Mondrian-Glamour' with: [
 				spec requires: #('GToolkit-Mondrian' ). ];
 			package: 'GToolkit-Connector' with: [
-				spec requires: #(#Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
+				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
 			package: 'GToolkit-Diagrammer' with: [
-				spec requires: #(#Brick ). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-TreeMap' with: [
-				spec requires: #(#Brick ). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-Plotter' with: [
-				spec requires: #(#Brick ). ]. ].
+				spec requires: #('Brick' ). ]. ].
 
 ]
