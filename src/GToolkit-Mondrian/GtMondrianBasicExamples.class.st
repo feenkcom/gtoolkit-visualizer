@@ -89,6 +89,17 @@ Class {
 { #category : #'debugging edge creation' }
 GtMondrianBasicExamples >> capturingEdgesNotCreated [
 	<gtExample>
+	<noTest>
+	"The example it not sound.
+
+	it does
+		l := MemoryLogger new.
+		l runDuring: [ ].
+		self assert: l recordings size equals: 3.
+
+	which is not thread safe (edited) 
+	if there is another thread that sends signals in the meantime, then there will be more recordings in 	the memory logger"
+	
 	| l view |
 	l := MemoryLogger new.
 	l runDuring: [ 
