@@ -196,7 +196,7 @@ GtExplainerExamples >> playgroundWithPreview [
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectAction := subject 
-		allChildrenBreadthFirstDetect: [:each | each isKindOf: GtCoderElement] 
+		allChildrenBreadthFirstDetect: [:each | each isKindOf: GtExpandableCoderElement] 
 		ifFound: [ :coderElement | coderElement coder addOns mainActions detect: [:each | each title = 'Inspect'] ].
 	inspectActionButton := subject 
 		allChildrenBreadthFirstDetect: [:each | (each isKindOf: BrButton) and: [ each action = inspectAction ]] 
