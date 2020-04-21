@@ -16,7 +16,7 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 		layout: BlLinearLayout vertical;
 		geometry: (BlRectangle cornerRadius: 4);
 		padding: (BlInsets left: 4 right: 4);
-		margin: (BlInsets all: 0);
+		margin: (BlInsets top: 2);
 		look: (BrInteractiveCommonLook new 
 			default: [ :aWidget |
 				lines do: [ :each | 
@@ -24,11 +24,9 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 					each removeFromParent ].
 				lines removeAll.
 				aWidget 
-					border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2);
-					background: Color transparent ];
+					background: (BrGlamorousColors textHighlightColor alpha: 0.5) ];
 			hovered: [ :aWidget |
-				aWidget border: (BlBorder paint: BrGlamorousColors textHighlightColor width: 2).
-				aWidget background: (BrGlamorousColors textHighlightColor alpha: 0.5).
+				aWidget background: (BrGlamorousColors textHighlightColor).
 				aWidget explainer firstExplanationHolderParent explainer
 					allTargetChildrenWithModel: aWidget explainer model
 					do: [ :explanationTargetElement | 
@@ -48,7 +46,7 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 						aWidget 
 							firstCommonParent: explanationTargetElement
 							ifFound: [ :aCommonParent |
-								aCommonParent addChild: (lines at: (lines size)) ]
+								aCommonParent addChild: (lines last) ]
 							ifNone: [  ] ]  ] );
 		constraintsDo: [ :c |
 			c horizontal fitContent.
