@@ -78,7 +78,7 @@ GtConnectorTextButtonAttribute >> newButton [
 		size: 6 @ 6;
 		margin:
 			(BlInsets
-				top: 6
+				top: 0
 				right: 2
 				bottom: 0
 				left: 2);
