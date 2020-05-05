@@ -17,25 +17,17 @@ Class {
 
 { #category : #accessing }
 GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
-	| circleElement rule underlineRules |
+	| circleElement underlineRules |
 	
 	circleElement := BrButton new
 		geometry: BlEllipse new;
 		size: circleSize@circleSize;
 		look: (GtExplainerTargetLook new explanationModel: identifier).
-	
-	rule := GtASTNodeHighlighterStylerRule new
-		nodeClassName: node className asSymbol;
-		styleBlock: [ :aNode :aText |
-			(aText
-				from: start
-				to: stop)
-			attributes: {BlTextHighlightAttribute new paint: BrGlamorousColors textHighlightColor}].
 		
 	circleElement addEventHandlerOn: GtExplanationLinkConnectedEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
-			highlights add: rule.
+			highlights add: self stylerRule.
 			underlineRules := GtCompositeHighlighter forHighlighters: highlights.
 			coder highlighter: underlineRules ].
 	circleElement addEventHandlerOn: GtExplanationLinkDisconnectedEvent 
@@ -97,4 +89,30 @@ GtTargetCircleWithUnderlineAdornment >> start: aStartPoint [
 { #category : #accessing }
 GtTargetCircleWithUnderlineAdornment >> stop: aStopPoint [
 	stop := aStopPoint.
+]
+
+{ #category : #'as yet unclassified' }
+GtTargetCircleWithUnderlineAdornment >> stylerRule [
+	^ (node isKindOf: RBMessageNode)
+		ifTrue:
+			[ 	GtASTNodeHighlighterStylerRule new
+					nodeClassName: node className asSymbol;
+					styleBlock: [ :aNode :aText |
+					node keywordsIntervals do: [ :each |	
+						(aText
+							from: each first
+							to: each last)
+							attributes: {BlTextHighlightAttribute new paint: BrGlamorousColors textHighlightColor}].
+					(aText
+						from: node keywordsIntervals first first
+						to: node keywordsIntervals last last)
+						attributes: {BlTextUnderlineAttribute new paint: BrGlamorousColors textHighlightColor}] ]
+		ifFalse:
+			[ 	GtASTNodeHighlighterStylerRule new
+					nodeClassName: node className asSymbol;
+					styleBlock: [ :aNode :aText |
+					(aText
+						from: start
+						to: stop)
+						attributes: {BlTextHighlightAttribute new paint: BrGlamorousColors textHighlightColor}]  ].
 ]
