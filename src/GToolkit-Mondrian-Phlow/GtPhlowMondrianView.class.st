@@ -8,7 +8,7 @@ Class {
 		'mondrianElement',
 		'transformation'
 	],
-	#category : #'GToolkit-Mondrian-Phlow'
+	#category : #'GToolkit-Mondrian-Phlow-View'
 }
 
 { #category : #accessing }
@@ -27,7 +27,7 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 							(GtPhlowObjectToSpawn new
 								object: transformedObject;
 								sourceElement: event target) ] ].
-	mondrianElement phlow beView; entity: self.
+	self beViewElement: mondrianElement.
 	^ aBlock value: mondrianElement
 ]
 
@@ -73,4 +73,14 @@ GtPhlowMondrianView >> painting: aBlock [
 { #category : #scripting }
 GtPhlowMondrianView >> send: aBlock [
 	transformation := aBlock
+]
+
+{ #category : #accessing }
+GtPhlowMondrianView >> updateContent: anOldElement [
+	| aParent |
+	aParent := anOldElement parent.
+	aParent ifNotNil: [
+		self initialize: GtMondrian new.
+		self asElementDo: [ :aNewElement | 
+			self replaceOldElement: anOldElement by: aNewElement in: aParent ] ]
 ]
