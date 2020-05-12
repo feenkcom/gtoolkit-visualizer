@@ -190,9 +190,8 @@ GtExplainerExamples >> playgroundWithPreview [
 			c vertical matchParent ];
 		layout: BlLinearLayout horizontal.
 	container explainer isExplanationHolder: true.
-	playbook := GtPlayBook newDefault.
-	playbook pages first snippets first sourceCode: '41 + 1'.
-	subject := (GtInspector withToolOn: playbook).
+	playbook := GtPlayBook newWithCodeSnippetContent: '41 + 1'.
+	subject := GtPlayground createOn: playbook.
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	inspectAction := subject 
