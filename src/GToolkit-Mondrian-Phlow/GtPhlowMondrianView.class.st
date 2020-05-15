@@ -22,11 +22,7 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 				ifTrue: [ 
 					| transformedObject |
 					transformedObject := transformation cull: event target graph model.
-					mondrianElement
-						fireEvent:
-							(GtPhlowObjectToSpawn new
-								object: transformedObject;
-								sourceElement: event target) ] ].
+					mondrianElement phlow spawnObject: transformedObject ] ].
 	self beViewElement: mondrianElement.
 	^ aBlock value: mondrianElement
 ]
