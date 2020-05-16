@@ -64,7 +64,8 @@ GtExampleGroup >> paintMapWith: m [
 		forEach: [:assoc | 
 			m nodes 
 				stencil: [ :each | | element |
-					element := BlElement new
+					element := BlElement new.
+					element
 						geometry: BlEllipse new;
 						constraintsDo: [:c | c horizontal fitContent. c vertical fitContent];
 						border: (BlBorder paint: Color black width: 2);
@@ -75,7 +76,7 @@ GtExampleGroup >> paintMapWith: m [
 							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: each) expanded: true) asElement.
 							container 
 								when: GtPhlowObjectToSpawn do: [:e | 
-								element fireEvent: (GtPhlowObjectToSpawn new object: e object; sourceElement: e target)]];
+									element phlow spawnObject: e object ] ];
 								preferredExtent: 200@200;
 								showDelay: 100 milliSeconds;
 								hideDelay: 200 milliSeconds ).
