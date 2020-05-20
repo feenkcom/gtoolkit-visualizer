@@ -116,7 +116,7 @@ GtConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
 	variableNodes := OrderedCollection new: anObject class allSlots size.
 	anObject gtInspectorVariableNodesIn: variableNodes.
 
-	list := BrColumnedList new display: variableNodes.
+	list := BrColumnedList new items: variableNodes.
 	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
 	list column
 		title: 'Icon';
