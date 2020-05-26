@@ -76,7 +76,7 @@ GtExampleGroup >> paintMapWith: m [
 							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: each) expanded: true) asElement.
 							container 
 								when: GtPhlowObjectToSpawn do: [:e | 
-									element phlow spawnObject: e object ] ];
+									element phlow spawnTool: e tool ] ];
 								preferredExtent: 200@200;
 								showDelay: 100 milliSeconds;
 								hideDelay: 200 milliSeconds ).
