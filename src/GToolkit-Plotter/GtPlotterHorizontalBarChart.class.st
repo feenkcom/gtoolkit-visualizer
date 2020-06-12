@@ -87,7 +87,7 @@ GtPlotterHorizontalBarChart >> barLabelColor [
 ]
 
 { #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barLabelColor: aColor [	
+GtPlotterHorizontalBarChart >> barLabelColor: aColor [
 	barLabelColor := aColor
 ]
 
@@ -308,9 +308,9 @@ GtPlotterHorizontalBarChart >> initialize [
 	barLabelColor := Color gray.
 
 	barHeightScale := GtPlotterConstantScale new constant: 30.
-	barHeightDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
+	barHeightDataBlock := [ :eachDataItem | eachDataItem ].
 	barWidthScale := GtPlotterLinearScale new.
-	barWidthDataBlock := [ :eachDataItem :eachDataItemIndex | eachDataItem ].
+	barWidthDataBlock := [ :eachDataItem | eachDataItem ].
 	barLabelLookStencil := [ BrGlamorousLabelLook new glamorousRegularFontAndSize ] asStencil.
 
 	barGroupStencil := GtPlotterHorizontalSeparateBarGroupStencilBuilder new.
