@@ -76,11 +76,8 @@ GtPhlowMondrianView >> send: aBlock [
 ]
 
 { #category : #accessing }
-GtPhlowMondrianView >> updateContent: anOldElement [
-	| aParent |
-	aParent := anOldElement parent.
-	aParent ifNotNil: [
-		self initialize: GtMondrian new.
-		self asElementDo: [ :aNewElement | 
-			self replaceOldElement: anOldElement by: aNewElement in: aParent ] ]
+GtPhlowMondrianView >> updateContent: aCurrentElement [
+	aCurrentElement hasParent ifFalse: [ ^ self ].
+	self initialize: GtMondrian new.
+	super updateContent: aCurrentElement.
 ]
