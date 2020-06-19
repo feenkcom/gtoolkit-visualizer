@@ -68,7 +68,7 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 
 	"since the treemap layout does not support unspecified measurement spec (fitContent of the container)
 	we can directly compute the size of the parent"
-	anElement measuredExtent: (anExtentSpec sizeFor: 0@0).
+	anElement measuredExtent: (anExtentSpec sizeFor: 0.0@0.0).
 	
 	"create a tree for the computed extent taking padding into account"	
 	aTree := self treeFrom: anElement measuredExtent - anElement padding extent.

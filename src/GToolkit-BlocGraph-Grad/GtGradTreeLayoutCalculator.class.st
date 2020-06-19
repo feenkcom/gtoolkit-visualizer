@@ -4,14 +4,14 @@ Class {
 	#instVars : [
 		'origin'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #initialization }
 GtGradTreeLayoutCalculator >> initialize [
 	super initialize.
 
-	origin := 50@50
+	origin := 50.0@50.0
 ]
 
 { #category : #'private - layout' }
@@ -157,8 +157,8 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 
 	
 	bounds := BlBounds new.
-	bounds left: SmallInteger maxVal.
-	bounds top: SmallInteger maxVal.
+	bounds left: SmallInteger maxVal asFloat.
+	bounds top: SmallInteger maxVal asFloat.
 	self
 		layout: aTreeNode
 		currentNode: aTreeNode
