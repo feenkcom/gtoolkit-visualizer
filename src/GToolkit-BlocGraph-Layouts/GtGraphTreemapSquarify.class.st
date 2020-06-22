@@ -4,9 +4,7 @@ I use ${method:GtGraphTreemapNode>>#weight}$ node values to split an area into.
 I use ${class:GtGraphTreemapSquarifyStep}$ to split area into sub-areas and measure ${class:GtGraphTreemapNode}$ positions and extends.
 
 The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*].
-
 !! Algorithm Explanation
-
 This is an adapted extract from the paper Squarified Treemaps mentioned above. Suppose we have a rectangle with width ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#width}$ and height ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#height}$, and furthermore suppose that this rectangle must be subdivided in seven rectangles with areas ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#nodeValues}$. The area will be subdivided as follows:
 ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:}$
 
