@@ -1,11 +1,11 @@
 Class {
-	#name : #GtNestedTreemapExamples,
+	#name : #GtNestedTreemapNodesExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-TreeMap-Examples'
 }
 
 { #category : #'examples - ui' }
-GtNestedTreemapExamples >> basicNestedRectangleTreemap [
+GtNestedTreemapNodesExamples >> basicNestedRectangleTreemap [
 	<gtExample>
 	| aBuilder |
 	aBuilder := GtNestedRectangleTreeMap new.
@@ -13,7 +13,7 @@ GtNestedTreemapExamples >> basicNestedRectangleTreemap [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> basicTreeBuilder [
+GtNestedTreemapNodesExamples >> basicTreeBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := GtNestedTreeBuilder new.
@@ -25,7 +25,7 @@ GtNestedTreemapExamples >> basicTreeBuilder [
 ]
 
 { #category : #'utilities - disk content' }
-GtNestedTreemapExamples >> createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels in: aDirectory [ 
+GtNestedTreemapNodesExamples >> createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels in: aDirectory [ 
 	aMaxLevels <= 0 ifTrue: [ ^ self ].
 	self createDirectories: (aMaxDirectories // 2 to: aMaxDirectories) atRandom in: aDirectory.
 	self createFiles: (aMaxFiles // 2 to: aMaxDirectories) atRandom in: aDirectory.
@@ -34,20 +34,20 @@ GtNestedTreemapExamples >> createDirectories: aMaxDirectories files: aMaxFiles u
 ]
 
 { #category : #'utilities - disk content' }
-GtNestedTreemapExamples >> createDirectories: aNumberOfDirectories in: aDirectory [ 
+GtNestedTreemapNodesExamples >> createDirectories: aNumberOfDirectories in: aDirectory [ 
 	aNumberOfDirectories timesCollect: [ :anIndex | 
 		(aDirectory / ('dir-', anIndex asString)) ensureCreateDirectory ]
 ]
 
 { #category : #'utilities - disk content' }
-GtNestedTreemapExamples >> createFiles: aNumberOfFiles in: aDirectory [ 
+GtNestedTreemapNodesExamples >> createFiles: aNumberOfFiles in: aDirectory [ 
 	aNumberOfFiles timesCollect: [ :anIndex | 
 		(aDirectory / ('file-', anIndex asString, '.txt')) writeStreamEncoded: #utf8 do: [ :aStream | 
 			aStream nextPutAll: (String loremIpsum: (50 to: 100) atRandom) ] ]
 ]
 
 { #category : #'examples - model' }
-GtNestedTreemapExamples >> directory [
+GtNestedTreemapNodesExamples >> directory [
 	<gtExample>
 	| aFileSystem |
 	aFileSystem := FileSystem memory.
@@ -56,7 +56,7 @@ GtNestedTreemapExamples >> directory [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> directoryBuilder [
+GtNestedTreemapNodesExamples >> directoryBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self basicTreeBuilder.
@@ -67,7 +67,7 @@ GtNestedTreemapExamples >> directoryBuilder [
 ]
 
 { #category : #'examples - collect nodes and leaves' }
-GtNestedTreemapExamples >> directoryStructure [
+GtNestedTreemapNodesExamples >> directoryStructure [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self directoryBuilder.
@@ -81,7 +81,7 @@ GtNestedTreemapExamples >> directoryStructure [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> groupByColorAndNameAndInstrumentBuilder [
+GtNestedTreemapNodesExamples >> groupByColorAndNameAndInstrumentBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self groupByColorAndNameBuilder.
@@ -92,7 +92,7 @@ GtNestedTreemapExamples >> groupByColorAndNameAndInstrumentBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> groupByColorAndNameBuilder [
+GtNestedTreemapNodesExamples >> groupByColorAndNameBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self groupByColorBuilder.
@@ -103,7 +103,7 @@ GtNestedTreemapExamples >> groupByColorAndNameBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> groupByColorAndNameSummarizeBuilder [
+GtNestedTreemapNodesExamples >> groupByColorAndNameSummarizeBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self groupByColorAndNameBuilder.
@@ -113,7 +113,7 @@ GtNestedTreemapExamples >> groupByColorAndNameSummarizeBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> groupByColorAndSummarizeBuilder [
+GtNestedTreemapNodesExamples >> groupByColorAndSummarizeBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self groupByColorBuilder.
@@ -123,7 +123,7 @@ GtNestedTreemapExamples >> groupByColorAndSummarizeBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> groupByColorBuilder [
+GtNestedTreemapNodesExamples >> groupByColorBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self noGroupingBuilder.
@@ -134,7 +134,7 @@ GtNestedTreemapExamples >> groupByColorBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> groupByColorRejectPeterBuilder [
+GtNestedTreemapNodesExamples >> groupByColorRejectPeterBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self groupByColorBuilder.
@@ -145,7 +145,7 @@ GtNestedTreemapExamples >> groupByColorRejectPeterBuilder [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> hundredByColor [
+GtNestedTreemapNodesExamples >> hundredByColor [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorBuilder.
@@ -159,7 +159,7 @@ GtNestedTreemapExamples >> hundredByColor [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> hundredByColorAndName [
+GtNestedTreemapNodesExamples >> hundredByColorAndName [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorAndNameBuilder.
@@ -173,7 +173,7 @@ GtNestedTreemapExamples >> hundredByColorAndName [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> hundredGroupByColorAndNameAndInstrument [
+GtNestedTreemapNodesExamples >> hundredGroupByColorAndNameAndInstrument [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorAndNameAndInstrumentBuilder.
@@ -187,7 +187,7 @@ GtNestedTreemapExamples >> hundredGroupByColorAndNameAndInstrument [
 ]
 
 { #category : #'examples - ui' }
-GtNestedTreemapExamples >> hundredNestedRectangleTreemap [
+GtNestedTreemapNodesExamples >> hundredNestedRectangleTreemap [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self basicNestedRectangleTreemap.
@@ -200,13 +200,13 @@ GtNestedTreemapExamples >> hundredNestedRectangleTreemap [
 ]
 
 { #category : #'examples - model' }
-GtNestedTreemapExamples >> hundredRandomModels [
+GtNestedTreemapNodesExamples >> hundredRandomModels [
 	<gtExample>
 	^ 100 timesCollect: [ self oneRandomModel ]
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> noGroupingBuilder [
+GtNestedTreemapNodesExamples >> noGroupingBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self basicTreeBuilder.
@@ -216,7 +216,7 @@ GtNestedTreemapExamples >> noGroupingBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> noGroupingSummarizeBuilder [
+GtNestedTreemapNodesExamples >> noGroupingSummarizeBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self noGroupingBuilder.
@@ -226,7 +226,7 @@ GtNestedTreemapExamples >> noGroupingSummarizeBuilder [
 ]
 
 { #category : #'examples - model' }
-GtNestedTreemapExamples >> oneRandomModel [
+GtNestedTreemapNodesExamples >> oneRandomModel [
 	<gtExample>
 	^ Array 
 		with: (1 to: 50) atRandom 
@@ -236,7 +236,7 @@ GtNestedTreemapExamples >> oneRandomModel [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> rejectPeterGroupByColorBuilder [
+GtNestedTreemapNodesExamples >> rejectPeterGroupByColorBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self noGroupingBuilder.
@@ -248,7 +248,7 @@ GtNestedTreemapExamples >> rejectPeterGroupByColorBuilder [
 ]
 
 { #category : #'examples - rejecting' }
-GtNestedTreemapExamples >> rejectingSix [
+GtNestedTreemapNodesExamples >> rejectingSix [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self rejectingSixBuilder.
@@ -262,7 +262,7 @@ GtNestedTreemapExamples >> rejectingSix [
 ]
 
 { #category : #'examples - rejecting' }
-GtNestedTreemapExamples >> rejectingSixAndAnna [
+GtNestedTreemapNodesExamples >> rejectingSixAndAnna [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self rejectingSixAndAnnaBuilder.
@@ -276,7 +276,7 @@ GtNestedTreemapExamples >> rejectingSixAndAnna [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> rejectingSixAndAnnaBuilder [
+GtNestedTreemapNodesExamples >> rejectingSixAndAnnaBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self rejectingSixBuilder.
@@ -286,7 +286,7 @@ GtNestedTreemapExamples >> rejectingSixAndAnnaBuilder [
 ]
 
 { #category : #'examples - tree builder' }
-GtNestedTreemapExamples >> rejectingSixBuilder [
+GtNestedTreemapNodesExamples >> rejectingSixBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self noGroupingBuilder.
@@ -296,7 +296,7 @@ GtNestedTreemapExamples >> rejectingSixBuilder [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> sevenByColor [
+GtNestedTreemapNodesExamples >> sevenByColor [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorBuilder.
@@ -315,7 +315,7 @@ GtNestedTreemapExamples >> sevenByColor [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> sevenByColorAndName [
+GtNestedTreemapNodesExamples >> sevenByColorAndName [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorAndNameBuilder.
@@ -335,7 +335,7 @@ GtNestedTreemapExamples >> sevenByColorAndName [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> sevenGroupByColorAndNameSummarize [
+GtNestedTreemapNodesExamples >> sevenGroupByColorAndNameSummarize [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorAndNameSummarizeBuilder.
@@ -356,7 +356,7 @@ GtNestedTreemapExamples >> sevenGroupByColorAndNameSummarize [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> sevenGroupByColorAndSummarize [
+GtNestedTreemapNodesExamples >> sevenGroupByColorAndSummarize [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self groupByColorAndSummarizeBuilder.
@@ -373,7 +373,7 @@ GtNestedTreemapExamples >> sevenGroupByColorAndSummarize [
 ]
 
 { #category : #'examples - model' }
-GtNestedTreemapExamples >> sevenModel [
+GtNestedTreemapNodesExamples >> sevenModel [
 	<gtExample>
 	^ { 
 		{ 6. Color yellow. 'peter' }.
@@ -386,7 +386,7 @@ GtNestedTreemapExamples >> sevenModel [
 ]
 
 { #category : #'examples - ui' }
-GtNestedTreemapExamples >> sevenNestedRectangleTreemap [
+GtNestedTreemapNodesExamples >> sevenNestedRectangleTreemap [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self basicNestedRectangleTreemap.
@@ -411,7 +411,7 @@ GtNestedTreemapExamples >> sevenNestedRectangleTreemap [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> sevenNoGrouping [
+GtNestedTreemapNodesExamples >> sevenNoGrouping [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self noGroupingBuilder.
@@ -425,7 +425,7 @@ GtNestedTreemapExamples >> sevenNoGrouping [
 ]
 
 { #category : #'examples - grouping' }
-GtNestedTreemapExamples >> sevenNoGroupingSummarize [
+GtNestedTreemapNodesExamples >> sevenNoGroupingSummarize [
 	<gtExample>
 	| aBuilder aResult |
 	aBuilder := self noGroupingSummarizeBuilder.

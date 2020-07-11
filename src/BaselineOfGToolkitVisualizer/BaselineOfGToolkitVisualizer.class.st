@@ -3,7 +3,9 @@
 Visualization is a first class citizen in Glamorous Toolkit. 
 
 Currently, the projects contains:
-- Mondrian, an engine that offers a fluent API for scripting graph-based visualizations.
+- Mondrian, a fluent API for scripting graph-based visualizations.
+- TreeMap, for building circular and rectangular treemaps.
+- Plotter, a collection of builders of charts like bar charts or timelines. 
 - Connector, an engine that allows you to create a visual way to navigate graphs.
 !!Mondrian
 Mondrian is an engine for scripting graph-based visualization like this one:
