@@ -1,43 +1,35 @@
 "
 !Visualizing class hierarchies
-
 This is a tutorial for using Mondrian to visualize a class hierarchy using a horizontal tree layout. It goes step by step thorugh rendering and connecting classes, while discussing and exemplifying various design decisions in Mondrian. 
 
 As a target class we use the class ${class:GtPhlowView}$. It subclasses can be used to create inspector views.
-
 !!An initial canvas
 When using Mondrian we start by instantiating a new canvas. A canvas is an instance of the class ${class:GtMondrian}$. Initially the canvas is empty and does not contain any graphical elements.
 ${example:GtMondrianClassHierarcyExamples>>#emptyView}$
-
 !!Adding nodes to the canvas 
 Next step is to place on the canvas each object that we want to visualize. For our example, that consists in the class ${class:GtPhlowView}$ together with all of its subclassess. We can obtain a collection with these data by sending the message ${method:Behavior>>#withAllSubclasses}$ to the class.
  
 To place the nodes we ask the canvas for a node builder (${class:GtMondrianNodeBuilder}$) to which we give the list of objects that we want to display. The builder creates a node in the view for each of those objects. By default all nodes are displayes as rectangles with a fixed size.
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyNodesOnly}$
-
 !!Adding edges
 To create a tree layout we need to add edges between nodes. For our example, we need to add edges from a class to all its direct subclases.
 
 Like with nodes, we first ask the canvas for an edge builder (${class:GtMondrianEdgeBuilder}$) using the method ${method:GtMondrian>>#edges}$. Then we can use ${method:GtMondrianEdgeBuilder>>#connectToAll:}$ to specify the edges. This method goes through every node in our view, and connects it to all the nodes obtained using the given argument (the argument can also be a block). In this case it will connect a class nodes with all the nodes that represent its subclasses.
 
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyNodesAndEdges}$
-
 !!Specifying a layout
 Our view does not have an explicit layout at the moment. By default a grid layout is used. To set an explicit layout we ask the canvas for a layout builder (${class:GtMondrianLayoutBuilder}$) using the method  ${method:GtMondrian>>#layout}$. The builder has various methods for configuring different types of layouts. For a horizontal tree layout we need to use ${method:GtMondrianLayoutBuilder>>#horizontalTree}$
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTree}$
-
 !!Customising shapes
 We connected now classes with subclasses, but all nodes are displayed using the default shape. We can change that by configuring the node builder with a custom logic for creating shapes for nodes using ${method:GtMondrianGraphBuilder>>#shape:}$. The order in which messages are sent matters in Mondrian. We need to customize the shape before configuring the nodes. 
 
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithBasicShape}$
 
 We can see above that the ==shape:== method gets as parameter a block that returns an instance of the class ${class:BlElement}$. Hence, shapes are not special elements in Mondrian. Any graphical element can be a shape. 
-
 !!Controlling edges
 Currently edges do not look right, as by default they connect the center of elements. To fix this we can use dedicated methods in the endge builder to indicate that we want edges to connect the right side with the left side.
 
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithInBetweenEdges}$
-
 !!More custom shapes
 Up until now we used identical shapes for all classes. When building views we often want to show nodes differently based on the object that  they represent. To support this the block passed to the ${method:GtMondrianGraphBuilder>>#shape:}$ method gets as parameter the model object for which that shape is being created. 
 
@@ -46,7 +38,6 @@ ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithBasi
 
 Another way in which we could customise shapes, is by returning a different graphical element. For example, below we use a ${class:BlTextElement}$ to show the name of each class.
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithClassNames}$
-
 !!Composing shapes 
 The previous examples started from a set of classes and created shapes to represent those classes. Next we would like to show for each class the methods that it contains. For that we can use composition: for each class we specify a script using Mondrian that creates the content of that shape.
 
@@ -56,7 +47,6 @@ In the example above ${method:GtMondrianNodeBuilder>>#forEach:}$ is applied for 
 
 We can customize the shape of a method in the same way as we customized the shape of a class. Below we set the the size of a method based on the number of lines of code in that method.
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithNestedMethodsWithSize}$
-
 !!Guiding composition
 When composing shapes we might want to have more complex graphical elements. A problem that arrises in this case is where within a shape to place the the child shapes. In the example below we have a more complex shape for displaying a class; this shape has a label and an element that should contain the methods. Just because we named the element ==methodsElement==, Mondrian cannot guess that methods should be placed there. We have to explicitly tell Mondrian where to place the child shapes. For that we can use ${method:GtGraphElementContext>>#beChildrenContainer}$. Using this method tells Mondrian where to place the shapes for methodss within the class shape.
 
