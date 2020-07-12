@@ -31,9 +31,9 @@ GtPlotter >> create [
 { #category : #initialization }
 GtPlotter >> gtLiveFor: aView [
 	<gtView>
-	^ aView explicit 
+	^ aView explicit
 		title: 'Live';
-		stencil: [ self root ]
+		stencil: [ self asElement ]
 ]
 
 { #category : #'api - builders' }

@@ -1,13 +1,9 @@
 "
 !Mondrian basics
-
-Mondrian is an engine for graph-based visualization. While its roots date back to 2005, there have been multiple incarnations since then, including the ones from Roassal. The current version is based on Bloc, the new graphical engine for Pharo. The current version makes extensive use of Bloc and its mechanisms. As a result it requires a very short implementation that is specific to visualizing graphs. It turns out that most of the things we need for graphs are actually generic concepts that can be used for all sorts of other graphical needs.
+Mondrian is an engine for graph-based visualization. While its roots date back to 2005, there have been multiple incarnations since then. The current version is based on Bloc and makes extensive use of its mechanisms. As a result it requires a very short implementation that is specific to visualizing graphs. It turns out that most of the things we need for graphs are actually generic concepts that can be used for all sorts of other graphical needs.
 
 To get a more concrete idea of what Mondrian is about, let's consider some examples. 
-
-
 !!A few examples
-
 The first example shows a tree made of nodes and interconnecting edges that are organized as a radial tree. Except that there are also two red edges that do not affect the layout.
 
 ${example:GtMondrianBasicExamples>>#passiveEdges|previewExpanded|noCode=|previewShow=#gtLiveFor:}$
@@ -20,13 +16,8 @@ Each of these examples are similar in that they are constructed as transformatio
 - One shows a tree with nodes represented as rectangles. Another one shows nodes represented as UML class elements. 
 - One shows only simple nodes. Another one also shows nested nodes.
 - Most drawn edges affect the visualization, except for two red ones that even if thicker they are passive ones.
-
-
 !!A tutorial
-
-
 !!!Nodes, edges and layouts
-
 The most basic parts of a Mondrian view are:
 # Nodes
 # Edges
@@ -43,10 +34,7 @@ ${example:GtMondrianBasicExamples>>#edgesBetweenNodes|previewExpanded}$
 And finally, we lay them out.
 
 ${example:GtMondrianBasicExamples>>#layoutOnEdgesBetweenNodes|previewExpanded}$
-
-
 !!!Shapes
-
 The look and feel of nodes and edges is specified by Shapes, which can be included in the construction of nodes and edges.
 
 A shape can be defined by a block that takes the node's model object as its argument and returns an instance of a Bloc element. In the example below, we see nine nodes drawn as circles with black borders, whose sizes depend on the number which each node represents.
@@ -56,10 +44,7 @@ ${example:GtMondrianBasicExamples>>#nodesWithEllipses|previewExpanded}$
 We can define the shape of edges in a similar way. In the example below, the nodes are connected by blue edges whose width varies depending on the node it tries to connect.
 
 ${example:GtMondrianBasicExamples>>#edgesWithThickerLines|previewExpanded}$
-
-
 !!!Nesting
-
 Mondrian graphs can also be nested. In other words, a node can have a subgraph.
 
 ${example:GtMondrianBasicExamples>>#nestedNodes|previewExpanded}$
@@ -67,10 +52,7 @@ ${example:GtMondrianBasicExamples>>#nestedNodes|previewExpanded}$
 Nested nodes behave like leaf nodes in that they can be connected through edges and laid out accordingly.
 
 ${example:GtMondrianBasicExamples>>#nestedWithEdges|previewExpanded}$
-
-
 !!Differences to previous incarnations of Mondrian
-
 The API has changed in comparison with the Roassal version because of the constraints and opportunities offered by Bloc:
 - Nodes are defined through ==view nodes with: { ... }==, instead of ==view nodes: { ... }==. One reason is to make the definition more similar to the one of edges.
 - Shapes are defined within the scope of a ==view nodes== or ==view edges== definition.
