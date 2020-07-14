@@ -320,6 +320,39 @@ GtMondrianDomainExamples >> packageDependencies [
 	^ view
 ]
 
+{ #category : #accessing }
+GtMondrianDomainExamples >> structureOfAnElement [
+	<gtExample>
+	| m root |
+	m := GtMondrian new.
+	root := BlElement new.
+	root 
+		withDeep: [:each | 
+			(each class instVarNames 
+				collectAsSet: [:iv | each instVarNamed: iv]) 
+				select: [:object | object class name beginsWith: 'Bl'] ]
+		do: [:each | 
+			m nodes 
+				stencil: [
+					BlElement new
+						geometry: BlCircle new;
+						size: 10@10;
+						background: (each = root 
+							ifTrue: [Color red darker] 
+							ifFalse: [ 
+								each = root border
+									ifTrue: [Color blue]
+									ifFalse: [Color gray]])];
+				with: {each}]
+		relationDo: [:a :b | 
+			m edges 
+				connect: {a->b} 
+				from: #key 
+				to: #value ].
+	m layout force charge: -100.
+	^ m
+]
+
 { #category : #examples }
 GtMondrianDomainExamples >> umlClasses [
 	<gtExample>
