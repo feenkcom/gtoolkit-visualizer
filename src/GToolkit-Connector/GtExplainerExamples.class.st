@@ -173,7 +173,7 @@ It comes with snippets, and each snippet can be independently evaluated or ' asR
 { #category : #example }
 GtExplainerExamples >> playgroundWithPreview [
 	<gtExample>
-	| container inspectorContainer subject editor playbook inspectAction inspectActionButton inspectActionMarker |
+	| container inspectorContainer subject editor playbook codeElement inspectButton inspectActionMarker |
 	inspectorContainer := BlElement new
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -192,23 +192,25 @@ GtExplainerExamples >> playgroundWithPreview [
 	subject := GtPlayground createOn: playbook.
 	subject forceLayout.
 	inspectorContainer addChild: subject.
-	inspectAction := subject 
-		allChildrenBreadthFirstDetect: [:each | each isKindOf: GtExpandableCoderElement] 
-		ifFound: [ :coderElement | coderElement coder addOns mainActions detect: [:each | each title = 'Inspect'] ].
-	inspectActionButton := subject 
-		allChildrenBreadthFirstDetect: [:each | (each isKindOf: BrButton) and: [ each action = inspectAction ]] 
-		ifFound: [ :b | b ].
+	codeElement := subject 
+		allChildrenBreadthFirstDetect: [ :each | each isKindOf: GtExpandableCoderElement] 
+		ifFound: [ :coderElement | coderElement ]
+		ifNone: [ NotFound signal: 'inspect action not found' ].
+	inspectButton := codeElement 
+		allChildrenBreadthFirstDetect: [:each | (each isKindOf: BrButton) and: [ each label asString = 'Inspect' ]] 
+		ifFound: [ :b | b ]
+		ifNone: [ NotFound signal: 'inspect button not found' ].
 	inspectActionMarker := BrButton new
 		constraintsDo: [ :c | c ignoreByLayout ];
 		size: 20 @ 20;
 		elevation: (BlRelativeElevation elevation: 10);
 		geometry: BlCircle new;
 		look: (GtExplainerTargetLook new explanationModel: #inspect);
-		relocate: (inspectorContainer globalPointToLocal: (inspectActionButton localPointToGlobal: 0 @ 0)).
+		relocate: (inspectorContainer globalPointToLocal: (inspectButton localPointToGlobal: 0 @ 0)).
 	inspectorContainer addChild: inspectActionMarker.
-	inspectActionButton
+	inspectButton
 		addEventHandlerOn: BlElementPositionInSpaceChangedEvent
-			do: [ inspectActionMarker relocate: (inspectorContainer globalPointToLocal: (inspectActionButton localPointToGlobal: ((inspectActionButton extent / 2) - ((inspectActionMarker extent + inspectActionMarker border width) / 2)))) ].
+			do: [ inspectActionMarker relocate: (inspectorContainer globalPointToLocal: (inspectButton localPointToGlobal: ((inspectButton extent / 2) - ((inspectActionMarker extent + inspectActionMarker border width) / 2)))) ].
 	editor := BrEditor new
 		look: BrGlamorousRegularEditorLook;
 		text: self playgroundExplanationText;
