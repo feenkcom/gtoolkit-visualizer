@@ -35,8 +35,8 @@ GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: a
 			anEvent consumed: true.
 			coder removeAttributeNamed: #highlighter.
 			coder addOns removeStylerOfType: GtASTNodeHighlighterStylerRule.
-			coder updateAddOns.
-			coder styleText ].
+			coder requestUpdateAddOns.
+			coder requestStyleSourceText ].
 	
 	^ circleElement .
 ]
