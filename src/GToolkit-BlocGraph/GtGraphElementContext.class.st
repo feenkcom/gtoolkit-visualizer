@@ -282,23 +282,37 @@ GtGraphElementContext >> nodeAt: anObject ifAbsent: aBlock [
 
 { #category : #accessing }
 GtGraphElementContext >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
-	objectsToNodesCache
+	model = anObject
+		ifTrue: [ ^ aPresentBlock value: self element ].
+
+	^ objectsToNodesCache
 		at: anObject 
 		ifPresent: aPresentBlock
 		ifAbsent: [
-			objectsToNodesCache values notEmpty
-				ifTrue: [ 
-					objectsToNodesCache values do: [ :aChildNode |
+			| theChildren |
+			theChildren := objectsToNodesCache values
+				ifEmpty: [ self element children ].
+
+			theChildren ifNotEmpty: [ :theValues |
+					theValues do: [ :aChildNode |
+						self
+							assert: [ aChildNode isKindOf: BlElement ]
+							description: [ 'Must be an element' ].
+						
 						aChildNode graph
 							nodeAt: anObject 
 							ifPresent: [ :aNode | ^ aPresentBlock value: aNode ] 
 							ifAbsent: [ ] ].
 					^ anAbsentBlock value ]
-				ifFalse: anAbsentBlock ]
+				ifEmpty: anAbsentBlock ]
 ]
 
 { #category : #accessing }
 GtGraphElementContext >> nodeAt: anObject put: aNodeElement [
+	self
+		assert: [ aNodeElement isKindOf: BlElement ]
+		description: [ 'Must be an element' ].
+	
 	^ objectsToNodesCache at: anObject put: aNodeElement
 ]
 
