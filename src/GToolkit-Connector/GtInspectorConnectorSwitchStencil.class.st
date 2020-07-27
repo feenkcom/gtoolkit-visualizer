@@ -10,7 +10,7 @@ GtInspectorConnectorSwitchStencil >> create [
 		background: Color white;
 		look: BrTextLabelLook  + BrShadowLook new;
 		constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent. c padding: (BlInsets all:5)];
-		geometry: (BlRectangle cornerRadius: 10);
+		geometry: (BlRoundedRectangleGeometry cornerRadius: 10);
 		layout: BlLinearLayout horizontal alignCenter;
 		when: BlMouseEnterEvent do: [ :anEvent | anEvent currentTarget background: Color veryVeryLightGray lighter ];
 		when: BlMouseLeaveEvent do: [ :anEvent | anEvent currentTarget background: Color white ];

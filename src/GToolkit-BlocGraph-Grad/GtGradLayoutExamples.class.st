@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGradLayoutExamples,
 	#superclass : #GtGradExamples,
-	#category : 'GToolkit-BlocGraph-Grad-Examples'
+	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
 { #category : #'examples - layout' }
@@ -59,7 +59,7 @@ GtGradLayoutExamples >> editor [
 	anEditorElement editor: anEditorModel.
 	anEditorElement size: 75@25.
 	anEditorElement background: (Color random alpha: 0.2).
-	anEditorElement geometry: (BlRectangle cornerRadius: 5).
+	anEditorElement geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
 	
 	^ anEditorElement
 ]

@@ -4,7 +4,7 @@ I allow users to pick a color
 Class {
 	#name : #GtDiagrammerColorPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -19,7 +19,7 @@ GtDiagrammerColorPicker >> initialize [
 			icon: (BlElement new
 				size: 20@20;
 				background: aColor;
-				geometry: (BlRectangle cornerRadius: 3));
+				geometry: (BlRoundedRectangleGeometry cornerRadius: 3));
 			padding: (BlInsets all: 1);
 			margin: (BlInsets all: 3) ]
 ]

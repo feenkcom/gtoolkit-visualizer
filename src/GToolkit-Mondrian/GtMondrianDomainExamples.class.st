@@ -360,7 +360,7 @@ GtMondrianDomainExamples >> umlClasses [
 	view := self emptyView.
 	view nodes
 		umlClassShapeWithName: [ :each | each name ];
-		with: BlGeometry withAllSubclasses;
+		with: BlElementVectorGeometry withAllSubclasses;
 		forEach: [ :class | 
 			view nodes
 				shape: [ :method | 

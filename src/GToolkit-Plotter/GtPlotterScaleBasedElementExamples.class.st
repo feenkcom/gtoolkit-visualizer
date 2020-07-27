@@ -234,7 +234,7 @@ GtPlotterScaleBasedElementExamples >> verticalSingleBar [
 			aNumber := aGtScaleContext originalValue.
 			
 			anElement
-				geometry: (BlRectangle cornerRadius: 15);
+				geometry: (BlRoundedRectangleGeometry cornerRadius: 15);
 				background: (aNumber < 0.5
 					ifTrue: [ Color red alpha: aNumber * 2 ]
 					ifFalse: [ Color blue alpha: (aNumber - 0.5)  * 2 ]) ];

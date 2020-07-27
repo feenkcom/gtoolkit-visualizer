@@ -14,7 +14,7 @@ GtExplainerExplanationAttribute >> affect: aTBrTextEditorTextualPiece in: anEdit
 	aContainer := BrButton new
 		clipChildren: false;
 		layout: BlLinearLayout vertical;
-		geometry: (BlRectangle cornerRadius: 4);
+		geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
 		padding: (BlInsets left: 4 right: 4);
 		margin: (BlInsets top: 2);
 		look: (BrInteractiveCommonLook new 
