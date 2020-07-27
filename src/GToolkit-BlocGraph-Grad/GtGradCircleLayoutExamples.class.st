@@ -25,7 +25,7 @@ ${example:name=GtGradCircleLayoutExamples>>#containerWithCircleLayoutAnd10Editor
 Class {
 	#name : #GtGradCircleLayoutExamples,
 	#superclass : #GtGradLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Grad-Examples'
+	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
 { #category : #'examples - instance creation' }
@@ -231,7 +231,7 @@ GtGradCircleLayoutExamples >> editorNodes10WithRandomContent [
 	
 		anEditor background: (Color veryVeryLightGray ).
 		anEditor border: (BlBorder builder width: 1; paint: Color black) build.
-		anEditor geometry: (BlRectangle cornerRadius: 5)..
+		anEditor geometry: (BlRoundedRectangleGeometry cornerRadius: 5)..
 		anEditor graph beNode.
 		anEditor 
 	].

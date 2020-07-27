@@ -4,7 +4,7 @@ I allow users to pick an element geometry
 Class {
 	#name : #GtDiagrammerGeometryPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -12,7 +12,7 @@ GtDiagrammerGeometryPicker >> initialize [
 	super initialize.
 
 	self display: [ { 
-		BlRectangle new.
+		BlRoundedRectangleGeometry new.
 		BlEllipse new.
 	 } ].
 
