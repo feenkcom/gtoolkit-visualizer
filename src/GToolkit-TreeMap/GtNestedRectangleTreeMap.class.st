@@ -72,7 +72,6 @@ GtNestedRectangleTreeMap >> createContainerFor: aModelContext [
 	| containerElement |
 	containerElement := BlElement new
 		layout: layoutIterator nextLayout;
-		geometry: BlRoundedRectangleGeometry new;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent.
@@ -106,7 +105,6 @@ GtNestedRectangleTreeMap >> createLeavesFor: aModelContext [
 		| aLeafElement aLeafContext |
 		aLeafContext := aModelContext copyWithModel: aLeaf.
 		aLeafElement := BlElement new
-			geometry: BlRoundedRectangleGeometry new;
 			constraintsDo: [ :c | 
 				c horizontal matchParent.
 				c vertical matchParent.

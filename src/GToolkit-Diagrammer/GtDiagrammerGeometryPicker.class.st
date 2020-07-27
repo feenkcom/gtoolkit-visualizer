@@ -12,7 +12,7 @@ GtDiagrammerGeometryPicker >> initialize [
 	super initialize.
 
 	self display: [ { 
-		BlRoundedRectangleGeometry new.
+		BlRectangleGeometry new.
 		BlEllipse new.
 	 } ].
 
