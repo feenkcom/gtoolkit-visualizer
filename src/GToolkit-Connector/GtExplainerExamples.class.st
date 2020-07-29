@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-Connector'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtExplainerExamples >> inspectorContainerElement [
 	<gtExample>
 	| inspectorContainer subject inspectorHeader inspectorView inspectorActionButton |
@@ -12,10 +12,7 @@ GtExplainerExamples >> inspectorContainerElement [
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ];
-		layout: BlLinearLayout horizontal;
-		background: Color white;
-		margin: (BlInsets all: 10);
-		look: BrShadowLook.
+		layout: BlLinearLayout horizontal.
 
 	subject := BlUseAsyncFeatures
 		disableDuring: [ (GtABCartoonAddressBookExample new cartoonAddressBook gtViewsFor: GtPhlowView empty) asElementDo: [ :e | e ] ].
