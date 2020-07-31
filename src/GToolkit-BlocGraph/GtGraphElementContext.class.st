@@ -282,9 +282,6 @@ GtGraphElementContext >> nodeAt: anObject ifAbsent: aBlock [
 
 { #category : #accessing }
 GtGraphElementContext >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
-	model = anObject
-		ifTrue: [ ^ aPresentBlock value: self element ].
-
 	^ objectsToNodesCache
 		at: anObject 
 		ifPresent: aPresentBlock
