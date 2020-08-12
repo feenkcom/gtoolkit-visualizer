@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'drawLines'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #accessing }

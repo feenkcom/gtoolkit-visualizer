@@ -2,88 +2,19 @@ Class {
 	#name : #GtConnector,
 	#superclass : #BlElement,
 	#instVars : [
-		'stylerDoneListener',
-		'stylerListener',
 		'stencil',
 		'options'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #'private - adding / removing' }
-GtConnector >> addDiscreteLineFrom: aSourceElement to: aTargetElement [
-	"Add a line connecting two given elements.
-	Both elements must not be nil"
-	| aLineElement aDeleteListener |
-	self
-		assert: [ aSourceElement isNotNil ]
-		description: [ 'Source element must not be nil' ].
-		
-	self
-		assert: [ aTargetElement isNotNil ]
-		description: [ 'Target element must not be nil' ].
-		
-	self
-		assert: [ (aSourceElement isConnectedTo: aTargetElement) not ]
-		description: [ 'Source must not be connected to the target' ].
-		
-	self
-		assert: [ (aTargetElement isConnectedTo: aSourceElement) not ]
-		description: [ 'Target must not be connected to the source' ].
-
-	self
-		assert: [ aSourceElement ~~ aTargetElement ]
-		description: [ 'Can not connect element with itself' ].
-
-	self
-		assert: [ self doesExist: aSourceElement ]
-		description: [ 'Source element must be in the scene graph' ].
-		
-	self
-		assert: [ self doesExist: aTargetElement ]
-		description: [ 'Target element must be in the scene graph' ].
-
-	aLineElement := BlParabollaArcElement new.
-	aLineElement curvatureFraction: 0.
-	aLineElement zIndex: 10.
-	aLineElement toHead: (BlArrowheadSimpleArrow new
-					border: (BlBorder builder paint: (Color gray alpha: 0.04); width: 10; build)).
-	aLineElement constraints ignoreByLayout.
-	aLineElement
-		border: (BlBorder paint: (Color gray alpha: 0.04) width: 20);
-		fromAnchor: (BlNearestPositionLooseCircleAnchor nearestTo:aTargetElement from: aSourceElement);
-		toAnchor: (BlNearestPositionBoundsAnchor nearestTo: aSourceElement from: aTargetElement).
-
-	"Line should disappear when any of source or target elements is deleted"
-	aDeleteListener := nil.
-	"we should not forget to remove event handlers before removing a line"
-	aDeleteListener := BlEventHandler on: BlElementRemovedFromParentEvent do: [ :anEvent |
-		aSourceElement removeEventHandler: aDeleteListener.
-		aTargetElement removeEventHandler: aDeleteListener.
-		aSourceElement beNotConnectedTo: aTargetElement.
-		aTargetElement beNotConnectedTo: aSourceElement.
-		aLineElement removeFromParent ].
-	
-	aSourceElement addEventHandler: aDeleteListener.
-	aTargetElement addEventHandler: aDeleteListener.
-	
-	aSourceElement beConnectedTo: aTargetElement.
-	aTargetElement beConnectedTo: aSourceElement.
-
-	self addChild: aLineElement.
-	
-]
-
-{ #category : #'private - adding / removing' }
-GtConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
-	
-	"Add a graph edge between two given elements.
-	Both elements must not be nil"
+GtConnector >> addEdgeConstraintFrom: aSourceElement to: aTargetElement [
+	"Add a graph edge between two given elements."
 	| anEdge |
 	self
 		assert: [ aSourceElement isNotNil ]
 		description: [ 'Source element must not be nil' ].
-
 	self
 		assert: [ aTargetElement isNotNil ]
 		description: [ 'Target element must not be nil' ].
@@ -94,15 +25,67 @@ GtConnector >> addEdgeFrom: aSourceElement to: aTargetElement [
 
 	aSourceElement constraints graph addConnectedEdge: anEdge.
 	aTargetElement constraints graph addConnectedEdge: anEdge.
+	
+	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
+	self ensureRemoveLayoutTargetHandlerFor: aTargetElement.
+	
 	(aSourceElement isConnectedTo: aTargetElement)
-		ifFalse: [ self addDiscreteLineFrom: aSourceElement to: aTargetElement].
+		ifFalse: [ self addEdgeLineFrom: aSourceElement to: aTargetElement].
 
 	self requestLayout
 ]
 
+{ #category : #'private - adding / removing' }
+GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
+	"Add a line connecting two given elements."
+	| aLineElement |
+	
+	self
+		assert: [ aSourceElement isNotNil ]
+		description: [ 'Source element must not be nil' ].
+	self
+		assert: [ aTargetElement isNotNil ]
+		description: [ 'Target element must not be nil' ].
+	self
+		assert: [ (aSourceElement isConnectedTo: aTargetElement) not ]
+		description: [ 'Source must not be connected to the target' ].
+	self
+		assert: [ (aTargetElement isConnectedTo: aSourceElement) not ]
+		description: [ 'Target must not be connected to the source' ].
+	self
+		assert: [ aSourceElement ~~ aTargetElement ]
+		description: [ 'Can not connect element with itself' ].
+	self
+		assert: [ self doesExist: aSourceElement ]
+		description: [ 'Source element must be in the scene graph' ].
+	self
+		assert: [ self doesExist: aTargetElement ]
+		description: [ 'Target element must be in the scene graph' ].
+
+	aLineElement := BlParabollaArcElement new.
+	aLineElement curvatureFraction: 0.01.
+	aLineElement zIndex: -10.
+	aLineElement toHead: (BlArrowheadSimpleArrow new
+		border: (BlBorder builder paint: (Color gray alpha: 0.04); width: 10; build)).
+	aLineElement constraints ignoreByLayout.
+	aLineElement
+		border: (BlBorder paint: (Color gray alpha: 0.04) width: 20);
+		fromAnchor: (BlNearestPositionLooseCircleAnchor nearestTo:aTargetElement from: aSourceElement);
+		toAnchor: (BlNearestPositionLooseCircleAnchor nearestTo: aSourceElement from: aTargetElement).
+	
+	aLineElement connectorEdge 
+		fromElement: aSourceElement;
+		toElement: aTargetElement.
+	aSourceElement beConnectedTo: aTargetElement.
+	aTargetElement beConnectedTo: aSourceElement.
+
+	self addChild: aLineElement.
+	
+]
+
 { #category : #public }
 GtConnector >> addEntity: anEntity [
-	"Create a new editor on a given method, add it to the scene"
+	"Create a new element for the given entity, add it to the scene"
 	
 	(self hasOpenedEntity: anEntity)
 		ifTrue: [ ^ self ].
@@ -111,26 +94,21 @@ GtConnector >> addEntity: anEntity [
 ]
 
 { #category : #'private - adding / removing' }
-GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
-	"Add a line connecting two given elements.
-	Both elements must not be nil"
-	| aLineElement aDeleteListener |
+GtConnector >> addVisualLineFrom: aSourceElement to: aTargetElement [
+	"Add a line connecting two given elements."
+	| aLineElement |
 	self
 		assert: [ aSourceElement isNotNil ]
 		description: [ 'Source element must not be nil' ].
-		
 	self
 		assert: [ aTargetElement isNotNil ]
 		description: [ 'Target element must not be nil' ].
-		
 	self
 		assert: [ (aSourceElement isConnectedTo: aTargetElement) not ]
 		description: [ 'Source must not be connected to the target' ].
-		
 	self
 		assert: [ (aTargetElement isConnectedTo: aSourceElement) not ]
 		description: [ 'Target must not be connected to the source' ].
-
 	self
 		assert: [ aSourceElement ~~ aTargetElement ]
 		description: [ 'Can not connect element with itself' ].
@@ -153,40 +131,20 @@ GtConnector >> addLineFrom: aSourceElement to: aTargetElement [
 		border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
 		fromAnchor: (BlElementCenterRightAnchor element: aSourceElement);
 		toAnchor: (BlElementCenterLeftAnchor element: aTargetElement).
-
-	"Line should disappear when any of source or target elements is deleted"
-	aDeleteListener := nil.
-	"we should not forget to remove event handlers before removing a line"
-	aDeleteListener := BlEventHandler on: BlElementRemovedFromParentEvent do: [ :anEvent |
-		aSourceElement removeEventHandler: aDeleteListener.
-		aTargetElement removeEventHandler: aDeleteListener.
-		aSourceElement beNotConnectedTo: aTargetElement.
-		aTargetElement beNotConnectedTo: aSourceElement.
-		aLineElement removeFromParent ].
 	
-	aSourceElement addEventHandler: aDeleteListener.
-	aTargetElement addEventHandler: aDeleteListener.
+	aLineElement connectorEdge 
+		fromElement: aSourceElement;
+		toElement: aTargetElement.
+	aSourceElement connector beConnectedTo: aTargetElement.
+	aTargetElement connector beConnectedTo: aSourceElement.
 	
-	aSourceElement beConnectedTo: aTargetElement.
-	aTargetElement beConnectedTo: aSourceElement.
-	self options drawLines ifTrue: [ self addChild: aLineElement ]
+	self ensureRemoveVisualSourceHandlerFor: aSourceElement.
+	self ensureRemoveVisualTargetHandlerFor: aTargetElement.
+	
+	self addChild: aLineElement
+	"self options drawLines ifTrue: [ self addChild: aLineElement ]"
 	
 	
-]
-
-{ #category : #'private - adding / removing' }
-GtConnector >> addLink: aLink [
-	| aSourceElement aTargetElement |
-	
-	aSourceElement := self
-		elementWithEntity: aLink source
-		ifAbsent: [ ^ self ].
-		
-	aTargetElement := self
-		elementWithEntity: aLink target
-		ifAbsent: [ ^ self ].
-
-	self addEdgeFrom: aSourceElement to: aTargetElement
 ]
 
 { #category : #converting }
@@ -201,34 +159,6 @@ GtConnector >> asScalableElement [
 	^ scalable
 ]
 
-{ #category : #'private - adding / removing' }
-GtConnector >> connect: anElement [
-	"I create a visual edge between elements (not used by layouts)"
-
-	"self
-		assert: [ anElement isConnectorSource or: [ anElement isConnectorTarget ] ]
-		description: [ 'An element must be either a source or a target' ]."
-
-	"Element is a source, connect it to all targets"
-	
-	anElement connector isVisualSource ifTrue: [
-		(self elementsWithTarget: anElement connector model)
-			select: [ :aTargetElement | (anElement isConnectedTo: aTargetElement) not
-				and: [ (self doesExist: aTargetElement)
-					and: [ (self doesExist: anElement) ] ] ]
-			thenDo: [ :aTargetElement | self addLineFrom: anElement to: aTargetElement ] ].
-
-	"Element is a target, connect it to all sources"
-	anElement isConnectorTarget ifTrue: [
-		(self sourcesWithTarget: anElement connector target)
-			select: [ :aSourceElement | (aSourceElement isConnectedTo: anElement) not
-				and: [ (self doesExist: aSourceElement)
-					and: [ (self doesExist: anElement) ] ]  ]
-			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ].
-		
-	self requestLayout.
-]
-
 { #category : #private }
 GtConnector >> createAndAddElementForEntity: anEntity [
 	| entityElement |	
@@ -238,9 +168,9 @@ GtConnector >> createAndAddElementForEntity: anEntity [
 		description: [ 'Stencil describing each entity can not be nil' ].
 	"build the entity itself"
 	entityElement := self stencil value: anEntity.
-
-	self addChild: entityElement.
 	entityElement graph beNode.
+	
+	self addChild: entityElement.
 
 	^ entityElement
 ]
@@ -250,15 +180,15 @@ GtConnector >> doesExist: anElement [
 	^ (anElement hasParent: self) or: [ anElement isAttachedToSceneGraph ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtConnector >> drawLines: anElement [
 	
 	anElement connector isVisualSource ifTrue: [
 		(self targetElementsWith: anElement connector model)
 			select: [ :aTargetElement |  (anElement isConnectedTo: aTargetElement) not 
-				and: [(self doesExist: aTargetElement)
+				and: [ (self doesExist: aTargetElement)
 					and: [ (self doesExist: anElement) ] ] ]
-			thenDo: [ :aTargetElement | self addLineFrom: anElement to: aTargetElement ] ].
+			thenDo: [ :aTargetElement | self addVisualLineFrom: anElement to: aTargetElement ] ].
 		
 	"Element is a target, connect it to all sources"
 	anElement connector isVisualTarget ifTrue: [
@@ -266,25 +196,7 @@ GtConnector >> drawLines: anElement [
 			select: [ :aSourceElement |  (aSourceElement isConnectedTo: anElement) not 
 				and: [(self doesExist: aSourceElement)
 					and: [ (self doesExist: anElement) ] ] ]
-			thenDo: [ :aSourceElement | self addLineFrom: aSourceElement to: anElement ] ].
-]
-
-{ #category : #accessing }
-GtConnector >> elementAddedToScene: anElement [
-	"I create a logical edge between elements (not visible)"
-	self link: anElement.
-	self drawLines: anElement.
-	
-]
-
-{ #category : #search }
-GtConnector >> elementWithEntity: aMethod ifAbsent: aBlock [
-	
-	self
-		elementWithEntity: aMethod
-		ifPresent: [ :anElement | ^ anElement ].
-		
-	^ aBlock value
+			thenDo: [ :aSourceElement | self addVisualLineFrom: aSourceElement to: anElement ] ].
 ]
 
 { #category : #search }
@@ -300,11 +212,9 @@ GtConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 
 	self entityElements 
 		detect: [ :anEntityElement | 
-			anEntityElement connector model = anEntity 
-				"at: #editedMethod
-				ifPresent: [ :anEditedMethod | anEntity = anEditedMethod ]
-				ifAbsent: [ false ]" ]
-		ifFound: [ :anEditorElement | aBlock cull: anEditorElement ]
+			anEntityElement connector model = anEntity ]
+		ifFound: [ :anEditorElement | 
+			aBlock cull: anEditorElement ]
 ]
 
 { #category : #search }
@@ -326,45 +236,69 @@ GtConnector >> elementsVisualWithTarget: aSource [
 
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
-			
 			(aChildElement connector isVisualTarget
 				and: [ aChildElement connector modelContains: aSource ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
-{ #category : #search }
-GtConnector >> elementsWithSource: aSource [
-	"Return a collection of source elements whose source is a given object"
-	<return: #SequenceableCollection of: #BlElement>
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [
+	self assert: [ anElement connector isLayoutSource ].
 
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement isConnectorSource
-				and: [ aChildElement connector source = aSource ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
+	anElement connector hasRemoveLayoutSourceHandler ifTrue: [ ^ self ].
+	
+	anElement when: GtConnectorLayoutSourceElementRemovedEvent do: [ :event | 
+		self removeEdgeConstraintsFrom: event element.
+		self removeLinesFrom: event element.
+		self requestLayout ].
+	anElement connector hasRemoveLayoutSourceHandler: true.
 ]
 
-{ #category : #search }
-GtConnector >> elementsWithTarget: aTarget [
-	"Return a collection of target elements whose target is a given object"
-	<return: #SequenceableCollection of: #BlElement>
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureRemoveLayoutTargetHandlerFor: anElement [
+	self assert: [ anElement connector isLayoutTarget ].
 
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement connector isVisualTarget
-				and: [ aChildElement connector model = aTarget ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
+	anElement connector hasRemoveLayoutTargetHandler ifTrue: [ ^ self ].
+	
+	anElement when: GtConnectorLayoutTargetElementRemovedEvent do: [ :event | 
+		self removeEdgeConstraintsTo: event element.
+		self removeLinesTo: event element.
+		self requestLayout ].
+	anElement connector hasRemoveLayoutTargetHandler: true.
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureRemoveVisualSourceHandlerFor: anElement [
+	self assert: [ anElement connector isVisualSource ].
+
+	anElement connector hasRemoveVisualSourceHandler ifTrue: [ ^ self ].
+	
+	anElement when: GtConnectorVisualSourceElementRemovedEvent do: [ :event | 
+		self removeLinesFrom: event element ].
+	anElement connector hasRemoveVisualSourceHandler: true.
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureRemoveVisualTargetHandlerFor: anElement [
+	self assert: [ anElement connector isVisualTarget ].
+
+	anElement connector hasRemoveVisualTargetHandler ifTrue: [ ^ self ]. 
+	
+	anElement when: GtConnectorVisualTargetElementRemovedEvent do: [ :event | 
+		self removeLinesTo: event element ].
+	anElement connector hasRemoveVisualTargetHandler: true.
 ]
 
 { #category : #accessing }
 GtConnector >> entityElements [
-	"Return a collection of existing editor elements that are already added to the tree"
+	"Return a collection of existing elements that are already added to the tree"
 	<return: #SequenceableCollection of: #BlElement>
 
-	^ self children reject: [ :anElement | anElement isKindOf: BlLineElement ]
+	^ self children reject: [ :anElement | 
+		anElement isKindOf: BlCurveElement ]
 ]
 
-{ #category : #accessing }
+{ #category : #search }
 GtConnector >> goUpToSourceLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
@@ -373,7 +307,7 @@ GtConnector >> goUpToSourceLayoutElement: anElement [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : #search }
 GtConnector >> goUpToTargetLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
@@ -398,21 +332,13 @@ GtConnector >> gtLiveFor: aView [
 
 { #category : #testing }
 GtConnector >> hasOpenedEntity: anEntity [
-	"Return true if there already exists an editor opened on a given method, false otheriwse.
-	aMethod must not be nil"
+	"Return true if there already exists a connector element for the given entity, false otheriwse"
 	<return: #Boolean>
+	self 
+		assert: [ anEntity notNil ]
+		description: [ 'Entity must not be nil' ].
 
 	self elementWithEntity: anEntity ifPresent: [ ^ true ].
-	^ false
-]
-
-{ #category : #testing }
-GtConnector >> hasOpenedMethod: aMethod [
-	"Return true if there already exists an editor opened on a given method, false otheriwse.
-	aMethod must not be nil"
-	<return: #Boolean>
-
-	self elementWithMethod: aMethod ifPresent: [ ^ true ].
 	^ false
 ]
 
@@ -432,42 +358,49 @@ GtConnector >> initialize [
 
 { #category : #initialization }
 GtConnector >> initializeListeners [
-	self when: GtConnectorTargetElement do: [ :event | 
+	self when: GtConnectorVisualTargetElementAddedEvent do: [ :event | 
 		self link: event element.
-		self drawLines: event element.
-		 ].
-	self when: GtConnectorSourceElement do: [ :event | 
+		self drawLines: event element ].
+	self when: GtConnectorVisualSourceElementAddedEvent do: [ :event | 
 		self link: event element.
-		self drawLines: event element.
-		 ].
+		self drawLines: event element ].
 ]
 
 { #category : #accessing }
+GtConnector >> lineElements [
+	"Return a collection of existing line element from the connector"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ self children select: [ :anElement | 
+		anElement isKindOf: BlCurveElement ]
+]
+
+{ #category : #private }
 GtConnector >> link: anElement [
 	"I create a logical edge between elements (not visible)"
 	| sourceLayoutElement targetLayoutElement |
 	self
-		assert: [ anElement connector isNotNil ]
-		description: [ 'An element connector must not be nil' ].
+		assert: [ anElement userData includesKey: #connector  ]
+		description: [ 'The element must have a connector' ].
 	
 	anElement connector isVisualTarget ifTrue: [
 		targetLayoutElement := self goUpToTargetLayoutElement: anElement.
 		anElement connector modelDo: [ :modelObject | 
 			(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
 				sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-				self addEdgeFrom: sourceLayoutElement to: targetLayoutElement ]]].
+				self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ]]].
 	
 	anElement connector isVisualSource ifTrue: [
 		sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
 		anElement connector modelDo: [ :modelObject |
 			(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
 				targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-				self addEdgeFrom: sourceLayoutElement to: targetLayoutElement ]]]
+				self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ]]]
 ]
 
 { #category : #private }
 GtConnector >> openEntity: anEntity [
-	"Open a given method without connecting it to other"	
+	"Open a given entity without connecting it to other"	
 	self
 		assert: [ (self hasOpenedEntity: anEntity) not ]
 		description: [ 'Can not open already opened enity' ].
@@ -475,14 +408,54 @@ GtConnector >> openEntity: anEntity [
 	self createAndAddElementForEntity: anEntity.
 ]
 
-{ #category : #search }
+{ #category : #accessing }
 GtConnector >> options [ 
 	^ options 
 ]
 
-{ #category : #search }
+{ #category : #accessing }
 GtConnector >> options: anOptionsObject [
 	options := anOptionsObject.
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> removeEdgeConstraintsFrom: sourceElement [
+	sourceElement constraints graph outgoingEdges do: [ :anEdge |
+		anEdge fromElement constraints graph removeConnectedEdge: anEdge.
+		anEdge toElement constraints graph removeConnectedEdge: anEdge ]
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> removeEdgeConstraintsTo: sourceElement [
+	sourceElement constraints graph incomingEdges do: [ :anEdge |
+		anEdge fromElement constraints graph removeConnectedEdge: anEdge.
+		anEdge toElement constraints graph removeConnectedEdge: anEdge ]
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> removeLinesFrom: sourceElement [
+	self lineElements
+		select: [ :aLineElement |
+			aLineElement connectorEdge fromElement = sourceElement ]
+		thenDo: [ :aLineElement |
+			| targetElement |
+			targetElement := aLineElement connectorEdge toElement.
+			sourceElement beNotConnectedTo: targetElement.
+			targetElement beNotConnectedTo: sourceElement.
+			aLineElement removeFromParent ]
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> removeLinesTo: targetElement [
+	self lineElements
+		select: [ :aLineElement |
+			aLineElement connectorEdge toElement = targetElement ]
+		thenDo: [ :aLineElement |
+			| sourceElement |
+			sourceElement := aLineElement connectorEdge fromElement.
+			sourceElement beNotConnectedTo: targetElement.
+			targetElement beNotConnectedTo: sourceElement.
+			aLineElement removeFromParent ]
 ]
 
 { #category : #search }
@@ -497,24 +470,12 @@ GtConnector >> sourceElementsWith: aTarget [
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
-{ #category : #search }
-GtConnector >> sourcesWithTarget: aTarget [
-	"Return a collection of target elements whose source is a given object"
-	<return: #SequenceableCollection of: #BlElement>
-
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement isConnectorSource
-				and: [ aChildElement connector target = aTarget ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
-]
-
-{ #category : #search }
+{ #category : #accessing }
 GtConnector >> stencil [ 
 	^ stencil 
 ]
 
-{ #category : #search }
+{ #category : #public }
 GtConnector >> stencil: aStencil [
 	stencil := aStencil
 ]
@@ -529,16 +490,4 @@ GtConnector >> targetElementsWith: aTarget [
 			(aChildElement connector isVisualTarget
 				and: [ aChildElement connector modelContains: aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ]]]
-]
-
-{ #category : #search }
-GtConnector >> targetsWithSource: aSource [
-	"Return a collection of target elements whose source is a given object"
-	<return: #SequenceableCollection of: #BlElement>
-
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement isConnectorTarget
-				and: [ aChildElement connectorSource = aSource ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]

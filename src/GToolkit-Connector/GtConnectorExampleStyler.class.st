@@ -5,7 +5,7 @@ Class {
 		'exampleAction',
 		'previousLinks'
 	],
-	#category : 'GToolkit-Connector'
+	#category : #'GToolkit-Connector'
 }
 
 { #category : #factory }
@@ -59,12 +59,12 @@ GtConnectorExampleStyler >> extraStyle: aText ast: ast [
 			target: targetExampleMethod.
 
 		buttonAttribute := GtConnectorTextButtonAttribute link: aLink.
-		buttonAttribute actionBlock: [ :anEvent | exampleAction valueWithEnoughArguments: { targetExampleMethod . each . anEvent currentTarget } ].
+		buttonAttribute actionBlock: [ :anEvent | 
+			exampleAction valueWithEnoughArguments: { targetExampleMethod . each . anEvent currentTarget } ].
 		aText 
 			attributes: { buttonAttribute }
 			from: each stop - 1
-			to: each stop.
-			].
+			to: each stop ].
 	
 ]
 
