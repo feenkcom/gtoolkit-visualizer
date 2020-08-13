@@ -44,6 +44,8 @@ GtConnectorElementContext >> beLayoutSource [
 	element 
 		when: BlElementRemovedFromSceneGraphEvent
 		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent forRole: #layoutSource.
+			
 			"Dispatch the event as the element is no longer in the scene graph"
 			anEvent currentTarget dispatchEvent: (GtConnectorLayoutSourceElementRemovedEvent new
 				element: anEvent currentTarget) ]
@@ -56,6 +58,8 @@ GtConnectorElementContext >> beLayoutTarget [
 	element 
 		when: BlElementRemovedFromSceneGraphEvent
 		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent forRole: #layoutTarget.
+			
 			"Dispatch the event as the element is no longer in the scene graph"
 			anEvent currentTarget dispatchEvent: (GtConnectorLayoutTargetElementRemovedEvent new
 				element: anEvent currentTarget) ]
@@ -73,11 +77,13 @@ GtConnectorElementContext >> beVisualSource [
 	element 
 		when: BlElementAddedToSceneGraphEvent
 		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent forRole: #visualSource.
 			anEvent currentTarget fireEvent: (GtConnectorVisualSourceElementAddedEvent new
 				element: anEvent currentTarget) ].
 	element 
 		when: BlElementRemovedFromSceneGraphEvent
 		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent forRole: #visualSource.
 			"Dispatch the event as the element is no longer in the scene graph"
 			anEvent currentTarget dispatchEvent: (GtConnectorVisualSourceElementRemovedEvent new
 				element: anEvent currentTarget) ]
@@ -90,11 +96,13 @@ GtConnectorElementContext >> beVisualTarget [
 	element 
 		when: BlElementAddedToSceneGraphEvent
 		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent forRole: #visualTarget.
 			anEvent currentTarget fireEvent: (GtConnectorVisualTargetElementAddedEvent new
 				element: anEvent currentTarget) ].
 	element 
 		when: BlElementRemovedFromSceneGraphEvent
 		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent forRole: #visualTarget.
 			"Dispatch the event as the element is no longer in the scene graph"
 			anEvent currentTarget dispatchEvent: (GtConnectorVisualTargetElementRemovedEvent new
 				element: anEvent currentTarget) ]
@@ -108,6 +116,14 @@ GtConnectorElementContext >> element [
 { #category : #accessing }
 GtConnectorElementContext >> element: anObject [
 	element := anObject
+]
+
+{ #category : #logging }
+GtConnectorElementContext >> emitSignalForEvent: anEvent forRole: aSymbol [
+	GtConnectorContextEventSignal new 
+		event: anEvent;
+		elementRole: aSymbol;
+		emit
 ]
 
 { #category : #accessing }

@@ -241,15 +241,23 @@ GtConnector >> elementsVisualWithTarget: aSource [
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
+{ #category : #logging }
+GtConnector >> emitSignalForEvent: anEvent [
+	GtConnectorEventSignal new 
+		event: anEvent;
+		emit
+]
+
 { #category : #'private - adding / removing' }
 GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [
 	self assert: [ anElement connector isLayoutSource ].
 
 	anElement connector hasRemoveLayoutSourceHandler ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorLayoutSourceElementRemovedEvent do: [ :event | 
-		self removeEdgeConstraintsFrom: event element.
-		self removeLinesFrom: event element.
+	anElement when: GtConnectorLayoutSourceElementRemovedEvent do: [ :anEvent | 
+		self emitSignalForEvent: anEvent.
+		self removeEdgeConstraintsFrom: anEvent element.
+		self removeLinesFrom: anEvent element.
 		self requestLayout ].
 	anElement connector hasRemoveLayoutSourceHandler: true.
 ]
@@ -260,9 +268,10 @@ GtConnector >> ensureRemoveLayoutTargetHandlerFor: anElement [
 
 	anElement connector hasRemoveLayoutTargetHandler ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorLayoutTargetElementRemovedEvent do: [ :event | 
-		self removeEdgeConstraintsTo: event element.
-		self removeLinesTo: event element.
+	anElement when: GtConnectorLayoutTargetElementRemovedEvent do: [ :anEvent | 
+		self emitSignalForEvent: anEvent.
+		self removeEdgeConstraintsTo: anEvent element.
+		self removeLinesTo: anEvent element.
 		self requestLayout ].
 	anElement connector hasRemoveLayoutTargetHandler: true.
 ]
@@ -273,8 +282,9 @@ GtConnector >> ensureRemoveVisualSourceHandlerFor: anElement [
 
 	anElement connector hasRemoveVisualSourceHandler ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorVisualSourceElementRemovedEvent do: [ :event | 
-		self removeLinesFrom: event element ].
+	anElement when: GtConnectorVisualSourceElementRemovedEvent do: [ :anEvent | 
+		self emitSignalForEvent: anEvent.
+		self removeLinesFrom: anEvent element ].
 	anElement connector hasRemoveVisualSourceHandler: true.
 ]
 
@@ -284,8 +294,9 @@ GtConnector >> ensureRemoveVisualTargetHandlerFor: anElement [
 
 	anElement connector hasRemoveVisualTargetHandler ifTrue: [ ^ self ]. 
 	
-	anElement when: GtConnectorVisualTargetElementRemovedEvent do: [ :event | 
-		self removeLinesTo: event element ].
+	anElement when: GtConnectorVisualTargetElementRemovedEvent do: [ :anEvent | 
+		self emitSignalForEvent: anEvent.
+		self removeLinesTo: anEvent element ].
 	anElement connector hasRemoveVisualTargetHandler: true.
 ]
 
@@ -358,12 +369,14 @@ GtConnector >> initialize [
 
 { #category : #initialization }
 GtConnector >> initializeListeners [
-	self when: GtConnectorVisualTargetElementAddedEvent do: [ :event | 
-		self link: event element.
-		self drawLines: event element ].
-	self when: GtConnectorVisualSourceElementAddedEvent do: [ :event | 
-		self link: event element.
-		self drawLines: event element ].
+	self when: GtConnectorVisualSourceElementAddedEvent do: [ :anEvent | 
+		self emitSignalForEvent: anEvent.
+		self link: anEvent element.
+		self drawLines: anEvent element ].
+	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
+		self emitSignalForEvent: anEvent.
+		self link: anEvent element.
+		self drawLines: anEvent element ].
 ]
 
 { #category : #accessing }
