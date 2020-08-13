@@ -12,17 +12,19 @@ Object >> gtConnectionsFor: aView [
 			gtconnector stencil: [ :entity |
 				| uml tabGroup aCloseButton connectorTable aConnectorButton aDetailsButton header text textElement aBottomResizer aRightResizer|
 				
-				uml := GtConnectorElement new.
+				uml := BlElement new.
 				uml size: 300@300.
 				uml layout: BlLinearLayout new beVertical.
-				uml connector beLayoutSource.
-				uml connector beLayoutTarget.
-				uml connector model: entity.
+				
 				uml constraintsDo: [:c | c padding: (BlInsets top: 1 bottom: 1).].
 				uml background: Color white;
 					effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
-				uml connector beVisualTarget.
-				uml connector model: entity.
+				
+				uml connector 
+					beLayoutSource;
+					beLayoutTarget;
+					beVisualTarget;
+					model: entity.
 				
 				tabGroup := (entity gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
 
@@ -38,7 +40,7 @@ Object >> gtConnectionsFor: aView [
 				header addChild: textElement.
 				textElement constraintsDo: [ :c | c padding: (BlInsets top:25) ].	
 			
-				connectorTable := GtConnectorExamples new rawObjectConnectorTableFor: entity in: gtconnector.
+				connectorTable := self gtObjectConnectorTableIn: gtconnector.
 				
 				aCloseButton := GtInspectorRoundButtonStencil new asElement
 					icon: (GtInspectorPlusIconStencil close);
@@ -105,4 +107,56 @@ Object >> gtConnectionsFor: aView [
 			].
 			gtconnector addEntity: self.
 			gtconnector asPannableElement ]
+]
+
+{ #category : #'*GToolkit-Connector' }
+Object >> gtObjectConnectorTableIn: connector [
+	| variableNodes list |
+	variableNodes := OrderedCollection new: self class allSlots size.
+	self gtInspectorVariableNodesIn: variableNodes.
+
+	list := BrColumnedList new items: variableNodes.
+	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
+	list column
+		title: 'Icon';
+		stencil: [ :aNode :index |
+			| icon |
+			icon := ([ aNode rawValue gtInspectorIcon ifNil: [ aNode rawValue class systemIcon ] ]
+				on: Error
+				do: [ :error | self iconNamed: #smallWarningIcon ]).
+			icon asElement].
+	list column
+		title: 'Variable';
+		stencil: [ :aNode :index |
+			| textElement text  |
+			text := aNode label asRopedText.
+			textElement :=  (BrColumnCellLabelStencil matchParent: text) asElement.
+			textElement constraintsDo: [ :c | c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
+			textElement ].
+	list column
+		title: 'Value';
+		stencil: [ :aNode :index |
+			| text textElement container |
+			text := [ aNode rawValue gtDisplayString asRopedText ]
+				on: Error
+				do: [ aNode errorMessage asRopedText foreground: Color red ].
+			textElement := (BrColumnCellLabelStencil fitContent: text) asElement.
+			textElement constraintsDo: [ :c | c padding: (BlInsets right: 10) ].
+
+			container := BlElement new.
+			aNode rawValue = aNode hostObject ifFalse: [
+				container connector model: aNode rawValue ].
+			
+			container layout: BlLinearLayout vertical.
+			container addChild: textElement.
+			container connector beVisualSource.	
+			container 
+				when: BlDoubleClickEvent 
+				do: [ :event | connector addEntity: aNode rawValue ].
+			container constraintsDo: [:c | 
+				c vertical fitContent. 
+				c horizontal matchParent. 
+				c padding: (BlInsets top: 1 bottom: 1).].
+			container ].
+	^ list
 ]

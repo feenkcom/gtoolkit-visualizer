@@ -125,62 +125,6 @@ GtConnectorExamples >> exampleMethodsExample [
 ]
 
 { #category : #'examples-raw' }
-GtConnectorExamples >> rawObjectConnectorTableFor: anObject in: connector [
-	| variableNodes list |
-	variableNodes := OrderedCollection new: anObject class allSlots size.
-	anObject gtInspectorVariableNodesIn: variableNodes.
-
-	list := BrColumnedList new items: variableNodes.
-	list constraintsDo: [ :c | c padding: (BlInsets top: 10) ].
-	list column
-		title: 'Icon';
-		stencil: [ :aNode :index |
-			| icon |
-			icon := ([ aNode rawValue gtInspectorIcon ifNil: [ aNode rawValue class systemIcon ] ]
-				on: Error
-				do: [ :error | anObject iconNamed: #smallWarningIcon ]).
-			icon asElement].
-	list column
-		title: 'Variable';
-		stencil: [ :aNode :index |
-			| textElement text vocal |
-			text := aNode label asRopedText.
-			textElement :=  (BrColumnCellLabelStencil matchParent: text) asElement.
-			textElement constraintsDo: [ :c | c padding: (BlInsets left: 10). c padding: (BlInsets top: 5 bottom:  5) ].
-			vocal := GtConnectorElement new.
-			vocal layout: BlLinearLayout vertical alignCenter.
-			vocal addChild: textElement.
-			vocal constraintsDo: [:c | c vertical fitContent. c horizontal matchParent].
-			vocal ].
-	list column
-		title: 'Value';
-		stencil: [ :aNode :index |
-			| text textElement container |
-			text := [ aNode rawValue gtDisplayString asRopedText ]
-				on: Error
-				do: [ aNode errorMessage asRopedText foreground: Color red ].
-			textElement := (BrColumnCellLabelStencil fitContent: text) asElement.
-			textElement constraintsDo: [ :c | c padding: (BlInsets right: 10) ].
-
-			container := BlElement new.
-			aNode rawValue = aNode hostObject ifFalse: [
-				container connector model: aNode rawValue ].
-			
-			container layout: BlLinearLayout vertical.
-			container addChild: textElement.
-			container connector beVisualSource.	
-			container 
-				when: BlDoubleClickEvent 
-				do: [ :event | connector addEntity: aNode rawValue ].
-			container constraintsDo: [:c | 
-				c vertical fitContent. 
-				c horizontal matchParent. 
-				c padding: (BlInsets top: 1 bottom: 1).].
-			container ].
-	^ list
-]
-
-{ #category : #'examples-raw' }
 GtConnectorExamples >> rawObjectExample [
 	<gtExample>
 	| gtconnector |
@@ -217,7 +161,7 @@ GtConnectorExamples >> rawObjectExample [
 		textElement constraintsDo: [ :c | 
 			c padding: (BlInsets top: 20 right: 0 bottom: 0 left: 20) ].
 
-		connectorTable := self rawObjectConnectorTableFor: entity in: gtconnector.
+		connectorTable := entity gtObjectConnectorTableIn: gtconnector.
 
 		aCloseButton := GtInspectorRoundButtonStencil new asElement
 			icon: (GtInspectorPlusIconStencil close);
