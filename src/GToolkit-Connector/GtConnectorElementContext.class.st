@@ -3,13 +3,13 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
+		'hasModel',
 		'isLayoutSource',
 		'isLayoutTarget',
 		'isVisualSource',
 		'isVisualTarget',
 		'element',
 		'connectorConnections',
-		'modelObjectList',
 		'hasRemoveVisualSourceHandler',
 		'hasRemoveVisualTargetHandler',
 		'hasRemoveLayoutSourceHandler',
@@ -26,14 +26,8 @@ GtConnectorElementContext class >> on: anElement [
 ]
 
 { #category : #accessing }
-GtConnectorElementContext >> addToModelObjectList: anObject [
-	modelObjectList ifNil: [ modelObjectList := OrderedCollection new ].
-	modelObjectList add: anObject.
-]
-
-{ #category : #accessing }
 GtConnectorElementContext >> beConnectedTo: anObject [ 
-	connectorConnections isNil ifTrue: [ connectorConnections := Set new ].
+	connectorConnections ifNil: [ connectorConnections := Set new ].
 	connectorConnections add: anObject.
 ]
 
@@ -67,7 +61,7 @@ GtConnectorElementContext >> beLayoutTarget [
 
 { #category : #accessing }
 GtConnectorElementContext >> beNotConnectedTo: anObject [ 
-	connectorConnections isNotNil ifTrue: [ connectorConnections remove: anObject ].
+	connectorConnections ifNotNil: [ connectorConnections remove: anObject ].
 ]
 
 { #category : #actions }
@@ -78,6 +72,7 @@ GtConnectorElementContext >> beVisualSource [
 		when: BlElementAddedToSceneGraphEvent
 		do: [ :anEvent | 
 			self emitSignalForEvent: anEvent forRole: #visualSource.
+			
 			anEvent currentTarget fireEvent: (GtConnectorVisualSourceElementAddedEvent new
 				element: anEvent currentTarget) ].
 	element 
@@ -126,6 +121,11 @@ GtConnectorElementContext >> emitSignalForEvent: anEvent forRole: aSymbol [
 		emit
 ]
 
+{ #category : #testing }
+GtConnectorElementContext >> hasModel [
+	^ hasModel
+]
+
 { #category : #accessing }
 GtConnectorElementContext >> hasRemoveLayoutSourceHandler [
 	^ hasRemoveLayoutSourceHandler
@@ -168,6 +168,7 @@ GtConnectorElementContext >> hasRemoveVisualTargetHandler: anObject [
 
 { #category : #initialization }
 GtConnectorElementContext >> initialize [
+	hasModel := false.
 	isLayoutSource := false.
 	isLayoutTarget := false.
 	isVisualSource := false.
@@ -210,17 +211,18 @@ GtConnectorElementContext >> model [
 
 { #category : #accessing }
 GtConnectorElementContext >> model: anObject [
-	model := anObject
+	self assert: [ hasModel not ].
+	model := anObject.
+	hasModel := true. 
 ]
 
 { #category : #accessing }
 GtConnectorElementContext >> modelContains: anObject [
-	model = anObject ifTrue: [ ^ true ].
-	^ modelObjectList isNotNil and: [modelObjectList includes: anObject].
+	hasModel ifFalse: [ ^ false ].
+	^ model = anObject
 ]
 
 { #category : #accessing }
 GtConnectorElementContext >> modelDo: aBloc [
-	model ifNotNil:  [ aBloc value: model ].
-	modelObjectList ifNotNil: [ modelObjectList do: [:each | aBloc value: each]]
+	hasModel ifTrue:  [ aBloc value: model ].
 ]

@@ -85,8 +85,8 @@ GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
 
 { #category : #public }
 GtConnector >> addEntity: anEntity [
-	"Create a new element for the given entity, add it to the scene"
-	
+	"Create a new element for the given entity, add it to the scene. 
+	Conector also accepts nil as an entity."
 	(self hasOpenedEntity: anEntity)
 		ifTrue: [ ^ self ].
 
@@ -166,10 +166,16 @@ GtConnector >> createAndAddElementForEntity: anEntity [
 	self
 		assert: [ self stencil isNotNil ]
 		description: [ 'Stencil describing each entity can not be nil' ].
-	"build the entity itself"
+	
 	entityElement := self stencil value: anEntity.
 	entityElement graph beNode.
 	
+	self 
+		assert: [ entityElement connector hasModel  ] 
+		description: 'Elements placed within connector should have an explicit model'.
+	self 
+		assert: [ entityElement connector modelContains: anEntity ] 
+		description: 'Elements placed within connector should the given entity as a model'.
 	self addChild: entityElement.
 
 	^ entityElement
@@ -206,13 +212,9 @@ GtConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 	Note: we don't make any assumptions on the type of anEntity object,
 	it might be any custom domain object that implements a `=` comparison method"
 
-	self
-		assert: [ anEntity isNotNil ]
-		description: [ 'Entity must not be nil' ].
-
 	self entityElements 
 		detect: [ :anEntityElement | 
-			anEntityElement connector model = anEntity ]
+			anEntityElement connector modelContains: anEntity ]
 		ifFound: [ :anEditorElement | 
 			aBlock cull: anEditorElement ]
 ]
@@ -345,10 +347,7 @@ GtConnector >> gtLiveFor: aView [
 GtConnector >> hasOpenedEntity: anEntity [
 	"Return true if there already exists a connector element for the given entity, false otheriwse"
 	<return: #Boolean>
-	self 
-		assert: [ anEntity notNil ]
-		description: [ 'Entity must not be nil' ].
-
+	
 	self elementWithEntity: anEntity ifPresent: [ ^ true ].
 	^ false
 ]

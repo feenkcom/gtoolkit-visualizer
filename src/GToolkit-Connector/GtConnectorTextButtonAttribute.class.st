@@ -78,8 +78,8 @@ GtConnectorTextButtonAttribute >> newButton [
 		addEventHandlerOn: BlClickEvent
 			do: [ :anEvent | actionBlock value: anEvent ];
 		yourself.
-	aButton connector beVisualSource.
 	aButton connector model: self target.
+	aButton connector beVisualSource.
 	^ aButton
 ]
 

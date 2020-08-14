@@ -16,10 +16,10 @@ GtConnectorExamples >> anotherSimpleExample [
 		| labelButton container dotButton buttonElement buttonContainer |
 		container := BlElement new.
 		container connector 
+			model: data;
 			beLayoutSource;
 			beLayoutTarget;
-			beVisualTarget;
-			model: data.
+			beVisualTarget.
 		
 		container geometry: BlEllipse new.
 		container background: (Color gray alpha: 0.1).
@@ -41,8 +41,8 @@ GtConnectorExamples >> anotherSimpleExample [
 
 		buttonContainer := BlElement new.
 		buttonContainer connector 
-			beVisualSource; 
-			model: data + 1.
+			model: data + 1;
+			beVisualSource.
 		buttonContainer size: 10 @ 10.
 
 		buttonElement := (BlEllipse new extent: 10 asPoint) asElement 
@@ -84,7 +84,8 @@ GtConnectorExamples >> exampleMethodsExample [
 			c margin: (BlInsets all: 10) ].
 		editorContainer connector 
 			beLayoutSource;
-			beLayoutTarget.
+			beLayoutTarget;
+			model: method.
 		
 		editorElement := BrEditorElement new.
 		editorElement
@@ -98,8 +99,9 @@ GtConnectorExamples >> exampleMethodsExample [
 			background: Color white;
 			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
 		
-		editorElement connector beVisualTarget.
-		editorElement connector model: method.
+		editorElement connector 
+			model: method;
+			beVisualTarget.
 		
 		styler := GtConnectorExampleStyler new.
 		styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
@@ -119,7 +121,7 @@ GtConnectorExamples >> exampleMethodsExample [
 		editorContainer addChild: editorElement.
 		editorContainer.
 	].
-	gtconnector addEntity: (BlFrameLayoutCompositionExamples>>#yellow).
+	gtconnector addEntity: (BlFrameLayoutCompositionExamples>>#example).
 	
 	^ gtconnector
 ]
@@ -140,10 +142,10 @@ GtConnectorExamples >> rawObjectExample [
 			background: Color white;
 			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
 		uml connector 
+			model: entity;
 			beLayoutSource;
 			beLayoutTarget;
-			beVisualTarget;
-			model: entity.
+			beVisualTarget.
 
 		tabGroup := (entity gtViewsFor: GtPhlowEmptyView new) asElementDo: [:e | e ].
 
