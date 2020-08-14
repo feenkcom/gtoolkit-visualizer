@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'highlights'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Explainer'
 }
 
 { #category : #accessing }

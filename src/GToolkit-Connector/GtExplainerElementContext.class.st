@@ -8,7 +8,7 @@ Class {
 		'isTarget',
 		'isExplanationHolder'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Explainer'
 }
 
 { #category : #'instance creation' }

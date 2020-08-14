@@ -23,6 +23,13 @@ BlElement >> connector [
 ]
 
 { #category : #'*GToolkit-Connector' }
+BlElement >> connectorEdge [
+	^ self userData
+		at: #connectorEdge 
+		ifAbsentPut: [ GtConnectorLineContext on: self ]
+]
+
+{ #category : #'*GToolkit-Connector' }
 BlElement >> connectorSource [
 	^ self userData at: #connectorSource
 ]

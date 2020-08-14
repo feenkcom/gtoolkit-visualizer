@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'explanationModel'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Explainer'
 }
 
 { #category : #accessing }

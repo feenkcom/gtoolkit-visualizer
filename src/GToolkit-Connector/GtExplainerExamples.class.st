@@ -1,7 +1,7 @@
 Class {
 	#name : #GtExplainerExamples,
 	#superclass : #Object,
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Explainer'
 }
 
 { #category : #accessing }

@@ -33,11 +33,7 @@ GtConnectorTextButtonAttribute >> actionBlock: aBlock [
 
 { #category : #initialization }
 GtConnectorTextButtonAttribute >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
-	| aButton |
-	
-	aButton := self newButton.
-	self fireEvent: (GtConnectorButtonCreatedEvent button: aButton).
-	^ aButton
+	^ self newButton
 ]
 
 { #category : #'event management accessing' }
@@ -74,14 +70,9 @@ GtConnectorTextButtonAttribute >> link [
 GtConnectorTextButtonAttribute >> newButton [
 	<return: #BlElement>
 	| aButton |
-	aButton := GtConnectorElement new
+	aButton := BlElement new
 		size: 6 @ 6;
-		margin:
-			(BlInsets
-				top: 0
-				right: 2
-				bottom: 0
-				left: 2);
+		margin: (BlInsets top: 0 right: 2 bottom: 0 left: 2);
 		background: (Color gray alpha: 0.5);
 		geometry: BlEllipse new;
 		addEventHandlerOn: BlClickEvent
