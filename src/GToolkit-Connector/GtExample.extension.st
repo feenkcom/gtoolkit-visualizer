@@ -4,12 +4,11 @@ Extension { #name : #GtExample }
 GtExample >> buildBlankContainer: method [
 	|container|
 	container := GtConnectorElement new.
-	container 
-		connector 
-			beLayoutSource; 
-			beLayoutTarget;
-			beVisualTarget;
-			model: method.
+	container connector 
+		model: method;
+		beLayoutSource; 
+		beLayoutTarget;
+		beVisualTarget.
 
 	container 
 		size: 400@200; 

@@ -21,10 +21,10 @@ Object >> gtConnectionsFor: aView [
 					effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 5@5).
 				
 				uml connector 
+					model: entity;
 					beLayoutSource;
 					beLayoutTarget;
-					beVisualTarget;
-					model: entity.
+					beVisualTarget.
 				
 				tabGroup := (entity gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
 
