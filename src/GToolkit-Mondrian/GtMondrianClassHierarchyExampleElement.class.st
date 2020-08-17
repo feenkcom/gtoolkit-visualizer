@@ -2,7 +2,7 @@
 I am an element for displaying a class. I show the name of the class and have a container for adding methods. I am meant to be used as a shape within Mondrian views.
 "
 Class {
-	#name : #GtMondrianClassHierarcyExampleElement,
+	#name : #GtMondrianClassHierarchyExampleElement,
 	#superclass : #BlElement,
 	#instVars : [
 		'labelElement',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'building widgets' }
-GtMondrianClassHierarcyExampleElement >> buildLabelElement [
+GtMondrianClassHierarchyExampleElement >> buildLabelElement [
 	^ BrLabel new
 		look: (BrLabelLook new
 			fontSize: 10);
@@ -22,19 +22,19 @@ GtMondrianClassHierarcyExampleElement >> buildLabelElement [
 ]
 
 { #category : #'building widgets' }
-GtMondrianClassHierarcyExampleElement >> buildMethodsElement [
+GtMondrianClassHierarchyExampleElement >> buildMethodsElement [
 	^ BlElement new
 		constraintsDo: [ :c | 
 			c linear horizontal alignCenter ]
 ]
 
 { #category : #accessing }
-GtMondrianClassHierarcyExampleElement >> className: aClassName [
+GtMondrianClassHierarchyExampleElement >> className: aClassName [
 	self labelElement text: aClassName
 ]
 
 { #category : #initialization }
-GtMondrianClassHierarcyExampleElement >> initialize [ 
+GtMondrianClassHierarchyExampleElement >> initialize [ 
 	super initialize.
 	self 
 		layout: BlLinearLayout vertical;
@@ -52,6 +52,6 @@ GtMondrianClassHierarcyExampleElement >> initialize [
 ]
 
 { #category : #accessing }
-GtMondrianClassHierarcyExampleElement >> labelElement [
+GtMondrianClassHierarchyExampleElement >> labelElement [
 	^ labelElement
 ]

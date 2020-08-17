@@ -57,18 +57,18 @@ The example above starts to become quite long. Often when this happens we can in
 ${example:GtMondrianClassHierarcyExamples>>#classHierarchyHorizontalTreeWithCustomShapeForClasses}$
 "
 Class {
-	#name : #GtMondrianClassHierarcyExamples,
+	#name : #GtMondrianClassHierarchyExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-Mondrian-Examples'
 }
 
 { #category : #examples }
-GtMondrianClassHierarcyExamples >> assertEmptyView: aView [
+GtMondrianClassHierarchyExamples >> assertEmptyView: aView [
 	self assert: aView topStep root children isEmpty.
 ]
 
 { #category : #assertions }
-GtMondrianClassHierarcyExamples >> assertNumberOfElementsIn: view [
+GtMondrianClassHierarchyExamples >> assertNumberOfElementsIn: view [
 	| mainElement expectedNumberOfElements |
 	mainElement := view topStep root.
 	"In the root space there should be an element and a line for each subclasses. 
@@ -82,7 +82,7 @@ GtMondrianClassHierarcyExamples >> assertNumberOfElementsIn: view [
 ]
 
 { #category : #assertions }
-GtMondrianClassHierarcyExamples >> assertNumberOfNodesIn: view [
+GtMondrianClassHierarchyExamples >> assertNumberOfNodesIn: view [
 	| mainElement expectedNumberOfElements |
 	mainElement := view topStep root.
 	expectedNumberOfElements := self targetClass allSubclasses size + 1.
@@ -94,7 +94,7 @@ GtMondrianClassHierarcyExamples >> assertNumberOfNodesIn: view [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTree [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTree [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -109,7 +109,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTree [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -127,7 +127,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShapeWithSize [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShapeWithSize [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -147,7 +147,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithBasicShapeWit
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithClassNames [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -169,14 +169,14 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithClassNames [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithCustomShapeForClasses [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithCustomShapeForClasses [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
 		shape: [ :aClass |
-			GtMondrianClassHierarcyExampleElement new 
+			GtMondrianClassHierarchyExampleElement new 
 				className: aClass name ]; 
 		with: targetClass withAllSubclasses;
 		forEach: [ :aClass |
@@ -196,7 +196,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithCustomShapeFo
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithInBetweenEdges [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithInBetweenEdges [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -215,7 +215,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithInBetweenEdge
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethods [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -245,7 +245,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethodsAndClassNames [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethodsAndClassNames [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -296,7 +296,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethodsWithSize [
+GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethodsWithSize [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -325,7 +325,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyHorizontalTreeWithNestedMethods
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyNodesAndEdges [
+GtMondrianClassHierarchyExamples >> classHierarchyNodesAndEdges [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -339,7 +339,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyNodesAndEdges [
 ]
 
 { #category : #'tutorial - nesting' }
-GtMondrianClassHierarcyExamples >> classHierarchyNodesOnly [
+GtMondrianClassHierarchyExamples >> classHierarchyNodesOnly [
 	<gtExample>
 	| targetClass view |
 	targetClass := self targetClass.
@@ -351,7 +351,7 @@ GtMondrianClassHierarcyExamples >> classHierarchyNodesOnly [
 ]
 
 { #category : #examples }
-GtMondrianClassHierarcyExamples >> emptyView [
+GtMondrianClassHierarchyExamples >> emptyView [
 	<gtExample>
 	| view |
 	view := GtMondrian new.
@@ -360,6 +360,6 @@ GtMondrianClassHierarcyExamples >> emptyView [
 ]
 
 { #category : #accessing }
-GtMondrianClassHierarcyExamples >> targetClass [ 
+GtMondrianClassHierarchyExamples >> targetClass [ 
 	^ GtPhlowView
 ]
