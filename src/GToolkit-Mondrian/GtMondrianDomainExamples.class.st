@@ -69,6 +69,58 @@ GtMondrianDomainExamples >> buttonLabelLookEventPropagation [
 	^ aView
 ]
 
+{ #category : #accessing }
+GtMondrianDomainExamples >> classHierarchyFor: classes [
+	"This is a simpler visualization than the umlClasses one, with just class names."
+
+	| m |
+	m := GtMondrian new.
+	m nodes
+		shape: [ :node | 
+			BlTextElement new
+				border: (BlBorder paint: Color black);
+				text: node name asRopedText;
+				padding:
+					(BlInsets
+						top: 5
+						right: 5
+						bottom: 5
+						left: 5) ];
+		with: classes.
+	m edges
+		fromCenterBottom;
+		toCenterTop;
+		connectFrom: #superclass.
+	m layout tree levelDistance: 20.
+	^ m
+]
+
+{ #category : #accessing }
+GtMondrianDomainExamples >> collectionHierarchy [
+	<gtExample>
+	^ self
+		classHierarchyFor:
+			{Object.
+			Collection.
+			SequenceableCollection.
+			ArrayedCollection.
+			Array.
+			String.
+			ByteString.
+			Symbol.
+			Text.
+			OrderedCollection.
+			SortedCollection.
+			LinkedList.
+			Interval.
+			Heap.
+			HashedCollection.
+			Set.
+			Dictionary.
+			IdentityDictionary.
+			Bag}
+]
+
 { #category : #examples }
 GtMondrianDomainExamples >> editorElementWithPreviews [
 	<gtExample>
