@@ -52,7 +52,7 @@ When composing shapes we might want to have more complex graphical elements. A p
 
 ${example:GtMondrianClassHierarchyExamples>>#classHierarchyHorizontalTreeWithNestedMethodsAndClassNames}$
 
-The example above starts to become quite long. Often when this happens we can introduce custom graphical elements. Here we can take the logic for creating a shape for a class and put in into a dedicated graphical element, ${class:GtMondrianClassHierarcyExampleElement}$. In this way we can simply use composition and dedicated elements for enabling more custom views, instead of increasing the code API offered by Mondrian.
+The example above starts to become quite long. Often when this happens we can introduce custom graphical elements. Here we can take the logic for creating a shape for a class and put in into a dedicated graphical element, ${class:GtMondrianClassHierarchyExampleElement}$. In this way we can simply use composition and dedicated elements for enabling more custom views, instead of increasing the code API offered by Mondrian.
 
 ${example:GtMondrianClassHierarchyExamples>>#classHierarchyHorizontalTreeWithCustomShapeForClasses}$
 "
