@@ -9,34 +9,6 @@ Class {
 }
 
 { #category : #'private - adding / removing' }
-GtConnector >> addEdgeConstraintFrom: aSourceElement to: aTargetElement [
-	"Add a graph edge between two given elements."
-	| anEdge |
-	
-	self
-		assert: [ aSourceElement isNotNil ]
-		description: [ 'Source element must not be nil' ].
-	self
-		assert: [ aTargetElement isNotNil ]
-		description: [ 'Target element must not be nil' ].
-
-	anEdge := GtGraphEdge new
-		from: aSourceElement
-		to: aTargetElement.
-
-	aSourceElement constraints graph addConnectedEdge: anEdge.
-	aTargetElement constraints graph addConnectedEdge: anEdge.
-	
-	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
-	self ensureRemoveLayoutTargetHandlerFor: aTargetElement.
-	
-	(aSourceElement isConnectedTo: aTargetElement)
-		ifFalse: [ self addEdgeLineFrom: aSourceElement to: aTargetElement].
-
-	self requestLayout
-]
-
-{ #category : #'private - adding / removing' }
 GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements."
 	| aLineElement |
@@ -262,6 +234,47 @@ GtConnector >> emitSignalForEvent: anEvent [
 		emit
 ]
 
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureEdgeConstraitFrom: aSourceElement to: aTargetElement [
+	"Ensure there is a graph edge between the two given elements."
+	| hasEdge newEdge |
+	
+	self assert: [ aSourceElement isNotNil ].
+	self assert: [ aTargetElement isNotNil ].
+		
+	hasEdge := aSourceElement constraints graph connectedEdges 
+		anySatisfy: [ :currentEdge | 
+			currentEdge fromElement = aSourceElement and: [ 
+				currentEdge toElement = aTargetElement ] ].
+	hasEdge ifTrue: [ ^ self ].
+	
+	newEdge := GtGraphEdge new
+		from: aSourceElement
+		to: aTargetElement.
+	aSourceElement constraints graph addConnectedEdge: newEdge.
+	aTargetElement constraints graph addConnectedEdge: newEdge.
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [	
+	self
+		assert: [ aSourceElement isNotNil ]
+		description: [ 'Source element must not be nil' ].
+	self
+		assert: [ aTargetElement isNotNil ]
+		description: [ 'Target element must not be nil' ].
+
+	self ensureEdgeConstraitFrom: aSourceElement to: aTargetElement.
+	
+	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
+	self ensureRemoveLayoutTargetHandlerFor: aTargetElement.
+	
+	(aSourceElement isConnectedTo: aTargetElement) ifFalse: [ 
+		self addEdgeLineFrom: aSourceElement to: aTargetElement ].
+
+	self requestLayout
+]
+
 { #category : #'private - event handling' }
 GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [ 
 	| eventHandler |
@@ -422,13 +435,13 @@ GtConnector >> initialize [
 GtConnector >> initializeListeners [
 	self when: GtConnectorVisualSourceElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
-		self linkLayoutSource: anEvent element.
-		self drawLinesFromVisualSource: anEvent element ].
+		self drawLinesFromVisualSource: anEvent element.
+		self linkLayoutSource: anEvent element ].
 	
 	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
-		self linkLayoutTarget: anEvent element.
-		self drawLinesToVisualTarget: anEvent element ]
+		self drawLinesToVisualTarget: anEvent element.
+		self linkLayoutTarget: anEvent element ]
 ]
 
 { #category : #accessing }
@@ -454,7 +467,7 @@ GtConnector >> linkLayoutSource: anElement [
 		(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
 			| targetLayoutElement |
 			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-			self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ] ]
+			self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ]
 ]
 
 { #category : #private }
@@ -471,7 +484,7 @@ GtConnector >> linkLayoutTarget: anElement [
 		(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
 			| sourceLayoutElement |
 			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-			self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ] ]
+			self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ]
 ]
 
 { #category : #accessing }
