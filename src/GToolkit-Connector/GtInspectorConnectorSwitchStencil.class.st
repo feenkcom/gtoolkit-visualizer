@@ -1,7 +1,7 @@
 Class {
 	#name : #GtInspectorConnectorSwitchStencil,
 	#superclass : #BrStencil,
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Extensions'
 }
 
 { #category : #'api - instantiation' }

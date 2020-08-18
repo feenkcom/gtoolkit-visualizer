@@ -5,7 +5,7 @@ Class {
 		'exampleAction',
 		'previousLinks'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Extensions'
 }
 
 { #category : #factory }
