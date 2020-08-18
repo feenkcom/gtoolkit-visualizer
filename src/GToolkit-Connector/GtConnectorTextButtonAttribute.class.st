@@ -8,7 +8,7 @@ Class {
 		'link',
 		'eventDispatcher'
 	],
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Extensions'
 }
 
 { #category : #'instance creation' }

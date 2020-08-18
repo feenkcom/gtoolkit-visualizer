@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TBlExample',
 	#classTraits : 'TBlExample classTrait',
-	#category : #'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Examples'
 }
 
 { #category : #examples }

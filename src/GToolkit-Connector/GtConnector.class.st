@@ -12,6 +12,7 @@ Class {
 GtConnector >> addEdgeConstraintFrom: aSourceElement to: aTargetElement [
 	"Add a graph edge between two given elements."
 	| anEdge |
+	
 	self
 		assert: [ aSourceElement isNotNil ]
 		description: [ 'Source element must not be nil' ].
@@ -90,13 +91,14 @@ GtConnector >> addEntity: anEntity [
 	(self hasOpenedEntity: anEntity)
 		ifTrue: [ ^ self ].
 
-	self openEntity: anEntity.
+	self createAndAddElementForEntity: anEntity.
 ]
 
 { #category : #'private - adding / removing' }
 GtConnector >> addVisualLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements."
 	| aLineElement |
+	
 	self
 		assert: [ aSourceElement isNotNil ]
 		description: [ 'Source element must not be nil' ].
@@ -161,11 +163,15 @@ GtConnector >> asScalableElement [
 
 { #category : #private }
 GtConnector >> createAndAddElementForEntity: anEntity [
+	"Open a given entity without connecting it to other"	
 	| entityElement |	
-		
+	
 	self
 		assert: [ self stencil isNotNil ]
 		description: [ 'Stencil describing each entity can not be nil' ].
+	self
+		assert: [ (self hasOpenedEntity: anEntity) not ]
+		description: [ 'Can not open already opened enity' ].
 	
 	entityElement := self stencil value: anEntity.
 	entityElement graph beNode.
@@ -250,56 +256,84 @@ GtConnector >> emitSignalForEvent: anEvent [
 		emit
 ]
 
-{ #category : #'private - adding / removing' }
-GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [
+{ #category : #'private - event handling' }
+GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [ 
+	| eventHandler |
 	self assert: [ anElement connector isLayoutSource ].
 
-	anElement connector hasRemoveLayoutSourceHandler ifTrue: [ ^ self ].
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeLayoutSource) ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorLayoutSourceElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeEdgeConstraintsFrom: anEvent element.
-		self removeLinesFrom: anEvent element.
-		self requestLayout ].
-	anElement connector hasRemoveLayoutSourceHandler: true.
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorLayoutSourceElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeEdgeConstraintsFrom: anEvent element.
+			self removeLinesFrom: anEvent element.
+			self requestLayout ].
+	eventHandler id: #removeLayoutSource.
+	
+	anElement addEventHandler: eventHandler.
 ]
 
-{ #category : #'private - adding / removing' }
+{ #category : #'private - event handling' }
 GtConnector >> ensureRemoveLayoutTargetHandlerFor: anElement [
+	| eventHandler |
 	self assert: [ anElement connector isLayoutTarget ].
 
-	anElement connector hasRemoveLayoutTargetHandler ifTrue: [ ^ self ].
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeLayoutTarget) ifTrue: [ ^ self ].
+		
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorLayoutTargetElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeEdgeConstraintsTo: anEvent element.
+			self removeLinesTo: anEvent element.
+			self requestLayout ].
+	eventHandler id: #removeLayoutTarget.
 	
-	anElement when: GtConnectorLayoutTargetElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeEdgeConstraintsTo: anEvent element.
-		self removeLinesTo: anEvent element.
-		self requestLayout ].
-	anElement connector hasRemoveLayoutTargetHandler: true.
+	anElement addEventHandler: eventHandler.
 ]
 
-{ #category : #'private - adding / removing' }
+{ #category : #'private - event handling' }
 GtConnector >> ensureRemoveVisualSourceHandlerFor: anElement [
+	| eventHandler |
 	self assert: [ anElement connector isVisualSource ].
 
-	anElement connector hasRemoveVisualSourceHandler ifTrue: [ ^ self ].
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeVisualSource) ifTrue: [ ^ self ].
+		
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorVisualSourceElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeLinesFrom: anEvent element ].
+	eventHandler id: #removeVisualSource.
 	
-	anElement when: GtConnectorVisualSourceElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeLinesFrom: anEvent element ].
-	anElement connector hasRemoveVisualSourceHandler: true.
+	anElement addEventHandler: eventHandler.
 ]
 
-{ #category : #'private - adding / removing' }
+{ #category : #'private - event handling' }
 GtConnector >> ensureRemoveVisualTargetHandlerFor: anElement [
+	| eventHandler |
 	self assert: [ anElement connector isVisualTarget ].
 
-	anElement connector hasRemoveVisualTargetHandler ifTrue: [ ^ self ]. 
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeVisualTarget) ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorVisualTargetElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeLinesTo: anEvent element ].
-	anElement connector hasRemoveVisualTargetHandler: true.
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorVisualTargetElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeLinesTo: anEvent element ].
+	eventHandler id: #removeVisualTarget.
+	
+	anElement addEventHandler: eventHandler.
 ]
 
 { #category : #accessing }
@@ -343,6 +377,14 @@ GtConnector >> gtLiveFor: aView [
 				ifNil: [ self asScalableElement ] ]
 ]
 
+{ #category : #utils }
+GtConnector >> hasElement: anElement eventHandlerWithId: anId [
+	^ anElement eventDispatcher handlers anySatisfy: [ :each |
+		(each isKindOf: GtConnectorEventHandler) and: [ 
+			each id = anId ] ]
+	
+]
+
 { #category : #testing }
 GtConnector >> hasOpenedEntity: anEntity [
 	"Return true if there already exists a connector element for the given entity, false otheriwse"
@@ -372,6 +414,7 @@ GtConnector >> initializeListeners [
 		self emitSignalForEvent: anEvent.
 		self link: anEvent element.
 		self drawLines: anEvent element ].
+	
 	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
 		self link: anEvent element.
@@ -410,16 +453,6 @@ GtConnector >> link: anElement [
 				self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ]]]
 ]
 
-{ #category : #private }
-GtConnector >> openEntity: anEntity [
-	"Open a given entity without connecting it to other"	
-	self
-		assert: [ (self hasOpenedEntity: anEntity) not ]
-		description: [ 'Can not open already opened enity' ].
-
-	self createAndAddElementForEntity: anEntity.
-]
-
 { #category : #accessing }
 GtConnector >> options [ 
 	^ options 
@@ -431,43 +464,67 @@ GtConnector >> options: anOptionsObject [
 ]
 
 { #category : #'private - adding / removing' }
-GtConnector >> removeEdgeConstraintsFrom: sourceElement [
-	sourceElement constraints graph outgoingEdges do: [ :anEdge |
-		anEdge fromElement constraints graph removeConnectedEdge: anEdge.
-		anEdge toElement constraints graph removeConnectedEdge: anEdge ]
+GtConnector >> removeAndDisconnectEdge: anEdge [
+	self assert: [ anEdge isNotNil ].
+	
+	anEdge fromElement constraints graph removeConnectedEdge: anEdge.
+	anEdge toElement constraints graph removeConnectedEdge: anEdge.
 ]
 
 { #category : #'private - adding / removing' }
-GtConnector >> removeEdgeConstraintsTo: sourceElement [
-	sourceElement constraints graph incomingEdges do: [ :anEdge |
-		anEdge fromElement constraints graph removeConnectedEdge: anEdge.
-		anEdge toElement constraints graph removeConnectedEdge: anEdge ]
+GtConnector >> removeAndDisconnectLineElement: aLineElement [
+	| sourceElement targetElement |
+	self assert: [ aLineElement isNotNil ].
+
+	sourceElement := aLineElement connectorEdge fromElement.
+	targetElement := aLineElement connectorEdge toElement.
+	sourceElement beNotConnectedTo: targetElement.
+	targetElement beNotConnectedTo: sourceElement.
+	aLineElement removeFromParent.
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> removeEdgeConstraintsFrom: sourceElement [
+	self assert: [ sourceElement isNotNil ].
+	self assert: [ sourceElement connector isLayoutSource ].
+	
+	sourceElement constraints graph outgoingEdges do: [ :anEdge |
+		self removeAndDisconnectEdge: anEdge ]
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> removeEdgeConstraintsTo: targetElement [
+	self assert: [ targetElement isNotNil ].
+	self assert: [ targetElement connector isLayoutTarget ].
+	
+	targetElement constraints graph incomingEdges do: [ :anEdge |
+		self removeAndDisconnectEdge: anEdge ]
 ]
 
 { #category : #'private - adding / removing' }
 GtConnector >> removeLinesFrom: sourceElement [
+	self assert: [ sourceElement isNotNil ].
+	self assert: [ sourceElement connector isVisualSource or: [
+		sourceElement connector isLayoutSource ] ].
+
 	self lineElements
 		select: [ :aLineElement |
 			aLineElement connectorEdge fromElement = sourceElement ]
 		thenDo: [ :aLineElement |
-			| targetElement |
-			targetElement := aLineElement connectorEdge toElement.
-			sourceElement beNotConnectedTo: targetElement.
-			targetElement beNotConnectedTo: sourceElement.
-			aLineElement removeFromParent ]
+			self removeAndDisconnectLineElement: aLineElement ]
 ]
 
 { #category : #'private - adding / removing' }
 GtConnector >> removeLinesTo: targetElement [
+	self assert: [ targetElement isNotNil ].
+	self assert: [ targetElement connector isVisualTarget or: [
+		targetElement connector isLayoutTarget ] ].
+	
 	self lineElements
 		select: [ :aLineElement |
 			aLineElement connectorEdge toElement = targetElement ]
 		thenDo: [ :aLineElement |
-			| sourceElement |
-			sourceElement := aLineElement connectorEdge fromElement.
-			sourceElement beNotConnectedTo: targetElement.
-			targetElement beNotConnectedTo: sourceElement.
-			aLineElement removeFromParent ]
+			self removeAndDisconnectLineElement: aLineElement ]
 ]
 
 { #category : #search }

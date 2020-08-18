@@ -8,7 +8,7 @@ Class {
 		'source',
 		'target'
 	],
-	#category : 'GToolkit-Connector'
+	#category : #'GToolkit-Connector-Extensions'
 }
 
 { #category : #'instance creation' }
