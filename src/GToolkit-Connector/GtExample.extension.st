@@ -2,8 +2,8 @@ Extension { #name : #GtExample }
 
 { #category : #'*GToolkit-Connector' }
 GtExample >> buildBlankContainer: method [
-	|container|
-	container := GtConnectorElement new.
+	| container |
+	container := BlElement new.
 	container connector 
 		model: method;
 		beLayoutSource; 
@@ -12,7 +12,6 @@ GtExample >> buildBlankContainer: method [
 
 	container 
 		size: 400@200; 
-		"border: (BlBorder paint: (BrGlamorousColors editorBorderColor) width: 1);"
 		background: Color white;
 		look: BrShadowLook new;
 		layout: BlLinearLayout new.
@@ -45,12 +44,7 @@ GtExample >> buildCloseButton: gtconnector [.
 
 { #category : #'*GToolkit-Connector' }
 GtExample >> buildEditor: aMethod for: gtconnector [
-	| vocalVisualTarget styler editorElement editor text |
-	vocalVisualTarget:= GtConnectorElement new.
-	vocalVisualTarget
-		constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
+	| styler editorElement editor text |
 				
 	styler := GtConnectorExampleStyler new.
 	styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
@@ -70,9 +64,7 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 	"because we connect editors with lines based on styler we must change text
 	only after editor is added to the scene, otherwise events will be ignored"
 	editor text: text.	
-	vocalVisualTarget addChild: editorElement.
-
-	^ vocalVisualTarget.
+	^ editorElement
 					
 ]
 
@@ -113,6 +105,15 @@ GtExample >> buildSourceButton: vocalEditorContainer [
 ]
 
 { #category : #'*GToolkit-Connector' }
+GtExample >> editorContainer [
+	^ BlElement new
+		constraintsDo: [ :c | 
+			c vertical matchParent. 
+			c horizontal matchParent ];
+		layout: BlLinearLayout new
+]
+
+{ #category : #'*GToolkit-Connector' }
 GtExample >> gtConnectionsFor: aView [
 	^ aView explicit
 		title: 'Connections';
@@ -120,21 +121,23 @@ GtExample >> gtConnectionsFor: aView [
 			| gtconnector  |
 			gtconnector := GtConnector new.
 			gtconnector stencil: [ :method |
-				| blankContainer vocalEditorContainer vocalVisualTarget playButton examplePreview sourceButton aBottomResizer aRightResizer aCloseButton|
+				| blankContainer editorContainer editorElement playButton examplePreview sourceButton aBottomResizer aRightResizer aCloseButton|
 				"The blankContainer is there as a placeholder for toggling between the source and the output of the example."
 				
 				blankContainer := self buildBlankContainer: method.
 				blankContainer clipChildren: false.
-				vocalEditorContainer := self vocalEditorContainer.
-				vocalVisualTarget := self buildEditor: method for: gtconnector.
-				vocalEditorContainer addChild: vocalVisualTarget.
 				aRightResizer := self buildRightResizerFor: blankContainer.
 				aBottomResizer := self buildBottomResizerFor: blankContainer.
-				playButton := self buildInspectButton: vocalEditorContainer.
-				sourceButton := self buildSourceButton: vocalEditorContainer.
+				
+				editorContainer := self editorContainer.
+				editorElement := self buildEditor: method for: gtconnector.
+				editorContainer addChild: editorElement.
+				
+				playButton := self buildInspectButton: editorContainer.
+				sourceButton := self buildSourceButton: editorContainer.
 				aCloseButton := self buildCloseButton: gtconnector. 
 				
-				blankContainer addChild: vocalEditorContainer.
+				blankContainer addChild: editorContainer.
 				blankContainer addChild: aRightResizer.
 				blankContainer addChild: aBottomResizer.
 				blankContainer addChild: playButton.
@@ -147,14 +150,14 @@ GtExample >> gtConnectionsFor: aView [
 					blankContainer removeChild: aBottomResizer.
 					blankContainer removeChild: sourceButton.
 					blankContainer removeChild: aCloseButton.
-					blankContainer addChild: vocalEditorContainer.
+					blankContainer addChild: editorContainer.
 					blankContainer addChild: aRightResizer.
 					blankContainer addChild: aBottomResizer.
 					blankContainer addChild: playButton.
 					blankContainer addChild: aCloseButton.].
 				
 				playButton action: [
-					blankContainer removeChild: vocalEditorContainer.
+					blankContainer removeChild: editorContainer.
 					blankContainer removeChild: aRightResizer.
 					blankContainer removeChild: aBottomResizer.
 					blankContainer removeChild: playButton.
@@ -169,13 +172,4 @@ GtExample >> gtConnectionsFor: aView [
 			].
 			gtconnector addEntity: self method.
 			gtconnector asPannableElement ]
-]
-
-{ #category : #'*GToolkit-Connector' }
-GtExample >> vocalEditorContainer [
-	|vocalEditorContainer|
-	vocalEditorContainer := GtConnectorElement new.
-	vocalEditorContainer constraintsDo: [ :c | c vertical matchParent. c horizontal matchParent. ].
-	vocalEditorContainer layout: BlLinearLayout new.
-	^ vocalEditorContainer
 ]

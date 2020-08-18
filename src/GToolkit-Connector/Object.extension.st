@@ -28,7 +28,7 @@ Object >> gtConnectionsFor: aView [
 				
 				tabGroup := (entity gtViewsFor: GtPhlowView empty) asElementDo: [:e | e ].
 
-				header := GtConnectorElement new.
+				header := BlElement new.
 				header layout: BlLinearLayout vertical alignCenter.
 				header constraintsDo: [ :c |
 					c horizontal matchParent.
@@ -145,11 +145,11 @@ Object >> gtObjectConnectorTableIn: connector [
 
 			container := BlElement new.
 			aNode rawValue = aNode hostObject ifFalse: [
-				container connector model: aNode rawValue ].
+				container connector model: aNode rawValue.
+				container connector beVisualSource ].
 			
 			container layout: BlLinearLayout vertical.
-			container addChild: textElement.
-			container connector beVisualSource.	
+			container addChild: textElement.	
 			container 
 				when: BlDoubleClickEvent 
 				do: [ :event | connector addEntity: aNode rawValue ].
