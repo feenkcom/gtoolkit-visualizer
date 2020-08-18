@@ -251,55 +251,83 @@ GtConnector >> emitSignalForEvent: anEvent [
 ]
 
 { #category : #'private - adding / removing' }
-GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [
+GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [ 
+	| eventHandler |
 	self assert: [ anElement connector isLayoutSource ].
 
-	anElement connector hasRemoveLayoutSourceHandler ifTrue: [ ^ self ].
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeLayoutSource) ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorLayoutSourceElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeEdgeConstraintsFrom: anEvent element.
-		self removeLinesFrom: anEvent element.
-		self requestLayout ].
-	anElement connector hasRemoveLayoutSourceHandler: true.
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorLayoutSourceElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeEdgeConstraintsFrom: anEvent element.
+			self removeLinesFrom: anEvent element.
+			self requestLayout ].
+	eventHandler id: #removeLayoutSource.
+	
+	anElement addEventHandler: eventHandler.
 ]
 
 { #category : #'private - adding / removing' }
 GtConnector >> ensureRemoveLayoutTargetHandlerFor: anElement [
+	| eventHandler |
 	self assert: [ anElement connector isLayoutTarget ].
 
-	anElement connector hasRemoveLayoutTargetHandler ifTrue: [ ^ self ].
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeLayoutTarget) ifTrue: [ ^ self ].
+		
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorLayoutTargetElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeEdgeConstraintsTo: anEvent element.
+			self removeLinesTo: anEvent element.
+			self requestLayout ].
+	eventHandler id: #removeLayoutTarget.
 	
-	anElement when: GtConnectorLayoutTargetElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeEdgeConstraintsTo: anEvent element.
-		self removeLinesTo: anEvent element.
-		self requestLayout ].
-	anElement connector hasRemoveLayoutTargetHandler: true.
+	anElement addEventHandler: eventHandler.
 ]
 
 { #category : #'private - adding / removing' }
 GtConnector >> ensureRemoveVisualSourceHandlerFor: anElement [
+	| eventHandler |
 	self assert: [ anElement connector isVisualSource ].
 
-	anElement connector hasRemoveVisualSourceHandler ifTrue: [ ^ self ].
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeVisualSource) ifTrue: [ ^ self ].
+		
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorVisualSourceElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeLinesFrom: anEvent element ].
+	eventHandler id: #removeVisualSource.
 	
-	anElement when: GtConnectorVisualSourceElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeLinesFrom: anEvent element ].
-	anElement connector hasRemoveVisualSourceHandler: true.
+	anElement addEventHandler: eventHandler.
 ]
 
 { #category : #'private - adding / removing' }
 GtConnector >> ensureRemoveVisualTargetHandlerFor: anElement [
+	| eventHandler |
 	self assert: [ anElement connector isVisualTarget ].
 
-	anElement connector hasRemoveVisualTargetHandler ifTrue: [ ^ self ]. 
+	(self 
+		hasElement: anElement 
+		eventHandlerWithId: #removeVisualTarget) ifTrue: [ ^ self ].
 	
-	anElement when: GtConnectorVisualTargetElementRemovedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self removeLinesTo: anEvent element ].
-	anElement connector hasRemoveVisualTargetHandler: true.
+	eventHandler := GtConnectorEventHandler 
+		on: GtConnectorVisualTargetElementRemovedEvent 
+		do: [ :anEvent | 
+			self emitSignalForEvent: anEvent.
+			self removeLinesTo: anEvent element ].
+	eventHandler id: #removeVisualTarget.
+	
+	anElement addEventHandler: eventHandler.
 ]
 
 { #category : #accessing }
@@ -343,6 +371,14 @@ GtConnector >> gtLiveFor: aView [
 				ifNil: [ self asScalableElement ] ]
 ]
 
+{ #category : #private }
+GtConnector >> hasElement: anElement eventHandlerWithId: anId [
+	^ anElement eventDispatcher handlers anySatisfy: [ :each |
+		(each isKindOf: GtConnectorEventHandler) and: [ 
+			each id = anId ] ]
+	
+]
+
 { #category : #testing }
 GtConnector >> hasOpenedEntity: anEntity [
 	"Return true if there already exists a connector element for the given entity, false otheriwse"
@@ -372,6 +408,7 @@ GtConnector >> initializeListeners [
 		self emitSignalForEvent: anEvent.
 		self link: anEvent element.
 		self drawLines: anEvent element ].
+	
 	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
 		self link: anEvent element.

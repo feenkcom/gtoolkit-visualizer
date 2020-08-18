@@ -9,11 +9,7 @@ Class {
 		'isVisualSource',
 		'isVisualTarget',
 		'element',
-		'connectorConnections',
-		'hasRemoveVisualSourceHandler',
-		'hasRemoveVisualTargetHandler',
-		'hasRemoveLayoutSourceHandler',
-		'hasRemoveLayoutTargetHandler'
+		'connectorConnections'
 	],
 	#category : #'GToolkit-Connector-Core'
 }
@@ -33,6 +29,7 @@ GtConnectorElementContext >> beConnectedTo: anObject [
 
 { #category : #actions }
 GtConnectorElementContext >> beLayoutSource [
+	self assert: [ isLayoutSource = false ].
 	isLayoutSource := true.
 	
 	element 
@@ -47,6 +44,7 @@ GtConnectorElementContext >> beLayoutSource [
 
 { #category : #actions }
 GtConnectorElementContext >> beLayoutTarget [
+	self assert: [ isLayoutTarget = false ].
 	isLayoutTarget := true.
 	
 	element 
@@ -66,6 +64,7 @@ GtConnectorElementContext >> beNotConnectedTo: anObject [
 
 { #category : #actions }
 GtConnectorElementContext >> beVisualSource [
+	self assert: [ isVisualSource = false ].
 	isVisualSource := true.
 	
 	element 
@@ -86,6 +85,7 @@ GtConnectorElementContext >> beVisualSource [
 
 { #category : #actions }
 GtConnectorElementContext >> beVisualTarget [
+	self assert: [ isVisualTarget = false ].
 	isVisualTarget := true.
 	
 	element 
@@ -123,47 +123,8 @@ GtConnectorElementContext >> emitSignalForEvent: anEvent forRole: aSymbol [
 
 { #category : #testing }
 GtConnectorElementContext >> hasModel [
+	"I indicate if the context has a model, as nil can also be a valid model value."
 	^ hasModel
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveLayoutSourceHandler [
-	^ hasRemoveLayoutSourceHandler
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveLayoutSourceHandler: anObject [
-	hasRemoveLayoutSourceHandler := anObject
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveLayoutTargetHandler [
-	^ hasRemoveLayoutTargetHandler
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveLayoutTargetHandler: anObject [
-	hasRemoveLayoutTargetHandler := anObject
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveVisualSourceHandler [
-	^ hasRemoveVisualSourceHandler
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveVisualSourceHandler: anObject [
-	hasRemoveVisualSourceHandler := anObject
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveVisualTargetHandler [
-	^ hasRemoveVisualTargetHandler
-]
-
-{ #category : #accessing }
-GtConnectorElementContext >> hasRemoveVisualTargetHandler: anObject [
-	hasRemoveVisualTargetHandler := anObject
 ]
 
 { #category : #initialization }
@@ -173,10 +134,6 @@ GtConnectorElementContext >> initialize [
 	isLayoutTarget := false.
 	isVisualSource := false.
 	isVisualTarget := false.
-	hasRemoveVisualSourceHandler := false.
-	hasRemoveVisualTargetHandler := false.
-	hasRemoveLayoutSourceHandler := false.
-	hasRemoveLayoutTargetHandler := false.
 ]
 
 { #category : #testing }
