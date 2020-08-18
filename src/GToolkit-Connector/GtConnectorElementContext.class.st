@@ -67,14 +67,13 @@ GtConnectorElementContext >> beVisualSource [
 	self assert: [ isVisualSource = false ].
 	isVisualSource := true.
 	
-	element 
+	element
 		when: BlElementAddedToSceneGraphEvent
 		do: [ :anEvent | 
 			self emitSignalForEvent: anEvent forRole: #visualSource.
-			
 			anEvent currentTarget fireEvent: (GtConnectorVisualSourceElementAddedEvent new
 				element: anEvent currentTarget) ].
-	element 
+	element
 		when: BlElementRemovedFromSceneGraphEvent
 		do: [ :anEvent | 
 			self emitSignalForEvent: anEvent forRole: #visualSource.
@@ -88,13 +87,13 @@ GtConnectorElementContext >> beVisualTarget [
 	self assert: [ isVisualTarget = false ].
 	isVisualTarget := true.
 	
-	element 
+	element
 		when: BlElementAddedToSceneGraphEvent
 		do: [ :anEvent | 
 			self emitSignalForEvent: anEvent forRole: #visualTarget.
 			anEvent currentTarget fireEvent: (GtConnectorVisualTargetElementAddedEvent new
 				element: anEvent currentTarget) ].
-	element 
+	element
 		when: BlElementRemovedFromSceneGraphEvent
 		do: [ :anEvent | 
 			self emitSignalForEvent: anEvent forRole: #visualTarget.
