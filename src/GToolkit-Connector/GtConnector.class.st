@@ -9,34 +9,6 @@ Class {
 }
 
 { #category : #'private - adding / removing' }
-GtConnector >> addEdgeConstraintFrom: aSourceElement to: aTargetElement [
-	"Add a graph edge between two given elements."
-	| anEdge |
-	
-	self
-		assert: [ aSourceElement isNotNil ]
-		description: [ 'Source element must not be nil' ].
-	self
-		assert: [ aTargetElement isNotNil ]
-		description: [ 'Target element must not be nil' ].
-
-	anEdge := GtGraphEdge new
-		from: aSourceElement
-		to: aTargetElement.
-
-	aSourceElement constraints graph addConnectedEdge: anEdge.
-	aTargetElement constraints graph addConnectedEdge: anEdge.
-	
-	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
-	self ensureRemoveLayoutTargetHandlerFor: aTargetElement.
-	
-	(aSourceElement isConnectedTo: aTargetElement)
-		ifFalse: [ self addEdgeLineFrom: aSourceElement to: aTargetElement].
-
-	self requestLayout
-]
-
-{ #category : #'private - adding / removing' }
 GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements."
 	| aLineElement |
@@ -176,6 +148,9 @@ GtConnector >> createAndAddElementForEntity: anEntity [
 	entityElement := self stencil value: anEntity.
 	entityElement graph beNode.
 	
+	self
+		assert: [ entityElement userData includesKey: #connector  ]
+		description: [ 'The element must have a connector' ].
 	self 
 		assert: [ entityElement connector hasModel  ] 
 		description: 'Elements placed within connector should have an explicit model'.
@@ -193,22 +168,25 @@ GtConnector >> doesExist: anElement [
 ]
 
 { #category : #private }
-GtConnector >> drawLines: anElement [
+GtConnector >> drawLinesFromVisualSource: anElement [
+	self assert: [ anElement connector isVisualSource ].
 	
-	anElement connector isVisualSource ifTrue: [
-		(self targetElementsWith: anElement connector model)
-			select: [ :aTargetElement |  (anElement isConnectedTo: aTargetElement) not 
-				and: [ (self doesExist: aTargetElement)
-					and: [ (self doesExist: anElement) ] ] ]
-			thenDo: [ :aTargetElement | self addVisualLineFrom: anElement to: aTargetElement ] ].
-		
-	"Element is a target, connect it to all sources"
-	anElement connector isVisualTarget ifTrue: [
-		(self sourceElementsWith: anElement connector model)
-			select: [ :aSourceElement |  (aSourceElement isConnectedTo: anElement) not 
-				and: [(self doesExist: aSourceElement)
-					and: [ (self doesExist: anElement) ] ] ]
-			thenDo: [ :aSourceElement | self addVisualLineFrom: aSourceElement to: anElement ] ].
+	(self targetElementsWith: anElement connector model)
+		select: [ :aTargetElement |  (anElement isConnectedTo: aTargetElement) not 
+			and: [ (self doesExist: aTargetElement)
+				and: [ (self doesExist: anElement) ] ] ]
+		thenDo: [ :aTargetElement | self addVisualLineFrom: anElement to: aTargetElement ]
+]
+
+{ #category : #private }
+GtConnector >> drawLinesToVisualTarget: anElement [
+	self assert: [ anElement connector isVisualTarget ].
+	
+	(self sourceElementsWith: anElement connector model)
+		select: [ :aSourceElement |  (aSourceElement isConnectedTo: anElement) not 
+			and: [ (self doesExist: aSourceElement)
+				and: [ (self doesExist: anElement) ] ] ]
+		thenDo: [ :aSourceElement | self addVisualLineFrom: aSourceElement to: anElement ] 
 ]
 
 { #category : #search }
@@ -254,6 +232,47 @@ GtConnector >> emitSignalForEvent: anEvent [
 	GtConnectorEventSignal new 
 		event: anEvent;
 		emit
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureEdgeConstraitFrom: aSourceElement to: aTargetElement [
+	"Ensure there is a graph edge between the two given elements."
+	| hasEdge newEdge |
+	
+	self assert: [ aSourceElement isNotNil ].
+	self assert: [ aTargetElement isNotNil ].
+		
+	hasEdge := aSourceElement constraints graph connectedEdges 
+		anySatisfy: [ :currentEdge | 
+			currentEdge fromElement = aSourceElement and: [ 
+				currentEdge toElement = aTargetElement ] ].
+	hasEdge ifTrue: [ ^ self ].
+	
+	newEdge := GtGraphEdge new
+		from: aSourceElement
+		to: aTargetElement.
+	aSourceElement constraints graph addConnectedEdge: newEdge.
+	aTargetElement constraints graph addConnectedEdge: newEdge.
+]
+
+{ #category : #'private - adding / removing' }
+GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [	
+	self
+		assert: [ aSourceElement isNotNil ]
+		description: [ 'Source element must not be nil' ].
+	self
+		assert: [ aTargetElement isNotNil ]
+		description: [ 'Target element must not be nil' ].
+
+	self ensureEdgeConstraitFrom: aSourceElement to: aTargetElement.
+	
+	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
+	self ensureRemoveLayoutTargetHandlerFor: aTargetElement.
+	
+	(aSourceElement isConnectedTo: aTargetElement) ifFalse: [ 
+		self addEdgeLineFrom: aSourceElement to: aTargetElement ].
+
+	self requestLayout
 ]
 
 { #category : #'private - event handling' }
@@ -350,7 +369,9 @@ GtConnector >> goUpToSourceLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
 	result := anElement.
-	[result isNotNil and: [result connector isLayoutSource]] whileFalse: [ result := result parent ].
+	[result isNotNil and: [
+		result connector isLayoutSource]
+	] whileFalse: [ result := result parent ].
 	^ result
 ]
 
@@ -359,7 +380,9 @@ GtConnector >> goUpToTargetLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
 	result := anElement.
-	[result isNotNil and: [result connector isLayoutTarget]] whileFalse: [ result := result parent ].
+	[result isNotNil and: [
+		result connector isLayoutTarget]
+	] whileFalse: [ result := result parent ].
 	^ result
 ]
 
@@ -412,13 +435,13 @@ GtConnector >> initialize [
 GtConnector >> initializeListeners [
 	self when: GtConnectorVisualSourceElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
-		self link: anEvent element.
-		self drawLines: anEvent element ].
+		self drawLinesFromVisualSource: anEvent element.
+		self linkLayoutSource: anEvent element ].
 	
 	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
-		self link: anEvent element.
-		self drawLines: anEvent element ].
+		self drawLinesToVisualTarget: anEvent element.
+		self linkLayoutTarget: anEvent element ]
 ]
 
 { #category : #accessing }
@@ -431,26 +454,37 @@ GtConnector >> lineElements [
 ]
 
 { #category : #private }
-GtConnector >> link: anElement [
+GtConnector >> linkLayoutSource: anElement [
 	"I create a logical edge between elements (not visible)"
-	| sourceLayoutElement targetLayoutElement |
+	| sourceLayoutElement |
 	self
 		assert: [ anElement userData includesKey: #connector  ]
 		description: [ 'The element must have a connector' ].
+	self assert: [ anElement connector isVisualSource ].
 	
-	anElement connector isVisualTarget ifTrue: [
-		targetLayoutElement := self goUpToTargetLayoutElement: anElement.
-		anElement connector modelDo: [ :modelObject | 
-			(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
-				sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-				self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ]]].
+	sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
+	anElement connector modelDo: [ :modelObject |
+		(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
+			| targetLayoutElement |
+			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
+			self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ]
+]
+
+{ #category : #private }
+GtConnector >> linkLayoutTarget: anElement [
+	"I create a logical edge between elements (not visible)"
+	| targetLayoutElement |
+	self
+		assert: [ anElement userData includesKey: #connector  ]
+		description: [ 'The element must have a connector' ].
+	self assert: [ anElement connector isVisualTarget ].
 	
-	anElement connector isVisualSource ifTrue: [
-		sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
-		anElement connector modelDo: [ :modelObject |
-			(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
-				targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-				self addEdgeConstraintFrom: sourceLayoutElement to: targetLayoutElement ]]]
+	targetLayoutElement := self goUpToTargetLayoutElement: anElement.
+	anElement connector modelDo: [ :modelObject | 
+		(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
+			| sourceLayoutElement |
+			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
+			self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ]
 ]
 
 { #category : #accessing }
