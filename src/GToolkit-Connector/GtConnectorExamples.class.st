@@ -201,6 +201,80 @@ GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
 	^ gtconnector
 ]
 
+{ #category : #examples }
+GtConnectorExamples >> linearDoubleDependenciesExample [
+	<gtExample>
+	| gtconnector |
+	gtconnector := GtConnector new.
+
+	gtconnector stencil: [ :data |
+		| labelButton container dotButtonOne dotButtonTwo buttonOneData buttonTwoData |
+		container := BlElement new.
+		container size: 90 @ 70.
+		container connector 
+			model: data;
+			beLayoutSource;
+			beLayoutTarget;
+			beVisualTarget.
+		
+		container geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
+		container background: (Color gray alpha: 0.1).
+		container border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
+		container
+			clipChildren: false; 
+		 	addChild: self buildCloseButton.
+
+		labelButton := BrButton new.
+		labelButton look: BrTextLabelLook.
+		labelButton label: data.
+		labelButton layout: BlFrameLayout new.
+		labelButton constraintsDo: [ :c | 
+			c horizontal fitContent. 
+			c vertical fitContent ].
+		labelButton relocate: 10 @ 27.
+
+		container addChild: labelButton.
+
+		buttonOneData := data + 2.
+		dotButtonOne := BrButton new.
+		dotButtonOne label: buttonOneData.
+		dotButtonOne look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook".
+		dotButtonOne beSmall.
+		dotButtonOne background: Color white.
+		dotButtonOne border: (BlBorder paint: Color gray).
+		dotButtonOne action: [ 
+			gtconnector addEntity: buttonOneData ].
+		dotButtonOne relocate: 50 @ 5.
+		dotButtonOne connector 
+			model: buttonOneData;
+			beVisualSource.
+			
+		buttonTwoData := data + 3.
+		dotButtonTwo := BrButton new.
+		dotButtonTwo label: buttonTwoData.
+		dotButtonTwo look: BrGlamorousButtonWithLabelLook.
+		dotButtonTwo beSmall.
+		dotButtonTwo background: Color white.
+		dotButtonTwo border: (BlBorder paint: Color gray).
+		dotButtonTwo action: [ 
+			gtconnector addEntity: buttonTwoData ].
+		dotButtonTwo relocate: 50 @ 45.
+		dotButtonTwo connector 
+			model: buttonTwoData;
+			beVisualSource.
+
+		container addChild: dotButtonOne.
+		container addChild: dotButtonTwo.
+		container
+	].
+
+	gtconnector addEntity: 0.
+	gtconnector addEntity: 1.
+	gtconnector addEntity: 2.
+	gtconnector addEntity: 3.
+	^ gtconnector
+]
+
 { #category : #'examples-raw' }
 GtConnectorExamples >> rawObjectExample [
 	<gtExample>
