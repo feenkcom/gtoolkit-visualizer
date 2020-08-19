@@ -6,66 +6,19 @@ Class {
 	#category : #'GToolkit-Connector-Examples'
 }
 
-{ #category : #examples }
-GtConnectorExamples >> anotherSimpleExample [
-	<gtExample>
-	| gtconnector |
-	gtconnector := GtConnector new.
-
-	gtconnector stencil: [ :data |
-		| labelButton container dotButton buttonElement buttonContainer |
-		container := BlElement new.
-		container connector 
-			model: data;
-			beLayoutSource;
-			beLayoutTarget;
-			beVisualTarget.
-		
-		container geometry: BlEllipse new.
-		container background: (Color gray alpha: 0.1).
-		container border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
-		container addEventHandler: (BlEventHandler
-			on: BlDoubleClickEvent
-			do: [ :evt | container removeFromParent ]).
-
-		labelButton := BrButton new.
-		labelButton look: BrTextLabelLook.
-		labelButton label: data.
-		labelButton layout: BlFrameLayout new.
-		labelButton constraintsDo: [ :c | 
-			c horizontal fitContent. 
-			c vertical fitContent ].
-		labelButton relocate: 15 @ 15.
-
-		container addChild: labelButton.
-
-		buttonContainer := BlElement new.
-		buttonContainer connector 
-			model: data + 1;
-			beVisualSource.
-		buttonContainer size: 10 @ 10.
-
-		buttonElement := (BlEllipse new extent: 10 asPoint) asElement 
-			background: Color black.
-		dotButton := BrButton new.
-		dotButton icon: buttonElement.
-		dotButton look: BrIconLook " BrGlamorousButtonWithIconLook".
-		dotButton size: 10 @ 10.
-		dotButton action: [ 
-			gtconnector addEntity: data + 1. 
-			gtconnector addEntity: data + 2 ].
-		buttonContainer relocate: 7 @ 7.
-		buttonContainer addChild: dotButton.
-
-		container addChild: buttonContainer.
-		container
-	].
-
-	gtconnector addEntity: 1.
-	gtconnector addEntity: 2.
-	gtconnector addEntity: 3.
-	gtconnector addEntity: 5.
-	^ gtconnector
+{ #category : #utils }
+GtConnectorExamples >> buildCloseButton [
+	^ (GtInspectorRoundButtonStencil new 
+	size: 15@15)
+	asElement
+		icon: (GtInspectorPlusIconStencil close asElement);
+		"beTiny;"
+		constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets top: -7.5 left: 0 bottom: 0 right: -7.5).
+			c ignored horizontal alignRight.
+			c ignored vertical alignTop ];
+		action: [ :aButton | aButton parent removeFromParent ]
 ]
 
 { #category : #examples }
@@ -122,6 +75,128 @@ GtConnectorExamples >> exampleMethodsExample [
 		editorContainer.
 	].
 	gtconnector addEntity: (BlFrameLayoutCompositionExamples>>#example).
+	
+	^ gtconnector
+]
+
+{ #category : #examples }
+GtConnectorExamples >> linearDependenciesExample [
+	<gtExample>
+	| gtconnector |
+	gtconnector := GtConnector new.
+
+	gtconnector stencil: [ :data |
+		| labelButton container dotButton  |
+		container := BlElement new.
+		container connector 
+			model: data;
+			beLayoutSource;
+			beLayoutTarget;
+			beVisualTarget.
+		
+		container 
+			geometry: (BlRoundedRectangleGeometry cornerRadius: 5);
+			background: (Color gray alpha: 0.1);
+			border: (BlBorder paint: (Color blue alpha: 0.2) width: 2);
+			clipChildren: false; 
+		 	addChild: self buildCloseButton.
+
+		labelButton := BrButton new.
+		labelButton look: BrTextLabelLook.
+		labelButton label: data.
+		labelButton layout: BlFrameLayout new.
+		labelButton constraintsDo: [ :c | 
+			c horizontal fitContent. 
+			c vertical fitContent ].
+		labelButton relocate: 10 @ 15.
+
+		container addChild: labelButton.
+
+		dotButton := BrButton new.
+		dotButton icon: ((BlEllipse new extent: 10 asPoint) asElement 
+			background: Color black).
+		dotButton look: BrIconLook " BrGlamorousButtonWithIconLook".
+		dotButton size: 10 @ 10.
+		dotButton action: [ 
+			gtconnector addEntity: data + 1.
+			gtconnector addEntity: data + 2].
+		dotButton connector 
+			model: data + 1;
+			beVisualSource.
+			
+		dotButton relocate: 30 @ 14.
+
+		container addChild: dotButton.
+		container
+	].
+
+	gtconnector addEntity: 1.
+	gtconnector addEntity: 2.
+	gtconnector addEntity: 3.
+	gtconnector addEntity: 7.
+	
+	^ gtconnector
+]
+
+{ #category : #examples }
+GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
+	<gtExample>
+	| gtconnector |
+	gtconnector := GtConnector new.
+
+	gtconnector stencil: [ :data |
+		| labelButton container dotButton buttonElement buttonContainer |
+		container := BlElement new.
+		container connector 
+			model: data;
+			beLayoutSource;
+			beLayoutTarget;
+			beVisualTarget.
+		
+		container 
+			geometry: (BlRoundedRectangleGeometry cornerRadius: 5);
+			background: (Color gray alpha: 0.1);
+			border: (BlBorder paint: (Color blue alpha: 0.2) width: 2);
+		 	clipChildren: false; 
+		 	addChild: self buildCloseButton.
+
+		labelButton := BrButton new.
+		labelButton look: BrTextLabelLook.
+		labelButton label: data.
+		labelButton layout: BlFrameLayout new.
+		labelButton constraintsDo: [ :c | 
+			c horizontal fitContent. 
+			c vertical fitContent ].
+		labelButton relocate: 10 @ 15.
+
+		container addChild: labelButton.
+
+		buttonContainer := BlElement new.
+		buttonContainer connector 
+			model: data + 1;
+			beVisualSource.
+		buttonContainer size: 10 @ 10.
+
+		buttonElement := (BlEllipse new extent: 10 asPoint) asElement 
+			background: Color black.
+		dotButton := BrButton new.
+		dotButton icon: buttonElement.
+		dotButton look: BrIconLook " BrGlamorousButtonWithIconLook".
+		dotButton size: 10 @ 10.
+		dotButton action: [ 
+			gtconnector addEntity: data + 1.
+			gtconnector addEntity: data + 2].
+		buttonContainer relocate: 30 @ 14.
+		buttonContainer addChild: dotButton.
+
+		container addChild: buttonContainer.
+		container
+	].
+
+	gtconnector addEntity: 1.
+	gtconnector addEntity: 2.
+	gtconnector addEntity: 3.
+	gtconnector addEntity: 7.
 	
 	^ gtconnector
 ]
@@ -227,5 +302,78 @@ GtConnectorExamples >> rawObjectExample [
 		uml
 	].
 	gtconnector addEntity: GtConnector new.
+	^ gtconnector
+]
+
+{ #category : #examples }
+GtConnectorExamples >> treeDependeciesExample [
+	<gtExample>
+	| gtconnector |
+	gtconnector := GtConnector new.
+
+	gtconnector stencil: [ :data |
+		| labelButton container dotButtonOne dotButtonTwo buttonOneData buttonTwoData |
+		container := BlElement new.
+		container size: 90 @ 70.
+		container connector 
+			model: data;
+			beLayoutSource;
+			beLayoutTarget;
+			beVisualTarget.
+		
+		container geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
+		container background: (Color gray alpha: 0.1).
+		container border: (BlBorder paint: (Color blue alpha: 0.2) width: 2).
+		container
+			clipChildren: false; 
+		 	addChild: self buildCloseButton.
+
+		labelButton := BrButton new.
+		labelButton look: BrTextLabelLook.
+		labelButton label: data.
+		labelButton layout: BlFrameLayout new.
+		labelButton constraintsDo: [ :c | 
+			c horizontal fitContent. 
+			c vertical fitContent ].
+		labelButton relocate: 10 @ 27.
+
+		container addChild: labelButton.
+
+		buttonOneData := data, '0'.
+		dotButtonOne := BrButton new.
+		dotButtonOne label: '+0'.
+		dotButtonOne look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook".
+		dotButtonOne beSmall.
+		dotButtonOne background: Color white.
+		dotButtonOne border: (BlBorder paint: Color gray).
+		dotButtonOne action: [ 
+			gtconnector addEntity: buttonOneData ].
+		dotButtonOne relocate: 50 @ 5.
+		dotButtonOne connector 
+			model: buttonOneData;
+			beVisualSource.
+			
+		buttonTwoData := data, '1'.
+		dotButtonTwo := BrButton new.
+		dotButtonTwo label: '+1'.
+		dotButtonTwo look: BrGlamorousButtonWithLabelLook "BrTextLabelLook" " BrGlamorousButtonWithIconLook".
+		dotButtonTwo beSmall.
+		dotButtonTwo background: Color white.
+		dotButtonTwo border: (BlBorder paint: Color gray).
+		dotButtonTwo action: [ 
+			gtconnector addEntity: buttonTwoData ].
+		dotButtonTwo relocate: 50 @ 45.
+		dotButtonTwo connector 
+			model: buttonTwoData;
+			beVisualSource.
+
+		container addChild: dotButtonOne.
+		container addChild: dotButtonTwo.
+		container
+	].
+
+	gtconnector addEntity: '0'.
+	gtconnector addEntity: '00'.
+	gtconnector addEntity: '01'.
 	^ gtconnector
 ]
