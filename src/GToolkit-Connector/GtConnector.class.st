@@ -467,7 +467,8 @@ GtConnector >> linkLayoutSource: anElement [
 		(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
 			| targetLayoutElement |
 			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-			self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ]
+			sourceLayoutElement ~~ targetLayoutElement ifTrue: [
+				self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ] ]
 ]
 
 { #category : #private }
@@ -484,7 +485,8 @@ GtConnector >> linkLayoutTarget: anElement [
 		(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
 			| sourceLayoutElement |
 			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-			self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ]
+			sourceLayoutElement ~~ targetLayoutElement ifTrue: [
+				self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ] ]
 ]
 
 { #category : #accessing }
