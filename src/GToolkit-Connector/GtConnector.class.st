@@ -3,6 +3,7 @@ Class {
 	#superclass : #BlElement,
 	#instVars : [
 		'stencil',
+		'referencedEntitiesBlock',
 		'options'
 	],
 	#category : #'GToolkit-Connector-Core'
@@ -203,30 +204,6 @@ GtConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 			aBlock cull: anEditorElement ]
 ]
 
-{ #category : #search }
-GtConnector >> elementsVisualWithSource: aSource [
-	"Return a collection of source elements whose source is a given object"
-	<return: #SequenceableCollection of: #BlElement>
-
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement connector isVisualSource
-				and: [ aChildElement connector modelContains: aSource ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
-]
-
-{ #category : #search }
-GtConnector >> elementsVisualWithTarget: aSource [
-	"Return a collection of source elements whose source is a given object"
-	<return: #SequenceableCollection of: #BlElement>
-
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement connector isVisualTarget
-				and: [ aChildElement connector modelContains: aSource ])
-					ifTrue: [ aStream nextPut: aChildElement ] ] ]
-]
-
 { #category : #logging }
 GtConnector >> emitSignalForEvent: anEvent [
 	GtConnectorEventSignal new 
@@ -263,7 +240,7 @@ GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [
 	self
 		assert: [ aTargetElement isNotNil ]
 		description: [ 'Target element must not be nil' ].
-
+	
 	self ensureEdgeConstraitFrom: aSourceElement to: aTargetElement.
 	
 	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
@@ -428,7 +405,9 @@ GtConnector >> initialize [
 
 	self layout: (GtGradHorizontalTreeLayout new levelDistance: 200; nodeDistance: 40).
 	self options: GtConnectorOptions new.
-	self initializeListeners
+	self initializeListeners.
+	
+	referencedEntitiesBlock := [ :anEntity | #() ].
 ]
 
 { #category : #initialization }
@@ -444,6 +423,48 @@ GtConnector >> initializeListeners [
 		self linkLayoutTarget: anEvent element ]
 ]
 
+{ #category : #search }
+GtConnector >> layoutSourceElementsConnectedTo: aSourceEntity [
+	"Return a collection of source elements whose model is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualSource
+				and: [ aChildElement connector modelContains: aSourceEntity ])
+					ifTrue: [ 
+						| layoutSourceElement |
+						layoutSourceElement := self goUpToSourceLayoutElement: aChildElement.
+						aStream nextPut: layoutSourceElement ] ].
+				
+		self entityElements do: [ :anElement |
+			| referencedEntities |
+			referencedEntities := self referencedEntitiesBlock value: anElement connector model.
+			(referencedEntities includes: aSourceEntity) ifTrue: [
+				aStream nextPut: anElement ] ]	 ]
+]
+
+{ #category : #search }
+GtConnector >> layoutTargetElementsConnectedTo: aSourceEntity [
+	"Return a collection of target elements whose model is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualTarget
+				and: [ aChildElement connector modelContains: aSourceEntity ])
+					ifTrue: [ 
+						| layoutSourceElement |
+						layoutSourceElement := self goUpToSourceLayoutElement: aChildElement.
+						aStream nextPut: layoutSourceElement ] ].
+				
+		self entityElements do: [ :anElement |
+			| referencedEntities |
+			referencedEntities := self referencedEntitiesBlock value: anElement connector model.
+			(referencedEntities includes: aSourceEntity) ifTrue: [
+				aStream nextPut: anElement ] ]	]
+]
+
 { #category : #accessing }
 GtConnector >> lineElements [
 	"Return a collection of existing line element from the connector"
@@ -455,38 +476,34 @@ GtConnector >> lineElements [
 
 { #category : #private }
 GtConnector >> linkLayoutSource: anElement [
-	"I create a logical edge between elements (not visible)"
-	| sourceLayoutElement |
+	"I create a logical edge between elements at the level of the layout"
+	| layoutSourceElement |
 	self
 		assert: [ anElement userData includesKey: #connector  ]
 		description: [ 'The element must have a connector' ].
 	self assert: [ anElement connector isVisualSource ].
 	
-	sourceLayoutElement := self goUpToSourceLayoutElement: anElement.
+	layoutSourceElement := self goUpToSourceLayoutElement: anElement.
 	anElement connector modelDo: [ :modelObject |
-		(self elementsVisualWithTarget: modelObject) do: [ :layoutTarget |
-			| targetLayoutElement |
-			targetLayoutElement := self goUpToTargetLayoutElement: layoutTarget.
-			sourceLayoutElement ~~ targetLayoutElement ifTrue: [
-				self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ] ]
+		(self layoutTargetElementsConnectedTo: modelObject) do: [ :layoutTargetElement |
+			layoutSourceElement ~~ layoutTargetElement ifTrue: [
+				self ensureLayoutLinkFrom: layoutSourceElement to: layoutTargetElement ] ] ]
 ]
 
 { #category : #private }
 GtConnector >> linkLayoutTarget: anElement [
-	"I create a logical edge between elements (not visible)"
-	| targetLayoutElement |
+	"I create a logical edge between elements at the level of the layout"
+	| layoutTargetElement |
 	self
 		assert: [ anElement userData includesKey: #connector  ]
 		description: [ 'The element must have a connector' ].
 	self assert: [ anElement connector isVisualTarget ].
 	
-	targetLayoutElement := self goUpToTargetLayoutElement: anElement.
+	layoutTargetElement := self goUpToTargetLayoutElement: anElement.
 	anElement connector modelDo: [ :modelObject | 
-		(self elementsVisualWithSource: modelObject) do: [ :layoutSource |
-			| sourceLayoutElement |
-			sourceLayoutElement := self goUpToSourceLayoutElement: layoutSource.
-			sourceLayoutElement ~~ targetLayoutElement ifTrue: [
-				self ensureLayoutLinkFrom: sourceLayoutElement to: targetLayoutElement ] ] ]
+		(self layoutSourceElementsConnectedTo: modelObject) do: [ :layoutSourceElement |
+			layoutSourceElement ~~ layoutTargetElement ifTrue: [
+				self ensureLayoutLinkFrom: layoutSourceElement to: layoutTargetElement ] ] ]
 ]
 
 { #category : #accessing }
@@ -497,6 +514,16 @@ GtConnector >> options [
 { #category : #accessing }
 GtConnector >> options: anOptionsObject [
 	options := anOptionsObject.
+]
+
+{ #category : #public }
+GtConnector >> referencedEntities: aBlock [ 
+	referencedEntitiesBlock := aBlock
+]
+
+{ #category : #accessing }
+GtConnector >> referencedEntitiesBlock [
+	^ referencedEntitiesBlock
 ]
 
 { #category : #'private - adding / removing' }
@@ -595,4 +622,28 @@ GtConnector >> targetElementsWith: aTarget [
 			(aChildElement connector isVisualTarget
 				and: [ aChildElement connector modelContains: aTarget ])
 					ifTrue: [ aStream nextPut: aChildElement ]]]
+]
+
+{ #category : #search }
+GtConnector >> visualSourceElementsWithModel: aSourceEntity [
+	"Return a collection of source elements whose model is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualSource
+				and: [ aChildElement connector modelContains: aSourceEntity ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
+]
+
+{ #category : #search }
+GtConnector >> visualTargetElementsWithModel: aSource [
+	"Return a collection of target elements whose model is a given object"
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ Array streamContents: [ :aStream |
+		self allChildrenBreadthFirstDo: [ :aChildElement |
+			(aChildElement connector isVisualTarget
+				and: [ aChildElement connector modelContains: aSource ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
