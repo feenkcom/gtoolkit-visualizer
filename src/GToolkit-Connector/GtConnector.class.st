@@ -415,54 +415,69 @@ GtConnector >> initializeListeners [
 	self when: GtConnectorVisualSourceElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
 		self drawLinesFromVisualSource: anEvent element.
-		self linkLayoutSource: anEvent element ].
+		self linkLayoutSourcesFor: anEvent element ].
 	
 	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
 		self emitSignalForEvent: anEvent.
 		self drawLinesToVisualTarget: anEvent element.
-		self linkLayoutTarget: anEvent element ]
+		self linkLayoutTargetsFor: anEvent element ]
 ]
 
 { #category : #search }
-GtConnector >> layoutSourceElementsConnectedTo: aSourceEntity [
-	"Return a collection of source elements whose model is a given object"
+GtConnector >> layoutSourceElementsConnectedTo: aTargetEntity [
+	"Return a collection of layout source elements that could be connected to
+	the given target entity for a visual target. There should be a connection:
+	- there is a visible visual source with the same model;
+	- there is no visible visual source but a layout source has a reference to the entity"
 	<return: #SequenceableCollection of: #BlElement>
 
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement connector isVisualSource
-				and: [ aChildElement connector modelContains: aSourceEntity ])
-					ifTrue: [ 
-						| layoutSourceElement |
-						layoutSourceElement := self goUpToSourceLayoutElement: aChildElement.
-						aStream nextPut: layoutSourceElement ] ].
-				
-		self entityElements do: [ :anElement |
+	^ (self layoutSourcesVisuallyConnectedTo: aTargetEntity),
+	  (self layoutSourcesWithReferencesTo: aTargetEntity)
+]
+
+{ #category : #search }
+GtConnector >> layoutSourcesVisuallyConnectedTo: aTargetEntity [
+	"Return a collection of layout source elements connected with the given target entity. 
+	They are connected if the layout source contains a visual source that has the given entity as a model."
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ (self sourceElementsWith: aTargetEntity) collect: [ :aVisualSourceElement | 
+			self goUpToSourceLayoutElement: aVisualSourceElement ] 
+]
+
+{ #category : #search }
+GtConnector >> layoutSourcesWithReferencesTo: aTargetEntity [
+	"Return a collection of layout source elements that reference the given entity."
+	<return: #SequenceableCollection of: #BlElement>
+	 
+	^ self entityElements select: [ :anElement |
+		| isReferenced |
+		isReferenced := false.
+		anElement connector modelDo: [ :aModel | 
 			| referencedEntities |
-			referencedEntities := self referencedEntitiesBlock value: anElement connector model.
-			(referencedEntities includes: aSourceEntity) ifTrue: [
-				aStream nextPut: anElement ] ]	 ]
+			referencedEntities := self referencedEntitiesBlock value: aModel.
+			isReferenced := referencedEntities includes: aTargetEntity ].
+		isReferenced ]	
 ]
 
 { #category : #search }
 GtConnector >> layoutTargetElementsConnectedTo: aSourceEntity [
-	"Return a collection of target elements whose model is a given object"
+	"Return a collection of layout target elements that could be connected to
+	the given source entity for a visual source. There should be a connection:
+	- there is a visible visual target with the same model"
 	<return: #SequenceableCollection of: #BlElement>
 
-	^ Array streamContents: [ :aStream |
-		self allChildrenBreadthFirstDo: [ :aChildElement |
-			(aChildElement connector isVisualTarget
-				and: [ aChildElement connector modelContains: aSourceEntity ])
-					ifTrue: [ 
-						| layoutSourceElement |
-						layoutSourceElement := self goUpToSourceLayoutElement: aChildElement.
-						aStream nextPut: layoutSourceElement ] ].
-				
-		self entityElements do: [ :anElement |
-			| referencedEntities |
-			referencedEntities := self referencedEntitiesBlock value: anElement connector model.
-			(referencedEntities includes: aSourceEntity) ifTrue: [
-				aStream nextPut: anElement ] ]	]
+	^ self layoutTargetsVisuallyConnectedTo: aSourceEntity
+]
+
+{ #category : #search }
+GtConnector >> layoutTargetsVisuallyConnectedTo: aSourceEntity [
+	"Return a collection of layout targets elements connected with the given source entity. 
+	They are connected if the layout target contains a visual target that has the given entity as a model."
+	<return: #SequenceableCollection of: #BlElement>
+
+	^ (self targetElementsWith: aSourceEntity) collect: [ :aVisualTargetElement | 
+			self goUpToTargetLayoutElement: aVisualTargetElement ]
 ]
 
 { #category : #accessing }
@@ -475,7 +490,7 @@ GtConnector >> lineElements [
 ]
 
 { #category : #private }
-GtConnector >> linkLayoutSource: anElement [
+GtConnector >> linkLayoutSourcesFor: anElement [
 	"I create a logical edge between elements at the level of the layout"
 	| layoutSourceElement |
 	self
@@ -491,16 +506,16 @@ GtConnector >> linkLayoutSource: anElement [
 ]
 
 { #category : #private }
-GtConnector >> linkLayoutTarget: anElement [
-	"I create a logical edge between elements at the level of the layout"
+GtConnector >> linkLayoutTargetsFor: aVisualTarget [
+	"I create a logical edge between elements at the level of the layout."
 	| layoutTargetElement |
 	self
-		assert: [ anElement userData includesKey: #connector  ]
+		assert: [ aVisualTarget userData includesKey: #connector  ]
 		description: [ 'The element must have a connector' ].
-	self assert: [ anElement connector isVisualTarget ].
+	self assert: [ aVisualTarget connector isVisualTarget ].
 	
-	layoutTargetElement := self goUpToTargetLayoutElement: anElement.
-	anElement connector modelDo: [ :modelObject | 
+	layoutTargetElement := self goUpToTargetLayoutElement: aVisualTarget.
+	aVisualTarget connector modelDo: [ :modelObject | 
 		(self layoutSourceElementsConnectedTo: modelObject) do: [ :layoutSourceElement |
 			layoutSourceElement ~~ layoutTargetElement ifTrue: [
 				self ensureLayoutLinkFrom: layoutSourceElement to: layoutTargetElement ] ] ]
@@ -591,14 +606,14 @@ GtConnector >> removeLinesTo: targetElement [
 ]
 
 { #category : #search }
-GtConnector >> sourceElementsWith: aTarget [
-	"Return a collection of target elements whose source is a given object"
+GtConnector >> sourceElementsWith: anEntity [
+	"Return a collection of visual source elements whose model is a given object."
 	<return: #SequenceableCollection of: #BlElement>
 
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement connector isVisualSource
-				and: [ aChildElement connector modelContains: aTarget ])
+				and: [ aChildElement connector modelContains: anEntity ])
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
@@ -613,15 +628,15 @@ GtConnector >> stencil: aStencil [
 ]
 
 { #category : #search }
-GtConnector >> targetElementsWith: aTarget [
-	"Return a collection of target elements whose target is a given object"
+GtConnector >> targetElementsWith: anEntity [
+	"Return a collection of visual target elements whose model is a given object"
 	<return: #SequenceableCollection of: #BlElement>
 
 	^ Array streamContents: [ :aStream |
 		self allChildrenBreadthFirstDo: [ :aChildElement |
 			(aChildElement connector isVisualTarget
-				and: [ aChildElement connector modelContains: aTarget ])
-					ifTrue: [ aStream nextPut: aChildElement ]]]
+				and: [ aChildElement connector modelContains: anEntity ])
+					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
 { #category : #search }
