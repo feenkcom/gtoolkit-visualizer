@@ -16,14 +16,8 @@ GtConnectorTool >> asElementDo: aOneArgBlock [
 ]
 
 { #category : #'api - converting' }
-GtConnectorTool >> asTabDo: aBlock [
-	| aTab |
-	aTab := BrTab new
-		look: BrGlamorousTabSwitcherWithIconLook;
-		label: self name;
-		icon: (BrGlamorousVectorIcons largebranching asElement asScalableElement size: 16@16);
-		stencil: [ self asElementDo: [ :anElement | anElement ] ].
-	aBlock cull: aTab.
+GtConnectorTool >> icon [ 
+	^ BrGlamorousVectorIcons largebranching asElement asScalableElement size: 16@16
 ]
 
 { #category : #'api - accessing' }
@@ -39,4 +33,9 @@ GtConnectorTool >> object [
 { #category : #'api - accessing' }
 GtConnectorTool >> object: anObject [
 	object := anObject
+]
+
+{ #category : #'private - accessing' }
+GtConnectorTool >> tabLook [
+	^ BrGlamorousTabSwitcherWithIconLook
 ]
