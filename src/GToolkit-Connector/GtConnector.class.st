@@ -365,6 +365,7 @@ GtConnector >> goUpToTargetLayoutElement: anElement [
 
 { #category : #'gt-extension' }
 GtConnector >> gtLiveFor: aView [
+	<gtView>
 	^ (super gtLiveFor: aView) 
 		stencil: [ 
 			self space
