@@ -53,6 +53,7 @@ GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [
 
 { #category : #'gt-extension' }
 GtGraphTreemapSquarifyAreaRectangle >> gtPreviewFor: aView [
+	<gtView>
 	self position ifNil: [ ^ aView empty ].
 	self extent ifNil: [ ^ aView empty ].
 	^ aView explicit

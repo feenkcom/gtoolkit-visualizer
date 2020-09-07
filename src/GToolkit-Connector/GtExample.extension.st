@@ -115,6 +115,7 @@ GtExample >> editorContainer [
 
 { #category : #'*GToolkit-Connector' }
 GtExample >> gtConnectionsFor: aView [
+	<gtView>
 	^ aView explicit
 		title: 'Connections';
 		stencil: [	

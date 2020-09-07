@@ -6,6 +6,7 @@ Class {
 
 { #category : #ui }
 GtConnectorEventSignal >> gtCurrentElementFor: aView [
+	<gtView>
 	^ aView forward 
 		title: 'Current element';
 		priority: 20;
