@@ -10,9 +10,20 @@ Class {
 { #category : #'api - converting' }
 GtConnectorTool >> asElementDo: aOneArgBlock [
 	| anElement |
-	anElement := (self object gtConnectionsFor: GtPhlowEmptyView new) asElementDo: [ :e | e ].
+	anElement := GtConnectorContainer new entity: self object.
 
 	^ aOneArgBlock cull: anElement
+]
+
+{ #category : #'private - converting' }
+GtConnectorTool >> asTabElement [
+	"Return a tool element that is going to be used as a part of ${class:GtPhlowCompositeTool}$"
+	<return: #BlElement>
+	| aContainer |
+	aContainer := super asTabElement.
+	aContainer addEventHandler: (GtPhlowToolChangedObjectHandler new
+		onChangeSend: #entity: to: aContainer).
+	^ aContainer
 ]
 
 { #category : #'api - converting' }
