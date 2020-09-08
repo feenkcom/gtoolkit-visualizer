@@ -1,3 +1,11 @@
+"
+I am a ${class:BlElement}$.
+I hold a ${method:GtConnectorContainer>>#entity|label=#selector}$ and display its ${class:GtConnector}$ view calling ${method:Object>>#gtConnectionsFor:}$. 
+I ${method:GtConnectorContainer>>#updateView|label=update}$ the view when the ${method:GtConnectorContainer>>#entity:|label=entity}$ is changed.
+!! Example
+For the entity: ${example:GtConnectorExamples>>#entityOne|noCode}$ 
+I display: ${example:GtConnectorExamples>>#entityOneContainer|codeExpanded=false|previewExpanded=true|previewHeight=400}$
+"
 Class {
 	#name : #GtConnectorContainer,
 	#superclass : #BlElement,
@@ -43,6 +51,7 @@ GtConnectorContainer >> updateView [
 	| aView |
 	self removeChildren.
 	aView := self entity gtConnectionsFor: GtPhlowEmptyView new.
-	aView asElementDo: [ :anElement | 
-		self addChild: anElement ].
+	aView ifItHasContent: [
+		aView asElementDo: [ :anElement | 
+			self addChild: anElement ] ].
 ]

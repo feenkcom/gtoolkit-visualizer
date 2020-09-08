@@ -6,6 +6,16 @@ Class {
 	#category : #'GToolkit-Connector-Examples'
 }
 
+{ #category : #'examples - container' }
+GtConnectorExamples >> basicContainer [
+	<gtExample>
+	| aContainer |
+	aContainer := GtConnectorContainer new.
+	self assert: aContainer hasChildren not.
+	self assert: aContainer entity isNil.
+	^ aContainer
+]
+
 { #category : #utils }
 GtConnectorExamples >> buildCloseButton [
 	^ (GtInspectorRoundButtonStencil new 
@@ -62,6 +72,30 @@ GtConnectorExamples >> createVisualSourceButtonWithLabel: aLabel withAction: anA
 	 	border: (BlBorder paint: Color gray);
 	 	action: anAction.
 	^ button
+]
+
+{ #category : #'examples - container' }
+GtConnectorExamples >> entityOne [
+	<gtExample>
+	^ self class >> #entityOne
+]
+
+{ #category : #'examples - container' }
+GtConnectorExamples >> entityOneContainer [
+	<gtExample>
+	| aContainer anEntity |
+	aContainer := self basicContainer.
+	anEntity := self entityOne.
+	aContainer entity: anEntity.
+	self assert: aContainer entity equals: anEntity.
+	self assert: aContainer hasChildren.
+	^ aContainer
+]
+
+{ #category : #'examples - container' }
+GtConnectorExamples >> entityTwo [
+	<gtExample>
+	^ self class >> #entityTwo
 ]
 
 { #category : #examples }
@@ -420,6 +454,19 @@ GtConnectorExamples >> rawObjectExample [
 	].
 	gtconnector addEntity: GtConnector new.
 	^ gtconnector
+]
+
+{ #category : #'examples - container' }
+GtConnectorExamples >> replaceEntityOneByEntityTwoContainer [
+	<gtExample>
+	| aContainer anEntity anOldContent |
+	aContainer := self entityOneContainer.
+	anOldContent := aContainer childAt: 1.
+	anEntity := self entityTwo.
+	aContainer entity: anEntity.
+	self assert: aContainer entity equals: anEntity.
+	self assert: (aContainer childAt: 1) ~= anOldContent.
+	^ aContainer
 ]
 
 { #category : #examples }
