@@ -357,20 +357,6 @@ GtGradKamadaKawaiLayout >> measure: aParentNode [
 	aParentNode children normalizePositions
 ]
 
-{ #category : #measure }
-GtGradKamadaKawaiLayout >> measurePositions: anElement with: anExtentSpec [
-	| aParentNode |
-
-	aParentNode := (BlLayoutParentNode alreadyMeasured: anElement) extentSpec: anExtentSpec.
-	aParentNode filter: [ :eachNode | eachNode constraints graph isNode ].
-
-	self measure: aParentNode withGraphEdges.
-	
-	aParentNode children do: [ :eachChildNode |
-		eachChildNode element measuredBounds position: eachChildNode measurement position.
-		eachChildNode element measuredBounds extent: eachChildNode measurement extent ]
-]
-
 { #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> randomlyPositionNodes: theNodes maxVerticalValue: maxX maxHorizontalValue: maxY [
 	| positions |

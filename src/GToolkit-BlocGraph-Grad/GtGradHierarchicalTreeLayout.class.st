@@ -135,20 +135,6 @@ GtGradHierarchicalTreeLayout >> measure: aParentNode [
 	self layout measure: aParentNode.
 ]
 
-{ #category : #measure }
-GtGradHierarchicalTreeLayout >> measurePositions: anElement with: anExtentSpec [
-	| aParentNode |
-
-	aParentNode := (BlLayoutParentNode alreadyMeasured: anElement) extentSpec: anExtentSpec.
-	aParentNode filter: [ :eachNode | eachNode constraints graph isNode ].
-
-	self measure: aParentNode withGraphEdges.
-	
-	aParentNode children do: [ :eachChildNode |
-		eachChildNode element measuredBounds position: eachChildNode measurement position.
-		eachChildNode element measuredBounds extent: eachChildNode measurement extent ]
-]
-
 { #category : #accessing }
 GtGradHierarchicalTreeLayout >> nodesDistance [
 	^ nodesDistance

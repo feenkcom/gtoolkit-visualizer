@@ -153,19 +153,6 @@ GtGradHierarchicalLayout >> measure: aParentNode [
 	aParentNode children normalizePositions
 ]
 
-{ #category : #measure }
-GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
-	| theNodes |
-
-	theNodes := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-
-	self run: theNodes.
-	
-	theNodes do: [ :aNodeElement |
-		aNodeElement measuredBounds position: (aNodeElement measurement position) ]
-]
-
 { #category : #accessing }
 GtGradHierarchicalLayout >> parallelEdgeSpacing [
 	"Distance between parallel edges"

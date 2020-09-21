@@ -99,20 +99,6 @@ GtGradAbstractTreeLayout >> measure: aParentNode [
 	aParentNode children normalizePositions
 ]
 
-{ #category : #measure }
-GtGradAbstractTreeLayout >> measurePositions: anElement with: anExtentSpec [
-	| aParentNode |
-
-	aParentNode := (BlLayoutParentNode alreadyMeasured: anElement) extentSpec: anExtentSpec.
-	aParentNode filter: [ :eachNode | eachNode constraints graph isNode ].
-
-	self measure: aParentNode withGraphEdges.
-	
-	aParentNode children do: [ :eachChildNode |
-		eachChildNode element measuredBounds position: eachChildNode measurement position.
-		eachChildNode element measuredBounds extent: eachChildNode measurement extent ]
-]
-
 { #category : #'api - geometry' }
 GtGradAbstractTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 	self subclassResponsibility
