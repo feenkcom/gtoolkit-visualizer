@@ -56,7 +56,7 @@ GtGradCircleLayoutExamples >> containerWithCircleLayout [
 	<gtExample>
 	| aContainer aCircleLayout |
 	
-	aContainer := self container. 
+	aContainer := self container.
 	aCircleLayout := self circleLayout.
 
 	aContainer layout: aCircleLayout.
@@ -80,7 +80,7 @@ GtGradCircleLayoutExamples >> containerWithCircleLayout: layoutDistance [
 { #category : #'examples - layout' }
 GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10BigNodes [
 	<gtExample>
-	| aContainer theNodes  |
+	| aContainer theNodes |
 
 	aContainer := self containerWithCircleLayout. 
 	theNodes := self bigNodesN: 10. 
@@ -110,7 +110,7 @@ GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10EditorNodes [
 { #category : #'examples - composite' }
 GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10EditorNodesAndLine [
 	<gtExample>
-	<label: 'An example of a passive edge that is not taking into account by the layout'>
+	<label: 'An example of a passive edge that is not taken into account by the layout'>
 	| aContainer fromNode toNode aLine |
 	
 	aContainer := self containerWithCircleLayoutAnd10EditorNodes.
@@ -130,7 +130,6 @@ GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10EditorNodesAndLine [
 { #category : #'examples - layout' }
 GtGradCircleLayoutExamples >> containerWithCircleLayoutAnd10SimpleNodes [
 	<gtExample>
-	<noTest>
 	| aContainer theNodes theNodeExtents theNodePositions |
 
 	aContainer := self containerWithCircleLayout.
@@ -231,7 +230,7 @@ GtGradCircleLayoutExamples >> editorNodes10WithRandomContent [
 	
 		anEditor background: (Color veryVeryLightGray ).
 		anEditor border: (BlBorder builder width: 1; paint: Color black) build.
-		anEditor geometry: (BlRoundedRectangleGeometry cornerRadius: 5)..
+		anEditor geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
 		anEditor graph beNode.
 		anEditor 
 	].

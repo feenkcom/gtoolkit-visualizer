@@ -1,7 +1,7 @@
 Class {
 	#name : #DijkstrasShortestPath,
 	#superclass : #Object,
-	#category : 'GToolkit-BlocGraph-Grad-Algorithms'
+	#category : #'GToolkit-BlocGraph-Grad-Algorithms'
 }
 
 { #category : #calculating }
@@ -70,7 +70,7 @@ DijkstrasShortestPath >> calculateShortestPathFromSourceToTargetUnweighted: theN
 			| currentNode |
 			currentNode := self getLowestDistanceNode: unsettledNodes nodeDistances: distancesDict.
 			unsettledNodes remove: currentNode.
-			(currentNode graph nodesAlongOutgoingEdges) do: [ :adjacentNode |
+			(currentNode nodesAlongOutgoingEdges) do: [ :adjacentNode |
 				(settledNodes includes: adjacentNode)
 					ifFalse: [
 				 		self calculateMinimumDistance: adjacentNode weight: 1 source: currentNode nodeDistances: distancesDict paths: pathsDict.
@@ -113,7 +113,7 @@ DijkstrasShortestPath >> calculateShortestPathFromSourceUnweighted: theNodes sou
 			| currentNode |
 			currentNode := self getLowestDistanceNode: unsettledNodes nodeDistances: distancesDict.
 			unsettledNodes remove: currentNode.
-			(currentNode graph nodesAlongOutgoingEdges) do: [ :adjacentNode |
+			(currentNode nodesAlongOutgoingEdges) do: [ :adjacentNode |
 				(settledNodes includes: adjacentNode)
 					ifFalse: [
 				 		self calculateMinimumDistance: adjacentNode weight: 1 source: currentNode nodeDistances: distancesDict paths: pathsDict.

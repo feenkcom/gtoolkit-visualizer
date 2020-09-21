@@ -100,15 +100,16 @@ GtGradTreeNode >> element: anElement [
 	element := anElement
 ]
 
-{ #category : #'gt-inspector-extension' }
-GtGradTreeNode >> gtInspectorNodesIn: aComposite [
-	<gtInspectorPresentationOrder: 1>
+{ #category : #'gt-extension' }
+GtGradTreeNode >> gtNodesFor: aView [
+	<gtView>
 
-	^ aComposite fastTree
-			title: 'Tree';
-			display: [ { self } ];
-			children: [ :aNode | aNode nodes ];
-			allExpanded
+	^ aView tree
+		title: 'Tree';
+		priority: 1;
+		items: [ { self } ];
+		children: [ :aNode | aNode nodes ];
+		expandAll
 ]
 
 { #category : #'api - testing' }

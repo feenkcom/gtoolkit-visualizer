@@ -17,7 +17,7 @@ GtGradDominanceCenteredTreeForest class >> bfs: theRootNode nodesDepthDictionary
 
 { #category : #'private - depth-first-search' }
 GtGradDominanceCenteredTreeForest class >> dfs: theCurrentElement nodesDepths: aNodesDepthsDictionary currentDepth: theCurrentDepth visited: aVisitedDictionary [
-	theCurrentElement graph nodesAlongOutgoingEdges
+	theCurrentElement nodesAlongOutgoingEdges
 		do: [ :aChildElement |
 			| theOldDepth |
 			(aVisitedDictionary includesKey: aChildElement)
@@ -61,11 +61,11 @@ GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode node
 			| theCurrentNode currentDepth|
 			theCurrentNode := queue removeAt: 1.
 			currentDepth := theCurrentNode depth + 1.
-			theCurrentNode element graph hasNodesAlongOutgoingEdges
+			theCurrentNode element hasNodesAlongOutgoingEdges
 				ifTrue: [ 
 					| outgoingEdges childrenDepth numOfNodesOnCurrentLevel currentNodeCenterDistance nodesOnNextLevel nodesOnCurrentLevel |
 					childrenDepth := currentDepth + 1.
-					outgoingEdges := theCurrentNode element graph nodesAlongOutgoingEdges.
+					outgoingEdges := theCurrentNode element nodesAlongOutgoingEdges.
 					nodesOnCurrentLevel := theNodesOnLevelsDictionary at: currentDepth.
 
 					numOfNodesOnCurrentLevel := nodesOnCurrentLevel size.
@@ -124,7 +124,7 @@ GtGradDominanceCenteredTreeForest class >> from: aCollectionOfElements separateS
 	aCollectionOfElements
 		do: [ :aNodeElement | 
 			((visitedDictionary includesKey: aNodeElement)
-				or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
+				or: [ aNodeElement hasNodesAlongIncomingEdges ])
 				ifFalse: [ | aTreeNode aNodesDepthsDictionary |
 					aTreeNode := GtGradTreeNode on: aNodeElement.
 					aNodesDepthsDictionary := self

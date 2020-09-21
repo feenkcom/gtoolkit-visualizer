@@ -4,49 +4,54 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #example }
-GtGradHierarchicalTreeLayoutExamples >> constructGraphWithCycles [		
-	| theNodes  pairsOfNodes theEdges |
+{ #category : #'examples - instance creation' }
+GtGradHierarchicalTreeLayoutExamples >> createGraphForHierarchical [
+	<gtExample>
 	
-	theNodes := self nodes: (1 to: 12).
-	theNodes doWithIndex: [ :node :index |
-			node labeled: (index asString).
-		].
-	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add:(2->4); add: (2->5); add: (3->6); add: (3->7);
-	add: (6->2); add: (5->3).
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-
-	^ theNodes -> theEdges
-
-	
- 
+	^ self
+		createGraph: 6
+		pairs: {
+			1 -> 2. 1 -> 3.
+			2 -> 4.
+			3 -> 5.
+			4 -> 3. 4 -> 6.
+			5 -> 6. 5 -> 2.
+			6 -> 1 }
 ]
 
-{ #category : #example }
+{ #category : #'examples - instance creation' }
+GtGradHierarchicalTreeLayoutExamples >> createGraphForHierarchicalTree [
+	<gtExample>
+	
+	^ self
+		createGraph: 7
+		pairs: {
+			1 -> 2. 1 -> 3.
+			2 -> 4. 2 -> 5.
+			3 -> 6. 3 -> 7.
+			5 -> 3.
+			6 -> 2 }
+]
+
+{ #category : #'examples - hierarchical' }
 GtGradHierarchicalTreeLayoutExamples >> eastHierarchical [
 	<gtExample>
-	| pairsOfNodes theEdges view theNodes aLayout |
-	view := self view.
-	theNodes := self nodes: (1 to: 6).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 3 -> 5;
-		add: 5 -> 6;
-		add: 4 -> 3;
-		add: 5 -> 2;
-		add: 6 -> 1;
-		add: 4 -> 6.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	| aParentNode aLayout |
+
+	aParentNode := self createGraphForHierarchical.
+	
 	aLayout := GtGradEastHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(400@40) corner: (450@60).
+		(320@20) corner: (370@40).
+		(160@0) corner: (210@20).
+		(240@0) corner: (290@20).
+		(80@10) corner: (130@30).
+		(0@10) corner: (50@30)
+	}.
+
 	self
 		assert: (aLayout layout isMemberOf: GtGradEastHierarchicalLayout).
 	self
@@ -60,30 +65,30 @@ GtGradHierarchicalTreeLayoutExamples >> eastHierarchical [
 		equals: aLayout componentsDistance.
 	self
 		assert: (aLayout layout alignment isMemberOf: GtGradHierarchicalLayoutCenterAlignment).
-	^ view
+	
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> eastTree [
 	<gtExample>
-	| pairsOfNodes theEdges view theNodes aLayout |
-	view := self view.
-	theNodes := self nodes: (1 to: 7).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 2 -> 5;
-		add: 3 -> 6;
-		add: 3 -> 7;
-		add: 6 -> 2;
-		add: 5 -> 3.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	| aParentNode aLayout |
+
+	aParentNode := self createGraphForHierarchicalTree.
+	
 	aLayout := GtGradEastHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(360.0@20.0) corner: (410.0@40.0).
+		(270.0@20.0) corner: (320.0@40.0).
+		(90.0@40.0) corner: (140.0@60.0).
+		(180.0@0.0) corner: (230.0@20.0).
+		(180.0@40.0) corner: (230.0@60.0).
+		(0.0@20.0) corner: (50.0@40.0).
+		(0.0@60.0) corner: (50.0@80.0)
+	}.
+
 	self
 		assert: (aLayout layout isKindOf: GtGradHorizontalDominanceTreeLayout).
 	self assert: aLayout layout reverse.
@@ -98,31 +103,29 @@ GtGradHierarchicalTreeLayoutExamples >> eastTree [
 		equals: aLayout componentsDistance.
 	self
 		assert: (aLayout layout nodesAlignment isMemberOf: GtGradTreeNodesCenterAlignment).
-	^ view
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - hierarchical' }
 GtGradHierarchicalTreeLayoutExamples >> northHierarchical [
 	<gtExample>
-	| pairsOfNodes theEdges view theNodes aLayout |
-	view := self view.
-	theNodes := self nodes: (1 to: 6).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 3 -> 5;
-		add: 5 -> 6;
-		add: 4 -> 3;
-		add: 5 -> 2;
-		add: 6 -> 1;
-		add: 4 -> 6.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	| aParentNode aLayout |
+		
+	aParentNode := self createGraphForHierarchical.
+
 	aLayout := GtGradNorthHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(70@0) corner: (120@20).
+		(35@50) corner: (85@70).
+		(0@150) corner: (50@170).
+		(0@100) corner: (50@120).
+		(18@200) corner: (68@220).
+		(18@250) corner: (68@270)
+	}.
+
 	self
 		assert: (aLayout layout isMemberOf: GtGradNorthHierarchicalLayout).
 	self
@@ -136,33 +139,30 @@ GtGradHierarchicalTreeLayoutExamples >> northHierarchical [
 		equals: aLayout componentsDistance.
 	self
 		assert: (aLayout layout alignment isMemberOf: GtGradHierarchicalLayoutCenterAlignment).
-	^ view
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> northTree [
 	<gtExample>
-		
-	|  pairsOfNodes theEdges view theNodes aLayout |
+	| aParentNode aLayout |
+
+	aParentNode := self createGraphForHierarchicalTree.
 	
-	view := self view.
-	theNodes := self nodes: (1 to: 7).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 2 -> 5;
-		add: 3 -> 6;
-		add: 3 -> 7;
-		add: 6 -> 2;
-		add: 5 -> 3.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	aLayout := GtGradNorthHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
-	
+	aLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(35.0@0.0) corner: (85.0@20.0).
+		(35.0@60.0) corner: (85.0@80.0).
+		(70.0@180.0) corner: (120.0@200.0).
+		(0.0@120.0) corner: (50.0@140.0).
+		(70.0@120.0) corner: (120.0@140.0).
+		(35.0@240.0) corner: (85.0@260.0).
+		(105.0@240.0) corner: (155.0@260.0)
+	}.
+
 	self
 		assert: (aLayout layout isKindOf: GtGradVerticalDominanceTreeLayout).
 	self assert: aLayout layout reverse not.
@@ -178,31 +178,28 @@ GtGradHierarchicalTreeLayoutExamples >> northTree [
 	self
 		assert: (aLayout layout nodesAlignment isMemberOf: GtGradTreeNodesCenterAlignment).
 	
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - hierarchical' }
 GtGradHierarchicalTreeLayoutExamples >> southHierarchical [
 	<gtExample>
-	| pairsOfNodes theEdges view theNodes aLayout |
-	view := self view.
-	theNodes := self nodes: (1 to: 6).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 3 -> 5;
-		add: 5 -> 6;
-		add: 4 -> 3;
-		add: 5 -> 2;
-		add: 6 -> 1;
-		add: 4 -> 6.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	| aParentNode aLayout |
+		
+	aParentNode := self createGraphForHierarchical.
+
 	aLayout := GtGradSouthHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(70@250) corner: (120@270).
+		(35@200) corner: (85@220).
+		(0@100) corner: (50@120).
+		(0@150) corner: (50@170).
+		(18@50) corner: (68@70).
+		(18@0) corner: (68@20)
+	}.
+
 	self
 		assert: (aLayout layout isMemberOf: GtGradSouthHierarchicalLayout).
 	self
@@ -216,32 +213,29 @@ GtGradHierarchicalTreeLayoutExamples >> southHierarchical [
 		equals: aLayout componentsDistance.
 	self
 		assert: (aLayout layout alignment isMemberOf: GtGradHierarchicalLayoutCenterAlignment).
-	^ view
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> southTree [
 	<gtExample>
-		
-	|  pairsOfNodes theEdges view theNodes aLayout |
+	| aParentNode aLayout |
+
+	aParentNode := self createGraphForHierarchicalTree.
 	
-	view := self view.
-	theNodes := self nodes: (1 to: 7).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 2 -> 5;
-		add: 3 -> 6;
-		add: 3 -> 7;
-		add: 6 -> 2;
-		add: 5 -> 3.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	aLayout := GtGradSouthHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(35.0@240.0) corner: (85.0@260.0).
+		(35.0@180.0) corner: (85.0@200.0).
+		(70.0@60.0) corner: (120.0@80.0).
+		(0.0@120.0) corner: (50.0@140.0).
+		(70.0@120.0) corner: (120.0@140.0).
+		(35.0@0.0) corner: (85.0@20.0).
+		(105.0@0.0) corner: (155.0@20.0)
+	}.
 	
 	self
 		assert: (aLayout layout isKindOf: GtGradVerticalDominanceTreeLayout).
@@ -257,31 +251,29 @@ GtGradHierarchicalTreeLayoutExamples >> southTree [
 		equals: aLayout componentsDistance.
 	self
 		assert: (aLayout layout nodesAlignment isMemberOf: GtGradTreeNodesCenterAlignment).
-	^ view
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - hierarchical' }
 GtGradHierarchicalTreeLayoutExamples >> westHierarchical [
 	<gtExample>
-	| pairsOfNodes theEdges view theNodes aLayout |
-	view := self view.
-	theNodes := self nodes: (1 to: 6).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 3 -> 5;
-		add: 5 -> 6;
-		add: 4 -> 3;
-		add: 5 -> 2;
-		add: 6 -> 1;
-		add: 4 -> 6.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	| aParentNode aLayout |
+		
+	aParentNode := self createGraphForHierarchical.
+
 	aLayout := GtGradWestHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0@40) corner: (50@60).
+		(80@20) corner: (130@40).
+		(240@0) corner: (290@20).
+		(160@0) corner: (210@20).
+		(320@10) corner: (370@30).
+		(400@10) corner: (450@30)
+	}.
+
 	self
 		assert: (aLayout layout isMemberOf: GtGradWestHierarchicalLayout).
 	self
@@ -295,32 +287,29 @@ GtGradHierarchicalTreeLayoutExamples >> westHierarchical [
 		equals: aLayout componentsDistance.
 	self
 		assert: (aLayout layout alignment isMemberOf: GtGradHierarchicalLayoutCenterAlignment).
-	^ view
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> westTree [
 	<gtExample>
-		
-	|  pairsOfNodes theEdges view theNodes aLayout |
+	| aParentNode aLayout |
+
+	aParentNode := self createGraphForHierarchicalTree.
 	
-	view := self view.
-	theNodes := self nodes: (1 to: 7).
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes
-		add: 1 -> 2;
-		add: 1 -> 3;
-		add: 2 -> 4;
-		add: 2 -> 5;
-		add: 3 -> 6;
-		add: 3 -> 7;
-		add: 6 -> 2;
-		add: 5 -> 3.
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	aLayout := GtGradWestHierarchicalTreeLayout new.
-	view addChildren: theNodes.
-	view layout: aLayout.
-	view forceLayout.
+	aLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@20.0) corner: (50.0@40.0).
+		(90.0@20.0) corner: (140.0@40.0).
+		(270.0@40.0) corner: (320.0@60.0).
+		(180.0@0.0) corner: (230.0@20.0).
+		(180.0@40.0) corner: (230.0@60.0).
+		(360.0@20.0) corner: (410.0@40.0).
+		(360.0@60.0) corner: (410.0@80.0)
+	}.
 	
 	self
 		assert: (aLayout layout isKindOf: GtGradHorizontalDominanceTreeLayout).
@@ -337,5 +326,5 @@ GtGradHierarchicalTreeLayoutExamples >> westTree [
 	self
 		assert: (aLayout layout nodesAlignment isMemberOf: GtGradTreeNodesCenterAlignment).
 	
-	^ view
+	^ aParentNode
 ]

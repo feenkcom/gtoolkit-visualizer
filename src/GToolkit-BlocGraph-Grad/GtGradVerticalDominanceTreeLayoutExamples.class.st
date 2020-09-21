@@ -4,139 +4,154 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #example }
-GtGradVerticalDominanceTreeLayoutExamples >> distinctSubtrees [
+{ #category : #'example - layout' }
+GtGradVerticalDominanceTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
-		
-	| view theNodes aTreeLayout|
-	
-	view := self view.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
+
 	aTreeLayout := self dominanceTreeLayout.
-	aTreeLayout separateSubtrees: true.
-	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout. 
-	view forceLayout. 
+	aTreeLayout separateSubtrees: false.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(108.72727272727272@0.0) corner: (158.72727272727272@20.0).
+		(52.0@31.0) corner: (102.0@51.0).
+		(113.45454545454544@31.0) corner: (163.45454545454544@51.0).
+		(165.45454545454544@31.0) corner: (215.45454545454544@51.0).
+		(0.0@62.0) corner: (50.0@82.0).
+		(52.0@62.0) corner: (102.0@82.0).
+		(104.0@62.0) corner: (154.0@82.0)
+	}.
 
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-
-	^ view
+	^ aParentNode
 ]
 
 { #category : #'example - instance creation' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	<gtExample>
-	|  aTreeLayout |
+	| aTreeLayout |
 
 	aTreeLayout := GtGradVerticalDominanceTreeLayout new.
 	self assert: aTreeLayout levelDistance equals: 10.
 	self assert: aTreeLayout nodeDistance equals: 1.
 
-		
 	^ aTreeLayout
 ]
 
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	theNodes := self constructDominanceTreeWithMultiplePathsToANodesWith8Nodes key. 
-	view addChildren: theNodes. 
-	aTreeLayout := self dominanceTreeLayout. 
-	view layout: aTreeLayout.
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-		
-	^ view
+	| aParentNode aTreeLayout |
 
+	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith8Nodes.
+
+	aTreeLayout := self dominanceTreeLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(26.0@0.0) corner: (76.0@20.0).
+		(0.0@31.0) corner: (50.0@51.0).
+		(52.0@31.0) corner: (102.0@51.0).
+		(52.0@62.0) corner: (102.0@82.0).
+		(52.0@93.0) corner: (102.0@113.0).
+		(52.0@124.0) corner: (102.0@144.0).
+		(52.0@155.0) corner: (102.0@175.0).
+		(52.0@186.0) corner: (102.0@206.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	theNodes := self constructDominanceTreeWithMultiplePathsToANodesWith9Nodes key.
-	view addChildren: theNodes. 
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith9Nodes.
+
 	aTreeLayout := self dominanceTreeLayout.
-	view layout: aTreeLayout.
-	view forceLayout.
+	aTreeLayout measure: aParentNode.
 	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-		
-	^ view
-
-]
-
-{ #category : #accessing }
-GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent y
-]
-
-{ #category : #accessing }
-GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
-	^ aTreeNode element position y
+	self assert: aParentNode children measuredBounds equals: {
+		(65.0@0.0) corner: (115.0@20.0).
+		(26.0@31.0) corner: (76.0@51.0).
+		(104.0@31.0) corner: (154.0@51.0).
+		(0.0@62.0) corner: (50.0@82.0).
+		(104.0@62.0) corner: (154.0@82.0).
+		(104.0@93.0) corner: (154.0@113.0).
+		(104.0@124.0) corner: (154.0@144.0).
+		(104.0@155.0) corner: (154.0@175.0).
+		(52.0@62.0) corner: (102.0@82.0)
+	}.
 	
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent  x.
-	
-]
-
-{ #category : #accessing }
-GtGradVerticalDominanceTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
-	^ aTreeNode element position x
-
-]
-
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructGraphWithANodeWithSeveralIncomingEdges.
+
 	aTreeLayout := self dominanceTreeLayout.
-	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(78.0@0.0) corner: (128.0@20.0).
+		(0.0@31.0) corner: (50.0@51.0).
+		(52.0@31.0) corner: (102.0@51.0).
+		(104.0@31.0) corner: (154.0@51.0).
+		(156.0@31.0) corner: (206.0@51.0).
+		(0.0@62.0) corner: (50.0@82.0)
+	}.
 
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradVerticalDominanceTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
-	^ aTreeNode element position x + aTreeNode element measuredBounds extent x.
+{ #category : #'example - layout' }
+GtGradVerticalDominanceTreeLayoutExamples >> separatedSubtrees [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
+
+	aTreeLayout := self dominanceTreeLayout.
+	aTreeLayout separateSubtrees: true.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(130.0@0.0) corner: (180.0@20.0).
+		(52.0@31.0) corner: (102.0@51.0).
+		(156.0@31.0) corner: (206.0@51.0).
+		(208.0@31.0) corner: (258.0@51.0).
+		(0.0@62.0) corner: (50.0@82.0).
+		(52.0@62.0) corner: (102.0@82.0).
+		(104.0@62.0) corner: (154.0@82.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradVerticalDominanceTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
-	^ aTreeNode element position x
-]
-
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	<gtExample>
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	theNodes := self constructDominanceTreeWith5Nodes key.
-	view addChildren: theNodes. 
-	aTreeLayout := self dominanceTreeLayout.
-	view layout: aTreeLayout. 
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-		
-	^ view
+	| aParentNode aTreeLayout |
 
+	aParentNode := self constructDominanceTreeWith5Nodes.
+
+	aTreeLayout := self dominanceTreeLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(26.0@0.0) corner: (76.0@20.0).
+		(0.0@31.0) corner: (50.0@51.0).
+		(52.0@31.0) corner: (102.0@51.0).
+		(52.0@62.0) corner: (102.0@82.0).
+		(52.0@93.0) corner: (102.0@113.0)
+	}.
+
+	^ aParentNode
 ]

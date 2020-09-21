@@ -88,23 +88,29 @@ GtGradAbstractTreeLayout >> levelDistance: aNumber [
 ]
 
 { #category : #measure }
-GtGradAbstractTreeLayout >> measurePositions: anElement with: anExtentSpec [
-	| theNodes aTreeForest |
+GtGradAbstractTreeLayout >> measure: aParentNode [
+	| aTreeForest |
 
-	"BlElement is a root for all graphical components"
-	"anElement children  -> an instance of BlChildren"
-	theNodes := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-
-	"reset all computed positions"
-	theNodes do: [ :aNodeElement | aNodeElement constraints gradTree computedPosition: 0@0 ].
-	aTreeForest := self formForestFrom: theNodes.
-
+	aTreeForest := self formForestFrom: aParentNode children.
+	
 	aTreeForest accept: (GtGradTreeLayoutPreparator on: self).
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
+	
+	aParentNode children normalizePositions
+]
 
-	theNodes do: [ :aNodeElement |
-		aNodeElement measuredBounds position: (aNodeElement constraints gradTree computedPosition) ]
+{ #category : #measure }
+GtGradAbstractTreeLayout >> measurePositions: anElement with: anExtentSpec [
+	| aParentNode |
+
+	aParentNode := (BlLayoutParentNode alreadyMeasured: anElement) extentSpec: anExtentSpec.
+	aParentNode filter: [ :eachNode | eachNode constraints graph isNode ].
+
+	self measure: aParentNode withGraphEdges.
+	
+	aParentNode children do: [ :eachChildNode |
+		eachChildNode element measuredBounds position: eachChildNode measurement position.
+		eachChildNode element measuredBounds extent: eachChildNode measurement extent ]
 ]
 
 { #category : #'api - geometry' }

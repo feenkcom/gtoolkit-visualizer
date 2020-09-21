@@ -8,8 +8,8 @@ Class {
 GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
 	| currentDepth |
 	currentDepth := theCurrentNode depth.
-	theCurrentNode element graph hasNodesAlongOutgoingEdges
-		ifTrue: [ theCurrentNode element graph nodesAlongOutgoingEdges
+	theCurrentNode element hasNodesAlongOutgoingEdges
+		ifTrue: [ theCurrentNode element nodesAlongOutgoingEdges
 				do: [ :aNodeElement | 
 					| aTreeNode |
 					(aVisitedDictionary includesKey: aNodeElement)
@@ -39,7 +39,7 @@ GtGradDominanceTreeForest class >> from: aCollectionOfElements separateSubtrees:
 
 
 	aCollectionOfElements do: [ :aNodeElement |
-		((visitedDictionary includesKey: aNodeElement) or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
+		((visitedDictionary includesKey: aNodeElement) or: [ aNodeElement hasNodesAlongIncomingEdges ])
 			ifFalse: [
 				| aTreeNode |
 				aTreeNode := GtGradTreeNode on: aNodeElement.

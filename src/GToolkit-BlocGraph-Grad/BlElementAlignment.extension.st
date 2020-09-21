@@ -6,13 +6,13 @@ BlElementAlignment >> nodeHorizontalCenterAlignment: aTreeNode nodeMaxWidth: aMa
 	parentCorrection := aTreeNode parent isNil
 		ifTrue: [ 0 ]
 		ifFalse: [ aMaxWidthAtParentsDepth - aTreeNode parent height ].
-	^ 0 @ (aMaxWidthAtNodesDepth - aTreeNode element height
+	^ 0 @ (aMaxWidthAtNodesDepth - aTreeNode element measuredHeight
 				+ parentCorrection) / 2.0
 ]
 
 { #category : #'*GToolkit-BlocGraph-Grad' }
 BlElementAlignment >> nodeHorizontalRightAlignment: aTreeNode nodeMaxWidth: aMaxWidthAtNodesDepth [ 
-	^ 0 @ (aMaxWidthAtNodesDepth - aTreeNode element width)
+	^ 0 @ (aMaxWidthAtNodesDepth - aTreeNode element measuredWidth)
 ]
 
 { #category : #'*GToolkit-BlocGraph-Grad' }
@@ -24,7 +24,7 @@ BlElementAlignment >> nodeHozitonalLeftAlignment: aTreeNode parentMaxWidth: aMax
 
 { #category : #'*GToolkit-BlocGraph-Grad' }
 BlElementAlignment >> nodeVerticalBottomAlignment: aTreeNode nodeMaxHeight: aMaxHeightAtNodesDepth [
-	^ 0 @ (aMaxHeightAtNodesDepth - aTreeNode element height)
+	^ 0 @ (aMaxHeightAtNodesDepth - aTreeNode element measuredHeight)
 ]
 
 { #category : #'*GToolkit-BlocGraph-Grad' }
@@ -33,7 +33,7 @@ BlElementAlignment >> nodeVerticalCenterAlignment: aTreeNode nodeMaxHeight: aMax
 	parentCorrection := aTreeNode parent isNil
 		ifTrue: [ 0 ]
 		ifFalse: [ aMaxHeightAtParentsDepth - aTreeNode parent height ].
-	^ 0 @ (aMaxHeightAtNodesDepth - aTreeNode element height
+	^ 0 @ (aMaxHeightAtNodesDepth - aTreeNode element measuredHeight
 				+ parentCorrection) / 2.0
 ]
 

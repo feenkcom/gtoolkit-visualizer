@@ -18,14 +18,14 @@ GtGradHierarchyModel class >> directedToUndirectedRatio: aSourceElement target: 
 	| directedCount undirectedCount |
 	directedCount := 0.
 	undirectedCount := 0.
-	aSourceElement graph nodesAlongOutgoingEdges do: [ :aConnectedElement |
+	aSourceElement nodesAlongOutgoingEdges do: [ :aConnectedElement |
 		aConnectedElement = aTargetElement
 			ifTrue: [ 
 				directedCount := directedCount + 1.
 			]
 	].
 	undirectedCount := directedCount.
-	aSourceElement graph nodesAlongIncomingEdges do: [ :aConnectedElement |
+	aSourceElement nodesAlongIncomingEdges do: [ :aConnectedElement |
 		aConnectedElement = aTargetElement
 			ifTrue: [ 
 				undirectedCount := undirectedCount + 1.
@@ -52,7 +52,7 @@ GtGradHierarchyModel class >> from: aCollectionOfElements [
 				nodesDictionary at: anElement put: (GtGradHierarchyNode on: anElement).
 			].
 		aHierarchyNode := nodesDictionary at: anElement.
-		anElement graph nodesAlongOutgoingEdges do: [ :anOutgoingElement |
+		anElement nodesAlongOutgoingEdges do: [ :anOutgoingElement |
 			anOutgoingElement ~= anElement
 				ifTrue: [
 					| otherElementConnectedElements |

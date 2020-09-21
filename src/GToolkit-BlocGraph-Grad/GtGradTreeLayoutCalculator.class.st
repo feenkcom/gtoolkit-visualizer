@@ -22,8 +22,7 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 			aTreeNode nodes isEmpty
 				ifTrue: [ ^self ]
 		].
-	nodePosition := aTreeNode element constraints gradTree
-		computedPosition.
+	nodePosition := aTreeNode element measurement position.
 	alignmentCorrection := self layout nodesAlignment
 		calculateCorrectionFor: aTreeNode
 		aRootNode: aRootNode
@@ -38,8 +37,7 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 	newNodePositionY := nodePosition y + aStartPoint y
 		+ (self layout nodeOffsetLength: aTreeNode)
 		+ alignmentCorrection y.
-	aTreeNode element constraints gradTree
-		computedPosition: newNodePositionX @ newNodePositionY.
+	aTreeNode element measurement position: newNodePositionX @ newNodePositionY.
 	self
 		updateNodeBounds: aTreeNode
 		bounds: bounds
@@ -76,7 +74,7 @@ GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
 	| nodePosition  newNodePositionX newNodePositionY|
 	
 
- 	nodePosition := aTreeNode element constraints gradTree computedPosition.
+ 	nodePosition := aTreeNode element measurement position.
 	newNodePositionX := nodePosition x.
 	newNodePositionY := nodePosition y.
 
@@ -89,7 +87,7 @@ GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
 			newNodePositionY := (newNodePositionY + delta y).
 	 ].
 	
-	aTreeNode element constraints gradTree computedPosition: newNodePositionX @ newNodePositionY .
+	aTreeNode element measurement position: newNodePositionX @ newNodePositionY .
  	aTreeNode nodes do: [ :child |
 		(self layout separateSubtrees not or: [ child nodes isNotEmpty ])
 			ifTrue: [ 
@@ -119,7 +117,7 @@ GtGradTreeLayoutCalculator >> reverse: aTreeNode rootPosition: theRootPosition b
 									aTreeNode rootPosition: theRootPosition
 									bounds: bounds.
 
-	aTreeNode element constraints gradTree computedPosition: newNodePosition.
+	aTreeNode element measurement position: newNodePosition.
 
 	aTreeNode nodes do: [ :child |
 		self reverse: child rootPosition: theRootPosition bounds: bounds
@@ -177,7 +175,7 @@ GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
 	self reverse
 		ifTrue: [ 
 			self reverse: aTreeNode
-			     rootPosition: (aTreeNode element constraints gradTree computedPosition)
+			     rootPosition: (aTreeNode element measurement position)
 			     bounds: bounds
 		].
 
