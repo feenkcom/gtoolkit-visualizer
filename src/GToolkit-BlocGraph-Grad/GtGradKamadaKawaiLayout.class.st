@@ -311,11 +311,6 @@ GtGradKamadaKawaiLayout >> initializeLayout: theNodes [
 ]
 
 { #category : #'private-layout' }
-GtGradKamadaKawaiLayout >> layout: theNodes [
-	[ self layoutDone ] whileFalse: [ self step: theNodes ]
-]
-
-{ #category : #'private-layout' }
 GtGradKamadaKawaiLayout >> layoutDone [
 	^ self currentIteration > self maxIterations.
 ]
@@ -357,7 +352,7 @@ GtGradKamadaKawaiLayout >> measure: aParentLayoutNode [
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
 
 	self initializeLayout: aParentGraphNode children.
-	self layout: aParentGraphNode children.
+	[ self layoutDone ] whileFalse: [ self step: aParentGraphNode children ].
 	aParentGraphNode children normalizePositions
 ]
 

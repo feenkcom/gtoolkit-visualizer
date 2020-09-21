@@ -115,7 +115,7 @@ GtGradHierarchicalTreeLayout >> layout [
 ]
 
 { #category : #accessing }
-GtGradHierarchicalTreeLayout >> layout: anObject [
+GtGradHierarchicalTreeLayout >> layoutAlgorithm: anObject [
 	layout := anObject
 ]
 
@@ -135,7 +135,7 @@ GtGradHierarchicalTreeLayout >> measure: aParentLayoutNode [
 
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
 
-	self layout: (self constructLayoutAlgorithm: aParentGraphNode children).
+	self layoutAlgorithm: (self constructLayoutAlgorithm: aParentGraphNode children).
 	self layout measure: aParentGraphNode
 ]
 
