@@ -18,10 +18,10 @@ GtGraphRectanglePackLayout >> doExecute: theElements with: anExtentSpec [
 GtGraphRectanglePackLayout >> fit: anElement in: aTree [
 	| aRectangle |
 	
-	aRectangle := (GtGraphRectangle origin: 0.0@0.0 extent: anElement measuredExtent) margin: anElement margin.
+	aRectangle := (GtGraphRectangle origin: 0.0@0.0 extent: anElement measuredExtent asPoint) margin: anElement margin.
 	aTree add: aRectangle.
 
-	anElement measuredBounds position: aRectangle origin
+	anElement measurement position: aRectangle origin
 ]
 
 { #category : #hook }

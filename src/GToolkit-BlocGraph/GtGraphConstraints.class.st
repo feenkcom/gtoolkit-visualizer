@@ -6,9 +6,13 @@ Class {
 	#superclass : #BlLayoutConstraints,
 	#instVars : [
 		'connectedEdges',
-		'radius'
+		'radius',
+		'isEdge',
+		'isNode',
+		'model',
+		'objectsToNodesCache'
 	],
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph'
 }
 
 { #category : #accessing }
@@ -18,8 +22,22 @@ GtGraphConstraints >> addConnectedEdge: anEdge [
 		ifFalse: [ self connectedEdges add: anEdge ]
 ]
 
+{ #category : #'api - graph' }
+GtGraphConstraints >> beEdge [
+	isEdge := true.
+	isNode := false
+]
+
+{ #category : #'api - graph' }
+GtGraphConstraints >> beNode [
+	isEdge := false.
+	isNode := true
+]
+
 { #category : #accessing }
 GtGraphConstraints >> connectedEdges [
+	<return: #OrderedCollection of: #GtGraphEdge>
+
 	^ connectedEdges
 ]
 
@@ -41,7 +59,72 @@ GtGraphConstraints >> initialize [
 	super initialize.
 	
 	connectedEdges := OrderedCollection new.
-	radius := 0
+	radius := 0.
+	isEdge := false.
+	isNode := false.
+	objectsToNodesCache := Dictionary new
+]
+
+{ #category : #testing }
+GtGraphConstraints >> isEdge [
+	"Return true if an element with these constraints plays a role of an edge, false otherwise"
+	<return: #Boolean>
+
+	^ isEdge
+]
+
+{ #category : #testing }
+GtGraphConstraints >> isNode [
+	"Return true if an element with these constraints plays a role of a node, false otherwise"
+	<return: #Boolean>
+
+	^ isNode
+]
+
+{ #category : #accessing }
+GtGraphConstraints >> model [
+	^ model
+]
+
+{ #category : #accessing }
+GtGraphConstraints >> model: anObject [
+	model := anObject
+]
+
+{ #category : #'api - cache' }
+GtGraphConstraints >> nodeAt: anObject ifAbsent: aBlock [
+	^ self 
+		nodeAt: anObject 
+		ifPresent: [ :aNode | ^ aNode ]
+		ifAbsent: aBlock
+]
+
+{ #category : #'api - cache' }
+GtGraphConstraints >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	^ objectsToNodesCache
+		at: anObject 
+		ifPresent: aPresentBlock
+		ifAbsent: [
+			objectsToNodesCache valuesDo: [ :aChildNode |
+				self
+					assert: [ aChildNode isKindOf: BlElement ]
+					description: [ 'Must be an element' ].
+				
+				aChildNode graph
+					nodeAt: anObject 
+					ifPresent: [ :aNode | ^ aPresentBlock value: aNode ] 
+					ifAbsent: [ ] ].
+	
+			anAbsentBlock value ]
+]
+
+{ #category : #'api - cache' }
+GtGraphConstraints >> nodeAt: anObject put: aNodeElement [
+	self
+		assert: [ aNodeElement isKindOf: BlElement ]
+		description: [ 'Must be an element' ].
+	
+	^ objectsToNodesCache at: anObject put: aNodeElement
 ]
 
 { #category : #accessing }

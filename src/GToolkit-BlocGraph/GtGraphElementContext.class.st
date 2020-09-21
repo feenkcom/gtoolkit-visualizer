@@ -5,11 +5,7 @@ Class {
 	#name : #GtGraphElementContext,
 	#superclass : #Object,
 	#instVars : [
-		'element',
-		'isEdge',
-		'isNode',
-		'model',
-		'objectsToNodesCache'
+		'element'
 	],
 	#category : #'GToolkit-BlocGraph'
 }
@@ -45,20 +41,19 @@ GtGraphElementContext >> beChildrenContainer: aSymbol [
 
 { #category : #api }
 GtGraphElementContext >> beEdge [
-	isEdge := true.
-	isNode := false
+	self element constraints graph beEdge
 ]
 
 { #category : #api }
 GtGraphElementContext >> beEdge: aGtGraphEdge [
-	self model: aGtGraphEdge.
-	self beEdge
+	self element constraints graph
+		model: aGtGraphEdge;
+		beEdge
 ]
 
 { #category : #api }
 GtGraphElementContext >> beNode [
-	isEdge := false.
-	isNode := true
+	self element constraints graph beNode
 ]
 
 { #category : #deprecated }
@@ -222,10 +217,6 @@ GtGraphElementContext >> identifyChildrenContainers [
 { #category : #initialization }
 GtGraphElementContext >> initialize [
 	super initialize.
-	
-	isEdge := false.
-	isNode := false.
-	objectsToNodesCache := Dictionary new
 ]
 
 { #category : #deprecated }
@@ -254,27 +245,27 @@ GtGraphElementContext >> isConnectedTo: anOtherElement [
 
 { #category : #'api - testing' }
 GtGraphElementContext >> isEdge [
-	^ isEdge
+	^ self element constraints graph isEdge
 ]
 
 { #category : #'api - testing' }
 GtGraphElementContext >> isNode [
-	^ isNode
+	^ self element constraints graph isNode
 ]
 
 { #category : #api }
 GtGraphElementContext >> model [
-	^ model
+	^ self element constraints graph model
 ]
 
 { #category : #api }
 GtGraphElementContext >> model: anObject [
-	model := anObject
+	self element constraints graph model: anObject
 ]
 
 { #category : #accessing }
 GtGraphElementContext >> nodeAt: anObject ifAbsent: aBlock [
-	^ self 
+	^ self element constraints graph 
 		nodeAt: anObject 
 		ifPresent: [ :aNode | ^ aNode ]
 		ifAbsent: aBlock
@@ -282,35 +273,14 @@ GtGraphElementContext >> nodeAt: anObject ifAbsent: aBlock [
 
 { #category : #accessing }
 GtGraphElementContext >> nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
-	^ objectsToNodesCache
-		at: anObject 
-		ifPresent: aPresentBlock
-		ifAbsent: [
-			| theChildren |
-			theChildren := objectsToNodesCache values
-				ifEmpty: [ self element children ].
-
-			theChildren ifNotEmpty: [ :theValues |
-					theValues do: [ :aChildNode |
-						self
-							assert: [ aChildNode isKindOf: BlElement ]
-							description: [ 'Must be an element' ].
-						
-						aChildNode graph
-							nodeAt: anObject 
-							ifPresent: [ :aNode | ^ aPresentBlock value: aNode ] 
-							ifAbsent: [ ] ].
-					^ anAbsentBlock value ]
-				ifEmpty: anAbsentBlock ]
+	^ self element constraints graph
+		nodeAt: anObject ifPresent: aPresentBlock ifAbsent: anAbsentBlock
 ]
 
 { #category : #accessing }
 GtGraphElementContext >> nodeAt: anObject put: aNodeElement [
-	self
-		assert: [ aNodeElement isKindOf: BlElement ]
-		description: [ 'Must be an element' ].
-	
-	^ objectsToNodesCache at: anObject put: aNodeElement
+	^ self element constraints graph
+		nodeAt: anObject put: aNodeElement
 ]
 
 { #category : #'api - children' }

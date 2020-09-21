@@ -13,11 +13,11 @@ v
 Class {
 	#name : #GtGraphWeightedCircleLayout,
 	#superclass : #GtGraphAbstractWeightedCircleLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #hook }
-GtGraphWeightedCircleLayout >> doExecute: elements [
+GtGraphWeightedCircleLayout >> doExecute: elements with: anExtentSpec [
 	| angle rad center angleIncrement |
 	rad := self computeRadiusFor: elements.
 	center := Point x: rad y: rad.

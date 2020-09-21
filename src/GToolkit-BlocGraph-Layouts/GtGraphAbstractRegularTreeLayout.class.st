@@ -10,7 +10,7 @@ Class {
 		'shouldBeHorizontallyReversed',
 		'shouldBeVerticallyReversed'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }
@@ -26,7 +26,7 @@ GtGraphAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 ]
 
 { #category : #hook }
-GtGraphAbstractRegularTreeLayout >> doExecute: elements [
+GtGraphAbstractRegularTreeLayout >> doExecute: elements with: anExtentSpec [
 	| rootNodes |
 	alreadyLayoutedNodes := OrderedCollection new.
 	rootNodes := self rootNodesFor: elements.
@@ -40,7 +40,7 @@ GtGraphAbstractRegularTreeLayout >> doExecute: elements [
 ]
 
 { #category : #hook }
-GtGraphAbstractRegularTreeLayout >> doPost: elements [
+GtGraphAbstractRegularTreeLayout >> doPost: elements with: anExtentSpec [
 	shouldBeHorizontallyReversed ifTrue: [ self horizontallyReverse: elements ].
 	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ].
 ]

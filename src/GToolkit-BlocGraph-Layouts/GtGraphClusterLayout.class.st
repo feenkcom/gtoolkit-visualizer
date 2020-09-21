@@ -24,7 +24,7 @@ Class {
 		'maxLayer',
 		'maxAbcissa'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #algorithm }
@@ -42,7 +42,7 @@ GtGraphClusterLayout >> computePosition: aNode [
 ]
 
 { #category : #hook }
-GtGraphClusterLayout >> doExecute: nodeElements [ 
+GtGraphClusterLayout >> doExecute: nodeElements  with: anExtentSpec [
 
 	| root gap |
 	"Not much to do if there is only one element"

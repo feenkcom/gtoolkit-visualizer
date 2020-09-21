@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphRadialTreeLayout,
 	#superclass : #GtGraphAbstractCompactTree,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #algorithm }
@@ -93,11 +93,11 @@ GtGraphRadialTreeLayout >> diameterOf: aNode [
 ]
 
 { #category : #hook }
-GtGraphRadialTreeLayout >> doExecute: nodeElements [
+GtGraphRadialTreeLayout >> doExecute: nodeElements with: anExtentSpec [
+	| rootNodes xOffset maximumRadius |
 
-	| rootNodes xOffset maximumRadius | 
-	initialLayout isNil
-		ifFalse: [ initialLayout new executeOnElements: nodeElements ].
+	initialLayout ifNotNil: [ initialLayout new executeOnElements: nodeElements with: anExtentSpec ].
+
 	rootNodes := self rootNodesFor: nodeElements.
 	rootNodes
 		do: [ :e | self initialize: e whoseFatherIs: nil ];

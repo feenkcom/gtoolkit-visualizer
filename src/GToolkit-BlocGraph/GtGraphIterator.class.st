@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'graphElement'
 	],
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph'
 }
 
 { #category : #'instance creation' }
@@ -47,15 +47,6 @@ GtGraphIterator >> graphElement [
 { #category : #'private - accessing' }
 GtGraphIterator >> graphElement: aGtGraphEement [
 	graphElement := aGtGraphEement
-]
-
-{ #category : #'gt-inspector-extension' }
-GtGraphIterator >> gtInspectorItemsIn: aComposite [
-	<gtInspectorPresentationOrder: 5>
-	
-	^ aComposite fastList
-		title: 'Items';
-		display: [ self asArray ]
 ]
 
 { #category : #'api - testing' }

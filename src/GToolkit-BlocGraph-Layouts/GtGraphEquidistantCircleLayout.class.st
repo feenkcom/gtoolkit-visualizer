@@ -13,7 +13,7 @@ v
 Class {
 	#name : #GtGraphEquidistantCircleLayout,
 	#superclass : #GtGraphAbstractWeightedCircleLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #hook }
@@ -26,7 +26,7 @@ GtGraphEquidistantCircleLayout >> computeSeparationFor: elements [
 ]
 
 { #category : #hook }
-GtGraphEquidistantCircleLayout >> doExecute: elements [
+GtGraphEquidistantCircleLayout >> doExecute: elements with: anExtentSpec [
 	| angle rad center angleIncrement |
 	rad := self computeRadiusFor: elements.
 	center := Point x: rad y: rad.

@@ -113,7 +113,7 @@ GtGraphForceBasedLayout >> accumulate: aQuad [
 																cx := cx + (e charge * e cx).
 																cy := cy + (e charge * e cy) ] ] ].
 												
-	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node measuredBounds position: aQuad node measuredBounds position + (random next - 0.5 @ ( random next - 0.5)) ].
+	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node measurement position: aQuad node measuredBounds position + (random next - 0.5 @ ( random next - 0.5)) ].
 								k := alpha * (self chargeOf: aQuad node).
 								aQuad charge: aQuad charge + k.
 								cx := cx + (k * aQuad node measuredBounds position x). 
@@ -170,8 +170,8 @@ GtGraphForceBasedLayout >> defaultInitialLayout [
 ]
 
 { #category : #hook }
-GtGraphForceBasedLayout >> doExecute: nodeElements [
-	self start: nodeElements.
+GtGraphForceBasedLayout >> doExecute: nodeElements with: anExtentSpec [
+	self start: nodeElements with: anExtentSpec.
 	self shouldRunLayoutWithProgressBar
 		ifTrue: [ self runLayoutInJob ]
 		ifFalse: [ self runLayoutSimply ].
@@ -203,8 +203,8 @@ GtGraphForceBasedLayout >> initialLayout: aLayout [
 ]
 
 { #category : #hook }
-GtGraphForceBasedLayout >> initialPositionOfNodes: nodeElements [
-	initialLayout executeOnElements: nodeElements
+GtGraphForceBasedLayout >> initialPositionOfNodes: nodeElements with: anExtentSpec [
+	initialLayout executeOnElements: nodeElements with: anExtentSpec
 ]
 
 { #category : #'initialize-release' }
@@ -271,13 +271,6 @@ GtGraphForceBasedLayout >> nodes [
 { #category : #accessing }
 GtGraphForceBasedLayout >> nodes: elements [
 	nodes := elements
-]
-
-{ #category : #hook }
-GtGraphForceBasedLayout >> on: elements edges: edgesCol [
-	self nodes: elements.
-	self userDefinedEdges: edgesCol.
-	self applyOn: elements.
 ]
 
 { #category : #accessing }
@@ -411,9 +404,9 @@ GtGraphForceBasedLayout >> shouldUseProgressBar [
 	^ shouldUseProgressBar
 ]
 
-{ #category : #accessing }
-GtGraphForceBasedLayout >> start: nodeElements [
-	self initialPositionOfNodes: nodeElements.
+{ #category : #algorithm }
+GtGraphForceBasedLayout >> start: nodeElements with: anExtentSpec [
+	self initialPositionOfNodes: nodeElements with: anExtentSpec.
 	self prepareNodes: nodeElements
 ]
 
@@ -438,9 +431,9 @@ GtGraphForceBasedLayout >> step [
 						x := x * len.
 						y := y * len.
 						k := (weights at: from) / (( weights at: from) +( weights at: to )).
-						to measuredBounds position: ( tp x - (x * k) )@( tp y - (y * k) ).
+						to measurement position: ( tp x - (x * k) )@( tp y - (y * k) ).
 						k := 1 -  k.
-						from measuredBounds position: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
+						from measurement position: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
 			
 		k := alpha * gravity.
 		((k closeTo: 0) not) ifTrue: [ 
@@ -448,7 +441,7 @@ GtGraphForceBasedLayout >> step [
 			y := center y.
 			nodes do: [ :ea | | pos |
 					pos := ea measuredBounds position.
-					ea measuredBounds position: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
+					ea measurement position: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
 				
 		quad := GtGraphQuadTree withAll: nodes.
 		self accumulate: quad.
@@ -459,7 +452,7 @@ GtGraphForceBasedLayout >> step [
 
 		nodes do: [ :e | 
 			old := e measuredBounds position.
-			e measuredBounds position: 
+			e measurement position: 
 				(old x - (( (oldPositions at: e) x - old x ) * friction)) @ 
 				(old y - (( (oldPositions at: e) y - old y ) * friction)).
 			oldPositions at: e put: old.].
@@ -481,12 +474,4 @@ GtGraphForceBasedLayout >> strengthOf: anEdge [
 { #category : #configuration }
 GtGraphForceBasedLayout >> useProgressBar [
 	shouldUseProgressBar := true	
-]
-
-{ #category : #public }
-GtGraphForceBasedLayout >> userDefinedEdges: aCollectionOfEdges [
-	"useful to tell to the layout which edges have to be used for the layout"
-	userDefinedEdges := aCollectionOfEdges select: [ :e |
-		(nodes includes: e from) and: [ nodes includes: e to ] ]
-	
 ]

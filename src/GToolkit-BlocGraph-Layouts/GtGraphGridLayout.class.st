@@ -15,11 +15,11 @@ lineItemsCountBlock
 Class {
 	#name : #GtGraphGridLayout,
 	#superclass : #GtGraphAbstractGridLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #hook }
-GtGraphGridLayout >> doExecute: elements [
+GtGraphGridLayout >> doExecute: elements with: anExtentSpec [
 	| pointer lineItemCount lineItemSize maxLastLineHeight originalGapLeft originalGapTop |
 	originalGapLeft := 0.
 	originalGapTop := 0.
