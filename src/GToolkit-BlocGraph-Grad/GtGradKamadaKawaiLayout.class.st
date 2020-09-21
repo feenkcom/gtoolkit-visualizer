@@ -351,10 +351,14 @@ GtGradKamadaKawaiLayout >> maxIterations: aNumber [
 ]
 
 { #category : #measure }
-GtGradKamadaKawaiLayout >> measure: aParentNode [
-	self initializeLayout: aParentNode children.
-	self layout: aParentNode children.
-	aParentNode children normalizePositions
+GtGradKamadaKawaiLayout >> measure: aParentLayoutNode [
+	| aParentGraphNode |
+
+	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
+
+	self initializeLayout: aParentGraphNode children.
+	self layout: aParentGraphNode children.
+	aParentGraphNode children normalizePositions
 ]
 
 { #category : #'private-layout' }

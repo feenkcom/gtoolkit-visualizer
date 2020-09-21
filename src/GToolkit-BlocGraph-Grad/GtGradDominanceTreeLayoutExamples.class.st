@@ -31,59 +31,36 @@ Class {
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith5Nodes [
 	<gtExample>
-	| theNodes pairsOfNodes |
-	
-	theNodes := self nodes: (1 to: 5).
-	pairsOfNodes := { (1->2). (1->3). (3->4). (4->5). (2->5) }.
-	
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 5
+		pairs: { (1->2). (1->3). (3->4). (4->5). (2->5) }
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
-	| theNodes pairsOfNodes |
-	
-	theNodes := self nodes: (1 to: 8).
-	
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(3->4). (4->5).
-		(2->6). (2->5).
-		(5->6). (6->7).
-		(7->8). (4->8) }.
-	
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 8
+		pairs: {
+			(1->2). (1->3).
+			(3->4). (4->5).
+			(2->6). (2->5).
+			(5->6). (6->7).
+			(7->8). (4->8) }
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
-	| theNodes  pairsOfNodes |
 	
-	theNodes := self nodes: (1 to: 9).
-	
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->7). (2->9).
-		(3->5). (5->6). (6->7). (7->8). (9->8) }.
-	
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^  self
+		createGraph: 9
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->7). (2->9).
+			(3->5). (5->6). (6->7). (7->8). (9->8) }
 ]
 
 { #category : #'example - instance creation' }

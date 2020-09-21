@@ -148,9 +148,14 @@ GtGradHierarchicalLayout >> layeringStage: model [
 ]
 
 { #category : #measure }
-GtGradHierarchicalLayout >> measure: aParentNode [
-	self run: aParentNode children.
-	aParentNode children normalizePositions
+GtGradHierarchicalLayout >> measure: aParentLayoutNode [
+	| aParentGraphNode |
+
+	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
+
+	self run: aParentGraphNode children.
+
+	aParentGraphNode children normalizePositions
 ]
 
 { #category : #accessing }

@@ -124,7 +124,7 @@ GtGradEastHierarchicalLayoutExamples >> simpleGraph [
 	aParentNode := self createSimpleGraph.
 	aLayout := self layout.
 	aLayout measure: aParentNode.
-	
+
 	self assert: aParentNode children measuredBounds equals: {
 		(600@2) corner: (650@22).
 		(500@2) corner: (550@22).

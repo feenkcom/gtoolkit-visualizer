@@ -11,7 +11,7 @@ I iterate over all outgoing edges from the graph node
 Class {
 	#name : #GtGraphOutgoingEdges,
 	#superclass : #GtGraphEdgesIterator,
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #'api - enumeration' }
