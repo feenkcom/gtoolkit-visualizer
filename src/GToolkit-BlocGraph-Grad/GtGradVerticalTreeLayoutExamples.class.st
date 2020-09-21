@@ -696,7 +696,7 @@ GtGradVerticalTreeLayoutExamples >> treeLayout: levelDistance nodeDistance: node
 	|  aTreeLayout |
 
 	aTreeLayout := GtGradVerticalTreeLayout new.
- 	aTreeLayout levelDistance: levelDistance.
+	aTreeLayout levelDistance: levelDistance.
 	aTreeLayout nodeDistance: nodeDistance.
 										
 	self assert: aTreeLayout levelDistance equals: levelDistance.

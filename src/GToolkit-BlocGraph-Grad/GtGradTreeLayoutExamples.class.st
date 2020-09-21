@@ -1,65 +1,43 @@
 "
 !Tree layout
-
 This layout orders a graph's nodes in such a way that they form  a tree. The layout supports creation of both vertical and horizontal trees. In the first case the root node is at the top, with all of the other nodes being bellow it, as seen in the following example:
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTree|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTree|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=115}$
 
 On the other hand,  in case of a  horizontal tree , the root node is placed to the left of all other nodes. An example can be seen below:
-
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTree|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
+${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTree|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=175}$
+!! Distances between levels and nodes
 The layout allows customization of distances between levels of the tree, as well as the nodes. The default value of distance between nodes is 1, meaning that the nodes on the same level are very close to each other.  The default value of level distance is 10. The next examples showcase horizontal and vertical trees created using firstly larger than default values of the  distances, and, secondly, with a smaller level distance.
 
 Big distances:
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWithBiggerDistances|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithBiggerDistances|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWithBiggerDistances|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=290}$
 Small distances:
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWithSmallerDistances|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithSmallerDistances|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWithSmallerDistances|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=100}$
+!!Graphs with cycles
 The layout can also handle graph which are not trees. This is done by firstly traversing the graph using DFS and forming a tree.  
 An example of this feature shown bellow:
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#graphWithCycles|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-${example:name=GtGradHorizontalTreeLayoutExamples>>#graphWithCycles|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-Additionally, if the layout handles laying out a disconnected graph. That is, a graph that contains several disconnected componnents.
+${example:name=GtGradVerticalTreeLayoutExamples>>#graphWithCycles|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=145}$
+!! Disconnected graphs
+Additionally, if the layout handles laying out a disconnected graph. That is, a graph that contains several disconnected components.
 It is possible to configure the distance between trees, as demonstrated by the next examples,  with the first one having the
 default distance between trees, and the second one a larger value of the distance parameter. The examples also demonstrate that disconnected horizontal trees are positioned one below the other, while in case of vertical trees, these components of a graph are placed one left/right of each other.
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#disconnectedGraph|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-${example:name=GtGradHorizontalTreeLayoutExamples>>#disconnectedGraphBiggerDistance|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-Another important aspect of the tree layout is that it supports alignment of nodes. More precisely, it can be specified if the nodes should have top, center or bottom alignment. In case of the horizontal layout, this actually means that nodes will have left, ceter or right alignment. Examples of different alignmets are shown in the next couple of examples:
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeRootAlignment|expanded=true|previewExpanded=true|previewShow=#gtLiveFor:}$
-
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithNodesOfIncreasingSizeRootAlignment|expanded=true|previewExpanded=true|previewShow=#gtLiveFor:}$
-
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeCenterAlignment|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithNodesOfIncreasingSizeCenterAlignment|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeLeafAlignment|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeWithNodesOfIncreasingLeafAlignment|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
-
+${example:name=GtGradVerticalTreeLayoutExamples>>#disconnectedGraph|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=145}$
+!! Alignment
+Another important aspect of the tree layout is that it supports alignment of nodes. More precisely, it can be specified if the nodes should have root, center or leaf alignment. In case of the horizontal layout, this actually means that nodes will have left, ceter or right alignment. Examples of different alignmets are shown in the next couple of examples:
+!!!!Root alignment
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeRootAlignment|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=305}$
+!!!!Center alignment
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeCenterAlignment|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=245}$
+!!!!Leaf alignment
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeWith10NodesOfIncreasingSizeLeafAlignment|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=250}$
+!!Reversed trees
 The trees can be reversed, so that in case of  a vertical tree, the root node is at the bottom, while in case of the horizontal tree, the root node is to the right of the all other nodes. The two examples are shown next:
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeReversed|expanded=true|expandedPreview=true|show=gtLiveFor:}$
-${example:name=GtGradHorizontalTreeLayoutExamples>>#simpleTreeReversed|expanded=true|expandedPreview=true|show=gtLiveFor:}$
-
-The previous examples demonstrate that this tree algorithm tends to create compact trees. However, in some cases, this is not preferable. By setting separateSubtrees parameter's value to true, all subtrees are clearly separated. An example is seen below:
-
-${example:name=GtGradVerticalTreeLayoutExamples>>#distinctSubtrees|expanded=true|expandedPreview=true|show=gtLiveFor:}$
-${example:name=GtGradHorizontalTreeLayoutExamples>>#distinctSubtrees|expanded=true|expandedPreview=true|show=gtLiveFor:}$
-
-
+${example:name=GtGradVerticalTreeLayoutExamples>>#simpleTreeReversed|codeExpanded=false|previewExpanded=true|previewShow=gtPreviewFor:|previewHeight=115}$
+!!Separated and compact subtrees
+Tree layout allows users to choose between compact and separated subtrees, it can be done by setting ${method:GtGradAbstractTreeLayout>>#separateSubtrees:}$ either to ==true== or ==false==.
+The following example shows a compact (default) version of the tree:
+${example:GtGradVerticalTreeLayoutExamples>>#compactSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=85}$
+while the next one is a separated tree:
+${example:GtGradVerticalTreeLayoutExamples>>#separatedSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=85}$
 "
 Class {
 	#name : #GtGradTreeLayoutExamples,
