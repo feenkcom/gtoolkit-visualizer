@@ -1,5 +1,7 @@
 "
-This is an implementation of the Kamada-Kawai force-directed algorithm. The algorithm was designed witht he intention of laying out general undirected graphs. It is a spring algorithm whose  main idea is that graph theoretic distances between vertices in a graph is related to the geomentri distances between them in the drawing. 
+This is an implementation of the Kamada-Kawai force-directed algorithm. The algorithm was designed with the intention of laying out general undirected graphs.
+
+It is a spring algorithm whose main idea is that graph theoretic distances between vertices in a graph is related to the geomentri distances between them in the drawing.
 "
 Class {
 	#name : #GtGradKamadaKawaiLayout,
@@ -20,11 +22,6 @@ Class {
 	],
 	#category : #'GToolkit-BlocGraph-Grad-Force-Directed'
 }
-
-{ #category : #constraints }
-GtGradKamadaKawaiLayout class >> constraints [
-	^ GtGradKamadaKawaiConstraints new
-]
 
 { #category : #accessing }
 GtGradKamadaKawaiLayout >> adjustForGravity [
@@ -50,7 +47,7 @@ GtGradKamadaKawaiLayout >> arbitraryConstantK: anObject [
 GtGradKamadaKawaiLayout >> calculateDeltaAtNode: theNodes node: aNode nodeIndex: nodeIndex [
 	| nodePosition dxSum dySum|
 	
-	nodePosition := aNode constraints gradKamadaKawai computedPosition.
+	nodePosition := aNode measurement position.
 	dxSum := 0.
 	dySum := 0.
 	
@@ -59,7 +56,7 @@ GtGradKamadaKawaiLayout >> calculateDeltaAtNode: theNodes node: aNode nodeIndex:
 			ifTrue: [ 
 				| dist dx dy d l k currentNodePosition common |
 					dist := self distanceMatrix at: nodeIndex at: currentIndex.
-					currentNodePosition := currentNode constraints gradKamadaKawai computedPosition.
+					currentNodePosition := currentNode measurement position.
 					dx := nodePosition x - currentNodePosition x.
 					dy := nodePosition y - currentNodePosition y.
 					d := (dx squared + dy squared) sqrt.
@@ -78,7 +75,7 @@ GtGradKamadaKawaiLayout >> calculateDeltaPositionNode: theNodes node: aNode node
 	"Determines a step to a new position of the given node"
 	| nodePosition dEx dEy d2Ex d2Ey d2Exy denominator deltaX deltaY|
 
-	nodePosition := aNode constraints gradKamadaKawai computedPosition.
+	nodePosition := aNode measurement position.
 	dEx := 0.
 	dEy := 0.
 	d2Ex := 0.
@@ -89,7 +86,7 @@ GtGradKamadaKawaiLayout >> calculateDeltaPositionNode: theNodes node: aNode node
 		currentIndex ~= nodeIndex
 			ifTrue: [ 
 				| currentPosition dist l k dx dy d dCube|
-				currentPosition := currentNode constraints gradKamadaKawai computedPosition.
+				currentPosition := currentNode measurement position.
 				dist := self distanceMatrix at: nodeIndex at: currentIndex.
 				l := self length * dist.
 				k := self arbitraryConstantK / (dist squared).
@@ -150,8 +147,8 @@ GtGradKamadaKawaiLayout >> calculateEnergy: theNodes [
 			distance := self distanceMatrix at: i at: j.
 			lij := self length * distance.
 			kij := self arbitraryConstantK / (distance squared).
-			position1 := theFirstNode constraints gradKamadaKawai computedPosition.
-			position2 := theSecondNode constraints gradKamadaKawai computedPosition.
+			position1 := theFirstNode measurement position.
+			position2 := theSecondNode measurement position.
 			dx := (position1 x) - (position2 x).
 			dy := (position1 y) - (position2 y).
 			d := ((dx squared) + (dy squared)) sqrt.
@@ -181,8 +178,8 @@ GtGradKamadaKawaiLayout >> calculateEnergyIfExchanged: theNodes firstNodeIndex: 
 			dist := self distanceMatrix at: i at: j.
 			l := self length * dist.
 			k := self arbitraryConstantK / (dist squared).
-			nodePosition1 := (theNodes at: ii) constraints gradKamadaKawai computedPosition.
-			nodePosition2 := (theNodes at: jj) constraints gradKamadaKawai computedPosition.
+			nodePosition1 := (theNodes at: ii) measurement position.
+			nodePosition2 := (theNodes at: jj) measurement position.
 			dx := nodePosition1 x - nodePosition2 x.
 			dy := nodePosition1 y - nodePosition2 y.
 			d := (dx squared + dy squared) sqrt.
@@ -354,17 +351,10 @@ GtGradKamadaKawaiLayout >> maxIterations: aNumber [
 ]
 
 { #category : #measure }
-GtGradKamadaKawaiLayout >> measurePositions: anElement with: anExtentSpec [
-	| theNodes |
-	
-	theNodes := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-			
-	self initializeLayout: theNodes.
-	self layout: theNodes.
-
-	theNodes do: [ :aNodeElement |
-		aNodeElement measuredBounds position: (aNodeElement constraints gradKamadaKawai computedPosition) ]
+GtGradKamadaKawaiLayout >> measure: aParentNode [
+	self initializeLayout: aParentNode children.
+	self layout: aParentNode children.
+	aParentNode children normalizePositions
 ]
 
 { #category : #'private-layout' }
@@ -380,7 +370,7 @@ GtGradKamadaKawaiLayout >> randomlyPositionNodes: theNodes maxVerticalValue: max
 				(positions includes: position)
 					ifFalse: [ 
 						positions add: position.
-						aNodeElement constraints gradKamadaKawai computedPosition: position.
+						aNodeElement measurement position: position.
 						GtGradKamadaKawaiInitialPositionSetSignal new
 							node: aNodeElement;
 							position: position;
@@ -400,11 +390,7 @@ GtGradKamadaKawaiLayout >> setDefaultParameterValues: theNodes [
 	for improvement, but this is the basic idea"
 	maxNodeSize := 0.
 	theNodes do: [ :aNode |
-		| nodeWidth nodeHeight biggerDim |
-		nodeWidth := aNode bounds extent x.
-		nodeHeight := aNode bounds extent y.
-		biggerDim := nodeWidth max: nodeHeight.
-		maxNodeSize := maxNodeSize max: biggerDim. 
+		maxNodeSize := maxNodeSize max: aNode measurement extent max. 
 	].
 
 	factor := 1 max: (maxNodeSize / 70).
@@ -443,7 +429,7 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 	theNodes do: [ :aNode |
 		| nodePosition |
 		
-		nodePosition := aNode constraints gradKamadaKawai computedPosition.
+		nodePosition := aNode measurement position.
 		gx := gx + nodePosition x.
 		gy := gy + nodePosition y.
 	].
@@ -456,8 +442,8 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 	"set new postions of nodes"
 	theNodes do: [ :aNode |
 		| currentPosition |
-		currentPosition := aNode constraints gradKamadaKawai computedPosition.
-		aNode constraints gradKamadaKawai computedPosition: (currentPosition x + diffx)@(currentPosition y + diffy).
+		currentPosition := aNode measurement position.
+		aNode measurement position: (currentPosition x + diffx)@(currentPosition y + diffy).
 	].
 	
 	
@@ -495,10 +481,8 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 				calculateDeltaPositionNode: theNodes
 				node: nodeWithMaxDelta
 				nodeIndex: nodeWithMaxDeltaIndex.
-			nodePosition := nodeWithMaxDelta constraints gradKamadaKawai
-				computedPosition.
-			nodeWithMaxDelta constraints gradKamadaKawai
-				computedPosition: (nodePosition x + dxy x) @ (nodePosition y + dxy y).
+			nodePosition := nodeWithMaxDelta measurement position.
+			nodeWithMaxDelta measurement position: (nodePosition x + dxy x) @ (nodePosition y + dxy y).
 				deltaAtNode := self
 				calculateDeltaAtNode: theNodes
 					node: nodeWithMaxDelta
@@ -521,15 +505,11 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 			energy > exenergy
 				ifTrue: [ firstNode := theNodes at: i.
 					secondNode := theNodes at: j.
-					position1 := firstNode constraints gradKamadaKawai
-						computedPosition.
-					position2 := secondNode constraints gradKamadaKawai
-						computedPosition.
-					firstNode constraints gradKamadaKawai computedPosition: (position2 x)@(position2 y).
-					secondNode constraints gradKamadaKawai
-						computedPosition: (position1 x)@(position1 y).
-						^ self.
-						] ] ]
+					position1 := firstNode measurement position.
+					position2 := secondNode measurement position.
+					firstNode measurement position: (position2 x)@(position2 y).
+					secondNode measurement position: (position1 x)@(position1 y).
+					^ self ] ] ]
 ]
 
 { #category : #accessing }

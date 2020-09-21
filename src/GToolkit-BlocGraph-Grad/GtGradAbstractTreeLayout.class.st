@@ -88,23 +88,15 @@ GtGradAbstractTreeLayout >> levelDistance: aNumber [
 ]
 
 { #category : #measure }
-GtGradAbstractTreeLayout >> measurePositions: anElement with: anExtentSpec [
-	| theNodes aTreeForest |
+GtGradAbstractTreeLayout >> measure: aParentNode [
+	| aTreeForest |
 
-	"BlElement is a root for all graphical components"
-	"anElement children  -> an instance of BlChildren"
-	theNodes := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-
-	"reset all computed positions"
-	theNodes do: [ :aNodeElement | aNodeElement constraints gradTree computedPosition: 0@0 ].
-	aTreeForest := self formForestFrom: theNodes.
-
+	aTreeForest := self formForestFrom: aParentNode children.
+	
 	aTreeForest accept: (GtGradTreeLayoutPreparator on: self).
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
-
-	theNodes do: [ :aNodeElement |
-		aNodeElement measuredBounds position: (aNodeElement constraints gradTree computedPosition) ]
+	
+	aParentNode children normalizePositions
 ]
 
 { #category : #'api - geometry' }

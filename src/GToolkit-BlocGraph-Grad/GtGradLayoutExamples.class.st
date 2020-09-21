@@ -24,6 +24,9 @@ GtGradLayoutExamples >> container [
 	<gtExample>
 
 	^ BlElement new
+		constraintsDo: [ :c |
+			c horizontal fitContent.
+			c vertical fitContent ]
 ]
 
 { #category : #'examples - layout' }

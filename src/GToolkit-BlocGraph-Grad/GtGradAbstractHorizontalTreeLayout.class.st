@@ -49,7 +49,7 @@ GtGradAbstractHorizontalTreeLayout >> initialize [
 
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-	^ ((aRootNode maxWidthAt: aTreeNode) - aTreeNode element width)@0
+	^ ((aRootNode maxWidthAt: aTreeNode) - aTreeNode element measuredWidth)@0
 ]
 
 { #category : #'api - geometry' }
@@ -63,8 +63,8 @@ GtGradAbstractHorizontalTreeLayout >> nodeCenterAlignmentCorrection: aTreeNode a
 	parentCorrection := aTreeNode hasParent
 		ifFalse: [ 0 ]
 		ifTrue: [ (aRootNode maxWidthAt: aTreeNode parent) - aTreeNode parent width ].
-	^ (((aRootNode maxWidthAt: aTreeNode) - aTreeNode element width
-				+ parentCorrection) / 2.0)@0
+
+	^ (((aRootNode maxWidthAt: aTreeNode) - aTreeNode element measuredWidth + parentCorrection) / 2.0)@0
 ]
 
 { #category : #'api - geometry' }
@@ -92,7 +92,7 @@ GtGradAbstractHorizontalTreeLayout >> nodeOffsetLength: aTreeNode [
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> nodeTopAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 	^ aTreeNode hasParent
-		ifTrue: [ ((aRootNode maxWidthAt: (aTreeNode parent)) - (aTreeNode parent) width)@0 ]
+		ifTrue: [ ((aRootNode maxWidthAt: aTreeNode parent) - aTreeNode parent width) @ 0 ]
 		ifFalse: [ 0@0 ]
 ]
 
@@ -101,7 +101,7 @@ GtGradAbstractHorizontalTreeLayout >> reversedPositionOfNode: aTreeNode rootPosi
 "calculate position of the node so that it the node is flipped
 over a vertical line containing the root node"
 	| nodePosition |
-	nodePosition := aTreeNode element constraints gradTree computedPosition.
+	nodePosition := aTreeNode element measurement position.
 
 	^ ( 2 * (theRootPosition x) - nodePosition  x + theBounds right) @ (nodePosition y)
 ]

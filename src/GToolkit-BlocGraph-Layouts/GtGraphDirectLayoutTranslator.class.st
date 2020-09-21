@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphDirectLayoutTranslator,
 	#superclass : #GtGraphLayoutTranslator,
-	#category : 'GToolkit-BlocGraph-Layouts-Basic'
+	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
 
 { #category : #accessing }
@@ -11,5 +11,5 @@ GtGraphDirectLayoutTranslator class >> isDefault [
 
 { #category : #hook }
 GtGraphDirectLayoutTranslator >> translate: element to: newPosition [
-	element measuredBounds position: newPosition asFloatPoint
+	element measurement position: newPosition asFloatPoint
 ]

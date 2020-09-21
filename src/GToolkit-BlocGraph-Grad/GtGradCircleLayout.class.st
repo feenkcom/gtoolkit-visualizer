@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'distance'
 	],
-	#category : 'GToolkit-BlocGraph-Grad'
+	#category : #'GToolkit-BlocGraph-Grad'
 }
 
 { #category : #computation }
@@ -111,20 +111,14 @@ GtGradCircleLayout >> initialize [
 ]
 
 { #category : #measure }
-GtGradCircleLayout >> measurePositions: anElement with: anExtentSpec [
-	| theNodes aRadius thePosition |
+GtGradCircleLayout >> measure: aParentLayoutNode [
+	| aRadius thePosition |
 	
-	"BlElement is a root for all graphical components"
-
-	"anElement children  -> an instance of BlChildren"
-	theNodes := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-
-	aRadius := self calculateRadiusFor: theNodes threshold: self distance.
-	thePosition := self calculatePositionsFor: theNodes radius: aRadius center: 0@0.
+	aRadius := self calculateRadiusFor: aParentLayoutNode children threshold: self distance.
+	thePosition := self calculatePositionsFor: aParentLayoutNode children radius: aRadius center: 0@0.
 
 	"SequenceableCollection"
-	theNodes with: thePosition do: [ :aNodeElement :aPosition |
+	aParentLayoutNode children with: thePosition do: [ :aNodeElement :aPosition |
 		"to change position of a node"
-		aNodeElement measuredBounds position: aPosition ]
+		aNodeElement measurement position: aPosition ]
 ]

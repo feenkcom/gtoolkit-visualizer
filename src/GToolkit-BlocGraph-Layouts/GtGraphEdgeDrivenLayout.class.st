@@ -16,39 +16,11 @@ GtGraphEdgeDrivenLayout class >> isAbstract [
 	^ self = GtGraphEdgeDrivenLayout
 ]
 
-{ #category : #public }
-GtGraphEdgeDrivenLayout class >> on: elements edges: edges [
-	^ self new on: elements edges: edges
-]
-
-{ #category : #'instance creation' }
-GtGraphEdgeDrivenLayout class >> withEdges: aCollection [
-	
-	^self new initialize userDefinedEdges: aCollection
-]
-
 { #category : #'default attach points' }
 GtGraphEdgeDrivenLayout >> addDefaultAttachPointToEdges [
 	self flag: 'Model attach points'.
 	
 	"edges do: [ :e | e shape attachPoint: self defaultAttachPoint ]"
-]
-
-{ #category : #accessing }
-GtGraphEdgeDrivenLayout >> affectedNodes [
-	
-	^affectedNodes
-]
-
-{ #category : #accessing }
-GtGraphEdgeDrivenLayout >> affectedNodes: anObject [
-	
-	affectedNodes := anObject
-]
-
-{ #category : #accessing }
-GtGraphEdgeDrivenLayout >> affectedNodesOf:  aNode [ 
-	^ affectedNodes ifNil: [ aNode nodes ]
 ]
 
 { #category : #'default attach points' }
@@ -78,16 +50,9 @@ GtGraphEdgeDrivenLayout >> doAttachPoint [
 ]
 
 { #category : #hook }
-GtGraphEdgeDrivenLayout >> doExecute: elements [
+GtGraphEdgeDrivenLayout >> doExecute: elements with: anExtentSpec [
 	
 	self subclassResponsibility
-]
-
-{ #category : #hook }
-GtGraphEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
-	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
-	
-	self doExecute: anElementNode
 ]
 
 { #category : #'default attach points' }
@@ -119,40 +84,11 @@ GtGraphEdgeDrivenLayout >> edgesDo: aBlock [
 ]
 
 { #category : #hook }
-GtGraphEdgeDrivenLayout >> executeOnElements: elements [ 
-	"Execute the layout, myself, on the elements"
-
-	self userDefinedEdges isNil 
-		ifTrue: [ self setEdgesFromElements: elements ]
-		ifFalse: 
-			[ | flat |
-			flat := OrderedCollection new.
-			self userDefinedEdges do: 
-				[ :each | 
-				each isCollection 
-					ifTrue: [ flat addAll: each ]
-					ifFalse: [ flat add: each ] ].
-			self edges: flat ].
-		
-	super executeOnElements: elements
-]
-
-{ #category : #hook }
 GtGraphEdgeDrivenLayout >> executeOnElements: elements with: anExtentSpec [
 	"Execute the layout, myself, on the elements"
 
-	self userDefinedEdges isNil 
-		ifTrue: [ self setEdgesFromElements: elements ]
-		ifFalse: 
-			[ | flat |
-			flat := OrderedCollection new.
-			self userDefinedEdges do: 
-				[ :each | 
-				each isCollection 
-					ifTrue: [ flat addAll: each ]
-					ifFalse: [ flat add: each ] ].
-			self edges: flat ].
-		
+	self setEdgesFromElements: elements.
+
 	super executeOnElements: elements with: anExtentSpec
 ]
 
@@ -182,44 +118,27 @@ GtGraphEdgeDrivenLayout >> isLineLayout [
 ]
 
 { #category : #accessing }
-GtGraphEdgeDrivenLayout >> setEdgesFromElements: elements [ 
+GtGraphEdgeDrivenLayout >> setEdgesFromElements: aCollectionOfLayoutChildNodes [
+	| aConstraintsMap theIncomingEdges |
 
-	elements isEmpty
+	aCollectionOfLayoutChildNodes isEmpty
 		ifTrue: [ ^ self ].
-	^ self
-		edges:
-			((elements flatCollect: [ :each | each constraints graph incomingEdges ])
-				select: [ :anEdge | (elements includes: anEdge fromElement) ])
+
+	aConstraintsMap := IdentityDictionary new.
+	aCollectionOfLayoutChildNodes do: [ :eachNode | aConstraintsMap at: eachNode constraints put: eachNode ].
+
+	theIncomingEdges := Array streamContents: [ :aStream |
+		aCollectionOfLayoutChildNodes do: [ :eachChildNode |
+			eachChildNode constraints graph incomingEdges do: [ :eachGraphEdge |
+				aStream nextPut: (BlLayoutEdge new
+					fromNode: (aConstraintsMap at: eachGraphEdge fromElement constraints);
+					toNode: (aConstraintsMap at: eachGraphEdge toElement constraints)) ] ] ].
+
+	self edges: (theIncomingEdges select: [ :eachEdge | aCollectionOfLayoutChildNodes includes: eachEdge fromNode ])
 ]
 
 { #category : #'default attach points' }
 GtGraphEdgeDrivenLayout >> shouldSetDefaultAttachPoint [
 	"Return true if an attach point has to be added to edges. False else"
 	^ shouldSetDefaultAttachPoint
-]
-
-{ #category : #private }
-GtGraphEdgeDrivenLayout >> toPositions [
-	
-	^toPositions ifNil: [toPositions := self defaultToPositions]
-]
-
-{ #category : #accessing }
-GtGraphEdgeDrivenLayout >> toPositions: anArray [
-	
-	toPositions := anArray
-]
-
-{ #category : #private }
-GtGraphEdgeDrivenLayout >> userDefinedEdges [
-	
-	^userDefinedEdges
-]
-
-{ #category : #'initialize-release' }
-GtGraphEdgeDrivenLayout >> userDefinedEdges: aCollectionOfEdges [
-	"useful to tell to the layout which edges have to be used for the layout"
-
-	userDefinedEdges := aCollectionOfEdges.
-	
 ]

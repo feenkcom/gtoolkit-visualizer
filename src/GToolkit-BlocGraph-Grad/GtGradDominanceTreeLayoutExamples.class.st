@@ -28,66 +28,62 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith5Nodes [
 	<gtExample>
-		
-	| theNodes  pairsOfNodes theEdges |
+	| theNodes pairsOfNodes |
 	
 	theNodes := self nodes: (1 to: 5).
-	theNodes doWithIndex: [ :aNode :index |
-		aNode labeled: index asString.
-	].
+	pairsOfNodes := { (1->2). (1->3). (3->4). (4->5). (2->5) }.
 	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add:(3->4); add: (4->5); add: (2->5).
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-	^ theNodes -> theEdges
-
+	^ BlLayoutParentNode new
+		constraints: (BlLayoutCommonConstraints new);
+		extentSpec: (BlExtentMeasurementSpec unspecified);
+		children: theNodes
 ]
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
-		
-	| theNodes  pairsOfNodes theEdges |
+	| theNodes pairsOfNodes |
 	
 	theNodes := self nodes: (1 to: 8).
-	theNodes doWithIndex: [ :aNode :index |
-		aNode labeled: index asString.	
-	].
 	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add:(3->4); add: (4->5); add: (2->6); add: (2->5);
-					 add: (5->6); add: (6->7); add: (7->8); add:(4->8).
+	pairsOfNodes := {
+		(1->2). (1->3).
+		(3->4). (4->5).
+		(2->6). (2->5).
+		(5->6). (6->7).
+		(7->8). (4->8) }.
 	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-	^ theNodes -> theEdges
-
+	^ BlLayoutParentNode new
+		constraints: (BlLayoutCommonConstraints new);
+		extentSpec: (BlExtentMeasurementSpec unspecified);
+		children: theNodes
 ]
 
-{ #category : #example }
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
-		
-	| theNodes  pairsOfNodes theEdges |
+	| theNodes  pairsOfNodes |
 	
 	theNodes := self nodes: (1 to: 9).
-	theNodes doWithIndex: [ :aNode :index |
-		aNode labeled: index asString.	
-	].
 	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add: (2->4); add: (2->7); add: (2->9);
-					 add: (3->5); add: (5->6); add: (6->7); add: (7->8); add: (9->8).
+	pairsOfNodes := {
+		(1->2). (1->3).
+		(2->4). (2->7). (2->9).
+		(3->5). (5->6). (6->7). (7->8). (9->8) }.
 	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-	^ theNodes -> theEdges
-
+	^ BlLayoutParentNode new
+		constraints: (BlLayoutCommonConstraints new);
+		extentSpec: (BlExtentMeasurementSpec unspecified);
+		children: theNodes
 ]
 
 { #category : #'example - instance creation' }
@@ -96,64 +92,21 @@ GtGradDominanceTreeLayoutExamples >> constructForest: theNodes [
 ]
 
 { #category : #'example - instance creation' }
-GtGradDominanceTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
-	<gtExample>
-		
-	| theNodes  pairsOfNodes theEdges |
-	
-	theNodes := self nodes: (1 to: 6).
-	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add: (1->4); add: (1->5);
-					 add: (2->6); add: (3->6); add: (4->6); add: (5->6).
-
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-
-	^ theNodes -> theEdges
-
-	
- 
-]
-
-{ #category : #'example - instance creation' }
-GtGradDominanceTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
-	<gtExample>
-		
-	| theNodes  pairsOfNodes theEdges |
-	
-	theNodes := self nodes: (1 to: 7).
-	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add:(1->4); add: (2->5); add: (2->6);
-	 add: (2->7).
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-
-	^ theNodes -> theEdges
-
-	
- 
-]
-
-{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> dominanceTreeLayout [
 	^ self subclassResponsibility
 ]
 
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	^ self subclassResponsibility
 ]

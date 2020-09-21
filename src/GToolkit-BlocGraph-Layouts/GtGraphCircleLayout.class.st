@@ -5,7 +5,7 @@ A ROCircleLayout is xxxxxxxxx.
 Class {
 	#name : #GtGraphCircleLayout,
 	#superclass : #GtGraphAbstractCircleLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #'instance creation' }
@@ -15,7 +15,7 @@ GtGraphCircleLayout class >> scaleBy: aNumber [
 ]
 
 { #category : #hook }
-GtGraphCircleLayout >> doExecute: elements [
+GtGraphCircleLayout >> doExecute: elements with: anExtentSpec [
 	| angleIncrement angle rad center |
 	rad := self computeRadiusFor: elements.
 	center := Point x: rad y: rad.

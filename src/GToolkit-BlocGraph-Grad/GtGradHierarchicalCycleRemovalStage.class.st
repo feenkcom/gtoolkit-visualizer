@@ -29,7 +29,7 @@ GtGradHierarchicalCycleRemovalStage >> execute [
 	newRootsCandidates do: [ :aRootCandidate |
 		| anElement |
 		anElement := aRootCandidate element.
-		anElement graph nodesAlongIncomingEdgesCount = 0
+		anElement nodesAlongIncomingEdges isEmpty
 			ifTrue: [ self model roots add: anElement].
 	]	
 

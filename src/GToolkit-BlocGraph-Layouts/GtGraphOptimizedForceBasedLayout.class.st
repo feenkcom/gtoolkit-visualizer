@@ -14,14 +14,6 @@ GtGraphOptimizedForceBasedLayout >> addEdges: someEdges [
 ]
 
 { #category : #hook }
-GtGraphOptimizedForceBasedLayout >> executeOnElements: elements [
-	"The argument is the set of Roassal elements"
-	mockElements := elements collect: [ :e | GtGraphMockElement new realElement: e ].
-	super executeOnElements: mockElements.
-	mockElements do: #applyToRealElement
-]
-
-{ #category : #hook }
 GtGraphOptimizedForceBasedLayout >> executeOnElements: elements with: anExtentSpec [
 	"The argument is the set of Roassal elements"
 	mockElements := elements collect: [ :e | GtGraphMockElement new realElement: e ].

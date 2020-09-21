@@ -56,8 +56,8 @@ GtGradHierarchicalLayout >> findRoots: theNodes [
 	maxDiff := -1.
 	theNodes do: [ :theNode |
 		| incomingEdgesNum outgoingEdgesNum |
-		incomingEdgesNum := theNode graph nodesAlongIncomingEdgesCount.
-		outgoingEdgesNum := theNode graph nodesAlongOutgoingEdgesCount.
+		incomingEdgesNum := theNode nodesAlongIncomingEdges size.
+		outgoingEdgesNum := theNode nodesAlongOutgoingEdges size.
 		(incomingEdgesNum = 0 and: [ outgoingEdgesNum > 0 ])
 			ifTrue: [ 
 				aRootsCollection add: theNode.
@@ -127,8 +127,8 @@ GtGradHierarchicalLayout >> intraRankSpacing: anObject [
 
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
-	^ (parentNode graph nodesAlongOutgoingEdges includes: childNode) or: [	
-	  parentNode graph nodesAlongOutgoingEdges
+	^ (parentNode nodesAlongOutgoingEdges includes: childNode) or: [	
+	  parentNode nodesAlongOutgoingEdges
 		anySatisfy: [ :aChildNode | self isDescentantOf: childNode parentNode: aChildNode ]]
 ]
 
@@ -148,17 +148,9 @@ GtGradHierarchicalLayout >> layeringStage: model [
 ]
 
 { #category : #measure }
-GtGradHierarchicalLayout >> measurePositions: anElement with: anExtentSpec [
-	| theNodes |
-
-	theNodes := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-
-	self run: theNodes.
-	
-	theNodes do: [ :aNodeElement |
-		aNodeElement measuredBounds position: (aNodeElement constraints gradHierarchical computedPosition)
-	]
+GtGradHierarchicalLayout >> measure: aParentNode [
+	self run: aParentNode children.
+	aParentNode children normalizePositions
 ]
 
 { #category : #accessing }
@@ -273,13 +265,13 @@ GtGradHierarchicalLayout >> traverse: aNode directed: isDirectedTraversal visite
 					aFilledNodesSet remove: aNode
 				].
 
-			aNode graph nodesAlongOutgoingEdges do: [ :aChildNode |
+			aNode nodesAlongOutgoingEdges do: [ :aChildNode |
 				self traverse: aChildNode directed: false visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: aFilledNodesSet.
 			].
 			isDirectedTraversal
 				ifTrue: [ 
 					"also process incoming edges"
-					aNode graph nodesAlongIncomingEdges do: [ :aChildNode |
+					aNode nodesAlongIncomingEdges do: [ :aChildNode |
 						self traverse: aChildNode directed: true visitedNodes: theVisitedNodes currentComponent: theCurrentComponent hierarchyComponents: theHierarchyComponents filledNodesSet: aFilledNodesSet.
 					]
 				]

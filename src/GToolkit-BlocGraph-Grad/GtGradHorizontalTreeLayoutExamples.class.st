@@ -2,431 +2,692 @@
 !Horizontal tree layout
 
 This layout orders a graph nodes so that they form a horizontal  tree, meaning that the root node is left of all other nodes.
+
+!Separated and compact subtrees
+Tree layout allows users to choose between compact and separated subtrees, it can be done by setting ${method:GtGradAbstractTreeLayout>>#separateSubtrees:}$ either to ==true== or ==false==.
+The following example shows a compact (default) version of the tree:
+${example:GtGradHorizontalTreeLayoutExamples>>#compactSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=90}$
+while the next one is a separated tree:
+${example:GtGradHorizontalTreeLayoutExamples>>#separatedSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=110}$
 "
 Class {
 	#name : #GtGradHorizontalTreeLayoutExamples,
 	#superclass : #GtGradTreeLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Grad-Examples'
+	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
-	aTreeLayout := self treeLayout.
-	theNodes := self constructBinaryTreeWith15Nodes key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout. 
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
-	^ view
+	aParentNode := self constructBinaryTreeWith15Nodes.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@77.0) corner: (50.0@97.0).
+		(61.0@33.0) corner: (111.0@53.0).
+		(61.0@121.0) corner: (111.0@141.0).
+		(122.0@11.0) corner: (172.0@31.0).
+		(122.0@55.0) corner: (172.0@75.0).
+		(122.0@99.0) corner: (172.0@119.0).
+		(122.0@143.0) corner: (172.0@163.0).
+		(183.0@0.0) corner: (233.0@20.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(183.0@44.0) corner: (233.0@64.0).
+		(183.0@66.0) corner: (233.0@86.0).
+		(183.0@88.0) corner: (233.0@108.0).
+		(183.0@110.0) corner: (233.0@130.0).
+		(183.0@132.0) corner: (233.0@152.0).
+		(183.0@154.0) corner: (233.0@174.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
-	aTreeLayout := self treeLayout.
-	aTreeLayout reverse: true.
-	theNodes := self constructBinaryTreeWith15Nodes key.
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
+	aParentNode := self constructBinaryTreeWith15Nodes.
 
-	^ view
+	aTreeLayout := self treeLayout reverse: true.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(183.0@77.0) corner: (233.0@97.0).
+		(122.0@33.0) corner: (172.0@53.0).
+		(122.0@121.0) corner: (172.0@141.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(61.0@55.0) corner: (111.0@75.0).
+		(61.0@99.0) corner: (111.0@119.0).
+		(61.0@143.0) corner: (111.0@163.0).
+		(0.0@0.0) corner: (50.0@20.0).
+		(0.0@22.0) corner: (50.0@42.0).
+		(0.0@44.0) corner: (50.0@64.0).
+		(0.0@66.0) corner: (50.0@86.0).
+		(0.0@88.0) corner: (50.0@108.0).
+		(0.0@110.0) corner: (50.0@130.0).
+		(0.0@132.0) corner: (50.0@152.0).
+		(0.0@154.0) corner: (50.0@174.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7Nodes [
 	<gtExample>
-		
-	| view theNodes  aTreeLayout |
-	
-	view := self view.
-	theNodes := self constructBinaryTreeWith7Nodes key.
-	view addChildren: theNodes.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructBinaryTreeWith7Nodes.
+
 	aTreeLayout := self treeLayout.
-	view layout: aTreeLayout.
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	aTreeLayout measure: aParentNode.
 
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@33.0) corner: (50.0@53.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(61.0@55.0) corner: (111.0@75.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@22.0) corner: (172.0@42.0).
+		(122.0@44.0) corner: (172.0@64.0).
+		(122.0@66.0) corner: (172.0@86.0)
+	}.
 
-	^ view
-
-	
- 
+	^ aParentNode
 ]
 
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesReversed [
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesRevered [
 	<gtExample>
-		
-	| view theNodes  aTreeLayout |
-	
-	view := self view.
-	theNodes := self constructBinaryTreeWith7Nodes key.
-	view addChildren: theNodes.
-	aTreeLayout := self treeLayout.
-	aTreeLayout reverse: true.
-	view layout: aTreeLayout.
-	view forceLayout. 
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
+	aParentNode := self constructBinaryTreeWith7Nodes.
 
-	^ view
+	aTreeLayout := self treeLayout reverse: true.
+	aTreeLayout measure: aParentNode.
 
-	
- 
+	self assert: aParentNode children measuredBounds equals: {
+		(122.0@33.0) corner: (172.0@53.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(61.0@55.0) corner: (111.0@75.0).
+		(0.0@0.0) corner: (50.0@20.0).
+		(0.0@22.0) corner: (50.0@42.0).
+		(0.0@44.0) corner: (50.0@64.0).
+		(0.0@66.0) corner: (50.0@86.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> compactSubtrees [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout separateSubtrees: false.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@46.0) corner: (50.0@66.0).
+		(61.0@22.0) corner: (111.0@42.0).
+		(61.0@48.0) corner: (111.0@68.0).
+		(61.0@70.0) corner: (111.0@90.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@22.0) corner: (172.0@42.0).
+		(122.0@44.0) corner: (172.0@64.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self treeLayout. 
-	theNodes := self constructDisconnectedGraph  key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
-	
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
+	aParentNode := self constructDisconnectedGraph.
 
-
-	^ view
+	aTreeLayout := self treeLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@11.0) corner: (50.0@31.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@22.0) corner: (172.0@42.0).
+		(244.0@11.0) corner: (294.0@31.0).
+		(244.0@33.0) corner: (294.0@53.0).
+		(0.0@94.0) corner: (50.0@114.0).
+		(61.0@83.0) corner: (111.0@103.0).
+		(61.0@105.0) corner: (111.0@125.0).
+		(122.0@105.0) corner: (172.0@125.0).
+		(183.0@105.0) corner: (233.0@125.0)
+	}.
+	
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructDisconnectedGraph.
+
 	aTreeLayout := self treeLayout.
 	aTreeLayout treesDistance: 150.
-	theNodes := self constructDisconnectedGraph  key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
+	aTreeLayout measure: aParentNode.
 
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@11.0) corner: (50.0@31.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@22.0) corner: (172.0@42.0).
+		(244.0@11.0) corner: (294.0@31.0).
+		(244.0@33.0) corner: (294.0@53.0).
+		(0.0@214.0) corner: (50.0@234.0).
+		(61.0@203.0) corner: (111.0@223.0).
+		(61.0@225.0) corner: (111.0@245.0).
+		(122.0@225.0) corner: (172.0@245.0).
+		(183.0@225.0) corner: (233.0@245.0)
+	}.
 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-
-
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize [	
 	<gtExample>
-		
-	|  view theNodes aTreeLayout |
-	
-	view := self view. 
-	aTreeLayout := self treeLayout.
-	theNodes := self constructDisconnectedGraphWithRootsOfDifferentSizes key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
-	
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
-	
-	^ view
+	aParentNode := self constructDisconnectedGraphWithRootsOfDifferentSizes.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@0.0) corner: (50.0@50.0).
+		(61.0@15.0) corner: (111.0@35.0).
+		(183.0@26.0) corner: (233.0@46.0).
+		(122.0@4.0) corner: (172.0@24.0).
+		(122.0@26.0) corner: (172.0@46.0).
+		(244.0@15.0) corner: (294.0@35.0).
+		(244.0@37.0) corner: (294.0@57.0).
+		(0.0@112.0) corner: (80.0@182.0).
+		(91.0@126.0) corner: (141.0@146.0).
+		(91.0@148.0) corner: (141.0@168.0).
+		(152.0@148.0) corner: (202.0@168.0).
+		(213.0@148.0) corner: (263.0@168.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode [
 	<gtExample>
-		
-	|  view theNodes aTreeLayout |
-	
-	view := self view. 
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructDisconnectedGraphWithTreeContainingOneNode.
+
 	aTreeLayout := self treeLayout.
-	theNodes := self constructDisconnectedGraphWithTreeContainingOneNode key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
-
+	aTreeLayout measure: aParentNode.
 	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@0.0) corner: (50.0@20.0).
+		(0.0@72.0) corner: (50.0@92.0).
+		(61.0@50.0) corner: (111.0@70.0).
+		(61.0@72.0) corner: (111.0@92.0).
+		(61.0@94.0) corner: (111.0@114.0)
+	}.
 
-	
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> distinctSubtrees [
-	<gtExample>
-		
-	| view theNodes aTreeLayout|
-	
-	view := self view.
-	aTreeLayout := self treeLayout.
-	aTreeLayout separateSubtrees: true.
-	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout. 
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-
-
-	^ view
-]
-
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	<gtExample>
-		
-	| view theNodes aTreeLayout|
-	
-	view := self view.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger.
+
 	aTreeLayout := self treeLayout.
 	aTreeLayout separateSubtrees: true.
-	theNodes := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
+	aTreeLayout measure: aParentNode.
 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@175.125) corner: (50.0@195.125).
+		(61.0@88.0) corner: (111.0@108.0).
+		(61.0@262.25) corner: (111.0@282.25).
+		(122.0@22.0) corner: (172.0@42.0).
+		(122.0@88.0) corner: (172.0@108.0).
+		(122.0@154.0) corner: (172.0@174.0).
+		(122.0@225.5) corner: (172.0@245.5).
+		(122.0@277.0) corner: (172.0@297.0).
+		(122.0@299.0) corner: (172.0@319.0).
+		(183.0@0.0) corner: (233.0@20.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(183.0@44.0) corner: (233.0@64.0).
+		(183.0@66.0) corner: (233.0@86.0).
+		(183.0@88.0) corner: (233.0@108.0).
+		(183.0@110.0) corner: (233.0@130.0).
+		(183.0@132.0) corner: (233.0@152.0).
+		(183.0@154.0) corner: (233.0@174.0).
+		(183.0@176.0) corner: (233.0@196.0).
+		(183.0@198.0) corner: (233.0@218.0).
+		(183.0@220.0) corner: (233.0@240.0).
+		(183.0@253.0) corner: (233.0@273.0).
+		(244.0@242.0) corner: (294.0@262.0).
+		(244.0@264.0) corner: (294.0@284.0)
+	}.
 
-
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent x.
-	
-]
-
-{ #category : #accessing }
-GtGradHorizontalTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
-	^ aTreeNode element position x
-	
-]
-
-{ #category : #accessing }
-GtGradHorizontalTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent  y.
-	
-]
-
-{ #category : #accessing }
-GtGradHorizontalTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
-	^ aTreeNode element position y
-
-]
-
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructGraphWithANodeWithSeveralIncomingEdges.
+
 	aTreeLayout := self treeLayout.
-	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
+	aTreeLayout measure: aParentNode.
 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@33.0) corner: (50.0@53.0).
+		(61.0@0.0) corner: (111.0@20.0).
+		(61.0@22.0) corner: (111.0@42.0).
+		(61.0@44.0) corner: (111.0@64.0).
+		(61.0@66.0) corner: (111.0@86.0).
+		(122.0@0.0) corner: (172.0@20.0)
+	}.
 
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructGraphWithCycles.
+
 	aTreeLayout := self treeLayout.
-	theNodes := self constructGraphWithCycles key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@11.0) corner: (50.0@31.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@22.0) corner: (172.0@42.0).
+		(244.0@11.0) corner: (294.0@31.0).
+		(244.0@33.0) corner: (294.0@53.0)
+	}.
 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradHorizontalTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
-	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> separatedSubtrees [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout separateSubtrees: true.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@55.0) corner: (50.0@75.0).
+		(61.0@22.0) corner: (111.0@42.0).
+		(61.0@66.0) corner: (111.0@86.0).
+		(61.0@88.0) corner: (111.0@108.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@22.0) corner: (172.0@42.0).
+		(122.0@44.0) corner: (172.0@64.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradHorizontalTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
-	^ aTreeNode element position y
-]
-
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
-	aTreeLayout := self treeLayout.
-	theNodes := self constructSimpleTree key.
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout. 
+	| aParentNode aTreeLayout |
 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
+	aParentNode := self constructSimpleTree.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@84.0) corner: (50.0@104.0).
+		(61.0@33.0) corner: (111.0@53.0).
+		(61.0@135.0) corner: (111.0@155.0).
+		(122.0@11.0) corner: (172.0@31.0).
+		(122.0@55.0) corner: (172.0@75.0).
+		(122.0@121.0) corner: (172.0@141.0).
+		(122.0@149.0) corner: (172.0@169.0).
+		(183.0@0.0) corner: (233.0@20.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(183.0@44.0) corner: (233.0@64.0).
+		(183.0@66.0) corner: (233.0@86.0).
+		(183.0@88.0) corner: (233.0@108.0).
+		(183.0@110.0) corner: (233.0@130.0).
+		(183.0@132.0) corner: (233.0@152.0).
+		(183.0@154.0) corner: (233.0@174.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
-	aTreeLayout := self treeLayout.
-	aTreeLayout reverse: true.
-	theNodes := self constructSimpleTree key.
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout. 
+	| aParentNode aTreeLayout |
 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
+	aParentNode := self constructSimpleTree.
+
+	aTreeLayout := self treeLayout reverse: true.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(183.0@84.0) corner: (233.0@104.0).
+		(122.0@33.0) corner: (172.0@53.0).
+		(122.0@135.0) corner: (172.0@155.0).
+		(61.0@11.0) corner: (111.0@31.0).
+		(61.0@55.0) corner: (111.0@75.0).
+		(61.0@121.0) corner: (111.0@141.0).
+		(61.0@149.0) corner: (111.0@169.0).
+		(0.0@0.0) corner: (50.0@20.0).
+		(0.0@22.0) corner: (50.0@42.0).
+		(0.0@44.0) corner: (50.0@64.0).
+		(0.0@66.0) corner: (50.0@86.0).
+		(0.0@88.0) corner: (50.0@108.0).
+		(0.0@110.0) corner: (50.0@130.0).
+		(0.0@132.0) corner: (50.0@152.0).
+		(0.0@154.0) corner: (50.0@174.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
-	aTreeLayout := self treeLayout: 40 nodeDistance: 30.
-	theNodes := self constructSimpleTree key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
-]
+	| aParentNode aTreeLayout |
 
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
-	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self treeLayout. 
-	theNodes := self constructTreeWithNodesOfDifferentSizes key.
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
+	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
 
-	^ view
-]
-
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingLeafAlignment [
-	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self treeLayout.
-	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
-	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout. 
-	 
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
-]
-
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
-	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesCenterAlignment new.
-	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout. 
-
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@247.25) corner: (10.0@257.25).
+		(26.0@147.5) corner: (46.0@167.5).
+		(21.0@327.0) corner: (51.0@357.0).
+		(77.0@66.0) corner: (117.0@106.0).
+		(72.0@199.0) corner: (122.0@249.0).
+		(67.0@276.0) corner: (127.0@336.0).
+		(62.0@338.0) corner: (132.0@408.0).
+		(153.0@0.0) corner: (233.0@80.0).
+		(148.0@82.0) corner: (238.0@172.0).
+		(143.0@174.0) corner: (243.0@274.0)
+	}.
+	
+	^ aParentNode
 ]
 
-{ #category : #example }
-GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
+	aTreeLayout measure: aParentNode.
 	
-	view := self view. 
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@247.25) corner: (10.0@257.25).
+		(31.0@147.5) corner: (51.0@167.5).
+		(21.0@327.0) corner: (51.0@357.0).
+		(92.0@66.0) corner: (132.0@106.0).
+		(82.0@199.0) corner: (132.0@249.0).
+		(72.0@276.0) corner: (132.0@336.0).
+		(62.0@338.0) corner: (132.0@408.0).
+		(163.0@0.0) corner: (243.0@80.0).
+		(153.0@82.0) corner: (243.0@172.0).
+		(143.0@174.0) corner: (243.0@274.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootAlignment [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
+
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
-	theNodes := self constructTreeWithNodesOfIncreasingSize key. 
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout. 
-
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
+	aTreeLayout levelDistance: 30.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@243.6209677419355) corner: (10.0@253.6209677419355).
+		(41.0@147.5) corner: (61.0@167.5).
+		(41.0@319.741935483871) corner: (71.0@349.741935483871).
+		(102.0@66.0) corner: (142.0@106.0).
+		(102.0@199.0) corner: (152.0@249.0).
+		(102.0@268.741935483871) corner: (162.0@328.741935483871).
+		(102.0@330.741935483871) corner: (172.0@400.741935483871).
+		(203.0@0.0) corner: (283.0@80.0).
+		(203.0@82.0) corner: (293.0@172.0).
+		(203.0@174.0) corner: (303.0@274.0)
+	}.
+	
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructSimpleTree.
+
+	aTreeLayout := self treeLayout: 40 nodeDistance: 30.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@325.7142857142857) corner: (50.0@345.7142857142857).
+		(120.0@120.0) corner: (170.0@140.0).
+		(120.0@531.4285714285714) corner: (170.0@551.4285714285714).
+		(240.0@40.0) corner: (290.0@60.0).
+		(240.0@200.0) corner: (290.0@220.0).
+		(240.0@440.0) corner: (290.0@460.0).
+		(240.0@622.8571428571429) corner: (290.0@642.8571428571429).
+		(360.0@0.0) corner: (410.0@20.0).
+		(360.0@80.0) corner: (410.0@100.0).
+		(360.0@160.0) corner: (410.0@180.0).
+		(360.0@240.0) corner: (410.0@260.0).
+		(360.0@320.0) corner: (410.0@340.0).
+		(360.0@400.0) corner: (410.0@420.0).
+		(360.0@480.0) corner: (410.0@500.0).
+		(360.0@560.0) corner: (410.0@580.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesOfDifferentSizes.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@97.0) corner: (50.0@117.0).
+		(61.0@0.0) corner: (101.0@40.0).
+		(61.0@42.0) corner: (161.0@142.0).
+		(61.0@144.0) corner: (131.0@214.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesOfIncreasingSize.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout nodesAlignment: GtGradTreeNodesCenterAlignment new.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@499.5) corner: (10.0@509.5).
+		(26.0@175.5) corner: (46.0@195.5).
+		(21.0@803.5) corner: (51.0@833.5).
+		(77.0@66.0) corner: (117.0@106.0).
+		(72.0@255.0) corner: (122.0@305.0).
+		(67.0@631.0) corner: (127.0@691.0).
+		(62.0@936.0) corner: (132.0@1006.0).
+		(178.0@0.0) corner: (258.0@80.0).
+		(173.0@82.0) corner: (263.0@172.0).
+		(168.0@174.0) corner: (268.0@274.0).
+		(163.0@276.0) corner: (273.0@386.0).
+		(158.0@388.0) corner: (278.0@508.0).
+		(153.0@510.0) corner: (283.0@640.0).
+		(148.0@642.0) corner: (288.0@782.0).
+		(143.0@784.0) corner: (293.0@934.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlignment [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesOfIncreasingSize.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@499.5) corner: (10.0@509.5).
+		(31.0@175.5) corner: (51.0@195.5).
+		(21.0@803.5) corner: (51.0@833.5).
+		(92.0@66.0) corner: (132.0@106.0).
+		(82.0@255.0) corner: (132.0@305.0).
+		(72.0@631.0) corner: (132.0@691.0).
+		(62.0@936.0) corner: (132.0@1006.0).
+		(213.0@0.0) corner: (293.0@80.0).
+		(203.0@82.0) corner: (293.0@172.0).
+		(193.0@174.0) corner: (293.0@274.0).
+		(183.0@276.0) corner: (293.0@386.0).
+		(173.0@388.0) corner: (293.0@508.0).
+		(163.0@510.0) corner: (293.0@640.0).
+		(153.0@642.0) corner: (293.0@782.0).
+		(143.0@784.0) corner: (293.0@934.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithNodesOfIncreasingSize.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@499.5) corner: (10.0@509.5).
+		(21.0@175.5) corner: (41.0@195.5).
+		(21.0@803.5) corner: (51.0@833.5).
+		(62.0@66.0) corner: (102.0@106.0).
+		(62.0@255.0) corner: (112.0@305.0).
+		(62.0@631.0) corner: (122.0@691.0).
+		(62.0@936.0) corner: (132.0@1006.0).
+		(143.0@0.0) corner: (223.0@80.0).
+		(143.0@82.0) corner: (233.0@172.0).
+		(143.0@174.0) corner: (243.0@274.0).
+		(143.0@276.0) corner: (253.0@386.0).
+		(143.0@388.0) corner: (263.0@508.0).
+		(143.0@510.0) corner: (273.0@640.0).
+		(143.0@642.0) corner: (283.0@782.0).
+		(143.0@784.0) corner: (293.0@934.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view. 
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructSimpleTree.
+
 	aTreeLayout := self treeLayout: 5 nodeDistance: 1.
-	theNodes := self constructSimpleTree key.
-	view addChildren: theNodes. 
-	view layout: aTreeLayout.
-	view forceLayout.
-		
-	self checkPositionsOfTreesAndNodes: theNodes layout: aTreeLayout.
-	^ view
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@85.25) corner: (50.0@105.25).
+		(56.0@33.0) corner: (106.0@53.0).
+		(56.0@137.5) corner: (106.0@157.5).
+		(112.0@11.0) corner: (162.0@31.0).
+		(112.0@55.0) corner: (162.0@75.0).
+		(112.0@121.0) corner: (162.0@141.0).
+		(112.0@154.0) corner: (162.0@174.0).
+		(168.0@0.0) corner: (218.0@20.0).
+		(168.0@22.0) corner: (218.0@42.0).
+		(168.0@44.0) corner: (218.0@64.0).
+		(168.0@66.0) corner: (218.0@86.0).
+		(168.0@88.0) corner: (218.0@108.0).
+		(168.0@110.0) corner: (218.0@130.0).
+		(168.0@132.0) corner: (218.0@152.0).
+		(168.0@154.0) corner: (218.0@174.0)
+	}.
+	
+	^ aParentNode
 ]
 
 { #category : #'examples - instance creation' }
 GtGradHorizontalTreeLayoutExamples >> treeLayout [
+	<gtExample>
 	|  aTreeLayout |
 
 	aTreeLayout := GtGradHorizontalTreeLayout new.
@@ -438,7 +699,6 @@ GtGradHorizontalTreeLayoutExamples >> treeLayout [
 
 { #category : #'examples - instance creation' }
 GtGradHorizontalTreeLayoutExamples >> treeLayout: levelDistance nodeDistance: nodeDistance [
-
 	<gtExample>
 	|  aTreeLayout |
 
@@ -454,7 +714,6 @@ GtGradHorizontalTreeLayoutExamples >> treeLayout: levelDistance nodeDistance: no
 
 { #category : #'examples - instance creation' }
 GtGradHorizontalTreeLayoutExamples >> treeLayout: levelDistance nodeDistance: nodeDistance treesDistance: treesDistance [
-
 	<gtExample>
 	|  aTreeLayout |
 

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'trees'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #'instance-creation' }
@@ -35,14 +35,14 @@ GtGradTreeForest >> accept: aVisitor [
 ]
 
 { #category : #'gt-inspector-extension' }
-GtGradTreeForest >> gtInspectorNodesIn: aComposite [
-	<gtInspectorPresentationOrder: 1>
+GtGradTreeForest >> gtNodesFor: aView [
+	<gtView>
 
-	^ aComposite fastTree
-			title: 'Trees';
-			display: [ self trees ];
-			children: [ :aNode | aNode nodes ];
-			allExpanded
+	^ aView tree
+		title: 'Trees';
+		items: [ self trees ];
+		children: [ :aNode | aNode nodes ];
+		expandAll
 ]
 
 { #category : #initialization }

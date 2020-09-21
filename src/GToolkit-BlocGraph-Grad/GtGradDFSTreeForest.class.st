@@ -9,8 +9,8 @@ GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
 
 	"aVisitedDictionary is a dictionary of already visited visual elements (element -> tree node)"
 	aVisitedDictionary at: theCurrentNode element put: theCurrentNode.
-	theCurrentNode element graph hasNodesAlongOutgoingEdges
-		ifTrue: [ theCurrentNode element graph nodesAlongOutgoingEdges
+	theCurrentNode element hasNodesAlongOutgoingEdges
+		ifTrue: [ theCurrentNode element nodesAlongOutgoingEdges
 				do: [ :aNodeElement | 
 					(aVisitedDictionary includesKey: aNodeElement)
 						ifFalse: [ | aTreeNode |
@@ -20,18 +20,18 @@ GtGradDFSTreeForest class >> dfs: theCurrentNode visited: aVisitedDictionary [
 ]
 
 { #category : #'instance-creation' }
-GtGradDFSTreeForest class >> from: aCollectionOfElements separateSubtrees: separateSubtrees [
+GtGradDFSTreeForest class >> from: aCollectionOfLayoutNodesWithEdges separateSubtrees: separateSubtrees [
 	"Create a forest of node trees using depth-first-search algorithm"
 
 	| allTrees visitedDictionary |
 	allTrees := OrderedDictionary new.
 	visitedDictionary := IdentityDictionary new.
-	aCollectionOfElements
-		do: [ :aNodeElement | 
-			((visitedDictionary includesKey: aNodeElement)
-				or: [ aNodeElement graph hasNodesAlongIncomingEdges ])
+	aCollectionOfLayoutNodesWithEdges
+		do: [ :eachLayoutNode | 
+			((visitedDictionary includesKey: eachLayoutNode)
+				or: [ eachLayoutNode hasNodesAlongIncomingEdges ])
 				ifFalse: [ | aTreeNode |
-					aTreeNode := GtGradTreeNode on: aNodeElement.
+					aTreeNode := GtGradTreeNode on: eachLayoutNode.
 					self dfs: aTreeNode visited: visitedDictionary.
 					allTrees at: aTreeNode root put: #root.
 					separateSubtrees

@@ -7,7 +7,7 @@ Class {
 		'initialLayout',
 		'margin'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }
@@ -116,10 +116,11 @@ GtGraphAbstractCompactTree >> coordinate: aNode withMod: aFloat [
 ]
 
 { #category : #hook }
-GtGraphAbstractCompactTree >> doExecute: nodeElements [ 
+GtGraphAbstractCompactTree >> doExecute: nodeElements with: anExtentSpec [
 	| rootNodes |
 	
-	initialLayout isNil  ifFalse: [ initialLayout new executeOnElements: nodeElements. ].
+	initialLayout
+		ifNotNil: [ initialLayout new executeOnElements: nodeElements with: anExtentSpec ].
 	
 	rootNodes := self rootNodesFor: nodeElements.
 

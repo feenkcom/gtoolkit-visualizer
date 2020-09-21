@@ -7,7 +7,6 @@ Class {
 	#traits : 'TGtGraphLayoutUtils',
 	#classTraits : 'TGtGraphLayoutUtils classTrait',
 	#instVars : [
-		'affectedNodes',
 		'translator',
 		'isCached'
 	],
@@ -20,14 +19,6 @@ GtGraphLayout class >> constraints [
 ]
 
 { #category : #hook }
-GtGraphLayout >> applyOn: elements [
-	"Return quickly if there is nothing to do"
-	(elements isEmpty)
-		ifTrue: [ ^ self ].
-	self executeOnElements: elements
-]
-
-{ #category : #hook }
 GtGraphLayout >> applyOn: elements with: anExtentSpec [
 	"Return quickly if there is nothing to do"
 	(elements isEmpty)
@@ -36,47 +27,29 @@ GtGraphLayout >> applyOn: elements with: anExtentSpec [
 ]
 
 { #category : #hook }
-GtGraphLayout >> doExecute: elements [
+GtGraphLayout >> doExecute: elements with: anExtentSpec [
 	"Performs the layout"
 
 	self subclassResponsibility
 ]
 
 { #category : #hook }
-GtGraphLayout >> doExecute: elements with: anExtentSpec [
-	"Performs the layout"
-
-	self doExecute: elements
-]
-
-{ #category : #hook }
-GtGraphLayout >> doInitialize: elements [
+GtGraphLayout >> doInitialize: elements with: anExtentSpec [
 	"Method executed before beginning the layout. Useful when the graph to be ordered need to be prepared"
-	"self announce: (ROLayoutBegin new elements: elements)."
 ]
 
 { #category : #hook }
-GtGraphLayout >> doPost: elements [
+GtGraphLayout >> doPost: elements with: anExtentSpec [
 	"Method executed after performing the layout"
-	"self announce: (ROLayoutEnd new elements: elements)."
-]
-
-{ #category : #hook }
-GtGraphLayout >> executeOnElements: elements [ 
-	"Execute the layout, myself, on the elements"
-		
-	self doInitialize: elements.
-	self doExecute: elements.
-	self doPost: elements
 ]
 
 { #category : #hook }
 GtGraphLayout >> executeOnElements: elements with: anExtentSpec [
 	"Execute the layout, myself, on the elements"
 
-	self doInitialize: elements.
+	self doInitialize: elements with: anExtentSpec.
 	self doExecute: elements with: anExtentSpec.
-	self doPost: elements
+	self doPost: elements with: anExtentSpec
 ]
 
 { #category : #geometry }
@@ -91,6 +64,7 @@ GtGraphLayout >> groupBounds: aCollectionOfElements [
 { #category : #initialization }
 GtGraphLayout >> initialize [
 	super initialize.
+
 	translator := GtGraphLayoutTranslator default.
 	isCached := false
 ]
@@ -103,30 +77,25 @@ GtGraphLayout >> measure: anElement with: anExtentSpec [
 
 { #category : #layout }
 GtGraphLayout >> measurePositions: anElement with: anExtentSpec [
-	
+	| aParentNode |
+
 	isCached
-		ifFalse: [ self applyOn: (anElement children select: [ :aChild | aChild constraints ignoredByLayout not ]) with: anExtentSpec ]
+		ifTrue: [ ^ self ].
+
+	aParentNode := (BlLayoutParentNode alreadyMeasured: anElement) extentSpec: anExtentSpec.
+	self applyOn: aParentNode children with: anExtentSpec.
 	
+	aParentNode children with: anElement children accountedByLayout do: [ :eachChildNode :eachChildElement |
+		eachChildElement measuredBounds position: eachChildNode measurement position ]
 ]
 
 { #category : #hook }
 GtGraphLayout >> on: elements [
-	self applyOn: elements
-]
-
-{ #category : #hook }
-GtGraphLayout >> on: elements edges: edges [
-	self applyOn: elements
+	self shouldNotImplement
 ]
 
 { #category : #hook }
 GtGraphLayout >> step [
-"	currentIteraction := currentIteraction + 1.
-	(currentIteraction \\ self iterationsToSendEvent) = 0 
-		ifTrue: [ self announce: (ROLayoutStep new 
-											currentIteration: currentIteraction;
-											maxInterations: maxInterations) ].
-	"
 ]
 
 { #category : #accessing }
@@ -137,9 +106,4 @@ GtGraphLayout >> translator [
 { #category : #accessing }
 GtGraphLayout >> translator: t [
 	translator := t
-]
-
-{ #category : #hook }
-GtGraphLayout >> userDefinedEdges: edges [
-	"Do nothing"
 ]

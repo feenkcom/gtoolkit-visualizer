@@ -1,106 +1,52 @@
 Class {
 	#name : #GtGradKamadaKawaiLayoutExamples,
 	#superclass : #GtGradLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Grad-Examples'
+	#category : #'GToolkit-BlocGraph-Grad-Examples'
 }
 
-{ #category : #examples }
-GtGradKamadaKawaiLayoutExamples >> simpleExample [
+{ #category : #'examples - instance creation' }
+GtGradKamadaKawaiLayoutExamples >> createKawaiTree [
 	<gtExample>
-		
-	| view theNodes layout pairsOfNodes theNodePositions |
-	
-	view := self view.
-	layout := GtGradKamadaKawaiLayout new.
+	| theNodes pairsOfNodes |
+
 	theNodes := self nodes: (1 to: 7). 
-	theNodes doWithIndex: [ :node :index |
-			node labeled: (index asString).
-	].
-	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add: (2->4);
-					 add: (3->5); add: (4->5); add: (3->6);
-					 add: (4->6); add: (6->5); add:(6->7). 
+
+	pairsOfNodes := {
+		(1->2). (1->3).
+		(2->4). (3->5). (4->5). (3->6).
+		(4->6). (6->5). (6->7) }.
+
 	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-
-	view addChildren: theNodes.
-	view layout: layout.
-	view forceLayout. 
-	theNodePositions := theNodes collect: [ :aNode | aNode position ].
-	theNodes do: [ :aNode |
-		(aNode graph nodesAlongOutgoingEdges) do: [ :adjacentNode |
-			| line |
-			line := BlLine new.
-			line from: (aNode position) to: (adjacentNode position).
-			view addChild: (line asElement ).
-		].
-	].
-
 	
-	^ view
+	^ BlLayoutParentNode new
+		constraints: (BlLayoutCommonConstraints new);
+		extentSpec: (BlExtentMeasurementSpec unspecified);
+		children: theNodes
 ]
 
-{ #category : #examples }
+{ #category : #'examples - layout' }
 GtGradKamadaKawaiLayoutExamples >> simpleExampleWithDefaultParameters [
-	<gtExample>
-		
-	| view theNodes layout pairsOfNodes theNodePositions |
+	<gtExample>	
+	| layout aParentNode |
 	
-	view := self view. 
+	aParentNode := self createKawaiTree.
+	
 	layout := GtGradKamadaKawaiLayout new.
-	theNodes := self nodes: (1 to: 7).
-	layout setDefaultParameterValues: theNodes.
-	theNodes doWithIndex: [ :node :index |
-			node labeled: (index asString).
-	].
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add: (2->4);
-					 add: (3->5); add: (4->5); add: (3->6);
-					 add: (4->6); add: (6->5); add:(6->7). 
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	layout setDefaultParameterValues: aParentNode children.
+	layout measure: aParentNode.
 
-	view addChildren: theNodes.
-	view layout: layout.
-	view forceLayout. 
-	theNodePositions := theNodes collect: [ :aNode | aNode position ].
-	theNodes do: [ :aNode |
-		(aNode graph nodesAlongOutgoingEdges) do: [ :adjacentNode |
-			| line |
-			line := BlLine new.
-			line from: (aNode position) to: (adjacentNode position).
-			view addChild: (line asElement ).
-		].
-	].
-
-	
-	^ view
+	^ aParentNode
 ]
 
-{ #category : #examples }
-GtGradKamadaKawaiLayoutExamples >> simpleExampleWithLogging [
-	<gtExample>
-
-	| view theNodes layout pairsOfNodes l|
+{ #category : #'examples - layout' }
+GtGradKamadaKawaiLayoutExamples >> simpleGraph [
+	<gtExample>	
+	| layout aParentNode |
 	
-	view := self view.
+	aParentNode := self createKawaiTree.
+	
 	layout := GtGradKamadaKawaiLayout new.
-	theNodes := self nodes: (1 to: 7).
-	theNodes doWithIndex: [ :node :index |
-			node labeled: (index asString). 
-	].
-	
-	pairsOfNodes := OrderedCollection new.
-	pairsOfNodes add: (1->2); add: (1->3); add: (2->4);
-					 add: (3->5); add: (4->5); add: (3->6);
-					 add: (4->6); add: (6->5); add:(6->7). 
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
+	layout measure: aParentNode.
 
-	view addChildren: theNodes.
-	view layout: layout.
-	l := MemoryLogger new.
-	l runDuring:[
-		view forceLayout. 
-	].
-
-	^ l
+	^ aParentNode
 ]

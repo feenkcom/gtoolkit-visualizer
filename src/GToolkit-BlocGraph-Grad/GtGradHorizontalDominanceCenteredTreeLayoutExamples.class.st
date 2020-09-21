@@ -16,90 +16,73 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> centeredDominanceTreeLayo
 	^ aTreeLayout
 ]
 
-{ #category : #accessing }
-GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelConstantAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent x.
-	
-]
-
-{ #category : #accessing }
-GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelConstantPosition: aTreeNode [
-	^ aTreeNode element position x
-	
-]
-
-{ #category : #accessing }
-GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelVariableAxisDimension: aTreeNode [
-	^ aTreeNode element measuredBounds extent  y.
-	
-]
-
-{ #category : #accessing }
-GtGradHorizontalDominanceCenteredTreeLayoutExamples >> getNodeLevelVariablePosition: aTreeNode [
-	^ aTreeNode element position y
-
-]
-
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self centeredDominanceTreeLayout.
-	theNodes := self constructGraphWithANodeWithSeveralIncomingEdges key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
-	^ view
+	aParentNode := self constructGraphWithANodeWithSeveralIncomingEdges.
+
+	aTreeLayout := self centeredDominanceTreeLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@33.0) corner: (50.0@53.0).
+		(61.0@0.0) corner: (111.0@20.0).
+		(61.0@22.0) corner: (111.0@42.0).
+		(61.0@44.0) corner: (111.0@64.0).
+		(61.0@66.0) corner: (111.0@86.0).
+		(122.0@22.0) corner: (172.0@42.0)
+	}.
+
+	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructMoreComplexGraphWithANodeWithSeveralIncomingEdges.
+
 	aTreeLayout := self centeredDominanceTreeLayout.
-	theNodes := self constructMoreComplexGraphWithANodeWithSeveralIncomingEdges key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout.
+	aTreeLayout measure: aParentNode.
 	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
-
-	^ view
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@38.5) corner: (50.0@58.5).
+		(61.0@0.0) corner: (111.0@20.0).
+		(61.0@33.0) corner: (111.0@53.0).
+		(61.0@55.0) corner: (111.0@75.0).
+		(61.0@77.0) corner: (111.0@97.0).
+		(122.0@33.0) corner: (172.0@53.0).
+		(183.0@22.0) corner: (233.0@42.0).
+		(183.0@44.0) corner: (233.0@64.0).
+		(244.0@22.0) corner: (294.0@42.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(183.0@0.0) corner: (233.0@20.0)
+	}.
+	
+	^ aParentNode
 ]
 
-{ #category : #accessing }
-GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMaximumPoint: aTreeNode [
-	^ aTreeNode element position y + aTreeNode element measuredBounds extent y.
-]
-
-{ #category : #accessing }
-GtGradHorizontalDominanceCenteredTreeLayoutExamples >> nodeMinimumPoint: aTreeNode [
-	^ aTreeNode element position y
-]
-
-{ #category : #example }
+{ #category : #'example - layout' }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> treeWithEdgesWhoseSoucesAreOnDifferentLevels [
 	<gtExample>
-		
-	| view theNodes aTreeLayout |
-	
-	view := self view.
-	aTreeLayout := self centeredDominanceTreeLayout.
-	theNodes := self construcTreeWithEdgesWhoseSoucesAreOnDifferentLevels key.
-	view addChildren: theNodes.
-	view layout: aTreeLayout.
-	view forceLayout.
-	
-	self checkPositionsOfTreesAndNodes:	theNodes layout: aTreeLayout.
+	| aParentNode aTreeLayout |
 
-	^ view
+	aParentNode := self constructTreeWithEdgesWhoseSourcesAreOnDifferentLevels.
+
+	aTreeLayout := self centeredDominanceTreeLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@22.0) corner: (50.0@42.0).
+		(61.0@0.0) corner: (111.0@20.0).
+		(61.0@22.0) corner: (111.0@42.0).
+		(61.0@44.0) corner: (111.0@64.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(183.0@0.0) corner: (233.0@20.0)
+	}.
+
+	^ aParentNode
 ]

@@ -15,7 +15,7 @@ Class {
 		'translateElement',
 		'align'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #accessing }
@@ -28,7 +28,7 @@ GtGraphCellLayout >> centered [
 ]
 
 { #category : #hook }
-GtGraphCellLayout >> doExecute: elements [ 
+GtGraphCellLayout >> doExecute: elements with: anExtentSpec [
 	
 	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights |
 	lineItemSize := self lineItemsCountBlock value: elements.

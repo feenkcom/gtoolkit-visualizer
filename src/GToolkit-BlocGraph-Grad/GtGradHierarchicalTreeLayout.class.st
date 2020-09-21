@@ -52,8 +52,8 @@ GtGradHierarchicalTreeLayout >> constructLayoutAlgorithm: anElementsCollection [
 GtGradHierarchicalTreeLayout >> dfs: theCurrentElement visited: aVisitedList [
 
 	aVisitedList add: theCurrentElement.
-	theCurrentElement graph hasNodesAlongOutgoingEdges
-		ifTrue: [ theCurrentElement graph nodesAlongOutgoingEdges
+	theCurrentElement hasNodesAlongOutgoingEdges
+		ifTrue: [ theCurrentElement nodesAlongOutgoingEdges
 				do: [ :aConnectedElement | 
 					(aVisitedList includes: aConnectedElement)
 						ifFalse: [
@@ -130,14 +130,9 @@ GtGradHierarchicalTreeLayout >> levelDistance: aNum [
 ]
 
 { #category : #measure }
-GtGradHierarchicalTreeLayout >> measurePositions: anElement with: anExtentSpec [
-	| anElementsCollection |
-
-	anElementsCollection := anElement children accountedByLayout
-		select: [ :aChildElement | aChildElement graph isNode ].
-
-	self layout: (self constructLayoutAlgorithm: anElementsCollection).
-	self layout measurePositions: anElement  with: anExtentSpec 
+GtGradHierarchicalTreeLayout >> measure: aParentNode [
+	self layout: (self constructLayoutAlgorithm: aParentNode children).
+	self layout measure: aParentNode.
 ]
 
 { #category : #accessing }
