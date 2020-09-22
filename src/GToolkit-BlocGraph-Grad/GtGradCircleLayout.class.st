@@ -120,5 +120,7 @@ GtGradCircleLayout >> measure: aParentLayoutNode [
 	"SequenceableCollection"
 	aParentLayoutNode children with: thePosition do: [ :aNodeElement :aPosition |
 		"to change position of a node"
-		aNodeElement measurement position: aPosition ]
+		aNodeElement measurement position: aPosition ].
+
+	aParentLayoutNode children normalizePositions
 ]
