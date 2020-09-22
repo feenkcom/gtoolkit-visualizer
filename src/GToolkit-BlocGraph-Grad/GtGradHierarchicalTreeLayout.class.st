@@ -115,7 +115,7 @@ GtGradHierarchicalTreeLayout >> layout [
 ]
 
 { #category : #accessing }
-GtGradHierarchicalTreeLayout >> layout: anObject [
+GtGradHierarchicalTreeLayout >> layoutAlgorithm: anObject [
 	layout := anObject
 ]
 
@@ -130,9 +130,13 @@ GtGradHierarchicalTreeLayout >> levelDistance: aNum [
 ]
 
 { #category : #measure }
-GtGradHierarchicalTreeLayout >> measure: aParentNode [
-	self layout: (self constructLayoutAlgorithm: aParentNode children).
-	self layout measure: aParentNode.
+GtGradHierarchicalTreeLayout >> measure: aParentLayoutNode [
+	| aParentGraphNode |
+
+	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
+
+	self layoutAlgorithm: (self constructLayoutAlgorithm: aParentGraphNode children).
+	self layout measure: aParentGraphNode
 ]
 
 { #category : #accessing }

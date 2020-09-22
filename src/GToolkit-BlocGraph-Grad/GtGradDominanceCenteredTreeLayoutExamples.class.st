@@ -24,38 +24,22 @@ Class {
 { #category : #'example - instance creation' }
 GtGradDominanceCenteredTreeLayoutExamples >> constructMoreComplexGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
-	| theNodes  pairsOfNodes |
 	
-	theNodes := self nodes: (1 to: 11).
-	
-	pairsOfNodes := {
-		(1->2). (1->3). (1->4). (1->5). (2->6).
-		(3->6). (4->6). (5->6). (6->7). (6->8).
-		(2->10). (10->11). (11->9). (7->9). (8->9) }.			 
-	
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 11
+		pairs: {
+			(1->2). (1->3). (1->4). (1->5). (2->6).
+			(3->6). (4->6). (5->6). (6->7). (6->8).
+			(2->10). (10->11). (11->9). (7->9). (8->9) }
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceCenteredTreeLayoutExamples >> constructTreeWithEdgesWhoseSourcesAreOnDifferentLevels [
 	<gtExample>
-	| theNodes  pairsOfNodes |
-	
-	theNodes := self nodes: (1 to: 6).
-	
-	pairsOfNodes := {
-		(1->2). (1->3). (1->4).
-		(2->5). (5->6). (3->6) }.
-					 
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 6
+		pairs: {
+			(1->2). (1->3). (1->4).
+			(2->5). (5->6). (3->6) }
 ]

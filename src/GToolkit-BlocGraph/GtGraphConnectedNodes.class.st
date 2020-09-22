@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'edges'
 	],
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'graphElement'
 	],
-	#category : #'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #'instance creation' }

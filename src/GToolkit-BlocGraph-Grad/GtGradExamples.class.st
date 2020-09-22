@@ -61,9 +61,10 @@ GtGradExamples >> createGraph: anAmountOfNodes pairs: anArrayOfPairs [
 
 	self connectPairsOfNodes: theNodes pairs: anArrayOfPairs.
 
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
+	^ BlLayoutParentNodeWithEdges new
+		parentNode: (BlLayoutParentNode new
+			constraints: (BlLayoutCommonConstraints new);
+			extentSpec: (BlExtentMeasurementSpec unspecified));
 		children: theNodes
 ]
 

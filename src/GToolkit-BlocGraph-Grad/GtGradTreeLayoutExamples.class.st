@@ -63,21 +63,21 @@ GtGradTreeLayoutExamples >> binaryTreeWith7Nodes [
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructBinaryTreeWith15Nodes [
 	<gtExample>		
-	| theNodes  pairsOfNodes theEdges |
+	| aParentNode theNodes |
 	
-	theNodes := self nodes: (1 to: 15).
-	
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5).
-		(3->6). (3->7).
-		(4->8). (4->9).
-		(5->10). (5->11).
-		(6->12). (6->13).
-		(7->14). (7->15) }.
+	aParentNode := self
+		createGraph: 15
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7).
+			(4->8). (4->9).
+			(5->10). (5->11).
+			(6->12). (6->13).
+			(7->14). (7->15) }.
 
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
+	theNodes := aParentNode children.
+
 	self assert: (theNodes at: 1) nodesAlongOutgoingEdges size equals: 2.
 	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
 	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 2.
@@ -88,114 +88,67 @@ GtGradTreeLayoutExamples >> constructBinaryTreeWith15Nodes [
 	self assert: (theNodes at: 15) nodesAlongOutgoingEdges size equals: 0.
 	self assert: (theNodes at: 15) nodesAlongIncomingEdges size equals: 1.
 
-	self assert: theEdges size equals: 14.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ aParentNode
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructBinaryTreeWith7Nodes [
-	<gtExample>		
-	| theNodes  pairsOfNodes theEdges |
-	
-	theNodes := self nodes: (1 to: 7).
-	
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5).
-		(3->6). (3->7) }.
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	self assert: (theNodes at: 1) nodesAlongOutgoingEdges size equals: 2.
-	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
-	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 2.
-	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
-	self assert: (theNodes at: 2) connectedNodes size equals: 3.
-	self assert: (theNodes at: 6) nodesAlongOutgoingEdges size equals: 0. 
-	self assert: (theNodes at: 6) nodesAlongIncomingEdges size equals: 1. 
-	self assert: (theNodes at: 7) nodesAlongOutgoingEdges size equals: 0.
-	self assert: (theNodes at: 7) nodesAlongIncomingEdges size equals: 1.
+	<gtExample>
 
-	self assert: theEdges size equals: 6.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 7
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7) }
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructDisconnectedGraph [
 	<gtExample>
-	| theNodes  pairsOfNodes theEdges |
 
-	theNodes := self nodes: (1 to: 12).
-
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5).
-		(3->6). (3->7).
-		(6->2). (5->3).
-		(8->9). (8->10).
-		(10->11). (11->12) }.
-
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	self assert: theEdges size equals: 12.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 12
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7).
+			(6->2). (5->3).
+			(8->9). (8->10).
+			(10->11). (11->12) }
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructDisconnectedGraphWithRootsOfDifferentSizes [
 	<gtExample>
-	| theNodes  pairsOfNodes theEdges |
+	| aParentNode theNodes |
 
-	theNodes := self nodes: (1 to: 12).
+	aParentNode := self
+		createGraph: 12
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7).
+			(6->2). (5->3).
+			(8->9). (8->10).
+			(10->11).
+			(11->12) }.
+		
+	theNodes := aParentNode children.
+
 	(theNodes at: 1) measurement extent: 50@50.
 	(theNodes at: 8) measurement extent: 80@70.
 
-	"The first tree's root is. The second root is 8"
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5).
-		(3->6). (3->7).
-		(6->2). (5->3).
-		(8->9). (8->10).
-		(10->11).
-		(11->12) }.
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	self assert: theEdges size equals: 12.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ aParentNode
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructDisconnectedGraphWithTreeContainingOneNode [
 	<gtExample>
-	| theNodes pairsOfNodes |
 
-	theNodes := self nodes: (1 to: 5).
-	
-	pairsOfNodes := { (2->3). (2->4). (2->5) }.
-
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^  self
+		createGraph: 5
+		pairs: { (2->3). (2->4). (2->5) }
 ]
 
 { #category : #'examples - instance creation' }
@@ -206,95 +159,64 @@ GtGradTreeLayoutExamples >> constructForest: theNodes [
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructGraphWithCycles [
 	<gtExample>
-	| theNodes pairsOfNodes theEdges |
 	
-	theNodes := self nodes: (1 to: 7).
-	
-	pairsOfNodes := { (1->2). (1->3). (2->4). (2->5). (3->6). (3->7). (6->2). (5->3) }.
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	self assert: theEdges size equals: 8.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 7
+		pairs: { (1->2). (1->3). (2->4). (2->5). (3->6). (3->7). (6->2). (5->3) }
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructSimpleTree [
 	<gtExample>
-	| theNodes pairsOfNodes theEdges |
 	
-	theNodes := self nodes: (1 to: 15).
-	
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5).
-		(3->6). (3->7).
-		(4->8). (4->9).
-		(5->10). (5->11).
-		(6->12). (6->13).
-		(6->14). (6->15) }.
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-	
-	self assert: (theNodes at: 1) nodesAlongOutgoingEdges size equals: 2.
-	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
-	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 2.
-	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
-	self assert: (theNodes at: 6) nodesAlongOutgoingEdges size equals: 4. 
-	self assert: (theNodes at: 6) nodesAlongIncomingEdges size equals: 1. 
-	self assert: (theNodes at: 15) nodesAlongOutgoingEdges size equals: 0.
-	self assert: (theNodes at: 15) nodesAlongIncomingEdges size equals: 1.
-
-	self assert: theEdges size equals: 14.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 15
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7).
+			(4->8). (4->9).
+			(5->10). (5->11).
+			(6->12). (6->13).
+			(6->14). (6->15) }
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructTreeWith10NodesOfIncreasingSize [
 	<gtExample>
-	| theNodes  pairsOfNodes |
+	| aParentNode theNodes |
 	
-	theNodes := self nodes: (1 to: 10).
+	aParentNode := self
+		createGraph: 10
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7).
+			(4->8). (4->9).
+			(5->10) }.
+	
+	theNodes := aParentNode children.
 	
 	theNodes doWithIndex: [ :aNodeElement :index |
 		aNodeElement measurement extent: 10 asPoint * index ].
 
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5).
-		(3->6). (3->7).
-		(4->8). (4->9).
-		(5->10) }.
-
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ aParentNode
 ]
 
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructTreeWithNodesOfDifferentSizes [
 	<gtExample>
-	| theNodes pairsOfNodes theEdges |
+	| aParentNode theNodes |
 
-	theNodes := self nodes: (1 to: 4).
+	aParentNode := self
+		createGraph: 4
+		pairs: { (1->2). (1->3). (1->4) }.
+	
+	theNodes := aParentNode children.
+
 	(theNodes at: 2) measurement extent: 40@40.
 	(theNodes at: 3) measurement extent: 100@100.
 	(theNodes at: 4) measurement extent: 70@70.
-
-	pairsOfNodes := { (1->2). (1->3). (1->4) }.
-	
-	theEdges := self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
 	
 	self assert: (theNodes at: 1) nodesAlongOutgoingEdges size equals: 3.
 	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
@@ -304,12 +226,8 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfDifferentSizes [
 	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
 	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 0.
 	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
-	self assert: theEdges size equals: 3.
 
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ aParentNode
 ]
 
 { #category : #'examples - instance creation' }
@@ -328,26 +246,18 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfIncreasingSize [
 { #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger [
 	<gtExample>
-	| theNodes pairsOfNodes |
-	
-	theNodes := self nodes: (1 to: 23).
-	
-	pairsOfNodes := {
-		(1->2). (1->3).
-		(2->4). (2->5). (2->6).
-		(4->10). (4->11). (4->12).
-		(5->13). (5->14). (5->15).
-		(6->16). (6->17). (6->18).
-		(3->7). (3->8). (3->9).
-		(7->19). (7->20). (7->21).
-		(21->22). (21->23) }.
 
-	self connectPairsOfNodes: theNodes pairs: pairsOfNodes.
-
-	^ BlLayoutParentNode new
-		constraints: (BlLayoutCommonConstraints new);
-		extentSpec: (BlExtentMeasurementSpec unspecified);
-		children: theNodes
+	^ self
+		createGraph: 23
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5). (2->6).
+			(4->10). (4->11). (4->12).
+			(5->13). (5->14). (5->15).
+			(6->16). (6->17). (6->18).
+			(3->7). (3->8). (3->9).
+			(7->19). (7->20). (7->21).
+			(21->22). (21->23) }
 ]
 
 { #category : #'examples - layout' }

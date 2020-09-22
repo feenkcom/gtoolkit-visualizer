@@ -4,7 +4,7 @@ I am an abstract iterator over edges connected to a graph element
 Class {
 	#name : #GtGraphEdgesIterator,
 	#superclass : #GtGraphIterator,
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #'api - enumeration' }

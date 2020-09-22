@@ -8,7 +8,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #'as yet unclassified' }

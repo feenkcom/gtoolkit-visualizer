@@ -6,7 +6,7 @@ Users can ask for different subsets of those edges for example incoming or outgo
 Class {
 	#name : #GtGraphConnectedEdges,
 	#superclass : #GtGraphEdgesIterator,
-	#category : 'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #'api - enumeration' }

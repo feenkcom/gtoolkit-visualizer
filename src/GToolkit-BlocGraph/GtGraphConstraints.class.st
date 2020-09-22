@@ -12,7 +12,7 @@ Class {
 		'model',
 		'objectsToNodesCache'
 	],
-	#category : #'GToolkit-BlocGraph'
+	#category : #'GToolkit-BlocGraph-Core'
 }
 
 { #category : #accessing }
