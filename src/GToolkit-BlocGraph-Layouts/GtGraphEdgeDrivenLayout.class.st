@@ -120,21 +120,28 @@ GtGraphEdgeDrivenLayout >> isLineLayout [
 { #category : #accessing }
 GtGraphEdgeDrivenLayout >> setEdgesFromElements: aCollectionOfLayoutChildNodes [
 	| aConstraintsMap theIncomingEdges |
-
 	aCollectionOfLayoutChildNodes isEmpty
 		ifTrue: [ ^ self ].
 
 	aConstraintsMap := IdentityDictionary new.
-	aCollectionOfLayoutChildNodes do: [ :eachNode | aConstraintsMap at: eachNode constraints put: eachNode ].
-
-	theIncomingEdges := Array streamContents: [ :aStream |
-		aCollectionOfLayoutChildNodes do: [ :eachChildNode |
-			eachChildNode constraints graph incomingEdges do: [ :eachGraphEdge |
-				aStream nextPut: (BlLayoutEdge new
-					fromNode: (aConstraintsMap at: eachGraphEdge fromElement constraints);
-					toNode: (aConstraintsMap at: eachGraphEdge toElement constraints)) ] ] ].
-
-	self edges: (theIncomingEdges select: [ :eachEdge | aCollectionOfLayoutChildNodes includes: eachEdge fromNode ])
+	aCollectionOfLayoutChildNodes
+		do: [ :eachNode | aConstraintsMap at: eachNode constraints put: eachNode ].
+	theIncomingEdges := Array
+		streamContents: [ :aStream | 
+			aCollectionOfLayoutChildNodes
+				do: [ :eachChildNode | 
+					eachChildNode incomingEdges
+						do: [ :eachGraphEdge | 
+							aStream
+								nextPut:
+									(BlLayoutEdge new
+										fromNode: (aConstraintsMap at: eachGraphEdge fromNode constraints);
+										toNode: (aConstraintsMap at: eachGraphEdge toNode constraints)) ] ] ].
+	self
+		edges:
+			(theIncomingEdges
+				select:
+					[ :eachEdge | aCollectionOfLayoutChildNodes includes: eachEdge fromNode ])
 ]
 
 { #category : #'default attach points' }

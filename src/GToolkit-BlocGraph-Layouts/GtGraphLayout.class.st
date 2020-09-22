@@ -70,23 +70,13 @@ GtGraphLayout >> initialize [
 ]
 
 { #category : #layout }
-GtGraphLayout >> measure: anElement with: anExtentSpec [
-	super measure: anElement with: anExtentSpec.
-	isCached := true
-]
-
-{ #category : #layout }
-GtGraphLayout >> measurePositions: anElement with: anExtentSpec [
-	| aParentNode |
-
+GtGraphLayout >> measure: aParentNode [	
 	isCached
 		ifTrue: [ ^ self ].
 
-	aParentNode := (BlLayoutParentNode alreadyMeasured: anElement) extentSpec: anExtentSpec.
-	self applyOn: aParentNode children with: anExtentSpec.
-	
-	aParentNode children with: anElement children accountedByLayout do: [ :eachChildNode :eachChildElement |
-		eachChildElement measuredBounds position: eachChildNode measurement position ]
+	self applyOn: aParentNode withGraphEdges children with: aParentNode extentSpec.
+	aParentNode children normalizePositions.
+	isCached := true
 ]
 
 { #category : #hook }

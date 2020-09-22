@@ -1,22 +1,39 @@
 Class {
 	#name : #GtGraphGridLayoutExamples,
 	#superclass : #GtGraphLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #example }
-GtGraphGridLayoutExamples >> simple [
+GtGraphGridLayoutExamples >> squareOfSquares [
 	<gtExample>
-	<script: 'self new simple asSpartaForm asMorph openInWindow'>
-	| view nodes |
+	| aParentNode aLayout |
 
-	view := self view.
-	nodes := self nodes: (1 to: 100).
-	self connect: nodes from: [ :x | x // 10 ].
-	view addChildren: nodes.
-	view layout: GtGraphGridLayout new.
+	aParentNode := self
+		createNodes: 16
+		extent: 20@20.
+
+	aLayout := GtGraphGridLayout new.
+	aLayout measure: aParentNode.
 	
-	self applyLayoutIn: view.
-	
-	^ view
+	self assert: aParentNode children measuredBounds equals: {
+		(0.0@0.0) corner: (20.0@20.0).
+		(25.0@0.0) corner: (45.0@20.0).
+		(50.0@0.0) corner: (70.0@20.0).
+		(75.0@0.0) corner: (95.0@20.0).
+		(0.0@25.0) corner: (20.0@45.0).
+		(25.0@25.0) corner: (45.0@45.0).
+		(50.0@25.0) corner: (70.0@45.0).
+		(75.0@25.0) corner: (95.0@45.0).
+		(0.0@50.0) corner: (20.0@70.0).
+		(25.0@50.0) corner: (45.0@70.0).
+		(50.0@50.0) corner: (70.0@70.0).
+		(75.0@50.0) corner: (95.0@70.0).
+		(0.0@75.0) corner: (20.0@95.0).
+		(25.0@75.0) corner: (45.0@95.0).
+		(50.0@75.0) corner: (70.0@95.0).
+		(75.0@75.0) corner: (95.0@95.0)
+	}.
+
+	^ aParentNode
 ]

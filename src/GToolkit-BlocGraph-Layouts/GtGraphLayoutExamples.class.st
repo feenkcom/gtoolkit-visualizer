@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphLayoutExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #examples }
@@ -36,9 +36,68 @@ GtGraphLayoutExamples >> connect: nodes from: aFromBlock to: aBlockOrSymbol [
 ]
 
 { #category : #'building - edges' }
+GtGraphLayoutExamples >> connectPairsOfNodes: nodes pairs: pairsOfNodes [
+	pairsOfNodes do: [ :aPair |
+		((aPair key between: 1 and: nodes size)
+			and: [ aPair value between: 1 and: nodes size ])
+				ifTrue: [
+					| fromNode toNode anEdge |
+					fromNode := nodes at: aPair key.
+					toNode := nodes at: aPair value.
+					
+					anEdge := self edgeFrom: fromNode to: toNode.
+					
+					fromNode addConnectedEdge: anEdge.
+					toNode addConnectedEdge: anEdge ] ]
+]
+
+{ #category : #'building - edges' }
 GtGraphLayoutExamples >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 	^ (self shouldCreateEdgeFrom: fromElement to: toElement)
 		ifTrue: [ (self edgeFrom: fromElement to: toElement) ]
+]
+
+{ #category : #'building - graph' }
+GtGraphLayoutExamples >> createGraph: anAmountOfNodes extent: anExtent pairs: anArrayOfPairs [
+	| theNodes |
+
+	theNodes := self nodes: (1 to: anAmountOfNodes) extent: anExtent .
+
+	self connectPairsOfNodes: theNodes pairs: anArrayOfPairs.
+
+	^ BlLayoutParentNodeWithEdges new
+		parentNode: (BlLayoutParentNode new
+			constraints: (BlLayoutCommonConstraints new);
+			extentSpec: (BlExtentMeasurementSpec unspecified));
+		children: theNodes
+]
+
+{ #category : #'building - graph' }
+GtGraphLayoutExamples >> createGraph: anAmountOfNodes pairs: anArrayOfPairs [
+	| theNodes |
+
+	theNodes := self nodes: (1 to: anAmountOfNodes).
+
+	self connectPairsOfNodes: theNodes pairs: anArrayOfPairs.
+
+	^ BlLayoutParentNodeWithEdges new
+		parentNode: (BlLayoutParentNode new
+			constraints: (BlLayoutCommonConstraints new);
+			extentSpec: (BlExtentMeasurementSpec unspecified));
+		children: theNodes
+]
+
+{ #category : #'building - graph' }
+GtGraphLayoutExamples >> createNodes: anAmountOfNodes extent: anExtent [
+	| theNodes |
+
+	theNodes := self nodes: (1 to: anAmountOfNodes) extent: anExtent.
+
+	^ BlLayoutParentNodeWithEdges new
+		parentNode: (BlLayoutParentNode new
+			constraints: (BlLayoutCommonConstraints new);
+			extentSpec: (BlExtentMeasurementSpec unspecified));
+		children: theNodes
 ]
 
 { #category : #'initialize-release' }
@@ -55,12 +114,15 @@ GtGraphLayoutExamples >> defaultView [
 ]
 
 { #category : #'building - edges' }
-GtGraphLayoutExamples >> edgeFrom: fromElement to: toElement [
-	| edge |
-	edge := GtGraphEdge new from: fromElement to: toElement.
-	fromElement constraints graph addConnectedEdge: edge.
-	toElement constraints graph addConnectedEdge: edge.
-	^ edge
+GtGraphLayoutExamples >> edgeFrom: aFromLayoutNode to: aToLayoutNode [
+	^ BlLayoutEdge new
+		fromNode: aFromLayoutNode;
+		toNode: aToLayoutNode
+]
+
+{ #category : #accessing }
+GtGraphLayoutExamples >> nodeExtent [
+	^ 50@20
 ]
 
 { #category : #'building - graph' }
@@ -70,11 +132,26 @@ GtGraphLayoutExamples >> nodeFor: aModel [
 
 { #category : #'building - graph' }
 GtGraphLayoutExamples >> nodes: aDataCollection [
+	^ self
+		nodes: aDataCollection
+		extent: self nodeExtent
+]
+
+{ #category : #'building - graph' }
+GtGraphLayoutExamples >> nodes: aDataCollection extent: anExtent [
 	^ aDataCollection collect: [ :model |
-		| child |
-		child := self nodeFor: model.
-		child userData at: #model put: model.
-		child ]
+		| childConstraints child |
+
+		childConstraints := BlLayoutCommonConstraints new.
+		childConstraints graph
+			beNode;
+			model: model.
+
+		child := BlLayoutChildNode new
+			constraints: childConstraints;
+			measurement: (BlLayoutNodeComputedMeasurement new extent: anExtent).
+
+		child withEdges: #() ]
 ]
 
 { #category : #'building - edges' }

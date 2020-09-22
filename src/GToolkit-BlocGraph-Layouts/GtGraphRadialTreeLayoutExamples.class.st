@@ -1,22 +1,39 @@
 Class {
 	#name : #GtGraphRadialTreeLayoutExamples,
 	#superclass : #GtGraphLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #example }
-GtGraphRadialTreeLayoutExamples >> simple [
+{ #category : #public }
+GtGraphRadialTreeLayoutExamples >> binaryTree [
 	<gtExample>
-	<script: 'self new simple asSpartaForm asMorph openInWindow'>
-	| view nodes |
+	| aParentNode aLayout |
 
-	view := self view.
-	nodes := self nodes: (1 to: 50).
-	self connect: nodes from: [ :x | x // 2 ].
-	view addChildren: nodes.
-	view layout: GtGraphRadialTreeLayout new.
+	aParentNode := self
+		createGraph: 15
+		extent: 10@10
+		pairs: ((1 to: 15) collect: [ :x |  (x // 2) -> x ]).
+
+	aLayout := GtGraphRadialTreeLayout new.
+	aLayout measure: aParentNode.
 	
-	self applyLayoutIn: view.
-	
-	^ view
+	self assert: aParentNode children measuredBounds equals: {
+		(48.06861693281601@0.0) corner: (58.06861693281601@10.0).
+		(65.62026817062346@9.58851077208405) corner: (75.62026817062346@19.58851077208405).
+		(39.74568020187317@18.18594853651365) corner: (49.74568020187317@28.18594853651365).
+		(87.75652362198917@4.986989335409106) corner: (97.75652362198917@14.986989335409106).
+		(73.70849125934902@30.701740089441074) corner: (83.70849125934902@40.701740089441074).
+		(45.901531531738556@39.94125362159326) corner: (55.901531531738556@49.94125362159326).
+		(19.257478074548345@27.747401278130866) corner: (29.257478074548345@37.747401278130866).
+		(108.06861693281601@0.0) corner: (118.06861693281601@10.0).
+		(106.2033622354547@14.844237555271377) corner: (116.2033622354547@24.844237555271377).
+		(91.96994906524526@40.898325601400046) corner: (101.96994906524526@50.898325601400046).
+		(80.4867552849044@50.4882590884738) corner: (90.4867552849044@60.4882590884738).
+		(52.31284903287819@59.84969919624325) corner: (62.31284903287819@69.84969919624325).
+		(37.37385359384649@59.039156812436204) corner: (47.37385359384649@69.0391568124362).
+		(10.37819956945168@46.68439181327528) corner: (20.37819956945168@56.68439181327528).
+		(0.0@35.90832864623738) corner: (10.0@45.90832864623738)
+	}.
+
+	^ aParentNode
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphRectanglePackLayoutExamples,
 	#superclass : #GtGraphLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #private }
@@ -21,7 +21,7 @@ GtGraphRectanglePackLayoutExamples >> centeredString: aString in: aNode [
 { #category : #example }
 GtGraphRectanglePackLayoutExamples >> circles [
 	<gtExample>
-	<script: 'self new circles asSpartaForm asMorph openInWindow'>
+	<noTest>
 	| view nodes data |
 
 	data := self circlesData.
@@ -62,7 +62,7 @@ GtGraphRectanglePackLayoutExamples >> circlesData [
 { #category : #example }
 GtGraphRectanglePackLayoutExamples >> circlesRaw [
 	<gtExample>
-	<script: 'self new circlesRaw asSpartaForm asMorph openInWindow'>
+	<noTest>
 	| view data |
 
 	data := self circlesData.
@@ -101,7 +101,7 @@ GtGraphRectanglePackLayoutExamples >> circlesRaw [
 { #category : #example }
 GtGraphRectanglePackLayoutExamples >> circlesSimplified [
 	<gtExample>
-	<script: 'self new circles asSpartaForm asMorph openInWindow'>
+	<noTest>
 	| view data |
 
 	data := self circlesData.
@@ -141,6 +141,7 @@ GtGraphRectanglePackLayoutExamples >> nodes: aDataCollection inView: aView forEa
 { #category : #example }
 GtGraphRectanglePackLayoutExamples >> powersOfTwo [
 	<gtExample>
+	<noTest>
 	
 	^ BlElement new
 		layout: GtGraphRectanglePackLayout new;
@@ -162,7 +163,7 @@ GtGraphRectanglePackLayoutExamples >> powersOfTwo [
 { #category : #example }
 GtGraphRectanglePackLayoutExamples >> simple [
 	<gtExample>
-	<script: 'self new simple asSpartaForm asMorph openInWindow'>
+	<noTest>
 	| view nodes |
 
 	view := self view.
