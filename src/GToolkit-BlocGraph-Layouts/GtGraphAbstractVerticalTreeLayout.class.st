@@ -46,8 +46,6 @@ GtGraphAbstractVerticalTreeLayout >> inverseAttachPoint [
 { #category : #reversing }
 GtGraphAbstractVerticalTreeLayout >> inverseAttachPointIfNecessary [
 	"Inverse the attach point if the user has not used #doNotAttachPoint"
-	self shouldSetDefaultAttachPoint
-		ifTrue: [ self inverseAttachPoint ]
 ]
 
 { #category : #'hook-private' }

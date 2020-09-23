@@ -83,6 +83,7 @@ GtGraphTreemapLayoutExamples >> node [
 { #category : #'building - graph' }
 GtGraphTreemapLayoutExamples >> numberElements [
 	<gtExample>
+	<noTest>
 	| theElements |
 	theElements := self nodes: #(6 6 4 3 2 2 1).
 	theElements do: [ :eachElement | 
@@ -97,6 +98,7 @@ GtGraphTreemapLayoutExamples >> numberElements [
 { #category : #'building - graph' }
 GtGraphTreemapLayoutExamples >> numbers [
 	<gtExample>
+	<noTest>
 	| aView |
 	aView := self view.
 	aView addChildren: self numberElements.
@@ -106,6 +108,7 @@ GtGraphTreemapLayoutExamples >> numbers [
 { #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 	<gtExample>
+	<noTest>
 	| aView |
 	aView := self numbers.
 	aView layout: GtGraphTreemapLayout horizontalSlice.
@@ -116,6 +119,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontal [
 { #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceHorizontalAndVertical [
 	<gtExample>
+	<noTest>
 	| aView |
 	aView := self numbers.
 	aView layout: GtGraphTreemapLayout horizontalSlice.
@@ -151,6 +155,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceHorizontalWithMarginAndPadding [
 { #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 	<gtExample>
+	<noTest>
 	| aView |
 	aView := self numbers.
 	aView layout: GtGraphTreemapLayout verticalSlice.
@@ -161,6 +166,7 @@ GtGraphTreemapLayoutExamples >> numbersSliceVertical [
 { #category : #'examples - layouts' }
 GtGraphTreemapLayoutExamples >> numbersSquarified [
 	<gtExample>
+	<noTest>
 	| aView |
 	aView := self numbers.
 	aView layout: GtGraphTreemapLayout squarify.

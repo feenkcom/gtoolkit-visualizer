@@ -111,7 +111,7 @@ GtGradCircleLayout >> initialize [
 ]
 
 { #category : #measure }
-GtGradCircleLayout >> measure: aParentLayoutNode [
+GtGradCircleLayout >> measureChildrenNodes: aParentLayoutNode [
 	| aRadius thePosition |
 	
 	aRadius := self calculateRadiusFor: aParentLayoutNode children threshold: self distance.

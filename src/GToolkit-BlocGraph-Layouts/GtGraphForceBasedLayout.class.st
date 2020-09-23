@@ -90,8 +90,7 @@ Class {
 		'fixedNodes',
 		'center',
 		'initialLayout',
-		'nbIterations',
-		'shouldUseProgressBar'
+		'nbIterations'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
@@ -113,11 +112,11 @@ GtGraphForceBasedLayout >> accumulate: aQuad [
 																cx := cx + (e charge * e cx).
 																cy := cy + (e charge * e cy) ] ] ].
 												
-	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node measurement position: aQuad node measuredBounds position + (random next - 0.5 @ ( random next - 0.5)) ].
+	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node measurement position: aQuad node measurement position + (random next - 0.5 @ ( random next - 0.5)) ].
 								k := alpha * (self chargeOf: aQuad node).
 								aQuad charge: aQuad charge + k.
-								cx := cx + (k * aQuad node measuredBounds position x). 
-								cy := cy + (k * aQuad node measuredBounds position y).].
+								cx := cx + (k * aQuad node measurement position x). 
+								cy := cy + (k * aQuad node measurement position y).].
 							
 	aQuad charge = 0 ifTrue: [ ^ self ].				
 	aQuad cx: cx / aQuad charge.
@@ -172,16 +171,11 @@ GtGraphForceBasedLayout >> defaultInitialLayout [
 { #category : #hook }
 GtGraphForceBasedLayout >> doExecute: nodeElements with: anExtentSpec [
 	self start: nodeElements with: anExtentSpec.
-	self shouldRunLayoutWithProgressBar
-		ifTrue: [ self runLayoutInJob ]
-		ifFalse: [ self runLayoutSimply ].
+
+	self runLayoutSimply.
+
 	alpha := 0.
 	"nodes do: [ :e | translator translateTopLeftOf: e to: e position ]"
-]
-
-{ #category : #configuration }
-GtGraphForceBasedLayout >> doNotUseProgressBar [
-	shouldUseProgressBar := false	
 ]
 
 { #category : #algorithm }
@@ -225,20 +219,13 @@ GtGraphForceBasedLayout >> initialize [
 	friction := 0.9.
 	theta := 0.8.
 	center := 200 @ 200.
-	alpha := 0.1.
-	self useProgressBar
+	alpha := 0.1
 ]
 
 { #category : #testing }
 GtGraphForceBasedLayout >> isFixed: aNode [
 
 	^ fixedNodes includesKey: aNode 
-]
-
-{ #category : #testing }
-GtGraphForceBasedLayout >> isJobInstalled [
-	"Return true if the class Job exist. This is mainly useful to make a distinction between Pharo and VisualWorks"
-	^ Smalltalk includesKey: #Job
 ]
 
 { #category : #accessing }
@@ -276,18 +263,20 @@ GtGraphForceBasedLayout >> nodes: elements [
 { #category : #accessing }
 GtGraphForceBasedLayout >> prepareNodes: nodeElements [
 	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
+
 	weights := Dictionary new.
 	oldPositions := Dictionary new.
 	nodes := nodeElements.
 	nodes
 		do: [ :e | 
 			weights add: (Association key: e value: 0).
-			oldPositions add: (Association key: e value: e measuredBounds position) ].
+			oldPositions
+				add: (Association key: e value: e measurement position) ].
 	edges
 		do: [ :e | 
 			| from to |
-			from := e fromElement.
-			to := e toElement.
+			from := e fromNode.
+			to := e toNode.
 			weights at: from put: (weights at: from) + 1.
 			weights at: to put: (weights at: to) + 1 ].
 	alpha := 0.1
@@ -311,48 +300,25 @@ GtGraphForceBasedLayout >> removeNode: node [
 
 { #category : #algorithm }
 GtGraphForceBasedLayout >> repulse: aNode from: aQuad [
-
 	| dx dy dn k p |
-	
-	dx := aQuad cx - aNode measuredBounds position x.
-	dy := aQuad cy - aNode measuredBounds position y.
-	
-	((dx closeTo: 0) and: [ dy closeTo: 0 ] ) ifFalse: [ 
-	
-	dn := 1 / ((dx * dx) + (dy * dy)) sqrt.
-	
-	p := oldPositions at: aNode.
-	aQuad node ~= aNode ifTrue: [ aQuad corner x - aQuad origin x * dn < theta ifTrue: [ k := aQuad charge * dn * dn.
-																							oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ).
-																							^ self].
-												
-									(aQuad node isNil not and: [ dn < 1e9 ]) ifTrue: [ k := (self chargeOf: aQuad node) * dn * dn * alpha.
-																					  oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ) ] ]. ].
-																			
-	(aQuad charge closeTo: 0) not ifTrue: [ aQuad nodes do: [ :e | e isNil ifFalse: [ self repulse: aNode from: e ] ] ]
-]
-
-{ #category : #hook }
-GtGraphForceBasedLayout >> runLayoutInJob [
-	[ :job | 
-	job
-		title: 'Laying out elements';
-		min: 1 - alpha;
-		max: 1.
-	nbIterations = 0
-		ifTrue: [ 
-			[ 
-			alpha := alpha * 0.99.
-			alpha > 0.005 ]
-				whileTrue: [ 
-					self step.
-					job currentValue: 1 - alpha ] ]
-		ifFalse: [ 
-			nbIterations
-				timesRepeat: [ 
-					alpha := alpha * 0.99.
-					self step.
-					job currentValue: 1 - alpha ] ] ] asJob run
+	dx := aQuad cx - aNode measurement position x.
+	dy := aQuad cy - aNode measurement position y.
+	((dx closeTo: 0) and: [ dy closeTo: 0 ])
+		ifFalse: [ dn := 1 / (dx * dx + (dy * dy)) sqrt.
+			p := oldPositions at: aNode.
+			aQuad node ~= aNode
+				ifTrue: [ (aQuad corner x - aQuad origin x) * dn < theta
+						ifTrue: [ k := aQuad charge * dn * dn.
+							oldPositions at: aNode put: (p x - (dx * k)) @ (p y - (dy * k)).
+							^ self ].
+					(aQuad node isNil not and: [ dn < 1e9 ])
+						ifTrue: [ k := (self chargeOf: aQuad node) * dn * dn * alpha.
+							oldPositions at: aNode put: (p x - (dx * k)) @ (p y - (dy * k)) ] ] ].
+	(aQuad charge closeTo: 0) not
+		ifTrue: [ aQuad nodes
+				do: [ :e | 
+					e isNil
+						ifFalse: [ self repulse: aNode from: e ] ] ]
 ]
 
 { #category : #hook }
@@ -394,16 +360,6 @@ GtGraphForceBasedLayout >> set: anEdge strength: aFloat [
 	strengths at: anEdge put: aFloat
 ]
 
-{ #category : #updating }
-GtGraphForceBasedLayout >> shouldRunLayoutWithProgressBar [
-	^ self isJobInstalled and: [ self shouldUseProgressBar ]
-]
-
-{ #category : #accessing }
-GtGraphForceBasedLayout >> shouldUseProgressBar [
-	^ shouldUseProgressBar
-]
-
 { #category : #algorithm }
 GtGraphForceBasedLayout >> start: nodeElements with: anExtentSpec [
 	self initialPositionOfNodes: nodeElements with: anExtentSpec.
@@ -411,51 +367,56 @@ GtGraphForceBasedLayout >> start: nodeElements with: anExtentSpec [
 ]
 
 { #category : #events }
-GtGraphForceBasedLayout >> step [ 
+GtGraphForceBasedLayout >> step [
 	"run a step of the force layout algorithm"
-	| from to fp tp x y len k quad old |	
-		
+
+	| from to fp tp x y len k quad old |
 	"If there is no nodes, then there is not much to do"
 	nodes ifEmpty: [ ^ self ].
 	super step.
-	edges do: [ :e | 
-					from := e fromElement. 
-					fp := from measuredBounds position.
-					to := e toElement. 
-					tp := to measuredBounds position.
-					x := tp x - fp x.
-					y := tp y - fp y.
-					len := ((x * x) + (y * y)) sqrt.
-					((len closeTo: 0) not) ifTrue: [ 
-						len :=  alpha * (self strengthOf: e) * ( len - (self lengthOf: e) ) / len.
-						x := x * len.
-						y := y * len.
-						k := (weights at: from) / (( weights at: from) +( weights at: to )).
-						to measurement position: ( tp x - (x * k) )@( tp y - (y * k) ).
-						k := 1 -  k.
-						from measurement position: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
-			
-		k := alpha * gravity.
-		((k closeTo: 0) not) ifTrue: [ 
-			x := center x.
+	edges
+		do: [ :e | 
+			from := e fromNode.
+			fp := from measurement position.
+			to := e toNode.
+			tp := to measurement position.
+			x := tp x - fp x.
+			y := tp y - fp y.
+			len := (x * x + (y * y)) sqrt.
+			(len closeTo: 0) not
+				ifTrue: [ len := alpha * (self strengthOf: e) * (len - (self lengthOf: e))
+						/ len.
+					x := x * len.
+					y := y * len.
+					k := (weights at: from) / ((weights at: from) + (weights at: to)).
+					to measurement position: (tp x - (x * k)) @ (tp y - (y * k)).
+					k := 1 - k.
+					from measurement position: (fp x + (x * k)) @ (fp y + (y * k)) ] ].
+	k := alpha * gravity.
+	(k closeTo: 0) not
+		ifTrue: [ x := center x.
 			y := center y.
-			nodes do: [ :ea | | pos |
-					pos := ea measuredBounds position.
-					ea measurement position: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
-				
-		quad := GtGraphQuadTree withAll: nodes.
-		self accumulate: quad.
-		nodes do: [ :e | 
-			(self isFixed: e) 
+			nodes
+				do: [ :ea | 
+					| pos |
+					pos := ea measurement position.
+					ea measurement
+						position: (pos x + ((x - pos x) * k)) @ (pos y + ((y - pos y) * k)) ] ].
+	quad := GtGraphQuadTree withAll: nodes.
+	self accumulate: quad.
+	nodes
+		do: [ :e | 
+			(self isFixed: e)
 				ifFalse: [ self repulse: e from: quad ]
 				ifTrue: [ translator translateTopLeftOf: e to: (fixedNodes at: e) ] ].
-
-		nodes do: [ :e | 
-			old := e measuredBounds position.
-			e measurement position: 
-				(old x - (( (oldPositions at: e) x - old x ) * friction)) @ 
-				(old y - (( (oldPositions at: e) y - old y ) * friction)).
-			oldPositions at: e put: old.].
+	nodes
+		do: [ :e | 
+			old := e measurement position.
+			e measurement
+				position:
+					(old x - (((oldPositions at: e) x - old x) * friction))
+						@ (old y - (((oldPositions at: e) y - old y) * friction)).
+			oldPositions at: e put: old ]
 ]
 
 { #category : #accessing }
@@ -469,9 +430,4 @@ GtGraphForceBasedLayout >> strength: aFloat [
 GtGraphForceBasedLayout >> strengthOf: anEdge [
 
 	^ strengths at: anEdge ifAbsent: [ ^ strength ] 
-]
-
-{ #category : #configuration }
-GtGraphForceBasedLayout >> useProgressBar [
-	shouldUseProgressBar := true	
 ]

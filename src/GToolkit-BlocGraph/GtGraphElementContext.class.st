@@ -56,6 +56,13 @@ GtGraphElementContext >> beNode [
 	self element constraints graph beNode
 ]
 
+{ #category : #api }
+GtGraphElementContext >> beNode: anObject [
+	self element constraints graph
+		model: anObject;
+		beNode
+]
+
 { #category : #deprecated }
 GtGraphElementContext >> childrenContainerName [
 	^ self userData at: #isMondrianChildrenContainer

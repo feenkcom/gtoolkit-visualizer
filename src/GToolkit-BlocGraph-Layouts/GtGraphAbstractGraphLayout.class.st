@@ -94,12 +94,6 @@ GtGraphAbstractGraphLayout >> defaultFromPositions [
 	^#(#bottomCenter)
 ]
 
-{ #category : #'default values' }
-GtGraphAbstractGraphLayout >> defaultToPositions [
-	
-	^#(#topCenter)
-]
-
 { #category : #hook }
 GtGraphAbstractGraphLayout >> doInitialize: elements with: anExtentSpec [
 	super doInitialize: elements with: anExtentSpec.
