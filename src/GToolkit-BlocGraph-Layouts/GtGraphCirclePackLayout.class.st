@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #measure }
-GtGraphCirclePackLayout >> boundingBox: anElement [
+GtGraphCirclePackLayout >> childrenBoundingBox: aParentNode [
 	| anActualBoundingBox anActualSquaredBoundingBox aCircleBoundingBox |
 	
-	anActualBoundingBox := super boundingBox: anElement.
+	anActualBoundingBox := super childrenBoundingBox: aParentNode.
 	anActualSquaredBoundingBox := anActualBoundingBox expandBy: (anActualBoundingBox extent max - anActualBoundingBox extent) / 2.0.
 
 	aCircleBoundingBox := (enclosureCircle origin extent: (enclosureCircle outerRadius * 2.0) asPoint) expanded.

@@ -1,4 +1,5 @@
 "
+!Graph layouts in Bloc
 Bloc treats graph layouts, such as tree or force based, the same as typical widget layouts, such as grid or flow. The challenge comes from the fact that a graph layout depends on the notion of edges between elements, and we did not want to have elements know about edges in the core of Bloc.
 
 The solution was to split the typical edge implementation in graph visualization libraries into two distinct concepts:
@@ -9,7 +10,7 @@ Thus, edges form constraints, and constraints are what layouts deal with. That i
 
 To understand this better, let us consider the following example:
 
-[[[example=GtGraphLayoutBasicExamples>>#elementsTreeWithEdges|expanded=true|show=gtLiveIn:]]]
+${example:GtGraphLayoutBasicExamples>>#elementsTreeWithEdges|codeExpanded=false|previewExpanded=true|previewShow=gtLiveFor:}$
 
 With this we visualize the elements that make the chicken element demo:
 - we create a label for each element
@@ -20,56 +21,58 @@ As can be seen in the preview, the edge is a constraint. It has no visual impact
 
 To add a visual queue, we need to explicitly add a line element.
 
-[[[example=GtGraphLayoutBasicExamples>>#elementsTreeWithEdgesAndLines|expanded=true|show=gtLiveIn:]]]
-
-
+${example:GtGraphLayoutBasicExamples>>#elementsTreeWithEdgesAndLines|codeExpanded=false|previewExpanded=true|previewShow=gtLiveFor:}$
 "
 Class {
 	#name : #GtGraphLayoutBasicExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'examples - graph' }
 GtGraphLayoutBasicExamples >> elementsTreeWithEdges [
 	<gtExample>
 	| elementToVisualize root |
+
 	elementToVisualize := BlChicken chicken.
 	elementToVisualize forceLayout.
+
 	root := BlElement new constraintsDo: [:c | 
-		c horizontal matchParent. c vertical matchParent].
-	root userData at: #model put: elementToVisualize.
+		c horizontal matchParent.
+		c vertical matchParent ].
+
+	root graph beNode: elementToVisualize.
 	elementToVisualize allChildrenBreadthFirstDo: [ :each | 
 		| label |
 		label := BlTextElement new
 			text: each gtDisplayString asRopedText;
 			background: Color white;
 			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 0@0).
-		label userData at: #model put: each.
+
+		label graph beNode: each.
 		root children 
-			detect: [ :child | 
-				(child userData at: #model ifAbsent: [ nil ]) = each parent ]
-			ifFound: [ :parentLabel |
-				| edge |
-				edge := GtGraphEdge new from: parentLabel to: label.
-				parentLabel constraints graph addConnectedEdge: edge.
-				label constraints graph addConnectedEdge: edge ].
-		root addChild: label].
+			detect: [ :child | child graph model = each parent ]
+			ifFound: [ :parentLabel | parentLabel graph connectTo: label ].
+		root addChild: label ].
+
 	root layout: (GtGraphHorizontalTreeLayout new layered; verticalGap: 20).
-	^ root 
+
+	^ root
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'examples - graph' }
 GtGraphLayoutBasicExamples >> elementsTreeWithEdgesAndLines [
 	<gtExample>
 	| root elementToVisualize |
+
 	root := self elementsTreeWithEdges.
-	elementToVisualize := root userData at: #model.
+
+	elementToVisualize := root graph model.
 	elementToVisualize allChildrenBreadthFirstDo: [ :each | 
 		| label |
-		label := root children detect: [ :child | (child userData at: #model) = each ] ifNone: []. 
+		label := root children detect: [ :child | child graph model = each ] ifNone: []. 
 		root children 
-			detect: [ :child | (child userData at: #model) = each parent ]
+			detect: [ :child | child graph model = each parent ]
 			ifFound: [ :parentLabel |
 				| line |
 				line := BlLineElement new.

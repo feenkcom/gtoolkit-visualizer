@@ -18,21 +18,21 @@ GtGraphGraphHorizontalDominanceTreeLayout >> binaryTree [
 	aLayout measure: aParentNode.
 	
 	self assert: aParentNode children measuredBounds equals: {
-		(0.0@45.5) corner: (10.0@55.5).
-		(30.0@19.5) corner: (40.0@29.5).
-		(30.0@71.5) corner: (40.0@81.5).
-		(60.0@6.5) corner: (70.0@16.5).
-		(60.0@32.5) corner: (70.0@42.5).
-		(60.0@58.5) corner: (70.0@68.5).
-		(60.0@84.5) corner: (70.0@94.5).
-		(90.0@0.0) corner: (100.0@10.0).
-		(90.0@13.0) corner: (100.0@23.0).
-		(90.0@26.0) corner: (100.0@36.0).
-		(90.0@39.0) corner: (100.0@49.0).
-		(90.0@52.0) corner: (100.0@62.0).
-		(90.0@65.0) corner: (100.0@75.0).
-		(90.0@78.0) corner: (100.0@88.0).
-		(90.0@91.0) corner: (100.0@101.0)
+		(0@46) corner: (10@56).
+		(30@20) corner: (40@30).
+		(30@72) corner: (40@82).
+		(60@7) corner: (70@17).
+		(60@33) corner: (70@43).
+		(60@59) corner: (70@69).
+		(60@85) corner: (70@95).
+		(90@0) corner: (100@10).
+		(90@13) corner: (100@23).
+		(90@26) corner: (100@36).
+		(90@39) corner: (100@49).
+		(90@52) corner: (100@62).
+		(90@65) corner: (100@75).
+		(90@78) corner: (100@88).
+		(90@91) corner: (100@101)
 	}.
 
 	^ aParentNode

@@ -7,8 +7,7 @@ Class {
 	#traits : 'TGtGraphLayoutUtils',
 	#classTraits : 'TGtGraphLayoutUtils classTrait',
 	#instVars : [
-		'translator',
-		'isCached'
+		'translator'
 	],
 	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
@@ -65,18 +64,16 @@ GtGraphLayout >> groupBounds: aCollectionOfElements [
 GtGraphLayout >> initialize [
 	super initialize.
 
-	translator := GtGraphLayoutTranslator default.
-	isCached := false
+	translator := GtGraphLayoutTranslator default
 ]
 
 { #category : #layout }
-GtGraphLayout >> measure: aParentNode [	
-	isCached
-		ifTrue: [ ^ self ].
+GtGraphLayout >> measureChildrenNodes: aParentLayoutNode [
+	self applyOn: aParentLayoutNode withGraphEdges children with: aParentLayoutNode extentSpec.
 
-	self applyOn: aParentNode withGraphEdges children with: aParentNode extentSpec.
-	aParentNode children normalizePositions.
-	isCached := true
+	aParentLayoutNode children
+		roundPositions;
+		normalizePositions
 ]
 
 { #category : #hook }
