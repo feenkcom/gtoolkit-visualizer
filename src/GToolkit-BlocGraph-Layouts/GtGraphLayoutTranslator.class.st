@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'defaultTranslator'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Basic'
+	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
 
 { #category : #accessing }
@@ -36,7 +36,7 @@ GtGraphLayoutTranslator >> nbCycles: anInteger [
 { #category : #hook }
 GtGraphLayoutTranslator >> translate: element by: deltaPosition [
 	"Translate of the center of the element by a step"
-	self translate: element to: element measuredBounds position + deltaPosition
+	self translate: element to: element position + deltaPosition
 ]
 
 { #category : #hook }
@@ -63,7 +63,7 @@ GtGraphLayoutTranslator >> translateBottomLeftOf: element to: newPosition [
 GtGraphLayoutTranslator >> translateBottomOf: element to: newPosition [
 	"Translate the bottom side of the element"
 
-	self translate: element to: element measuredBounds position x @ newPosition direction: 0 @ -1
+	self translate: element to: element position x @ newPosition direction: 0 @ -1
 ]
 
 { #category : #'public - translating' }
@@ -84,14 +84,14 @@ GtGraphLayoutTranslator >> translateCenterLeftOf: element to: newPosition [
 GtGraphLayoutTranslator >> translateLeftOf: element to: newPosition [
 	"Translate the left side of the element"
 
-	self translate: element to: newPosition @ element measuredBounds position y direction: 1 @ 0.
+	self translate: element to: newPosition @ element position y direction: 1 @ 0.
 ]
 
 { #category : #'public - translating' }
 GtGraphLayoutTranslator >> translateRightOf: element to: newPosition [
 	"Translate the right side of the element"
 
-	self translate: element to: newPosition @ element measuredBounds position y direction: -1 @ 0.
+	self translate: element to: newPosition @ element position y direction: -1 @ 0.
 ]
 
 { #category : #'public - translating' }
@@ -105,7 +105,7 @@ GtGraphLayoutTranslator >> translateTopLeftOf: element to: newPosition [
 GtGraphLayoutTranslator >> translateTopOf: element to: newPosition [
 	"Translate the top side of the element"
 
-	self translate: element to: element measuredBounds position x @ newPosition direction: 0 @ 1.
+	self translate: element to: element position x @ newPosition direction: 0 @ 1.
 ]
 
 { #category : #'public - translating' }

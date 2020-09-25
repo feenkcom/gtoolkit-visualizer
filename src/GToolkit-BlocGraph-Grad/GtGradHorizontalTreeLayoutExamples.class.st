@@ -26,7 +26,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@77.0) corner: (50.0@97.0).
 		(61.0@33.0) corner: (111.0@53.0).
 		(61.0@121.0) corner: (111.0@141.0).
@@ -57,7 +57,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	aTreeLayout := self treeLayout reverse: true.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(183.0@77.0) corner: (233.0@97.0).
 		(122.0@33.0) corner: (172.0@53.0).
 		(122.0@121.0) corner: (172.0@141.0).
@@ -88,7 +88,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7Nodes [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@33.0) corner: (50.0@53.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(61.0@55.0) corner: (111.0@75.0).
@@ -111,7 +111,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesRevered [
 	aTreeLayout := self treeLayout reverse: true.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(122.0@33.0) corner: (172.0@53.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(61.0@55.0) corner: (111.0@75.0).
@@ -135,7 +135,7 @@ GtGradHorizontalTreeLayoutExamples >> compactSubtrees [
 	aTreeLayout separateSubtrees: false.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@46.0) corner: (50.0@66.0).
 		(61.0@22.0) corner: (111.0@42.0).
 		(61.0@48.0) corner: (111.0@68.0).
@@ -158,7 +158,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@11.0) corner: (50.0@31.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(183.0@22.0) corner: (233.0@42.0).
@@ -187,7 +187,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	aTreeLayout treesDistance: 150.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@11.0) corner: (50.0@31.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(183.0@22.0) corner: (233.0@42.0).
@@ -215,7 +215,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@0.0) corner: (50.0@50.0).
 		(61.0@15.0) corner: (111.0@35.0).
 		(183.0@26.0) corner: (233.0@46.0).
@@ -243,7 +243,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@0.0) corner: (50.0@20.0).
 		(0.0@72.0) corner: (50.0@92.0).
 		(61.0@50.0) corner: (111.0@70.0).
@@ -265,7 +265,7 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	aTreeLayout separateSubtrees: true.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@175.125) corner: (50.0@195.125).
 		(61.0@88.0) corner: (111.0@108.0).
 		(61.0@262.25) corner: (111.0@282.25).
@@ -304,7 +304,7 @@ GtGradHorizontalTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@33.0) corner: (50.0@53.0).
 		(61.0@0.0) corner: (111.0@20.0).
 		(61.0@22.0) corner: (111.0@42.0).
@@ -326,7 +326,7 @@ GtGradHorizontalTreeLayoutExamples >> graphWithCycles [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@11.0) corner: (50.0@31.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(183.0@22.0) corner: (233.0@42.0).
@@ -350,7 +350,7 @@ GtGradHorizontalTreeLayoutExamples >> separatedSubtrees [
 	aTreeLayout separateSubtrees: true.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@55.0) corner: (50.0@75.0).
 		(61.0@22.0) corner: (111.0@42.0).
 		(61.0@66.0) corner: (111.0@86.0).
@@ -373,7 +373,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@84.0) corner: (50.0@104.0).
 		(61.0@33.0) corner: (111.0@53.0).
 		(61.0@135.0) corner: (111.0@155.0).
@@ -404,7 +404,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	aTreeLayout := self treeLayout reverse: true.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(183.0@84.0) corner: (233.0@104.0).
 		(122.0@33.0) corner: (172.0@53.0).
 		(122.0@135.0) corner: (172.0@155.0).
@@ -436,7 +436,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCente
 	aTreeLayout nodesAlignment: GtGradTreeNodesCenterAlignment new.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@247.25) corner: (10.0@257.25).
 		(26.0@147.5) corner: (46.0@167.5).
 		(21.0@327.0) corner: (51.0@357.0).
@@ -463,7 +463,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafA
 	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@247.25) corner: (10.0@257.25).
 		(31.0@147.5) corner: (51.0@167.5).
 		(21.0@327.0) corner: (51.0@357.0).
@@ -491,7 +491,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootA
 	aTreeLayout levelDistance: 30.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@243.6209677419355) corner: (10.0@253.6209677419355).
 		(41.0@147.5) corner: (61.0@167.5).
 		(41.0@319.741935483871) corner: (71.0@349.741935483871).
@@ -517,7 +517,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	aTreeLayout := self treeLayout: 40 nodeDistance: 30.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@325.7142857142857) corner: (50.0@345.7142857142857).
 		(120.0@120.0) corner: (170.0@140.0).
 		(120.0@531.4285714285714) corner: (170.0@551.4285714285714).
@@ -548,7 +548,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@97.0) corner: (50.0@117.0).
 		(61.0@0.0) corner: (101.0@40.0).
 		(61.0@42.0) corner: (161.0@142.0).
@@ -569,7 +569,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterA
 	aTreeLayout nodesAlignment: GtGradTreeNodesCenterAlignment new.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@499.5) corner: (10.0@509.5).
 		(26.0@175.5) corner: (46.0@195.5).
 		(21.0@803.5) corner: (51.0@833.5).
@@ -601,7 +601,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAli
 	aTreeLayout nodesAlignment: GtGradTreeNodesLeafAlignment new.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@499.5) corner: (10.0@509.5).
 		(31.0@175.5) corner: (51.0@195.5).
 		(21.0@803.5) corner: (51.0@833.5).
@@ -633,7 +633,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAli
 	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@499.5) corner: (10.0@509.5).
 		(21.0@175.5) corner: (41.0@195.5).
 		(21.0@803.5) corner: (51.0@833.5).
@@ -664,7 +664,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	aTreeLayout := self treeLayout: 5 nodeDistance: 1.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@85.25) corner: (50.0@105.25).
 		(56.0@33.0) corner: (106.0@53.0).
 		(56.0@137.5) corner: (106.0@157.5).

@@ -16,7 +16,7 @@ GtGraphGridLayoutExamples >> squareOfSquares [
 	aLayout := GtGraphGridLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0@0) corner: (20@20).
 		(25@0) corner: (45@20).
 		(50@0) corner: (70@20).

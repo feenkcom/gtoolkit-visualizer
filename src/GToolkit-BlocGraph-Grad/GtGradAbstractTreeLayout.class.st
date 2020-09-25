@@ -26,11 +26,6 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
-{ #category : #constraints }
-GtGradAbstractTreeLayout class >> constraints [
-	^ GtGradTreeConstraints new
-]
-
 { #category : #'api - geometry' }
 GtGradAbstractTreeLayout >> calculateTreePositionCorrection: delta [
 	self subclassResponsibility

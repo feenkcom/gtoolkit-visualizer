@@ -16,7 +16,7 @@ GtGraphCircleLayoutExamples >> rectangularNodes [
 	aLayout := GtGraphCircleLayout new radius: 120.
 	aLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(240@120) corner: (270@135).
 		(234@157) corner: (264@172).
 		(217@191) corner: (247@206).
@@ -54,7 +54,7 @@ GtGraphCircleLayoutExamples >> squaredNodes [
 	aLayout := GtGraphCircleLayout new radius: 100.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(200@100) corner: (220@120).
 		(195@131) corner: (215@151).
 		(181@159) corner: (201@179).

@@ -11,5 +11,5 @@ GtGraphDirectLayoutTranslator class >> isDefault [
 
 { #category : #hook }
 GtGraphDirectLayoutTranslator >> translate: element to: newPosition [
-	element measurement position: newPosition asFloatPoint
+	element position: newPosition asFloatPoint
 ]

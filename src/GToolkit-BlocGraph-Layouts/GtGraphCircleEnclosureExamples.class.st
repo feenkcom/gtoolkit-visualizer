@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphCircleEnclosureExamples,
 	#superclass : #Object,
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #accessing }
@@ -17,9 +17,9 @@ GtGraphCircleEnclosureExamples >> enclosureWithFourCircles [
 
 	^ self enclosureWithThreeCircles
 		addCircle: (GtGraphCircle new
-		radius: 20;
-		margin: 10;
-		center: 240@50)
+			radius: 20;
+			margin: 10;
+			center: 240@50)
 ]
 
 { #category : #'as yet unclassified' }
@@ -39,18 +39,18 @@ GtGraphCircleEnclosureExamples >> enclosureWithThreeCircles [
 
 	^ self enclosureWithTwoCircles
 		addCircle: (GtGraphCircle new
-		radius: 20;
-		margin: 10;
-		center: 140@0)
+			radius: 20;
+			margin: 10;
+			center: 140@0)
 ]
 
 { #category : #'as yet unclassified' }
 GtGraphCircleEnclosureExamples >> enclosureWithTwoCircles [
 	<gtExample>
-
+	
 	^ self enclosureWithOneCircle
 		addCircle: (GtGraphCircle new
-		radius: 30;
-		margin: 10;
-		center: 130@130)
+			radius: 30;
+			margin: 10;
+			center: 130@130)
 ]

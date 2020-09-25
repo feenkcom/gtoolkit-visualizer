@@ -104,6 +104,19 @@ GtGradTreeLayoutExamples >> constructBinaryTreeWith7Nodes [
 ]
 
 { #category : #'examples - instance creation' }
+GtGradTreeLayoutExamples >> constructBinaryTreeWith7NodesScaled [
+	<gtExample>
+
+	^ self
+		createGraph: 7
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->5).
+			(3->6). (3->7) }
+		scaled: { (3 -> 2) }
+]
+
+{ #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructDisconnectedGraph [
 	<gtExample>
 
@@ -136,8 +149,8 @@ GtGradTreeLayoutExamples >> constructDisconnectedGraphWithRootsOfDifferentSizes 
 		
 	theNodes := aParentNode children.
 
-	(theNodes at: 1) measurement extent: 50@50.
-	(theNodes at: 8) measurement extent: 80@70.
+	(theNodes at: 1) measurement: (BlLayoutNodeComputedMeasurement new extent: 50@50).
+	(theNodes at: 8) measurement: (BlLayoutNodeComputedMeasurement new extent: 80@70).
 
 	^ aParentNode
 ]
@@ -198,7 +211,7 @@ GtGradTreeLayoutExamples >> constructTreeWith10NodesOfIncreasingSize [
 	theNodes := aParentNode children.
 	
 	theNodes doWithIndex: [ :aNodeElement :index |
-		aNodeElement measurement extent: 10 asPoint * index ].
+		aNodeElement measurement: (BlLayoutNodeComputedMeasurement new extent: 10 asPoint * index) ].
 
 	^ aParentNode
 ]
@@ -214,9 +227,9 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfDifferentSizes [
 	
 	theNodes := aParentNode children.
 
-	(theNodes at: 2) measurement extent: 40@40.
-	(theNodes at: 3) measurement extent: 100@100.
-	(theNodes at: 4) measurement extent: 70@70.
+	(theNodes at: 2) measurement: (BlLayoutNodeComputedMeasurement new extent: 40@40).
+	(theNodes at: 3) measurement: (BlLayoutNodeComputedMeasurement new extent: 100@100).
+	(theNodes at: 4) measurement: (BlLayoutNodeComputedMeasurement new extent: 70@70).
 	
 	self assert: (theNodes at: 1) nodesAlongOutgoingEdges size equals: 3.
 	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
@@ -238,8 +251,8 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfIncreasingSize [
 	aParentNode := self constructSimpleTree.
 	
 	aParentNode children doWithIndex: [ :eachChildNode :index |
-		eachChildNode measurement extent: 10 asPoint * index ].
-	
+		eachChildNode measurement: (BlLayoutNodeComputedMeasurement new extent: 10 asPoint * index) ].
+
 	^ aParentNode
 ]
 

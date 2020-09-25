@@ -120,7 +120,7 @@ GtGraphCirclePackLayout >> sorted: theElements [
 	| sortedElements |
 
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
-		(larger measuredExtent max) > (smaller measuredExtent max) ].
+		(larger extent max) > (smaller extent max) ].
 	sortedElements addAll: theElements.
 
 	^ sortedElements

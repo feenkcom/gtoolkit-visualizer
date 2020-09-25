@@ -18,10 +18,10 @@ GtGraphRectanglePackLayout >> doExecute: theElements with: anExtentSpec [
 GtGraphRectanglePackLayout >> fit: anElement in: aTree [
 	| aRectangle |
 	
-	aRectangle := (GtGraphRectangle origin: 0.0@0.0 extent: anElement measuredExtent asPoint) margin: anElement margin.
+	aRectangle := (GtGraphRectangle origin: 0.0@0.0 extent: anElement extent) margin: anElement margin.
 	aTree add: aRectangle.
 
-	anElement measurement position: aRectangle origin
+	anElement position: aRectangle origin
 ]
 
 { #category : #hook }
@@ -49,7 +49,7 @@ GtGraphRectanglePackLayout >> sorted: theElements [
 	| sortedElements |
 
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
-		larger measuredBounds perimeter > smaller measuredBounds perimeter ].
+		larger perimeter > smaller perimeter ].
 	sortedElements addAll: theElements.
 
 	^ sortedElements

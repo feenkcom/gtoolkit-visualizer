@@ -21,11 +21,11 @@ GtGraphQuadTree class >> withAll: aNodeCollection [
 	^ self
 		withAll: aNodeCollection
 		origin:
-			(aNodeCollection collect: [ :e | e measurement position x ]) min
-				@ (aNodeCollection collect: [ :e | e measurement position y ]) min
+			(aNodeCollection collect: [ :e | e position x ]) min
+				@ (aNodeCollection collect: [ :e | e position y ]) min
 		corner:
-			(aNodeCollection collect: [ :e | e measurement position x ]) max
-				@ (aNodeCollection collect: [ :e | e measurement position y ]) max
+			(aNodeCollection collect: [ :e | e position x ]) max
+				@ (aNodeCollection collect: [ :e | e position y ]) max
 ]
 
 { #category : #public }
@@ -64,7 +64,7 @@ GtGraphQuadTree >> add: aNode [
 		description: [ 'Leaf must not have any sub-nodes' ].
 	
 	x
-		ifNotNil: [ (x - aNode measurement position x) abs + (y - aNode measurement position y) abs < 0.01
+		ifNotNil: [ (x - aNode position x) abs + (y - aNode position y) abs < 0.01
 			ifTrue: [ self addChild: aNode ]
 			ifFalse: [
 				| aCurrentNode |
@@ -78,8 +78,8 @@ GtGraphQuadTree >> add: aNode [
 					addChild: aNode;
 					addChild: aCurrentNode ] ]
 		ifNil: [
-			x := aNode measurement position x.
-			y := aNode measurement position y.
+			x := aNode position x.
+			y := aNode position y.
 			node := aNode ]
 ]
 
@@ -90,8 +90,8 @@ GtGraphQuadTree >> addChild: aNode [
 	center := self center.
 	leaf := false.
 
-	aNode measuredBounds position x < center x
-		ifTrue: [ aNode measuredBounds position y < center y
+	aNode position x < center x
+		ifTrue: [ aNode position y < center y
 				"top left quad"
 				ifTrue: [
 					(nodes at: 1) ifNil: [
@@ -112,7 +112,7 @@ GtGraphQuadTree >> addChild: aNode [
 						nodes at: 3 put: new ].
 					(nodes at: 3) add: aNode ] ]
 
-		ifFalse: [ aNode measuredBounds position y < center y
+		ifFalse: [ aNode position y < center y
 				"top right quad"
 				ifTrue: [
 					(nodes at: 2) ifNil: [

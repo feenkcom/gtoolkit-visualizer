@@ -44,7 +44,7 @@ GtGraphCirclePackNode >> center [
 { #category : #accessing }
 GtGraphCirclePackNode >> center: aPoint [
 	circle center: aPoint.
-	self element measuredBounds position: self center - self radius asPoint
+	self element position: self center - self radius asPoint
 ]
 
 { #category : #accessing }
@@ -86,7 +86,7 @@ GtGraphCirclePackNode >> initializeWith: anElement [
 	value := anElement.
 
 	circle := GtGraphCircle new.
-	circle radius: anElement measuredExtent max / 2.0.
+	circle radius: anElement extent max / 2.0.
 	circle margin: anElement margin max
 ]
 

@@ -43,7 +43,7 @@ GtGradHierarchicalTreeLayoutExamples >> eastHierarchical [
 	aLayout := GtGradEastHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(400@40) corner: (450@60).
 		(320@20) corner: (370@40).
 		(160@0) corner: (210@20).
@@ -79,7 +79,7 @@ GtGradHierarchicalTreeLayoutExamples >> eastTree [
 	aLayout := GtGradEastHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(360.0@20.0) corner: (410.0@40.0).
 		(270.0@20.0) corner: (320.0@40.0).
 		(90.0@40.0) corner: (140.0@60.0).
@@ -117,7 +117,7 @@ GtGradHierarchicalTreeLayoutExamples >> northHierarchical [
 	aLayout := GtGradNorthHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(70@0) corner: (120@20).
 		(35@50) corner: (85@70).
 		(0@150) corner: (50@170).
@@ -153,7 +153,7 @@ GtGradHierarchicalTreeLayoutExamples >> northTree [
 	aLayout := GtGradNorthHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(35.0@0.0) corner: (85.0@20.0).
 		(35.0@60.0) corner: (85.0@80.0).
 		(70.0@180.0) corner: (120.0@200.0).
@@ -191,7 +191,7 @@ GtGradHierarchicalTreeLayoutExamples >> southHierarchical [
 	aLayout := GtGradSouthHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(70@250) corner: (120@270).
 		(35@200) corner: (85@220).
 		(0@100) corner: (50@120).
@@ -227,7 +227,7 @@ GtGradHierarchicalTreeLayoutExamples >> southTree [
 	aLayout := GtGradSouthHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(35.0@240.0) corner: (85.0@260.0).
 		(35.0@180.0) corner: (85.0@200.0).
 		(70.0@60.0) corner: (120.0@80.0).
@@ -265,7 +265,7 @@ GtGradHierarchicalTreeLayoutExamples >> westHierarchical [
 	aLayout := GtGradWestHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0@40) corner: (50@60).
 		(80@20) corner: (130@40).
 		(240@0) corner: (290@20).
@@ -301,7 +301,7 @@ GtGradHierarchicalTreeLayoutExamples >> westTree [
 	aLayout := GtGradWestHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@20.0) corner: (50.0@40.0).
 		(90.0@20.0) corner: (140.0@40.0).
 		(270.0@40.0) corner: (320.0@60.0).

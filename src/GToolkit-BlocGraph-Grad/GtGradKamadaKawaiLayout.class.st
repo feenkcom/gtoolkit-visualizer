@@ -47,7 +47,7 @@ GtGradKamadaKawaiLayout >> arbitraryConstantK: anObject [
 GtGradKamadaKawaiLayout >> calculateDeltaAtNode: theNodes node: aNode nodeIndex: nodeIndex [
 	| nodePosition dxSum dySum|
 	
-	nodePosition := aNode measurement position.
+	nodePosition := aNode position.
 	dxSum := 0.
 	dySum := 0.
 	
@@ -56,7 +56,7 @@ GtGradKamadaKawaiLayout >> calculateDeltaAtNode: theNodes node: aNode nodeIndex:
 			ifTrue: [ 
 				| dist dx dy d l k currentNodePosition common |
 					dist := self distanceMatrix at: nodeIndex at: currentIndex.
-					currentNodePosition := currentNode measurement position.
+					currentNodePosition := currentNode position.
 					dx := nodePosition x - currentNodePosition x.
 					dy := nodePosition y - currentNodePosition y.
 					d := (dx squared + dy squared) sqrt.
@@ -75,7 +75,7 @@ GtGradKamadaKawaiLayout >> calculateDeltaPositionNode: theNodes node: aNode node
 	"Determines a step to a new position of the given node"
 	| nodePosition dEx dEy d2Ex d2Ey d2Exy denominator deltaX deltaY|
 
-	nodePosition := aNode measurement position.
+	nodePosition := aNode position.
 	dEx := 0.
 	dEy := 0.
 	d2Ex := 0.
@@ -86,7 +86,7 @@ GtGradKamadaKawaiLayout >> calculateDeltaPositionNode: theNodes node: aNode node
 		currentIndex ~= nodeIndex
 			ifTrue: [ 
 				| currentPosition dist l k dx dy d dCube|
-				currentPosition := currentNode measurement position.
+				currentPosition := currentNode position.
 				dist := self distanceMatrix at: nodeIndex at: currentIndex.
 				l := self length * dist.
 				k := self arbitraryConstantK / (dist squared).
@@ -147,8 +147,8 @@ GtGradKamadaKawaiLayout >> calculateEnergy: theNodes [
 			distance := self distanceMatrix at: i at: j.
 			lij := self length * distance.
 			kij := self arbitraryConstantK / (distance squared).
-			position1 := theFirstNode measurement position.
-			position2 := theSecondNode measurement position.
+			position1 := theFirstNode position.
+			position2 := theSecondNode position.
 			dx := (position1 x) - (position2 x).
 			dy := (position1 y) - (position2 y).
 			d := ((dx squared) + (dy squared)) sqrt.
@@ -178,8 +178,8 @@ GtGradKamadaKawaiLayout >> calculateEnergyIfExchanged: theNodes firstNodeIndex: 
 			dist := self distanceMatrix at: i at: j.
 			l := self length * dist.
 			k := self arbitraryConstantK / (dist squared).
-			nodePosition1 := (theNodes at: ii) measurement position.
-			nodePosition2 := (theNodes at: jj) measurement position.
+			nodePosition1 := (theNodes at: ii) position.
+			nodePosition2 := (theNodes at: jj) position.
 			dx := nodePosition1 x - nodePosition2 x.
 			dy := nodePosition1 y - nodePosition2 y.
 			d := (dx squared + dy squared) sqrt.
@@ -369,7 +369,7 @@ GtGradKamadaKawaiLayout >> randomlyPositionNodes: theNodes maxVerticalValue: max
 				(positions includes: position)
 					ifFalse: [ 
 						positions add: position.
-						aNodeElement measurement position: position.
+						aNodeElement position: position.
 						GtGradKamadaKawaiInitialPositionSetSignal new
 							node: aNodeElement;
 							position: position;
@@ -389,7 +389,7 @@ GtGradKamadaKawaiLayout >> setDefaultParameterValues: theNodes [
 	for improvement, but this is the basic idea"
 	maxNodeSize := 0.
 	theNodes do: [ :aNode |
-		maxNodeSize := maxNodeSize max: aNode measurement extent max. 
+		maxNodeSize := maxNodeSize max: aNode extent max. 
 	].
 
 	factor := 1 max: (maxNodeSize / 70).
@@ -428,7 +428,7 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 	theNodes do: [ :aNode |
 		| nodePosition |
 		
-		nodePosition := aNode measurement position.
+		nodePosition := aNode position.
 		gx := gx + nodePosition x.
 		gy := gy + nodePosition y.
 	].
@@ -441,15 +441,9 @@ GtGradKamadaKawaiLayout >> shiftNodesToTheCenterOfGavity: theNodes [
 	"set new postions of nodes"
 	theNodes do: [ :aNode |
 		| currentPosition |
-		currentPosition := aNode measurement position.
-		aNode measurement position: (currentPosition x + diffx)@(currentPosition y + diffy).
+		currentPosition := aNode position.
+		aNode position: (currentPosition x + diffx)@(currentPosition y + diffy).
 	].
-	
-	
-	
-
-	
-	
 ]
 
 { #category : #'private-layout' }
@@ -480,8 +474,8 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 				calculateDeltaPositionNode: theNodes
 				node: nodeWithMaxDelta
 				nodeIndex: nodeWithMaxDeltaIndex.
-			nodePosition := nodeWithMaxDelta measurement position.
-			nodeWithMaxDelta measurement position: (nodePosition x + dxy x) @ (nodePosition y + dxy y).
+			nodePosition := nodeWithMaxDelta position.
+			nodeWithMaxDelta position: (nodePosition x + dxy x) @ (nodePosition y + dxy y).
 				deltaAtNode := self
 				calculateDeltaAtNode: theNodes
 					node: nodeWithMaxDelta
@@ -504,10 +498,10 @@ GtGradKamadaKawaiLayout >> step: theNodes [
 			energy > exenergy
 				ifTrue: [ firstNode := theNodes at: i.
 					secondNode := theNodes at: j.
-					position1 := firstNode measurement position.
-					position2 := secondNode measurement position.
-					firstNode measurement position: (position2 x)@(position2 y).
-					secondNode measurement position: (position1 x)@(position1 y).
+					position1 := firstNode position.
+					position2 := secondNode position.
+					firstNode position: (position2 x)@(position2 y).
+					secondNode position: (position1 x)@(position1 y).
 					^ self ] ] ]
 ]
 

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'distance'
 	],
-	#category : #'GToolkit-BlocGraph-Grad'
+	#category : #'GToolkit-BlocGraph-Grad-Layouts'
 }
 
 { #category : #computation }
@@ -42,7 +42,7 @@ GtGradCircleLayout >> calculateRadiusFor: aCollectionOfNodes threshold: threshol
 
 	| radius slice currentTheta previousTheta previousNode |
 	aCollectionOfNodes size = 2
-		ifTrue: [ ^ aCollectionOfNodes first measuredBounds width + aCollectionOfNodes second measuredBounds width + self distance ].
+		ifTrue: [ ^ aCollectionOfNodes first width + aCollectionOfNodes second width + self distance ].
 	
 	radius := 0.
 	slice := (2 * Float pi) / (aCollectionOfNodes size).
@@ -62,9 +62,9 @@ GtGradCircleLayout >> calculateRadiusFor: aCollectionOfNodes threshold: threshol
 					rx := 0.
 					ry := 0.
 					angleCos > 0.01
-						ifTrue: [rx := ((each measuredBounds width) + (previousNode measuredBounds width) + threshold) / angleCos].
+						ifTrue: [rx := ((each width) + (previousNode width) + threshold) / angleCos].
 					angleSin > 0.01
-						ifTrue: [ry := ((each measuredBounds height) + (previousNode measuredBounds height) + threshold) / angleSin].
+						ifTrue: [ry := ((each height) + (previousNode height) + threshold) / angleSin].
 					
 					(rx >0  and: [ ry > 0 ])
 						ifTrue: [rCurrent := rx min: ry]
@@ -120,7 +120,7 @@ GtGradCircleLayout >> measureChildrenNodes: aParentLayoutNode [
 	"SequenceableCollection"
 	aParentLayoutNode children with: thePosition do: [ :aNodeElement :aPosition |
 		"to change position of a node"
-		aNodeElement measurement position: aPosition ].
+		aNodeElement position: aPosition ].
 
 	aParentLayoutNode children normalizePositions
 ]

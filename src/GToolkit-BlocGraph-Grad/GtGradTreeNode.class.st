@@ -124,7 +124,7 @@ GtGradTreeNode >> height [
 	"Return the height of my element"
 	<return: #Number>
 	
-	^ self element measuredHeight
+	^ self element height
 ]
 
 { #category : #initialization }
@@ -309,5 +309,5 @@ GtGradTreeNode >> width [
 	"Return the width of my element"
 	<return: #Number>
 	
-	^ self element measuredWidth
+	^ self element width
 ]
