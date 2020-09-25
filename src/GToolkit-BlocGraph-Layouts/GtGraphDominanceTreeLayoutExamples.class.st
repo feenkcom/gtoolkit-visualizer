@@ -17,7 +17,7 @@ GtGraphDominanceTreeLayoutExamples >> binaryTree [
 	aLayout := GtGraphDominanceTreeLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(46@0) corner: (56@10).
 		(20@30) corner: (30@40).
 		(72@30) corner: (82@40).

@@ -15,7 +15,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> compactSubtrees [
 	aTreeLayout separateSubtrees: false.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(108.72727272727272@0.0) corner: (158.72727272727272@20.0).
 		(52.0@31.0) corner: (102.0@51.0).
 		(113.45454545454544@31.0) corner: (163.45454545454544@51.0).
@@ -50,7 +50,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	aTreeLayout := self dominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(26.0@0.0) corner: (76.0@20.0).
 		(0.0@31.0) corner: (50.0@51.0).
 		(52.0@31.0) corner: (102.0@51.0).
@@ -74,7 +74,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 	aTreeLayout := self dominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(65.0@0.0) corner: (115.0@20.0).
 		(26.0@31.0) corner: (76.0@51.0).
 		(104.0@31.0) corner: (154.0@51.0).
@@ -99,7 +99,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEd
 	aTreeLayout := self dominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(78.0@0.0) corner: (128.0@20.0).
 		(0.0@31.0) corner: (50.0@51.0).
 		(52.0@31.0) corner: (102.0@51.0).
@@ -122,7 +122,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> separatedSubtrees [
 	aTreeLayout separateSubtrees: true.
 	aTreeLayout measure: aParentNode.
 
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(130.0@0.0) corner: (180.0@20.0).
 		(52.0@31.0) corner: (102.0@51.0).
 		(156.0@31.0) corner: (206.0@51.0).
@@ -145,7 +145,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	aTreeLayout := self dominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(26.0@0.0) corner: (76.0@20.0).
 		(0.0@31.0) corner: (50.0@51.0).
 		(52.0@31.0) corner: (102.0@51.0).

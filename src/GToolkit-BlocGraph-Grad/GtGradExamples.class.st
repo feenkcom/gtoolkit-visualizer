@@ -55,9 +55,17 @@ GtGradExamples >> createEdgeIfNecessaryFrom: fromLayoutNode to: toLayoutNode [
 
 { #category : #'examples - instance creation' }
 GtGradExamples >> createGraph: anAmountOfNodes pairs: anArrayOfPairs [
+	^ self
+		createGraph: anAmountOfNodes
+		pairs: anArrayOfPairs
+		scaled: #()
+]
+
+{ #category : #'examples - instance creation' }
+GtGradExamples >> createGraph: anAmountOfNodes pairs: anArrayOfPairs scaled: aCollectionOfScaledNodes [
 	| theNodes |
 
-	theNodes := self nodes: (1 to: anAmountOfNodes).
+	theNodes := self nodes: (1 to: anAmountOfNodes) scaled: aCollectionOfScaledNodes.
 
 	self connectPairsOfNodes: theNodes pairs: anArrayOfPairs.
 
@@ -100,8 +108,16 @@ GtGradExamples >> nodes: aDataCollection [
 
 { #category : #'building - graph' }
 GtGradExamples >> nodes: aDataCollection extent: anExtent [
-	^ aDataCollection collect: [ :model |
-		| childConstraints child |
+	^ self
+		nodes: aDataCollection
+		extent: anExtent
+		scaled: #()
+]
+
+{ #category : #'building - graph' }
+GtGradExamples >> nodes: aDataCollection extent: anExtent scaled: aCollectionOfScaledNodes [
+	^ aDataCollection collectWithIndex: [ :model :eachIndex |
+		| childConstraints child aScale |
 
 		childConstraints := BlLayoutCommonConstraints new.
 		childConstraints graph
@@ -111,8 +127,25 @@ GtGradExamples >> nodes: aDataCollection extent: anExtent [
 		child := BlLayoutChildNode new
 			constraints: childConstraints;
 			measurement: (BlLayoutNodeComputedMeasurement new extent: anExtent).
+			
+		child userData at: #label put: eachIndex asString.
+		
+		aScale := aCollectionOfScaledNodes
+			detect: [ :assoc | assoc key = eachIndex ]
+			ifFound: [ :assoc | assoc value ]
+			ifNone: [ nil ].
+		
+		(aScale 
+			ifNotNil: [ :scale | (child withTransformation: (BlElementTransformation scale: scale)) ]
+			ifNil: [ child ]) withEdges: #() ]
+]
 
-		child withEdges: #() ]
+{ #category : #'building - graph' }
+GtGradExamples >> nodes: aDataCollection scaled: aCollectionOfScaledNodes [
+	^ self
+		nodes: aDataCollection
+		extent: self nodeExtent
+		scaled: aCollectionOfScaledNodes
 ]
 
 { #category : #accessing }

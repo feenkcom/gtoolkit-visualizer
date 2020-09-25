@@ -26,7 +26,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> graphWithANodeWithSeveralIn
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(78.0@0.0) corner: (128.0@20.0).
 		(0.0@31.0) corner: (50.0@51.0).
 		(52.0@31.0) corner: (102.0@51.0).
@@ -48,7 +48,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANodeWi
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(91.0@0.0) corner: (141.0@20.0).
 		(0.0@31.0) corner: (50.0@51.0).
 		(78.0@31.0) corner: (128.0@51.0).
@@ -75,7 +75,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> treeWithEdgesWhoseSoucesAre
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(52.0@0.0) corner: (102.0@20.0).
 		(0.0@31.0) corner: (50.0@51.0).
 		(52.0@31.0) corner: (102.0@51.0).

@@ -102,7 +102,7 @@ GtGradAbstractVerticalTreeLayout >> reversedPositionOfNode: aTreeNode rootPositi
 over a horizontal line containing the root node"
 	| nodePosition |
 	
-	nodePosition := aTreeNode element measurement position.
+	nodePosition := aTreeNode element position.
 
 	^ (nodePosition x) @ ( 2 * (theRootPosition y) - (nodePosition  y) + (theBounds bottom)).
 	

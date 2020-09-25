@@ -13,7 +13,7 @@ GtGradWestHierarchicalLayoutExamples >> allNodesHaveIncomingEdges [
 	aLayout := self layout.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(100@10) corner: (150@30).
 		(200@40) corner: (250@60).
 		(300@60) corner: (350@80).
@@ -33,7 +33,7 @@ GtGradWestHierarchicalLayoutExamples >> disconnectedGraph [
 	aLayout := self layout.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0@0) corner: (50@20).
 		(100@0) corner: (150@20).
 		(200@0) corner: (250@20).
@@ -56,7 +56,7 @@ GtGradWestHierarchicalLayoutExamples >> disconnectedGraphIncreasedInterHierarchy
 	aLayout interHierarchySpacing: 100.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0@0) corner: (50@20).
 		(100@0) corner: (150@20).
 		(200@0) corner: (250@20).
@@ -79,7 +79,7 @@ GtGradWestHierarchicalLayoutExamples >> graphWithIncreasedInterRanksSpacing [
 	aLayout interRanksSpacing: 70.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(120@10) corner: (170@30).
 		(240@40) corner: (290@60).
 		(360@60) corner: (410@80).
@@ -100,7 +100,7 @@ GtGradWestHierarchicalLayoutExamples >> graphWithIncreasedIntraRankSpacing [
 	aLayout intraRankSpacing: 100.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(100@10) corner: (150@30).
 		(200@110) corner: (250@130).
 		(300@165) corner: (350@185).
@@ -125,7 +125,7 @@ GtGradWestHierarchicalLayoutExamples >> simpleGraph [
 	aLayout := self layout.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0@2) corner: (50@22).
 		(100@2) corner: (150@22).
 		(500@1) corner: (550@21).

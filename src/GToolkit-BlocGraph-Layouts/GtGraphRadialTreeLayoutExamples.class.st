@@ -17,7 +17,7 @@ GtGraphRadialTreeLayoutExamples >> binaryTree [
 	aLayout := GtGraphRadialTreeLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(48@0) corner: (58@10).
 		(66@10) corner: (76@20).
 		(40@18) corner: (50@28).

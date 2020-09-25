@@ -228,7 +228,7 @@ GtGraphAbstractGraphLayout >> rootNodesFor: aCollection [
 { #category : #private }
 GtGraphAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 	
-	aNode measurement position: (aNode measurement position + aPoint).
+	aNode position: (aNode position + aPoint).
 	(self childrenFor: aNode)
 		do: [:child | self shiftTree: child by: aPoint]
 ]

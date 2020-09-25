@@ -23,6 +23,18 @@ GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEd
 ]
 
 { #category : #'example - instance creation' }
+GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdgesScaled [
+	<gtExample>
+
+	^ self
+		createGraph: 6
+		pairs: {
+			(1->2). (1->3). (1->4). (1->5).
+			(2->6). (3->6). (4->6). (5->6) }
+		scaled: { (4 -> 2) }
+]
+
+{ #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
 	<gtExample>
 

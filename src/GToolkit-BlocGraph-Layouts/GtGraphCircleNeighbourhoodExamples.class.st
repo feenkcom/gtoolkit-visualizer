@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphCircleNeighbourhoodExamples,
 	#superclass : #Object,
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #'as yet unclassified' }

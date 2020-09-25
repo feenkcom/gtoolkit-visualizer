@@ -94,25 +94,26 @@ GtTargetCircleWithUnderlineAdornment >> stop: aStopPoint [
 { #category : #'as yet unclassified' }
 GtTargetCircleWithUnderlineAdornment >> stylerRule [
 	^ (node isKindOf: RBMessageNode)
-		ifTrue:
-			[ 	GtASTNodeHighlighterStylerRule new
-					nodeClassName: node className asSymbol;
-					styleBlock: [ :aNode :aText |
-					node keywordsIntervals do: [ :each |	
-						(aText
-							from: each first
-							to: each last)
-							attributes: {BlTextHighlightAttribute new paint: BrGlamorousColors textHighlightColor}].
+		ifTrue: [ GtASTNodeHighlighterStylerRule new
+				nodeClassName: node className asSymbol;
+				styleBlock: [ :aNode :aText | 
+					node keywordsIntervals
+						do: [ :each | 
+							(aText from: each first to: each last)
+								attributes:
+									{(BlTextHighlightAttribute new
+										paint: BrGlamorousColors textHighlightColor)} ].
 					(aText
 						from: node keywordsIntervals first first
 						to: node keywordsIntervals last last)
-						attributes: {BlTextUnderlineAttribute new paint: BrGlamorousColors textHighlightColor}] ]
-		ifFalse:
-			[ 	GtASTNodeHighlighterStylerRule new
-					nodeClassName: node className asSymbol;
-					styleBlock: [ :aNode :aText |
-					(aText
-						from: start
-						to: stop)
-						attributes: {BlTextHighlightAttribute new paint: BrGlamorousColors textHighlightColor}]  ].
+						attributes:
+							{(BlTextUnderlineAttribute new
+								color: BrGlamorousColors textHighlightColor)} ] ]
+		ifFalse: [ GtASTNodeHighlighterStylerRule new
+				nodeClassName: node className asSymbol;
+				styleBlock: [ :aNode :aText | 
+					(aText from: start to: stop)
+						attributes:
+							{(BlTextHighlightAttribute new
+								paint: BrGlamorousColors textHighlightColor)} ] ]
 ]

@@ -5,64 +5,14 @@ Class {
 }
 
 { #category : #private }
-GtGraphRectanglePackLayoutExamples >> centeredString: aString in: aNode [
-	| label |
-	label := BlTextElement new.
-	label text: aString asRopedText.
-	label constraintsDo: [ :constraints |
-		constraints frame horizontal alignCenter.
-		constraints frame vertical alignCenter.
-		constraints padding: (BlInsets all: 1) ].
-	aNode addChild: label.
-	aNode layout: BlFrameLayout new.
-	^ label
-]
-
-{ #category : #example }
-GtGraphRectanglePackLayoutExamples >> circles [
-	<gtExample>
-	<noTest>
-	| view nodes data |
-
-	data := self circlesData.
-
-	view := self view.
-	nodes := self nodes: data.
-	nodes do: [ :node |
-		| model label |
-		model := node userData at: #model.
-		node
-			geometry: BlEllipse new;
-			size: model value asPoint;
-			background: Color random.
-		label := BlTextElement new.
-		label text: (model key asRopedText
-			attributes: { 
-				BlTextForegroundAttribute paint: Color black .
-				BlFontSizeAttribute size: 10 } ).
-		label constraintsDo: [ :constraints |
-			constraints frame horizontal alignCenter.
-			constraints frame vertical alignCenter ].
-		node addChild: label.
-		node layout: BlFrameLayout new ].
-	
-	view addChildren: nodes.
-	view layout: GtGraphRectanglePackLayout new.
-	self applyLayoutIn: view.
-
-	^ view
-]
-
-{ #category : #private }
 GtGraphRectanglePackLayoutExamples >> circlesData [
-	^ GLMPresentation withAllSubclasses collect: [ :aClass | 
+	^ Collection withAllSubclasses collect: [ :aClass | 
 		aClass name  -> (30*( (aClass numberOfMethods max: 1) ln asInteger)) ]
 ]
 
 { #category : #example }
 GtGraphRectanglePackLayoutExamples >> circlesRaw [
 	<gtExample>
-	<noTest>
 	| view data |
 
 	data := self circlesData.
@@ -99,52 +49,14 @@ GtGraphRectanglePackLayoutExamples >> circlesRaw [
 ]
 
 { #category : #example }
-GtGraphRectanglePackLayoutExamples >> circlesSimplified [
-	<gtExample>
-	<noTest>
-	| view data |
-
-	data := self circlesData.
-
-	view := self view.
-	self nodes: data inView: view forEach: [ :node |
-		| model label |
-		model := self modelFor: node.
-		node
-			geometry: BlEllipse new;
-			size: model value asPoint;
-			background: Color random.
-		label := self centeredString: model key in: node.
-		label text attributes: { 
-			BlTextForegroundAttribute paint: Color black .
-			BlFontSizeAttribute size: 10 } ].
-	
-	view layout: (GtGraphRectanglePackLayout new).
-	self applyLayoutIn: view.
-
-	^ view
-]
-
-{ #category : #private }
-GtGraphRectanglePackLayoutExamples >> modelFor: aNode [
-	^ aNode userData at: #model
-]
-
-{ #category : #private }
-GtGraphRectanglePackLayoutExamples >> nodes: aDataCollection inView: aView forEach: aBlock [
-	| nodes |
-	nodes := self nodes: aDataCollection.
-	nodes do: aBlock.
-	aView addChildren: nodes.
-]
-
-{ #category : #example }
 GtGraphRectanglePackLayoutExamples >> powersOfTwo [
 	<gtExample>
-	<noTest>
 	
 	^ BlElement new
 		layout: GtGraphRectanglePackLayout new;
+		constraintsDo: [ :c |
+			c horizontal fitContent.
+			c vertical fitContent ];
 		addChildren: ({
 			2 -> 256.
 			4 -> 128.
@@ -158,22 +70,4 @@ GtGraphRectanglePackLayoutExamples >> powersOfTwo [
 					background: (Color gray alpha: 0.3);
 					border: (BlBorder paint: Color white width: 1);
 					size: eachSize value asPoint ] ])
-]
-
-{ #category : #example }
-GtGraphRectanglePackLayoutExamples >> simple [
-	<gtExample>
-	<noTest>
-	| view nodes |
-
-	view := self view.
-	nodes := self nodes: (1 to: 50).
-	nodes do: [ :node | node size: (100 atRandom @ 100 atRandom) ].
-	
-	view addChildren: nodes.
-	view layout: GtGraphRectanglePackLayout new.
-
-	self applyLayoutIn: view.
-
-	^ view
 ]

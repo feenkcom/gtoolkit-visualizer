@@ -17,7 +17,7 @@ GtGraphClusterLayoutExamples >> forestOfClusters [
 	aLayout := GtGraphClusterLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children measuredBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(87@60) corner: (97@70).
 		(96@119) corner: (106@129).
 		(146@71) corner: (156@81).

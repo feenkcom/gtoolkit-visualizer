@@ -14,38 +14,11 @@ GtGraphAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #'default attach points' }
-GtGraphAbstractVerticalTreeLayout >> defaultAttachPoint [
-	self flag: 'attach point'.
-	
-	^ nil "RTVerticalAttachPoint new"
-]
-
 { #category : #'initialize-release' }
 GtGraphAbstractVerticalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 3
-]
-
-{ #category : #reversing }
-GtGraphAbstractVerticalTreeLayout >> inverseAttachPoint [
-	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
-
-	self flag: 'Attach point'.
-
-	"| a |
-	a := RTShorterVerticalDistanceAttachPoint new.
-	edges
-		do: [ :edge | 
-			edge shape attachPoint: a.
-			edge updateFromTo ]
-"
-]
-
-{ #category : #reversing }
-GtGraphAbstractVerticalTreeLayout >> inverseAttachPointIfNecessary [
-	"Inverse the attach point if the user has not used #doNotAttachPoint"
 ]
 
 { #category : #'hook-private' }
@@ -57,10 +30,10 @@ GtGraphAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atL
 	alreadyLayoutedNodes addAll: aNodeCollection.
 	self atLayer: aNumber add: aNodeCollection.
 	aNodeCollection do: [ :each | 
-		childrenPosition := y + each measuredHeight + self verticalGap.
-		treeSize := each measuredWidth
+		childrenPosition := y + each height + self verticalGap.
+		treeSize := each width
 			max: (self layout: (self computeChildrenFor: each) atPoint: x @ childrenPosition atLayer: aNumber + 1).
-		middleOfTree := x + (treeSize / 2.0) - (each measuredWidth / 2.0).
+		middleOfTree := x + (treeSize / 2.0) - (each width / 2.0).
 		translator translateTopLeftOf: each to: middleOfTree @ y.
 		x := x + treeSize + self horizontalGap.
 		self step ].
@@ -84,14 +57,6 @@ GtGraphAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 	nodesByLayer do: [:eachSetOfNodes |
 		layerDepthSize := eachSetOfNodes inject: 0 into: [:max :eachNode | 
 			self translator translate: eachNode to: (eachNode position x @ cursor ).
-			max max: eachNode measuredHeight ].
+			max max: eachNode height ].
 		cursor := cursor + layerDepthSize + self verticalGap ]
-]
-
-{ #category : #reversing }
-GtGraphAbstractVerticalTreeLayout >> verticallyReverse: elements [
-	"Vertically reverse the elements, as well as the attachpoints"
-
-	super verticallyReverse: elements.
-	self inverseAttachPointIfNecessary
 ]
