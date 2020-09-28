@@ -346,7 +346,7 @@ GtGradKamadaKawaiLayout >> maxIterations: aNumber [
 ]
 
 { #category : #measure }
-GtGradKamadaKawaiLayout >> measureChildrenNodes: aParentLayoutNode [
+GtGradKamadaKawaiLayout >> measureChildrenPositions: aParentLayoutNode [
 	| aParentGraphNode |
 
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.

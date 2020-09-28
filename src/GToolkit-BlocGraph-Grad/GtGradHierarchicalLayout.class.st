@@ -148,7 +148,7 @@ GtGradHierarchicalLayout >> layeringStage: model [
 ]
 
 { #category : #measure }
-GtGradHierarchicalLayout >> measureChildrenNodes: aParentLayoutNode [
+GtGradHierarchicalLayout >> measureChildrenPositions: aParentLayoutNode [
 	| aParentGraphNode |
 
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
