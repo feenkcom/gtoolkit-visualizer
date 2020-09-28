@@ -83,7 +83,7 @@ GtGradAbstractTreeLayout >> levelDistance: aNumber [
 ]
 
 { #category : #measure }
-GtGradAbstractTreeLayout >> measureChildrenNodes: aParentLayoutNode [
+GtGradAbstractTreeLayout >> measureChildrenPositions: aParentLayoutNode [
 	| aTreeForest aParentGraphNode |
 
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.

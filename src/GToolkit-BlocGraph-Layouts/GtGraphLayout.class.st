@@ -68,7 +68,7 @@ GtGraphLayout >> initialize [
 ]
 
 { #category : #layout }
-GtGraphLayout >> measureChildrenNodes: aParentLayoutNode [
+GtGraphLayout >> measureChildrenPositions: aParentLayoutNode [
 	self applyOn: aParentLayoutNode withGraphEdges children with: aParentLayoutNode extentSpec.
 
 	aParentLayoutNode children
