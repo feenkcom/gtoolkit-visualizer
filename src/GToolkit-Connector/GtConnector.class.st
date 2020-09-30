@@ -378,6 +378,17 @@ GtConnector >> gtLiveFor: aView [
 				ifNil: [ self asScalableElement ] ]
 ]
 
+{ #category : #'gt-extension' }
+GtConnector >> gtOptionsFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Options';
+		priority: 0.5;
+		object: [ self options ];
+		view: #gtOptionsFor:
+]
+
 { #category : #utils }
 GtConnector >> hasElement: anElement eventHandlerWithId: anId [
 	^ anElement eventDispatcher handlers anySatisfy: [ :each |
@@ -523,13 +534,15 @@ GtConnector >> linkLayoutTargetsFor: aVisualTarget [
 ]
 
 { #category : #accessing }
-GtConnector >> options [ 
+GtConnector >> options [
+	<return: #GtConnectorOptions>
+
 	^ options 
 ]
 
 { #category : #accessing }
 GtConnector >> options: anOptionsObject [
-	options := anOptionsObject.
+	options := anOptionsObject
 ]
 
 { #category : #public }
@@ -620,7 +633,7 @@ GtConnector >> sourceElementsWith: anEntity [
 
 { #category : #accessing }
 GtConnector >> stencil [ 
-	^ stencil 
+	^ stencil
 ]
 
 { #category : #public }
