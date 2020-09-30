@@ -9,15 +9,33 @@ Class {
 
 { #category : #accessing }
 GtConnectorOptions >> drawLines [
+	<return: #Boolean>
+
 	^ drawLines
 ]
 
 { #category : #accessing }
-GtConnectorOptions >> drawLines: anObject [
-	drawLines := anObject
+GtConnectorOptions >> drawLines: aBoolean [
+	drawLines := aBoolean
+]
+
+{ #category : #'gt-extension' }
+GtConnectorOptions >> gtOptionsFor: aView [
+	<gtExample>
+	
+	^ aView columnedList
+		title: 'Styles' translated;
+		priority: 10;
+		items: [ { 
+			'Draw Lines' -> self drawLines.
+		} ];
+		column: 'Option' item: [ :each | each key ];
+		column: 'Value' item: [ :each | each value ]
 ]
 
 { #category : #accessing }
 GtConnectorOptions >> initialize [
-	drawLines := true.
+	super initialize.
+
+	drawLines := true
 ]
