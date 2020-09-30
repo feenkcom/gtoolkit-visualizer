@@ -69,10 +69,10 @@ GtMondrianDomainExamples >> buttonLabelLookEventPropagation [
 	^ aView
 ]
 
-{ #category : #accessing }
+{ #category : #utility }
 GtMondrianDomainExamples >> classHierarchyFor: classes [
 	"This is a simpler visualization than the umlClasses one, with just class names."
-
+<gtExample>
 	| m |
 	m := GtMondrian new.
 	m nodes
@@ -95,7 +95,7 @@ GtMondrianDomainExamples >> classHierarchyFor: classes [
 	^ m
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 GtMondrianDomainExamples >> collectionHierarchy [
 	<gtExample>
 	^ self
@@ -299,6 +299,17 @@ GtMondrianDomainExamples >> exampleDependencies [
 	^ view
 ]
 
+{ #category : #'examples - layout' }
+GtMondrianDomainExamples >> forceBasedCollectionHierarchy [
+	<gtExample>
+	| m |
+	m := GtMondrian new.
+	m nodes with: Collection withAllSubclasses.
+	m edges connectFrom: #superclass.
+	m layout force.
+	^ m
+]
+
 { #category : #examples }
 GtMondrianDomainExamples >> packageDependencies [
 	<gtExample>
@@ -372,7 +383,7 @@ GtMondrianDomainExamples >> packageDependencies [
 	^ view
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 GtMondrianDomainExamples >> structureOfAnElement [
 	<gtExample>
 	| m root |
