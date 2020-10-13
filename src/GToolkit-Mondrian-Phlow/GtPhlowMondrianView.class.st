@@ -13,7 +13,9 @@ Class {
 
 { #category : #accessing }
 GtPhlowMondrianView >> asElementDo: aBlock [
+	| wrapper |
 	paintingStencilBuilder value: mondrianInstance.
+	wrapper := BrFrame new matchParent.
 	mondrianElement := mondrianInstance asPannableElement.
 	mondrianElement
 		when: BlClickEvent
@@ -23,8 +25,9 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 					| transformedObject |
 					transformedObject := transformation cull: event target graph model.
 					mondrianElement phlow spawnObject: transformedObject ] ].
-	self beViewElement: mondrianElement.
-	^ aBlock value: mondrianElement
+	wrapper addChild: mondrianElement.
+	self beViewElement: wrapper.
+	^ aBlock value: wrapper
 ]
 
 { #category : #initialize }
@@ -77,7 +80,13 @@ GtPhlowMondrianView >> send: aBlock [
 
 { #category : #accessing }
 GtPhlowMondrianView >> updateContent: aCurrentElement [
-	aCurrentElement hasParent ifFalse: [ ^ self ].
 	self initialize: GtMondrian new.
-	super updateContent: aCurrentElement.
+	self asElementDo: [ :aWrapper |
+		| aChild |
+		aChild := (aWrapper childAt: 1).
+		aChild removeFromParent.
+		aCurrentElement enqueueTask: (BlTaskAction new
+			action: [ 
+				aCurrentElement removeChildren.
+				aCurrentElement addChild: aChild ]) ].
 ]
