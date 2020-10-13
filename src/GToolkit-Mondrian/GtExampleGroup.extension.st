@@ -37,7 +37,7 @@ GtExampleGroup >> gtInspectorMondrianMapIn: composite [
 { #category : #'*GToolkit-Mondrian' }
 GtExampleGroup >> paintMapWith: m [
 	| grouped all local |
-	local := self examples collect: #example.
+	local := self examples.
 	all := local withDeepCollect: #directDependencies as: Set.
 	grouped := all groupedBy: [:each | each method methodClass ].
 	m nodes 
@@ -63,24 +63,27 @@ GtExampleGroup >> paintMapWith: m [
 		with: grouped associations;
 		forEach: [:assoc | 
 			m nodes 
-				stencil: [ :each | | element |
+				stencil: [ :anExample | | element |
 					element := BlElement new.
 					element
 						geometry: BlEllipse new;
-						constraintsDo: [:c | c horizontal fitContent. c vertical fitContent];
+						constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent];
 						border: (BlBorder paint: Color black width: 2);
+						background: anExample color;
 						size: 20@20;
-						when: BlClickEvent do: [:e | e target phlow spawnObject: each];
+						when: BlClickEvent do: [:anEvent | anEvent target phlow spawnObject: anExample];
 						look: (BrGlamorousWithTooltipLook2 new 
 							contentStencil: [ | container |
-							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: each) expanded: true) asElement.
+							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: anExample) expanded: true) asElement.
 							container 
 								when: GtPhlowObjectToSpawn do: [:e | 
 									element phlow spawnTool: e tool ] ];
 								preferredExtent: 200@200;
 								showDelay: 100 milliSeconds;
 								hideDelay: 200 milliSeconds ).
-					(local includes: each) ifFalse: [element border: (BlBorder paint: Color gray width: 2)].
+					anExample announcer weak when: GtExampleExecuted do: [ :anEvent | 
+						element enqueueTask: (BlTaskAction new action: [ element background: anExample color ]) ].
+					(local includes: anExample) ifFalse: [element border: (BlBorder paint: Color gray width: 2)].
 					element ];
 		with: assoc value. 
 	m layout horizontalDominanceTree nodeDistance: 2; treesDistance: 4; levelDistance: 10.].
