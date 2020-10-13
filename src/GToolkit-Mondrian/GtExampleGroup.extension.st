@@ -37,7 +37,7 @@ GtExampleGroup >> gtInspectorMondrianMapIn: composite [
 { #category : #'*GToolkit-Mondrian' }
 GtExampleGroup >> paintMapWith: m [
 	| grouped all local |
-	local := self examples.
+	local := self examples select: #isMethodDefined.
 	all := local withDeepCollect: #directDependencies as: Set.
 	grouped := all groupedBy: [:each | each method methodClass ].
 	m nodes 
