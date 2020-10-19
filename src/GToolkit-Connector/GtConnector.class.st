@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'stencil',
 		'referencedEntitiesBlock',
-		'options'
+		'options',
+		'entityEventHandler',
+		'connectorEventHandler'
 	],
 	#category : #'GToolkit-Connector-Core'
 }
@@ -113,8 +115,8 @@ GtConnector >> addVisualLineFrom: aSourceElement to: aTargetElement [
 	aSourceElement connector beConnectedTo: aTargetElement.
 	aTargetElement connector beConnectedTo: aSourceElement.
 	
-	self ensureRemoveVisualSourceHandlerFor: aSourceElement.
-	self ensureRemoveVisualTargetHandlerFor: aTargetElement.
+	self ensureEntityHandlerFor: aSourceElement.
+	self ensureEntityHandlerFor: aTargetElement.
 	
 	self addChild: aLineElement
 	"self options drawLines ifTrue: [ self addChild: aLineElement ]"
@@ -232,6 +234,13 @@ GtConnector >> ensureEdgeConstraitFrom: aSourceElement to: aTargetElement [
 	aTargetElement constraints graph addConnectedEdge: newEdge.
 ]
 
+{ #category : #'private - event handling' }
+GtConnector >> ensureEntityHandlerFor: anElement [
+	
+	anElement removeEventHandler: entityEventHandler.
+	anElement addEventHandler: entityEventHandler
+]
+
 { #category : #'private - adding / removing' }
 GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [	
 	self
@@ -243,93 +252,13 @@ GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [
 	
 	self ensureEdgeConstraitFrom: aSourceElement to: aTargetElement.
 	
-	self ensureRemoveLayoutSourceHandlerFor: aSourceElement.
-	self ensureRemoveLayoutTargetHandlerFor: aTargetElement.
+	self ensureEntityHandlerFor: aSourceElement.
+	self ensureEntityHandlerFor: aTargetElement.
 	
 	(aSourceElement isConnectedTo: aTargetElement) ifFalse: [ 
 		self addEdgeLineFrom: aSourceElement to: aTargetElement ].
 
 	self requestLayout
-]
-
-{ #category : #'private - event handling' }
-GtConnector >> ensureRemoveLayoutSourceHandlerFor: anElement [ 
-	| eventHandler |
-	self assert: [ anElement connector isLayoutSource ].
-
-	(self 
-		hasElement: anElement 
-		eventHandlerWithId: #removeLayoutSource) ifTrue: [ ^ self ].
-	
-	eventHandler := GtConnectorEventHandler 
-		on: GtConnectorLayoutSourceElementRemovedEvent 
-		do: [ :anEvent | 
-			self emitSignalForEvent: anEvent.
-			self removeEdgeConstraintsFrom: anEvent element.
-			self removeLinesFrom: anEvent element.
-			self requestLayout ].
-	eventHandler id: #removeLayoutSource.
-	
-	anElement addEventHandler: eventHandler.
-]
-
-{ #category : #'private - event handling' }
-GtConnector >> ensureRemoveLayoutTargetHandlerFor: anElement [
-	| eventHandler |
-	self assert: [ anElement connector isLayoutTarget ].
-
-	(self 
-		hasElement: anElement 
-		eventHandlerWithId: #removeLayoutTarget) ifTrue: [ ^ self ].
-		
-	eventHandler := GtConnectorEventHandler 
-		on: GtConnectorLayoutTargetElementRemovedEvent 
-		do: [ :anEvent | 
-			self emitSignalForEvent: anEvent.
-			self removeEdgeConstraintsTo: anEvent element.
-			self removeLinesTo: anEvent element.
-			self requestLayout ].
-	eventHandler id: #removeLayoutTarget.
-	
-	anElement addEventHandler: eventHandler.
-]
-
-{ #category : #'private - event handling' }
-GtConnector >> ensureRemoveVisualSourceHandlerFor: anElement [
-	| eventHandler |
-	self assert: [ anElement connector isVisualSource ].
-
-	(self 
-		hasElement: anElement 
-		eventHandlerWithId: #removeVisualSource) ifTrue: [ ^ self ].
-		
-	eventHandler := GtConnectorEventHandler 
-		on: GtConnectorVisualSourceElementRemovedEvent 
-		do: [ :anEvent | 
-			self emitSignalForEvent: anEvent.
-			self removeLinesFrom: anEvent element ].
-	eventHandler id: #removeVisualSource.
-	
-	anElement addEventHandler: eventHandler.
-]
-
-{ #category : #'private - event handling' }
-GtConnector >> ensureRemoveVisualTargetHandlerFor: anElement [
-	| eventHandler |
-	self assert: [ anElement connector isVisualTarget ].
-
-	(self 
-		hasElement: anElement 
-		eventHandlerWithId: #removeVisualTarget) ifTrue: [ ^ self ].
-	
-	eventHandler := GtConnectorEventHandler 
-		on: GtConnectorVisualTargetElementRemovedEvent 
-		do: [ :anEvent | 
-			self emitSignalForEvent: anEvent.
-			self removeLinesTo: anEvent element ].
-	eventHandler id: #removeVisualTarget.
-	
-	anElement addEventHandler: eventHandler.
 ]
 
 { #category : #accessing }
@@ -392,7 +321,7 @@ GtConnector >> gtOptionsFor: aView [
 { #category : #utils }
 GtConnector >> hasElement: anElement eventHandlerWithId: anId [
 	^ anElement eventDispatcher handlers anySatisfy: [ :each |
-		(each isKindOf: GtConnectorEventHandler) and: [ 
+		(each isKindOf: GtConnectorEntityEventHandler) and: [ 
 			each id = anId ] ]
 	
 ]
@@ -417,22 +346,12 @@ GtConnector >> initialize [
 
 	self layout: (GtGradHorizontalTreeLayout new levelDistance: 200; nodeDistance: 40).
 	self options: GtConnectorOptions new.
-	self initializeListeners.
 	
-	referencedEntitiesBlock := [ :anEntity | #() ].
-]
-
-{ #category : #initialization }
-GtConnector >> initializeListeners [
-	self when: GtConnectorVisualSourceElementAddedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self drawLinesFromVisualSource: anEvent element.
-		self linkLayoutSourcesFor: anEvent element ].
+	entityEventHandler := GtConnectorEntityEventHandler new connector: self.
+	connectorEventHandler := GtConnectorEventHandler new connector: self.
+	self addEventHandler: connectorEventHandler.
 	
-	self when: GtConnectorVisualTargetElementAddedEvent do: [ :anEvent | 
-		self emitSignalForEvent: anEvent.
-		self drawLinesToVisualTarget: anEvent element.
-		self linkLayoutTargetsFor: anEvent element ]
+	referencedEntitiesBlock := [ :anEntity | #() ]
 ]
 
 { #category : #search }
