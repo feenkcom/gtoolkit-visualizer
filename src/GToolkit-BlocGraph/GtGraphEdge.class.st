@@ -11,7 +11,7 @@ Class {
 	#category : #'GToolkit-BlocGraph-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtGraphEdge class >> connecting: aFromElement to: aToElement [
 	<return: #GtGraphEdge>
 
