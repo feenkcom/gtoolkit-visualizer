@@ -120,6 +120,14 @@ GtNestedRectangleTreeMap >> deep: aBlock [
 	traversalBlock := aBlock
 ]
 
+{ #category : #accessing }
+GtNestedRectangleTreeMap >> gtViewTreeMapRootsFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Roots';
+		items: [ roots ]
+]
+
 { #category : #initialization }
 GtNestedRectangleTreeMap >> initialize [
 	super initialize.
