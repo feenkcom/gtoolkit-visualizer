@@ -152,8 +152,11 @@ GtGradHierarchicalLayout >> measureChildrenPositions: aParentLayoutNode [
 	| aParentGraphNode |
 
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
-
+	
+	"we should recompute nodes each time, otherwise the cache is not invalidated"
+	roots := nil.
 	self run: aParentGraphNode children.
+	roots := nil.
 
 	aParentGraphNode children normalizePositions
 ]
