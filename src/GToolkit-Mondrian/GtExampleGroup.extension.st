@@ -86,7 +86,7 @@ GtExampleGroup >> paintMapWith: m [
 					(local includes: anExample) ifFalse: [element border: (BlBorder paint: Color gray width: 2)].
 					element ];
 		with: assoc value. 
-	m layout horizontalDominanceTree nodeDistance: 2; treesDistance: 4; levelDistance: 10.].
+	m layout horizontalTree nodeDistance: 2; treesDistance: 4; levelDistance: 10.].
 	m edges 
 		fromNearestTightCircle;
 		toNearestTightCircle;
