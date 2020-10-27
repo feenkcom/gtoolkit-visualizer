@@ -81,7 +81,7 @@ GtExampleGroup >> paintMapWith: m [
 								preferredExtent: 200@200;
 								showDelay: 100 milliSeconds;
 								hideDelay: 200 milliSeconds ).
-					anExample announcer weak when: GtExampleExecuted do: [ :anEvent | 
+					anExample announcer when: GtExampleExecuted do: [ :anEvent | 
 						element enqueueTask: (BlTaskAction new action: [ element background: anExample color ]) ].
 					(local includes: anExample) ifFalse: [element border: (BlBorder paint: Color gray width: 2)].
 					element ];
