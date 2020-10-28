@@ -21,7 +21,7 @@ GtGraphRectanglePackLayoutExamples >> circlesRaw [
 	data do: [ :model |
 		| node label |
 		node := BlElement new 
-			geometry: BlEllipse new;
+			geometry: BlEllipseGeometry new;
 			size: model value asPoint;
 			background: Color random.
 		label := BlTextElement new.

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'createdElements'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #private }
@@ -27,7 +27,7 @@ GtMondrianNodeBuilder >> ellipse: aBlock [
 	self shape: [ :anObject :anElement |
 		aBlock 
 			cull: anObject 
-			cull: (anElement geometry: BlEllipse new) ]
+			cull: (anElement geometry: BlEllipseGeometry new) ]
 ]
 
 { #category : #scripting }

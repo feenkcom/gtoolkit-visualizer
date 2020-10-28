@@ -162,7 +162,7 @@ GtGraphCircleNeighbourhoodElement >> projectionElement [
 	anExtent := self neighbourhood averageRadius asPoint /  20.0.
 	
 	^ BlElement new
-		geometry: BlEllipse new;
+		geometry: BlEllipseGeometry new;
 		relocate: self neighbourhood neighbourProjection - (anExtent / 2.0);
 		size: anExtent;
 		background: (Color black alpha: 0.6)

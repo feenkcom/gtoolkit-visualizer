@@ -172,7 +172,7 @@ GtMondrianBasicExamples >> elipseWithCustomShape [
 	view nodes
 		shape: [ :anInteger | 
 			BlElement new
-				geometry: BlEllipse new;
+				geometry: BlEllipseGeometry new;
 				border: (BlBorder paint: Color black width: 2);
 				size: (anInteger max: 5) asPoint;
 				constraintsDo: [ :constraints | constraints padding: (BlInsets all: 10) ] ];
@@ -204,7 +204,7 @@ GtMondrianBasicExamples >> elipseWithReusedShape [
 	view nodes
 		shape: [ :anInteger :anElement | 
 			anElement
-				geometry: BlEllipse new;
+				geometry: BlEllipseGeometry new;
 				size: (anInteger max: 5) asPoint;
 				constraintsDo: [ :constraints | constraints padding: (BlInsets all: 10) ] ];
 		with: (1 to: 20).
@@ -250,7 +250,7 @@ GtMondrianBasicExamples >> nestedNodes [
 	view nodes
 		shape: [ :x | 
 			BlElement new 
-				geometry: BlEllipse new; 
+				geometry: BlEllipseGeometry new; 
 				background: Color paleOrange;
 				constraintsDo: [ :c | c padding: (BlInsets all: 10) ] ];
 		with: (1 to: 9)
@@ -399,7 +399,7 @@ GtMondrianBasicExamples >> nodesWithEllipses [
 		shape: [ :x | 
 			BlElement new 
 				border: (BlBorder paint: Color black);
-				geometry: BlEllipse new; 
+				geometry: BlEllipseGeometry new; 
 				size: (x * 2) @ (x * 2) ];
 		with: (1 to: 9).
 	self assert: view topStep root graph nodeChildren size = 9.
@@ -416,7 +416,7 @@ GtMondrianBasicExamples >> nodesWithText [
 			BlTextElement new
 				text: x gtDisplayString asRopedText;
 				padding: (BlInsets all: 5);
-				geometry: BlEllipse new ];
+				geometry: BlEllipseGeometry new ];
 		with: (1 to: 9).
 	^ view
 ]
@@ -462,7 +462,7 @@ GtMondrianBasicExamples >> passiveEdgesWithNesting [
 	view nodes
 		shape: [ :x | 
 			BlElement new 
-				geometry: BlEllipse new; 
+				geometry: BlEllipseGeometry new; 
 				border: (BlBorder paint: Color black);
 				constraintsDo: [ :c | c padding: (BlInsets all: 10) ] ];
 		with: (1 to: 9)

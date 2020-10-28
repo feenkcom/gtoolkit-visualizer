@@ -12,7 +12,7 @@ GtExampleGroup >> gtInspectorMondrianMapIn: composite [
 				view nodes
 					shape: [ :each |
 						BlElement new 	
-							geometry: BlEllipse new;
+							geometry: BlEllipseGeometry new;
 							border: (BlBorder paint: Color black width: 2);
 							size: 20@20;
 							constraintsDo: [ :constraints |
@@ -66,7 +66,7 @@ GtExampleGroup >> paintMapWith: m [
 				stencil: [ :anExample | | element |
 					element := BlElement new.
 					element
-						geometry: BlEllipse new;
+						geometry: BlEllipseGeometry new;
 						constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent];
 						border: (BlBorder paint: Color black width: 2);
 						background: anExample color;

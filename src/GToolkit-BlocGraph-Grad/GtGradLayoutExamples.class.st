@@ -13,7 +13,7 @@ GtGradLayoutExamples >> bigNodesN: num [
 		aNode := BlElement new
 							background: (Color gray alpha: 0.5);
 							border: (BlBorder builder width: 1; paint: Color black) build;
-							geometry: BlEllipse new;
+							geometry: BlEllipseGeometry new;
 							size: 300@300.
 		aNode graph beNode.
 		aNode ]
@@ -39,7 +39,7 @@ GtGradLayoutExamples >> createNNodesOfIncreasingSize: numberOfNodes [
 		anElement := BlElement new
 							background: (Color gray alpha: 0.5);
 							border: (BlBorder builder width: 1; paint: Color black) build;
-							geometry: BlEllipse new;
+							geometry: BlEllipseGeometry new;
 							size: 10 asPoint * index.
 		anElement graph beNode.
 		anElement ]

@@ -13,7 +13,7 @@ GtDiagrammerGeometryPicker >> initialize [
 
 	self display: [ { 
 		BlRectangleGeometry new.
-		BlEllipse new.
+		BlEllipseGeometry new.
 	 } ].
 
 	self shape: [ :aGeometry |
