@@ -66,13 +66,13 @@ GtExampleGroup >> paintMapWith: m [
 				stencil: [ :anExample | | element |
 					element := BlElement new.
 					element
-						geometry: BlEllipse new;
+						geometry: BlEllipseGeometry new;
 						constraintsDo: [ :c | c horizontal fitContent. c vertical fitContent];
 						border: (BlBorder paint: Color black width: 2);
 						background: anExample color;
 						size: 20@20;
 						when: BlClickEvent do: [:anEvent | anEvent target phlow spawnObject: anExample];
-						look: (BrGlamorousWithTooltipLook2 new 
+						look: (BrGlamorousWithTooltipLook new 
 							contentStencil: [ | container |
 							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: anExample) expanded: true) asElement.
 							container 
