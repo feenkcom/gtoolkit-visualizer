@@ -36,7 +36,7 @@ GtNestedTreeMap >> create [
 GtNestedTreeMap >> createContainerFor: anObject [
 	| containerElement |
 	containerElement := BlElement new
-		geometry: BlEllipse new;
+		geometry: BlEllipseGeometry new;
 		when: BlClickEvent
 			do: [ :e | 
 			e target phlow spawnObject: anObject.
@@ -61,7 +61,7 @@ GtNestedTreeMap >> createLeavesFor: anObject [
 	^ (leavesCreationBlock value: anObject) collect: [ :leaf |
 		| leafElement |
 		leafElement := BlElement new
-			geometry: BlEllipse new;
+			geometry: BlEllipseGeometry new;
 			size: ((leavesSizeBlock value: leaf) max: 1) asPoint;
 			when: BlClickEvent do: [ :e | e target phlow spawnObject: leaf. e consumed: true ];
 			background: (Color red darker alpha: 0.7);

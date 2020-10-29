@@ -20,7 +20,7 @@ GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: a
 	| circleElement underlineRules |
 	
 	circleElement := BrButton new
-		geometry: BlEllipse new;
+		geometry: BlEllipseGeometry new;
 		size: circleSize@circleSize;
 		look: (GtExplainerTargetLook new explanationModel: identifier).
 		

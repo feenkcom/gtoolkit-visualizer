@@ -190,7 +190,7 @@ GtConnectorExamples >> linearDependenciesExample [
 		container addChild: labelButton.
 
 		dotButton := BrButton new.
-		dotButton icon: ((BlEllipse new extent: 10 asPoint) asElement 
+		dotButton icon: ((BlEllipseGeometry new extent: 10 asPoint) asElement 
 			background: Color black).
 		dotButton look: BrIconLook " BrGlamorousButtonWithIconLook".
 		dotButton size: 10 @ 10.
@@ -254,7 +254,7 @@ GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
 			beVisualSource.
 		buttonContainer size: 10 @ 10.
 
-		buttonElement := (BlEllipse new extent: 10 asPoint) asElement 
+		buttonElement := (BlEllipseGeometry new extent: 10 asPoint) asElement 
 			background: Color black.
 		dotButton := BrButton new.
 		dotButton icon: buttonElement.

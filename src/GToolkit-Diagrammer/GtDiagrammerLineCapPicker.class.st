@@ -4,7 +4,7 @@ I allow users to pick a line cap
 Class {
 	#name : #GtDiagrammerLineCapPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -29,13 +29,13 @@ GtDiagrammerLineCapPicker >> initialize [
 		
 		fromAnchor := BlElement new
 			size: anchorSize;
-			geometry: BlEllipse new;
+			geometry: BlEllipseGeometry new;
 			relocate: (cellSize y / 2.0) @ (anchorY) - (anchorSize / 2.0);
 			background: (Color gray alpha: 0.5).
 
 		toAnchor := BlElement new
 			size: anchorSize;
-			geometry: BlEllipse new;
+			geometry: BlEllipseGeometry new;
 			relocate: (cellSize x - (cellSize y / 2.0))@(anchorY) - (anchorSize / 2.0);
 			background: (Color gray alpha: 0.5).
 

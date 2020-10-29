@@ -4,7 +4,7 @@ I allow users to pick an element outskirts
 Class {
 	#name : #GtDiagrammerOutskirtsPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -30,7 +30,7 @@ GtDiagrammerOutskirtsPicker >> initialize [
 			addChild: (BlElement new
 				outskirts: theOutskirts;
 				background: (Color gray alpha: 0.3);
-				geometry: BlEllipse new;
+				geometry: BlEllipseGeometry new;
 				border: (BlBorder paint: (Color blue alpha: 0.2) width: borderWidth);
 				constraintsDo: [ :c |
 					c frame horizontal alignCenter.
@@ -38,7 +38,7 @@ GtDiagrammerOutskirtsPicker >> initialize [
 				size: previewSize);
 			addChild: (BlElement new
 				outskirts: BlOutskirts centered;
-				geometry: BlEllipse new;
+				geometry: BlEllipseGeometry new;
 				border: (BlBorder builder dashedSmall paint: (Color black alpha: 0.5); width: 1; build);
 				constraintsDo: [ :c |
 					c frame horizontal alignCenter.

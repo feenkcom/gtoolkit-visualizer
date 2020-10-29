@@ -74,7 +74,7 @@ GtConnectorTextButtonAttribute >> newButton [
 		size: 6 @ 6;
 		margin: (BlInsets top: 0 right: 2 bottom: 0 left: 2);
 		background: (Color gray alpha: 0.5);
-		geometry: BlEllipse new;
+		geometry: BlEllipseGeometry new;
 		addEventHandlerOn: BlClickEvent
 			do: [ :anEvent | actionBlock value: anEvent ];
 		yourself.

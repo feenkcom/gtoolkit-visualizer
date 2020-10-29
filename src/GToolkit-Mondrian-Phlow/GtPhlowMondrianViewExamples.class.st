@@ -28,7 +28,7 @@ GtPhlowMondrianViewExamples >> randomNodesWithEllipsesWith: view [
 		shape: [ :x | 
 			BlElement new 
 				border: (BlBorder paint: Color black);
-				geometry: BlEllipse new; 
+				geometry: BlEllipseGeometry new; 
 				size: (x * 2) @ (x * 2) ];
 		with: (1 to: (9 to: 50) atRandom).
 	self assert: view topStep root graph nodeChildren size >= 9.
