@@ -74,7 +74,7 @@ GtExampleGroup >> paintMapWith: m [
 						when: BlClickEvent do: [:anEvent | anEvent target phlow spawnObject: anExample];
 						look: (BrGlamorousWithTooltipLook new 
 							contentStencil: [ | container |
-							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: anExample) expanded: true) asElement.
+							container := BrVerticalPane new fitContent addChild: ((GtMethodCoder forExample: anExample) asCoderUIModel expanded: true) asElement.
 							container 
 								when: GtPhlowObjectToSpawn do: [:e | 
 									element phlow spawnTool: e tool ] ];
