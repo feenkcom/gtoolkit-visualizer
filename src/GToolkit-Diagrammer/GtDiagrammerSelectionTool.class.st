@@ -16,7 +16,7 @@ Class {
 		'selectedFigures',
 		'resizer'
 	],
-	#category : 'GToolkit-Diagrammer-Tools - Selection'
+	#category : #'GToolkit-Diagrammer-Tools - Selection'
 }
 
 { #category : #'api - deletion' }
@@ -75,7 +75,7 @@ GtDiagrammerSelectionTool >> onInstalledIn: aDiagrammerElement [
 	"aDiagrammerElement canvas addEventHandler: selector."
 	chooser := GtDiagrammerSelectionChooser on: self.
 
-	deleter := BlShortcut new
+	deleter := BlShortcutWithAction new
 		combination: (BlKeyCombination builder primary delete build);
 		action: [ self deleteSelected ].
 
