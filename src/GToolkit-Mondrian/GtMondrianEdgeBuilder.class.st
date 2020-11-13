@@ -156,7 +156,7 @@ GtMondrianEdgeBuilder >> connectToAll: aToBlock [
 GtMondrianEdgeBuilder >> defaultEdgeElement [
 	^ BlLineElement new
 		border: (BlBorder paint: (Color gray alpha: 0.5) width: 1);
-		constraintsDo: [:c | c ignoredByLayout ];
+		constraintsDo: [:c | c ignoreByLayout ];
 		zIndex: -1
 ]
 
