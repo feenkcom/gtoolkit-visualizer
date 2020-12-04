@@ -34,10 +34,9 @@ GtConnectorContainer >> entity: anEntity [
 { #category : #initialization }
 GtConnectorContainer >> initialize [
 	super initialize.
-	self addInteractiveModelState: BrLayoutHorizontalResizerModel matchParent.
-	self addInteractiveModelState: BrLayoutVerticalResizerModel matchParent.
+
 	self layout: BlFrameLayout new.
-	
+	self matchParent.
 	self addLook: BrLayoutResizerLook inherit.
 ]
 
