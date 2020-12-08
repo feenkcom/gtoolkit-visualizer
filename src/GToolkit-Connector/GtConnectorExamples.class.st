@@ -54,7 +54,7 @@ GtConnectorExamples >> createVisualSourceButtonForModel: anEntity withLabel: aLa
 	button := BrButton new
 		label: '+0';
 		look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook";
-		beSmall;
+		beSmallSize;
 		background: Color white;
 	 	border: (BlBorder paint: Color gray);
 	 	action: anAction.
@@ -67,7 +67,7 @@ GtConnectorExamples >> createVisualSourceButtonWithLabel: aLabel withAction: anA
 	button := BrButton new
 		label: aLabel;
 		look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook";
-		beSmall;
+		beSmallSize;
 		background: Color white;
 	 	border: (BlBorder paint: Color gray);
 	 	action: anAction.
@@ -316,7 +316,7 @@ GtConnectorExamples >> linearDoubleDependenciesExample [
 		dotButtonOne := BrButton new.
 		dotButtonOne label: buttonOneData.
 		dotButtonOne look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook".
-		dotButtonOne beSmall.
+		dotButtonOne beSmallSize.
 		dotButtonOne background: Color white.
 		dotButtonOne border: (BlBorder paint: Color gray).
 		dotButtonOne action: [ 
@@ -330,7 +330,7 @@ GtConnectorExamples >> linearDoubleDependenciesExample [
 		dotButtonTwo := BrButton new.
 		dotButtonTwo label: buttonTwoData.
 		dotButtonTwo look: BrGlamorousButtonWithLabelLook.
-		dotButtonTwo beSmall.
+		dotButtonTwo beSmallSize.
 		dotButtonTwo background: Color white.
 		dotButtonTwo border: (BlBorder paint: Color gray).
 		dotButtonTwo action: [ 
