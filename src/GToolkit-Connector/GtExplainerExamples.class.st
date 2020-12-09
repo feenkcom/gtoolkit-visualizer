@@ -190,7 +190,7 @@ GtExplainerExamples >> playgroundWithPreview [
 	subject forceLayout.
 	inspectorContainer addChild: subject.
 	codeElement := subject 
-		allChildrenBreadthFirstDetect: [ :each | each isKindOf: GtExpandableCoderElement] 
+		allChildrenBreadthFirstDetect: [ :each | each isKindOf: GtExpandableSourceCoderElement] 
 		ifFound: [ :coderElement | coderElement ]
 		ifNone: [ NotFound signal: 'inspect action not found' ].
 	inspectButton := codeElement 
