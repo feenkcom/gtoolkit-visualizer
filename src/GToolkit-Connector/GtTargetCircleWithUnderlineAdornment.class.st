@@ -16,7 +16,12 @@ Class {
 }
 
 { #category : #accessing }
-GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
+GtTargetCircleWithUnderlineAdornment >> coder: aCoder [
+	coder := aCoder.
+]
+
+{ #category : #accessing }
+GtTargetCircleWithUnderlineAdornment >> doAffect: aTBrTextEditorTextualPiece in: anEditorElement [
 	| circleElement underlineRules |
 	
 	circleElement := BrButton new
@@ -39,11 +44,6 @@ GtTargetCircleWithUnderlineAdornment >> affect: aTBrTextEditorTextualPiece in: a
 			coder requestStyleSourceText ].
 	
 	^ circleElement .
-]
-
-{ #category : #accessing }
-GtTargetCircleWithUnderlineAdornment >> coder: aCoder [
-	coder := aCoder.
 ]
 
 { #category : #accessing }

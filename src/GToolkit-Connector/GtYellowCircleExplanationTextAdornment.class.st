@@ -22,7 +22,7 @@ GtYellowCircleExplanationTextAdornment class >> forIdentifier: anIdentifier with
 ]
 
 { #category : #accessing }
-GtYellowCircleExplanationTextAdornment >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
+GtYellowCircleExplanationTextAdornment >> doAffect: aTBrTextEditorTextualPiece in: anEditorElement [
 	| circleElement |
 	
 	circleElement := BrButton new
