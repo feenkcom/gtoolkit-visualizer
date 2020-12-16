@@ -8,11 +8,7 @@ Class {
 GtExplainerExplanationLook >> initialize [
 	super initialize.
 	
-	self add: GtExplainerLinesLook new beForExplanation.
-
-	self
-		default: [ :aStyle | aStyle background: (BrGlamorousColors textHighlightColor alpha: 0.5) ];
-		hovered: [ :aStyle | aStyle background: (BrGlamorousColors textHighlightColor) ]
+	self add: GtExplainerLinesLook new beForExplanation
 ]
 
 { #category : #'api - hooks' }

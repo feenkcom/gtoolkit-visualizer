@@ -43,7 +43,7 @@ GtTargetCircleWithUnderlineAdornment >> doAffect: aTBrTextEditorTextualPiece in:
 			coder requestUpdateAddOns.
 			coder requestStyleSourceText ].
 	
-	^ circleElement .
+	^ circleElement
 ]
 
 { #category : #accessing }
@@ -78,7 +78,7 @@ GtTargetCircleWithUnderlineAdornment >> size [
 
 { #category : #accessing }
 GtTargetCircleWithUnderlineAdornment >> size: aSize [
-	circleSize := aSize.
+	circleSize := aSize
 ]
 
 { #category : #accessing }
