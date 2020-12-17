@@ -12,7 +12,7 @@ GtExplainerExplanationAttribute >> doAffect: aTBrTextEditorTextualPiece in: anEd
 	| aContainer aTextPieceElement |
 
 	aContainer := BrButton new
-		look: (GtExplainerExplanationLook new explanationModel: self explanationModel);
+		look: (GtExplainerExplanationLook new explanationModel: self explanationModel) + GtExplainerExplanationAttributeLook;
 		clipChildren: false;
 		layout: BlLinearLayout vertical;
 		geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
