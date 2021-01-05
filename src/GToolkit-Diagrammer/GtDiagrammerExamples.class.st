@@ -6,11 +6,12 @@
 Class {
 	#name : #GtDiagrammerExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Diagrammer-Examples'
+	#category : #'GToolkit-Diagrammer-Examples'
 }
 
 { #category : #ui }
 GtDiagrammerExamples >> colorPicker [
+	<noTest>
 	<gtExample>
 	| container picker |
 
@@ -31,6 +32,7 @@ GtDiagrammerExamples >> colorPicker [
 
 { #category : #'instance creation' }
 GtDiagrammerExamples >> diagrammer [
+	<noTest>
 	<gtExample>
 	
 	^ GtDiagrammerElement new
@@ -38,6 +40,7 @@ GtDiagrammerExamples >> diagrammer [
 
 { #category : #examples }
 GtDiagrammerExamples >> diagrammerWithEllipse [
+	<noTest>
 	<gtExample>
 	| aDiagrammer anEllipse |
 	
@@ -51,6 +54,7 @@ GtDiagrammerExamples >> diagrammerWithEllipse [
 
 { #category : #examples }
 GtDiagrammerExamples >> diagrammerWithSelectedEllipse [
+	<noTest>
 	<gtExample>
 	| aDiagrammer anEllipse |
 	
@@ -63,6 +67,7 @@ GtDiagrammerExamples >> diagrammerWithSelectedEllipse [
 
 { #category : #'instance creation' }
 GtDiagrammerExamples >> ellipseStencil [
+	<noTest>
 	<gtExample>
 	
 	^ GtDiagrammerEllipseStencil new create
