@@ -54,12 +54,12 @@ GtGraphTreemapLayout >> initialize [
 ]
 
 { #category : #layout }
-GtGraphTreemapLayout >> layout: anElement in: aRectangle [
+GtGraphTreemapLayout >> layout: anElement in: aRectangle context: aBlElementBoundsUpdateContext [
 
 	anElement children accountedByLayout do: [ :child |
-		child applyLayoutIn: child measuredBounds asRectangle ].
+		child applyLayoutIn: child measuredBounds asRectangle context: aBlElementBoundsUpdateContext ].
 
-	self layoutIgnored: anElement
+	self layoutIgnored: anElement context: aBlElementBoundsUpdateContext
 ]
 
 { #category : #layout }

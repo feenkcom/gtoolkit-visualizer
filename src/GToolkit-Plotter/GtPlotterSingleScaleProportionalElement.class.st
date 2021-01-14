@@ -34,9 +34,9 @@ GtPlotterSingleScaleProportionalElement >> initializeElements [
 ]
 
 { #category : #layout }
-GtPlotterSingleScaleProportionalElement >> onLayout: aBounds [
+GtPlotterSingleScaleProportionalElement >> onLayout: aBounds context: aBlElementBoundsUpdater [
 	| aFirstVisibleLabel aLastVisibleLabel aLeftHalfOfElements aRightHalfOfElements |
-	super onLayout: aBounds.
+	super onLayout: aBounds context: aBlElementBoundsUpdater.
 
 	elements
 		ifEmpty: [ ^ self ].
