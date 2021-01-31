@@ -9,7 +9,7 @@ Class {
 		'childrenContainers',
 		'objectsToNodesCache'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ GtMondrianStep >> layout: aLayout [
 
 { #category : #accessing }
 GtMondrianStep >> nodeAt: anObject ifAbsent: aBlock [
-	^ self root graph nodeAt: anObject ifAbsent: aBlock
+	^ self root graph firstNodeParent graph nodeAt: anObject ifAbsent: aBlock
 ]
 
 { #category : #accessing }
