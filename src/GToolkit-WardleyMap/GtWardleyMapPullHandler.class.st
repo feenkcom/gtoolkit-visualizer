@@ -47,6 +47,11 @@ GtWardleyMapPullHandler >> onPulled: aPulledElement from: aPreviousPosition to: 
 	pulledAction value: aPulledElement value: newRelativePosition
 ]
 
+{ #category : #'api - event managing' }
+GtWardleyMapPullHandler >> wantsEvent: anEvent [
+	^ (super wantsEvent: anEvent) and: [ anEvent modifiers isPrimaryModifier not ]
+]
+
 { #category : #accessing }
 GtWardleyMapPullHandler >> whenPulled: aBlockClosure [
 	pulledAction := aBlockClosure

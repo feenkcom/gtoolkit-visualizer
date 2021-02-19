@@ -26,7 +26,9 @@ GtWardleyMapEvolutionAsixLayer >> createVerticalGridLine [
 		constraintsDo: [ :c |
 			c horizontal exact: 1.
 			c vertical matchParent ];
-		background: Color veryLightGray
+		background: (BlLinearGradientPaint vertical stops: { 
+			0.1 -> Color transparent.
+			1 -> Color veryLightGray})
 ]
 
 { #category : #initialization }

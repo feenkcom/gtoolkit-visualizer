@@ -13,6 +13,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 		addEventHandler: (GtWardleyMapPullHandler new
 			containerElement: self;
 			whenPulled: [ :aPulledElement :aNormalizedPosition | aNodeViewModel moveNodeTo: aNormalizedPosition ]);
+		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
 		constraintsDo: [ :c |
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 			c frame vertical alignCenterAt: aNodeViewModel coordinateY ];

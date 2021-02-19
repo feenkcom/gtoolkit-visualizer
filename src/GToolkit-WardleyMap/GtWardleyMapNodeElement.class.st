@@ -20,6 +20,7 @@ GtWardleyMapNodeElement >> initialize [
 	self layout: BlFrameLayout new.
 	
 	labelElement := BrEditableLabel new
+		fitContent;
 		look: (BrGlamorousRegularEditorLook new);
 		text: 'Label'.
 

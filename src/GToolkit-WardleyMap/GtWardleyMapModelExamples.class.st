@@ -12,9 +12,16 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 	aWardleyMap := self newMapWithNodes.
 	aWardleyMapViewModel := GtWardleyMapViewModel new.
 	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
-	
+
 	aWardleyMapElement := GtWardleyMapElement new.
 	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
+
+	aWardleyMapElement evolutionSections: {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity'
+	}.
 
 	^ aWardleyMapElement
 ]
