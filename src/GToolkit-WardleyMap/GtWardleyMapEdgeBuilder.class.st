@@ -6,7 +6,7 @@ Class {
 		'lineToAnchorElement',
 		'lineElement'
 	],
-	#category : #'GToolkit-WardleyMap-! Views'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }
@@ -23,11 +23,22 @@ GtWardleyMapEdgeBuilder >> containerElement: anObject [
 GtWardleyMapEdgeBuilder >> dragEndEvent: anEvent [
 	anEvent consumed: true.
 	
+	
+	
 	lineToAnchorElement
 		ifNil: [ ^ self ].
 
 	lineToAnchorElement removeFromParent.
-	lineElement removeFromParent
+	lineElement removeFromParent.
+
+	self containerElement
+		childrenAt: (self containerElement globalPointToLocal: anEvent position)
+		do: [ :eachChild |
+			eachChild graph isNode
+				ifTrue: [
+					^ self containerElement wardleyMapViewModel
+						addNewEdgeFrom: anEvent currentTarget wardleyMapNodeViewModel
+						to: eachChild wardleyMapNodeViewModel ] ]
 ]
 
 { #category : #'dnd handlers' }
@@ -49,7 +60,7 @@ GtWardleyMapEdgeBuilder >> dragStartEvent: anEvent [
 
 	lineToAnchorElement := BlElement new
 		size: self lineAnchorExtent;
-		background: Color gray;
+		background: anEvent currentTarget wardleyMapNodeViewModel nodeColor;
 		geometry: BlEllipseGeometry new;
 		constraintsDo: [ :c | c ignoreByLayout ].
 	self relocateLineAnchorTo: anEvent position.
@@ -57,7 +68,7 @@ GtWardleyMapEdgeBuilder >> dragStartEvent: anEvent [
 	lineElement := BlLineElement new
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: lineToAnchorElement relatedTo: anEvent currentTarget);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: anEvent currentTarget relatedTo: lineToAnchorElement);
-		border: (BlBorder paint: Color gray width: 1).
+		border: (BlBorder paint: anEvent currentTarget wardleyMapNodeViewModel nodeColor width: 1).
 
 	self containerElement addChildren: { lineToAnchorElement . lineElement }
 ]
@@ -79,5 +90,8 @@ GtWardleyMapEdgeBuilder >> relocateLineAnchorTo: aGlobalPosition [
 
 { #category : #'api - event managing' }
 GtWardleyMapEdgeBuilder >> wantsEvent: anEvent [
-	^ (super wantsEvent: anEvent) and: [ anEvent modifiers isPrimaryModifier ]
+	(anEvent isKindOf: BlDragStartEvent)
+		ifTrue: [ ^ anEvent modifiers isPrimaryModifier ].
+
+	^ super wantsEvent: anEvent
 ]

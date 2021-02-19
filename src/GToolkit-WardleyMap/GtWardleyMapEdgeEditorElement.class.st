@@ -1,8 +1,8 @@
 Class {
-	#name : #GtWardleyMapNodeEditorElement,
+	#name : #GtWardleyMapEdgeEditorElement,
 	#superclass : #BrVerticalPane,
-	#traits : 'TGtWithWardleyMapNodeViewModel + TGtWithWardleyMapViewModel',
-	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
+	#traits : 'TGtWithWardleyMapEdgeViewModel + TGtWithWardleyMapViewModel',
+	#classTraits : 'TGtWithWardleyMapEdgeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
 		'colorsPane',
 		'predefinedColorsElement'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> initialize [
+GtWardleyMapEdgeEditorElement >> initialize [
 	super initialize.
 	
 	self 
@@ -37,15 +37,13 @@ GtWardleyMapNodeEditorElement >> initialize [
 		content: colorsPane)
 ]
 
-{ #category : #'api - wardley map node view model' }
-GtWardleyMapNodeEditorElement >> onWardleyMapNodeViewModelChanged [
-	"Is sent when a new WardleyMapNode view model is assigned to the element"
-
-	
+{ #category : #'api - wardley map edge view model' }
+GtWardleyMapEdgeEditorElement >> onWardleyMapEdgeViewModelChanged [
+	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 ]
 
 { #category : #'api - wardley map view model' }
-GtWardleyMapNodeEditorElement >> onWardleyMapViewModelChanged [
+GtWardleyMapEdgeEditorElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	
 	predefinedColorsElement removeChildren.
@@ -62,6 +60,6 @@ GtWardleyMapNodeEditorElement >> onWardleyMapViewModelChanged [
 				anEvent consumed: true.
 				anEvent currentTarget fireEvent: BrDropdownHideWish new.
 
-				self wardleyMapNodeViewModel changeColorTo: eachColor.
+				self wardleyMapEdgeViewModel changeColorTo: eachColor.
 				self wardleyMapViewModel defaultColor: eachColor ] ])
 ]

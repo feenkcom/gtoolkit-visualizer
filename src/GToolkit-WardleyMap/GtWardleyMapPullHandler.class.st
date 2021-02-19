@@ -8,7 +8,7 @@ Class {
 		'containerElement',
 		'pulledAction'
 	],
-	#category : #'GToolkit-WardleyMap-! Views'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }

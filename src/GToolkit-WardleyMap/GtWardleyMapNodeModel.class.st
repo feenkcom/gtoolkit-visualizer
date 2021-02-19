@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'announcer',
 		'labelModel',
-		'size'
+		'size',
+		'id'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -23,6 +24,7 @@ GtWardleyMapNodeModel >> asDictionaryForExport [
 	Users will override and add to the dictionary"
 
 	^ OrderedDictionary new
+		at: #id put: id;
 		at: #color put: (Dictionary new
 			at: #red put: self color red;
 			at: #green put: self color green;
@@ -37,6 +39,16 @@ GtWardleyMapNodeModel >> asDictionaryForExport [
 		yourself
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodeModel >> id [
+	^ id
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeModel >> id: anObject [
+	id := anObject
+]
+
 { #category : #initialization }
 GtWardleyMapNodeModel >> initialize [
 	super initialize.
@@ -44,7 +56,8 @@ GtWardleyMapNodeModel >> initialize [
 	labelModel := GtWardleyMapNodeLabelModel new.
 	color := Color black.
 	coordinate := 0.5@0.5.
-	size := 12@12
+	size := 12@12.
+	id := nil
 ]
 
 { #category : #accessing }

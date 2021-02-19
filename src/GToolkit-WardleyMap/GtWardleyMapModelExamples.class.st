@@ -39,7 +39,7 @@ GtWardleyMapModelExamples >> newMap [
 { #category : #examples }
 GtWardleyMapModelExamples >> newMapWithNodes [
 	<gtExample>
-	| aWardleyMap aNodeA aNodeB aNodeC |
+	| aWardleyMap aNodeA aNodeB aNodeC anEdgeAtoB |
 
 	aNodeA := GtWardleyMapNodeModelExamples new newNode.
 	aNodeA coordinate: (0.25@0.75).
@@ -56,12 +56,18 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 	aNodeC color: Color red darker.
 	aNodeC label: 'Node C'.
 
+	anEdgeAtoB := GtWardleyMapEdgeModel new
+		fromNode: aNodeA;
+		toNode: aNodeB.		
+
 	aWardleyMap := self newMap.
 	aWardleyMap addNode: aNodeA.
 	aWardleyMap addNode: aNodeB.
 	aWardleyMap addNode: aNodeC.
+	aWardleyMap addEdge: anEdgeAtoB.
 	
 	self assert: aWardleyMap nodes size equals: 3.
+	self assert: aWardleyMap edges size equals: 1.
 
 	^ aWardleyMap
 ]
