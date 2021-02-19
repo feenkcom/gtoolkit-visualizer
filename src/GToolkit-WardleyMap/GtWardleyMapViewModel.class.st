@@ -5,10 +5,23 @@ Class {
 	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait',
 	#instVars : [
 		'announcer',
-		'nodeViewModels'
+		'nodeViewModels',
+		'predefinedColors',
+		'defaultColor'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
+	| aNewNode |
+	
+	aNewNode := GtWardleyMapNodeModel new
+		coordinate: aNormalizedPosition;
+		color: self defaultColor.
+		
+	self wardleyMapModel addNode: aNewNode
+]
 
 { #category : #announcer }
 GtWardleyMapViewModel >> announcer [
@@ -18,10 +31,45 @@ GtWardleyMapViewModel >> announcer [
 ]
 
 { #category : #initialization }
+GtWardleyMapViewModel >> createNodeViewModelFor: aNodeModel [
+	^ GtWardleyMapNodeViewModel new
+		wardleyMapViewModel: self;
+		wardleyMapNodeModel: aNodeModel
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> defaultColor [
+	^ defaultColor
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> defaultColor: aColor [
+	defaultColor := aColor
+]
+
+{ #category : #initialization }
 GtWardleyMapViewModel >> initialize [
 	super initialize.
 	
-	nodeViewModels := OrderedCollection new
+	nodeViewModels := OrderedCollection new.
+	
+	predefinedColors := { 
+		Color black.
+		Color veryVeryDarkGray.
+		Color veryDarkGray.
+		Color darkGray.
+		Color gray.
+		Color lightGray.
+		Color veryLightGray.
+		Color veryVeryLightGray.
+		Color red muchDarker.
+		Color red darker.
+		Color red.
+		Color red lighter.
+		Color red muchLighter.
+	}.
+	
+	defaultColor := Color gray
 ]
 
 { #category : #accessing }
@@ -34,7 +82,7 @@ GtWardleyMapViewModel >> nodeViewModels [
 { #category : #'event handling' }
 GtWardleyMapViewModel >> onNodeAdded: aNodeAddedAnnouncement [
 	| aNodeViewModel |
-	nodeViewModels add: (aNodeViewModel := GtWardleyMapNodeViewModel new wardleyMapNodeModel: aNodeAddedAnnouncement nodeModel).
+	nodeViewModels add: (aNodeViewModel := self createNodeViewModelFor: aNodeAddedAnnouncement nodeModel).
 	self announce: (GtWardleyMapNodeViewModelAdded new nodeViewModel: aNodeViewModel)
 ]
 
@@ -52,9 +100,17 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
 	
 	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel |
-		GtWardleyMapNodeViewModel new
-			wardleyMapViewModel: self;
-			wardleyMapNodeModel: eachNodeModel ]
+		self createNodeViewModelFor: eachNodeModel ]
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> predefinedColors [
+	^ predefinedColors
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> removeNodeViewModel: aNodeViewModel [
+	self wardleyMapModel removeNode: aNodeViewModel wardleyMapNodeModel
 ]
 
 { #category : #'api - wardley map model' }

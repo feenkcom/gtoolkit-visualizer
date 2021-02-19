@@ -17,9 +17,9 @@ GtWardleyMapNodeViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'api - accessing' }
-GtWardleyMapNodeViewModel >> color [
-	^ self wardleyMapNodeModel color
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> changeColorTo: aColor [
+	self wardleyMapNodeModel color: aColor
 ]
 
 { #category : #'api - accessing' }
@@ -52,6 +52,11 @@ GtWardleyMapNodeViewModel >> label [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> labelColor [
+	^ self nodeColor darker
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> labelCoordinate [
 	^ self wardleyMapNodeModel labelModel coordinate
 ]
@@ -76,6 +81,16 @@ GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
 	self wardleyMapNodeModel coordinate: aNormalizedPoint
 ]
 
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> nodeColor [
+	^ self wardleyMapNodeModel color
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeColored: anAnnouncement [
+	self announce: (GtWardleyMapNodeViewModelColored new nodeViewModel: self)
+]
+
 { #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeLabelMoved: anAnnouncement [
 	self announce: (GtWardleyMapNodeLabelViewModelMoved new nodeViewModel: self)
@@ -94,13 +109,21 @@ GtWardleyMapNodeViewModel >> onWardleyMapNodeModelChanged [
 	
 ]
 
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> removeFromMap [
+	self wardleyMapViewModel removeNodeViewModel: self
+]
+
 { #category : #'api - wardley map node model' }
 GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 	"Is sent after a new wardleyMapNode model is assigned to the view model.
 	It is required to unsubscribe from the domain model by implementing
 	#unsubscribeFromWardleyMapNodeModel if view model subscribes to them"
 	
-	self wardleyMapNodeModel weak when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self.
+	self wardleyMapNodeModel weak
+		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
+		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self.
+	
 	self wardleyMapNodeModel labelModel weak when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self
 ]
 
