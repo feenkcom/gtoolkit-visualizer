@@ -1,16 +1,22 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapWithCoordinate + TGtWardleyMapExportable',
-	#classTraits : 'TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait',
+	#traits : 'TGtWardleyMapWithCoordinate + TGtWardleyMapExportable + TGtAnnouncer',
+	#classTraits : 'TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait + TGtAnnouncer classTrait',
 	#instVars : [
+		'announcer',
 		'labelModel',
 		'color',
-		'size',
-		'id'
+		'size'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
+
+{ #category : #announcer }
+GtWardleyMapNodeModel >> announcer [
+	<return: #Announcer>
+	^ announcer ifNil: [ announcer := Announcer new ]
+]
 
 { #category : #'api - export / import' }
 GtWardleyMapNodeModel >> asDictionaryForExport [
@@ -67,6 +73,11 @@ GtWardleyMapNodeModel >> label: aString [
 { #category : #accessing }
 GtWardleyMapNodeModel >> labelModel [
 	^ labelModel
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> notifyMoved [
+	self announce: (GtWardleyMapNodeModelMoved new nodeModel: self)
 ]
 
 { #category : #accessing }

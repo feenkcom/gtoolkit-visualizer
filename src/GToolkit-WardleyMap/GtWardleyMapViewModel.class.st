@@ -51,7 +51,10 @@ GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
 GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
 	
-	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel | GtWardleyMapNodeViewModel new wardleyMapNodeModel: eachNodeModel ]
+	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel |
+		GtWardleyMapNodeViewModel new
+			wardleyMapViewModel: self;
+			wardleyMapNodeModel: eachNodeModel ]
 ]
 
 { #category : #'api - wardley map model' }

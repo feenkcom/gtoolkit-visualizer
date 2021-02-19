@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapCanvasLayer,
+	#name : #GtWardleyMapCanvasElement,
 	#superclass : #BlCanvassableElement,
 	#traits : 'TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #adding }
-GtWardleyMapCanvasLayer >> addNodeAt: aRelativePosition [
+GtWardleyMapCanvasElement >> addNodeAt: aRelativePosition [
 	| aNodeElement |
 
 	aNodeElement := self createCircleNode.
@@ -35,12 +35,12 @@ GtWardleyMapCanvasLayer >> addNodeAt: aRelativePosition [
 ]
 
 { #category : #initialization }
-GtWardleyMapCanvasLayer >> circleNodeExtent [
+GtWardleyMapCanvasElement >> circleNodeExtent [
 	^ 12@12
 ]
 
 { #category : #initialization }
-GtWardleyMapCanvasLayer >> createCircleNode [
+GtWardleyMapCanvasElement >> createCircleNode [
 	| aCircleNode aNodeLabel |
 
 	aCircleNode := BlElement new
@@ -87,7 +87,7 @@ GtWardleyMapCanvasLayer >> createCircleNode [
 ]
 
 { #category : #initialization }
-GtWardleyMapCanvasLayer >> createColorPickerAndThen: aCallbackBlock [
+GtWardleyMapCanvasElement >> createColorPickerAndThen: aCallbackBlock [
 	| aContainer theColorsPane thePredefinedColors |
 	
 	aContainer := BrVerticalPane new
@@ -130,7 +130,7 @@ GtWardleyMapCanvasLayer >> createColorPickerAndThen: aCallbackBlock [
 ]
 
 { #category : #initialization }
-GtWardleyMapCanvasLayer >> initialize [
+GtWardleyMapCanvasElement >> initialize [
 	super initialize.
 
 	self constraintsDo: [ :c |
@@ -165,8 +165,21 @@ GtWardleyMapCanvasLayer >> initialize [
 	defaultColor := Color gray
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
+	| aMovedNodeViewModel |
+	
+	aMovedNodeViewModel := anAnnouncement nodeViewModel.
+	self children
+		detect: [ :eachNodeView | eachNodeView wardleyMapNodeViewModel = aMovedNodeViewModel ]
+		ifFound: [ :aNodeView |
+			aNodeView constraintsDo: [ :c |
+				c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
+				c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+]
+
 { #category : #'api - wardley map view model' }
-GtWardleyMapCanvasLayer >> onWardleyMapViewModelChanged [
+GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	| theNodeElements |
 
@@ -174,10 +187,29 @@ GtWardleyMapCanvasLayer >> onWardleyMapViewModelChanged [
 	theNodeElements := self wardleyMapViewModel nodeViewModels collect: [ :eachNodeViewModel |
 		GtWardleyMapNodeElement new
 			wardleyMapNodeViewModel: eachNodeViewModel;
-			addEventHandler: (GtWardleyMapPullHandler new containerElement: self);
+			addEventHandler: (GtWardleyMapPullHandler new
+				containerElement: self;
+				whenPulled: [ :aPulledElement :aNormalizedPosition | eachNodeViewModel moveNodeTo: aNormalizedPosition ]);
 			constraintsDo: [ :c |
 				c frame horizontal alignCenterAt: eachNodeViewModel coordinateX.
 				c frame vertical alignCenterAt: eachNodeViewModel coordinateY ] ].
 	
 	self addChildren: theNodeElements
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
+	"Is sent after a new WardleyMap view model is assigned to the element.
+	It is required to unsubscribe from the view model or domain model by implementing
+	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
+	
+	self wardleyMapViewModel weak when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved: to: self
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapCanvasElement >> unsubscribeFromWardleyMapViewModel [
+	"Is sent before a new WardleyMap view model is assigned to the element.
+	Elements that subscribe to WardleyMap view model in domain model are required to implement this methods"
+	
+	self wardleyMapViewModel unsubscribe: self
 ]

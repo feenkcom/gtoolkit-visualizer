@@ -11,7 +11,7 @@ Class {
 	#traits : 'TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
-		'canvasLayer'
+		'canvasElement'
 	],
 	#category : #'GToolkit-WardleyMap-! Views'
 }
@@ -26,12 +26,12 @@ GtWardleyMapElement >> initialize [
 	super initialize.
 	
 	self matchParent.
-	self addChild: (canvasLayer := GtWardleyMapCanvasLayer new)
+	self addChild: (canvasElement := GtWardleyMapCanvasElement new)
 ]
 
 { #category : #'api - wardley map view model' }
 GtWardleyMapElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	
-	canvasLayer wardleyMapViewModel: self wardleyMapViewModel
+	canvasElement wardleyMapViewModel: self wardleyMapViewModel
 ]
