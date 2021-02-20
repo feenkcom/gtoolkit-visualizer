@@ -26,7 +26,7 @@ GtWardleyMapEdgeViewModel >> changeColorTo: aColor [
 
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> decreaseWidth [
-	self wardleyMapEdgeModel width: (self lineWidth * 0.8)
+	self lineWidth: ((self lineWidth - self lineWidthStep) roundTo: 0.01)
 ]
 
 { #category : #accessing }
@@ -36,7 +36,7 @@ GtWardleyMapEdgeViewModel >> fromNodeViewModel [
 
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> increaseWidth [
-	self wardleyMapEdgeModel width: (self lineWidth * 1.2)
+	self lineWidth: ((self lineWidth + self lineWidthStep) roundTo: 0.01)
 ]
 
 { #category : #'api - edge' }
@@ -47,6 +47,16 @@ GtWardleyMapEdgeViewModel >> lineColor [
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> lineWidth [
 	^ self wardleyMapEdgeModel width
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> lineWidth: aNumber [
+	self wardleyMapEdgeModel width: (aNumber max: 0)
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> lineWidthStep [
+	^ ((self lineWidth // 10 + 1) max: 1) / 4.0
 ]
 
 { #category : #'event handling' }

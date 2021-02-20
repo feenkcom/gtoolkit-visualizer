@@ -12,6 +12,11 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
+{ #category : #visiting }
+GtWardleyMapModel >> acceptVisitor: aWardleyMapVisitor [
+	^ aWardleyMapVisitor visitWardleyMap: self
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> addEdge: aGtWardleyMapEdgeModel [
 	self
@@ -58,17 +63,6 @@ GtWardleyMapModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #'api - export / import' }
-GtWardleyMapModel >> asDictionaryForExport [
-	"Answer the receiver as a dictionary ready for JSON serialisation.
-	Users will override and add to the dictionary"
-
-	^ OrderedDictionary new
-		at: #nodes put: (self nodes collect: [ :eachNode | eachNode asDictionaryForExport ] as: Array);
-		at: #edges put: (self edges collect: [ :eachEdge | eachEdge asDictionaryForExport ] as: Array);
-		yourself
 ]
 
 { #category : #'api - edges' }
