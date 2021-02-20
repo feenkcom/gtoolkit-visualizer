@@ -60,6 +60,7 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-TreeMap' with: [
 				spec requires: #(#Brick). ];
 			package: 'GToolkit-Plotter' with: [
-				spec requires: #(#Brick). ]. ].
-
+				spec requires: #(#Brick). ];
+			package: 'GToolkit-WardleyMap' with: [
+				spec requires: #(#Brick). ] ].
 ]
