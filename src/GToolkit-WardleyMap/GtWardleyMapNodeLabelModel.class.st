@@ -10,23 +10,16 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
+{ #category : #visiting }
+GtWardleyMapNodeLabelModel >> acceptVisitor: aWardleyMapVisitor [
+	^ aWardleyMapVisitor visitWardleyMapNodeLabel: self
+]
+
 { #category : #announcer }
 GtWardleyMapNodeLabelModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #'api - export / import' }
-GtWardleyMapNodeLabelModel >> asDictionaryForExport [
-	"Answer the receiver as a dictionary ready for JSON serialisation.
-	Users will override and add to the dictionary"
-
-	^ OrderedDictionary new
-		at: #x put: self coordinate x;
-		at: #y put: self coordinate y;
-		at: #text put: self label;
-		yourself
 ]
 
 { #category : #initialization }

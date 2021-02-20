@@ -4,18 +4,10 @@ Trait {
 }
 
 { #category : #'api - export / import' }
-TGtWardleyMapExportable >> asDictionaryForExport [
-	"Answer the receiver as a dictionary ready for JSON serialisation.
-	Users will override and add to the dictionary"
-
-	^ self explicitRequirement
-]
-
-{ #category : #'api - export / import' }
 TGtWardleyMapExportable >> asJSONForExport [ 
 	"Answer the receiver serialised in JSON format"
 
-	^ STONJSON toStringPretty: self asDictionaryForExport
+	^ STONJSON toStringPretty: (self acceptVisitor: GtWardleyMapAsDictionaryExporter new)
 ]
 
 { #category : #'api - export / import' }

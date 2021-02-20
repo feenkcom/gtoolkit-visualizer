@@ -33,7 +33,8 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 					background: anEdgeViewModel lineColor ]
 			content: [ GtWardleyMapEdgeEditorElement new
 				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapEdgeViewModel: anEdgeViewModel ]) onPrimaryClick doNotHideWidget attachToCenter
+				wardleyMapEdgeViewModel: anEdgeViewModel;
+				requestFocus ]) onPrimaryClick doNotHideWidget attachToCenter
 ]
 
 { #category : #initialization }
