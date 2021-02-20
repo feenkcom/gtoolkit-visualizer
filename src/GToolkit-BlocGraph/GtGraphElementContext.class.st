@@ -45,9 +45,9 @@ GtGraphElementContext >> beEdge [
 ]
 
 { #category : #api }
-GtGraphElementContext >> beEdge: aGtGraphEdge [
+GtGraphElementContext >> beEdge: anObject [
 	self element constraints graph
-		model: aGtGraphEdge;
+		model: anObject;
 		beEdge
 ]
 

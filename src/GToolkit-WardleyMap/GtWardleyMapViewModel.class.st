@@ -5,10 +5,36 @@ Class {
 	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait',
 	#instVars : [
 		'announcer',
-		'nodeViewModels'
+		'nodeViewModels',
+		'edgeViewModels',
+		'predefinedColors',
+		'defaultColor'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> addNewEdgeFrom: aFromNodeViewModel to: aToNodeViewModel [
+	| aNewEdge |
+	
+	aNewEdge := GtWardleyMapEdgeModel new
+		fromNode: aFromNodeViewModel wardleyMapNodeModel;
+		toNode: aToNodeViewModel wardleyMapNodeModel;
+		color: aFromNodeViewModel nodeColor.
+		
+	self wardleyMapModel addEdge: aNewEdge
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
+	| aNewNode |
+	
+	aNewNode := GtWardleyMapNodeModel new
+		coordinate: aNormalizedPosition;
+		color: self defaultColor.
+		
+	self wardleyMapModel addNode: aNewNode
+]
 
 { #category : #announcer }
 GtWardleyMapViewModel >> announcer [
@@ -18,10 +44,79 @@ GtWardleyMapViewModel >> announcer [
 ]
 
 { #category : #initialization }
+GtWardleyMapViewModel >> createEdgeViewModelFor: anEdgeModel [
+	^ GtWardleyMapEdgeViewModel new
+		wardleyMapViewModel: self;
+		wardleyMapEdgeModel: anEdgeModel
+]
+
+{ #category : #initialization }
+GtWardleyMapViewModel >> createNodeViewModelFor: aNodeModel [
+	^ GtWardleyMapNodeViewModel new
+		wardleyMapViewModel: self;
+		wardleyMapNodeModel: aNodeModel
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> defaultColor [
+	^ defaultColor
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> defaultColor: aColor [
+	defaultColor := aColor
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> edgeViewModelFor: anEdgeModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self edgeViewModels
+		detect: [ :eachEdgeViewModel | eachEdgeViewModel wardleyMapEdgeModel = anEdgeModel ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> edgeViewModels [
+	^ edgeViewModels
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> edgeViewModels: anObject [
+	edgeViewModels := anObject
+]
+
+{ #category : #initialization }
 GtWardleyMapViewModel >> initialize [
 	super initialize.
 	
-	nodeViewModels := OrderedCollection new
+	nodeViewModels := OrderedCollection new.
+	edgeViewModels := OrderedCollection new.
+	
+	predefinedColors := { 
+		Color black.
+		Color veryVeryDarkGray.
+		Color veryDarkGray.
+		Color darkGray.
+		Color gray.
+		Color lightGray.
+		Color veryLightGray.
+		Color veryVeryLightGray.
+		Color red muchDarker.
+		Color red darker.
+		Color red.
+		Color red lighter.
+		Color red muchLighter.
+	}.
+	
+	defaultColor := Color gray
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> nodeViewModelFor: aNodeModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self nodeViewModels
+		detect: [ :eachNodeViewModel | eachNodeViewModel wardleyMapNodeModel = aNodeModel ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
 ]
 
 { #category : #accessing }
@@ -32,26 +127,63 @@ GtWardleyMapViewModel >> nodeViewModels [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapViewModel >> onEdgeAdded: anAnnouncement [
+	| anEdgeViewModel |
+	edgeViewModels add: (anEdgeViewModel := self createEdgeViewModelFor: anAnnouncement edgeModel).
+	self announce: (GtWardleyMapEdgeViewModelAdded new edgeViewModel: anEdgeViewModel)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
+	self 
+		edgeViewModelFor: anAnnouncement edgeModel
+		ifFound: [ :anEdgeViewModel |
+			edgeViewModels remove: anEdgeViewModel.
+			self announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel) ]
+		ifNone: [ ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapViewModel >> onNodeAdded: aNodeAddedAnnouncement [
 	| aNodeViewModel |
-	nodeViewModels add: (aNodeViewModel := GtWardleyMapNodeViewModel new wardleyMapNodeModel: aNodeAddedAnnouncement nodeModel).
+	nodeViewModels add: (aNodeViewModel := self createNodeViewModelFor: aNodeAddedAnnouncement nodeModel).
 	self announce: (GtWardleyMapNodeViewModelAdded new nodeViewModel: aNodeViewModel)
 ]
 
 { #category : #'event handling' }
 GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
-	nodeViewModels
-		detect: [ :eachViewModel | eachViewModel wardleyMapNodeModel = aNodeAddedAnnouncement nodeModel ]
+	self 
+		nodeViewModelFor: aNodeAddedAnnouncement nodeModel
 		ifFound: [ :aNodeViewModel |
 			nodeViewModels remove: aNodeViewModel.
 			self announce: (GtWardleyMapNodeViewModelRemoved new nodeViewModel: aNodeViewModel) ]
+		ifNone: [ ]
 ]
 
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
 	
-	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel | GtWardleyMapNodeViewModel new wardleyMapNodeModel: eachNodeModel ]
+	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel |
+		self createNodeViewModelFor: eachNodeModel ] as: OrderedCollection.
+	
+	edgeViewModels := self wardleyMapModel edges collect: [ :eachEdgeModel |
+		self createEdgeViewModelFor: eachEdgeModel ] as: OrderedCollection.
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> predefinedColors [
+	^ predefinedColors
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> removeEdgeViewModel: anEdgeViewModel [
+	self wardleyMapModel removeEdge: anEdgeViewModel wardleyMapEdgeModel
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> removeNodeViewModel: aNodeViewModel [
+	self wardleyMapModel removeNode: aNodeViewModel wardleyMapNodeModel
 ]
 
 { #category : #'api - wardley map model' }
@@ -62,7 +194,9 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	
 	self wardleyMapModel weak
 		when: GtWardleyMapNodeModelAdded send: #onNodeAdded: to: self;
-		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self
+		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self;
+		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
+		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self
 ]
 
 { #category : #'api - wardley map model' }

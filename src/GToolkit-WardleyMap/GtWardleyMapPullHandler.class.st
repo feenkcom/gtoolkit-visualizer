@@ -1,10 +1,14 @@
+"
+I am a specialized pull handler that transforms the absolute position into a normalized proportional position for the frame layout alignment
+"
 Class {
 	#name : #GtWardleyMapPullHandler,
 	#superclass : #BlPullHandler,
 	#instVars : [
-		'containerElement'
+		'containerElement',
+		'pulledAction'
 	],
-	#category : #'GToolkit-WardleyMap-! Views'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }
@@ -23,6 +27,13 @@ GtWardleyMapPullHandler >> dragStartEvent: anEvent [
 	super dragStartEvent: anEvent
 ]
 
+{ #category : #initialization }
+GtWardleyMapPullHandler >> initialize [
+	super initialize.
+	
+	pulledAction := [ :aPulledElement :aNormalizedPosition |  ]
+]
+
 { #category : #'event handling' }
 GtWardleyMapPullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition [
 	| newRelativePosition aContainerExtent |
@@ -32,8 +43,16 @@ GtWardleyMapPullHandler >> onPulled: aPulledElement from: aPreviousPosition to: 
 	newRelativePosition := (aContainerExtent x isZero or: [ aContainerExtent y isZero ])
 		ifTrue: [ 0@0 ]
 		ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
+	
+	pulledAction value: aPulledElement value: newRelativePosition
+]
 
-	aPulledElement constraintsDo: [ :c |
-		c frame horizontal alignCenterAt: newRelativePosition x.
-		c frame vertical alignCenterAt: newRelativePosition y ]
+{ #category : #'api - event managing' }
+GtWardleyMapPullHandler >> wantsEvent: anEvent [
+	^ (super wantsEvent: anEvent) and: [ anEvent modifiers isPrimaryModifier not ]
+]
+
+{ #category : #accessing }
+GtWardleyMapPullHandler >> whenPulled: aBlockClosure [
+	pulledAction := aBlockClosure
 ]

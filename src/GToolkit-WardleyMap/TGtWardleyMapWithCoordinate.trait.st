@@ -6,14 +6,23 @@ Trait {
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
-{ #category : #accessing }
+{ #category : #'api - coordinate' }
 TGtWardleyMapWithCoordinate >> coordinate [
 	<return: #Point>
 
 	^ coordinate
 ]
 
-{ #category : #accessing }
+{ #category : #'api - coordinate' }
 TGtWardleyMapWithCoordinate >> coordinate: aPoint [
-	coordinate := aPoint
+	(coordinate closeTo: aPoint)
+		ifTrue: [ ^ self ].
+
+	coordinate := aPoint.
+	self notifyMoved
+]
+
+{ #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> notifyMoved [
+	self explicitRequirement
 ]

@@ -4,7 +4,8 @@ Class {
 	#traits : 'TGtWithWardleyMapNodeModel + TGtAnnouncer',
 	#classTraits : 'TGtWithWardleyMapNodeModel classTrait + TGtAnnouncer classTrait',
 	#instVars : [
-		'announcer'
+		'announcer',
+		'wardleyMapViewModel'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
@@ -16,9 +17,9 @@ GtWardleyMapNodeViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'api - accessing' }
-GtWardleyMapNodeViewModel >> color [
-	^ self wardleyMapNodeModel color
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> changeColorTo: aColor [
+	self wardleyMapNodeModel color: aColor
 ]
 
 { #category : #'api - accessing' }
@@ -51,6 +52,11 @@ GtWardleyMapNodeViewModel >> label [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> labelColor [
+	^ self nodeColor darker
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> labelCoordinate [
 	^ self wardleyMapNodeModel labelModel coordinate
 ]
@@ -65,9 +71,77 @@ GtWardleyMapNodeViewModel >> labelCoordinateY [
 	^ self labelCoordinate y
 ]
 
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> moveNodeLabelTo: aNormalizedPoint [
+	self wardleyMapNodeModel labelModel coordinate: aNormalizedPoint
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
+	self wardleyMapNodeModel coordinate: aNormalizedPoint
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> nodeColor [
+	^ self wardleyMapNodeModel color
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeColored: anAnnouncement [
+	self announce: (GtWardleyMapNodeViewModelColored new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeLabelMoved: anAnnouncement [
+	self announce: (GtWardleyMapNodeLabelViewModelMoved new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeMoved: anAnnouncement [
+	self announce: (GtWardleyMapNodeViewModelMoved new nodeViewModel: self).
+	self wardleyMapViewModel announce: (GtWardleyMapNodeViewModelMoved new nodeViewModel: self)
+]
+
 { #category : #'api - wardley map node model' }
 GtWardleyMapNodeViewModel >> onWardleyMapNodeModelChanged [
 	"Is sent when a new wardleyMapNode model is assigned to the view model"
 	
 	
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> removeFromMap [
+	self wardleyMapViewModel removeNodeViewModel: self
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
+	"Is sent after a new wardleyMapNode model is assigned to the view model.
+	It is required to unsubscribe from the domain model by implementing
+	#unsubscribeFromWardleyMapNodeModel if view model subscribes to them"
+	
+	self wardleyMapNodeModel weak
+		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
+		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self.
+	
+	self wardleyMapNodeModel labelModel weak when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNodeViewModel >> unsubscribeFromWardleyMapNodeModel [
+	"Is sent before a new wardleyMapNode model is assigned to the view model.
+	View models that subscribe to wardleyMapNode model are required to implement this methods"
+
+	self wardleyMapNodeModel unsubscribe: self.
+	self wardleyMapNodeModel labelModel unsubscribe: self
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> wardleyMapViewModel [
+	^ wardleyMapViewModel
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> wardleyMapViewModel: aMapViewModel [
+	wardleyMapViewModel := aMapViewModel
 ]

@@ -1,16 +1,22 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapWithCoordinate + TGtWardleyMapExportable',
-	#classTraits : 'TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait',
+	#traits : 'TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapExportable + TGtAnnouncer',
+	#classTraits : 'TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapExportable classTrait + TGtAnnouncer classTrait',
 	#instVars : [
+		'announcer',
 		'labelModel',
-		'color',
 		'size',
 		'id'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
+
+{ #category : #announcer }
+GtWardleyMapNodeModel >> announcer [
+	<return: #Announcer>
+	^ announcer ifNil: [ announcer := Announcer new ]
+]
 
 { #category : #'api - export / import' }
 GtWardleyMapNodeModel >> asDictionaryForExport [
@@ -18,6 +24,7 @@ GtWardleyMapNodeModel >> asDictionaryForExport [
 	Users will override and add to the dictionary"
 
 	^ OrderedDictionary new
+		at: #id put: id;
 		at: #color put: (Dictionary new
 			at: #red put: self color red;
 			at: #green put: self color green;
@@ -33,13 +40,13 @@ GtWardleyMapNodeModel >> asDictionaryForExport [
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeModel >> color [
-	^ color
+GtWardleyMapNodeModel >> id [
+	^ id
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeModel >> color: anObject [
-	color := anObject
+GtWardleyMapNodeModel >> id: anObject [
+	id := anObject
 ]
 
 { #category : #initialization }
@@ -49,7 +56,8 @@ GtWardleyMapNodeModel >> initialize [
 	labelModel := GtWardleyMapNodeLabelModel new.
 	color := Color black.
 	coordinate := 0.5@0.5.
-	size := 12@12
+	size := 12@12.
+	id := nil
 ]
 
 { #category : #accessing }
@@ -67,6 +75,16 @@ GtWardleyMapNodeModel >> label: aString [
 { #category : #accessing }
 GtWardleyMapNodeModel >> labelModel [
 	^ labelModel
+]
+
+{ #category : #'api - color' }
+GtWardleyMapNodeModel >> notifyColored [
+	self announce: (GtWardleyMapNodeModelColored new nodeModel: self)
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> notifyMoved [
+	self announce: (GtWardleyMapNodeModelMoved new nodeModel: self)
 ]
 
 { #category : #accessing }
