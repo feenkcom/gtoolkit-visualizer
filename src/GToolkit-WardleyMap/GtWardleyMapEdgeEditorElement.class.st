@@ -57,12 +57,12 @@ GtWardleyMapEdgeEditorElement >> initialize [
 		hFitContent
 		vFitContentLimited.
 
-	predefinedColorsElement := BrHorizontalGrid new
+	predefinedColorsElement := GtWardleyMapColorPickerElement new
 		hFitContent;
 		vFitContentLimited;
 		columnCount: 8;
-		margin: (BlInsets top: 0 left: 5 bottom: 0 right: 5).
-	
+		cellSpacing: 5.
+
 	aContainer addChildren: {
 		BrLabel new
 			look: (BrGlamorousLabelLook new foreground: Color darkGray);
@@ -107,22 +107,11 @@ GtWardleyMapEdgeEditorElement >> onWardleyMapEdgeViewModelChanged [
 GtWardleyMapEdgeEditorElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	
-	predefinedColorsElement removeChildren.
-	predefinedColorsElement addChildren: (self wardleyMapViewModel predefinedColors collect: [ :eachColor |
-		BlElement new
-			size: 16@16;
-			margin: (BlInsets all: 3);
-			background: eachColor;
-			border: (eachColor luminance >= Color lightGray luminance
-				ifTrue: [ BlBorder paint: Color darkGray width: 1 ]
-				ifFalse: [ BlBorder empty ]);
-			geometry: (BlRoundedRectangleGeometry cornerRadius: 3);
-			when: BlClickEvent do: [ :anEvent |
-				anEvent consumed: true.
-				anEvent currentTarget fireEvent: BrDropdownHideWish new.
-
-				self wardleyMapEdgeViewModel changeColorTo: eachColor.
-				self wardleyMapViewModel defaultColor: eachColor ] ])
+	predefinedColorsElement
+		colors: self wardleyMapViewModel predefinedColors;
+		whenColorPickedDo: [ :aColor |
+			self wardleyMapEdgeViewModel changeColorTo: aColor.
+			self wardleyMapViewModel defaultColor: aColor ]
 ]
 
 { #category : #'api - wardley map edge view model' }

@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapEdgeModel,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapWithColor + TGtWardleyMapExportable + TGtAnnouncer',
-	#classTraits : 'TGtWardleyMapWithColor classTrait + TGtWardleyMapExportable classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithColor + TGtWardleyMapExportable + TGtWardleyMapVisitable',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
 		'fromNode',
