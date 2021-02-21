@@ -46,33 +46,52 @@ GtWardleyMapNodeElement >> initialize [
 	self addShortcut: (BlShortcutWithAction new
 		combination: BlKeyCombination backspace;
 		action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel removeFromMap ]).
+	self addShortcut: (BlShortcutWithAction new
+		combination: BlKeyCombination builder primary minus build;
+		action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel decreaseNodeSize ]).
+	self addShortcut: (BlShortcutWithAction new
+		combination: BlKeyCombination builder primary equal build;
+		action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel increaseNodeSize ])
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeColored: anAnnouncement [
+GtWardleyMapNodeElement >> onNodeColored [
 	self background: self wardleyMapNodeViewModel nodeColor.
 	labelElement look foreground: self wardleyMapNodeViewModel labelColor.
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeLabelMoved: anAnnouncement [
+GtWardleyMapNodeElement >> onNodeColored: anAnnouncement [
+	self onNodeColored
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeLabelMoved [
 	labelContainer constraintsDo: [ :c |
 		c frame horizontal alignCenterAt: self wardleyMapNodeViewModel labelCoordinateX.
 		c frame vertical alignCenterAt: self wardleyMapNodeViewModel labelCoordinateY ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeLabelMoved: anAnnouncement [
+	self onNodeLabelMoved
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeResized [
+	self size: self wardleyMapNodeViewModel nodeSize
 ]
 
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
 	
-	self size: self wardleyMapNodeViewModel extent.
-	self background: self wardleyMapNodeViewModel nodeColor.
+	self onNodeResized.
+	self onNodeColored.
 
-	labelElement look foreground: self wardleyMapNodeViewModel labelColor.	
 	labelElement text: self wardleyMapNodeViewModel label.
-	labelContainer constraintsDo: [ :c |
-		c frame horizontal alignCenterAt: self wardleyMapNodeViewModel labelCoordinateX.
-		c frame vertical alignCenterAt: self wardleyMapNodeViewModel labelCoordinateY ]
+	
+	self onNodeLabelMoved
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -82,8 +101,9 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
 	
 	self wardleyMapNodeViewModel weak
-		when: GtWardleyMapNodeLabelViewModelMoved send: #onNodeLabelMoved: to: self;
-		when: GtWardleyMapNodeViewModelColored send: #onNodeColored: to: self
+		when: GtWardleyMapNodeLabelViewModelMoved send: #onNodeLabelMoved to: self;
+		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
+		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self
 ]
 
 { #category : #'api - wardley map node view model' }

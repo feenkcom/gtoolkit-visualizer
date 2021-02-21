@@ -51,7 +51,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 			c graph beNode ];
 		addLook: (BrGlamorousWithDropdownLook
 			handle: [ BlElement new
-					size: aNodeViewModel extent;
+					size: aNodeViewModel nodeSize;
 					geometry: BlEllipseGeometry new;
 					background: aNodeViewModel nodeColor ]
 			content: [ GtWardleyMapNodeEditorElement new

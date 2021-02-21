@@ -56,7 +56,7 @@ GtWardleyMapEdgeViewModel >> lineWidth: aNumber [
 
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> lineWidthStep [
-	^ ((self lineWidth // 10 + 1) max: 1) / 4.0
+	^ ((self lineWidth // 10 + 1) max: 1)
 ]
 
 { #category : #'event handling' }

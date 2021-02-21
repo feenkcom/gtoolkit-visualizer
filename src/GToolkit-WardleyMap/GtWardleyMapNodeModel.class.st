@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapExportable + TGtAnnouncer',
-	#classTraits : 'TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapExportable classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapExportable + TGtWardleyMapVisitable',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
 		'labelModel',
@@ -77,6 +77,10 @@ GtWardleyMapNodeModel >> size [
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeModel >> size: anObject [
-	size := anObject
+GtWardleyMapNodeModel >> size: aPoint [
+	self size = aPoint
+		ifTrue: [ ^ self ].
+
+	size := aPoint.
+	self announce: (GtWardleyMapNodeModelResized new nodeModel: self)
 ]
