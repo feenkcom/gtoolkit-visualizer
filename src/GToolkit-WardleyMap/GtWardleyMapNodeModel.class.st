@@ -1,12 +1,11 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapExportable + TGtWardleyMapVisitable',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
 		'labelModel',
-		'size',
 		'id'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
@@ -67,20 +66,11 @@ GtWardleyMapNodeModel >> notifyColored [
 ]
 
 { #category : #'api - coordinate' }
-GtWardleyMapNodeModel >> notifyMoved [
+GtWardleyMapNodeModel >> notifyCoordinateChanged [
 	self announce: (GtWardleyMapNodeModelMoved new nodeModel: self)
 ]
 
-{ #category : #accessing }
-GtWardleyMapNodeModel >> size [
-	^ size
-]
-
-{ #category : #accessing }
-GtWardleyMapNodeModel >> size: aPoint [
-	self size = aPoint
-		ifTrue: [ ^ self ].
-
-	size := aPoint.
+{ #category : #'api - size' }
+GtWardleyMapNodeModel >> notifySizeChanged [
 	self announce: (GtWardleyMapNodeModelResized new nodeModel: self)
 ]

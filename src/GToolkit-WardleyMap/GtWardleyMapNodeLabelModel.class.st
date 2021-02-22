@@ -43,6 +43,6 @@ GtWardleyMapNodeLabelModel >> label: aString [
 ]
 
 { #category : #'api - coordinate' }
-GtWardleyMapNodeLabelModel >> notifyMoved [
+GtWardleyMapNodeLabelModel >> notifyCoordinateChanged [
 	self announce: (GtWardleyMapNodeLabelModelMoved new nodeLabelModel: self)
 ]
