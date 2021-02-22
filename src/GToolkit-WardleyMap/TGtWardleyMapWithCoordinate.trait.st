@@ -14,15 +14,15 @@ TGtWardleyMapWithCoordinate >> coordinate [
 ]
 
 { #category : #'api - coordinate' }
-TGtWardleyMapWithCoordinate >> coordinate: aPoint [
-	(coordinate closeTo: aPoint)
+TGtWardleyMapWithCoordinate >> coordinate: aNewCoordinate [
+	(self coordinate closeTo: aNewCoordinate)
 		ifTrue: [ ^ self ].
 
-	coordinate := aPoint.
-	self notifyMoved
+	coordinate := aNewCoordinate.
+	self notifyCoordinateChanged.
 ]
 
 { #category : #'api - coordinate' }
-TGtWardleyMapWithCoordinate >> notifyMoved [
+TGtWardleyMapWithCoordinate >> notifyCoordinateChanged [
 	self explicitRequirement
 ]
