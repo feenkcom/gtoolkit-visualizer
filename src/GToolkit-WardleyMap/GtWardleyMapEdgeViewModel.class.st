@@ -12,6 +12,11 @@ Class {
 	#category : #'GToolkit-WardleyMap-! View models'
 }
 
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> addLineArrow [
+	self wardleyMapEdgeModel arrow: true
+]
+
 { #category : #announcer }
 GtWardleyMapEdgeViewModel >> announcer [
 	<return: #Announcer>
@@ -32,6 +37,11 @@ GtWardleyMapEdgeViewModel >> decreaseWidth [
 { #category : #accessing }
 GtWardleyMapEdgeViewModel >> fromNodeViewModel [
 	^ fromNodeViewModel
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> hasLineArrow [
+	^ self wardleyMapEdgeModel arrow
 ]
 
 { #category : #'api - edge' }
@@ -57,6 +67,11 @@ GtWardleyMapEdgeViewModel >> lineWidth: aNumber [
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> lineWidthStep [
 	^ ((self lineWidth // 10 + 1) max: 1)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeViewModel >> onEdgeArrowChanged: anAnnouncement [
+	self announce: (GtWardleyMapEdgeViewModelColored new edgeViewModel: self)
 ]
 
 { #category : #'event handling' }
@@ -89,6 +104,11 @@ GtWardleyMapEdgeViewModel >> removeFromMap [
 	self wardleyMapViewModel removeEdgeViewModel: self
 ]
 
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> removeLineArrow [
+	self wardleyMapEdgeModel arrow: false
+]
+
 { #category : #'api - wardley map edge model' }
 GtWardleyMapEdgeViewModel >> subscribeToWardleyMapEdgeModel [
 	"Is sent after a new wardleyMapEdge model is assigned to the view model.
@@ -97,7 +117,8 @@ GtWardleyMapEdgeViewModel >> subscribeToWardleyMapEdgeModel [
 	
 	self wardleyMapEdgeModel weak
 		when: GtWardleyMapEdgeModelColored send: #onEdgeColored: to: self;
-		when: GtWardleyMapEdgeModelResized send: #onEdgeResized: to: self
+		when: GtWardleyMapEdgeModelResized send: #onEdgeResized: to: self;
+		when: GtWardleyMapEdgeModelArrowChanged send: #onEdgeArrowChanged: to: self
 ]
 
 { #category : #accessing }

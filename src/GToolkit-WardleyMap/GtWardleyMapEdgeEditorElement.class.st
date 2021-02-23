@@ -5,10 +5,33 @@ Class {
 	#classTraits : 'TGtWithWardleyMapEdgeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
 		'predefinedColorsElement',
-		'lineWidthEditor'
+		'lineWidthEditor',
+		'arrowHeadCheckbox'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
+
+{ #category : #initialization }
+GtWardleyMapEdgeEditorElement >> createLineArrowPicker [
+	| aPicker |
+
+	aPicker := BrHorizontalPane new
+		fitContent;
+		alignCenterLeft;
+		cellSpacing: 5.
+
+	aPicker addChild: (arrowHeadCheckbox := BrCheckbox new
+		uncheck;
+		look: BrGlamorousCheckboxLook;
+		whenCheckedDo: [ self wardleyMapEdgeViewModel addLineArrow ];
+		whenUncheckedDo: [ self wardleyMapEdgeViewModel removeLineArrow ]).
+		
+	aPicker addChild: (BrLabel new
+		look: BrGlamorousLabelLook;
+		text: 'arrowhead').
+
+	^ aPicker
+]
 
 { #category : #initialization }
 GtWardleyMapEdgeEditorElement >> createLineWidthPicker [
@@ -74,6 +97,7 @@ GtWardleyMapEdgeEditorElement >> initialize [
 			margin: (BlInsets top: 10 left: 5 bottom: 2 right: 0);
 			text: 'Line width:'.
 		self createLineWidthPicker.
+		self createLineArrowPicker margin: (BlInsets top: 5).
 		
 		BrButton new
 			beSmallSize;
@@ -92,6 +116,11 @@ GtWardleyMapEdgeEditorElement >> initialize [
 ]
 
 { #category : #private }
+GtWardleyMapEdgeEditorElement >> onLineArrowChanged [
+	arrowHeadCheckbox checked: self wardleyMapEdgeViewModel hasLineArrow
+]
+
+{ #category : #private }
 GtWardleyMapEdgeEditorElement >> onLineWidthChanged [
 	lineWidthEditor text: (self wardleyMapEdgeViewModel lineWidth printShowingDecimalPlaces: 2)
 ]
@@ -100,7 +129,8 @@ GtWardleyMapEdgeEditorElement >> onLineWidthChanged [
 GtWardleyMapEdgeEditorElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 
-	self onLineWidthChanged
+	self onLineWidthChanged.
+	self onLineArrowChanged
 ]
 
 { #category : #'api - wardley map view model' }
@@ -119,8 +149,10 @@ GtWardleyMapEdgeEditorElement >> subscribeToWardleyMapEdgeViewModel [
 	"Is sent after a new wardleyMapEdge view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
-	
-	self wardleyMapEdgeViewModel weak when: GtWardleyMapEdgeViewModelResized send: #onLineWidthChanged to: self
+
+	self wardleyMapEdgeViewModel weak
+		when: GtWardleyMapEdgeViewModelResized send: #onLineWidthChanged to: self;
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged to: self
 ]
 
 { #category : #'api - wardley map edge view model' }
