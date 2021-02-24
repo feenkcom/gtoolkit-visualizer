@@ -31,6 +31,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdge: aWardleyMapEdge [
 		at: #to put: aWardleyMapEdge toNode id;
 		at: #color put: (self visitColor: aWardleyMapEdge color);
 		at: #width put: aWardleyMapEdge width;
+		at: #arrow put: aWardleyMapEdge arrow;
 		yourself
 ]
 

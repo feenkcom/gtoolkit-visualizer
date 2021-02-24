@@ -32,8 +32,14 @@ GtWardleyMapEdgeElement >> initialize [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeArrowChanged: anAnnouncement [
+	self updateLineArrow
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeColored: anAnnouncement [
-	self updateLineLook
+	self updateLineLook.
+	self updateLineArrow
 ]
 
 { #category : #'event handling' }
@@ -45,7 +51,8 @@ GtWardleyMapEdgeElement >> onEdgeResized: anAnnouncement [
 GtWardleyMapEdgeElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 	
-	self updateLineLook
+	self updateLineLook.
+	self updateLineArrow
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -56,7 +63,8 @@ GtWardleyMapEdgeElement >> subscribeToWardleyMapEdgeViewModel [
 	
 	self wardleyMapEdgeViewModel weak
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
-		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self
+		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self;
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -67,7 +75,19 @@ GtWardleyMapEdgeElement >> unsubscribeFromWardleyMapEdgeViewModel [
 	self wardleyMapEdgeViewModel unsubscribe: self
 ]
 
-{ #category : #initialization }
+{ #category : #private }
+GtWardleyMapEdgeElement >> updateLineArrow [
+
+	self toHead: (self wardleyMapEdgeViewModel hasLineArrow
+		ifTrue: [
+			BlArrowheadSimpleArrow new
+				arrowLengthFraction: 4;
+				arrowNoseAngle: 50;
+				background: (self wardleyMapEdgeViewModel lineColor) ]
+		ifFalse: [ BlArrowheadNone new ])
+]
+
+{ #category : #private }
 GtWardleyMapEdgeElement >> updateLineLook [
 	self look
 		unfocused: [ :s | s border: (BlBorder paint: self wardleyMapEdgeViewModel lineColor width: self wardleyMapEdgeViewModel lineWidth) ];

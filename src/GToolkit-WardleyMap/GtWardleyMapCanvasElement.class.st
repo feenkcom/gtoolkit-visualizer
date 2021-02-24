@@ -26,15 +26,14 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
 		zIndex: -1;
-		addLook: (BrGlamorousWithDropdownLook
+		addLook: (BrGlamorousWithContextMenuLook
 			handle: [ BlElement new
-					size: 10@10;
-					geometry: BlEllipseGeometry new;
-					background: anEdgeViewModel lineColor ]
+					size: 5@5;
+					geometry: BlEllipseGeometry new ]
 			content: [ GtWardleyMapEdgeEditorElement new
 				wardleyMapViewModel: self wardleyMapViewModel;
 				wardleyMapEdgeViewModel: anEdgeViewModel;
-				requestFocus ]) onPrimaryClick doNotHideWidget attachToCenter
+				requestFocus ])
 ]
 
 { #category : #initialization }
@@ -49,14 +48,13 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 			c frame vertical alignCenterAt: aNodeViewModel coordinateY.
 			c graph beNode ];
-		addLook: (BrGlamorousWithDropdownLook
+		addLook: (BrGlamorousWithContextMenuLook
 			handle: [ BlElement new
-					size: aNodeViewModel nodeSize;
-					geometry: BlEllipseGeometry new;
-					background: aNodeViewModel nodeColor ]
+					size: aNodeViewModel nodeSize / 2.0;
+					geometry: BlEllipseGeometry new ]
 			content: [ GtWardleyMapNodeEditorElement new
 				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapNodeViewModel: aNodeViewModel ]) onPrimaryClick doNotHideWidget
+				wardleyMapNodeViewModel: aNodeViewModel ])
 ]
 
 { #category : #private }
