@@ -57,6 +57,11 @@ GtWardleyMapNodeViewModel >> label [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> label: aString [
+	self wardleyMapNodeModel label: aString
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> labelColor [
 	^ self nodeColor darker
 ]
@@ -113,7 +118,12 @@ GtWardleyMapNodeViewModel >> onNodeColored: anAnnouncement [
 
 { #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeLabelMoved: anAnnouncement [
-	self announce: (GtWardleyMapNodeLabelViewModelMoved new nodeViewModel: self)
+	self announce: (GtWardleyMapNodeViewModelLabelMoved new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeLabelTextChanged: anAnnouncement [
+	self announce: (GtWardleyMapNodeViewModelLabelTextChanged new nodeViewModel: self)
 ]
 
 { #category : #'event handling' }
@@ -150,7 +160,9 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self;
 		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self.
 	
-	self wardleyMapNodeModel labelModel weak when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self
+	self wardleyMapNodeModel labelModel weak
+		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;
+		when: GtWardleyMapNodeLabelModelTextChanged send: #onNodeLabelTextChanged: to: self
 ]
 
 { #category : #'api - wardley map node model' }

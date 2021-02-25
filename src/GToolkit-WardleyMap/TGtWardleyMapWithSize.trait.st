@@ -7,6 +7,16 @@ Trait {
 }
 
 { #category : #'api - size' }
+TGtWardleyMapWithSize >> height [
+	^ self size y
+]
+
+{ #category : #'api - size' }
+TGtWardleyMapWithSize >> height: aNumber [
+	self size: self width @ aNumber
+]
+
+{ #category : #'api - size' }
 TGtWardleyMapWithSize >> notifySizeChanged [
 	self explicitRequirement
 ]
@@ -25,4 +35,14 @@ TGtWardleyMapWithSize >> size: aNewSize [
 
 	size := aNewSize.
 	self notifySizeChanged.
+]
+
+{ #category : #'api - size' }
+TGtWardleyMapWithSize >> width [
+	^ self size x
+]
+
+{ #category : #'api - size' }
+TGtWardleyMapWithSize >> width: aNumber [
+	self size: aNumber @ self height
 ]

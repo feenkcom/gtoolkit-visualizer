@@ -14,12 +14,22 @@ Class {
 	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
-		'uniqueIdGenerator',
 		'nodes',
 		'edges'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
+
+{ #category : #comparing }
+GtWardleyMapModel >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ nodes = anObject nodes and: [ edges = anObject edges ]
+]
 
 { #category : #visiting }
 GtWardleyMapModel >> acceptVisitor: aWardleyMapVisitor [
@@ -54,8 +64,13 @@ GtWardleyMapModel >> addEdge: aGtWardleyMapEdgeModel [
 
 { #category : #'api - nodes' }
 GtWardleyMapModel >> addNode: aGtWardleyMapNodeModel [
+	aGtWardleyMapNodeModel hasId
+		ifFalse: [ aGtWardleyMapNodeModel id: self nextUniqueId ]
+		ifTrue: [
+			(self hasNodeWithId: aGtWardleyMapNodeModel id)
+				ifTrue: [ self error: 'Can not add a node with already used id' ]. ].
+
 	nodes add: aGtWardleyMapNodeModel.
-	aGtWardleyMapNodeModel id: uniqueIdGenerator next.
 	self announce: (GtWardleyMapNodeModelAdded new nodeModel: aGtWardleyMapNodeModel)
 ]
 
@@ -111,18 +126,61 @@ GtWardleyMapModel >> hasNode: aGtWardleyMapNodeModel [
 	^ self nodes includes: aGtWardleyMapNodeModel
 ]
 
+{ #category : #testing }
+GtWardleyMapModel >> hasNodeWithId: anId [
+	^ self
+		nodeWithId: anId
+		ifFound: [ true ]
+		ifNone: [ false ]
+]
+
+{ #category : #comparing }
+GtWardleyMapModel >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ nodes hash bitXor: edges hash
+]
+
 { #category : #initialization }
 GtWardleyMapModel >> initialize [
 	super initialize.
 
-	uniqueIdGenerator := GtWardleyMapUniqueIdGenerator new.
 	nodes := OrderedCollection new.
 	edges := OrderedCollection new
+]
+
+{ #category : #private }
+GtWardleyMapModel >> nextUniqueId [
+	| aNextId |
+	
+	aNextId := UUIDGenerator next.
+	[
+	self
+		nodeWithId: aNextId
+		ifFound: [ false ]
+		ifNone: [ true ] ] whileFalse: [ aNextId := UUIDGenerator next ].
+
+	^ aNextId
+]
+
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> nodeWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self nodes
+		detect: [ :eachNode | eachNode id = anId ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
 ]
 
 { #category : #'api - nodes' }
 GtWardleyMapModel >> nodes [
 	^ nodes
+]
+
+{ #category : #private }
+GtWardleyMapModel >> rebuildUniqueIds [
+	self nodes
+		collect: [ :eachNode | eachNode -> self nextUniqueId ]
+		thenDo: [ :anAssoc | anAssoc key value: anAssoc value ]
 ]
 
 { #category : #'api - edges' }

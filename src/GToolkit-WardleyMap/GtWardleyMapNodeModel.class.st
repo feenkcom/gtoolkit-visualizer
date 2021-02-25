@@ -11,6 +11,17 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
+{ #category : #comparing }
+GtWardleyMapNodeModel >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ labelModel = anObject labelModel and: [ id = anObject id ]
+]
+
 { #category : #visiting }
 GtWardleyMapNodeModel >> acceptVisitor: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapNode: self
@@ -20,6 +31,18 @@ GtWardleyMapNodeModel >> acceptVisitor: aWardleyMapVisitor [
 GtWardleyMapNodeModel >> announcer [
 	<return: #Announcer>
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #testing }
+GtWardleyMapNodeModel >> hasId [
+	^ id notNil
+]
+
+{ #category : #comparing }
+GtWardleyMapNodeModel >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ labelModel hash bitXor: id hash
 ]
 
 { #category : #accessing }
@@ -58,6 +81,11 @@ GtWardleyMapNodeModel >> label: aString [
 { #category : #accessing }
 GtWardleyMapNodeModel >> labelModel [
 	^ labelModel
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeModel >> labelModel: aGtWardleyMapNodeLabelModel [
+	labelModel := aGtWardleyMapNodeLabelModel
 ]
 
 { #category : #'api - color' }

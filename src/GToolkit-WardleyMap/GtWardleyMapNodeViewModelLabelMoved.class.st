@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapNodeLabelViewModelMoved,
+	#name : #GtWardleyMapNodeViewModelLabelMoved,
 	#superclass : #Announcement,
 	#instVars : [
 		'nodeViewModel'
@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapNodeLabelViewModelMoved >> nodeViewModel [
+GtWardleyMapNodeViewModelLabelMoved >> nodeViewModel [
 	^ nodeViewModel
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeLabelViewModelMoved >> nodeViewModel: anObject [
+GtWardleyMapNodeViewModelLabelMoved >> nodeViewModel: anObject [
 	nodeViewModel := anObject
 ]
