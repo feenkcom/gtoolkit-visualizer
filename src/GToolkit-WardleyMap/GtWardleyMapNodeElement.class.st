@@ -22,6 +22,8 @@ GtWardleyMapNodeElement >> initialize [
 	labelElement := BrEditableLabel new
 		fitContent;
 		look: (BrGlamorousRegularEditorLook new);
+		when: BrEditorAcceptWish do: [ :aWish | 
+			self wardleyMapNodeViewModel label: aWish text asString ];
 		text: 'Label'.
 
 	"we have to wrap the editable label in a pullable element to allow text selection with drag"
@@ -61,11 +63,6 @@ GtWardleyMapNodeElement >> onNodeColored [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeColored: anAnnouncement [
-	self onNodeColored
-]
-
-{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeLabelMoved [
 	labelContainer constraintsDo: [ :c |
 		c frame horizontal alignCenterAt: self wardleyMapNodeViewModel labelCoordinateX.
@@ -73,8 +70,8 @@ GtWardleyMapNodeElement >> onNodeLabelMoved [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeLabelMoved: anAnnouncement [
-	self onNodeLabelMoved
+GtWardleyMapNodeElement >> onNodeLabelTextChanged [
+	labelElement text: self wardleyMapNodeViewModel label
 ]
 
 { #category : #'event handling' }
@@ -89,8 +86,7 @@ GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 	self onNodeResized.
 	self onNodeColored.
 
-	labelElement text: self wardleyMapNodeViewModel label.
-	
+	self onNodeLabelTextChanged.
 	self onNodeLabelMoved
 ]
 
@@ -101,7 +97,8 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
 	
 	self wardleyMapNodeViewModel weak
-		when: GtWardleyMapNodeLabelViewModelMoved send: #onNodeLabelMoved to: self;
+		when: GtWardleyMapNodeViewModelLabelMoved send: #onNodeLabelMoved to: self;
+		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged to: self;
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self
 ]
