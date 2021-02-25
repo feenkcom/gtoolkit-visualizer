@@ -22,6 +22,11 @@ GtWardleyMapFromDictionaryImporter >> importColorFrom: aDictionary [
 ]
 
 { #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importIdFrom: aString [
+	^ UUID fromString: aString
+]
+
+{ #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary [
 	| aWardleyMapEdge |
 
@@ -47,7 +52,7 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary map:
 		at: #from
 		ifPresent: [ :aFromId |
 			aWardleyMap
-				nodeWithId: aFromId
+				nodeWithId: (self importIdFrom: aFromId)
 				ifFound: [ :aFromNode | aWardleyMapEdge fromNode: aFromNode ]
 				ifNone: [  ] ].
 
@@ -55,8 +60,8 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary map:
 		at: #to
 		ifPresent: [ :aToId |
 			aWardleyMap
-				nodeWithId: aToId
-				ifFound: [ :atoNode | aWardleyMapEdge toNode: atoNode ]
+				nodeWithId: (self importIdFrom: aToId)
+				ifFound: [ :aToNode | aWardleyMapEdge toNode: aToNode ]
 				ifNone: [  ] ].
 	
 	^ aWardleyMapEdge
@@ -85,7 +90,7 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 	aWardleyMapNode := GtWardleyMapNodeModel new.
 	aDictionary
 		at: #id
-		ifPresent: [ :anId | aWardleyMapNode id: anId ].
+		ifPresent: [ :anId | aWardleyMapNode id: (self importIdFrom: anId) ].
 
 	aDictionary
 		at: #color

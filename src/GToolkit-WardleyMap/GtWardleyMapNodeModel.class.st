@@ -19,7 +19,11 @@ GtWardleyMapNodeModel >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ labelModel = anObject labelModel and: [ id = anObject id ]
+	^ labelModel = anObject labelModel
+		and: [ id = anObject id
+			and: [ size = anObject size
+				and: [ coordinate = anObject coordinate
+					and: [ color = anObject color ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -101,4 +105,23 @@ GtWardleyMapNodeModel >> notifyCoordinateChanged [
 { #category : #'api - size' }
 GtWardleyMapNodeModel >> notifySizeChanged [
 	self announce: (GtWardleyMapNodeModelResized new nodeModel: self)
+]
+
+{ #category : #printing }
+GtWardleyMapNodeModel >> printOn: aStream [
+	"Append a sequence of characters to aStream that identify the receiver."
+
+	aStream
+		nextPutAll: 'Node {';
+		nextPutAll: ' label: ';
+		print: self label;
+		nextPutAll: '; coordinate: ';
+		print: self coordinate;
+		nextPutAll: '; size: ';
+		print: self size;
+		nextPutAll: '; color: ';
+		print: self color;
+		nextPutAll: '; id: ';
+		print: id;
+		nextPutAll: ' }'
 ]
