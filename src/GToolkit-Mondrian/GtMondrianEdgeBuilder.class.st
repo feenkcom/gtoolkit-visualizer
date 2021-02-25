@@ -203,12 +203,6 @@ GtMondrianEdgeBuilder >> fromCenterBottom [
 	self fromAnchor: BlElementBottomCenterAnchor
 ]
 
-{ #category : #accessing }
-GtMondrianEdgeBuilder >> fromCenterPath [
-	"Position the from anchor on the border along the path between the centers of two nodes."
-	self fromAnchor: BlAnchorOnBorderAlongCenterPath
-]
-
 { #category : #'scripting anchors' }
 GtMondrianEdgeBuilder >> fromCenterTop [
 	self fromAnchor: BlElementTopCenterAnchor
@@ -248,8 +242,9 @@ GtMondrianEdgeBuilder >> fromRightCenter [
 { #category : #initialize }
 GtMondrianEdgeBuilder >> initialize [
 	areEdgesPassive := false.
-	fromAnchorClass := BlElementCenterAnchor.
-	toAnchorClass := BlElementCenterAnchor
+	fromAnchorClass := BlNearestPositionBoundsAnchor.
+	toAnchorClass := BlNearestPositionBoundsAnchor
+
 ]
 
 { #category : #scripting }
@@ -293,12 +288,6 @@ GtMondrianEdgeBuilder >> toAnchor: aClass [
 { #category : #'scripting anchors' }
 GtMondrianEdgeBuilder >> toCenterBottom [
 	self toAnchor: BlElementBottomCenterAnchor
-]
-
-{ #category : #accessing }
-GtMondrianEdgeBuilder >> toCenterPath [
-	"Position the to anchor on the border along the path between the centers of two nodes."
-	self toAnchor: BlAnchorOnBorderAlongCenterPath
 ]
 
 { #category : #'scripting anchors' }
