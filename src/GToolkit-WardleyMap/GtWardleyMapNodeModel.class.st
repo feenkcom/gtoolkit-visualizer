@@ -27,7 +27,7 @@ GtWardleyMapNodeModel >> = anObject [
 ]
 
 { #category : #visiting }
-GtWardleyMapNodeModel >> acceptVisitor: aWardleyMapVisitor [
+GtWardleyMapNodeModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapNode: self
 ]
 

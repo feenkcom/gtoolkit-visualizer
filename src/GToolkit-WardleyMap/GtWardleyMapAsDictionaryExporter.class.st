@@ -19,8 +19,8 @@ GtWardleyMapAsDictionaryExporter >> visitColor: aColor [
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
 	^ OrderedDictionary new
-		at: #nodes put: (aWardleyMap nodes collect: [ :eachNode | eachNode acceptVisitor: self ] as: Array);
-		at: #edges put: (aWardleyMap edges collect: [ :eachEdge | eachEdge acceptVisitor: self ] as: Array);
+		at: #nodes put: (aWardleyMap nodes collect: [ :eachNode | eachNode accept: self ] as: Array);
+		at: #edges put: (aWardleyMap edges collect: [ :eachEdge | eachEdge accept: self ] as: Array);
 		yourself
 ]
 
@@ -44,7 +44,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 		at: #y put: aWardleyMapNode y;
 		at: #width put: aWardleyMapNode width;
 		at: #height put: aWardleyMapNode height;
-		at: #label put: (aWardleyMapNode labelModel acceptVisitor: self);
+		at: #label put: (aWardleyMapNode labelModel accept: self);
 		yourself
 ]
 

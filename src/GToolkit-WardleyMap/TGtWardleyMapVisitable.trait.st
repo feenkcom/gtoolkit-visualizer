@@ -4,6 +4,6 @@ Trait {
 }
 
 { #category : #visiting }
-TGtWardleyMapVisitable >> acceptVisitor: aWardleyMapVisitor [
+TGtWardleyMapVisitable >> accept: aWardleyMapVisitor [
 	^ self explicitRequirement
 ]

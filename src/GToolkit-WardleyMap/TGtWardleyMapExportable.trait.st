@@ -7,7 +7,7 @@ Trait {
 TGtWardleyMapExportable >> asJSONForExport [ 
 	"Answer the receiver serialised in JSON format"
 
-	^ STONJSON toStringPretty: (self acceptVisitor: GtWardleyMapAsDictionaryExporter new)
+	^ STONJSON toStringPretty: (self accept: GtWardleyMapAsDictionaryExporter new)
 ]
 
 { #category : #'api - export / import' }
@@ -19,5 +19,7 @@ TGtWardleyMapExportable >> gtJSONFor: aView [
 		priority: 8;
 		look: [ BrGlamorousCodeEditorLook ];
 		styler: [ JSONParser gtStyler ];
-		text: [ self asJSONForExport ]
+		text: [ self asJSONForExport ];
+		actionButtonLabel: 'Copy'
+			action: [ Clipboard clipboardText: self asJSONForExport ]
 ]

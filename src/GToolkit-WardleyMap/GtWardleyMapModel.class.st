@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'announcer',
 		'nodes',
-		'edges'
+		'edges',
+		'sections'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -32,7 +33,7 @@ GtWardleyMapModel >> = anObject [
 ]
 
 { #category : #visiting }
-GtWardleyMapModel >> acceptVisitor: aWardleyMapVisitor [
+GtWardleyMapModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMap: self
 ]
 
@@ -146,7 +147,8 @@ GtWardleyMapModel >> initialize [
 	super initialize.
 
 	nodes := OrderedCollection new.
-	edges := OrderedCollection new
+	edges := OrderedCollection new.
+	sections := OrderedCollection new
 ]
 
 { #category : #private }
@@ -180,7 +182,7 @@ GtWardleyMapModel >> nodes [
 GtWardleyMapModel >> rebuildUniqueIds [
 	self nodes
 		collect: [ :eachNode | eachNode -> self nextUniqueId ]
-		thenDo: [ :anAssoc | anAssoc key value: anAssoc value ]
+		thenDo: [ :anAssoc | anAssoc key id: anAssoc value ]
 ]
 
 { #category : #'api - edges' }

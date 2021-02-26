@@ -10,7 +10,7 @@ GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
 	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary |
 
 	aWardleyMap := GtWardleyMapModelExamples new newMapWithNodes.
-	anExportedDictionary := aWardleyMap acceptVisitor: GtWardleyMapAsDictionaryExporter new.
+	anExportedDictionary := aWardleyMap accept: GtWardleyMapAsDictionaryExporter new.
 
 	self assert: anExportedDictionary size equals: 2.
 	self assert: (anExportedDictionary includesKey: #nodes).
@@ -24,7 +24,7 @@ GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
 	self assert: (aFirstNodeDictionary at: #y) equals: 0.75.
 	self assert: (aFirstNodeDictionary at: #width) equals: 12.
 	self assert: (aFirstNodeDictionary at: #height) equals: 12.
-	
+
 	aFirstNodeLabelDictionary := aFirstNodeDictionary at: #label.
 	self assert: aFirstNodeLabelDictionary size equals: 3.
 	self assert: (aFirstNodeLabelDictionary at: #x) equals: 0.5.

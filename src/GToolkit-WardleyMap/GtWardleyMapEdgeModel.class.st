@@ -23,7 +23,7 @@ GtWardleyMapEdgeModel >> = anObject [
 ]
 
 { #category : #visiting }
-GtWardleyMapEdgeModel >> acceptVisitor: aWardleyMapVisitor [
+GtWardleyMapEdgeModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapEdge: self
 ]
 

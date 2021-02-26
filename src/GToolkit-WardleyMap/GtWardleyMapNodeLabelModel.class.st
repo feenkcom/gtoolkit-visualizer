@@ -22,7 +22,7 @@ GtWardleyMapNodeLabelModel >> = anObject [
 ]
 
 { #category : #visiting }
-GtWardleyMapNodeLabelModel >> acceptVisitor: aWardleyMapVisitor [
+GtWardleyMapNodeLabelModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapNodeLabel: self
 ]
 
