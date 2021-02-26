@@ -26,3 +26,23 @@ TGtWardleyMapWithCoordinate >> coordinate: aNewCoordinate [
 TGtWardleyMapWithCoordinate >> notifyCoordinateChanged [
 	self explicitRequirement
 ]
+
+{ #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> x [
+	^ self coordinate x
+]
+
+{ #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> x: aNumber [
+	self coordinate: (aNumber @ self coordinate y)
+]
+
+{ #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> y [
+	^ self coordinate y
+]
+
+{ #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> y: aNumber [
+	self coordinate: (self coordinate x @ aNumber)
+]

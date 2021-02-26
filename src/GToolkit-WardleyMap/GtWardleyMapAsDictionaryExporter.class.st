@@ -7,28 +7,28 @@ Class {
 }
 
 { #category : #visiting }
-GtWardleyMapAsDictionaryExporter >> visitColor: aCcolor [
+GtWardleyMapAsDictionaryExporter >> visitColor: aColor [
 	^ Dictionary new
-		at: #red put: aCcolor red;
-		at: #green put: aCcolor green;
-		at: #blue put: aCcolor blue;
-		at: #alpha put: aCcolor alpha;
+		at: #red put: aColor red;
+		at: #green put: aColor green;
+		at: #blue put: aColor blue;
+		at: #alpha put: aColor alpha;
 		yourself
 ]
 
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
 	^ OrderedDictionary new
-		at: #nodes put: (aWardleyMap nodes collect: [ :eachNode | eachNode acceptVisitor: self ] as: Array);
-		at: #edges put: (aWardleyMap edges collect: [ :eachEdge | eachEdge acceptVisitor: self ] as: Array);
+		at: #nodes put: (aWardleyMap nodes collect: [ :eachNode | eachNode accept: self ] as: Array);
+		at: #edges put: (aWardleyMap edges collect: [ :eachEdge | eachEdge accept: self ] as: Array);
 		yourself
 ]
 
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdge: aWardleyMapEdge [
 	^ OrderedDictionary new
-		at: #from put: aWardleyMapEdge fromNode id;
-		at: #to put: aWardleyMapEdge toNode id;
+		at: #from put: aWardleyMapEdge fromNode id asString;
+		at: #to put: aWardleyMapEdge toNode id asString;
 		at: #color put: (self visitColor: aWardleyMapEdge color);
 		at: #width put: aWardleyMapEdge width;
 		at: #arrow put: aWardleyMapEdge arrow;
@@ -38,21 +38,21 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdge: aWardleyMapEdge [
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 	^ OrderedDictionary new
-		at: #id put: aWardleyMapNode id;
+		at: #id put: aWardleyMapNode id asString;
 		at: #color put: (self visitColor: aWardleyMapNode color);
-		at: #x put: aWardleyMapNode coordinate x;
-		at: #y put: aWardleyMapNode coordinate y;
-		at: #width put: aWardleyMapNode size x;
-		at: #height put: aWardleyMapNode size y;
-		at: #label put: (aWardleyMapNode labelModel acceptVisitor: self);
+		at: #x put: aWardleyMapNode x;
+		at: #y put: aWardleyMapNode y;
+		at: #width put: aWardleyMapNode width;
+		at: #height put: aWardleyMapNode height;
+		at: #label put: (aWardleyMapNode labelModel accept: self);
 		yourself
 ]
 
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapNodeLabel: aWardleyMapNodeLabel [
 	^ OrderedDictionary new
-		at: #x put: aWardleyMapNodeLabel coordinate x;
-		at: #y put: aWardleyMapNodeLabel coordinate y;
+		at: #x put: aWardleyMapNodeLabel x;
+		at: #y put: aWardleyMapNodeLabel y;
 		at: #text put: aWardleyMapNodeLabel label;
 		yourself
 ]

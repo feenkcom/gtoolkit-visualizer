@@ -11,8 +11,19 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
+{ #category : #comparing }
+GtWardleyMapEdgeModel >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ toNode = anObject toNode and: [ fromNode = anObject fromNode ]
+]
+
 { #category : #visiting }
-GtWardleyMapEdgeModel >> acceptVisitor: aWardleyMapVisitor [
+GtWardleyMapEdgeModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapEdge: self
 ]
 
@@ -31,6 +42,13 @@ GtWardleyMapEdgeModel >> fromNode [
 { #category : #accessing }
 GtWardleyMapEdgeModel >> fromNode: anObject [
 	fromNode := anObject
+]
+
+{ #category : #comparing }
+GtWardleyMapEdgeModel >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ toNode hash bitXor: fromNode hash
 ]
 
 { #category : #initialization }
