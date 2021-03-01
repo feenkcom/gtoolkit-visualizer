@@ -32,8 +32,8 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdge: aWardleyMapEdge [
 	^ OrderedDictionary new
-		at: #from put: aWardleyMapEdge fromNode id asString;
-		at: #to put: aWardleyMapEdge toNode id asString;
+		at: #from put: (self visitWardleyId: aWardleyMapEdge fromNode id);
+		at: #to put: (self visitWardleyId: aWardleyMapEdge toNode id);
 		at: #color put: (self visitColor: aWardleyMapEdge color);
 		at: #width put: aWardleyMapEdge width;
 		at: #arrow put: aWardleyMapEdge arrow;
@@ -43,7 +43,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdge: aWardleyMapEdge [
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 	^ OrderedDictionary new
-		at: #id put: aWardleyMapNode id asString;
+		at: #id put: (self visitWardleyId: aWardleyMapNode id);
 		at: #color put: (self visitColor: aWardleyMapNode color);
 		at: #x put: aWardleyMapNode x;
 		at: #y put: aWardleyMapNode y;
