@@ -1,6 +1,6 @@
 Class {
 	#name : #GtWardleyMapEdgeModelRemoved,
-	#superclass : #Announcement,
+	#superclass : #GtWardleyMapModelAnnouncement,
 	#instVars : [
 		'edgeModel'
 	],

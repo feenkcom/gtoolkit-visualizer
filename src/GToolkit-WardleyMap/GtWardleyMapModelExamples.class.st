@@ -73,3 +73,20 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 
 	^ aWardleyMap
 ]
+
+{ #category : #examples }
+GtWardleyMapModelExamples >> understandingWhenMapChanges [
+	<gtExample>
+	| aWardleyMap theAnnouncements |
+
+	aWardleyMap := self newMapWithNodes.
+	
+	theAnnouncements := OrderedCollection new.
+	aWardleyMap when: GtWardleyMapAnnouncement do: [ :anAnnouncement | theAnnouncements add: anAnnouncement ].
+	
+	aWardleyMap nodes second label: 'Changed Node B'.
+	
+	self assert: theAnnouncements size equals: 1.
+	
+	^ theAnnouncements
+]

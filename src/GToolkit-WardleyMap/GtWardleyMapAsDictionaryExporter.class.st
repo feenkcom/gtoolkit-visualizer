@@ -17,6 +17,11 @@ GtWardleyMapAsDictionaryExporter >> visitColor: aColor [
 ]
 
 { #category : #visiting }
+GtWardleyMapAsDictionaryExporter >> visitWardleyId: aUUID [
+	^ aUUID asString
+]
+
+{ #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
 	^ OrderedDictionary new
 		at: #nodes put: (aWardleyMap nodes collect: [ :eachNode | eachNode accept: self ] as: Array);

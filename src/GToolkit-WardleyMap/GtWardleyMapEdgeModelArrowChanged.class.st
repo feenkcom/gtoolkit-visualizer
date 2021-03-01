@@ -1,6 +1,6 @@
 Class {
 	#name : #GtWardleyMapEdgeModelArrowChanged,
-	#superclass : #Announcement,
+	#superclass : #GtWardleyMapEdgeModelAnnouncement,
 	#instVars : [
 		'edgeModel'
 	],

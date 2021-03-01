@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
 		'labelModel',
@@ -64,6 +64,8 @@ GtWardleyMapNodeModel >> initialize [
 	super initialize.
 
 	labelModel := GtWardleyMapNodeLabelModel new.
+	labelModel parent: self.
+	
 	color := Color black.
 	coordinate := 0.5@0.5.
 	size := 12@12.
@@ -94,17 +96,22 @@ GtWardleyMapNodeModel >> labelModel: aGtWardleyMapNodeLabelModel [
 
 { #category : #'api - color' }
 GtWardleyMapNodeModel >> notifyColored [
-	self announce: (GtWardleyMapNodeModelColored new nodeModel: self)
+	self propagateAnnouncement: (GtWardleyMapNodeModelColored new nodeModel: self)
 ]
 
 { #category : #'api - coordinate' }
 GtWardleyMapNodeModel >> notifyCoordinateChanged [
-	self announce: (GtWardleyMapNodeModelMoved new nodeModel: self)
+	self propagateAnnouncement: (GtWardleyMapNodeModelMoved new nodeModel: self)
+]
+
+{ #category : #'api - parent' }
+GtWardleyMapNodeModel >> notifyParentChanged [
+	
 ]
 
 { #category : #'api - size' }
 GtWardleyMapNodeModel >> notifySizeChanged [
-	self announce: (GtWardleyMapNodeModelResized new nodeModel: self)
+	self propagateAnnouncement: (GtWardleyMapNodeModelResized new nodeModel: self)
 ]
 
 { #category : #printing }
