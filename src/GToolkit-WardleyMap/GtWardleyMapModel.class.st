@@ -39,18 +39,21 @@ GtWardleyMapModel >> accept: aWardleyMapVisitor [
 
 { #category : #'api - edges' }
 GtWardleyMapModel >> addEdge: aGtWardleyMapEdgeModel [
+	aGtWardleyMapEdgeModel hasParent
+		ifTrue: [ GtWardleyMapParentAlreadySetError signal ].
+
 	self
 		assert: [ aGtWardleyMapEdgeModel notNil ]
 		description: [ 'Edge must not be nil' ].
-		
+
 	self
 		assert: [ self hasNode: aGtWardleyMapEdgeModel fromNode ]
 		description: [ 'The edge must be from the existing node' ].
-		
+
 	self
 		assert: [ self hasNode: aGtWardleyMapEdgeModel toNode ]
 		description: [ 'The edge must be from the existing node' ].
-	
+
 	"`self` edges are not permitted"
 	aGtWardleyMapEdgeModel fromNode = aGtWardleyMapEdgeModel toNode
 		ifTrue: [ ^ self ].
@@ -60,11 +63,15 @@ GtWardleyMapModel >> addEdge: aGtWardleyMapEdgeModel [
 		ifTrue: [ ^ self ].
 
 	self edges add: aGtWardleyMapEdgeModel.
+	aGtWardleyMapEdgeModel parent: self.
 	self announce: (GtWardleyMapEdgeModelAdded new edgeModel: aGtWardleyMapEdgeModel)
 ]
 
 { #category : #'api - nodes' }
 GtWardleyMapModel >> addNode: aGtWardleyMapNodeModel [
+	aGtWardleyMapNodeModel hasParent
+		ifTrue: [ GtWardleyMapParentAlreadySetError signal ].
+
 	aGtWardleyMapNodeModel hasId
 		ifFalse: [ aGtWardleyMapNodeModel id: self nextUniqueId ]
 		ifTrue: [
@@ -72,6 +79,7 @@ GtWardleyMapModel >> addNode: aGtWardleyMapNodeModel [
 				ifTrue: [ self error: 'Can not add a node with already used id' ]. ].
 
 	nodes add: aGtWardleyMapNodeModel.
+	aGtWardleyMapNodeModel parent: self.
 	self announce: (GtWardleyMapNodeModelAdded new nodeModel: aGtWardleyMapNodeModel)
 ]
 
@@ -133,6 +141,11 @@ GtWardleyMapModel >> hasNodeWithId: anId [
 		nodeWithId: anId
 		ifFound: [ true ]
 		ifNone: [ false ]
+]
+
+{ #category : #testing }
+GtWardleyMapModel >> hasParent [
+	^ false
 ]
 
 { #category : #comparing }
@@ -200,6 +213,7 @@ GtWardleyMapModel >> removeEdge: aGtWardleyMapEdgeModel [
 		description: [ 'The edge must be from the existing node' ].
 
 	self edges remove: aGtWardleyMapEdgeModel ifAbsent: [ ^ self ].
+	aGtWardleyMapEdgeModel removeParent.
 	self announce: (GtWardleyMapEdgeModelRemoved new edgeModel: aGtWardleyMapEdgeModel)
 ]
 
@@ -208,6 +222,7 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 
 	"before removing a node we should remove all connected edges"	
 	self allEdgesConnecting: aGtWardleyMapNodeModel do: [ :eachEdge | self removeEdge: eachEdge ].
-	nodes remove: aGtWardleyMapNodeModel ifAbsent: [ ^ self ]. 
+	nodes remove: aGtWardleyMapNodeModel ifAbsent: [ ^ self ].
+	aGtWardleyMapNodeModel removeParent.
 	self announce: (GtWardleyMapNodeModelRemoved new nodeModel: aGtWardleyMapNodeModel)
 ]

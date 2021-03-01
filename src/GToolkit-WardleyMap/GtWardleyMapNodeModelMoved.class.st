@@ -1,6 +1,6 @@
 Class {
 	#name : #GtWardleyMapNodeModelMoved,
-	#superclass : #Announcement,
+	#superclass : #GtWardleyMapNodeModelAnnouncement,
 	#instVars : [
 		'nodeModel'
 	],

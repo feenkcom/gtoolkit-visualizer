@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapEdgeModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithColor + TGtWardleyMapWithArrow + TGtWardleyMapWithWidth + TGtWardleyMapExportable + TGtWardleyMapVisitable',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithArrow classTrait + TGtWardleyMapWithWidth classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithColor + TGtWardleyMapWithArrow + TGtWardleyMapWithWidth + TGtWardleyMapExportable + TGtWardleyMapVisitable',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithArrow classTrait + TGtWardleyMapWithWidth classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
 		'fromNode',
@@ -62,17 +62,22 @@ GtWardleyMapEdgeModel >> initialize [
 
 { #category : #'api - arrow' }
 GtWardleyMapEdgeModel >> notifyArrowChanged [
-	self announce: (GtWardleyMapEdgeModelArrowChanged new edgeModel: self)
+	self propagateAnnouncement: (GtWardleyMapEdgeModelArrowChanged new edgeModel: self)
 ]
 
 { #category : #'api - color' }
 GtWardleyMapEdgeModel >> notifyColored [
-	self announce: (GtWardleyMapEdgeModelColored new edgeModel: self)
+	self propagateAnnouncement: (GtWardleyMapEdgeModelColored new edgeModel: self)
+]
+
+{ #category : #'api - parent' }
+GtWardleyMapEdgeModel >> notifyParentChanged [
+	
 ]
 
 { #category : #'api - width' }
 GtWardleyMapEdgeModel >> notifyWidthChanged [
-	self announce: (GtWardleyMapEdgeModelResized new edgeModel: self)
+	self propagateAnnouncement: (GtWardleyMapEdgeModelResized new edgeModel: self)
 ]
 
 { #category : #accessing }

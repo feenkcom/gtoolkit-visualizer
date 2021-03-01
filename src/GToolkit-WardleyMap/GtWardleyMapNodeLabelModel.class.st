@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNodeLabelModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapExportable + TGtWardleyMapVisitable',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithCoordinate + TGtWardleyMapExportable + TGtWardleyMapVisitable',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
 	#instVars : [
 		'announcer',
 		'label'
@@ -61,10 +61,15 @@ GtWardleyMapNodeLabelModel >> label: aString [
 		ifTrue: [ ^ self ].
 
 	label := aString.	
-	self announce: (GtWardleyMapNodeLabelModelTextChanged new nodeLabelModel: self)
+	self propagateAnnouncement: (GtWardleyMapNodeLabelModelTextChanged new nodeLabelModel: self)
 ]
 
 { #category : #'api - coordinate' }
 GtWardleyMapNodeLabelModel >> notifyCoordinateChanged [
-	self announce: (GtWardleyMapNodeLabelModelMoved new nodeLabelModel: self)
+	self propagateAnnouncement: (GtWardleyMapNodeLabelModelMoved new nodeLabelModel: self)
+]
+
+{ #category : #'api - parent' }
+GtWardleyMapNodeLabelModel >> notifyParentChanged [
+	
 ]
