@@ -11,6 +11,57 @@ Class {
 }
 
 { #category : #initialization }
+GtWardleyMapNodeEditorElement >> createColorPicker [
+	^ GtWardleyMapColorPickerElement new
+		hFitContent;
+		vFitContentLimited;
+		columnCount: 8;
+		cellSpacing: 5
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeEditorElement >> createNodeColorLabel [
+	^ BrLabel new
+		look: (BrGlamorousLabelLook new foreground: Color darkGray);
+		margin:
+			(BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0);
+		text: 'Node color:'
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
+	^ BrButton new
+		beSmallSize;
+		look: BrGlamorousButtonWithLabelLook new;
+		margin:
+			(BlInsets
+				top: 10
+				left: 5
+				bottom: 5
+				right: 0);
+		label: 'Delete';
+		action: [ self wardleyMapNodeViewModel removeFromMap.
+			self fireEvent: BrDropdownHideWish new ]
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeEditorElement >> createNodeSizeLabel [
+	^ BrLabel new
+		look: (BrGlamorousLabelLook new foreground: Color darkGray);
+		margin:
+			(BlInsets
+				top: 10
+				left: 5
+				bottom: 2
+				right: 0);
+		text: 'Node size:'
+]
+
+{ #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodeSizePicker [
 	| aPicker |
 
@@ -45,51 +96,45 @@ GtWardleyMapNodeEditorElement >> createNodeSizePicker [
 ]
 
 { #category : #initialization }
+GtWardleyMapNodeEditorElement >> createPropertiesEditorContainer [
+	| aContainer |
+
+	aContainer := BrVerticalPane new hFitContent vFitContentLimited.
+	aContainer addChildren: self createPropertyEditorElements.
+	aContainer addChild: self createNodeDeleteButton.
+
+	^ aContainer
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeEditorElement >> createPropertyEditorElements [
+	^ {
+		self createNodeColorLabel.
+		(predefinedColorsElement := self createColorPicker).
+		self createNodeSizeLabel.
+		self createNodeSizePicker
+	}
+]
+
+{ #category : #initialization }
 GtWardleyMapNodeEditorElement >> initialize [
 	| aContainer |
 	super initialize.
-	
-	self 
+
+	self
 		hFitContent;
 		vFitContentLimited;
 		padding: (BlInsets all: 3).
 
-	aContainer := BrVerticalPane new
-		hFitContent
-		vFitContentLimited.
+	aContainer := self createPropertiesEditorContainer.
 
-	predefinedColorsElement := GtWardleyMapColorPickerElement new
-		hFitContent;
-		vFitContentLimited;
-		columnCount: 8;
-		cellSpacing: 5.
-	
-	aContainer addChildren: {
-		BrLabel new
-			look: (BrGlamorousLabelLook new foreground: Color darkGray);
-			margin: (BlInsets top: 5 left: 5 bottom: 2 right: 0);
-			text: 'Node color:'.
-		predefinedColorsElement.
-		BrLabel new
-			look: (BrGlamorousLabelLook new foreground: Color darkGray);
-			margin: (BlInsets top: 10 left: 5 bottom: 2 right: 0);
-			text: 'Node size:'.
-		self createNodeSizePicker. 
-		
-		BrButton new
-			beSmallSize;
-			look: (BrGlamorousButtonWithLabelLook new);
-			margin: (BlInsets top: 10 left: 5 bottom: 5 right: 0);
-			label: 'Delete';
-			action: [
-				self wardleyMapNodeViewModel removeFromMap.
-				self fireEvent: BrDropdownHideWish new ] }.
-	
-	self addChild: (BrScrollPane new
-		look: BrScrollPaneLook + BrGlamorousWithVerticalScrollbarLook;
-		vFitContentLimited;
-		hFitContent;
-		content: aContainer)
+	self
+		addChild:
+			(BrScrollPane new
+				look: BrScrollPaneLook + BrGlamorousWithVerticalScrollbarLook;
+				vFitContentLimited;
+				hFitContent;
+				content: aContainer)
 ]
 
 { #category : #'event handling' }
