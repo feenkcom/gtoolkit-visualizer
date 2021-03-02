@@ -37,6 +37,13 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
+	^ GtWardleyMapNodeEditorElement new
+		wardleyMapViewModel: self wardleyMapViewModel;
+		wardleyMapNodeViewModel: aNodeViewModel
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
@@ -52,9 +59,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 			handle: [ BlElement new
 					size: aNodeViewModel nodeSize / 2.0;
 					geometry: BlEllipseGeometry new ]
-			content: [ GtWardleyMapNodeEditorElement new
-				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapNodeViewModel: aNodeViewModel ])
+			content: [ self createNodeEditorFor: aNodeViewModel ])
 ]
 
 { #category : #private }

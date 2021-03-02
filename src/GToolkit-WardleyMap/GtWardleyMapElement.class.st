@@ -16,6 +16,11 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
+{ #category : #initialization }
+GtWardleyMapElement >> createCanvasElement [
+	^ GtWardleyMapCanvasElement new
+]
+
 { #category : #accessing }
 GtWardleyMapElement >> evolutionSections: aCollectionOfSections [	
 	self addChildFirst: (GtWardleyMapEvolutionAsixLayer new sections: aCollectionOfSections)
@@ -26,7 +31,7 @@ GtWardleyMapElement >> initialize [
 	super initialize.
 	
 	self matchParent.
-	self addChild: (canvasElement := GtWardleyMapCanvasElement new)
+	self addChild: (canvasElement := self createCanvasElement)
 ]
 
 { #category : #'api - wardley map view model' }
