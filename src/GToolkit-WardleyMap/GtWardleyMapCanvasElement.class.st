@@ -79,7 +79,13 @@ GtWardleyMapCanvasElement >> initialize [
 		c vertical matchParent ].
 
 	self layout: BlFrameLayout new.
-
+	(self addLook: (BrGlamorousWithContextMenuLook
+			handle: [ BlElement new
+					size: 5@5;
+					geometry: BlEllipseGeometry new ]
+			content: [ GtWardleyMapEditorElement new
+				canvas: self;
+				requestFocus ])).
 	self
 		when: BlDoubleClickEvent
 		do: [ :anEvent |

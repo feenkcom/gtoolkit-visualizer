@@ -109,6 +109,11 @@ GtWardleyMapEdgeViewModel >> removeLineArrow [
 	self wardleyMapEdgeModel arrow: false
 ]
 
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> reverse [
+	self wardleyMapEdgeModel reverse
+]
+
 { #category : #'api - wardley map edge model' }
 GtWardleyMapEdgeViewModel >> subscribeToWardleyMapEdgeModel [
 	"Is sent after a new wardleyMapEdge model is assigned to the view model.
