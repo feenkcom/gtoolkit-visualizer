@@ -23,7 +23,7 @@ GtWardleyMapElement >> createCanvasElement [
 
 { #category : #accessing }
 GtWardleyMapElement >> evolutionSections: aCollectionOfSections [	
-	self addChildFirst: (GtWardleyMapEvolutionAsixLayer new sections: aCollectionOfSections)
+	self addChildFirst: (GtWardleyMapEvolutionAxisLayer new sections: aCollectionOfSections)
 ]
 
 { #category : #initialization }

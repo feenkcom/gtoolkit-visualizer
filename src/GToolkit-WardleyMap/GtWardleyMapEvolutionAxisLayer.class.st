@@ -1,11 +1,11 @@
 Class {
-	#name : #GtWardleyMapEvolutionAsixLayer,
+	#name : #GtWardleyMapEvolutionAxisLayer,
 	#superclass : #BrHorizontalGrid,
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #initialization }
-GtWardleyMapEvolutionAsixLayer >> createHorizontalAxis [
+GtWardleyMapEvolutionAxisLayer >> createHorizontalAxis [
 	^ BlElement new
 		constraintsDo: [ :c |
 			c vertical exact: 1.
@@ -14,14 +14,14 @@ GtWardleyMapEvolutionAsixLayer >> createHorizontalAxis [
 ]
 
 { #category : #initialization }
-GtWardleyMapEvolutionAsixLayer >> createLabel [
+GtWardleyMapEvolutionAxisLayer >> createLabel [
 	^ BrLabel new
 		beSmallSize;
 		look: (BrGlamorousLabelLook new foreground: Color gray)
 ]
 
 { #category : #initialization }
-GtWardleyMapEvolutionAsixLayer >> createVerticalGridLine [
+GtWardleyMapEvolutionAxisLayer >> createVerticalGridLine [
 	^ BlElement new
 		constraintsDo: [ :c |
 			c horizontal exact: 1.
@@ -32,14 +32,14 @@ GtWardleyMapEvolutionAsixLayer >> createVerticalGridLine [
 ]
 
 { #category : #initialization }
-GtWardleyMapEvolutionAsixLayer >> initialize [
+GtWardleyMapEvolutionAxisLayer >> initialize [
 	super initialize.
 	
 	self matchParent
 ]
 
 { #category : #accessing }
-GtWardleyMapEvolutionAsixLayer >> sections: aCollectionOfSectionNames [
+GtWardleyMapEvolutionAxisLayer >> sections: aCollectionOfSectionNames [
 	| theColumnCount  theLabels theGridLines theGridEmptySpace theDivider |
 
 	theColumnCount := aCollectionOfSectionNames size * 2.

@@ -80,6 +80,17 @@ GtWardleyMapEdgeModel >> notifyWidthChanged [
 	self propagateAnnouncement: (GtWardleyMapEdgeModelResized new edgeModel: self)
 ]
 
+{ #category : #'api - arrow' }
+GtWardleyMapEdgeModel >> reverse [
+	| temp |
+	temp := fromNode.
+	fromNode := toNode.
+	toNode := temp.
+	temp := self parent.
+	parent removeEdge: self.
+	temp addEdge: self
+]
+
 { #category : #accessing }
 GtWardleyMapEdgeModel >> toNode [
 	^ toNode
