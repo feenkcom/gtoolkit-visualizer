@@ -26,6 +26,11 @@ GtWardleyMapElement >> evolutionSections: aCollectionOfSections [
 	self addChildFirst: (GtWardleyMapEvolutionAxisLayer new sections: aCollectionOfSections)
 ]
 
+{ #category : #accessing }
+GtWardleyMapElement >> hasEvolutionAxisLayer [
+	^(self childAt: 1) class = GtWardleyMapEvolutionAxisLayer
+]
+
 { #category : #initialization }
 GtWardleyMapElement >> initialize [
 	super initialize.
