@@ -34,8 +34,7 @@ GtWardleyMapEdgeEditorElement >> createLineArrowPicker [
 			beSmallSize;
 			look: (BrGlamorousButtonWithLabelLook new);
 			label: 'Reverse';
-			action: [
-				self wardleyMapEdgeViewModel reverse  ] ).
+			action: [ self wardleyMapEdgeViewModel reverse  ] ).
 
 	^ aPicker
 ]
