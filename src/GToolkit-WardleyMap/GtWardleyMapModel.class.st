@@ -103,6 +103,21 @@ GtWardleyMapModel >> edges [
 	^ edges
 ]
 
+{ #category : #'api - export / import' }
+GtWardleyMapModel >> gtJSONFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'JSON';
+		priority: 8;
+		look: [ BrGlamorousCodeEditorLook ];
+		styler: [ JSONParser gtStyler ];
+		text: [ self asJSONForExport ];
+		actionUpdateButtonTooltip: 'Update JSON';
+		actionButtonLabel: 'Copy'
+			action: [ Clipboard clipboardText: self asJSONForExport ]
+]
+
 { #category : #'gt-extensions' }
 GtWardleyMapModel >> gtLiveFor: aView [
 	<gtView>
