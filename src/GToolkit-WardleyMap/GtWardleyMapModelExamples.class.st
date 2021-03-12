@@ -22,7 +22,8 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 		'product (+rental)'.
 		'commodity'
 	}.
-
+	self assert: aWardleyMapElement children size = 2.
+	self assert: aWardleyMapElement children last children size = 4.
 	^ aWardleyMapElement
 ]
 
