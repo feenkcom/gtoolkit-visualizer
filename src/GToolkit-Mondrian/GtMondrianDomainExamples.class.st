@@ -281,7 +281,7 @@ GtMondrianDomainExamples >> exampleDependencies [
 	view := self emptyView.
 	view nodes 
 		shape: [ :each | 
-			((GtMethodCoder forMethod: each method) asElement)
+			((GtPharoMethodCoder forMethod: each method) asElement)
 				constraintsDo: [ :c | 
 					c horizontal exact: 200.
 					c vertical exact: 200 ] ];
