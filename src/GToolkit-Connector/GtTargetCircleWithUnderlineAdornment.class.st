@@ -93,7 +93,7 @@ GtTargetCircleWithUnderlineAdornment >> stop: aStopPoint [
 { #category : #'as yet unclassified' }
 GtTargetCircleWithUnderlineAdornment >> stylerRule [
 	^ (node isKindOf: RBMessageNode)
-		ifTrue: [ GtASTNodeHighlighterStylerRule new
+		ifTrue: [ GtPharoAstNodeHighlighterStylerRule new
 				nodeClassName: node className asSymbol;
 				styleBlock: [ :aNode :aText | 
 					node keywordsIntervals
@@ -108,7 +108,7 @@ GtTargetCircleWithUnderlineAdornment >> stylerRule [
 						attributes:
 							{(BlTextUnderlineAttribute new
 								color: BrGlamorousColors textHighlightColor)} ] ]
-		ifFalse: [ GtASTNodeHighlighterStylerRule new
+		ifFalse: [ GtPharoAstNodeHighlighterStylerRule new
 				nodeClassName: node className asSymbol;
 				styleBlock: [ :aNode :aText | 
 					(aText from: start to: stop)
