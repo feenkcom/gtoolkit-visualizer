@@ -20,11 +20,12 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 	mondrianElement
 		when: BlClickEvent
 		do: [ :event | 
-			(event target graph isNode or: [ event target graph isEdge ])
-				ifTrue: [ 
+			(event target withAllParents 
+				detect: [:element | element graph isNode or: [ element graph isEdge]]
+				ifFound: [ :element |
 					| transformedObject |
-					transformedObject := transformation cull: event target graph model.
-					mondrianElement phlow spawnObject: transformedObject ] ].
+					transformedObject := transformation cull: element graph model.
+					mondrianElement phlow spawnObject: transformedObject ] ) ].
 	wrapper addChild: mondrianElement.
 	self beViewElement: wrapper.
 	^ aBlock value: wrapper
