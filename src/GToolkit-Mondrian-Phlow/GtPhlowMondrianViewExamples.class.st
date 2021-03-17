@@ -21,6 +21,26 @@ GtPhlowMondrianViewExamples >> itself [
 	^ self
 ]
 
+{ #category : #accessing }
+GtPhlowMondrianViewExamples >> mondrianPhlowViewHandlesClickEventsOnCustomElements [
+	<gtExample>
+	| mondrianView mondrianViewElement nodeElement objectToSpawn |
+	mondrianView := GtPhlowMondrianView new.
+	mondrianView painting: [:m | 
+		m nodes
+			stencil: [:each | BrLabel new look: BrGlamorousLabelLook; text: each asString ]; 
+			with: {42} ].
+	mondrianView asElementDo: [:e | mondrianViewElement := e ].
+	mondrianViewElement 
+		allChildrenBreadthFirstDetect: [:each | each isKindOf: BrLabel] 
+		ifFound: [:x | nodeElement := x ].
+	self assert: nodeElement graph model = 42.
+	mondrianViewElement when: GtPhlowObjectToSpawn do: [:event | objectToSpawn := event].
+	nodeElement children first fireEvent: BlClickEvent new.
+	self assert: objectToSpawn notNil.
+	^ mondrianViewElement
+]
+
 { #category : #'gt-extensions' }
 GtPhlowMondrianViewExamples >> randomNodesWithEllipsesWith: view [
 	<gtExample>

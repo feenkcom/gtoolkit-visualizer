@@ -170,34 +170,29 @@ It comes with snippets, and each snippet can be independently evaluated or ' asR
 { #category : #example }
 GtExplainerExamples >> playgroundWithPreview [
 	<gtExample>
-	| container inspectorContainer subject editor playbook codeElement inspectButton inspectActionMarker |
-	inspectorContainer := BlElement new
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		layout: BlLinearLayout horizontal;
+	| container inspectorContainer subject editor inspectButton inspectActionMarker scripter |
+
+	inspectorContainer := BrHorizontalPane new
+		matchParent;
 		background: Color white;
 		margin: (BlInsets all: 10);
 		look: BrShadowLook.
-	container := BlElement new
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		layout: BlLinearLayout horizontal.
+
+	container := BrHorizontalPane new
+		matchParent.
 	container explainer isExplanationHolder: true.
-	playbook := GtPlayBook newWithCodeSnippetContent: '41 + 1'.
-	subject := GtPlayground createOn: playbook.
-	subject forceLayout.
+
+	scripter := BlDevScripter new
+		element: (GtPlayground createOn: (GtPlayBook newWithCodeSnippetContent: '41 + 1')).
+	scripter wait forEmptySpaceTaskQueue.
+	scripter syncContinue.
+	subject := scripter elementWithoutParent.
+	
+	inspectButton := (subject query // GtSourceCoderDoItActionId) anyOne.
+	
 	inspectorContainer addChild: subject.
-	codeElement := subject 
-		allChildrenBreadthFirstDetect: [ :each | each isKindOf: GtExpandableSourceCoderElement] 
-		ifFound: [ :coderElement | coderElement ]
-		ifNone: [ NotFound signal: 'inspect action not found' ].
-	inspectButton := codeElement 
-		allChildrenBreadthFirstDetect: [:each | (each isKindOf: BrButton) and: [ each label asString = 'Inspect' ]] 
-		ifFound: [ :b | b ]
-		ifNone: [ NotFound signal: 'inspect button not found' ].
-	inspectActionMarker := BrButton new
+	
+	inspectActionMarker := BlElement new
 		constraintsDo: [ :c | c ignoreByLayout ];
 		size: 20 @ 20;
 		elevation: (BlRelativeElevation elevation: 10);
