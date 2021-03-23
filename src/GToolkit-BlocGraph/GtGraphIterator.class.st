@@ -67,6 +67,11 @@ GtGraphIterator >> hasNone [
 	^ true
 ]
 
+{ #category : #testing }
+GtGraphIterator >> isCollection [
+	^ true
+]
+
 { #category : #'api - testing' }
 GtGraphIterator >> isEmpty [
 	<return: #Boolean>
