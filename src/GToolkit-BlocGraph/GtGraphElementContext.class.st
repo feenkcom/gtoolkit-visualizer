@@ -23,6 +23,13 @@ GtGraphElementContext >> addChildren: aCollection inChildrenContainer: aSymbol [
 ]
 
 { #category : #'api - graph model' }
+GtGraphElementContext >> allEdgeChildrenDo: aBlock [
+	self element allChildrenBreadthFirstDo: [ :eachElement |
+		(eachElement graph isEdge)
+			ifTrue: [ aBlock value: eachElement ] ]
+]
+
+{ #category : #'api - graph model' }
 GtGraphElementContext >> allNodeChildrenDo: aBlock [
 	self element allChildrenBreadthFirstDo: [ :eachElement |
 		(eachElement graph isNode)
