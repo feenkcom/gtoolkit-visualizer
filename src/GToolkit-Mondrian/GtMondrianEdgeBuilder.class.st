@@ -161,11 +161,9 @@ GtMondrianEdgeBuilder >> defaultEdgeElement [
 ]
 
 { #category : #private }
-GtMondrianEdgeBuilder >> edgeConstraintsFrom: fromElement to: toElement [
-	| edge |
-	edge := GtGraphEdge new from: fromElement to: toElement.
-	fromElement constraints graph addConnectedEdge: edge.
-	toElement constraints graph addConnectedEdge: edge
+GtMondrianEdgeBuilder >> edgeConstraintsFrom: fromElement to: toElement line: aLineElement [
+	fromElement constraints graph addConnectedEdge: aLineElement graph model.
+	toElement constraints graph addConnectedEdge: aLineElement graph model
 ]
 
 { #category : #accessing }
@@ -177,7 +175,7 @@ GtMondrianEdgeBuilder >> edgeElementFor: anObject [
 
 { #category : #private }
 GtMondrianEdgeBuilder >> edgeElementFor: anObject from: fromElement to: toElement [
-	| edgeElement |
+	| edgeElement anEdgeModel |
 	edgeElement := elementStencilBuilder
 		ifNotNil: [ elementStencilBuilder 
 				cull: anObject
@@ -188,7 +186,12 @@ GtMondrianEdgeBuilder >> edgeElementFor: anObject from: fromElement to: toElemen
 		fromAnchor: (fromAnchorClass referenceElement: fromElement relatedTo: toElement);
 		toAnchor: (toAnchorClass referenceElement: toElement relatedTo: fromElement).
 	edgeElement constraints ignoreByLayout.
-	edgeElement graph model: anObject.
+	
+	anEdgeModel := GtGraphEdgeWithElement new
+		element: edgeElement;
+		from: fromElement to: toElement.
+	
+	edgeElement graph model: anEdgeModel.
 	edgeElement graph beEdge.
 	^ edgeElement
 ]
@@ -267,9 +270,10 @@ GtMondrianEdgeBuilder >> privateConnect: aCollection from: aToBlock to: aFromBlo
 			fromElement := mondrian nodeAt: fromObject ifAbsent: [ nil ].
 			toElement := mondrian nodeAt: toObject ifAbsent: [ nil ].
 			(toElement notNil and: [ fromElement notNil ])
-				ifTrue: [ line := self edgeElementFor: each from: fromElement to: toElement.
+				ifTrue: [
+					line := self edgeElementFor: each from: fromElement to: toElement.
 					self areEdgesPassive
-						ifFalse: [ self edgeConstraintsFrom: fromElement to: toElement ].
+						ifFalse: [ self edgeConstraintsFrom: fromElement to: toElement line: line ].
 					elements add: line ]
 				ifFalse: [ (GtMondrianEdgeNotCreated new
 						fromElement: fromElement;

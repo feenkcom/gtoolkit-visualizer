@@ -149,9 +149,13 @@ GtGraphElementContext >> connectedEdges [
 
 { #category : #'api - graph' }
 GtGraphElementContext >> connectedNodes [
+	"Return an iterator of the connected nodes along the connected edges if the underlying element is a node,
+	or directly return the connected node (usually 2) if the element is an edge"
 	<return: #GtGraphConnectedNodes>
 
-	^ self connectedEdges nodes
+	^ self isNode
+		ifTrue: [ self connectedEdges nodes ]
+		ifFalse: [ GtGraphConnectedNodes on: self from: { self model } ]
 ]
 
 { #category : #'api - graph' }
