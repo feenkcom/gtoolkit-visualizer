@@ -263,7 +263,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethod
 					c vertical fitContent ].
 			labelElement := BrLabel new
 				text: aClass name;
-				look: (BrLabelLook new 
+				aptitude: (BrLabelAptitude new 
 					fontSize: 10);
 				constraintsDo: [ :c | 
 					c padding: (BlInsets all: 5).

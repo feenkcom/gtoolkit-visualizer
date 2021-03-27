@@ -37,7 +37,7 @@ GtConnectorContainer >> initialize [
 
 	self layout: BlFrameLayout new.
 	self matchParent.
-	self addLook: BrLayoutResizerLook inherit.
+	self addAptitude: BrLayoutResizerAptitude inherit.
 ]
 
 { #category : #'private - hooks' }

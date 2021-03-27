@@ -23,7 +23,7 @@ GtWardleyMapColorPickerElement >> createColorElementFor: aColor [
 		size: 16@16;
 		background: aColor;
 		geometry: (BlRoundedRectangleGeometry cornerRadius: 3);
-		addLook: (BrStyleCommonLook new
+		addAptitude: (BrStyleCommonAptitude new
 			default: [ :s | s border: (aColor luminance >= Color lightGray luminance
 				ifTrue: [ BlBorder paint: Color darkGray width: 1 ]
 				ifFalse: [ BlBorder empty ]) ];

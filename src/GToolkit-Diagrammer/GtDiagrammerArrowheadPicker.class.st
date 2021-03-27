@@ -4,7 +4,7 @@ I allow users to pick an arrowhead for a curve
 Class {
 	#name : #GtDiagrammerArrowheadPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -22,7 +22,7 @@ GtDiagrammerArrowheadPicker >> initialize [
 
 	self shape: [ :anArrowheadStencil |	
 		BrToggle new
-			look: BrMaterialToggleIconifiedLook;
+			aptitude: BrMaterialToggleIconifiedAptitude;
 			icon: anArrowheadStencil icon;
 			margin: (BlInsets all: 3) ]
 ]

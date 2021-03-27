@@ -60,7 +60,7 @@ GtDiagrammerTool >> stylesIn: aPicker [
 	aPicker
 		display: [ #() ];
 		shape: [ BrToggle new
-			look: BrMaterialToggleIconifiedLook;
+			aptitude: BrMaterialToggleIconifiedAptitude;
 			icon: (BlElement new
 				size: 28@28;
 				background: Color random);

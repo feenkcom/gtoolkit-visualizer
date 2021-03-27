@@ -28,7 +28,7 @@ GtPhlowMondrianViewExamples >> mondrianPhlowViewHandlesClickEventsOnCustomElemen
 	mondrianView := GtPhlowMondrianView new.
 	mondrianView painting: [:m | 
 		m nodes
-			stencil: [:each | BrLabel new look: BrGlamorousLabelLook; text: each asString ]; 
+			stencil: [:each | BrLabel new aptitude: BrGlamorousLabelAptitude; text: each asString ]; 
 			with: {42} ].
 	mondrianView asElementDo: [:e | mondrianViewElement := e ].
 	mondrianViewElement 

@@ -4,7 +4,7 @@ I allow users to pick a line join
 Class {
 	#name : #GtDiagrammerLineJoinPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -38,7 +38,7 @@ GtDiagrammerLineJoinPicker >> initialize [
 				border: (BlBorder builder lineJoin: aLineJoin; width: lineWidth; paint: (Color gray alpha: 0.5); build)).
 		
 		BrToggle new
-			look: BrMaterialToggleIconifiedLook;
+			aptitude: BrMaterialToggleIconifiedAptitude;
 			icon: anIconElement;
 			margin: (BlInsets all: 3);
 			padding: (BlInsets all: 0) ].

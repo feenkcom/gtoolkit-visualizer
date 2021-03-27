@@ -26,7 +26,7 @@ Class {
 		'shapeBlock',
 		'selected'
 	],
-	#category : 'GToolkit-Diagrammer-UI'
+	#category : #'GToolkit-Diagrammer-UI'
 }
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ GtDiagrammerPicker >> initialize [
 	
 	entities := #().
 	displayBlock := [ #() ].	
-	shapeBlock := [ BrToggle new look: BrMaterialToggleLabelledLook new ].
+	shapeBlock := [ BrToggle new aptitude: BrMaterialToggleLabelledAptitude new ].
 	
 	self layout: BlFlowLayout horizontal.
 	self padding: (BlInsets all: 10).

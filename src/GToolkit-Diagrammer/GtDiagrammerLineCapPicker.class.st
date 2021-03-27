@@ -51,7 +51,7 @@ GtDiagrammerLineCapPicker >> initialize [
 				toAnchor: (BlElementCenterAnchor element: toAnchor);
 				border: (BlBorder paint: (Color blue alpha: 0.4) width: 1)).
 		BrToggle new
-			look: BrMaterialToggleIconifiedLook;
+			aptitude: BrMaterialToggleIconifiedAptitude;
 			icon: iconElement;
 			padding: (BlInsets empty);
 			margin: (BlInsets all: 3) ].

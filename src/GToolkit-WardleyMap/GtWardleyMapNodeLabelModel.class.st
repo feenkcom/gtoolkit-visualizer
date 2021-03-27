@@ -33,6 +33,20 @@ GtWardleyMapNodeLabelModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - export / import' }
+GtWardleyMapNodeLabelModel >> gtJSONFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'JSON';
+		priority: 8;
+		aptitude: [ BrGlamorousCodeEditorAptitude ];
+		styler: [ JSONParser gtStyler ];
+		text: [ self asJSONForExport ];
+		actionButtonLabel: 'Copy'
+			action: [ Clipboard clipboardText: self asJSONForExport ]
+]
+
 { #category : #comparing }
 GtWardleyMapNodeLabelModel >> hash [
 	"Answer an integer value that is related to the identity of the receiver."

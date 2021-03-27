@@ -167,7 +167,7 @@ GtPlotterHorizontalBarChart >> create [
 		labelFormat: self tickLabelFormat;
 		labelElement: [ :aGtPlotterScaleContext |
 			BrLabel new
-				look: (self tickLabelLook create foreground: self tickLabelColor);
+				aptitude: (self tickLabelLook create foreground: self tickLabelColor);
 				text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) ];
 		labels: self amountOfTicks).
 
@@ -196,7 +196,7 @@ GtPlotterHorizontalBarChart >> createBarRowFor: aGtPlotterDataEntity grouping: s
 		vMatchParent;
 		text: aRowLabel;
 		alignCenterRight;
-		look: (self barLabelLookStencil create).
+		aptitude: (self barLabelLookStencil create).
 	
 	aContainer addChild: aRowLabelElement.
 	
@@ -298,7 +298,7 @@ GtPlotterHorizontalBarChart >> initialize [
 
 	tickLabelFormat := [ :aTickObject | aTickObject printString ].
 	tickLabelColor := Color gray.
-	tickLabelLookStencil := [ BrGlamorousLabelLook new glamorousRegularFontAndSize ] asStencil.
+	tickLabelLookStencil := [ BrGlamorousLabelAptitude new glamorousRegularFontAndSize ] asStencil.
 
 	amountOfTicks := 10.
 	groupSpacing := 20.
@@ -311,7 +311,7 @@ GtPlotterHorizontalBarChart >> initialize [
 	barHeightDataBlock := [ :eachDataItem | eachDataItem ].
 	barWidthScale := GtPlotterLinearScale new.
 	barWidthDataBlock := [ :eachDataItem | eachDataItem ].
-	barLabelLookStencil := [ BrGlamorousLabelLook new glamorousRegularFontAndSize ] asStencil.
+	barLabelLookStencil := [ BrGlamorousLabelAptitude new glamorousRegularFontAndSize ] asStencil.
 
 	barGroupStencil := GtPlotterHorizontalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterHorizontalBarStencilBuilder new.

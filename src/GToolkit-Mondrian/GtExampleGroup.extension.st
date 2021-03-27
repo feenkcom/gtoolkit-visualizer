@@ -49,7 +49,7 @@ GtExampleGroup >> paintMapWith: m [
 					c vertical fitContent ];
 				layout: BlLinearLayout vertical alignCenter;
 				background: Color white;
-				look: BrShadowLook;
+				aptitude: BrShadowAptitude;
 				margin: (BlInsets all: 10);
 				padding: (BlInsets top: 0 left: 10 bottom: 10 right: 10).
 			default := BlElement new
@@ -57,7 +57,7 @@ GtExampleGroup >> paintMapWith: m [
 					c horizontal fitContent.
 					c vertical fitContent ].
 			default graph beChildrenContainer: #default.
-			pane addChild: (BrLabel new text: assoc key name; look: (BrGlamorousLabelLook new foreground: Color gray); margin: (BlInsets bottom: 10)).
+			pane addChild: (BrLabel new text: assoc key name; aptitude: (BrGlamorousLabelAptitude new foreground: Color gray); margin: (BlInsets bottom: 10)).
 			pane addChild: default.
 			pane ];
 		with: grouped associations;
@@ -72,7 +72,7 @@ GtExampleGroup >> paintMapWith: m [
 						background: anExample color;
 						size: 20@20;
 						when: BlClickEvent do: [:anEvent | anEvent target phlow spawnObject: anExample];
-						look: (BrGlamorousWithTooltipLook new 
+						aptitude: (BrGlamorousWithTooltipAptitude new 
 							contentStencil: [ | container |
 							container := BrVerticalPane new fitContent addChild: ((GtPharoMethodCoder forExample: anExample) asCoderUIModel expanded: true) asElement.
 							container 

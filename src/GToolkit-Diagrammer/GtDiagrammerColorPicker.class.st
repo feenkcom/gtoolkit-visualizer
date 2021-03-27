@@ -14,8 +14,8 @@ GtDiagrammerColorPicker >> initialize [
 	self display: [ Color registeredColorNames collect: [ :aName | Color named: aName ] ].
 	self shape: [ :aColor |
 		BrToggle new
-			look: BrMaterialToggleIconifiedLook;
-			lookDo: [ :aLook | aLook background checkedBackground: Color blue ];
+			aptitude: BrMaterialToggleIconifiedAptitude;
+			aptitudeDo: [ :aLook | aLook background checkedBackground: Color blue ];
 			icon: (BlElement new
 				size: 20@20;
 				background: aColor;

@@ -26,7 +26,7 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
 		zIndex: -1;
-		addLook: (BrGlamorousWithContextMenuLook
+		addAptitude: (BrGlamorousWithContextMenuAptitude
 			handle: [ BlElement new
 					size: 5@5;
 					geometry: BlEllipseGeometry new ]
@@ -55,7 +55,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 			c frame vertical alignCenterAt: aNodeViewModel coordinateY.
 			c graph beNode ];
-		addLook: (BrGlamorousWithContextMenuLook
+		addAptitude: (BrGlamorousWithContextMenuAptitude
 			handle: [ BlElement new
 					size: aNodeViewModel nodeSize / 2.0;
 					geometry: BlEllipseGeometry new ]
@@ -79,7 +79,7 @@ GtWardleyMapCanvasElement >> initialize [
 		c vertical matchParent ].
 
 	self layout: BlFrameLayout new.
-	(self addLook: (BrGlamorousWithContextMenuLook
+	(self addAptitude: (BrGlamorousWithContextMenuAptitude
 			handle: [ BlElement new
 					size: 5@5;
 					geometry: BlEllipseGeometry new ]

@@ -44,7 +44,7 @@ GtConnectorExamples >> createContainerElement [
 { #category : #utils }
 GtConnectorExamples >> createLabelWithText: aLabel [ 	
 	^ BrLabel new
-		look: BrGlamorousLabelLook;
+		aptitude: BrGlamorousLabelAptitude;
 		text: aLabel
 ]
 
@@ -53,7 +53,7 @@ GtConnectorExamples >> createVisualSourceButtonForModel: anEntity withLabel: aLa
 	| button |
 	button := BrButton new
 		label: '+0';
-		look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook";
+		aptitude: BrGlamorousButtonWithLabelAptitude " BrGlamorousButtonWithIconLook";
 		beSmallSize;
 		background: Color white;
 	 	border: (BlBorder paint: Color gray);
@@ -66,7 +66,7 @@ GtConnectorExamples >> createVisualSourceButtonWithLabel: aLabel withAction: anA
 	| button |
 	button := BrButton new
 		label: aLabel;
-		look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook";
+		aptitude: BrGlamorousButtonWithLabelAptitude " BrGlamorousButtonWithIconLook";
 		beSmallSize;
 		background: Color white;
 	 	border: (BlBorder paint: Color gray);
@@ -179,7 +179,7 @@ GtConnectorExamples >> linearDependenciesExample [
 		 	addChild: self buildCloseButton.
 
 		labelButton := BrButton new.
-		labelButton look: BrTextLabelLook.
+		labelButton aptitude: BrTextLabelAptitude.
 		labelButton label: data.
 		labelButton layout: BlFrameLayout new.
 		labelButton constraintsDo: [ :c | 
@@ -192,7 +192,7 @@ GtConnectorExamples >> linearDependenciesExample [
 		dotButton := BrButton new.
 		dotButton icon: ((BlEllipseGeometry new extent: 10 asPoint) asElement 
 			background: Color black).
-		dotButton look: BrIconLook " BrGlamorousButtonWithIconLook".
+		dotButton aptitude: BrIconAptitude " BrGlamorousButtonWithIconLook".
 		dotButton size: 10 @ 10.
 		dotButton action: [ 
 			gtconnector addEntity: data + 1.
@@ -238,7 +238,7 @@ GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
 		 	addChild: self buildCloseButton.
 
 		labelButton := BrButton new.
-		labelButton look: BrTextLabelLook.
+		labelButton aptitude: BrTextLabelAptitude.
 		labelButton label: data.
 		labelButton layout: BlFrameLayout new.
 		labelButton constraintsDo: [ :c | 
@@ -258,7 +258,7 @@ GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
 			background: Color black.
 		dotButton := BrButton new.
 		dotButton icon: buttonElement.
-		dotButton look: BrIconLook " BrGlamorousButtonWithIconLook".
+		dotButton aptitude: BrIconAptitude " BrGlamorousButtonWithIconLook".
 		dotButton size: 10 @ 10.
 		dotButton action: [ 
 			gtconnector addEntity: data + 1.
@@ -302,7 +302,7 @@ GtConnectorExamples >> linearDoubleDependenciesExample [
 		 	addChild: self buildCloseButton.
 
 		labelButton := BrButton new.
-		labelButton look: BrTextLabelLook.
+		labelButton aptitude: BrTextLabelAptitude.
 		labelButton label: data.
 		labelButton layout: BlFrameLayout new.
 		labelButton constraintsDo: [ :c | 
@@ -315,7 +315,7 @@ GtConnectorExamples >> linearDoubleDependenciesExample [
 		buttonOneData := data + 2.
 		dotButtonOne := BrButton new.
 		dotButtonOne label: buttonOneData.
-		dotButtonOne look: BrGlamorousButtonWithLabelLook " BrGlamorousButtonWithIconLook".
+		dotButtonOne aptitude: BrGlamorousButtonWithLabelAptitude " BrGlamorousButtonWithIconLook".
 		dotButtonOne beSmallSize.
 		dotButtonOne background: Color white.
 		dotButtonOne border: (BlBorder paint: Color gray).
@@ -329,7 +329,7 @@ GtConnectorExamples >> linearDoubleDependenciesExample [
 		buttonTwoData := data + 3.
 		dotButtonTwo := BrButton new.
 		dotButtonTwo label: buttonTwoData.
-		dotButtonTwo look: BrGlamorousButtonWithLabelLook.
+		dotButtonTwo aptitude: BrGlamorousButtonWithLabelAptitude.
 		dotButtonTwo beSmallSize.
 		dotButtonTwo background: Color white.
 		dotButtonTwo border: (BlBorder paint: Color gray).
@@ -433,12 +433,12 @@ GtConnectorExamples >> rawObjectExample [
 			uml removeChild: aDetailsButton.
 			uml addChild: aConnectorButton.  ].
 		aBottomResizer := BlElement new
-			look: BrGlamorousResizerBottomBarLook new;
+			aptitude: BrGlamorousResizerBottomBarAptitude new;
 			constraintsDo: [ :c |
 				c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0) ];
 				addEventHandler: (BlResizerBottomListener new resizeTarget: uml; minimumExtent: 0@75).
 		aRightResizer := BlElement new
-			look: BrGlamorousResizerRightBarLook new;
+			aptitude: BrGlamorousResizerRightBarAptitude new;
 			constraintsDo: [ :c |
 				c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0) ];
 			addEventHandler: (BlResizerRightListener new resizeTarget: uml; minimumExtent: 75@0).
@@ -526,7 +526,7 @@ GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndNoExplicitRefe
 			beVisualSource.
 		
 		toggleButtonOne := BrToggle new
-			look: BrHydraSwitchWithoutTrackLook new;
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
 			when: BrToggleActivatedEvent do: [ :anEvent | 
 				container addChild: dotButtonOne ];
 			when: BrToggleDeactivatedEvent do: [ :anEvent | 
@@ -534,7 +534,7 @@ GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndNoExplicitRefe
 		toggleButtonOne relocate: 5 @ 5.
 		
 		toggleButtonTwo := BrToggle new
-			look: BrHydraSwitchWithoutTrackLook new;
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
 			when: BrToggleActivatedEvent do: [ :anEvent | 
 				container addChild: dotButtonTwo. ];
 			when: BrToggleDeactivatedEvent do: [ :anEvent | 
@@ -597,7 +597,7 @@ GtConnectorExamples >> treeDependeciesExampleWithVisibleVisualSourceAndNoExplici
 			beVisualSource.
 
 		toggleButtonOne := BrToggle new
-			look: BrHydraSwitchWithoutTrackLook new;
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
 			when: BrToggleActivatedEvent do: [ :anEvent | 
 				container addChild: dotButtonOne ];
 			when: BrToggleDeactivatedEvent do: [ :anEvent | 
@@ -606,7 +606,7 @@ GtConnectorExamples >> treeDependeciesExampleWithVisibleVisualSourceAndNoExplici
 		toggleButtonOne relocate: 5 @ 5.
 		
 		toggleButtonTwo := BrToggle new
-			look: BrHydraSwitchWithoutTrackLook new;
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
 			when: BrToggleActivatedEvent do: [ :anEvent | 
 				container addChild: dotButtonTwo. ];
 			when: BrToggleDeactivatedEvent do: [ :anEvent | 

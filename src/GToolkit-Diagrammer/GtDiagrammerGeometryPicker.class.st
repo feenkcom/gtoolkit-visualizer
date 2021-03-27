@@ -18,7 +18,7 @@ GtDiagrammerGeometryPicker >> initialize [
 
 	self shape: [ :aGeometry |
 		BrToggle new
-			look: BrMaterialToggleIconifiedLook;
+			aptitude: BrMaterialToggleIconifiedAptitude;
 			icon: (aGeometry class new asElement size: 20@20);
 			margin: (BlInsets all: 3) ]
 ]

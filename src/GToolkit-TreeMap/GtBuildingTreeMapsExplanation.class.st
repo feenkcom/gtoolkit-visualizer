@@ -92,7 +92,7 @@ GtBuildingTreeMapsExplanation >> treemapWithCustomContainerElement [
 			aNodeContext level = 2 ifTrue: [ 
 				anElement addChild: (BrLabel new 
 					text: (aNodeContext  model name name removePrefix: 'Brick-'); 
-					look: (BrGlamorousLabelLook new fontSize: 8; foreground: Color gray); 
+					aptitude: (BrGlamorousLabelAptitude new fontSize: 8; foreground: Color gray); 
 					constraintsDo: [ :c | c ignoreByLayout. ])].
 			anElement border: (BlBorder 
 				paint: (Color gray alpha: 0.7 / aNodeContext level) 

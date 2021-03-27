@@ -22,7 +22,7 @@ GtWardleyMapNodeEditorElement >> createColorPicker [
 { #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodeColorLabel [
 	^ BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color darkGray);
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 		margin:
 			(BlInsets
 				top: 5
@@ -36,7 +36,7 @@ GtWardleyMapNodeEditorElement >> createNodeColorLabel [
 GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
 	^ BrButton new
 		beSmallSize;
-		look: BrGlamorousButtonWithLabelLook new;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
 		margin:
 			(BlInsets
 				top: 10
@@ -51,7 +51,7 @@ GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
 { #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodeSizeLabel [
 	^ BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color darkGray);
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 		margin:
 			(BlInsets
 				top: 10
@@ -71,13 +71,13 @@ GtWardleyMapNodeEditorElement >> createNodeSizePicker [
 		cellSpacing: 5.
 
 	aPicker addChild: (BrButton new
-		look: BrGlamorousButtonWithLabelLook new;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
 		beSmallSize;
 		label: '-';
 		action: [ self wardleyMapNodeViewModel decreaseNodeSize ]).
 		
 	aPicker addChild: (nodeSizeEditor := BrEditableLabel new
-		look: (BrGlamorousEditableLabelLook new fontSize: 0.9 fontEm);
+		aptitude: (BrGlamorousEditableLabelAptitude new fontSize: 0.9 fontEm);
 		fitContent;
 		text: '1.0';
 		when: BrEditorAcceptWish
@@ -87,7 +87,7 @@ GtWardleyMapNodeEditorElement >> createNodeSizePicker [
 			self wardleyMapNodeViewModel nodeSize: aNewNodeSize asPoint ]).
 
 	aPicker addChild: (BrButton new
-		look: BrGlamorousButtonWithLabelLook new;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
 		label: '+';
 		beSmallSize;
 		action: [ self wardleyMapNodeViewModel increaseNodeSize ]).
@@ -131,7 +131,7 @@ GtWardleyMapNodeEditorElement >> initialize [
 	self
 		addChild:
 			(BrScrollPane new
-				look: BrScrollPaneLook + BrGlamorousWithVerticalScrollbarLook;
+				aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
 				vFitContentLimited;
 				hFitContent;
 				content: aContainer)
