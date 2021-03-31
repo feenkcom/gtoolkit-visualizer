@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'printBlock'
 	],
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #printing }
@@ -29,6 +29,6 @@ GtDiagrammerNumberPicker >> initialize [
 
 	self shape: [ :aNumber | BrToggle new
 		margin: (BlInsets all: 3);
-		look: BrMaterialToggleLabelledLook;
+		aptitude: BrMaterialToggleLabelledAptitude;
 		label: (printBlock value: aNumber) ]
 ]

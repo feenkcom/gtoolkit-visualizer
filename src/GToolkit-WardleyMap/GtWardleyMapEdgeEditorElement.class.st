@@ -22,17 +22,17 @@ GtWardleyMapEdgeEditorElement >> createLineArrowPicker [
 
 	aPicker addChild: (arrowHeadCheckbox := BrCheckbox new
 		uncheck;
-		look: BrGlamorousCheckboxLook;
+		aptitude: BrGlamorousCheckboxAptitude;
 		whenCheckedDo: [ self wardleyMapEdgeViewModel addLineArrow ];
 		whenUncheckedDo: [ self wardleyMapEdgeViewModel removeLineArrow ]).
 		
 	aPicker addChild: (BrLabel new
-		look: BrGlamorousLabelLook;
+		aptitude: BrGlamorousLabelAptitude;
 		text: 'arrowhead').
 		
 	aPicker addChild: (BrButton new
 			beSmallSize;
-			look: (BrGlamorousButtonWithLabelLook new);
+			aptitude: (BrGlamorousButtonWithLabelAptitude new);
 			label: 'Reverse';
 			action: [ self wardleyMapEdgeViewModel reverse  ] ).
 
@@ -49,13 +49,13 @@ GtWardleyMapEdgeEditorElement >> createLineWidthPicker [
 		cellSpacing: 5.
 
 	aPicker addChild: (BrButton new
-		look: BrGlamorousButtonWithLabelLook new;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
 		beSmallSize;
 		label: '-';
 		action: [ self wardleyMapEdgeViewModel decreaseWidth ]).
 		
 	aPicker addChild: (lineWidthEditor := BrEditableLabel new
-		look: (BrGlamorousEditableLabelLook new fontSize: 0.9 fontEm);
+		aptitude: (BrGlamorousEditableLabelAptitude new fontSize: 0.9 fontEm);
 		fitContent;
 		text: '1.0';
 		when: BrEditorAcceptWish
@@ -65,7 +65,7 @@ GtWardleyMapEdgeEditorElement >> createLineWidthPicker [
 			self wardleyMapEdgeViewModel lineWidth: aNewLineWidth ]).
 
 	aPicker addChild: (BrButton new
-		look: BrGlamorousButtonWithLabelLook new;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
 		label: '+';beSmallSize;
 		action: [ self wardleyMapEdgeViewModel increaseWidth ]).
 	
@@ -94,12 +94,12 @@ GtWardleyMapEdgeEditorElement >> initialize [
 
 	aContainer addChildren: {
 		BrLabel new
-			look: (BrGlamorousLabelLook new foreground: Color darkGray);
+			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 			margin: (BlInsets top: 5 left: 5 bottom: 2 right: 0);
 			text: 'Line color:'.
 		predefinedColorsElement.
 		BrLabel new
-			look: (BrGlamorousLabelLook new foreground: Color darkGray);
+			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 			margin: (BlInsets top: 10 left: 5 bottom: 2 right: 0);
 			text: 'Line width:'.
 		self createLineWidthPicker.
@@ -107,7 +107,7 @@ GtWardleyMapEdgeEditorElement >> initialize [
 		
 		BrButton new
 			beSmallSize;
-			look: (BrGlamorousButtonWithLabelLook new);
+			aptitude: (BrGlamorousButtonWithLabelAptitude new);
 			margin: (BlInsets top: 10 left: 5 bottom: 5 right: 0);
 			label: 'Delete';
 			action: [
@@ -115,7 +115,7 @@ GtWardleyMapEdgeEditorElement >> initialize [
 				self fireEvent: BrDropdownHideWish new ] }.
 	
 	self addChild: (BrScrollPane new
-		look: BrScrollPaneLook + BrGlamorousWithVerticalScrollbarLook;
+		aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
 		vFitContentLimited;
 		hFitContent;
 		content: aContainer)

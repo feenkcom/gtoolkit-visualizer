@@ -17,7 +17,7 @@ GtWardleyMapEvolutionAxisLayer >> createHorizontalAxis [
 GtWardleyMapEvolutionAxisLayer >> createLabel [
 	^ BrLabel new
 		beSmallSize;
-		look: (BrGlamorousLabelLook new foreground: Color gray)
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray)
 ]
 
 { #category : #initialization }

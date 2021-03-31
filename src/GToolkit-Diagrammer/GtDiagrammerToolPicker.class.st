@@ -4,7 +4,7 @@ I allow users to pick a diagrammer tool
 Class {
 	#name : #GtDiagrammerToolPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -13,6 +13,6 @@ GtDiagrammerToolPicker >> initialize [
 
 	self padding: (BlInsets all: 0).
 	self shape: [ :aTool | BrToggle new
-		look: BrMaterialToggleLabelledLook - BrShadowLook - BrMaterialRoundedLook;
+		aptitude: BrMaterialToggleLabelledAptitude - BrShadowAptitude - BrMaterialRoundedAptitude;
 		label: aTool symbol asString ]
 ]

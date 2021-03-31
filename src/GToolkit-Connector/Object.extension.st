@@ -86,12 +86,12 @@ Object >> gtConnectionsFor: aView [
 					uml addChild: aConnectorButton 
 				].
 				aBottomResizer := BlElement new
-					look: BrGlamorousResizerBottomBarLook new;
+					aptitude: BrGlamorousResizerBottomBarAptitude new;
 					constraintsDo: [ :c |
 						c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
 					addEventHandler: (BlResizerBottomListener new resizeTarget: uml; minimumExtent: 0@75).
 				aRightResizer := BlElement new
-					look: BrGlamorousResizerRightBarLook new;
+					aptitude: BrGlamorousResizerRightBarAptitude new;
 					constraintsDo: [ :c |
 						c margin: (BlInsets top: 0 left: 0 bottom: 0 right: 0).];
 					addEventHandler: (BlResizerRightListener new resizeTarget: uml; minimumExtent: 75@0).

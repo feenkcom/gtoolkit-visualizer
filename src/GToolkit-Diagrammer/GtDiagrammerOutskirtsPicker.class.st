@@ -45,7 +45,7 @@ GtDiagrammerOutskirtsPicker >> initialize [
 					c frame vertical alignCenter ];
 				size: previewSize).
 		BrToggle new
-			look: BrMaterialToggleIconifiedLook;
+			aptitude: BrMaterialToggleIconifiedAptitude;
 			icon: anIconElement;
 			padding: (BlInsets empty);
 			margin: (BlInsets all: 3) ].

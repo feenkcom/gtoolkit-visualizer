@@ -14,7 +14,7 @@ Class {
 { #category : #'building widgets' }
 GtMondrianClassHierarchyExampleElement >> buildLabelElement [
 	^ BrLabel new
-		look: (BrLabelLook new
+		aptitude: (BrLabelAptitude new
 			fontSize: 10);
 		constraintsDo: [ :c | 
 			c padding: (BlInsets all: 5).

@@ -25,10 +25,10 @@ GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 	barChart := GtPlotterHorizontalBarChart new.
 	barChart barElement: [ :aGtPlotterContext | 
 		BlElement new
-			look: ((BrGlamorousWithTooltipLook2 content: [
+			aptitude: ((BrGlamorousWithTooltipAptitude2 content: [
 			BrLabel new
 				text: (aGtPlotterContext originalValue second);
-				look: (BrGlamorousLabelLook new padding: (BlInsets all: 1)) ]) hideDelay: 0; showDelay: 0) ].
+				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ]) hideDelay: 0; showDelay: 0) ].
 	barChart barLabelWidth: 160.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue last ].
@@ -171,10 +171,10 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenus [
 
 	barChart := GtPlotterHorizontalBarChart new.
 	barChart barElement: [ :aGtPlotterContext | BlElement new
-		look: ((BrGlamorousWithTooltipLook2 content: [
+		aptitude: ((BrGlamorousWithTooltipAptitude2 content: [
 			BrLabel new
 				text: (aGtPlotterContext originalValue at: #species);
-				look: (BrGlamorousLabelLook new padding: (BlInsets all: 5)) ]) hideDelay: 0; showDelay: 0) ].
+				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 5)) ]) hideDelay: 0; showDelay: 0) ].
 	barChart barLabelWidth: 125.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].

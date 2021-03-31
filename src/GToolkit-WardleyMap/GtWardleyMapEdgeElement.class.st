@@ -10,7 +10,7 @@ Class {
 GtWardleyMapEdgeElement >> initialize [
 	super initialize.
 	
-	self look: (BrStyleCommonLook new
+	self aptitude: (BrStyleCommonAptitude new
 		unfocused: [ :s | s border: (BlBorder paint: Color red width: 1) ];
 		focused: [ :s | s border: (BlBorder paint: BrGlamorousColors focusedEditorBorderColor width: 1) ]).
 
@@ -89,7 +89,7 @@ GtWardleyMapEdgeElement >> updateLineArrow [
 
 { #category : #private }
 GtWardleyMapEdgeElement >> updateLineLook [
-	self look
+	self aptitude
 		unfocused: [ :s | s border: (BlBorder paint: self wardleyMapEdgeViewModel lineColor width: self wardleyMapEdgeViewModel lineWidth) ];
 		focused: [ :s | s border: (BlBorder paint: BrGlamorousColors focusedEditorBorderColor width: self wardleyMapEdgeViewModel lineWidth) ];
 		propagateStylesToWidget

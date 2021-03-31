@@ -29,7 +29,7 @@ GtGraphTreemapSquarifyNoRectangle class >> uniqueInstance [
 GtGraphTreemapSquarifyNoRectangle >> asElementWithOccupiedArea [
 	^ (GtGraphUtilities default rectangleOn: self extent: 100@50)
 		addChild: (BrLabel new
-			look: BrGlamorousLabelLook;
+			aptitude: BrGlamorousLabelAptitude;
 			text: ('Uninitialized' asRopedText foreground: Color lightGray);
 			constraintsDo: [ :c | 
 				c ignoreByLayout.

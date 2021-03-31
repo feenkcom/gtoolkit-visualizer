@@ -48,5 +48,5 @@ GtConnectorTool >> object: anObject [
 
 { #category : #'private - accessing' }
 GtConnectorTool >> tabLook [
-	^ BrGlamorousTabSwitcherWithIconLook
+	^ BrGlamorousTabSwitcherWithIconAptitude
 ]

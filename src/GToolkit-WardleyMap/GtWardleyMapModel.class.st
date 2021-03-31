@@ -110,7 +110,7 @@ GtWardleyMapModel >> gtJSONFor: aView [
 	^ aView textEditor
 		title: 'JSON';
 		priority: 8;
-		look: [ BrGlamorousCodeEditorLook ];
+		aptitude: [ BrGlamorousCodeEditorAptitude ];
 		styler: [ JSONParser gtStyler ];
 		text: [ self asJSONForExport ];
 		actionUpdateButtonTooltip: 'Update JSON';

@@ -21,7 +21,7 @@ GtWardleyMapNodeElement >> initialize [
 	
 	labelElement := BrEditableLabel new
 		fitContent;
-		look: (BrGlamorousRegularEditorLook new);
+		aptitude: (BrGlamorousRegularEditorAptitude new);
 		when: BrEditorAcceptWish do: [ :aWish | 
 			self wardleyMapNodeViewModel label: aWish text asString ];
 		text: 'Label'.
@@ -36,7 +36,7 @@ GtWardleyMapNodeElement >> initialize [
 
 	self addChild: labelContainer.
 	
-	self addLook: (BrStyleCommonLook new
+	self addAptitude: (BrStyleCommonAptitude new
 		focused: [ :s | s border: (BlBorder paint: (BrGlamorousColors focusedEditorBorderColor) width: 1) ]).
 
 	self when: BlClickEvent do: [ :anEvent |
@@ -59,7 +59,7 @@ GtWardleyMapNodeElement >> initialize [
 { #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeColored [
 	self background: self wardleyMapNodeViewModel nodeColor.
-	labelElement look foreground: self wardleyMapNodeViewModel labelColor.
+	labelElement aptitude foreground: self wardleyMapNodeViewModel labelColor.
 ]
 
 { #category : #'event handling' }

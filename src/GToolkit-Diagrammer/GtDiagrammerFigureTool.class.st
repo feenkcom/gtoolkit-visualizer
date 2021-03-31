@@ -11,7 +11,7 @@ Class {
 		'hoverOut',
 		'overlay'
 	],
-	#category : 'GToolkit-Diagrammer-Tools'
+	#category : #'GToolkit-Diagrammer-Tools'
 }
 
 { #category : #initialization }
@@ -120,7 +120,7 @@ GtDiagrammerFigureTool >> stylesIn: aPicker [
 		display: [ self styles ];
 		shape: [ :aStencil |
 			BrToggle new
-				look: BrMaterialToggleIconifiedLook;
+				aptitude: BrMaterialToggleIconifiedAptitude;
 				icon: (BlScalableElement new
 					size: 28@28;
 					"stencil preview must not receive mouse events,

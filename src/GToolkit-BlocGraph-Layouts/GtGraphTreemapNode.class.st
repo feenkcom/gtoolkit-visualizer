@@ -17,7 +17,7 @@ Class {
 { #category : #converting }
 GtGraphTreemapNode >> asElement [
 	^ super asElement addChild: (BrLabel new
-		look: BrGlamorousLabelLook;
+		aptitude: BrGlamorousLabelAptitude;
 		text: (self value asRopedText foreground: Color lightGray);
 		constraintsDo: [ :c | 
 			c ignoreByLayout.

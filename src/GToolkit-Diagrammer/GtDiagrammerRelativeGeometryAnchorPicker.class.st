@@ -4,7 +4,7 @@ I allow users to pick a relative geometry anchor
 Class {
 	#name : #GtDiagrammerRelativeGeometryAnchorPicker,
 	#superclass : #GtDiagrammerPicker,
-	#category : 'GToolkit-Diagrammer-UI-Pickers'
+	#category : #'GToolkit-Diagrammer-UI-Pickers'
 }
 
 { #category : #initialization }
@@ -20,6 +20,6 @@ GtDiagrammerRelativeGeometryAnchorPicker >> initialize [
 
 	self shape: [ :anAnchorClass | BrToggle new
 		margin: (BlInsets all: 3);
-		look: BrMaterialToggleLabelledLook;
+		aptitude: BrMaterialToggleLabelledAptitude;
 		label: anAnchorClass label ]
 ]

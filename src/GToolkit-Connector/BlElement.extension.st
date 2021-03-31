@@ -52,7 +52,7 @@ BlElement >> gtExplainerTreeFor: aView [
 				stencil: [ :each | 
 					| el |
 					el := (each explainer isExplanation or: [ each explainer isTarget ])
-						ifTrue: [ BrLabel new look: BrGlamorousLabelLook; text: ((each explainer model asString) asRopedText foreground: Color white); geometry: (BlRoundedRectangleGeometry cornerRadius: 4); background: Color orange]
+						ifTrue: [ BrLabel new aptitude: BrGlamorousLabelAptitude; text: ((each explainer model asString) asRopedText foreground: Color white); geometry: (BlRoundedRectangleGeometry cornerRadius: 4); background: Color orange]
 						ifFalse: [ BlElement new geometry: BlEllipseGeometry new; border: (BlBorder paint: Color black); size: 5@5 ].
 					el when: BlClickEvent do: [:e | e target phlow spawnObject: each ] 
 				];

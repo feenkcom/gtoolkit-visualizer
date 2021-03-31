@@ -13,7 +13,7 @@ GtExample >> buildBlankContainer: method [
 	container 
 		size: 400@200; 
 		background: Color white;
-		look: BrShadowLook new;
+		aptitude: BrShadowAptitude new;
 		layout: BlLinearLayout new.
 	^ container
 ]
@@ -21,7 +21,7 @@ GtExample >> buildBlankContainer: method [
 { #category : #'*GToolkit-Connector' }
 GtExample >> buildBottomResizerFor: blankContainer [
 	^  BlElement new
-			look: BrGlamorousResizerBottomBarLook new;
+			aptitude: BrGlamorousResizerBottomBarAptitude new;
 			background: BrGlamorousColors editorBorderColor;
 			constraintsDo: [ :c | c vertical exact: 5. c grid horizontal span: 2];
 			addEventHandler: (BlResizerBottomListener new resizeTarget: blankContainer; minimumExtent: 0@75).
@@ -84,7 +84,7 @@ GtExample >> buildInspectButton: vocalEditorContainer [
 { #category : #'*GToolkit-Connector' }
 GtExample >> buildRightResizerFor: blankContainer [
 	^  BlElement new
-			look: BrGlamorousResizerRightBarLook new;
+			aptitude: BrGlamorousResizerRightBarAptitude new;
 			background: BrGlamorousColors editorBorderColor;
 			constraintsDo: [ :c | c margin: (BlInsets right: 0). c horizontal exact: 5.];
 			addEventHandler: (BlResizerRightListener new resizeTarget: blankContainer; minimumExtent: 75@0).

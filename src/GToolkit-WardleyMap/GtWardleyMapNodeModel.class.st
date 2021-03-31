@@ -37,6 +37,20 @@ GtWardleyMapNodeModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - export / import' }
+GtWardleyMapNodeModel >> gtJSONFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'JSON';
+		priority: 8;
+		aptitude: [ BrGlamorousCodeEditorAptitude ];
+		styler: [ JSONParser gtStyler ];
+		text: [ self asJSONForExport ];
+		actionButtonLabel: 'Copy'
+			action: [ Clipboard clipboardText: self asJSONForExport ]
+]
+
 { #category : #testing }
 GtWardleyMapNodeModel >> hasId [
 	^ id notNil

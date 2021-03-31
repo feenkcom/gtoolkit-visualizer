@@ -22,7 +22,7 @@ Class {
 		'topbar',
 		'canvasContainer'
 	],
-	#category : 'GToolkit-Diagrammer-UI'
+	#category : #'GToolkit-Diagrammer-UI'
 }
 
 { #category : #'instance creation' }
@@ -115,31 +115,31 @@ GtDiagrammerElement >> initializeExports [
 	| aContainer asSvg asPdf asPng asJpg asForm |
 	
 	asSvg := BrButton new
-		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrTextLabelLook new fontSize: 11);
+		aptitude: BrMaterialButtonLayoutAptitude + BrShadowAptitude + BrMaterialRoundedAptitude + (BrTextLabelAptitude new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'SVG';
 		action: [ self canvas exportAsSVG ].
 
 	asPdf := BrButton new
-		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrTextLabelLook new fontSize: 11);
+		aptitude: BrMaterialButtonLayoutAptitude + BrShadowAptitude + BrMaterialRoundedAptitude + (BrTextLabelAptitude new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'PDF';
 		action: [ self canvas exportAsPDF ].
 		
 	asPng := BrButton new
-		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook  + (BrTextLabelLook new fontSize: 11);
+		aptitude: BrMaterialButtonLayoutAptitude + BrShadowAptitude + BrMaterialRoundedAptitude  + (BrTextLabelAptitude new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'PNG';
 		action: [ self canvas exportAsPNG ].
 
 	asJpg := BrButton new
-		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrTextLabelLook new fontSize: 11);
+		aptitude: BrMaterialButtonLayoutAptitude + BrShadowAptitude + BrMaterialRoundedAptitude + (BrTextLabelAptitude new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'JPG';
 		action: [ self canvas exportAsJPEG ].
 		
 	asForm := BrButton new
-		look: BrMaterialButtonLayoutLook + BrShadowLook + BrMaterialRoundedLook + (BrTextLabelLook new fontSize: 11);
+		aptitude: BrMaterialButtonLayoutAptitude + BrShadowAptitude + BrMaterialRoundedAptitude + (BrTextLabelAptitude new fontSize: 11);
 		background: (Color fromHexString: 'fafafa');
 		label: 'Form';
 		action: [ self canvas exportAsForm inspect ].
@@ -185,7 +185,7 @@ GtDiagrammerElement >> initializeTools [
 
 	tools := GtDiagrammerToolPicker new.
 	tools layout: BlLinearLayout horizontal.
-	tools look: BrShadowLook new.
+	tools aptitude: BrShadowAptitude new.
 	tools margin: (BlInsets all: 5).
 	tools display: [ self availableTools ].
 	tools when: BrToggleActivatedEvent do: [ :anEvent | self tool: anEvent model ].

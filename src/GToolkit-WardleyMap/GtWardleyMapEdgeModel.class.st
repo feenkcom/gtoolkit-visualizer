@@ -44,6 +44,20 @@ GtWardleyMapEdgeModel >> fromNode: anObject [
 	fromNode := anObject
 ]
 
+{ #category : #'api - export / import' }
+GtWardleyMapEdgeModel >> gtJSONFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'JSON';
+		priority: 8;
+		aptitude: [ BrGlamorousCodeEditorAptitude ];
+		styler: [ JSONParser gtStyler ];
+		text: [ self asJSONForExport ];
+		actionButtonLabel: 'Copy'
+			action: [ Clipboard clipboardText: self asJSONForExport ]
+]
+
 { #category : #comparing }
 GtWardleyMapEdgeModel >> hash [
 	"Answer an integer value that is related to the identity of the receiver."

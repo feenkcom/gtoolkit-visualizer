@@ -30,7 +30,7 @@ GtWardleyMapEditorElement >> initialize [
 		
 		BrButton new
 			beSmallSize;
-			look: (BrGlamorousButtonWithLabelLook new);
+			aptitude: (BrGlamorousButtonWithLabelAptitude new);
 			margin: (BlInsets top: 10 left: 10 bottom: 10 right: 10);
 			label: 'Switch sections';
 			action: [
@@ -43,7 +43,7 @@ GtWardleyMapEditorElement >> initialize [
 					canvas parent removeChildAt: 1] ] }.
 	
 	self addChild: (BrScrollPane new
-		look: BrScrollPaneLook + BrGlamorousWithVerticalScrollbarLook;
+		aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
 		vFitContentLimited;
 		hFitContent;
 		content: aContainer)
