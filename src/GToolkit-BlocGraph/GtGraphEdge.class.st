@@ -27,9 +27,11 @@ GtGraphEdge >> = anObject [
 
 { #category : #private }
 GtGraphEdge >> from: anElement [
-	from ifNotNil: [ :element | element constraints graph removeConnectedEdge: self ].
-	from := anElement.
-	anElement constraints graph addConnectedEdge: self
+	self
+		assert: [ from isNil ]
+		description: [ 'From element of the graph edge must not be modified' ].
+
+	from := anElement
 ]
 
 { #category : #initialization }
@@ -50,9 +52,11 @@ GtGraphEdge >> hash [
 
 { #category : #private }
 GtGraphEdge >> to: anElement [
-	to ifNotNil: [ :element | element constraints graph removeConnectedEdge: self ].
-	to := anElement.
-	anElement constraints graph addConnectedEdge: self
+	self
+		assert: [ to isNil ]
+		description: [ 'To element of the graph edge must not be modified' ].
+
+	to := anElement
 ]
 
 { #category : #accessing }
