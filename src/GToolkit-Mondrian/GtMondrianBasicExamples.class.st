@@ -444,8 +444,9 @@ GtMondrianBasicExamples >> passiveEdgeBetweenTwoNodes [
 	m root forceLayout.
 	nodeElements := m root graph allNodeChildren.
 	self assert: nodeElements size = 2.
-	self assert: m root graph allEdgeChildren isEmpty.
-	self assert: nodeElements first bounds top = nodeElements last bounds top
+	self assert: m root graph allEdgeChildren size = 1.
+	self assert: nodeElements first bounds top = nodeElements last bounds top.
+	^ m
 ]
 
 { #category : #'tutorial - advanced' }
