@@ -432,6 +432,24 @@ GtMondrianBasicExamples >> oneNode [
 ]
 
 { #category : #'tutorial - advanced' }
+GtMondrianBasicExamples >> passiveEdgeBetweenTwoNodes [
+	<gtExample>
+	| m nodeElements |
+	m := GtMondrian new.
+	m nodes with: { 1. 2}.
+	m edges 
+		passive;
+		connect: {1->2} from: #key to: #value.
+	m layout tree.
+	m root forceLayout.
+	nodeElements := m root graph allNodeChildren.
+	self assert: nodeElements size = 2.
+	self assert: m root graph allEdgeChildren size = 1.
+	self assert: nodeElements first bounds top = nodeElements last bounds top.
+	^ m
+]
+
+{ #category : #'tutorial - advanced' }
 GtMondrianBasicExamples >> passiveEdges [
 	<gtExample>
 	| view |
@@ -450,7 +468,7 @@ GtMondrianBasicExamples >> passiveEdges [
 			(11 -> 19)}
 			from: #key
 			to: #value.
-	view layout radialTree.
+	view layout tree.
 	^ view
 ]
 
