@@ -337,11 +337,7 @@ GtMondrianBasicExamples >> nestedNodesWithGlobalEdges [
 	| view |
 	view := self emptyView.
 	view nodes
-		shape: [ :each | 
-			BlElement new
-				border: (BlBorder paint: Color black width: 2);
-				constraintsDo: [ :constraints | constraints padding: (BlInsets all: 10) ] ].
-	view nodes
+		shape: [ :each | GtMondrianUMLClassElement withDefaultContainer ];
 		with:
 			{(1 to: 3).
 			(4 to: 6)}
@@ -360,6 +356,7 @@ GtMondrianBasicExamples >> nestedNodesWithGlobalEdges [
 		from: [ :x | x key ]
 		to: [ :x | x value ].
 	view layout circle radius: 100.
+	self assert: (view root children select: [ :each | each graph isEdge ]) size = 5.
 	^ view
 ]
 
