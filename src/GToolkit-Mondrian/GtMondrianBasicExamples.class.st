@@ -337,7 +337,7 @@ GtMondrianBasicExamples >> nestedNodesWithGlobalEdges [
 	| view |
 	view := self emptyView.
 	view nodes
-		shape: [ :each | GtMondrianUMLClassElement withDefaultContainer ];
+		stencil: [ :each | GtMondrianUMLClassElement withDefaultContainer label: each asString ];
 		with:
 			{(1 to: 3).
 			(4 to: 6)}
