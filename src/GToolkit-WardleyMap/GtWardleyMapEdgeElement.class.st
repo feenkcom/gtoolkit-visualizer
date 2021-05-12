@@ -9,26 +9,35 @@ Class {
 { #category : #initialization }
 GtWardleyMapEdgeElement >> initialize [
 	super initialize.
-	
-	self aptitude: (BrStyleCommonAptitude new
-		unfocused: [ :s | s border: (BlBorder paint: Color red width: 1) ];
-		focused: [ :s | s border: (BlBorder paint: BrGlamorousColors focusedEditorBorderColor width: 1) ]).
-
-	self when: BlClickEvent do: [ :anEvent |
-		(anEvent modifiers isPrimaryModifier not and: [ anEvent target = anEvent currentTarget ])
-			ifTrue: [
-				anEvent consumed: true.
-				anEvent currentTarget requestFocus ] ].
-
-	self addShortcut: (BlShortcutWithAction new
-		combination: BlKeyCombination backspace;
-		action: [ self wardleyMapEdgeViewModel removeFromMap ]).
-	self addShortcut: (BlShortcutWithAction new
-		combination: BlKeyCombination builder primary minus build;
-		action: [ self wardleyMapEdgeViewModel decreaseWidth ]).
-	self addShortcut: (BlShortcutWithAction new
-		combination: BlKeyCombination builder primary equal build;
-		action: [ self wardleyMapEdgeViewModel increaseWidth ])
+	self
+		aptitude:
+			(BrStyleCommonAptitude new
+				unfocused: [ :s | s border: (BlBorder paint: Color red width: 1) ];
+				focused: [ :s | 
+					s
+						border: (BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
+	self
+		when: BlClickEvent
+		do: [ :anEvent | 
+			(anEvent modifiers isPrimaryModifier not
+				and: [ anEvent target = anEvent currentTarget ])
+				ifTrue: [ anEvent consumed: true.
+					anEvent currentTarget requestFocus ] ].
+	self
+		addShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination backspace;
+				action: [ self wardleyMapEdgeViewModel removeFromMap ]).
+	self
+		addShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination builder primary minus build;
+				action: [ self wardleyMapEdgeViewModel decreaseWidth ]).
+	self
+		addShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination builder primary equal build;
+				action: [ self wardleyMapEdgeViewModel increaseWidth ])
 ]
 
 { #category : #'event handling' }
@@ -90,7 +99,17 @@ GtWardleyMapEdgeElement >> updateLineArrow [
 { #category : #private }
 GtWardleyMapEdgeElement >> updateLineLook [
 	self aptitude
-		unfocused: [ :s | s border: (BlBorder paint: self wardleyMapEdgeViewModel lineColor width: self wardleyMapEdgeViewModel lineWidth) ];
-		focused: [ :s | s border: (BlBorder paint: BrGlamorousColors focusedEditorBorderColor width: self wardleyMapEdgeViewModel lineWidth) ];
+		unfocused: [ :s | 
+			s
+				border:
+					(BlBorder
+						paint: self wardleyMapEdgeViewModel lineColor
+						width: self wardleyMapEdgeViewModel lineWidth) ];
+		focused: [ :s | 
+			s
+				border:
+					(BlBorder
+						paint: self theme editor focusedBorderColor
+						width: self wardleyMapEdgeViewModel lineWidth) ];
 		propagateStylesToWidget
 ]

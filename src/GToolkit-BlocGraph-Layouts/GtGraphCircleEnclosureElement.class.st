@@ -25,12 +25,13 @@ GtGraphCircleEnclosureElement >> embellishCircle: aCircleElement at: anIndex [
 { #category : #'private - elements' }
 GtGraphCircleEnclosureElement >> embellishEnclosureCircle: aCircleElement [
 	| anActualCircle |
-
 	anActualCircle := aCircleElement childNamed: #circle.
 	anActualCircle
-		background: (BrGlamorousColors primaryBorderColor alpha: 0.3);
-		border: (anActualCircle border copyWithPaint: BrGlamorousColors primaryBorderColor).
-	(aCircleElement childNamed: #center) background: (Color transparent)
+		background: (self theme default primaryBorderColor alpha: 0.3);
+		border:
+			(anActualCircle border
+				copyWithPaint: self theme default primaryBorderColor).
+	(aCircleElement childNamed: #center) background: Color transparent
 ]
 
 { #category : #accessing }

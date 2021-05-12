@@ -41,19 +41,17 @@ GtGraphCircleNeighbourhoodElement >> embellishCircle: aCircleElement at: anIndex
 { #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> embellishNeighbourCircle: aCircleElement [
 	| aCircle aCenterLabelElement |
-
 	aCircle := self neighbourhood neighbourCircle.
-
 	aCenterLabelElement := self
 		newLabel: ('C' asRopedText fontSize: self labelFontSize)
 		for: aCircleElement
 		circle: aCircle.
-
 	aCircleElement addChild: aCenterLabelElement.
 	aCircleElement relocate: aCircle origin.
-
-	(aCircleElement childNamed: #circle) background: (BrGlamorousColors primaryBorderColor alpha: 0.1).
-	(aCircleElement childNamed: #center) background: (BrGlamorousColors primaryBorderColor)
+	(aCircleElement childNamed: #circle)
+		background: (self theme default primaryBorderColor alpha: 0.1).
+	(aCircleElement childNamed: #center)
+		background: self theme default primaryBorderColor
 ]
 
 { #category : #initialization }
