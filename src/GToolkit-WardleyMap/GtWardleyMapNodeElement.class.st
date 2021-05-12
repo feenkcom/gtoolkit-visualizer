@@ -13,47 +13,59 @@ Class {
 { #category : #initialization }
 GtWardleyMapNodeElement >> initialize [
 	super initialize.
-
 	self geometry: BlEllipseGeometry new.
 	self clipChildren: false.
-	
 	self layout: BlFrameLayout new.
-	
 	labelElement := BrEditableLabel new
 		fitContent;
-		aptitude: (BrGlamorousRegularEditorAptitude new);
-		when: BrEditorAcceptWish do: [ :aWish | 
-			self wardleyMapNodeViewModel label: aWish text asString ];
+		aptitude: BrGlamorousRegularEditorAptitude new;
+		when: BrEditorAcceptWish
+			do:
+				[ :aWish | self wardleyMapNodeViewModel label: aWish text asString ];
 		text: 'Label'.
 
 	"we have to wrap the editable label in a pullable element to allow text selection with drag"
 	labelContainer := BrHorizontalPane new
 		fitContent;
-		addEventHandler: (GtWardleyMapPullHandler new
-			containerElement: self;
-			whenPulled: [ :aPulledElement :aNormalizedPosition | self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
+		addEventHandler:
+			(GtWardleyMapPullHandler new
+				containerElement: self;
+				whenPulled:
+						[ :aPulledElement :aNormalizedPosition | self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
 		addChild: labelElement.
-
 	self addChild: labelContainer.
-	
-	self addAptitude: (BrStyleCommonAptitude new
-		focused: [ :s | s border: (BlBorder paint: (BrGlamorousColors focusedEditorBorderColor) width: 1) ]).
-
-	self when: BlClickEvent do: [ :anEvent |
-		(anEvent modifiers isPrimaryModifier not and: [ anEvent target = self ])
-			ifTrue: [
-				anEvent consumed: true.
-				self requestFocus ] ].
-
-	self addShortcut: (BlShortcutWithAction new
-		combination: BlKeyCombination backspace;
-		action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel removeFromMap ]).
-	self addShortcut: (BlShortcutWithAction new
-		combination: BlKeyCombination builder primary minus build;
-		action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel decreaseNodeSize ]).
-	self addShortcut: (BlShortcutWithAction new
-		combination: BlKeyCombination builder primary equal build;
-		action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel increaseNodeSize ])
+	self
+		addAptitude:
+			(BrStyleCommonAptitude new
+				focused: [ :s | 
+					s
+						border:
+							(BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
+	self
+		when: BlClickEvent
+		do: [ :anEvent | 
+			(anEvent modifiers isPrimaryModifier not
+				and: [ anEvent target = self ])
+				ifTrue: [ anEvent consumed: true.
+					self requestFocus ] ].
+	self
+		addShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination backspace;
+				action:
+						[ :anEvent | anEvent currentTarget wardleyMapNodeViewModel removeFromMap ]).
+	self
+		addShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination builder primary minus build;
+				action:
+						[ :anEvent | anEvent currentTarget wardleyMapNodeViewModel decreaseNodeSize ]).
+	self
+		addShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination builder primary equal build;
+				action:
+						[ :anEvent | anEvent currentTarget wardleyMapNodeViewModel increaseNodeSize ])
 ]
 
 { #category : #'event handling' }
