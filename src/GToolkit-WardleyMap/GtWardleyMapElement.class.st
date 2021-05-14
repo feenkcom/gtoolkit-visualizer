@@ -16,6 +16,26 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
+{ #category : #accessing }
+GtWardleyMapElement class >> withDefaultSections [
+	| aWardleyMapElement |
+	aWardleyMapElement := self withoutSections.
+	aWardleyMapElement
+		evolutionSections: {'genesis' . 'custom built' . 'product (+rental)' . 'commodity'}.
+	^ aWardleyMapElement
+]
+
+{ #category : #accessing }
+GtWardleyMapElement class >> withoutSections [
+	| aWardleyMapElement aWardleyMap aWardleyMapViewModel |
+	aWardleyMap := GtWardleyMapModel new.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+	aWardleyMapElement := self new.
+	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
+	^ aWardleyMapElement
+]
+
 { #category : #initialization }
 GtWardleyMapElement >> createCanvasElement [
 	^ GtWardleyMapCanvasElement new
