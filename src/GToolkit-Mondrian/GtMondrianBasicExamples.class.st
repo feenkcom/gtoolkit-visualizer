@@ -249,14 +249,13 @@ GtMondrianBasicExamples >> nestedNodes [
 	view := self emptyView.
 	view nodes
 		shape: [ :x | 
-			BlElement new 
-				geometry: BlEllipseGeometry new; 
+			BlElement new  
 				background: Color paleOrange;
-				constraintsDo: [ :c | c padding: (BlInsets all: 10) ] ];
+				constraintsDo: [ :c | c margin: (BlInsets all: 10) ] ];
 		with: (1 to: 9)
 		forEach: [ :each |
 			view nodes 
-				shape: [ :x | BlTextElement new text: (x asString asRopedText attributes: {BlTextForegroundAttribute paint: Color gray}) ];
+				shape: [ :x | BlTextElement new text: x asString asRopedText ];
 				with: (10 * each to: (10 * each + 4)).
 			view layout circle radius: 20 ].
 	self assert: view root children size = 9.
