@@ -1,5 +1,5 @@
 "
-I am an abstract ==worst()== function defined in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*]. The function ==worst()== gives the highest aspect ratio of a list of rectangles, given the length of the side along which they are to be laid out. 
+I am an abstract ==worst()== function defined in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" *PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*. The function ==worst()== gives the highest aspect ratio of a list of rectangles, given the length of the side along which they are to be laid out. 
 
 I am used by ${class:GtGraphTreemapSquarifyStep}$.
 
