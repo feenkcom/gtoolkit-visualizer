@@ -6,13 +6,13 @@ possible, but also that it is centered.  Please see dominance tree documentation
 
 A node being centered means that, if it has multiple incoming edges starting at nodes at the same level, it will be placed under the middle one. An example is shown below:
 
-${example:name=GtGradVerticalDominanceCenteredTreeLayoutExamples>>#moreComplexGraphWithANodeWithSeveralIncomingEdges|expanded=true|expandedPreview=true|show=gtLiveFor:}$
+${example:name=GtGradVerticalDominanceCenteredTreeLayoutExamples>>#moreComplexGraphWithANodeWithSeveralIncomingEdges|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
 
 All nodes on the second level are conneceted to the rightmost node on the third level. A simple depth-first search would form a tree where this node would be placed under the leftmost node on the second level. However, it can be seen that this layout placed it under the second node on the second level. The same can be seen in case of the bottommost node, whose possible parent sinclude all nodes on the second to last level. 
 
 The following example shows the same graph , but laid out using the horizontal centered dominance tree:
 
-${example:name=GtGradHorizontalDominanceCenteredTreeLayoutExamples>>#moreComplexGraphWithANodeWithSeveralIncomingEdges|expanded=true|expandedPreview=true|show=gtLiveFor:}$
+${example:name=GtGradHorizontalDominanceCenteredTreeLayoutExamples>>#moreComplexGraphWithANodeWithSeveralIncomingEdges|expanded=true|previewExpanded=true|previewShow=gtLiveFor:}$
 
 "
 Class {
