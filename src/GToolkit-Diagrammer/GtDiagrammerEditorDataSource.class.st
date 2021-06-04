@@ -1,5 +1,7 @@
 "
 I am a data source for the diagrammer editor list
+
+
 "
 Class {
 	#name : #GtDiagrammerEditorDataSource,
@@ -7,7 +9,7 @@ Class {
 	#instVars : [
 		'editors'
 	],
-	#category : 'GToolkit-Diagrammer-UI-Lists'
+	#category : #'GToolkit-Diagrammer-UI-Lists'
 }
 
 { #category : #accessing }

@@ -1,7 +1,9 @@
 "
-!Diagrammer
+1. Diagrammer
 
 [[[example=GtDiagrammerExamples>>#diagrammer|expanded=true|noCode=true|show=gtLiveIn:]]]
+
+
 "
 Class {
 	#name : #GtDiagrammerExamples,

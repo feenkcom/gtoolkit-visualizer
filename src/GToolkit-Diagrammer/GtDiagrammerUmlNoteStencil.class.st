@@ -1,10 +1,12 @@
 "
 I create a UML note  element
+
+
 "
 Class {
 	#name : #GtDiagrammerUmlNoteStencil,
 	#superclass : #GtDiagrammerElementStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Figures'
+	#category : #'GToolkit-Diagrammer-Stencils - Figures'
 }
 
 { #category : #'instance creation' }

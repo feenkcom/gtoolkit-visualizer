@@ -1,5 +1,7 @@
 "
-I represent a ==nil== value of a ${class:GtGraphTreemapSquarifyAreaRectangle}$.
+I represent a `nil` value of a {{gtClass:GtGraphTreemapSquarifyAreaRectangle}}.
+
+
 "
 Class {
 	#name : #GtGraphTreemapSquarifyNoRectangle,

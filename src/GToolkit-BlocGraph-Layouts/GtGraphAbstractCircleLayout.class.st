@@ -19,6 +19,7 @@ initialIncrementalAngle
 initialRadius
 	- xxxxx
 
+
 "
 Class {
 	#name : #GtGraphAbstractCircleLayout,
@@ -29,7 +30,7 @@ Class {
 		'initialRadius',
 		'factor'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #public }

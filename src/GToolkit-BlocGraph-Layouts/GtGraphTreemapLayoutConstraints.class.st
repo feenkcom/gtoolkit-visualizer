@@ -1,5 +1,7 @@
 "
-I am a ${class:BlLayoutConstraints}$ for ${class:GtGraphTreemapSquarifiedLayout}$ layout.
+I am a {{gtClass:BlLayoutConstraints}} for {{gtClass:GtGraphTreemapSquarifiedLayout}} layout.
+
+
 "
 Class {
 	#name : #GtGraphTreemapLayoutConstraints,

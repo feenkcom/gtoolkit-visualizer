@@ -1,5 +1,7 @@
 "
 I am a specialized pull handler that transforms the absolute position into a normalized proportional position for the frame layout alignment
+
+
 "
 Class {
 	#name : #GtWardleyMapPullHandler,

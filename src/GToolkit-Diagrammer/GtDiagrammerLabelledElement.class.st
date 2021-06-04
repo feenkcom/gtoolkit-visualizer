@@ -1,5 +1,7 @@
 "
 I am a stencil element with a text input field that can be switched in a edit mode with the help of a double click
+
+
 "
 Class {
 	#name : #GtDiagrammerLabelledElement,
@@ -8,7 +10,7 @@ Class {
 		'editor',
 		'editorElement'
 	],
-	#category : 'GToolkit-Diagrammer-Stencils'
+	#category : #'GToolkit-Diagrammer-Stencils'
 }
 
 { #category : #initialization }

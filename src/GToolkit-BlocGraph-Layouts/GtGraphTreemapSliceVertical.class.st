@@ -1,10 +1,11 @@
 "
-I split an area vertically according to ${method:GtGraphTreemapNode>>#weight}$ node values.
+I split an area vertically according to {{gtMethod:GtGraphTreemapNode>>#weight}} node values.
 
-!! Example 
+1. # Example 
+
 
 The following example shows an area with three nodes: 
-${example:GtGraphTreemapLayoutExamples>>#sliceVerticalWithThreeNodes|codeExpanded=false|previewExpanded=true}$.
+{{gtExample:GtGraphTreemapLayoutExamples>>#sliceVerticalWithThreeNodes|codeExpanded=false|previewExpanded=true}}.
 
 
 "

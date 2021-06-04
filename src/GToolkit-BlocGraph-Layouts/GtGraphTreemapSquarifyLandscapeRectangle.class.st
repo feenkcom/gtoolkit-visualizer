@@ -1,12 +1,14 @@
 "
 I represent a rectangle. My height is smaller than my width.
-I layout ${class:GtGraphTreemapNode}$ along my shorter side (height).
-I am used by ${class:GtGraphTreemapSquarifyStep}$.
+I layout {{gtClass:GtGraphTreemapNode}} along my shorter side (height).
+I am used by {{gtClass:GtGraphTreemapSquarifyStep}}.
 
-!! Example
+1. # Example
 
-In the following example, I occupy top-right side of a total area with ${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|label=#nodesCount}$ nodes:
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|noCode}$
+
+In the following example, I occupy top-right side of a total area with {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|label=#nodesCount}} nodes:
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithFourNodesFirstArea|noCode}}
+
 
 "
 Class {

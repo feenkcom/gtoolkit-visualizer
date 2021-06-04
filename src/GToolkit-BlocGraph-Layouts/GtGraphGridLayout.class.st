@@ -11,6 +11,7 @@ gapSize
 lineItemsCountBlock
 	- tells the amount of item per line should be used
 
+
 "
 Class {
 	#name : #GtGraphGridLayout,

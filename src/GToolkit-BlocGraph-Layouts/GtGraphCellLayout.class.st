@@ -6,6 +6,8 @@ Instance Variables
 
 inCellPosition
 	- Object which computes position of each element inside a cell. The cell is the space allocated for an element. Its height is maximum of heights of elements on the row. Its width is maximum of widths of elements on the column. By default elements are in the middle of their cell.
+
+
 "
 Class {
 	#name : #GtGraphCellLayout,

@@ -1,9 +1,8 @@
 "
 I am a scriptable toogle group to display a uniform collection of selectable values.
 
-[[[
-| picker |
-picker := GtDiagrammerPicker new.
+```
+pickerpicker := GtDiagrammerPicker new.
 picker layout: BlFlowLayout horizontal.
 picker display: [ { 'Hello' . 'World' . 'I' . 'am' . 'a' . 'picker' } ].
 picker shape: [ :aString | BrToggle new
@@ -15,7 +14,9 @@ picker constraintsDo: [ :c |
 	c vertical fitContent ].
 picker when: BrToggleActivatedEvent do: [ :anEvent | self inform: anEvent model ].
 picker
-]]]
+```
+
+
 "
 Class {
 	#name : #GtDiagrammerPicker,

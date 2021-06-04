@@ -1,10 +1,12 @@
 "
 I create a filled triangle arrowhead
+
+
 "
 Class {
 	#name : #GtDiagrammerArrowheadFilledTriangleStencil,
 	#superclass : #GtDiagrammerArrowheadTriangleStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #comparing }

@@ -1,28 +1,32 @@
 "
-!Domain-specific examples
+1. Domain-specific examples
 
 Mondrian is useful for creating custom views that are specific to a given domain.
 
 
-!!!Package dependencies
+1. ## Package dependencies
+
 
 In this example, we see a list of packages arranged in a circle, with nested classes and the inheritance dependencies between the classes grouped at package level. One interesting thing is that the label of the packages shrinks to the available space offered by the size of the boxes. Another particularity is the use of parabolla arcs and heads.
 
-${example:GtMondrianDomainExamples>>#packageDependencies|previewExpanded}$
+{{gtExample:GtMondrianDomainExamples>>#packageDependencies|previewExpanded}}
 
 
-!!!Examples dependencies
+1. ## Examples dependencies
+
 
 This examples shows a tree of dependencies between example methods. We can see here that the visualization can embed arbitrary elements, such as an editor element with syntax highlighting.
 
-${example:GtMondrianDomainExamples>>#exampleDependencies|previewExpanded}$
+{{gtExample:GtMondrianDomainExamples>>#exampleDependencies|previewExpanded}}
 
 
-!!The inner structure of an element editor
+1. # The inner structure of an element editor
+
 
 Visualization can be applied to any object or set objects. For example, the following visualization helps us understand how the editor element is composed out of smaller elements by showing the tree of the elements, each depicted with a label and a picture of the actual element.
 
-${example:GtMondrianDomainExamples>>#editorElements|previewExpanded}$
+{{gtExample:GtMondrianDomainExamples>>#editorElements|previewExpanded}}
+
 
 "
 Class {

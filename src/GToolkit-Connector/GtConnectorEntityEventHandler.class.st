@@ -1,7 +1,9 @@
 "
-!Connector's entity event handler
+1. Connector's entity event handler
 
 Is added to each entity element in the connector
+
+
 "
 Class {
 	#name : #GtConnectorEntityEventHandler,

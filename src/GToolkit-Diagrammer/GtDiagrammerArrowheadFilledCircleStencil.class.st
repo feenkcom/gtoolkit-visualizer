@@ -1,10 +1,12 @@
 "
 I create a filled circle arrow head with the border and background equal to the color of the curve
+
+
 "
 Class {
 	#name : #GtDiagrammerArrowheadFilledCircleStencil,
 	#superclass : #GtDiagrammerArrowheadCircleStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #comparing }

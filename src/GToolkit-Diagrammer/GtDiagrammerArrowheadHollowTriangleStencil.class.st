@@ -1,10 +1,12 @@
 "
 I create a hollow triangle arrowhead
+
+
 "
 Class {
 	#name : #GtDiagrammerArrowheadHollowTriangleStencil,
 	#superclass : #GtDiagrammerArrowheadTriangleStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #comparing }

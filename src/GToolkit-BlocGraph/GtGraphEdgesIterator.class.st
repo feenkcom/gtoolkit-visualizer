@@ -1,5 +1,7 @@
 "
 I am an abstract iterator over edges connected to a graph element
+
+
 "
 Class {
 	#name : #GtGraphEdgesIterator,

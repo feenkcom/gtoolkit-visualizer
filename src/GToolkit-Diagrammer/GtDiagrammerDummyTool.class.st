@@ -1,10 +1,12 @@
 "
 I am a dummy tool that does nothing
+
+
 "
 Class {
 	#name : #GtDiagrammerDummyTool,
 	#superclass : #GtDiagrammerTool,
-	#category : 'GToolkit-Diagrammer-Tools'
+	#category : #'GToolkit-Diagrammer-Tools'
 }
 
 { #category : #'api - accessing' }

@@ -1,25 +1,27 @@
 "
-! Smallest enclosing circle of circles
+1. Smallest enclosing circle of circles
 
-I compute the smallest circle that encloses the specified array of circles. The enclosing circle is computed using the *Matoušek-Sharir-Welzl>http://www.inf.ethz.ch/personal/emo/PublFiles/SubexLinProg_ALG16_96.pdf* algorithm.
+I compute the smallest circle that encloses the specified array of circles. The enclosing circle is computed using the [Matoušek-Sharir-Welzl](http://www.inf.ethz.ch/personal/emo/PublFiles/SubexLinProg_ALG16_96.pdf) algorithm.
 
-The implementation is based on *d3.packEnclose(circles)>https://github.com/d3/d3-hierarchy/blob/master/src/pack/enclose.js*
+The implementation is based on [d3.packEnclose(circles)](https://github.com/d3/d3-hierarchy/blob/master/src/pack/enclose.js)
 
 Let's start with an empty enclosure:
-${example:GtGraphCircleEnclosureExamples>>#emptyEnclosure|previewShow=#gtPreviewFor:|previewHeight=300}$
+{{gtExample:GtGraphCircleEnclosureExamples>>#emptyEnclosure|previewShow=#gtPreviewFor:|previewHeight=300}}
 
-and add circles one by one, starting with a larger one. A circle enclosure is represented by a cyan circle. An enclosure of a single circle is a special case and can be computed directly by ${method:GtGraphCircleEnclosure class>>#enclosure:}$. Note, that the added circle has a margin set which is taken into account by enclosure:
-${example:GtGraphCircleEnclosureExamples>>#enclosureWithOneCircle|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}$
+and add circles one by one, starting with a larger one. A circle enclosure is represented by a cyan circle. An enclosure of a single circle is a special case and can be computed directly by {{gtMethod:GtGraphCircleEnclosure class>>#enclosure:}}. Note, that the added circle has a margin set which is taken into account by enclosure:
+{{gtExample:GtGraphCircleEnclosureExamples>>#enclosureWithOneCircle|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}}
 
-adding a second circle expands the enclosure circle to fit both circles ==C1== and ==C2==. Two circle enclosure is also a special case and can be derived directly by ${method:GtGraphCircleEnclosure class>>#enclosure:and:}$
-${example:GtGraphCircleEnclosureExamples>>#enclosureWithTwoCircles|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}$
+adding a second circle expands the enclosure circle to fit both circles `C1` and `C2`. Two circle enclosure is also a special case and can be derived directly by {{gtMethod:GtGraphCircleEnclosure class>>#enclosure:and:}}
+{{gtExample:GtGraphCircleEnclosureExamples>>#enclosureWithTwoCircles|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}}
 
-Three circle enclosure is a special case too. ${method:GtGraphCircleEnclosure class>>#enclosure:and:and:}$ is responsible for the computation. Let's add the third circle to our enclosure to see the result: 
-${example:GtGraphCircleEnclosureExamples>>#enclosureWithThreeCircles|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}$
+Three circle enclosure is a special case too. {{gtMethod:GtGraphCircleEnclosure class>>#enclosure:and:and:}} is responsible for the computation. Let's add the third circle to our enclosure to see the result: 
+{{gtExample:GtGraphCircleEnclosureExamples>>#enclosureWithThreeCircles|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}}
 
-Starting with four circles, an enclosure should be computed recursively by building and updating a basis enclosure consisting of one to three circles: ${method:GtGraphCircleEnclosure class>>#enclosureAll:}$. 
+Starting with four circles, an enclosure should be computed recursively by building and updating a basis enclosure consisting of one to three circles: {{gtMethod:GtGraphCircleEnclosure class>>#enclosureAll:}}. 
 
-${example:GtGraphCircleEnclosureExamples>>#enclosureWithFourCircles|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}$
+{{gtExample:GtGraphCircleEnclosureExamples>>#enclosureWithFourCircles|previewShow=#gtPreviewFor:|previewExpanded|previewHeight=300}}
+
+
 "
 Class {
 	#name : #GtGraphCircleEnclosure,

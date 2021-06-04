@@ -1,10 +1,13 @@
 "
-I am a ${class:BlElement}$.
-I hold a ${method:GtConnectorContainer>>#entity|label=#selector}$ and display its ${class:GtConnector}$ view calling ${method:Object>>#gtConnectionsFor:}$. 
-I ${method:GtConnectorContainer>>#updateView|label=update}$ the view when the ${method:GtConnectorContainer>>#entity:|label=entity}$ is changed.
-!! Example
-For the entity: ${example:GtConnectorExamples>>#entityOne|noCode}$ 
-I display: ${example:GtConnectorExamples>>#entityOneContainer|codeExpanded=false|previewExpanded=true|previewHeight=400}$
+I am a {{gtClass:BlElement}}.
+I hold a {{gtMethod:GtConnectorContainer>>#entity|label=#selector}} and display its {{gtClass:GtConnector}} view calling {{gtMethod:Object>>#gtConnectionsFor:}}. 
+I {{gtMethod:GtConnectorContainer>>#updateView|label=update}} the view when the {{gtMethod:GtConnectorContainer>>#entity:|label=entity}} is changed.
+1. # Example
+
+For the entity: {{gtExample:GtConnectorExamples>>#entityOne|noCode}} 
+I display: {{gtExample:GtConnectorExamples>>#entityOneContainer|codeExpanded=false|previewExpanded=true|previewHeight=400}}
+
+
 "
 Class {
 	#name : #GtConnectorContainer,

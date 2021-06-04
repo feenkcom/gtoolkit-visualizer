@@ -1,10 +1,12 @@
 "
 I am used to remove arrow heads
+
+
 "
 Class {
 	#name : #GtDiagrammerArrowheadNoneStencil,
 	#superclass : #GtDiagrammerArrowheadStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #hook }

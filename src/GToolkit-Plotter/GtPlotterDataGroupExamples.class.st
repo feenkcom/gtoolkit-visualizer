@@ -1,7 +1,7 @@
 "
 Browser data created with:
 
-[[[
+```
 browsers := { 'Chrome' . 'Safari' . 'Firefox' . 'Opera' . 'Edge' }.
 dangers := { #low . #medium . #high }.
 
@@ -11,7 +11,7 @@ Clipboard clipboardText: (String streamContents: [ :aStream |
 	10000 timesRepeat: [
 		aStream tab; tab; nextPutAll: '#('.
 		aStream print: browsers atRandom; space.
-		aStream print: ((12 * 30 * 10) atRandom); space.
+		aStream print: ((12  10) atRandom); space.
 		aStream print: 2 atRandom even; space.
 		aStream nextPutAll: dangers atRandom printString.
 		aStream nextPut: $); cr.
@@ -19,7 +19,9 @@ Clipboard clipboardText: (String streamContents: [ :aStream |
 	
 	aStream tab; nextPut: $).
 ])
-]]]
+```
+
+
 "
 Class {
 	#name : #GtPlotterDataGroupExamples,

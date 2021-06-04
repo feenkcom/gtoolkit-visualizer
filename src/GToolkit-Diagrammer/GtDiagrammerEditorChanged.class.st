@@ -1,5 +1,7 @@
 "
 I am notified by an editor when its graphical representation should be recreated due to underlying element or model changes.
+
+
 "
 Class {
 	#name : #GtDiagrammerEditorChanged,
@@ -7,7 +9,7 @@ Class {
 	#instVars : [
 		'editor'
 	],
-	#category : 'GToolkit-Diagrammer-Model'
+	#category : #'GToolkit-Diagrammer-Model'
 }
 
 { #category : #'instance creation' }

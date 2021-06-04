@@ -1,7 +1,8 @@
 "
-!Stencils
+1. Stencils
 
-!! Arrow heads
+1. # Arrow heads
+
 
 Simple arrow head:
 [[[example=GtDiagrammerStencilExamples>>#arrowheadSimple|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
@@ -17,6 +18,8 @@ Holllow circle arrow head:
 
 Filled circle arrow head:
 [[[example=GtDiagrammerStencilExamples>>#arrowheadHollowCircle|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
+
+
 "
 Class {
 	#name : #GtDiagrammerStencilExamples,

@@ -1,5 +1,7 @@
 "
-My subclasses are announced by the node model ${class:GtWardleyMapNodeModel}$
+My subclasses are announced by the node model {{gtClass:GtWardleyMapNodeModel}}
+
+
 "
 Class {
 	#name : #GtWardleyMapModelAnnouncement,

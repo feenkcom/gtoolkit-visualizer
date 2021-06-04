@@ -1,5 +1,7 @@
 "
 I allow users to pick a line join
+
+
 "
 Class {
 	#name : #GtDiagrammerLineJoinPicker,

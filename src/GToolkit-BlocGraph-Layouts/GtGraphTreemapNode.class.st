@@ -1,6 +1,7 @@
 "
-I represent a ${class:GtGraphTreemap}$ node.
-I keep my weight and the ${class:GtGraphTreemap}$ is responsible for computing my position and extent.
+I represent a {{gtClass:GtGraphTreemap}} node.
+I keep my weight and the {{gtClass:GtGraphTreemap}} is responsible for computing my position and extent.
+
 
 "
 Class {

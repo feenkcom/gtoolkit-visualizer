@@ -11,6 +11,7 @@ gapSize
 lineItemsCountBlock
 	- xxxxx
 
+
 "
 Class {
 	#name : #GtGraphAbstractGridLayout,

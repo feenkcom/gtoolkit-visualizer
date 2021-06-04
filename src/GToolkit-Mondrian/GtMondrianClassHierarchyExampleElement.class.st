@@ -1,5 +1,7 @@
 "
 I am an element for displaying a class. I show the name of the class and have a container for adding methods. I am meant to be used as a shape within Mondrian views.
+
+
 "
 Class {
 	#name : #GtMondrianClassHierarchyExampleElement,

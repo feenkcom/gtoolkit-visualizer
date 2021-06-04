@@ -1,10 +1,12 @@
 "
 I create a UML class element with a one container for class members (either attributes or methods)
+
+
 "
 Class {
 	#name : #GtDiagrammerUmlClassWithMembersStencil,
 	#superclass : #GtDiagrammerElementStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Figures'
+	#category : #'GToolkit-Diagrammer-Stencils - Figures'
 }
 
 { #category : #'instance creation' }

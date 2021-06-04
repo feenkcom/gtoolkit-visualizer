@@ -1,5 +1,6 @@
 "
-I keep utility methods that are useful for ${class:GtGraphTreemapSquarifyWorst}$ inspector extention views.
+I keep utility methods that are useful for {{gtClass:GtGraphTreemapSquarifyWorst}} inspector extention views.
+
 
 "
 Class {

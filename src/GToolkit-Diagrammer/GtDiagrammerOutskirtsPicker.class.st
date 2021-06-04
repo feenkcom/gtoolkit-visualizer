@@ -1,5 +1,7 @@
 "
 I allow users to pick an element outskirts
+
+
 "
 Class {
 	#name : #GtDiagrammerOutskirtsPicker,

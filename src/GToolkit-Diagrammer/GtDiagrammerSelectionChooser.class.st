@@ -8,12 +8,14 @@ Initially, the selection context (or step) is the diagrammer canvas.
  - If user clicks outside of the current selection context, we reset it and start all over again with the canvas as selection context.
 
 Selection can not dive-in of the elements marked as selection leaf:
-[[[
+```
 	""make element a selection leaf (or cutting point)""
 	element beDiagrammerSelectionLeaf.
 	""ask whether an element is a selection leaf (false by default)""
 	element isDiagrammerSelectionLeaf
-]]]
+```
+
+
 "
 Class {
 	#name : #GtDiagrammerSelectionChooser,

@@ -1,20 +1,22 @@
 "
-I represent one step in which ${class:GtGraphTreemapNode}$ nodes are allocated along with shorter rectangle size.
-I use ${class:GtGraphTreemapSquarifyAreaRectangle}$ to layout nodes.
-My main algorithm that split an orignal area into sub-areas is implemented in the ${method:GtGraphTreemapSquarifyStep>>#squarifyHereNode:}$ method.
-I use ${class:GtGraphTreemapSquarifyWorst}$ in order to decide whether a new node should be added to my area or rather a new area should be created.
+I represent one step in which {{gtClass:GtGraphTreemapNode}} nodes are allocated along with shorter rectangle size.
+I use {{gtClass:GtGraphTreemapSquarifyAreaRectangle}} to layout nodes.
+My main algorithm that split an orignal area into sub-areas is implemented in the {{gtMethod:GtGraphTreemapSquarifyStep>>#squarifyHereNode:}} method.
+I use {{gtClass:GtGraphTreemapSquarifyWorst}} in order to decide whether a new node should be added to my area or rather a new area should be created.
 
-!! Example 
+1. # Example 
+
 
 In the following example, you can see one are with two nodes: 
-${example:GtGraphTreemapLayoutExamples>>#stepWithTwoNodes|codeExpanded=false|previewExpanded=true}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#stepWithTwoNodes|codeExpanded=false|previewExpanded=true}}
 
 If we add another node, all area nodes get less squared:
-${example:GtGraphTreemapLayoutExamples>>#stepWithThreeNodes|codeExpanded=false|previewExpanded=true}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#stepWithThreeNodes|codeExpanded=false|previewExpanded=true}}
 
 The algorithm therefore decides to rather create a new area with the third node and keeps the first two nodes in the existing area. A new node is added only if the worst aspect ratio (among all area nodes) is improved. Otherwise, the new node is added to a new area.
 
-See the ${class:GtGraphTreemapSquarify}$ class comment for more details.
+See the {{gtClass:GtGraphTreemapSquarify}} class comment for more details.
+
 
 "
 Class {

@@ -1,10 +1,12 @@
 "
 I create a star element
+
+
 "
 Class {
 	#name : #GtDiagrammerStarStencil,
 	#superclass : #GtDiagrammerElementStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Figures'
+	#category : #'GToolkit-Diagrammer-Stencils - Figures'
 }
 
 { #category : #'instance creation' }

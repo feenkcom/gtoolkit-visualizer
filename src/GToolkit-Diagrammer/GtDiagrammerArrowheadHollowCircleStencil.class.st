@@ -1,10 +1,12 @@
 "
 I create a hollow circle arrow head with the border equal to the color of the curve
+
+
 "
 Class {
 	#name : #GtDiagrammerArrowheadHollowCircleStencil,
 	#superclass : #GtDiagrammerArrowheadCircleStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #comparing }

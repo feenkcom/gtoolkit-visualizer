@@ -1,5 +1,5 @@
 "
-!Visualizer
+1. Visualizer
 Visualization is a first class citizen in Glamorous Toolkit. 
 
 Currently, the projects contains:
@@ -7,16 +7,18 @@ Currently, the projects contains:
 - TreeMap, for building circular and rectangular treemaps.
 - Plotter, a collection of builders of charts like bar charts or timelines. 
 - Connector, an engine that allows you to create a visual way to navigate graphs.
-!!Mondrian
+1. # Mondrian
+
 Mondrian is an engine for scripting graph-based visualization like this one:
 
-${example:GtMondrianClassHierarchyExamples>>#classHierarchyHorizontalTreeWithClassNames|previewExpanded=|noCode=|previewShow=gtLiveFor:|previewHeight=250}$
+{{gtExample:GtMondrianClassHierarchyExamples>>#classHierarchyHorizontalTreeWithClassNames|previewExpanded=|noCode=|previewShow=gtLiveFor:|previewHeight=250}}
 
-Learn more about it: ${class:GtMondrianBasicExamples}$,  ${class:GtMondrianClassHierarchyExamples}$, and ${class:GtMondrianDomainExamples}$ .
-!!Connector
+Learn more about it: {{gtClass:GtMondrianBasicExamples}},  {{gtClass:GtMondrianClassHierarchyExamples}}, and {{gtClass:GtMondrianDomainExamples}} .
+1. # Connector
+
 Connector is an engine for scripting a visual exploration of a graph. For example, below we can see an instantiation of the engine for navigating examples. Just click on the dots.
 
-${example:GtConnectorExamples>>#exampleMethodsExample|noCode|previewShow=gtLiveFor:|previewHeight=300}$
+{{gtExample:GtConnectorExamples>>#exampleMethodsExample|noCode|previewShow=gtLiveFor:|previewHeight=300}}
 
 
 
