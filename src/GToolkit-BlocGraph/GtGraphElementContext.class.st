@@ -1,5 +1,7 @@
 "
 I am a utility class that offers an extra API for adding graph semantics to Bloc elements 
+
+
 "
 Class {
 	#name : #GtGraphElementContext,

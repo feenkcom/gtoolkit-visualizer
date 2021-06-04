@@ -1,7 +1,9 @@
 "
-!Connector event handler
+1. Connector event handler
 
 Is added to the connector itself
+
+
 "
 Class {
 	#name : #GtConnectorEventHandler,

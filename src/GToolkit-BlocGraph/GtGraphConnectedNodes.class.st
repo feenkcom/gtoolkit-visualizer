@@ -1,5 +1,7 @@
 "
 I iterate over all nodes connected by given edges to the initial graph  element
+
+
 "
 Class {
 	#name : #GtGraphConnectedNodes,

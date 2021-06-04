@@ -1,38 +1,41 @@
 "
-!Building treemaps
+1. Building treemaps
 A treemap represents a tree. That means that before we can represent a treemap, we first need a tree.
 
-Let's start with visualizing a directory containing files and other directories. To define the treemap, we start from a root directory and specify the structure should be navigated recursively through ==directories== and the leaves of the tree are the ==files==.
+Let's start with visualizing a directory containing files and other directories. To define the treemap, we start from a root directory and specify the structure should be navigated recursively through `directories` and the leaves of the tree are the `files`.
 
-${example:GtBuildingTreeMapsExplanation>>#fileReferenceTreeMap|previewShow=#gtLiveFor:|previewExpanded=}$
+{{gtExample:GtBuildingTreeMapsExplanation>>#fileReferenceTreeMap|previewShow=#gtLiveFor:|previewExpanded=}}
 
 The above treemap represents all leaves using the same weight. We can also specify different sizes.
 
-${example:GtBuildingTreeMapsExplanation>>#fileReferenceTreeMapWithLeavesSize|previewShow=#gtLiveFor:|previewExpanded=}$
+{{gtExample:GtBuildingTreeMapsExplanation>>#fileReferenceTreeMapWithLeavesSize|previewShow=#gtLiveFor:|previewExpanded=}}
 
 This is the basic mechanism.
-!!Manufacturing trees
-Sometimes, we have a data structure that is a tree, but no easy way to navigate it. For example, the code model of Pharo relies on package, package tag and class, but there is no uniform way to traverse them nicely. That's when we benefit from the ${class:GtNestedTreeBuilder}$. 
+1. # Manufacturing trees
 
-For example, here we get all classes that start with the ==Br== prefix. We group those first by package and then by the package tag.
+Sometimes, we have a data structure that is a tree, but no easy way to navigate it. For example, the code model of Pharo relies on package, package tag and class, but there is no uniform way to traverse them nicely. That's when we benefit from the {{gtClass:GtNestedTreeBuilder}}. 
 
-${example:GtBuildingTreeMapsExplanation>>#tree|previewExpanded|previewShow=#gtTreeFor:}$
+For example, here we get all classes that start with the `Br` prefix. We group those first by package and then by the package tag.
 
-The result is a ${class:GtNestedTreeNode|label=nested tree node}$ that can be traversed uniformly.
+{{gtExample:GtBuildingTreeMapsExplanation>>#tree|previewExpanded|previewShow=#gtTreeFor:}}
+
+The result is a {{gtClass:GtNestedTreeNode|label=nested tree node}} that can be traversed uniformly.
 
 So, now we can construct the treemap.
 
-${example:GtBuildingTreeMapsExplanation>>#treemapWithLeavesSize|previewExpanded=|previewShow=#gtLiveFor:}$
-!!Specifying custom elements
+{{gtExample:GtBuildingTreeMapsExplanation>>#treemapWithLeavesSize|previewExpanded=|previewShow=#gtLiveFor:}}
+1. # Specifying custom elements
+
 The default shapes of a treemap can be fine, but sometimes we want to emphasize items. After all, it is a map.
 
-In our case, let's aim to highlight the classes that define at least one custom inspector view with one color, and those that define examples with another color. To make this happen we specify ${method:GtNestedRectangleTreeMap>>leafElement:}$. The block receives an element that can be customized. You cannot create a new element because a treemap constrains the shape and size of the element.
+In our case, let's aim to highlight the classes that define at least one custom inspector view with one color, and those that define examples with another color. To make this happen we specify {{gtMethod:GtNestedRectangleTreeMap>>leafElement:}}. The block receives an element that can be customized. You cannot create a new element because a treemap constrains the shape and size of the element.
 
-${example:GtBuildingTreeMapsExplanation>>#treemapWithCustomLeafElement|previewExpanded=|previewShow=#gtLiveFor:}$
+{{gtExample:GtBuildingTreeMapsExplanation>>#treemapWithCustomLeafElement|previewExpanded=|previewShow=#gtLiveFor:}}
 
 Similarly, we can also customize the container element. For example, let's add a label with the package names.
 
-${example:GtBuildingTreeMapsExplanation>>#treemapWithCustomContainerElement|previewShow=#gtLiveFor:|previewExpanded=}$
+{{gtExample:GtBuildingTreeMapsExplanation>>#treemapWithCustomContainerElement|previewShow=#gtLiveFor:|previewExpanded=}}
+
 
 "
 Class {

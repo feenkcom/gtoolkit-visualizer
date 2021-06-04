@@ -1,5 +1,7 @@
 "
 I draw marker of plot series
+
+
 "
 Class {
 	#name : #GtPlotterMarkersElement,

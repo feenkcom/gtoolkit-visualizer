@@ -1,6 +1,8 @@
 "
 nextStep
 	^ self step nextStep
+
+
 "
 Class {
 	#name : #GtGraphTreemapSquarifyRejectedStep,

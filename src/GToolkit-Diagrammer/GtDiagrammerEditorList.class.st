@@ -2,11 +2,13 @@
 I display a list of editors of an object in a vertical list.
 
 I fetch data from the diagrammer editor data source
+
+
 "
 Class {
 	#name : #GtDiagrammerEditorList,
 	#superclass : #BlInfiniteElement,
-	#category : 'GToolkit-Diagrammer-UI-Lists'
+	#category : #'GToolkit-Diagrammer-UI-Lists'
 }
 
 { #category : #initialization }

@@ -1,27 +1,30 @@
 "
-!Stencils
+1. Stencils
 
-!! Arrow heads
+1. # Arrow heads
+
 
 Simple arrow head:
-[[[example=GtDiagrammerStencilExamples>>#arrowheadSimple|expanded=true|expandedPreview=true|show=gtLiveIn:]]]
+[[[example=GtDiagrammerStencilExamples>>#arrowheadSimple|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
 
 Hollow triangle arrow head:
-[[[example=GtDiagrammerStencilExamples>>#arrowheadHollowTriangle|expanded=true|expandedPreview=true|show=gtLiveIn:]]]
+[[[example=GtDiagrammerStencilExamples>>#arrowheadHollowTriangle|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
 
 Filled triangle arrow head:
-[[[example=GtDiagrammerStencilExamples>>#arrowheadFilledTriangle|expanded=true|expandedPreview=true|show=gtLiveIn:]]]
+[[[example=GtDiagrammerStencilExamples>>#arrowheadFilledTriangle|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
 
 Holllow circle arrow head:
-[[[example=GtDiagrammerStencilExamples>>#arrowheadFilledCircle|expanded=true|expandedPreview=true|show=gtLiveIn:]]]
+[[[example=GtDiagrammerStencilExamples>>#arrowheadFilledCircle|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
 
 Filled circle arrow head:
-[[[example=GtDiagrammerStencilExamples>>#arrowheadHollowCircle|expanded=true|expandedPreview=true|show=gtLiveIn:]]]
+[[[example=GtDiagrammerStencilExamples>>#arrowheadHollowCircle|expanded=true|previewExpanded=true|show=gtLiveIn:]]]
+
+
 "
 Class {
 	#name : #GtDiagrammerStencilExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Diagrammer-Examples'
+	#category : #'GToolkit-Diagrammer-Examples'
 }
 
 { #category : #'example - arrowhead' }

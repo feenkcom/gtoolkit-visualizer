@@ -1,37 +1,38 @@
 "
 I split an area into rectangles that are close to squares (aspect ratio 1) as much as possible.
-I use ${method:GtGraphTreemapNode>>#weight}$ node values to split an area into.
-I use ${class:GtGraphTreemapSquarifyStep}$ to split area into sub-areas and measure ${class:GtGraphTreemapNode}$ positions and extends.
+I use {{gtMethod:GtGraphTreemapNode>>#weight}} node values to split an area into.
+I use {{gtClass:GtGraphTreemapSquarifyStep}} to split area into sub-areas and measure {{gtClass:GtGraphTreemapNode}} positions and extends.
 
-The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [*PDF>https://www.win.tue.nl/~vanwijk/stm.pdf*].
-!! Algorithm Explanation
-This is an adapted extract from the paper Squarified Treemaps mentioned above. Suppose we have a rectangle with width ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#width}$ and height ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#height}$, and furthermore suppose that this rectangle must be subdivided in seven rectangles with areas ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#nodeValues}$. The area will be subdivided as follows:
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:}$
+The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [[PDF](https://www.win.tue.nl/~vanwijk/stm.pdf)].
+1. # Algorithm Explanation
 
-The *first step* of our algorithm is to split the initial rectangle. We choose for a horizontal subdivision, because the original rectangle is wider than high. We next fill the left half. First we add a single rectangle. The aspect ratio of this first rectangle is ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFirstStep|label=#worstValueRounded}$.
+This is an adapted extract from the paper Squarified Treemaps mentioned above. Suppose we have a rectangle with width {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#width}} and height {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#height}}, and furthermore suppose that this rectangle must be subdivided in seven rectangles with areas {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#nodeValues}}. The area will be subdivided as follows:
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:}}
 
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFirstStep|previewExpanded=true|noCode}$
+The  of our algorithm is to split the initial rectangle. We choose for a horizontal subdivision, because the original rectangle is wider than high. We next fill the left half. First we add a single rectangle. The aspect ratio of this first rectangle is {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFirstStep|label=#worstValueRounded}}.
 
-Next we add a second rectangle, above the first. The worst aspect ratio improves to ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSecondStep|label=#worstValueRounded}$.
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSecondStep|previewExpanded=true|noCode}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFirstStep|previewExpanded=true|noCode}}
 
-However, if we add the next (area 4) above these original rectangles, the aspect ratio of this rectangle is ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesThirdStep|label=#worstValueRounded}$.
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesThirdStep|previewExpanded=true|noCode}$
+Next we add a second rectangle, above the first. The worst aspect ratio improves to {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSecondStep|label=#worstValueRounded}}.
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSecondStep|previewExpanded=true|noCode}}
+
+However, if we add the next (area 4) above these original rectangles, the aspect ratio of this rectangle is {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesThirdStep|label=#worstValueRounded}}.
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesThirdStep|previewExpanded=true|noCode}}
 
 Therefore, we decide that we have reached an optimum for the left half in step two, and start processing the right half. The initial subdivision we choose here is vertical, because the rectangle is higher than wider. In step 4 we add the rectangle with area 4:
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFourthStep|previewExpanded=true|noCode}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFourthStep|previewExpanded=true|noCode}}
 
-In the next step, we add area 3. The worst aspect ratio decreases from ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFourthStep|label=#worstValueRounded}$ to ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|label=#worstValueRounded}$: 
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|previewExpanded=true|noCode}$
+In the next step, we add area 3. The worst aspect ratio decreases from {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFourthStep|label=#worstValueRounded}} to {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|label=#worstValueRounded}}: 
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|previewExpanded=true|noCode}}
 
-Addition of the next (area 2) however does not improve the result as the worst aspect ratio increases from ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|label=#worstValueRounded}$ to ${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSixthStep|label=#worstValueRounded}$:
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSixthStep|previewExpanded=true|noCode}$
+Addition of the next (area 2) however does not improve the result as the worst aspect ratio increases from {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesFifthStep|label=#worstValueRounded}} to {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSixthStep|label=#worstValueRounded}}:
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSixthStep|previewExpanded=true|noCode}}
 
 So we reject the previous step and start to fill the right top partition:
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSeventhStep|previewExpanded=true|noCode}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodesSeventhStep|previewExpanded=true|noCode}}
  
 These steps are repeated until all rectangles have been processed. The final result is the following:
-${example:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true}$.
+{{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|noCode|codeExpanded=false|previewExpanded=true}}.
 
 An optimal result can not be guaranteed, and counterexamples can be set up. The order in which the rectangles are processed is important. We found that a decreasing order usually gives the best results. The initially large rectangle is then filled in first with the larger subrectangles.
 

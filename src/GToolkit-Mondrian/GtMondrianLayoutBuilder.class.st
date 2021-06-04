@@ -1,5 +1,7 @@
 "
 I am a builder for layouts.
+
+
 "
 Class {
 	#name : #GtMondrianLayoutBuilder,

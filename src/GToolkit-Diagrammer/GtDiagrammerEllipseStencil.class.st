@@ -1,5 +1,7 @@
 "
 I create an ellipse element
+
+
 "
 Class {
 	#name : #GtDiagrammerEllipseStencil,

@@ -1,5 +1,7 @@
 "
 I allow users to pick a number from an interval
+
+
 "
 Class {
 	#name : #GtDiagrammerNumberPicker,

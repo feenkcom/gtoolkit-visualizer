@@ -5,6 +5,8 @@ Those operations consist of:
 
  - selection / deselection
  - deletion
+
+
 "
 Class {
 	#name : #GtDiagrammerSelectionTool,

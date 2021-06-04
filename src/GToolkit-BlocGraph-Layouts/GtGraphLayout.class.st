@@ -1,5 +1,7 @@
 "
 I am an abstract graph layout. My subclasses define the concrete algorithm.
+
+
 "
 Class {
 	#name : #GtGraphLayout,

@@ -1,5 +1,7 @@
 "
 I offer a fluent API for constructing graph-based visualizations.
+
+
 "
 Class {
 	#name : #GtMondrian,

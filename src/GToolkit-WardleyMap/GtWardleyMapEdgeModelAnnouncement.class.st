@@ -1,5 +1,7 @@
 "
-My subclasses are announced by the edge model ${class:GtWardleyMapEdgeModel}$
+My subclasses are announced by the edge model {{gtClass:GtWardleyMapEdgeModel}}
+
+
 "
 Class {
 	#name : #GtWardleyMapEdgeModelAnnouncement,

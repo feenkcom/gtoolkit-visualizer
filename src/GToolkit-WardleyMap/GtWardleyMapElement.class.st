@@ -1,5 +1,5 @@
 "
-! Wardley map
+1. Wardley map
 This is a renderer, visual editor adn exporter of Wardley Maps.
 See https://en.wikipedia.org/wiki/Wardley_map to learn more.
 

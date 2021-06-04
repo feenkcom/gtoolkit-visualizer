@@ -1,6 +1,6 @@
 "
 I am an abstract rectangle and I know my position and extent.
-See my subclasses for more details and examples: ${class:GtGraphTreemapRectangle|show=gtSubclassesFor:|expanded=true}$
+See my subclasses for more details and examples: {{gtClass:GtGraphTreemapRectangle|show=gtSubclassesFor:|expanded=true}}
 
 
 "

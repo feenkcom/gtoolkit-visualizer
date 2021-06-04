@@ -1,10 +1,11 @@
 "
 I implement an horizontal slice algorithm.
-I use ${class:GtGraphTreemapSliceHorizontal}$ to compute ${class:BlElement}$ children positions and extents.
+I use {{gtClass:GtGraphTreemapSliceHorizontal}} to compute {{gtClass:BlElement}} children positions and extents.
 
-!! Example 
+1. # Example 
 
-${example:GtGraphTreemapLayoutExamples>>#numbersSliceHorizontal|codeExpanded=false|previewExpanded=true}$
+
+{{gtExample:GtGraphTreemapLayoutExamples>>#numbersSliceHorizontal|codeExpanded=false|previewExpanded=true}}
 
 
 "

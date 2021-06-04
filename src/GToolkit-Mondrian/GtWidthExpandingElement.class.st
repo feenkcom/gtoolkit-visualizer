@@ -1,10 +1,12 @@
 "
 I am a special element that can grow horizontally with the children regardless of the layout.
+
+
 "
 Class {
 	#name : #GtWidthExpandingElement,
 	#superclass : #BlElement,
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #example }

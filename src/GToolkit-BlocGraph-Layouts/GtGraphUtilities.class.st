@@ -1,13 +1,14 @@
 "
-I am useful to exemplify rectangles witch may represent ${class:BlBounds}$ of an ${class:BlElement}$.
+I am useful to exemplify rectangles witch may represent {{gtClass:BlBounds}} of an {{gtClass:BlElement}}.
 
-!! Examples
+1. # Examples
+
 
 I can draw a rectangle with margin: 
-${example:GtGraphTreemapLayoutExamples>>#rectangleWithMarginUtility|codeExpanded=false|previewExpanded=true}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#rectangleWithMarginUtility|codeExpanded=false|previewExpanded=true}}
 
 I can draw a rectangle with bounds values:  
-${example:GtGraphTreemapLayoutExamples>>#rectangleWithMarginAndInformationUtility|codeExpanded=false|previewExpanded=true}$
+{{gtExample:GtGraphTreemapLayoutExamples>>#rectangleWithMarginAndInformationUtility|codeExpanded=false|previewExpanded=true}}
 
 
 "

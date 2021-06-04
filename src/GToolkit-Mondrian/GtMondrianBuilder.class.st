@@ -1,6 +1,8 @@
 "
 I am an abstract builder.
-I work closely with a ==GtMondrian== 
+I work closely with a `GtMondrian` 
+
+
 "
 Class {
 	#name : #GtMondrianBuilder,
@@ -8,7 +10,7 @@ Class {
 	#instVars : [
 		'mondrian'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #accessing }

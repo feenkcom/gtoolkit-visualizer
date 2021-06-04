@@ -1,6 +1,8 @@
 "
 I am an abstract builder of either nodes or edges.
-I know how to specify a shape through an ==elementBlock==.
+I know how to specify a shape through an `elementBlock`.
+
+
 "
 Class {
 	#name : #GtMondrianGraphBuilder,
@@ -8,7 +10,7 @@ Class {
 	#instVars : [
 		'elementStencilBuilder'
 	],
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #accessing }

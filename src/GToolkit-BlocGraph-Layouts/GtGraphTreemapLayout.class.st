@@ -1,10 +1,10 @@
 "
 My subclasses implement treemap algorithms.
-Given ${class:BlElement}$ children must define a weight using ${method:GtGraphTreemapLayoutConstraints>>#weight:}$.
+Given {{gtClass:BlElement}} children must define a weight using {{gtMethod:GtGraphTreemapLayoutConstraints>>#weight:}}.
 
-Here is an example of a such definition: ${example:GtGraphTreemapLayoutExamples>>#numberElements}$
+Here is an example of a such definition: {{gtExample:GtGraphTreemapLayoutExamples>>#numberElements}}
 
-See my subclasses for more details and examples: ${class:GtGraphTreemapLayout|show=gtSubclassesFor:|expanded=true}$
+See my subclasses for more details and examples: {{gtClass:GtGraphTreemapLayout|show=gtSubclassesFor:|expanded=true}}
 
 
 "

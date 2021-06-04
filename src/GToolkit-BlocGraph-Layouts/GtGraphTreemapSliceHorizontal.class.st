@@ -1,10 +1,11 @@
 "
-I split an area horizontally according to ${method:GtGraphTreemapNode>>#weight}$ node values.
+I split an area horizontally according to {{gtMethod:GtGraphTreemapNode>>#weight}} node values.
 
-!! Example 
+1. # Example 
+
 
 The following example shows an area with three nodes: 
-${example:GtGraphTreemapLayoutExamples>>#sliceHorizontalWithThreeNodes|codeExpanded=false|previewExpanded=true}$.
+{{gtExample:GtGraphTreemapLayoutExamples>>#sliceHorizontalWithThreeNodes|codeExpanded=false|previewExpanded=true}}.
 
 
 "

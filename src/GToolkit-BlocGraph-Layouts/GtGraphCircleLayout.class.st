@@ -1,6 +1,7 @@
 "
 A ROCircleLayout is xxxxxxxxx.
 
+
 "
 Class {
 	#name : #GtGraphCircleLayout,

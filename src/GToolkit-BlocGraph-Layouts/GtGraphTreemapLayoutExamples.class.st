@@ -1,5 +1,7 @@
 "
-I exemplify ${class:GtGraphTreemap}$ layout algorithm.
+I exemplify {{gtClass:GtGraphTreemap}} layout algorithm.
+
+
 "
 Class {
 	#name : #GtGraphTreemapLayoutExamples,

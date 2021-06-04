@@ -1,14 +1,16 @@
 "
-!Horizontal tree layout
+1. Horizontal tree layout
 
 This layout orders a graph nodes so that they form a horizontal  tree, meaning that the root node is left of all other nodes.
 
-!Separated and compact subtrees
-Tree layout allows users to choose between compact and separated subtrees, it can be done by setting ${method:GtGradAbstractTreeLayout>>#separateSubtrees:}$ either to ==true== or ==false==.
+1. Separated and compact subtrees
+Tree layout allows users to choose between compact and separated subtrees, it can be done by setting {{gtMethod:GtGradAbstractTreeLayout>>#separateSubtrees:}} either to `true` or `false`.
 The following example shows a compact (default) version of the tree:
-${example:GtGradHorizontalTreeLayoutExamples>>#compactSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=90}$
+{{gtExample:GtGradHorizontalTreeLayoutExamples>>#compactSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=90}}
 while the next one is a separated tree:
-${example:GtGradHorizontalTreeLayoutExamples>>#separatedSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=110}$
+{{gtExample:GtGradHorizontalTreeLayoutExamples>>#separatedSubtrees|codeExpanded=false|previewExpanded=true|previewShow=#gtPreviewFor:|previewHeight=110}}
+
+
 "
 Class {
 	#name : #GtGradHorizontalTreeLayoutExamples,

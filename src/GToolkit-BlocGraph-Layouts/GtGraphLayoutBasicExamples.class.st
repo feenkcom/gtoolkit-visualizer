@@ -1,5 +1,5 @@
 "
-!Graph layouts in Bloc
+1. Graph layouts in Bloc
 Bloc treats graph layouts, such as tree or force based, the same as typical widget layouts, such as grid or flow. The challenge comes from the fact that a graph layout depends on the notion of edges between elements, and we did not want to have elements know about edges in the core of Bloc.
 
 The solution was to split the typical edge implementation in graph visualization libraries into two distinct concepts:
@@ -10,7 +10,7 @@ Thus, edges form constraints, and constraints are what layouts deal with. That i
 
 To understand this better, let us consider the following example:
 
-${example:GtGraphLayoutBasicExamples>>#elementsTreeWithEdges|codeExpanded=false|previewExpanded=true|previewShow=gtLiveFor:}$
+{{gtExample:GtGraphLayoutBasicExamples>>#elementsTreeWithEdges|codeExpanded=false|previewExpanded=true|previewShow=gtLiveFor:}}
 
 With this we visualize the elements that make the chicken element demo:
 - we create a label for each element
@@ -21,7 +21,9 @@ As can be seen in the preview, the edge is a constraint. It has no visual impact
 
 To add a visual queue, we need to explicitly add a line element.
 
-${example:GtGraphLayoutBasicExamples>>#elementsTreeWithEdgesAndLines|codeExpanded=false|previewExpanded=true|previewShow=gtLiveFor:}$
+{{gtExample:GtGraphLayoutBasicExamples>>#elementsTreeWithEdgesAndLines|codeExpanded=false|previewExpanded=true|previewShow=gtLiveFor:}}
+
+
 "
 Class {
 	#name : #GtGraphLayoutBasicExamples,

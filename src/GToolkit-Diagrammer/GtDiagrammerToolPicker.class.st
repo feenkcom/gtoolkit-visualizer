@@ -1,5 +1,7 @@
 "
 I allow users to pick a diagrammer tool
+
+
 "
 Class {
 	#name : #GtDiagrammerToolPicker,

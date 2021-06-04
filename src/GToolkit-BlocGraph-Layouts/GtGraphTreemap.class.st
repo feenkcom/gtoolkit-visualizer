@@ -1,6 +1,6 @@
 "
 My subclasses implement treemap algorithms.
-See my subclasses for more details and examples: ${class:GtGraphTreemap|show=gtSubclassesFor:|expanded=true}$
+See my subclasses for more details and examples: {{gtClass:GtGraphTreemap|show=gtSubclassesFor:|expanded=true}}
 
 
 "

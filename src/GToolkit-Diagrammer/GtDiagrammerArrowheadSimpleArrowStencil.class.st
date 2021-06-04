@@ -1,5 +1,7 @@
 "
 I create a ""simple arrow"" arrowhead
+
+
 "
 Class {
 	#name : #GtDiagrammerArrowheadSimpleArrowStencil,
@@ -8,7 +10,7 @@ Class {
 		'arrowLengthFraction',
 		'arrowNoseAngle'
 	],
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #accessing }

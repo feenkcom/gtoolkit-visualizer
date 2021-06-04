@@ -11,6 +11,8 @@ Additionally, this implementation supports alignment of  nodes (top, center, bot
 GtGradTreeLayout is  a superclass of GtGradHorizontalTreeLayout and GtGradVerticalTreeLayout classes and  contains generic tree layout methods and definitions of methods the two subclasses need to redefine.  Generally, the differences between the implementations of  the hozitonal and vertical variants  are really small, revolving around one using  or setting the x and the other y coordinates.
 
 The tree algorithms can be  used to lay out inner elements of a Bloc element or a Mondrian view.
+
+
 "
 Class {
 	#name : #GtGradAbstractTreeLayout,
