@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'values',
 		'maxY',
-		'minY'
+		'minY',
+		'minX',
+		'maxX'
 	],
 	#category : #'GToolkit-Plotter-!Plotter - Stencils'
 }
@@ -48,9 +50,21 @@ GtHorizontalSparklineStencil >> create [
 GtHorizontalSparklineStencil >> initialize [
 	super initialize.
 	
+	minX := nil.
+	maxX := nil.
 	minY := nil.
 	maxY := nil.
 	values := #()
+]
+
+{ #category : #accessing }
+GtHorizontalSparklineStencil >> maxX [
+	^ maxX
+]
+
+{ #category : #accessing }
+GtHorizontalSparklineStencil >> maxX: anObject [
+	maxX := anObject
 ]
 
 { #category : #accessing }
@@ -61,6 +75,16 @@ GtHorizontalSparklineStencil >> maxY [
 { #category : #accessing }
 GtHorizontalSparklineStencil >> maxY: anObject [
 	maxY := anObject
+]
+
+{ #category : #accessing }
+GtHorizontalSparklineStencil >> minX [
+	^ minX
+]
+
+{ #category : #accessing }
+GtHorizontalSparklineStencil >> minX: anObject [
+	minX := anObject
 ]
 
 { #category : #accessing }
