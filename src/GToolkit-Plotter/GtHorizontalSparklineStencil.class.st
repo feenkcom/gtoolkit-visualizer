@@ -18,8 +18,8 @@ GtHorizontalSparklineStencil >> create [
 
 	theData := GtPlotterDataGroup new values: values.
 	
-	aMinX := theData inject: Float infinity intoValues: [ :eachMin :eachValue | eachMin min: eachValue value ].
-	aMaxX := theData inject: Float negativeInfinity intoValues: [ :eachMax :eachValue | eachMax max: eachValue value ].
+	aMinX := minX ifNil: [ theData inject: Float infinity intoValues: [ :eachMin :eachValue | eachMin min: eachValue value ] ].
+	aMaxX := maxX ifNil: [ theData inject: Float negativeInfinity intoValues: [ :eachMax :eachValue | eachMax max: eachValue value ] ].
 
 	aMinX isInfinite
 		ifTrue: [ aMinX := 0 ].
