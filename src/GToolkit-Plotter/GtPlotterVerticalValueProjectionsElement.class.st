@@ -1,3 +1,14 @@
+"
+I draw vertical projections.
+#Examples
+##Lines
+{{gtExample:GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples>>#projections|codeExpanded=false|previewExpanded=true}}
+##Labels
+{{gtExample:GtPlotterRawVerticalLeftAlignedTimelineExamples>>#projectionLabels|codeExpanded=false|previewExpanded=true}}
+##Chart
+{{gtExample:GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true}}
+
+"
 Class {
 	#name : #GtPlotterVerticalValueProjectionsElement,
 	#superclass : #GtPlotterSingleScaleValueBasedElement,

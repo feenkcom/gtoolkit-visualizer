@@ -1,3 +1,8 @@
+"
+I exemplify {{gtClass:GtPlotterVerticalTimeline}}.
+#Example
+{{gtExample:GtPlotterVerticalTimelineExamples>>exampleVersions|previewExpanded=true|codeExpanded=false}}
+"
 Class {
 	#name : #GtPlotterVerticalTimelineExamples,
 	#superclass : #GtPlotterBuilderExamples,

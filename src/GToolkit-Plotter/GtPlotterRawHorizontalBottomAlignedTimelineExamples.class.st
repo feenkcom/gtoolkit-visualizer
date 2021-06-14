@@ -1,59 +1,60 @@
 "
 I exemplify vertical left aligned timeline chart.
 #Example
-{{gtExample:GtPlotterRawVerticalLeftAlignedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+{{gtExample:GtPlotterRawHorizontalBottomAlignedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : #GtPlotterRawVerticalLeftAlignedTimelineExamples,
-	#superclass : #GtPlotterRawVerticalTimelineExamples,
+	#name : #GtPlotterRawHorizontalBottomAlignedTimelineExamples,
+	#superclass : #GtPlotterRawHorizontalTimelineExamples,
 	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'examples - axis' }
-GtPlotterRawVerticalLeftAlignedTimelineExamples >> axis [
+GtPlotterRawHorizontalBottomAlignedTimelineExamples >> axis [
 	<gtExample>
 
 	^ BrHorizontalPane new
-		hFitContent;
-		vMatchParent;
+		vFitContent;
+		hMatchParent;
 		clipChildren: false;
 		addChildren: { self labels }
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterRawVerticalLeftAlignedTimelineExamples >> content [
+GtPlotterRawHorizontalBottomAlignedTimelineExamples >> content [
 	<gtExample>
 	
 	^ BrFrame new
 		matchParent;
 		addChildren: {
 			self projections.
-			self timeline }
+			self timeline
+				constraintsDo: [ :c | c frame vertical alignBottom ]. }
 ]
 
 { #category : #'examples - plot' }
-GtPlotterRawVerticalLeftAlignedTimelineExamples >> plot [
+GtPlotterRawHorizontalBottomAlignedTimelineExamples >> plot [
 	<gtExample>
 	
-	^ BrHorizontalPane new
-		cellSpacing: 20;
+	^ BrVerticalPane new
+		cellSpacing: 10;
 		weightSum: 1;
 		matchParent;
 		padding: (BlInsets all: 15);
 		addChildren: { 
-			self axis.
+			self projectionLabels.
 			(self content constraintsDo: [ :c | c linear weight: 0.5 ]).
-			self projectionLabels }
+			self axis. }
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterRawVerticalLeftAlignedTimelineExamples >> projectionLabels [
+GtPlotterRawHorizontalBottomAlignedTimelineExamples >> projectionLabels [
 	<gtExample>
 
-	^ GtPlotterVerticalValueProjectionsElement new
+	^ GtPlotterHorizontalValueProjectionsElement new
 		scale: self scale;
 		scaleData: #key;
-		constraintsDo: [ :c | c horizontal fitContent ];
+		constraintsDo: [ :c | c vertical fitContent ];
 		hideOverlapping;
 		valueElement: [ :aGtPlotterSingleScaleContext | BlTextElement new text: (aGtPlotterSingleScaleContext originalValue value asRopedText foreground: Color gray) ];
 		valueStyle: [ :anElement | anElement background: BlBackground transparent ];
@@ -61,10 +62,10 @@ GtPlotterRawVerticalLeftAlignedTimelineExamples >> projectionLabels [
 ]
 
 { #category : #'examples - timeline' }
-GtPlotterRawVerticalLeftAlignedTimelineExamples >> projections [
+GtPlotterRawHorizontalBottomAlignedTimelineExamples >> projections [
 	<gtExample>
 
-	^ GtPlotterVerticalValueProjectionsElement new
+	^ GtPlotterHorizontalValueProjectionsElement new
 		scale: self scale;
 		scaleData: #key;
 		valueStyle: [ :anElement | anElement background: Color veryLightGray ];

@@ -1,3 +1,9 @@
+"
+I exemplify a vertical left aligned projected timeline.
+#Example
+{{gtExample:GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+
+"
 Class {
 	#name : #GtPlotterRawVerticalLeftAlignedProjectedTimelineExamples,
 	#superclass : #GtPlotterRawVerticalTimelineExamples,

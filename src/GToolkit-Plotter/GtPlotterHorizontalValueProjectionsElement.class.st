@@ -1,3 +1,14 @@
+"
+I draw horizontal projections.
+#Examples
+##Lines
+{{gtExample:GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples>>#projections|codeExpanded=false|previewExpanded=true|previewHeight=150}}
+##Labels
+{{gtExample:GtPlotterRawHorizontalBottomAlignedTimelineExamples>>#projectionLabels|codeExpanded=false|previewExpanded=true|previewHeight=150}}
+##Chart
+{{gtExample:GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+
+"
 Class {
 	#name : #GtPlotterHorizontalValueProjectionsElement,
 	#superclass : #GtPlotterSingleScaleValueBasedElement,

@@ -1,3 +1,8 @@
+"
+I draw horizontal chart tick labels.
+#Example
+{{gtExample:GtPlotterRawHorizontalTimelineExamples>>#labels|codeExpanded=false|previewExpanded=true|previewHeight=150}}
+"
 Class {
 	#name : #GtPlotterHorizontalTickLabelsElement,
 	#superclass : #GtPlotterTickLabelsElement,
