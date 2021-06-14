@@ -6,10 +6,21 @@ Class {
 		'maxY',
 		'minY',
 		'minX',
-		'maxX'
+		'maxX',
+		'color'
 	],
 	#category : #'GToolkit-Plotter-!Plotter - Stencils'
 }
+
+{ #category : #accessing }
+GtHorizontalSparklineStencil >> color [
+	^ color
+]
+
+{ #category : #accessing }
+GtHorizontalSparklineStencil >> color: aColorBlock [
+	color := aColorBlock
+]
 
 { #category : #'api - instantiation' }
 GtHorizontalSparklineStencil >> create [
@@ -17,6 +28,8 @@ GtHorizontalSparklineStencil >> create [
 	| theData aMinY aMaxY aMinX aMaxX aScaleX aScaleY |
 
 	theData := GtPlotterDataGroup new values: values.
+	
+	color ifNotNil: [ :aColorBlock | theData := theData colored: aColorBlock ].
 	
 	aMinX := minX ifNil: [ theData inject: Float infinity intoValues: [ :eachMin :eachValue | eachMin min: eachValue value ] ].
 	aMaxX := maxX ifNil: [ theData inject: Float negativeInfinity intoValues: [ :eachMax :eachValue | eachMax max: eachValue value ] ].
