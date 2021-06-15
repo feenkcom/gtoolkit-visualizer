@@ -1,3 +1,8 @@
+"
+I draw vertical chart ticks.
+#Example
+{{gtExample:GtPlotterRawVerticalCenteredTimelineExamples>>#ticks|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+"
 Class {
 	#name : #GtPlotterVerticalTicksElement,
 	#superclass : #GtPlotterTicksElement,

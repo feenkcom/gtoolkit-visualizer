@@ -1,3 +1,8 @@
+"
+I exemplify a vertical centered timeline chart.
+##Example
+{{gtExample:GtPlotterRawVerticalCenteredTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+"
 Class {
 	#name : #GtPlotterRawVerticalCenteredTimelineExamples,
 	#superclass : #GtPlotterRawVerticalTimelineExamples,

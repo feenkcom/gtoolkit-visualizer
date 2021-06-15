@@ -1,3 +1,8 @@
+"
+I draw vertical timeline chart. 
+#Example
+{{gtExample:GtPlotterVerticalTimelineExamples>>exampleVersions|previewExpanded=true|codeExpanded=false}}
+"
 Class {
 	#name : #GtPlotterVerticalTimeline,
 	#superclass : #GtPlotterBuilder,

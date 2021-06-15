@@ -1,3 +1,14 @@
+"
+I draw a horizontal bar chart. You can create instances directly and by using {{gtMethod:GtPlotter>>#horizontalBarChart}}.
+#Examples
+###Brick Dependencies
+The following chart displays lines of code for individual {{gtClass:BaselineOfBrick}} dependencies: {{gtExample:GtPlotterHorizontalBarChartExamples>>#brickDependenciesSizesBarChart|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+##Browser data
+The following example shows web browser usage, displaying utilization duration (x axis) and danger (color): {{gtExample:GtPlotterHorizontalBarChartExamples>>#browserDataChart|codeExpanded=false|previewExpanded=true|previewHeight=500}}
+##Other examples
+See {{gtClass:GtPlotterHorizontalBarChartExamples}}. 
+
+"
 Class {
 	#name : #GtPlotterHorizontalBarChart,
 	#superclass : #GtPlotterBuilder,

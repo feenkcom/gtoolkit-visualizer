@@ -1,3 +1,8 @@
+"
+My subclasses exemplify timeline charts of the following data: {{gtExample:GtPlotterRawTimelineExamples>>#versions|codeExpanded=false|previewExpanded=true}}
+Charts use the following scale: {{gtExample:GtPlotterRawTimelineExamples>>#scale|codeExpanded=false|previewExpanded=true}}
+See my subclasses for more example: {{gtClass:GtPlotterRawTimelineExamples|expanded=true|show=#gtSubclassesFor:|height=200}}
+"
 Class {
 	#name : #GtPlotterRawTimelineExamples,
 	#superclass : #Object,

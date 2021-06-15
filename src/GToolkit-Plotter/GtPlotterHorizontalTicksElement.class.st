@@ -1,3 +1,8 @@
+"
+I draw horizontal chart ticks.
+#Example
+{{gtExample:GtPlotterRawHorizontalCenteredTimelineExamples>>#ticks|codeExpanded=false|previewExpanded=true|previewHeight=150}}
+"
 Class {
 	#name : #GtPlotterHorizontalTicksElement,
 	#superclass : #GtPlotterTicksElement,
