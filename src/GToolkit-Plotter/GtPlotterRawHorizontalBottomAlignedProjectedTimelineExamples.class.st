@@ -31,7 +31,8 @@ GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> axisLabels [
 		constraintsDo: [ :c | c vertical fitContent ];
 		hideOverlapping;
 		valueElement: [ :aGtPlotterSingleScaleContext | 
-			BlTextElement new text: (aGtPlotterSingleScaleContext scaledValue asRopedText glamorousRegularFontAndSize foreground: Color gray) ];
+			BlTextElement new text: (aGtPlotterSingleScaleContext scaledValue 
+				asRopedText glamorousRegularFontAndSize foreground: Color gray) ];
 		valueStyle: [ :anElement | anElement background: BlBackground transparent ];
 		valueLayout: [ :anElement :aGtPlotterScaleContext |
 			anElement constraintsDo: [ :c |

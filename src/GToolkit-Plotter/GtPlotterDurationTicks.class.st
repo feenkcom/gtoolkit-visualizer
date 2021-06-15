@@ -37,25 +37,25 @@ GtPlotterDurationTicks class >> tickInterval: aStartDateAndTime stop: aStopDateA
 
 { #category : #private }
 GtPlotterDurationTicks >> computedTicks [
-	| isReverse aStartDurtion aStopDuration anInterval theTicks |
+	| isReverse aStartDuration aStopDuration anInterval theTicks |
 
-	aStartDurtion := from.
+	aStartDuration := from.
 	aStopDuration := to.
 	
 	"the order is based on duration"
 	isReverse := to < from.
 	isReverse
 		ifTrue: [
-			aStartDurtion := to.
+			aStartDuration := to.
 			aStopDuration := from ]
 		ifFalse: [
-			aStartDurtion := from.
+			aStartDuration := from.
 			aStopDuration := to ].
 	
-	anInterval := self class tickInterval: aStartDurtion stop: aStopDuration count: count.
+	anInterval := self class tickInterval: aStartDuration stop: aStopDuration count: count.
 	theTicks := Array streamContents: [ :aStream |
 		anInterval
-			durationsFrom: aStartDurtion
+			durationsFrom: aStartDuration
 			to: aStopDuration
 			do: [ :eachPlotterDuration | aStream nextPut: eachPlotterDuration ] ].
 	^ isReverse

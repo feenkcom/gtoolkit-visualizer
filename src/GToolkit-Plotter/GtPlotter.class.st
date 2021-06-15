@@ -41,6 +41,11 @@ GtPlotter >> horizontalBarChart [
 	^ self addPlot: GtPlotterHorizontalBarChart new
 ]
 
+{ #category : #'api - builders' }
+GtPlotter >> horizontalTimeline [
+	^ self addPlot: GtPlotterHorizontalTimeline new
+]
+
 { #category : #initialization }
 GtPlotter >> initialize [
 	super initialize.
