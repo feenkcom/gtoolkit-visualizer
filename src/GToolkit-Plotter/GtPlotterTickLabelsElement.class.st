@@ -14,7 +14,9 @@ Class {
 { #category : #initialization }
 GtPlotterTickLabelsElement >> defaultLabelElement [
 	^ [ :aGtPlotterScaleContext |
-		BlTextElement new text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) asRopedText ]
+		BlTextElement new 
+			text: (aGtPlotterScaleContext scale 
+				formattedTick: aGtPlotterScaleContext originalValue) asRopedText ]
 			asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
