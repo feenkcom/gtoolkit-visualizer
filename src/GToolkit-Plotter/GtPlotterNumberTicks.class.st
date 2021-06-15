@@ -1,3 +1,13 @@
+"
+I define number of axis ticks.
+#Users
+I am used by {{gtClass:GtPlotterLinearScale}} in {{gtMethod:GtPlotterLinearScale>>#ticks:|label=#selector}}.
+#Examples
+##Ten Ticks
+{{gtExample:GtPlotterNumberTicksExamples>>#from_0_to_10_count_10|codeExpanded=false|previewExpanded=true|previewHeight=150}}
+#Five Ticks
+{{gtExample:GtPlotterNumberTicksExamples>>#from_20_to_40_count_5|codeExpanded=false|previewExpanded=true|previewHeight=150}}
+"
 Class {
 	#name : #GtPlotterNumberTicks,
 	#superclass : #GtPlotterTicks,

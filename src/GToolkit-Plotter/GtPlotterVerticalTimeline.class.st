@@ -5,33 +5,9 @@ I draw vertical timeline chart.
 "
 Class {
 	#name : #GtPlotterVerticalTimeline,
-	#superclass : #GtPlotterBuilder,
-	#instVars : [
-		'axisType',
-		'timeScale',
-		'amountOfTicks',
-		'timelineDataBlock',
-		'timelineLabelFormat',
-		'projectionDataBlock',
-		'projectionLabelFormat',
-		'timelineStencil',
-		'projectionLineStencil',
-		'data'
-	],
-	#classVars : [
-		'AxisProjection',
-		'AxisTicks'
-	],
+	#superclass : #GtPlotterTimeline,
 	#category : #'GToolkit-Plotter-Builder - Timeline'
 }
-
-{ #category : #'class initialization' }
-GtPlotterVerticalTimeline class >> initialize [
-	super initialize.
-	
-	AxisProjection := #projection.
-	AxisTicks := #ticks
-]
 
 { #category : #'api - instantiation' }
 GtPlotterVerticalTimeline >> create [
@@ -149,12 +125,6 @@ GtPlotterVerticalTimeline >> createTimelineLine [
 GtPlotterVerticalTimeline >> initialize [
 	super initialize.
 	
-	timelineDataBlock := [ :eachDataItem | eachDataItem ].
-	timelineLabelFormat := [ :eachDateAndTime | (eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) asRopedText glamorousRegularFontAndSize foreground: Color darkGray ].
-
-	projectionDataBlock := [ :eachDataItem | eachDataItem ].
-	projectionLabelFormat := [ :eachObject | eachObject asRopedText glamorousRegularFontAndSize foreground: Color black ].
-
 	timelineStencil := [ BlElement new
 		width: 2;
 		background: (Color veryVeryLightGray) ] asStencil.
@@ -162,10 +132,6 @@ GtPlotterVerticalTimeline >> initialize [
 	projectionLineStencil := [ BlElement new
 		height: 1;
 		background: (Color veryLightGray) ] asStencil.
-
-	timeScale := GtPlotterTimeScale new.
-	amountOfTicks := 10.
-	axisType := AxisProjection
 ]
 
 { #category : #'api - builder' }
