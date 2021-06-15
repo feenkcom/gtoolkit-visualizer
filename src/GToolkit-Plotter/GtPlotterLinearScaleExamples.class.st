@@ -24,11 +24,10 @@ GtPlotterLinearScaleExamples >> defaultLinearScale [
 { #category : #'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 	<gtExample>
-	<noTest>
 	| aScale |
 	
 	aScale := self defaultLinearScale.
-	aScale domain: (GtPlotterScaleIntervalDomain from: 0 to: 10).
+	aScale domain: (GtPlotterScaleMagnitudeDomain from: 0 to: 10).
 	
 	self assert: (aScale map: -20) equals: -2.
 	self assert: (aScale map: -10) equals: -1.
@@ -44,11 +43,10 @@ GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 { #category : #'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainAndRange [
 	<gtExample>
-	<noTest>
 	| aScale |
 	
 	aScale := self defaultLinearScale.	
-	aScale domain: (GtPlotterScaleIntervalDomain from: 0 to: 10).
+	aScale domain: (GtPlotterScaleMagnitudeDomain from: 0 to: 10).
 	aScale range: (GtPlotterScaleIntervalRange from: 0 to: 100).
 	
 	self assert: (aScale map: -20) equals: -200.
