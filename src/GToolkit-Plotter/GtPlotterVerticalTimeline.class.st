@@ -33,7 +33,7 @@ GtPlotterVerticalTimeline >> create [
 GtPlotterVerticalTimeline >> createAxisLabelProjections: aCollectionOfDomainObjects [
 	^ GtPlotterVerticalValueProjectionsElement new
 		scale: timeScale;
-		scaleData: #key;
+		scaleData: timelineDataBlock;
 		constraintsDo: [ :c | c horizontal fitContent ];
 		hideOverlapping;
 		valueElement: [ :aGtPlotterSingleScaleContext | BlTextElement new text: (timelineLabelFormat value: aGtPlotterSingleScaleContext scaledValue) asRopedText glamorousRegularFont ];

@@ -33,7 +33,7 @@ GtPlotterHorizontalTimeline >> create [
 GtPlotterHorizontalTimeline >> createAxisLabelProjections: aCollectionOfDomainObjects [
 	^ GtPlotterHorizontalValueProjectionsElement new
 		scale: timeScale;
-		scaleData: #key;
+		scaleData: timelineDataBlock;
 		constraintsDo: [ :c | c vertical fitContent ];
 		hideOverlapping;
 		valueElement: [ :aGtPlotterSingleScaleContext | 
