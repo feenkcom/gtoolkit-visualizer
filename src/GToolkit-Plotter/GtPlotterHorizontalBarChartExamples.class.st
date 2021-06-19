@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : #accessing }
+{ #category : #'example - dependencies' }
 GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 	<gtExample>
 	| projects packages theData maxLines aBarWidthScale barChart |
