@@ -162,3 +162,8 @@ GtPlotterDataGroups >> values [
 GtPlotterDataGroups >> valuesDo: aBlock [
 	self entities do: [ :eachEntity | eachEntity valuesDo: aBlock ]
 ]
+
+{ #category : #enumerating }
+GtPlotterDataGroups >> withIndexCollect: aBlock [
+	^ self entities withIndexCollect: aBlock
+]

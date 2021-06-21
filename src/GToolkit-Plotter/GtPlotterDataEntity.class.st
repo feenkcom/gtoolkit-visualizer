@@ -29,6 +29,12 @@ GtPlotterDataEntity >> collect: aBlock [
 	^ self subclassResponsibility
 ]
 
+{ #category : #enumerating }
+GtPlotterDataEntity >> collectWithIndex: elementAndIndexBlock [
+	"Use the new version with consistent naming"
+	^ self withIndexCollect: elementAndIndexBlock
+]
+
 { #category : #'api - decorators' }
 GtPlotterDataEntity >> color [
 	"Return transparent color if it is not defined"
@@ -325,4 +331,9 @@ GtPlotterDataEntity >> values [
 { #category : #'api - enumerating' }
 GtPlotterDataEntity >> valuesDo: aBlock [
 	self subclassResponsibility
+]
+
+{ #category : #enumerating }
+GtPlotterDataEntity >> withIndexCollect: aBlock [
+	^ self subclassResponsibility
 ]

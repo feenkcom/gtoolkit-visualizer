@@ -235,7 +235,7 @@ GtPlotterHorizontalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	aContainer := BlElement new
 		constraintsDo: [ :c |
 			c horizontal matchParent.
-			c vertical matchParent ].
+			c vertical fitContent ].
 
 	isStacking
 		ifTrue: [ aContainer layout: BlFrameLayout new ]

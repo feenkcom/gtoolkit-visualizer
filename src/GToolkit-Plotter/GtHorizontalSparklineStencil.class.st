@@ -9,7 +9,7 @@ Class {
 		'maxX',
 		'color'
 	],
-	#category : #'GToolkit-Plotter-!Plotter - Stencils'
+	#category : #'GToolkit-Plotter-! Plotter - Stencils'
 }
 
 { #category : #accessing }

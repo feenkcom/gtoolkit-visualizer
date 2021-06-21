@@ -200,3 +200,8 @@ GtPlotterDataGroup >> values: aCollection [
 GtPlotterDataGroup >> valuesDo: aBlock [
 	self values do: aBlock
 ]
+
+{ #category : #enumerating }
+GtPlotterDataGroup >> withIndexCollect: aBlock [
+	^ self values withIndexCollect: aBlock
+]
