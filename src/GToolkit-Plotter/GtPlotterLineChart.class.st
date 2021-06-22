@@ -12,7 +12,9 @@ Class {
 		'minY',
 		'maxY',
 		'titleX',
-		'titleY'
+		'titleY',
+		'ticksX',
+		'ticksY'
 	],
 	#category : #'GToolkit-Plotter-Builder - Line Chart'
 }
@@ -51,8 +53,10 @@ GtPlotterLineChart >> initialize [
 	super initialize.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #key.
+	ticksX := 10.
 	scaleY := GtPlotterLinearScale new.
 	valueY := #value.
+	ticksY := 10.
 ]
 
 { #category : #initialization }
@@ -173,7 +177,7 @@ GtPlotterLineChart >> newAxisXTickLabelsElement [
 				asRopedText foreground: Color darkGray ];
 		constraintsDo: [ :c | c vertical fitContent ];
 		clipChildren: false;
-		labels: 10
+		labels: ticksX
 ]
 
 { #category : #'instance creation' }
@@ -184,7 +188,7 @@ GtPlotterLineChart >> newAxisXTicksElement [
 		tickStyle: [ :anElement | anElement
 			width: 2;
 			background: (Color gray alpha: 0.8) ];
-		ticks: 10
+		ticks: ticksX
 ]
 
 { #category : #'instance creation' }
@@ -246,7 +250,7 @@ GtPlotterLineChart >> newAxisYTickLabelsElement [
 			c horizontal fitContent.
 			c padding: (BlInsets left: 10 right: 10) ];
 		clipChildren: false;
-		labels: 7
+		labels: ticksY
 ]
 
 { #category : #'instance creation' }
@@ -256,7 +260,7 @@ GtPlotterLineChart >> newAxisYTicksElement [
 		tickStyle: [ :anElement | anElement
 			height: 2;
 			background: (Color gray alpha: 0.8) ];
-		ticks: 7
+		ticks: ticksY
 ]
 
 { #category : #'instance creation' }
@@ -332,6 +336,18 @@ GtPlotterLineChart >> scaleY [
 { #category : #accessing }
 GtPlotterLineChart >> scaleY: anObject [
 	scaleY := anObject
+]
+
+{ #category : #'api - axes' }
+GtPlotterLineChart >> ticksX: aNumber [
+	"Define number of axis ticks"
+	ticksX := aNumber
+]
+
+{ #category : #'api - axes' }
+GtPlotterLineChart >> ticksY: aNumber [
+	"Define number of axis ticks"
+	ticksY := aNumber
 ]
 
 { #category : #'api - axes' }

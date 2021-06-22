@@ -47,7 +47,7 @@ GtPlotterLineChartExamples >> definedLineColor [
 	| aData lineChart |
 	
 	aData := GtPlotterDataGroup new values: self commits.
-	aData := aData colored: Color red.
+	aData := aData colored: Color blue.
 	
 	lineChart := GtPlotterLineChart new
 		with: aData;
@@ -57,6 +57,28 @@ GtPlotterLineChartExamples >> definedLineColor [
 		valueY: #value;
 		scaleY: GtPlotterLinearScale new;
 		titleY: 'Number of commits per day'.
+
+	^ lineChart
+]
+
+{ #category : #accessing }
+GtPlotterLineChartExamples >> plot [
+	<gtExample>
+	| aData lineChart |
+	
+	aData := GtPlotterDataGroup new values: self commits.
+	aData := aData colored: Color blue.
+	
+	lineChart := GtPlotterLineChart new
+		with: aData;
+		valueX: #key;
+		scaleX: GtPlotterTimeScale new;
+		titleX: 'Date';
+		ticksX: 10;
+		valueY: #value;
+		scaleY: GtPlotterLinearScale new;
+		titleY: 'Number of commits per day';
+		ticksY: 10.
 
 	^ lineChart
 ]
