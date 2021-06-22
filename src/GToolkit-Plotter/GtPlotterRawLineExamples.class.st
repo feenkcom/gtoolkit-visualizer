@@ -129,16 +129,22 @@ GtPlotterRawLineExamples >> axisYLine [
 GtPlotterRawLineExamples >> axisYName [
 	<gtExample>
 
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new 
-			glamorousRegularFont;
-			foreground: Color darkGray;
-			fontSize: 16);
-		text: 'Number of Commits';
-		constraintsDo: [ :c |
-			c linear vertical alignCenter ];
-		transformDo: [ :t | 
-			t rotateBy: 270 ]
+	^ BrFrame new
+		fitContent;
+		background: BlBackground transparent;
+		constraintsDo: [ :c | 
+			c linear vertical alignTop ];
+		addChild: (BrLabel new
+			aptitude: (BrGlamorousLabelAptitude new 
+				glamorousRegularFont;
+				foreground: Color darkGray;
+				fontSize: 16);
+			text: 'Number of Commits';
+			constraintsDo: [ :c |
+				c linear vertical alignCenter.
+				c accountTransformation ];
+			transformDo: [ :t | 
+				t rotateBy: 270 ])
 ]
 
 { #category : #'example - axis' }
