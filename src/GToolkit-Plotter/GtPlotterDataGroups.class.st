@@ -19,7 +19,7 @@ GtPlotterDataGroups >> children [
 
 { #category : #enumerating }
 GtPlotterDataGroups >> collect: aBlock [
-	^ self entities collect: aBlock
+	^ self values collect: aBlock
 ]
 
 { #category : #'api - decoration' }
