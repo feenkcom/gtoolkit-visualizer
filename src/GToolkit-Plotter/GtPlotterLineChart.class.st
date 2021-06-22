@@ -10,7 +10,11 @@ Class {
 		'minX',
 		'maxX',
 		'minY',
-		'maxY'
+		'maxY',
+		'titleX',
+		'titleY',
+		'ticksX',
+		'ticksY'
 	],
 	#category : #'GToolkit-Plotter-Builder - Line Chart'
 }
@@ -30,10 +34,10 @@ GtPlotterLineChart >> create [
 
 	aContainer 
 		addChildren: { 
-			self newCornerElement.
+			self newAxisYElement.
 			self newContentElement.
 			self newCornerElement.
-			self newCornerElement.
+			self newAxisXElement.
 		 }.
 	
 	^ aContainer
@@ -49,8 +53,10 @@ GtPlotterLineChart >> initialize [
 	super initialize.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #key.
+	ticksX := 10.
 	scaleY := GtPlotterLinearScale new.
 	valueY := #value.
+	ticksY := 10.
 ]
 
 { #category : #initialization }
@@ -136,6 +142,23 @@ GtPlotterLineChart >> minY: anObject [
 ]
 
 { #category : #'instance creation' }
+GtPlotterLineChart >> newAxisXElement [
+	| aContainer |
+	aContainer := BrVerticalPane new
+		vFitContent;
+		hMatchParent;
+		clipChildren: false;
+		addChildren: { 
+			self newAxisXTicksElement height: 10.
+			self newAxisXTickLabelsElement. }.
+		
+	titleX ifNotNil: [ 
+		aContainer addChild: self newAxisXTitleElement ].
+	
+	^ aContainer
+]
+
+{ #category : #'instance creation' }
 GtPlotterLineChart >> newAxisXLineElement [
 	^ BlElement new
 		height: 2;
@@ -146,6 +169,61 @@ GtPlotterLineChart >> newAxisXLineElement [
 ]
 
 { #category : #'instance creation' }
+GtPlotterLineChart >> newAxisXTickLabelsElement [
+	^ GtPlotterHorizontalTickLabelsElement new
+		scale: self scaleX;
+		labelFormat: [ :eachDateAndTime | 
+			(eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) 
+				asRopedText foreground: Color darkGray ];
+		constraintsDo: [ :c | c vertical fitContent ];
+		clipChildren: false;
+		labels: ticksX
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newAxisXTicksElement [
+	
+	^ GtPlotterHorizontalTicksElement new
+		scale: self scaleX;
+		tickStyle: [ :anElement | anElement
+			width: 2;
+			background: (Color gray alpha: 0.8) ];
+		ticks: ticksX
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newAxisXTitleElement [
+
+	^ BrLabel new
+		aptitude: (BrGlamorousLabelAptitude new 
+			glamorousRegularFont;
+			foreground: Color darkGray;
+			fontSize: 16);
+		text: titleX asRopedText;
+		constraintsDo: [ :c |
+			c linear horizontal alignRight ]
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newAxisYElement [
+	| aContainer |
+	aContainer := BrHorizontalPane new
+		hFitContent;
+		vMatchParent;
+		clipChildren: false.
+		
+	titleY ifNotNil: [ 
+		aContainer addChild: self newAxisYTitleElement ].
+	
+	aContainer
+		addChildren: { 
+			self newAxisYTickLabelsElement.
+			self newAxisYTicksElement width: 10. }.
+			
+	^ aContainer
+]
+
+{ #category : #'instance creation' }
 GtPlotterLineChart >> newAxisYLineElement [
 	^ BlElement new
 		width: 2;
@@ -153,6 +231,57 @@ GtPlotterLineChart >> newAxisYLineElement [
 		constraintsDo: [ :c | 
 			c vertical matchParent.
 			c frame horizontal alignLeft ]
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newAxisYTickLabelsElement [
+	^ GtPlotterVerticalTickLabelsElement new
+		scale: self scaleY;
+		inverse;
+		labelFormat: [ :aValue | 
+			(aValue printShowingDecimalPlaces: 0) asRopedText foreground: Color darkGray ];
+		labelStyle: [ :anElement |
+			(anElement background: Color white)
+				constraintsDo: [ :c |
+					c frame horizontal alignRight.
+					c horizontal fitContent.
+					c vertical fitContent ] ];
+		constraintsDo: [ :c | 
+			c horizontal fitContent.
+			c padding: (BlInsets left: 10 right: 10) ];
+		clipChildren: false;
+		labels: ticksY
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newAxisYTicksElement [
+	^ GtPlotterVerticalTicksElement new
+		scale: self scaleY;
+		tickStyle: [ :anElement | anElement
+			height: 2;
+			background: (Color gray alpha: 0.8) ];
+		ticks: ticksY
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newAxisYTitleElement [
+
+	^ BrFrame new
+		fitContent;
+		background: BlBackground transparent;
+		constraintsDo: [ :c | 
+			c linear vertical alignTop ];
+		addChild: (BrLabel new
+			aptitude: (BrGlamorousLabelAptitude new 
+				glamorousRegularFont;
+				foreground: Color darkGray;
+				fontSize: 16);
+			text: titleY asRopedText;
+			constraintsDo: [ :c |
+				c linear vertical alignCenter.
+				c accountTransformation ];
+			transformDo: [ :t | 
+				t rotateBy: 270 ])
 ]
 
 { #category : #'instance creation' }
@@ -169,7 +298,7 @@ GtPlotterLineChart >> newContentElement [
 GtPlotterLineChart >> newContentLineElement [
 	^ BlElement new
 		geometry: (BlNormalizedPolyline vertices: self newContentLineVertices);
-		border: (BlBorder paint: Color orange width: 2);
+		border: (BlBorder paint: data color width: 1);
 		outskirts: BlOutskirts centered;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -209,6 +338,28 @@ GtPlotterLineChart >> scaleY: anObject [
 	scaleY := anObject
 ]
 
+{ #category : #'api - axes' }
+GtPlotterLineChart >> ticksX: aNumber [
+	"Define number of axis ticks"
+	ticksX := aNumber
+]
+
+{ #category : #'api - axes' }
+GtPlotterLineChart >> ticksY: aNumber [
+	"Define number of axis ticks"
+	ticksY := aNumber
+]
+
+{ #category : #'api - axes' }
+GtPlotterLineChart >> titleX: aString [
+	titleX := aString
+]
+
+{ #category : #'api - axes' }
+GtPlotterLineChart >> titleY: aString [
+	titleY := aString
+]
+
 { #category : #accessing }
 GtPlotterLineChart >> valueX [
 	^ valueX
@@ -229,7 +380,7 @@ GtPlotterLineChart >> valueY: anObject [
 	valueY := anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'api - data' }
 GtPlotterLineChart >> with: aGtPlotterDataGroup [
 	data := aGtPlotterDataGroup
 ]
