@@ -27,3 +27,16 @@ GtPlotterLineChartExamples >> commitsBasicChart [
 
 	^ lineChart
 ]
+
+{ #category : #'example - chart' }
+GtPlotterLineChartExamples >> commitsChart [
+	<gtExample>
+	| lineChart |
+	lineChart := self commitsBasicChart.
+	
+	lineChart
+		titleX: 'Date';
+		titleY: 'Number of commits per day'.
+		
+	^ lineChart
+]
