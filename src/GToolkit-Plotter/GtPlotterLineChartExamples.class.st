@@ -11,18 +11,43 @@ GtPlotterLineChartExamples >> commits [
 ]
 
 { #category : #'example - data' }
-GtPlotterLineChartExamples >> commitsAndUsers [
+GtPlotterLineChartExamples >> commitsAndUserData [
 	<gtExample>
-	^ self commitsAndUsersData collect: [ :e | 
-		OrderedDictionary new
-			at: #date put: e first;
-			at: #user put: e second;
-			at: #commits put: e third;
-			yourself ]
+	^ GtPlotterDataGroup new values: self commitsAndUserValues
 ]
 
 { #category : #'example - data' }
-GtPlotterLineChartExamples >> commitsAndUsersData [
+GtPlotterLineChartExamples >> commitsAndUserDataGroupedByMonth [
+	<gtExample>
+	| aData |
+
+	aData := self commitsAndUserData.
+	aData := aData 
+		groupedBy: [ :eachData | (eachData at: #date) asMonth ] 
+		colored: [ :user | Color purple ].
+	^ aData
+]
+
+{ #category : #'example - data' }
+GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUser [
+	<gtExample>
+	| aData colors |
+
+	colors := { 
+		'jessica' -> Color green.
+		'bill' -> Color blue.
+		'joe' -> Color red } asOrderedDictionary.
+	
+	aData := self commitsAndUserData.
+	aData := aData 
+		groupedBy: [ :eachData | eachData at: #user ] 
+		labelled: [ :user | user ] 
+		colored: [ :user | colors at: user ].
+	^ aData
+]
+
+{ #category : #'example - value' }
+GtPlotterLineChartExamples >> commitsAndUserRawValues [
 	<gtExample>
 
 	^ {
@@ -210,6 +235,17 @@ GtPlotterLineChartExamples >> commitsAndUsersData [
 	}
 ]
 
+{ #category : #'example - value' }
+GtPlotterLineChartExamples >> commitsAndUserValues [
+	<gtExample>
+	^ self commitsAndUserRawValues collect: [ :e | 
+		OrderedDictionary new
+			at: #date put: e first;
+			at: #user put: e second;
+			at: #commits put: e third;
+			yourself ]
+]
+
 { #category : #'example - chart' }
 GtPlotterLineChartExamples >> commitsBasicChart [
 	<gtExample>
@@ -239,24 +275,6 @@ GtPlotterLineChartExamples >> commitsChart [
 		titleY: 'Number of commits per day'.
 		
 	^ lineChart
-]
-
-{ #category : #'example - data' }
-GtPlotterLineChartExamples >> dataPerUser [
-	<gtExample>
-	| aData colors |
-
-	colors := { 
-		'jessica' -> Color green.
-		'bill' -> Color blue.
-		'joe' -> Color red } asOrderedDictionary.
-	
-	aData := GtPlotterDataGroup new values: self commitsAndUsers.
-	aData := aData 
-		groupedBy: [ :eachData | eachData at: #user ] 
-		labelled: [ :user | user ] 
-		colored: [ :user | colors at: user ].
-	^ aData
 ]
 
 { #category : #'example - chart' }
@@ -302,11 +320,53 @@ GtPlotterLineChartExamples >> plot [
 ]
 
 { #category : #'example - chart' }
-GtPlotterLineChartExamples >> plotPerUser [
+GtPlotterLineChartExamples >> plotCommitsByMonth [
 	<gtExample>
 	| aData aChart |
 
-	aData := self dataPerUser.
+	aData := self commitsAndUserDataGroupedByMonth.
+	
+	aChart := GtPlotterLineChart new
+		with: aData;
+		valueX: [ :e | e at: #date ];
+		scaleX: GtPlotterTimeScale new;
+		titleX: 'Date';
+		ticksX: 10;
+		valueY: [ :e | e at: #commits ];
+		scaleY: GtPlotterLinearScale new;
+		titleY: 'Number of commits per month';
+		ticksY: 10.
+
+	^ aChart
+]
+
+{ #category : #'example - chart' }
+GtPlotterLineChartExamples >> plotCommitsOfAllUsers [
+	<gtExample>
+	| aData aChart |
+
+	aData := self commitsAndUserData.
+	
+	aChart := GtPlotterLineChart new
+		with: aData;
+		valueX: [ :e | e at: #date ];
+		scaleX: GtPlotterTimeScale new;
+		titleX: 'Date';
+		ticksX: 10;
+		valueY: [ :e | e at: #commits ];
+		scaleY: GtPlotterLinearScale new;
+		titleY: 'Number of commits per day';
+		ticksY: 10.
+
+	^ aChart
+]
+
+{ #category : #'example - chart' }
+GtPlotterLineChartExamples >> plotCommitsPerUser [
+	<gtExample>
+	| aData aChart |
+
+	aData := self commitsAndUserDataGroupedByUser.
 	
 	aChart := GtPlotterLineChart new
 		with: aData;
