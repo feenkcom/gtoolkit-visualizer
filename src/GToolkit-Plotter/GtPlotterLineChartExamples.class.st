@@ -46,6 +46,17 @@ GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUser [
 	^ aData
 ]
 
+{ #category : #'example - data' }
+GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUserAndMonth [
+	<gtExample>
+	| aData |
+
+	aData := self commitsAndUserDataGroupedByUser.
+	aData := aData 
+		groupedBy: [ :eachData | (eachData at: #date) asMonth ].
+	^ aData
+]
+
 { #category : #'example - value' }
 GtPlotterLineChartExamples >> commitsAndUserRawValues [
 	<gtExample>
@@ -367,6 +378,27 @@ GtPlotterLineChartExamples >> plotCommitsPerUser [
 	| aData aChart |
 
 	aData := self commitsAndUserDataGroupedByUser.
+	
+	aChart := GtPlotterLineChart new
+		with: aData;
+		valueX: [ :e | e at: #date ];
+		scaleX: GtPlotterTimeScale new;
+		titleX: 'Date';
+		ticksX: 10;
+		valueY: [ :e | e at: #commits ];
+		scaleY: GtPlotterLinearScale new;
+		titleY: 'Number of commits per day';
+		ticksY: 10.
+
+	^ aChart
+]
+
+{ #category : #'example - chart' }
+GtPlotterLineChartExamples >> plotCommitsPerUserAndMonth [
+	<gtExample>
+	| aData aChart |
+
+	aData := self commitsAndUserDataGroupedByUserAndMonth.
 	
 	aChart := GtPlotterLineChart new
 		with: aData;

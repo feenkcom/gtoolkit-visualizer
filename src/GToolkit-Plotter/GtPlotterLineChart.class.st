@@ -1,3 +1,11 @@
+"
+I draw line charts.
+#Examples
+##Number of Commits per Day
+{{gtExample:GtPlotterLineChartExamples>>plotCommitsOfAllUsers|codeExpanded=false|previewExpanded=true|previewHeight=400}}
+##Number of Commits per Day for Individual Users
+{{gtExample:GtPlotterLineChartExamples>>plotCommitsPerUser|codeExpanded=false|previewExpanded=true|previewHeight=400}}
+"
 Class {
 	#name : #GtPlotterLineChart,
 	#superclass : #GtPlotterBuilder,
