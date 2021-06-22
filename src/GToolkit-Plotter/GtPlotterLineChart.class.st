@@ -294,7 +294,7 @@ GtPlotterLineChart >> newContentElement [
 GtPlotterLineChart >> newContentLineElement [
 	^ BlElement new
 		geometry: (BlNormalizedPolyline vertices: self newContentLineVertices);
-		border: (BlBorder paint: Color orange width: 2);
+		border: (BlBorder paint: data color width: 1);
 		outskirts: BlOutskirts centered;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.

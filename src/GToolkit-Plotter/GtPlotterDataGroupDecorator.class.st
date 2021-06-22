@@ -17,6 +17,11 @@ GtPlotterDataGroupDecorator >> children [
 	^ { self entity }
 ]
 
+{ #category : #'api - enumerating' }
+GtPlotterDataGroupDecorator >> collect: aBlock [
+	^ self entity collect: aBlock
+]
+
 { #category : #copying }
 GtPlotterDataGroupDecorator >> copyWithDeepestEntity: anEntity [
 	^ self entity isDecorator
@@ -156,4 +161,9 @@ GtPlotterDataGroupDecorator >> values [
 { #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> valuesDo: aBlock [
 	self entity valuesDo: aBlock
+]
+
+{ #category : #'api - enumerating' }
+GtPlotterDataGroupDecorator >> withIndexCollect: aBlock [
+	^ self entity withIndexCollect: aBlock
 ]
