@@ -1,3 +1,6 @@
+"
+I exemplify {{gtClass:GtPlotterLineChart}}.
+"
 Class {
 	#name : #GtPlotterLineChartExamples,
 	#superclass : #GtPlotterBuilderExamples,
