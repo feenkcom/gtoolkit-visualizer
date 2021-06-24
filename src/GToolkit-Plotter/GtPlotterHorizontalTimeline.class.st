@@ -78,7 +78,7 @@ GtPlotterHorizontalTimeline >> createProjections: aCollectionOfDomainObjects [
 					BlTextElement new
 						margin: (BlInsets bottom: self spacing);
 						text: (projectionLabelFormat value: (projectionDataBlock value: aGtPlotterSingleScaleContext originalValue) asRopedText glamorousRegularFont).
-					projectionLineStencil asElement
+					(projectionLineStencil arguments: {aGtPlotterSingleScaleContext originalValue}) asElement
 						constraintsDo: [ :c | c vertical matchParent ].
 				} ];
 		valueStyle: [ :anElement | anElement ];
@@ -133,7 +133,7 @@ GtPlotterHorizontalTimeline >> initialize [
 		height: 2;
 		background: (Color veryVeryLightGray) ] asStencil.
 	
-	projectionLineStencil := [ BlElement new
+	projectionLineStencil := [ :aValuable | BlElement new
 		width: 1;
 		background: (Color veryLightGray) ] asStencil.
 ]

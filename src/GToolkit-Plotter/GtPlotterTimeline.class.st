@@ -31,10 +31,15 @@ GtPlotterTimeline >> initialize [
 	super initialize.
 	
 	timelineDataBlock := [ :eachDataItem | eachDataItem ].
-	timelineLabelFormat := [ :eachDateAndTime | (eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) asRopedText glamorousRegularFontAndSize foreground: Color darkGray ].
+	timelineLabelFormat := [ :eachDateAndTime | 
+			(eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) asRopedText 
+				glamorousRegularFontAndSize 
+				foreground: Color darkGray ].
 
 	projectionDataBlock := [ :eachDataItem | eachDataItem ].
-	projectionLabelFormat := [ :eachObject | eachObject asRopedText glamorousRegularFontAndSize foreground: Color black ].
+	projectionLabelFormat := [ :eachObject | eachObject asRopedText 
+		glamorousRegularFontAndSize 
+		foreground: Color black ].
 
 	timeScale := GtPlotterTimeScale new.
 	amountOfTicks := 10.
