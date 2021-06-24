@@ -1,3 +1,6 @@
+"
+I exemplify {{gtClass:GtPlotterHorizontalBarChart}}.
+"
 Class {
 	#name : #GtPlotterHorizontalBarChartExamples,
 	#superclass : #GtPlotterBuilderExamples,
