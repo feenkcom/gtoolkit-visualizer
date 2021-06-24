@@ -1,3 +1,11 @@
+"
+I draw line charts.
+#Examples
+##Number of Commits per Day
+{{gtExample:GtPlotterLineChartExamples>>plotCommitsOfAllUsers|codeExpanded=false|previewExpanded=true|previewHeight=400}}
+##Number of Commits per Day for Individual Users
+{{gtExample:GtPlotterLineChartExamples>>plotCommitsPerUser|codeExpanded=false|previewExpanded=true|previewHeight=400}}
+"
 Class {
 	#name : #GtPlotterLineChart,
 	#superclass : #GtPlotterBuilder,
@@ -286,19 +294,24 @@ GtPlotterLineChart >> newAxisYTitleElement [
 
 { #category : #'instance creation' }
 GtPlotterLineChart >> newContentElement [
-	^ BrFrame new
+	| aContainer |
+	aContainer := BrFrame new
 		matchParent;
 		addChildren: { 
 			self newAxisYLineElement.
-			self newAxisXLineElement.		
-			self newContentLineElement. }
+			self newAxisXLineElement. }.
+	
+	data groupsCollect: [ :aGroup |
+		aContainer addChild: (self newContentLineElementFor: aGroup) ].
+	
+	^ aContainer
 ]
 
 { #category : #'instance creation' }
-GtPlotterLineChart >> newContentLineElement [
+GtPlotterLineChart >> newContentLineElementFor: aGroup [
 	^ BlElement new
-		geometry: (BlNormalizedPolyline vertices: self newContentLineVertices);
-		border: (BlBorder paint: data color width: 1);
+		geometry: (BlNormalizedPolyline vertices: (self newContentLineVerticesFor: aGroup));
+		border: (BlBorder paint: aGroup color width: 1);
 		outskirts: BlOutskirts centered;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -306,8 +319,8 @@ GtPlotterLineChart >> newContentLineElement [
 ]
 
 { #category : #'instance creation' }
-GtPlotterLineChart >> newContentLineVertices [
-	^ self data collect: [ :eachValue | 
+GtPlotterLineChart >> newContentLineVerticesFor: aGroup [
+	^ aGroup collect: [ :eachValue | 
 		(scaleX map: (valueX value: eachValue)) @ (1 - (scaleY map: (valueY value: eachValue))) ].
 ]
 

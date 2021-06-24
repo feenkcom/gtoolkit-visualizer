@@ -72,7 +72,7 @@ GtPlotterVerticalTimeline >> createProjections: aCollectionOfDomainObjects [
 					c horizontal matchParent.
 					c vertical fitContent ];
 				addChildren: { 
-					projectionLineStencil asElement
+					(projectionLineStencil arguments: {aGtPlotterSingleScaleContext originalValue}) asElement
 						constraintsDo: [ :c | c horizontal matchParent ].
 					BlTextElement new
 						margin: (BlInsets left: self spacing);
@@ -129,7 +129,7 @@ GtPlotterVerticalTimeline >> initialize [
 		width: 2;
 		background: (Color veryVeryLightGray) ] asStencil.
 	
-	projectionLineStencil := [ BlElement new
+	projectionLineStencil := [ :aValuable | BlElement new
 		height: 1;
 		background: (Color veryLightGray) ] asStencil.
 ]
