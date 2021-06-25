@@ -416,3 +416,25 @@ GtPlotterLineChartExamples >> plotCommitsPerUserAndMonth [
 
 	^ aChart
 ]
+
+{ #category : #'example - chart' }
+GtPlotterLineChartExamples >> plotEmptyData [
+	<gtExample>
+	| aData lineChart |
+	
+	aData := GtPlotterDataGroup new values: #().
+	aData := aData colored: Color blue.
+	
+	lineChart := GtPlotterLineChart new
+		with: aData;
+		valueX: #key;
+		scaleX: GtPlotterTimeScale new;
+		titleX: 'Date';
+		ticksX: 10;
+		valueY: #value;
+		scaleY: GtPlotterLinearScale new;
+		titleY: 'Number of commits per day';
+		ticksY: 10.
+
+	^ lineChart
+]

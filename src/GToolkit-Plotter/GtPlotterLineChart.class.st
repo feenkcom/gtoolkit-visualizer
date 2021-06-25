@@ -40,13 +40,19 @@ GtPlotterLineChart >> create [
 		matchParent;
 		padding: (BlInsets all: 20).	
 
-	aContainer 
-		addChildren: { 
-			self newAxisYElement.
-			self newContentElement.
-			self newCornerElement.
-			self newAxisXElement.
-		 }.
+	self data size isZero 
+		ifTrue: [ 
+			aContainer 
+				columnCount: 1;
+				addChild: self newNoDataElement ]
+		ifFalse: [
+			aContainer 
+				addChildren: { 
+					self newAxisYElement.
+					self newContentElement.
+					self newCornerElement.
+					self newAxisXElement.
+				 } ].
 	
 	^ aContainer
 ]
@@ -329,6 +335,16 @@ GtPlotterLineChart >> newCornerElement [
 	^ BlElement new
 		size: 0@0;
 		visibility: BlVisibility hidden
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newNoDataElement [
+	^ BrLabel new 
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color lightGray);
+		text: 'no data';
+		constraintsDo: [ :c | 
+			c grid horizontal alignCenter.
+			c grid vertical alignCenter ]
 ]
 
 { #category : #accessing }
