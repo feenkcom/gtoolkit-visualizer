@@ -1,14 +1,14 @@
 Class {
-	#name : #GtPlotter,
-	#superclass : #BrStencil,
+	#name : #GtPlotterCompositeChart,
+	#superclass : #GtPlotterBuilder,
 	#instVars : [
 		'plots'
 	],
-	#category : #'GToolkit-Plotter-! Plotter'
+	#category : #'GToolkit-Plotter-Builder - Composite Chart'
 }
 
 { #category : #'private - plots' }
-GtPlotter >> addPlot: aPlotterBuilder [
+GtPlotterCompositeChart >> addPlot: aPlotterBuilder [
 	<return: #GtPlotterBuilder>
 	
 	plots add: aPlotterBuilder.
@@ -16,7 +16,7 @@ GtPlotter >> addPlot: aPlotterBuilder [
 ]
 
 { #category : #'api - instantiation' }
-GtPlotter >> create [
+GtPlotterCompositeChart >> create [
 	<return: #Object>
 	| aContainer |
 
@@ -29,7 +29,7 @@ GtPlotter >> create [
 ]
 
 { #category : #initialization }
-GtPlotter >> gtLiveFor: aView [
+GtPlotterCompositeChart >> gtLiveFor: aView [
 	<gtView>
 	^ aView explicit
 		title: 'Live';
@@ -37,37 +37,28 @@ GtPlotter >> gtLiveFor: aView [
 ]
 
 { #category : #'api - builders' }
-GtPlotter >> horizontalBarChart [
+GtPlotterCompositeChart >> horizontalBarChart [
 	^ self addPlot: GtPlotterHorizontalBarChart new
 ]
 
 { #category : #'api - builders' }
-GtPlotter >> horizontalTimeline [
+GtPlotterCompositeChart >> horizontalTimeline [
 	^ self addPlot: GtPlotterHorizontalTimeline new
 ]
 
 { #category : #initialization }
-GtPlotter >> initialize [
+GtPlotterCompositeChart >> initialize [
 	super initialize.
 	
 	plots := OrderedCollection new
 ]
 
-{ #category : #accessing }
-GtPlotter >> root [
-	self
-		deprecated: 'Use #asElement instead.'
-		transformWith: '`@receiver root' -> '`@receiver asElement'.
-
-	^ self asElement
-]
-
 { #category : #'api - builders' }
-GtPlotter >> verticalBarChart [
+GtPlotterCompositeChart >> verticalBarChart [
 	^ self addPlot: nil
 ]
 
 { #category : #'api - builders' }
-GtPlotter >> verticalTimeline [
+GtPlotterCompositeChart >> verticalTimeline [
 	^ self addPlot: GtPlotterVerticalTimeline new
 ]
