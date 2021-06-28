@@ -66,6 +66,39 @@ GtPlotterRawLineExamples >> axisXName [
 ]
 
 { #category : #'example - axis' }
+GtPlotterRawLineExamples >> axisXProjectionLabels [
+	<gtExample>
+
+	^ GtPlotterHorizontalValueProjectionsElement new
+		scale: self scaleX;
+		scaleData: #key;
+		clipChildren: false;
+		constraintsDo: [ :c | c vertical fitContent ];
+		hideOverlapping;
+		valueElement: [ :aGtPlotterScaleContext | 
+				BlTextElement new text: (
+					(aGtPlotterScaleContext originalValue value asRopedText, ' commits' asRopedText) 
+						foreground: Color gray) ];
+		valueStyle: [ :anElement | anElement background: BlBackground transparent ];
+		values: self peekCommits
+]
+
+{ #category : #'example - axis' }
+GtPlotterRawLineExamples >> axisXProjections [
+	<gtExample>
+
+	^ GtPlotterHorizontalValueProjectionsElement new
+		scale: self scaleX;
+		scaleData: #key;
+		valueStyle: [ :anElement :aGtPlotterScaleContext | 
+			anElement 
+				background: (aGtPlotterScaleContext originalValue value > 30
+					ifTrue: [ Color red ]
+					ifFalse: [ Color veryLightGray ]) ];
+		values: self peekCommits
+]
+
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXTicks [
 	<gtExample>
 	
@@ -187,7 +220,8 @@ GtPlotterRawLineExamples >> content [
 		addChildren: { 
 			self axisYLine.
 			self axisXLine.		
-			self contentLine. }
+			self contentLine.
+			self axisXProjections. }
 ]
 
 { #category : #'example - plot' }
@@ -222,6 +256,13 @@ GtPlotterRawLineExamples >> corner [
 		visibility: BlVisibility hidden
 ]
 
+{ #category : #'example - data' }
+GtPlotterRawLineExamples >> peekCommits [
+	<gtExample>
+
+	^ self commits select: [ :e | e value > 20 ]
+]
+
 { #category : #'example - plot' }
 GtPlotterRawLineExamples >> plot [
 	<gtExample>
@@ -231,6 +272,8 @@ GtPlotterRawLineExamples >> plot [
 		matchParent;
 		padding: (BlInsets all: 15);
 		addChildren: { 
+			self corner.
+			self axisXProjectionLabels.
 			self axisY.
 			self content.
 			self corner.

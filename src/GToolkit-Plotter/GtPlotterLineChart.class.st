@@ -5,6 +5,8 @@ I draw line charts.
 {{gtExample:GtPlotterLineChartExamples>>plotCommitsOfAllUsers|codeExpanded=false|previewExpanded=true|previewHeight=400}}
 ##Number of Commits per Day for Individual Users
 {{gtExample:GtPlotterLineChartExamples>>plotCommitsPerUser|codeExpanded=false|previewExpanded=true|previewHeight=400}}
+##With Projection Lines and Labels
+{{gtExample:GtPlotterLineChartExamples>>#plotWithProjections|codeExpanded=false|previewExpanded=true|previewHeight=430}}
 "
 Class {
 	#name : #GtPlotterLineChart,
@@ -22,7 +24,11 @@ Class {
 		'titleX',
 		'titleY',
 		'ticksX',
-		'ticksY'
+		'ticksY',
+		'projectionXLabelElement',
+		'projectionXValues',
+		'projectionXLabelStyle',
+		'projectionXLineStyle'
 	],
 	#category : #'GToolkit-Plotter-Builder - Line Chart'
 }
@@ -46,6 +52,14 @@ GtPlotterLineChart >> create [
 				columnCount: 1;
 				addChild: self newNoDataElement ]
 		ifFalse: [
+			projectionXValues ifNotNil: [ 
+				aContainer
+					addChildren: { 
+						self newCornerElement.
+						self newProjectionLabelsElement.
+					 }	
+			].
+			
 			aContainer 
 				addChildren: { 
 					self newAxisYElement.
@@ -57,7 +71,7 @@ GtPlotterLineChart >> create [
 	^ aContainer
 ]
 
-{ #category : #accessing }
+{ #category : #'api - data' }
 GtPlotterLineChart >> data [
 	^ data
 ]
@@ -71,6 +85,7 @@ GtPlotterLineChart >> initialize [
 	scaleY := GtPlotterLinearScale new.
 	valueY := #value.
 	ticksY := 10.
+	projectionXLineStyle := [ :anElement :aGtPlotterScaleContext | anElement background: Color veryLightGray ].
 ]
 
 { #category : #initialization }
@@ -310,6 +325,10 @@ GtPlotterLineChart >> newContentElement [
 	data groupsCollect: [ :aGroup |
 		aContainer addChild: (self newContentLineElementFor: aGroup) ].
 	
+	projectionXValues ifNotNil: [ 
+		aContainer addChild: (self newProjectionLinesElement)
+	].
+	
 	^ aContainer
 ]
 
@@ -345,6 +364,63 @@ GtPlotterLineChart >> newNoDataElement [
 		constraintsDo: [ :c | 
 			c grid horizontal alignCenter.
 			c grid vertical alignCenter ]
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newProjectionLabelsElement [
+	| anElement |
+	anElement := GtPlotterHorizontalValueProjectionsElement new
+		scale: self scaleX;
+		scaleData: valueX;
+		clipChildren: false;
+		constraintsDo: [ :c | c vertical fitContent ];
+		hideOverlapping;
+		values: (projectionXValues cull: self data).
+	
+	projectionXLabelElement ifNotNil: [ 
+		anElement valueElement: projectionXLabelElement ].
+
+	projectionXLabelStyle ifNotNil: [ 
+		anElement valueStyle: projectionXLabelStyle ].
+	
+	^ anElement
+]
+
+{ #category : #'instance creation' }
+GtPlotterLineChart >> newProjectionLinesElement [
+	^ GtPlotterHorizontalValueProjectionsElement new
+		scale: self scaleX;
+		scaleData: valueX;
+		valueStyle: projectionXLineStyle;
+		values: (projectionXValues cull: self data)
+]
+
+{ #category : #'api - projections' }
+GtPlotterLineChart >> projectionXLabelElement: aBlock [
+	"Return projection label element. 
+	Block has one argument: [ :aGtPlotterSingleScaleContext | ... ]"
+	projectionXLabelElement := aBlock
+]
+
+{ #category : #'api - projections' }
+GtPlotterLineChart >> projectionXLabelStyle: aBlock [
+	"Style a label element. 
+	Block has one argument: [ :anElement | ... ]"
+	projectionXLabelStyle := aBlock
+]
+
+{ #category : #'api - projections' }
+GtPlotterLineChart >> projectionXLineStyle: aBlock [
+	"Style a label element. 
+	Block has one argument: [ :anElement :aGtPlotterScaleContext | ... ]"
+	projectionXLineStyle := aBlock
+]
+
+{ #category : #'api - projections' }
+GtPlotterLineChart >> projectionXValues: aBlock [
+	"Return projection values. 
+	Block has one argument: [ :aData | ... ]"
+	projectionXValues := aBlock
 ]
 
 { #category : #accessing }
