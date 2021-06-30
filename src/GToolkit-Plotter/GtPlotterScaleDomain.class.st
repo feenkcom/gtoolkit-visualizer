@@ -33,6 +33,13 @@ GtPlotterScaleDomain >> normalize: aDomainValue [
 	^ self subclassResponsibility
 ]
 
+{ #category : #comparing }
+GtPlotterScaleDomain >> sameAs: anotherDomain [
+	^ self class = anotherDomain class and: [ 
+		self min = anotherDomain min and: [ 
+			self max = anotherDomain max ] ]
+]
+
 { #category : #'api - polymorphism' }
 GtPlotterScaleDomain >> value: aDomainValue [
 	^ self normalize: aDomainValue

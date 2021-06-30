@@ -30,10 +30,36 @@ Class {
 		'projectionXLabelStyle',
 		'projectionXLineStyle',
 		'labelFormatX',
-		'labelFormatY'
+		'labelFormatY',
+		'isAlreadyInitialized'
 	],
 	#category : #'GToolkit-Plotter-Builder - Line Chart'
 }
+
+{ #category : #'api - instantiation' }
+GtPlotterLineChart >> axisXStencil [
+	self initializeScales.
+	^ GtPlotterAxisStencil new
+		valuable: [ 
+			self newAxisXElement ];
+		scale: self scaleX
+]
+
+{ #category : #'api - instantiation' }
+GtPlotterLineChart >> axisYStencil [
+	self initializeScales.
+	^ GtPlotterAxisStencil new
+		valuable: [ 
+			self newAxisYElement ];
+		scale: self scaleY
+]
+
+{ #category : #'api - instantiation' }
+GtPlotterLineChart >> contentStencil [
+	^ [ 
+		self initializeScales.
+		self newContentElement ] asStencil
+]
 
 { #category : #'api - instantiation' }
 GtPlotterLineChart >> create [
@@ -82,6 +108,7 @@ GtPlotterLineChart >> data [
 GtPlotterLineChart >> initialize [
 	super initialize.
 
+	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #key.
 	ticksX := 10.
@@ -102,6 +129,9 @@ GtPlotterLineChart >> initialize [
 GtPlotterLineChart >> initializeScales [
 
 	| aMinX aMaxX aMinY aMaxY |
+	
+	isAlreadyInitialized ifTrue: [ ^ self ].
+	
 	aMinX := minX ifNil: [ 
 		| aCurrentValue |
 		data valuesDo: [ :eachValue | 

@@ -76,6 +76,12 @@ GtPlotterScale >> range: aGtPlotterScaleRange [
 	range := aGtPlotterScaleRange
 ]
 
+{ #category : #comparing }
+GtPlotterScale >> sameAs: anotherScale [
+	^ self class = anotherScale class and: [ 
+		self domain sameAs: anotherScale domain ]
+]
+
 { #category : #'api - ticks' }
 GtPlotterScale >> tickFormat: aFormatBlock [
 	tickFormat := aFormatBlock
