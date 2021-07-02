@@ -56,7 +56,7 @@ GtPlotter >> initialize [
 { #category : #accessing }
 GtPlotter >> root [
 	self
-		deprecated: 'Use #description instead.'
+		deprecated: 'Use #asElement instead.'
 		transformWith: '`@receiver root' -> '`@receiver asElement'.
 
 	^ self asElement
