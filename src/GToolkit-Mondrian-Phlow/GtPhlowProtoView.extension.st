@@ -4,5 +4,7 @@ Extension { #name : #GtPhlowProtoView }
 GtPhlowProtoView >> mondrian [
 	^ GtPhlowMondrianView new
 		originalView: self;
-		definingMethod: thisContext stack second method asRingDefinition
+		definingMethod: (GtPhlowDefiningMethodsCollector new 
+			stack: thisContext stack;
+			collect)
 ]
