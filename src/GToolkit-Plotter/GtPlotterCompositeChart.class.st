@@ -70,7 +70,8 @@ GtPlotterCompositeChart >> create [
 				vMatchParent;
 				hFitContent;
 				clipChildren: false;
-				addChildren: (self axisYStencils allButFirst collect: [ :e | e reversed asElement ]).
+				addChildren: (self axisYStencils allButFirst flatCollect: [ :e | 
+					{ self newAxisYLineElement. e reversed asElement. } ]).
 		 } ].
 	
 	aContainer addChild: self newEmptyElement.
