@@ -185,18 +185,18 @@ GtGradHierarchicalCoordinateAssignmentStage >> execute [
 					].
 					self currentXDelta < bestXDelta
 						ifTrue: [
-							self model ranks doWithIndex: [ :aRankSet :anIndex | 
-								aRankSet do: [ :aNode |
-									aNode xPositionAt: anIndex value: (aNode rankPositionsAt: anIndex) 
+							(self model ranks associations sorted: [:a :b | a key < b key ]) do: [ :assoc | 
+								assoc value do: [ :aNode |
+									aNode xPositionAt: assoc key value: (aNode rankPositionsAt: assoc key) 
 								]
 							].
 							anIteration > 1 "or else bestXDelta would be set to 0"
 								ifTrue: [ bestXDelta  := self currentXDelta ].
 						]
 						ifFalse: [
-							self model ranks doWithIndex: [ :aRankSet :anIndex | 
-								aRankSet do: [ :aNode |
-									aNode rankPositionsAt: anIndex value: (aNode xPositionAt: anIndex) 
+							(self model ranks associations sorted: [:a :b | a key < b key ]) do: [ :assoc |
+								assoc value do: [ :aNode |
+									aNode rankPositionsAt: assoc key value: (aNode xPositionAt: assoc key) 
 									].
 							] 
 						].
