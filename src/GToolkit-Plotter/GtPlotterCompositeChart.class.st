@@ -15,7 +15,7 @@ GtPlotterCompositeChart >> addPlot: aPlotterBuilder [
 	^ aPlotterBuilder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> axisXStencils [
 	| aCollection aUniqueCollection |
 	aCollection := plots collect: [ :eachPlot | eachPlot axisXStencil ].
@@ -26,7 +26,7 @@ GtPlotterCompositeChart >> axisXStencils [
 	^ aUniqueCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> axisYStencils [
 	| aCollection aUniqueCollection |
 	aCollection := plots collect: [ :eachPlot | eachPlot axisYStencil ].
@@ -37,7 +37,7 @@ GtPlotterCompositeChart >> axisYStencils [
 	^ aUniqueCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> contentStencils [
 	^ plots collect: [ :eachPlot | eachPlot contentStencil ]
 ]
@@ -46,12 +46,18 @@ GtPlotterCompositeChart >> contentStencils [
 GtPlotterCompositeChart >> create [
 	<return: #Object>
 	| aContainer axisYStencils |
-
+	
 	aContainer := BrHorizontalGrid new
 		cellSpacing: 0;
 		columnCount: 2;
 		matchParent;
 		padding: (BlInsets all: 20).
+		
+	self plots ifEmpty: [ 
+		aContainer
+			columnCount: 1; 
+			addChild: self newNoDataElement.
+		^ aContainer ].
 	
 	axisYStencils := self axisYStencils.
 	
@@ -95,7 +101,7 @@ GtPlotterCompositeChart >> gtLiveFor: aView [
 		stencil: [ self asElement ]
 ]
 
-{ #category : #accessing }
+{ #category : #'gt extensions' }
 GtPlotterCompositeChart >> gtPlotsFor: aView [
 	<gtView>
 	self plots ifNil: [ ^ aView empty ].
@@ -143,6 +149,16 @@ GtPlotterCompositeChart >> newEmptyElement [
 	^ BlElement new
 		size: 0@0;
 		visibility: BlVisibility hidden
+]
+
+{ #category : #'instance creation' }
+GtPlotterCompositeChart >> newNoDataElement [
+	^ BrLabel new 
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color lightGray);
+		text: 'no data';
+		constraintsDo: [ :c | 
+			c grid horizontal alignCenter.
+			c grid vertical alignCenter ]
 ]
 
 { #category : #accessing }
