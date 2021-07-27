@@ -446,6 +446,15 @@ GtPlotterLineChart >> newProjectionXLinesElement [
 		values: (projectionXValues cull: self data)
 ]
 
+{ #category : #'api - instantiation' }
+GtPlotterLineChart >> projectionLabelXStencil [
+	(self data size isZero or: [ projectionXValues isNil ])
+		ifTrue: [ ^ nil ].
+	self initializeScales.
+	^ BrValuableStencil new
+		valuable: [ self newProjectionXLabelsElement ]
+]
+
 { #category : #'api - projections' }
 GtPlotterLineChart >> projectionXLabelElement: aBlock [
 	"Return projection label element. 
