@@ -45,7 +45,7 @@ GtPlotterCompositeChart >> contentStencils [
 { #category : #'api - instantiation' }
 GtPlotterCompositeChart >> create [
 	<return: #Object>
-	| aContainer axisYStencils |
+	| aContainer axisYStencils projectionLabelXStencils |
 	
 	aContainer := BrHorizontalGrid new
 		cellSpacing: 0;
@@ -61,6 +61,22 @@ GtPlotterCompositeChart >> create [
 	
 	axisYStencils := self axisYStencils.
 	
+	projectionLabelXStencils := self projectionLabelXStencils.
+	projectionLabelXStencils ifNotEmpty: [ 
+		aContainer addChild: self newEmptyElement.
+	
+		aContainer addChildren: { 
+			BrVerticalPane new
+				hMatchParent;
+				vFitContent;
+				clipChildren: false;
+				addChildren: (projectionLabelXStencils collect: #asElement).
+		 }. 
+		
+		axisYStencils size > 1 ifTrue: [ 	
+			aContainer addChild: self newEmptyElement ].
+	].
+		
 	aContainer addChild: axisYStencils first asElement.
 	
 	aContainer addChildren: { 
@@ -164,6 +180,13 @@ GtPlotterCompositeChart >> newNoDataElement [
 { #category : #accessing }
 GtPlotterCompositeChart >> plots [
 	^ plots
+]
+
+{ #category : #'instance creation' }
+GtPlotterCompositeChart >> projectionLabelXStencils [
+	^ plots
+		collect: [ :eachPlot | eachPlot projectionLabelXStencil ]
+		thenReject: #isNil
 ]
 
 { #category : #'api - builders' }
