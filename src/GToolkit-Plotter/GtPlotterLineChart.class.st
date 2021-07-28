@@ -56,9 +56,11 @@ GtPlotterLineChart >> axisYStencil [
 
 { #category : #'api - instantiation' }
 GtPlotterLineChart >> contentStencil [
-	^ [ 
-		self initializeScales.
-		self newContentElement ] asStencil
+	^ [ | anElement |
+	self initializeScales.
+	anElement := self newContentElement.
+	self styleChartElement: anElement.
+	anElement ] asStencil
 ]
 
 { #category : #'api - instantiation' }
@@ -95,6 +97,8 @@ GtPlotterLineChart >> create [
 					self newCornerElement.
 					self newAxisXElement.
 				 } ].
+	
+	self styleChartElement: aContainer.
 	
 	^ aContainer
 ]
