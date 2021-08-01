@@ -91,6 +91,11 @@ GtPlotterHorizontalBarChart >> barHeightScale: aGtPlotterScale [
 ]
 
 { #category : #'api - bars' }
+GtPlotterHorizontalBarChart >> barLabelAptitudeStencil: aStencil [
+	barLabelLookStencil := aStencil asStencil
+]
+
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barLabelColor [
 	<return: #Color>
 	
@@ -110,11 +115,6 @@ GtPlotterHorizontalBarChart >> barLabelFormat: aBlock [
 { #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barLabelLookStencil [
 	^ barLabelLookStencil
-]
-
-{ #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barLabelLookStencil: aStencil [
-	barLabelLookStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
