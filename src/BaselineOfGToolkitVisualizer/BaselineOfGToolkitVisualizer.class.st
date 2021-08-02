@@ -41,28 +41,29 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick/src' ];
+				spec repository: 'github://feenkcom/Brick:main/src' ];
 			baseline: 'Beacon' with: [
 				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
-				spec requires: #(#Brick ). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-BlocGraph-Grad' with: [
 				spec requires: #('GToolkit-BlocGraph' ). ];
 			package: 'GToolkit-BlocGraph-Layouts' with: [
 				spec requires: #('GToolkit-BlocGraph' ). ];
 			package: 'GToolkit-Mondrian' with: [
-				spec requires: #(#Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon' ). ];
+				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon' ). ];
 			package: 'GToolkit-Mondrian-Glamour' with: [
 				spec requires: #('GToolkit-Mondrian' ). ];
 			package: 'GToolkit-Connector' with: [
-				spec requires: #(#Brick 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
+				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
 			package: 'GToolkit-Diagrammer' with: [
-				spec requires: #(#Brick). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-TreeMap' with: [
-				spec requires: #(#Brick). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-Plotter' with: [
-				spec requires: #(#Brick). ];
+				spec requires: #('Brick' ). ];
 			package: 'GToolkit-WardleyMap' with: [
-				spec requires: #(#Brick). ] ].
+				spec requires: #('Brick' ). ]. ].
+
 ]
