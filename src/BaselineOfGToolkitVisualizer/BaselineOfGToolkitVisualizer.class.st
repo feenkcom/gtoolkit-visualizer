@@ -24,46 +24,47 @@ Connector is an engine for scripting a visual exploration of a graph. For exampl
 
 "
 Class {
-	#name : #BaselineOfGToolkitVisualizer,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfGToolkitVisualizer
+	#name : 'BaselineOfGToolkitVisualizer',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfGToolkitVisualizer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfGToolkitVisualizer class >> itself [
 	<gtExample>
 	^ self
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfGToolkitVisualizer >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
-		spec 
+		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.371/src' ];
+				spec repository: 'github://feenkcom/Brick:v0.8.372/src' ].
+		spec
 			baseline: 'Beacon' with: [
 				spec repository: 'github://feenkcom/pharo-beacon:a119e739bc378ca2a95883e074090d90fed4edeb/repository' ].
-		spec 
-			package: 'GToolkit-BlocGraph' with: [
-				spec requires: #('Brick' ). ];
-			package: 'GToolkit-BlocGraph-Grad' with: [
-				spec requires: #('GToolkit-BlocGraph' ). ];
-			package: 'GToolkit-BlocGraph-Layouts' with: [
-				spec requires: #('GToolkit-BlocGraph' ). ];
-			package: 'GToolkit-Mondrian' with: [
-				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon' ). ];
-			package: 'GToolkit-Mondrian-Glamour' with: [
-				spec requires: #('GToolkit-Mondrian' ). ];
-			package: 'GToolkit-Connector' with: [
-				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
-			package: 'GToolkit-Diagrammer' with: [
-				spec requires: #('Brick' ). ];
-			package: 'GToolkit-TreeMap' with: [
-				spec requires: #('Brick' ). ];
-			package: 'GToolkit-Plotter' with: [
-				spec requires: #('Brick' ). ];
-			package: 'GToolkit-WardleyMap' with: [
-				spec requires: #('Brick' ). ]. ].
 
+		spec package: 'GToolkit-BlocGraph' with: [
+			spec requires: #('Brick') ].
+		spec package: 'GToolkit-BlocGraph-Grad' with: [
+			spec requires: #('GToolkit-BlocGraph') ].
+		spec package: 'GToolkit-BlocGraph-Layouts' with: [
+			spec requires: #('GToolkit-BlocGraph') ].
+		spec package: 'GToolkit-Mondrian' with: [
+			spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon') ].
+		spec package: 'GToolkit-Mondrian-Glamour' with: [
+			spec requires: #('GToolkit-Mondrian') ].
+		spec package: 'GToolkit-Connector' with: [
+			spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts') ].
+		spec package: 'GToolkit-Diagrammer' with: [
+			spec requires: #('Brick') ].
+		spec package: 'GToolkit-TreeMap' with: [
+			spec requires: #('Brick') ].
+		spec package: 'GToolkit-Plotter' with: [
+			spec requires: #('Brick') ].
+		spec package: 'GToolkit-WardleyMap' with: [
+			spec requires: #('Brick') ].
+	]
 ]
