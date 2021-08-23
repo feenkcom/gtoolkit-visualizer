@@ -1,1 +1,1 @@
-Package { #name : 'BaselineOfGToolkitVisualizer' }
+Package { #name : #BaselineOfGToolkitVisualizer }
