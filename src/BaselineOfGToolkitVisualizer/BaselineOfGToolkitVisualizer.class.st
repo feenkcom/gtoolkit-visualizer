@@ -24,26 +24,24 @@ Connector is an engine for scripting a visual exploration of a graph. For exampl
 
 "
 Class {
-	#name : #BaselineOfGToolkitVisualizer,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfGToolkitVisualizer
+	#name : 'BaselineOfGToolkitVisualizer',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfGToolkitVisualizer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfGToolkitVisualizer class >> itself [
 	<gtExample>
 	^ self
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfGToolkitVisualizer >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:main/src' ];
-			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
+				spec repository: 'github://feenkcom/Brick:main/src' ].
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
 				spec requires: #('Brick' ). ];
@@ -52,7 +50,7 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-BlocGraph-Layouts' with: [
 				spec requires: #('GToolkit-BlocGraph' ). ];
 			package: 'GToolkit-Mondrian' with: [
-				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'Beacon' ). ];
+				spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' ). ];
 			package: 'GToolkit-Mondrian-Glamour' with: [
 				spec requires: #('GToolkit-Mondrian' ). ];
 			package: 'GToolkit-Connector' with: [
