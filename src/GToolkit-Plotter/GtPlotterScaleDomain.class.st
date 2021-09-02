@@ -6,41 +6,41 @@ https://en.wikipedia.org/wiki/Domain_of_a_function
 
 "
 Class {
-	#name : #GtPlotterScaleDomain,
-	#superclass : #Object,
-	#category : #'GToolkit-Plotter-Scale'
+	#name : 'GtPlotterScaleDomain',
+	#superclass : 'Object',
+	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : #'api - polymorphism' }
+{ #category : 'api - polymorphism' }
 GtPlotterScaleDomain >> cull: aDomainValue [
 	^ self normalize: aDomainValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterScaleDomain >> max [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterScaleDomain >> min [
 	^ self subclassResponsibility
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 GtPlotterScaleDomain >> normalize: aDomainValue [
 	"I take a domain value x and return the corresponding parameter t in [0,1]."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtPlotterScaleDomain >> sameAs: anotherDomain [
 	^ self class = anotherDomain class and: [ 
 		self min = anotherDomain min and: [ 
 			self max = anotherDomain max ] ]
 ]
 
-{ #category : #'api - polymorphism' }
+{ #category : 'api - polymorphism' }
 GtPlotterScaleDomain >> value: aDomainValue [
 	^ self normalize: aDomainValue
 ]

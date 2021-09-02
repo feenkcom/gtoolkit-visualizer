@@ -10,17 +10,17 @@ I use {{gtClass:GtGraphTreemapSquarify}} to compute {{gtClass:BlElement}} childr
 
 "
 Class {
-	#name : #GtGraphTreemapSquarifiedLayout,
-	#superclass : #GtGraphTreemapLayout,
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
+	#name : 'GtGraphTreemapSquarifiedLayout',
+	#superclass : 'GtGraphTreemapLayout',
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtGraphTreemapSquarifiedLayout >> defaultSortFunction [
 	^ self descendentSortFunction
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtGraphTreemapSquarifiedLayout >> treeFrom: anExtent [
 	^ GtGraphTreemap squarify extent: anExtent
 ]

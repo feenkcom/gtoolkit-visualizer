@@ -10,12 +10,12 @@ I draw horizontal projections.
 
 "
 Class {
-	#name : #GtPlotterHorizontalValueProjectionsElement,
-	#superclass : #GtPlotterSingleScaleValueBasedElement,
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#name : 'GtPlotterHorizontalValueProjectionsElement',
+	#superclass : 'GtPlotterSingleScaleValueBasedElement',
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterHorizontalValueProjectionsElement >> defaultValueElement [
 	^ [ :aGtPlotterScaleContext | BlElement new
 			constraintsDo: [ :c |
@@ -23,7 +23,7 @@ GtPlotterHorizontalValueProjectionsElement >> defaultValueElement [
 				c vertical matchParent ] ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterHorizontalValueProjectionsElement >> defaultValueLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
@@ -35,7 +35,7 @@ GtPlotterHorizontalValueProjectionsElement >> defaultValueLayout [
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterHorizontalValueProjectionsElement >> defaultValueStyle [
 	^ [ :anElement :aGtPlotterScaleContext | anElement background: (Color gray alpha: 0.8) ]
 		asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher

@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterDonutValuesElement,
-	#superclass : #GtPlotterSingleScaleValueBasedElement,
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#name : 'GtPlotterDonutValuesElement',
+	#superclass : 'GtPlotterSingleScaleValueBasedElement',
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDonutValuesElement >> defaultValueElement [
 	^ [ :aGtPlotterScaleContext | BlElement new
 		geometry: (BlAnnulusSector new
@@ -13,7 +13,7 @@ GtPlotterDonutValuesElement >> defaultValueElement [
 		outskirts: (BlOutskirts centered) ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDonutValuesElement >> defaultValueLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
@@ -23,14 +23,14 @@ GtPlotterDonutValuesElement >> defaultValueLayout [
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDonutValuesElement >> defaultValueStyle [
 	^ [ :anElement :aGtPlotterScaleContext | anElement
 			background: (Color gray alpha: 0.5);
 			border: (BlBorder paint: Color gray width: 1) ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 GtPlotterDonutValuesElement >> initializeElements [
 	| theChildren theScaledValues theMappedValues theDonutContexts aSumOfMappedValues aStartAngle |
 

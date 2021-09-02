@@ -5,31 +5,31 @@ See my subclasses for more details and examples: {{gtClass:GtGraphTreemapSlice|s
 
 "
 Class {
-	#name : #GtGraphTreemapSlice,
-	#superclass : #GtGraphTreemap,
+	#name : 'GtGraphTreemapSlice',
+	#superclass : 'GtGraphTreemap',
 	#instVars : [
 		'breadth',
 		'length'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 GtGraphTreemapSlice class >> horizontal [
 	^ GtGraphTreemapSliceHorizontal new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtGraphTreemapSlice class >> isAbstract [
 	^ self name = #GtGraphTreemapSlice 
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 GtGraphTreemapSlice class >> vertical [
 	^ GtGraphTreemapSliceVertical new
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSlice >> asElementWithInformation [
 	<return: #BlElement>
 	| aContainer |
@@ -41,47 +41,47 @@ GtGraphTreemapSlice >> asElementWithInformation [
 	^ aContainer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSlice >> breadth [
 	<return: #Number>
 	^ breadth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSlice >> breadth: aNumber [
 	breadth := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtGraphTreemapSlice >> initialize [
 	super initialize.
 	breadth := 0.
 	length := 0.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSlice >> length [
 	<return: #Number>
 	^ length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSlice >> length: aNumber [
 	length := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSlice >> remainingExtent [
 	<return: #Point>
 	^ self subclassResponsibility
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphTreemapSlice >> updateExtentFor: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 GtGraphTreemapSlice >> updateNode: aNode [
 	self updateExtentFor: aNode.
 	self nodes
@@ -89,7 +89,7 @@ GtGraphTreemapSlice >> updateNode: aNode [
 		ifNotEmpty: [ self updatePositionFor: aNode ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphTreemapSlice >> updatePositionFor: aNode [
 	self subclassResponsibility
 ]

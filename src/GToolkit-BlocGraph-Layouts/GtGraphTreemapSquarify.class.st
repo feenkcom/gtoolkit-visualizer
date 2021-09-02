@@ -39,16 +39,16 @@ An optimal result can not be guaranteed, and counterexamples can be set up. The 
 
 "
 Class {
-	#name : #GtGraphTreemapSquarify,
-	#superclass : #GtGraphTreemap,
+	#name : 'GtGraphTreemapSquarify',
+	#superclass : 'GtGraphTreemap',
 	#instVars : [
 		'extent',
 		'firstStep'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtGraphTreemapSquarify >> allAreas [
 	self 
 		deprecated: 'Please use #allSteps instead.'
@@ -56,12 +56,12 @@ GtGraphTreemapSquarify >> allAreas [
 	^ firstStep allSteps
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtGraphTreemapSquarify >> allSteps [
 	^ firstStep allSteps
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarify >> asAllStepsPreview [
 	| aContainer theStepsToElements |
 	aContainer := BlElement new 
@@ -93,12 +93,12 @@ GtGraphTreemapSquarify >> asAllStepsPreview [
 	^ aContainer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarify >> extent [
 	^ self firstArea extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarify >> extent: aPoint [ 
 	self 
 		assert: [ aPoint isNotNil ] 
@@ -106,13 +106,13 @@ GtGraphTreemapSquarify >> extent: aPoint [
 	self firstArea extent: aPoint.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarify >> firstArea [
 	<return: #GtGraphTreemapSquarifyStep>
 	^ firstStep
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarify >> gtAllStepsFor: aView [
 	<gtView>
 	firstStep ifNil: [ ^ aView empty ].
@@ -120,7 +120,7 @@ GtGraphTreemapSquarify >> gtAllStepsFor: aView [
 		title: 'Steps List'
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarify >> gtAllStepsMondrianPreviewFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
@@ -140,7 +140,7 @@ GtGraphTreemapSquarify >> gtAllStepsMondrianPreviewFor: aView [
 		]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarify >> gtAllStepsPreviewFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
@@ -151,28 +151,28 @@ GtGraphTreemapSquarify >> gtAllStepsPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarify >> height [
 	^ self extent y
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtGraphTreemapSquarify >> initialize [
 	super initialize.
 	firstStep := GtGraphTreemapSquarifyStep new nodes: self nodes.
 ]
 
-{ #category : #'seas optimizations' }
+{ #category : 'seas optimizations' }
 GtGraphTreemapSquarify >> updateNode: aNode [
 	self firstArea squarifyNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarify >> width [
 	^ self extent x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarify >> width: aWidth height: anHeight [ 
 	self extent: aWidth @ anHeight
 ]

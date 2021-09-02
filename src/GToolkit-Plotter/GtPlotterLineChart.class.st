@@ -9,8 +9,8 @@ I draw line charts.
 {{gtExample:GtPlotterLineChartExamples>>#plotWithProjections|codeExpanded=false|previewExpanded=true|previewHeight=430}}
 "
 Class {
-	#name : #GtPlotterLineChart,
-	#superclass : #GtPlotterBuilder,
+	#name : 'GtPlotterLineChart',
+	#superclass : 'GtPlotterBuilder',
 	#instVars : [
 		'data',
 		'valueX',
@@ -33,10 +33,10 @@ Class {
 		'labelFormatY',
 		'isAlreadyInitialized'
 	],
-	#category : #'GToolkit-Plotter-Builder - Line Chart'
+	#category : 'GToolkit-Plotter-Builder - Line Chart'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterLineChart >> axisXStencil [
 	self initializeScales.
 	^ GtPlotterAxisStencil new
@@ -45,7 +45,7 @@ GtPlotterLineChart >> axisXStencil [
 		scale: self scaleX
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterLineChart >> axisYStencil [
 	self initializeScales.
 	^ GtPlotterAxisStencil new
@@ -54,7 +54,7 @@ GtPlotterLineChart >> axisYStencil [
 		scale: self scaleY
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterLineChart >> contentStencil [
 	^ [ | anElement |
 	self initializeScales.
@@ -63,7 +63,7 @@ GtPlotterLineChart >> contentStencil [
 	anElement ] asStencil
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterLineChart >> create [
 	<return: #BlElement>
 	| aContainer |
@@ -103,12 +103,12 @@ GtPlotterLineChart >> create [
 	^ aContainer
 ]
 
-{ #category : #'api - data' }
+{ #category : 'api - data' }
 GtPlotterLineChart >> data [
 	^ data
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterLineChart >> initialize [
 	super initialize.
 
@@ -129,7 +129,7 @@ GtPlotterLineChart >> initialize [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterLineChart >> initializeScales [
 
 	| aMinX aMaxX aMinY aMaxY |
@@ -174,61 +174,61 @@ GtPlotterLineChart >> initializeScales [
 	
 ]
 
-{ #category : #'api - axes' }
+{ #category : 'api - axes' }
 GtPlotterLineChart >> labelFormatX: aBlock [
 	"Create a {{gtClass:BlText}}.
 	Block has one argument [ :aValue | ... ]"
 	labelFormatX := aBlock
 ]
 
-{ #category : #'api - axes' }
+{ #category : 'api - axes' }
 GtPlotterLineChart >> labelFormatY: aBlock [
 	"Create a {{gtClass:BlText}}.
 	Block has one argument [ :aValue | ... ]"
 	labelFormatY := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> maxX [
 	^ maxX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> maxX: anObject [
 	maxX := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> maxY [
 	^ maxY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> maxY: anObject [
 	maxY := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> minX [
 	^ minX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> minX: anObject [
 	minX := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> minY [
 	^ minY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> minY: anObject [
 	minY := anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisXElement [
 	| aContainer |
 	aContainer := BrVerticalPane new
@@ -245,7 +245,7 @@ GtPlotterLineChart >> newAxisXElement [
 	^ aContainer
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisXLineElement [
 	^ BlElement new
 		height: 2;
@@ -255,7 +255,7 @@ GtPlotterLineChart >> newAxisXLineElement [
 			c frame vertical alignBottom ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisXTickLabelsElement [
 	^ GtPlotterHorizontalTickLabelsElement new
 		scale: self scaleX;
@@ -265,7 +265,7 @@ GtPlotterLineChart >> newAxisXTickLabelsElement [
 		labels: ticksX
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisXTicksElement [
 	
 	^ GtPlotterHorizontalTicksElement new
@@ -276,7 +276,7 @@ GtPlotterLineChart >> newAxisXTicksElement [
 		ticks: ticksX
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisXTitleElement [
 
 	^ BrLabel new
@@ -289,7 +289,7 @@ GtPlotterLineChart >> newAxisXTitleElement [
 			c linear horizontal alignRight ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisYElement [
 	| aContainer |
 	aContainer := BrHorizontalPane new
@@ -308,7 +308,7 @@ GtPlotterLineChart >> newAxisYElement [
 	^ aContainer
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisYLineElement [
 	^ BlElement new
 		width: 2;
@@ -318,7 +318,7 @@ GtPlotterLineChart >> newAxisYLineElement [
 			c frame horizontal alignLeft ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisYTickLabelsElement [
 	^ GtPlotterVerticalTickLabelsElement new
 		scale: self scaleY;
@@ -337,7 +337,7 @@ GtPlotterLineChart >> newAxisYTickLabelsElement [
 		labels: ticksY
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisYTicksElement [
 	^ GtPlotterVerticalTicksElement new
 		scale: self scaleY;
@@ -347,7 +347,7 @@ GtPlotterLineChart >> newAxisYTicksElement [
 		ticks: ticksY
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newAxisYTitleElement [
 
 	^ BrFrame new
@@ -368,7 +368,7 @@ GtPlotterLineChart >> newAxisYTitleElement [
 				t rotateBy: 270 ])
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newContentElement [
 	| aContainer |
 	aContainer := BrFrame new
@@ -387,7 +387,7 @@ GtPlotterLineChart >> newContentElement [
 	^ aContainer
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newContentLineElementFor: aGroup [
 	^ BlElement new
 		geometry: (BlNormalizedPolyline vertices: (self newContentLineVerticesFor: aGroup));
@@ -398,20 +398,20 @@ GtPlotterLineChart >> newContentLineElementFor: aGroup [
 			c vertical matchParent ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newContentLineVerticesFor: aGroup [
 	^ aGroup collect: [ :eachValue | 
 		(scaleX map: (valueX value: eachValue)) @ (1 - (scaleY map: (valueY value: eachValue))) ].
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newCornerElement [
 	^ BlElement new
 		size: 0@0;
 		visibility: BlVisibility hidden
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newNoDataElement [
 	^ BrLabel new 
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color lightGray);
@@ -421,7 +421,7 @@ GtPlotterLineChart >> newNoDataElement [
 			c grid vertical alignCenter ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newProjectionXLabelsElement [
 	| anElement |
 	anElement := GtPlotterHorizontalValueProjectionsElement new
@@ -441,7 +441,7 @@ GtPlotterLineChart >> newProjectionXLabelsElement [
 	^ anElement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLineChart >> newProjectionXLinesElement [
 	^ GtPlotterHorizontalValueProjectionsElement new
 		scale: self scaleX;
@@ -450,7 +450,7 @@ GtPlotterLineChart >> newProjectionXLinesElement [
 		values: (projectionXValues cull: self data)
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterLineChart >> projectionLabelXStencil [
 	(self data size isZero or: [ projectionXValues isNil ])
 		ifTrue: [ ^ nil ].
@@ -459,97 +459,97 @@ GtPlotterLineChart >> projectionLabelXStencil [
 		valuable: [ self newProjectionXLabelsElement ]
 ]
 
-{ #category : #'api - projections' }
+{ #category : 'api - projections' }
 GtPlotterLineChart >> projectionXLabelElement: aBlock [
 	"Return projection label element. 
 	Block has one argument: [ :aGtPlotterSingleScaleContext | ... ]"
 	projectionXLabelElement := aBlock
 ]
 
-{ #category : #'api - projections' }
+{ #category : 'api - projections' }
 GtPlotterLineChart >> projectionXLabelStyle: aBlock [
 	"Style a label element. 
 	Block has one argument: [ :anElement | ... ]"
 	projectionXLabelStyle := aBlock
 ]
 
-{ #category : #'api - projections' }
+{ #category : 'api - projections' }
 GtPlotterLineChart >> projectionXLineStyle: aBlock [
 	"Style a label element. 
 	Block has one argument: [ :anElement :aGtPlotterScaleContext | ... ]"
 	projectionXLineStyle := aBlock
 ]
 
-{ #category : #'api - projections' }
+{ #category : 'api - projections' }
 GtPlotterLineChart >> projectionXValues: aBlock [
 	"Return projection values. 
 	Block has one argument: [ :aData | ... ]"
 	projectionXValues := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> scaleX [
 	^ scaleX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> scaleX: anObject [
 	scaleX := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> scaleY [
 	^ scaleY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> scaleY: anObject [
 	scaleY := anObject
 ]
 
-{ #category : #'api - axes' }
+{ #category : 'api - axes' }
 GtPlotterLineChart >> ticksX: aNumber [
 	"Define number of axis ticks"
 	ticksX := aNumber
 ]
 
-{ #category : #'api - axes' }
+{ #category : 'api - axes' }
 GtPlotterLineChart >> ticksY: aNumber [
 	"Define number of axis ticks"
 	ticksY := aNumber
 ]
 
-{ #category : #'api - axes' }
+{ #category : 'api - axes' }
 GtPlotterLineChart >> titleX: aString [
 	titleX := aString
 ]
 
-{ #category : #'api - axes' }
+{ #category : 'api - axes' }
 GtPlotterLineChart >> titleY: aString [
 	titleY := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> valueX [
 	^ valueX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> valueX: anObject [
 	valueX := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> valueY [
 	^ valueY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterLineChart >> valueY: anObject [
 	valueY := anObject
 ]
 
-{ #category : #'api - data' }
+{ #category : 'api - data' }
 GtPlotterLineChart >> with: aGtPlotterDataGroup [
 	data := aGtPlotterDataGroup
 ]

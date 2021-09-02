@@ -4,21 +4,21 @@ I describes a logical connection (link) between methods
 
 "
 Class {
-	#name : #GtConnectorLink,
-	#superclass : #Object,
+	#name : 'GtConnectorLink',
+	#superclass : 'Object',
 	#instVars : [
 		'source',
 		'target'
 	],
-	#category : #'GToolkit-Connector-Extensions'
+	#category : 'GToolkit-Connector-Extensions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtConnectorLink class >> source: aSource target: aTarget [
 	^ self new source: aSource target: aTarget
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtConnectorLink >> = anotherObject [
 	self == anotherObject
 		ifTrue: [ ^ true ].
@@ -29,31 +29,31 @@ GtConnectorLink >> = anotherObject [
 		and: [ anotherObject target = self target ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtConnectorLink >> hash [
 	^ self source hash bitXor: self target hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorLink >> inverted [
 	^ self class
 		source: self target
 		target: self source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorLink >> source [
 	^ source
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtConnectorLink >> source: aSource target: aTarget [
 
 	source := aSource.
 	target := aTarget
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorLink >> target [
 	^ target
 ]

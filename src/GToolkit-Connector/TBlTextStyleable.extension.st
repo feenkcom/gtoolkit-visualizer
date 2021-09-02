@@ -1,6 +1,6 @@
-Extension { #name : #TBlTextStyleable }
+Extension { #name : 'TBlTextStyleable' }
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 TBlTextStyleable >> glamorousExplanationFor: anExplanationModel [
 	self attributesBuilder attribute: (GtExplainerExplanationAttribute new explanationModel: anExplanationModel)
 ]

@@ -1,18 +1,18 @@
 Class {
-	#name : #GtConnectorVisualElementEvent,
-	#superclass : #BlEvent,
+	#name : 'GtConnectorVisualElementEvent',
+	#superclass : 'BlEvent',
 	#instVars : [
 		'element'
 	],
-	#category : #'GToolkit-Connector-Events'
+	#category : 'GToolkit-Connector-Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorVisualElementEvent >> element [
 	^ element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorVisualElementEvent >> element: anObject [
 	element := anObject
 ]

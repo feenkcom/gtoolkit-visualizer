@@ -1,15 +1,15 @@
 Class {
-	#name : #GtPlotterDurationDay,
-	#superclass : #GtPlotterDuration,
-	#category : #'GToolkit-Plotter-Time'
+	#name : 'GtPlotterDurationDay',
+	#superclass : 'GtPlotterDuration',
+	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtPlotterDurationDay >> asDuration [
 	^ self amount days
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtPlotterDurationDay >> name [
 	^ 'day'
 ]

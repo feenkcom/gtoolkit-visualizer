@@ -4,12 +4,12 @@ I draw horizontal timeline chart.
 {{gtExample:GtPlotterHorizontalTimelineExamples>>exampleVersions|previewExpanded=true|codeExpanded=false}}
 "
 Class {
-	#name : #GtPlotterHorizontalTimeline,
-	#superclass : #GtPlotterTimeline,
-	#category : #'GToolkit-Plotter-Builder - Timeline'
+	#name : 'GtPlotterHorizontalTimeline',
+	#superclass : 'GtPlotterTimeline',
+	#category : 'GToolkit-Plotter-Builder - Timeline'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalTimeline >> create [
 	<return: #Object>	
 	| anAxisElement |
@@ -29,7 +29,7 @@ GtPlotterHorizontalTimeline >> create [
 				anAxisElement. }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterHorizontalTimeline >> createAxisLabelProjections: aCollectionOfDomainObjects [
 	^ GtPlotterHorizontalValueProjectionsElement new
 		scale: timeScale;
@@ -49,7 +49,7 @@ GtPlotterHorizontalTimeline >> createAxisLabelProjections: aCollectionOfDomainOb
 		values: aCollectionOfDomainObjects
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterHorizontalTimeline >> createAxisLabelTicks [
 	^ GtPlotterHorizontalTickLabelsElement new
 		scale: timeScale;
@@ -59,7 +59,7 @@ GtPlotterHorizontalTimeline >> createAxisLabelTicks [
 		labels: amountOfTicks
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterHorizontalTimeline >> createProjections: aCollectionOfDomainObjects [
 	<gtExample>
 
@@ -90,7 +90,7 @@ GtPlotterHorizontalTimeline >> createProjections: aCollectionOfDomainObjects [
 		values: aCollectionOfDomainObjects
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterHorizontalTimeline >> createTimeline: aCollectionOfDomainObjects [
 	^ BrFrame new
 		vFitContent;
@@ -101,7 +101,7 @@ GtPlotterHorizontalTimeline >> createTimeline: aCollectionOfDomainObjects [
 			self createTimelineDots: aCollectionOfDomainObjects }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterHorizontalTimeline >> createTimelineDots: aCollectionOfDomainObjects [
 	^ GtPlotterMarkersElement new
 		horizontalMarkerLayout;
@@ -117,7 +117,7 @@ GtPlotterHorizontalTimeline >> createTimelineDots: aCollectionOfDomainObjects [
 		values: aCollectionOfDomainObjects
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterHorizontalTimeline >> createTimelineLine [	
 	^ timelineStencil asElement
 		constraintsDo: [ :c | 
@@ -125,7 +125,7 @@ GtPlotterHorizontalTimeline >> createTimelineLine [
 			c frame vertical alignCenterAt: 0.5 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterHorizontalTimeline >> initialize [
 	super initialize.
 	

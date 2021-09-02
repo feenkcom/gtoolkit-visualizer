@@ -1,39 +1,39 @@
 Class {
-	#name : #GtNestedTreeBuilderStepContext,
-	#superclass : #Object,
+	#name : 'GtNestedTreeBuilderStepContext',
+	#superclass : 'Object',
 	#instVars : [
 		'data',
 		'weight'
 	],
-	#category : #'GToolkit-TreeMap-Data Structures'
+	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : #copying }
+{ #category : 'copying' }
 GtNestedTreeBuilderStepContext >> copyWithData: aCollection [ 
 	^ self copy data: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeBuilderStepContext >> data [
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeBuilderStepContext >> data: anObject [
 	data := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedTreeBuilderStepContext >> defaultData [
 	^ #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedTreeBuilderStepContext >> defaultWeight [
 	^ [ :anItem | anItem isNumber ifTrue: [ anItem ] ifFalse: [ 1 ] ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtNestedTreeBuilderStepContext >> gtDataFor: aView [
 	<gtView>
 	self data ifNil: [ ^ aView empty ].
@@ -43,7 +43,7 @@ GtNestedTreeBuilderStepContext >> gtDataFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedTreeBuilderStepContext >> initialize [
 	super initialize.
 	data := self defaultData.
@@ -51,12 +51,12 @@ GtNestedTreeBuilderStepContext >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeBuilderStepContext >> weight [
 	^ weight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeBuilderStepContext >> weight: anObject [
 	weight := anObject
 ]

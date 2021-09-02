@@ -1,6 +1,6 @@
 Class {
-	#name : #GtPlotterHorizontalSparkline,
-	#superclass : #GtPlotterBuilder,
+	#name : 'GtPlotterHorizontalSparkline',
+	#superclass : 'GtPlotterBuilder',
 	#instVars : [
 		'scaleX',
 		'scaleY',
@@ -9,10 +9,10 @@ Class {
 		'scaleDataBlockY',
 		'lineWidth'
 	],
-	#category : #'GToolkit-Plotter-Builder - Sparkline'
+	#category : 'GToolkit-Plotter-Builder - Sparkline'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalSparkline >> create [
 	<return: #Object>
 	| aContainer |
@@ -38,7 +38,7 @@ GtPlotterHorizontalSparkline >> create [
 	^ aContainer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterHorizontalSparkline >> initialize [
 	super initialize.
 	
@@ -53,57 +53,57 @@ GtPlotterHorizontalSparkline >> initialize [
 	data := GtPlotterDataGroup new
 ]
 
-{ #category : #'api  - line' }
+{ #category : 'api  - line' }
 GtPlotterHorizontalSparkline >> lineWidth [
 	^ lineWidth
 ]
 
-{ #category : #'api  - line' }
+{ #category : 'api  - line' }
 GtPlotterHorizontalSparkline >> lineWidth: aNumber [
 	lineWidth := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleDataX [
 	^ scaleDataBlockX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleDataX: anObject [
 	scaleDataBlockX := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleDataY [
 	^ scaleDataBlockY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleDataY: anObject [
 	scaleDataBlockY := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleX [
 	^ scaleX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleX: anObject [
 	scaleX := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleY [
 	^ scaleY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> scaleY: anObject [
 	scaleY := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalSparkline >> with: aGtPlotterDataEntity [
 	data := aGtPlotterDataEntity
 ]

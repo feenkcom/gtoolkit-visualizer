@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterHorizontalAdjacentBarGroupStencilBuilder,
-	#superclass : #GtPlotterHorizontalBarGroupStencilBuilder,
-	#category : #'GToolkit-Plotter-Builder - Bar Chart'
+	#name : 'GtPlotterHorizontalAdjacentBarGroupStencilBuilder',
+	#superclass : 'GtPlotterHorizontalBarGroupStencilBuilder',
+	#category : 'GToolkit-Plotter-Builder - Bar Chart'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalAdjacentBarGroupStencilBuilder >> buildDefault [
 	<return: #BrStencil or: #BlElement>
 	| aGtPlotterContext |

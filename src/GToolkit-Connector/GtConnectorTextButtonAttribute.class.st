@@ -1,6 +1,6 @@
 Class {
-	#name : #GtConnectorTextButtonAttribute,
-	#superclass : #BrTextAdornmentAttribute,
+	#name : 'GtConnectorTextButtonAttribute',
+	#superclass : 'BrTextAdornmentAttribute',
 	#traits : 'TBlEventTarget',
 	#classTraits : 'TBlEventTarget classTrait',
 	#instVars : [
@@ -8,35 +8,35 @@ Class {
 		'link',
 		'eventDispatcher'
 	],
-	#category : #'GToolkit-Connector-Extensions'
+	#category : 'GToolkit-Connector-Extensions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtConnectorTextButtonAttribute class >> link: aConnectorLink [
 	^ self new initializeWith: aConnectorLink
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtConnectorTextButtonAttribute class >> source: aSource target: aTarget [
 	^ self new initializeWith: (GtConnectorLink source: aSource target: aTarget)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorTextButtonAttribute >> actionBlock [
 	^ actionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorTextButtonAttribute >> actionBlock: aBlock [
 	actionBlock := aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtConnectorTextButtonAttribute >> affect: aTBrTextEditorTextualPiece in: anEditorElement [
 	^ self newButton
 ]
 
-{ #category : #'event management accessing' }
+{ #category : 'event management accessing' }
 GtConnectorTextButtonAttribute >> eventDispatcher [
 	"Return an object responsible for event dispatching"
 	<return: #BlDirectEventDispatcher>
@@ -44,7 +44,7 @@ GtConnectorTextButtonAttribute >> eventDispatcher [
 	^ eventDispatcher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtConnectorTextButtonAttribute >> initialize [
 	super initialize.
 	
@@ -54,19 +54,19 @@ GtConnectorTextButtonAttribute >> initialize [
 	self beAppend
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtConnectorTextButtonAttribute >> initializeWith: aLink [
 	link := aLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorTextButtonAttribute >> link [
 	<return: #GtConnectorLink>
 
 	^ link
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtConnectorTextButtonAttribute >> newButton [
 	<return: #BlElement>
 	| aButton |
@@ -83,7 +83,7 @@ GtConnectorTextButtonAttribute >> newButton [
 	^ aButton
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtConnectorTextButtonAttribute >> printOn: stream [
 	super printOn: stream.
 	stream space.
@@ -92,12 +92,12 @@ GtConnectorTextButtonAttribute >> printOn: stream [
 	self target printOn: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorTextButtonAttribute >> source [
 	^ self link source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorTextButtonAttribute >> target [
 	^ self link target
 ]

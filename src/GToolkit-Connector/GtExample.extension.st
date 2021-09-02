@@ -1,6 +1,6 @@
-Extension { #name : #GtExample }
+Extension { #name : 'GtExample' }
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildBlankContainer: method [
 	| container |
 	container := BlElement new.
@@ -18,7 +18,7 @@ GtExample >> buildBlankContainer: method [
 	^ container
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildBottomResizerFor: blankContainer [
 	^  BlElement new
 			aptitude: BrGlamorousResizerBottomBarAptitude new;
@@ -28,7 +28,7 @@ GtExample >> buildBottomResizerFor: blankContainer [
 
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildCloseButton: gtconnector [. 
 	^ GtInspectorRoundButtonStencil new asElement
 		icon: (GtInspectorPlusIconStencil close asElement);
@@ -42,7 +42,7 @@ GtExample >> buildCloseButton: gtconnector [.
 			
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildEditor: aMethod for: gtconnector [
 	| styler editorElement editor text |
 				
@@ -68,7 +68,7 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 					
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildInspectButton: vocalEditorContainer [
 	| aGoButton |
 	aGoButton := GtInspectorRoundButtonStencil new asElement
@@ -81,7 +81,7 @@ GtExample >> buildInspectButton: vocalEditorContainer [
 	^ aGoButton.
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildRightResizerFor: blankContainer [
 	^  BlElement new
 			aptitude: BrGlamorousResizerRightBarAptitude new;
@@ -91,7 +91,7 @@ GtExample >> buildRightResizerFor: blankContainer [
 
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> buildSourceButton: vocalEditorContainer [
 	| aGoButton |
 	aGoButton := GtInspectorRoundButtonStencil new asElement
@@ -104,7 +104,7 @@ GtExample >> buildSourceButton: vocalEditorContainer [
 	^ aGoButton.
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> editorContainer [
 	^ BlElement new
 		constraintsDo: [ :c | 
@@ -113,7 +113,7 @@ GtExample >> editorContainer [
 		layout: BlLinearLayout new
 ]
 
-{ #category : #'*GToolkit-Connector' }
+{ #category : '*GToolkit-Connector' }
 GtExample >> gtConnectionsFor: aView [
 	<gtView>
 	^ aView explicit

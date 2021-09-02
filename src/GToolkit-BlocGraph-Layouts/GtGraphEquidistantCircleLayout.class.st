@@ -12,12 +12,12 @@ v
 
 "
 Class {
-	#name : #GtGraphEquidistantCircleLayout,
-	#superclass : #GtGraphAbstractWeightedCircleLayout,
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
+	#name : 'GtGraphEquidistantCircleLayout',
+	#superclass : 'GtGraphAbstractWeightedCircleLayout',
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphEquidistantCircleLayout >> computeSeparationFor: elements [
 "Compute the separation between each element, this separation will always be the same"
 	| sep |
@@ -26,7 +26,7 @@ GtGraphEquidistantCircleLayout >> computeSeparationFor: elements [
 	^sep
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphEquidistantCircleLayout >> doExecute: elements with: anExtentSpec [
 	| angle rad center angleIncrement |
 	rad := self computeRadiusFor: elements.

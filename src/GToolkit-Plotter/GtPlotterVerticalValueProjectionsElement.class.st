@@ -10,12 +10,12 @@ I draw vertical projections.
 
 "
 Class {
-	#name : #GtPlotterVerticalValueProjectionsElement,
-	#superclass : #GtPlotterSingleScaleValueBasedElement,
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#name : 'GtPlotterVerticalValueProjectionsElement',
+	#superclass : 'GtPlotterSingleScaleValueBasedElement',
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterVerticalValueProjectionsElement >> defaultValueElement [
 	^ [ :aGtPlotterScaleContext | BlElement new
 			constraintsDo: [ :c |
@@ -23,7 +23,7 @@ GtPlotterVerticalValueProjectionsElement >> defaultValueElement [
 				c vertical exact: 1 ] ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterVerticalValueProjectionsElement >> defaultValueLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
@@ -33,7 +33,7 @@ GtPlotterVerticalValueProjectionsElement >> defaultValueLayout [
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterVerticalValueProjectionsElement >> defaultValueStyle [
 	^ [ :anElement :aGtPlotterScaleContext | anElement background: (Color gray alpha: 0.8) ]
 		asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher

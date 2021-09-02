@@ -5,30 +5,30 @@ Since I am a part of the front-chain which is a double linked list I also know t
 
 "
 Class {
-	#name : #GtGraphCirclePackNode,
-	#superclass : #DoubleLink,
+	#name : 'GtGraphCirclePackNode',
+	#superclass : 'DoubleLink',
 	#instVars : [
 		'circle'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtGraphCirclePackNode class >> for: anElement [
 	^ self basicNew initializeWith: anElement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtGraphCirclePackNode class >> new [
 	self error: 'Error use for: instead'
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 GtGraphCirclePackNode >> alignTo: aCircle and: anotherCircle [
 	self center: (GtGraphCircleNeighbourhood computeNeighbourCenter: circle near: aCircle circle and: anotherCircle circle)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphCirclePackNode >> asElement [
 	^ BlScalableElement new
 		geometry: BlCircle new;
@@ -38,28 +38,28 @@ GtGraphCirclePackNode >> asElement [
 		addChild: (BlTextElement new text: self index asRopedText; padding: (BlInsets all: 10))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackNode >> center [
 	^ circle center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackNode >> center: aPoint [
 	circle center: aPoint.
 	self element position: self center - self radius asPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackNode >> circle [
 	^ circle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackNode >> element [
 	^ self value
 ]
 
-{ #category : #'gt-inspector-extension' }
+{ #category : 'gt-inspector-extension' }
 GtGraphCirclePackNode >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -68,7 +68,7 @@ GtGraphCirclePackNode >> gtPreviewFor: aView [
 		stencil: [ self asElement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackNode >> index [
 	| anIndex aPreviousLink |
 	
@@ -83,7 +83,7 @@ GtGraphCirclePackNode >> index [
 	^ anIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtGraphCirclePackNode >> initializeWith: anElement [
 	value := anElement.
 
@@ -92,7 +92,7 @@ GtGraphCirclePackNode >> initializeWith: anElement [
 	circle margin: anElement margin max
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 GtGraphCirclePackNode >> intersects: anotherCircle [
 	| aCenterVector aMagnitude |
 	
@@ -102,7 +102,7 @@ GtGraphCirclePackNode >> intersects: anotherCircle [
 	^ aMagnitude < (self radius + anotherCircle radius - 1.0e-0006)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackNode >> radius [
 	<return: #Number>
 

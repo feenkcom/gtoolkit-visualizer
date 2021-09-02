@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterIdentityInterpolator,
-	#superclass : #GtPlotterInterpolator,
-	#category : #'GToolkit-Plotter-Interpolator'
+	#name : 'GtPlotterIdentityInterpolator',
+	#superclass : 'GtPlotterInterpolator',
+	#category : 'GToolkit-Plotter-Interpolator'
 }
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 GtPlotterIdentityInterpolator >> interpolate: aValue [
 	^ aValue
 ]

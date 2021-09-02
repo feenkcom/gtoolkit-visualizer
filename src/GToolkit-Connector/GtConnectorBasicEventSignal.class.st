@@ -1,23 +1,23 @@
 Class {
-	#name : #GtConnectorBasicEventSignal,
-	#superclass : #GtConnectorBasicSignal,
+	#name : 'GtConnectorBasicEventSignal',
+	#superclass : 'GtConnectorBasicSignal',
 	#instVars : [
 		'event'
 	],
-	#category : #'GToolkit-Connector-Logging'
+	#category : 'GToolkit-Connector-Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorBasicEventSignal >> event [
 	^ event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorBasicEventSignal >> event: anObject [
 	event := anObject
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtConnectorBasicEventSignal >> gtCurrentElementFor: aView [
 	<gtView>
 	^ (self gtCurrentTargetFor: aView)
@@ -25,7 +25,7 @@ GtConnectorBasicEventSignal >> gtCurrentElementFor: aView [
 		priority: 20
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtConnectorBasicEventSignal >> gtCurrentTargetFor: aView [
 	<gtView>
 	^ aView forward 
@@ -35,7 +35,7 @@ GtConnectorBasicEventSignal >> gtCurrentTargetFor: aView [
 		view: #gtCurrentTargetFor:
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtConnectorBasicEventSignal >> gtDetailsFor: aView [
 	<gtView>
 	^ aView columnedList 
@@ -47,13 +47,13 @@ GtConnectorBasicEventSignal >> gtDetailsFor: aView [
 		
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtConnectorBasicEventSignal >> printOneLineContentsOn: stream [
 	stream 
 		nextPutAll: self event class name
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtConnectorBasicEventSignal >> signalDetails [
 	^ {
 			'Source event' -> self event.

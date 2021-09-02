@@ -1,15 +1,15 @@
 Class {
-	#name : #GtNestedTreeSummaryLeaf,
-	#superclass : #GtNestedTreeLeaf,
+	#name : 'GtNestedTreeSummaryLeaf',
+	#superclass : 'GtNestedTreeLeaf',
 	#instVars : [
 		'name',
 		'weight',
 		'items'
 	],
-	#category : #'GToolkit-TreeMap-Data Structures'
+	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtNestedTreeSummaryLeaf >> gtItemsFor: aView [
 	<gtView>
 	self items ifNil: [ ^ aView empty ].
@@ -20,20 +20,20 @@ GtNestedTreeSummaryLeaf >> gtItemsFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedTreeSummaryLeaf >> initialize [
 	super initialize.
 	items := #().
 	weight := [ :anItem | anItem yourself ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeSummaryLeaf >> items [
 	<return: #Collection>
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeSummaryLeaf >> items: aCollection [
 	self 
 		assert: [ aCollection isNotNil ]
@@ -41,22 +41,22 @@ GtNestedTreeSummaryLeaf >> items: aCollection [
 	items := aCollection
 ]
 
-{ #category : #stream }
+{ #category : 'stream' }
 GtNestedTreeSummaryLeaf >> itemsTo: aStream [
 	aStream nextPutAll: self items.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeSummaryLeaf >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeSummaryLeaf >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtNestedTreeSummaryLeaf >> printOn: aStream [
 	self items ifNil: [ ^ super printOn: aStream ].
 	aStream 
@@ -65,12 +65,12 @@ GtNestedTreeSummaryLeaf >> printOn: aStream [
 		nextPutAll: ' items'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeSummaryLeaf >> weight [
 	^ self items sum: [ :eachItem | weight value: eachItem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeSummaryLeaf >> weight: aBlock [
 	"aBlock is an object that understands #value: message and returns a number"
 	self 

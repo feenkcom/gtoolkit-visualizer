@@ -1,43 +1,43 @@
 Class {
-	#name : #GtNestedRectangleTreeMapContainerLayoutIterator,
-	#superclass : #Object,
+	#name : 'GtNestedRectangleTreeMapContainerLayoutIterator',
+	#superclass : 'Object',
 	#instVars : [
 		'layoutClasses',
 		'nextLayoutIndex'
 	],
-	#category : #'GToolkit-TreeMap-Core'
+	#category : 'GToolkit-TreeMap-Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedRectangleTreeMapContainerLayoutIterator >> beAlternateHorizontalAndVerticalSlice [
 	self layoutClasses: { GtGraphTreemapSliceHorizontalLayout. GtGraphTreemapSliceVerticalLayout }
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedRectangleTreeMapContainerLayoutIterator >> beSquarified [
 	self layoutClasses: { GtGraphTreemapSquarifiedLayout }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedRectangleTreeMapContainerLayoutIterator >> initialize [
 	super initialize.
 	nextLayoutIndex := 1.
 	self beSquarified.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedRectangleTreeMapContainerLayoutIterator >> layoutClasses: anArray [
 	layoutClasses := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedRectangleTreeMapContainerLayoutIterator >> nextLayout [
 	<return: #BlLayout>
 	^ self nextLayoutClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedRectangleTreeMapContainerLayoutIterator >> nextLayoutClass [
 	<return: #Class>
 	| aLayoutClass aPossibleNextLayoutIndex |

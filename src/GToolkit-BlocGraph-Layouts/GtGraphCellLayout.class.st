@@ -10,17 +10,17 @@ inCellPosition
 
 "
 Class {
-	#name : #GtGraphCellLayout,
-	#superclass : #GtGraphAbstractGridLayout,
+	#name : 'GtGraphCellLayout',
+	#superclass : 'GtGraphAbstractGridLayout',
 	#instVars : [
 		'inCellPosition',
 		'translateElement',
 		'align'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCellLayout >> centered [
 	align := #center.
 	translateElement := [ :aTranslator :anElement :newPos | translator translateCenterLeftOf: anElement to: newPos ].
@@ -29,7 +29,7 @@ GtGraphCellLayout >> centered [
 
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphCellLayout >> doExecute: elements with: anExtentSpec [
 	
 	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights |
@@ -77,19 +77,19 @@ GtGraphCellLayout >> doExecute: elements with: anExtentSpec [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCellLayout >> inCellPosition: anObjectOrOneArgBlock [
 
 	inCellPosition := anObjectOrOneArgBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 GtGraphCellLayout >> initialize [
 	super initialize.
 	self leftCentered
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCellLayout >> leftCentered [
 	align := #left.
 

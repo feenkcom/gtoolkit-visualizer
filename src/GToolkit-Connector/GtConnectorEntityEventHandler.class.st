@@ -6,27 +6,27 @@ Is added to each entity element in the connector
 
 "
 Class {
-	#name : #GtConnectorEntityEventHandler,
-	#superclass : #BlCustomEventHandler,
+	#name : 'GtConnectorEntityEventHandler',
+	#superclass : 'BlCustomEventHandler',
 	#instVars : [
 		'connector'
 	],
-	#category : #'GToolkit-Connector-Events'
+	#category : 'GToolkit-Connector-Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorEntityEventHandler >> connector [
 	<return: #GtConnector>
 
 	^ connector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorEntityEventHandler >> connector: aGtConnector [
 	connector := aGtConnector
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtConnectorEntityEventHandler >> eventsToHandle [
 	^ {
 		GtConnectorLayoutSourceElementRemovedEvent.
@@ -36,7 +36,7 @@ GtConnectorEntityEventHandler >> eventsToHandle [
 	}
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtConnectorEntityEventHandler >> layoutSourceRemoved: anEvent [
 	self connector
 		emitSignalForEvent: anEvent;
@@ -45,7 +45,7 @@ GtConnectorEntityEventHandler >> layoutSourceRemoved: anEvent [
 		requestLayout
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtConnectorEntityEventHandler >> layoutTargetRemoved: anEvent [
 	self connector
 		emitSignalForEvent: anEvent;
@@ -54,14 +54,14 @@ GtConnectorEntityEventHandler >> layoutTargetRemoved: anEvent [
 		requestLayout
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtConnectorEntityEventHandler >> visualSourceRemoved: anEvent [
 	self connector
 		emitSignalForEvent: anEvent;
 		removeLinesFrom: anEvent element
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtConnectorEntityEventHandler >> visualTargetRemoved: anEvent [
 	self connector
 		emitSignalForEvent: anEvent;

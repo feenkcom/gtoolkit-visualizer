@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterLinearScaleExamples,
-	#superclass : #GtPlotterScaleExamples,
-	#category : #'GToolkit-Plotter-Examples'
+	#name : 'GtPlotterLinearScaleExamples',
+	#superclass : 'GtPlotterScaleExamples',
+	#category : 'GToolkit-Plotter-Examples'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLinearScaleExamples >> defaultLinearScale [
 	<gtExample>
 	| aScale |
@@ -21,7 +21,7 @@ GtPlotterLinearScaleExamples >> defaultLinearScale [
 	^ aScale
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 	<gtExample>
 	| aScale |
@@ -40,7 +40,7 @@ GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomain [
 	^ aScale
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainAndRange [
 	<gtExample>
 	| aScale |
@@ -62,7 +62,7 @@ GtPlotterLinearScaleExamples >> linearScaleWithIntervalDomainAndRange [
 	^ aScale
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterLinearScaleExamples >> linearScaleWithIntervalRange [
 	<gtExample>
 	| aScale |

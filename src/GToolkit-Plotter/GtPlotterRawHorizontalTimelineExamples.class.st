@@ -4,12 +4,12 @@ My subclasses exemplify horizontal timeline charts of the following timeline:
 See my subclasses {{gtClass:GtPlotterRawHorizontalTimelineExamples|expanded=true|show=#gtSubclassesFor:|height=150}}
 "
 Class {
-	#name : #GtPlotterRawHorizontalTimelineExamples,
-	#superclass : #GtPlotterRawTimelineExamples,
-	#category : #'GToolkit-Plotter-Example - Charts'
+	#name : 'GtPlotterRawHorizontalTimelineExamples',
+	#superclass : 'GtPlotterRawTimelineExamples',
+	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalTimelineExamples >> dots [
 	<gtExample>
 	
@@ -27,7 +27,7 @@ GtPlotterRawHorizontalTimelineExamples >> dots [
 		values: self versions
 ]
 
-{ #category : #'examples - axis' }
+{ #category : 'examples - axis' }
 GtPlotterRawHorizontalTimelineExamples >> labels [
 	<gtExample>
 	
@@ -39,7 +39,7 @@ GtPlotterRawHorizontalTimelineExamples >> labels [
 		labels: 10
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalTimelineExamples >> line [
 	<gtExample>
 	
@@ -51,7 +51,7 @@ GtPlotterRawHorizontalTimelineExamples >> line [
 			c frame vertical alignCenterAt: 0.5 ]
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalTimelineExamples >> timeline [
 	<gtExample>
 	

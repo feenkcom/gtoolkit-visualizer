@@ -1,35 +1,35 @@
 Class {
-	#name : #GtPlotterHorizontalBarGroupStencilBuilder,
-	#superclass : #BrStencilBuilder,
+	#name : 'GtPlotterHorizontalBarGroupStencilBuilder',
+	#superclass : 'BrStencilBuilder',
 	#instVars : [
 		'bar',
 		'group',
 		'barStencil'
 	],
-	#category : #'GToolkit-Plotter-Builder - Bar Chart'
+	#category : 'GToolkit-Plotter-Builder - Bar Chart'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarGroupStencilBuilder >> bar [
 	^ bar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarGroupStencilBuilder >> bar: anObject [
 	bar := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarGroupStencilBuilder >> barStencil [
 	^ barStencil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarGroupStencilBuilder >> barStencil: anObject [
 	barStencil := anObject
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalBarGroupStencilBuilder >> context [
 	| theOriginalValues theScaledValues theMappedValues |
 	
@@ -45,17 +45,17 @@ GtPlotterHorizontalBarGroupStencilBuilder >> context [
 		index: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarGroupStencilBuilder >> group [
 	^ group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarGroupStencilBuilder >> group: anObject [
 	group := anObject
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalBarGroupStencilBuilder >> paramsOn: aStencilExecutor [
 	aStencilExecutor
 		push: self bar;

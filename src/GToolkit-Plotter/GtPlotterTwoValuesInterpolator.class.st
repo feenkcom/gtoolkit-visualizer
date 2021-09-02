@@ -1,19 +1,19 @@
 Class {
-	#name : #GtPlotterTwoValuesInterpolator,
-	#superclass : #GtPlotterInterpolator,
+	#name : 'GtPlotterTwoValuesInterpolator',
+	#superclass : 'GtPlotterInterpolator',
 	#instVars : [
 		'from',
 		'to'
 	],
-	#category : #'GToolkit-Plotter-Interpolator'
+	#category : 'GToolkit-Plotter-Interpolator'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTwoValuesInterpolator class >> between: aFirstValue and: aSecondValue [
 	^ self new between: aFirstValue and: aSecondValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTwoValuesInterpolator >> between: aFirstValue and: aSecondValue [
 	from := aFirstValue.
 	to := aSecondValue

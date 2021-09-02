@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPlotterTimeEveryWednesday,
-	#superclass : #GtPlotterTimeEveryWeekDay,
-	#category : #'GToolkit-Plotter-Time'
+	#name : 'GtPlotterTimeEveryWednesday',
+	#superclass : 'GtPlotterTimeEveryWeekDay',
+	#category : 'GToolkit-Plotter-Time'
 }

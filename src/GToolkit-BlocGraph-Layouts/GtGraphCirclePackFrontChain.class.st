@@ -1,15 +1,15 @@
 Class {
-	#name : #GtGraphCirclePackFrontChain,
-	#superclass : #DoubleLinkedList,
+	#name : 'GtGraphCirclePackFrontChain',
+	#superclass : 'DoubleLinkedList',
 	#instVars : [
 		'origin',
 		'nearestCircle',
 		'nextCircle'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 GtGraphCirclePackFrontChain >> aroundLink: aLink detect: aBlock ifFound: aFoundBlock ifNone: anExceptionBlock [
 	self aroundLink: aLink do: [ :eachLink :eachIndex |
 		(aBlock value: eachLink)
@@ -17,7 +17,7 @@ GtGraphCirclePackFrontChain >> aroundLink: aLink detect: aBlock ifFound: aFoundB
 	^ anExceptionBlock value
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 GtGraphCirclePackFrontChain >> aroundLink: aLink do: block [
 	"Execute block for each of the links that I hold internally
 	taking one to the left of the link, one to the right of the link"
@@ -70,7 +70,7 @@ GtGraphCirclePackFrontChain >> aroundLink: aLink do: block [
 	] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackFrontChain >> enclosureCircle [
 	| theCircles |
 	
@@ -78,7 +78,7 @@ GtGraphCirclePackFrontChain >> enclosureCircle [
 	^ (GtGraphCircleEnclosure new circles: theCircles) enclosureCircle
 ]
 
-{ #category : #'gt-inspector-extension' }
+{ #category : 'gt-inspector-extension' }
 GtGraphCirclePackFrontChain >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -124,32 +124,32 @@ GtGraphCirclePackFrontChain >> gtPreviewFor: aView [
 			aContainer asScalableElement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackFrontChain >> nearestCircle [
 	^ nearestCircle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackFrontChain >> nearestCircle: anObject [
 	nearestCircle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackFrontChain >> nextCircle [
 	^ nextCircle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackFrontChain >> nextCircle: anObject [
 	nextCircle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCirclePackFrontChain >> origin [
 	^ origin
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 GtGraphCirclePackFrontChain >> removeFrom: aNodeLink to: anotherNodeLink [
 	"does not remove aNodeLink and anotherNodeLink"
 	| aCurrentLink aFirstLink |

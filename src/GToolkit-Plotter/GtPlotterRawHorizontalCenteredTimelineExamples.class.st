@@ -4,12 +4,12 @@ I exemplify a horizontal centered timeline chart.
 {{gtExample:GtPlotterRawHorizontalCenteredTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : #GtPlotterRawHorizontalCenteredTimelineExamples,
-	#superclass : #GtPlotterRawHorizontalTimelineExamples,
-	#category : #'GToolkit-Plotter-Example - Charts'
+	#name : 'GtPlotterRawHorizontalCenteredTimelineExamples',
+	#superclass : 'GtPlotterRawHorizontalTimelineExamples',
+	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : #'examples - axis' }
+{ #category : 'examples - axis' }
 GtPlotterRawHorizontalCenteredTimelineExamples >> axis [
 	<gtExample>
 
@@ -23,7 +23,7 @@ GtPlotterRawHorizontalCenteredTimelineExamples >> axis [
 		}
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalCenteredTimelineExamples >> content [
 	<gtExample>
 	
@@ -34,7 +34,7 @@ GtPlotterRawHorizontalCenteredTimelineExamples >> content [
 			self timeline constraintsDo: [ :c | c frame vertical alignCenterAt: 0.5 ] }
 ]
 
-{ #category : #'examples - plot' }
+{ #category : 'examples - plot' }
 GtPlotterRawHorizontalCenteredTimelineExamples >> plot [
 	<gtExample>
 	
@@ -46,7 +46,7 @@ GtPlotterRawHorizontalCenteredTimelineExamples >> plot [
 			self axis. }
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalCenteredTimelineExamples >> projections [
 	<gtExample>
 	
@@ -66,7 +66,7 @@ GtPlotterRawHorizontalCenteredTimelineExamples >> projections [
 		values: self versions
 ]
 
-{ #category : #'examples - axis' }
+{ #category : 'examples - axis' }
 GtPlotterRawHorizontalCenteredTimelineExamples >> ticks [
 	<gtExample>
 	

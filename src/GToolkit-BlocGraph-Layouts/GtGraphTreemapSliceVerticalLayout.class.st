@@ -10,12 +10,12 @@ I use {{gtClass:GtGraphTreemapSliceVertical}} to compute {{gtClass:BlElement}} c
 
 "
 Class {
-	#name : #GtGraphTreemapSliceVerticalLayout,
-	#superclass : #GtGraphTreemapLayout,
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
+	#name : 'GtGraphTreemapSliceVerticalLayout',
+	#superclass : 'GtGraphTreemapLayout',
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtGraphTreemapSliceVerticalLayout >> treeFrom: anExtent [
 	^ GtGraphTreemapSlice vertical length: anExtent y; breadth: anExtent x.
 ]

@@ -1,22 +1,22 @@
 Class {
-	#name : #GtPlotterDurationScale,
-	#superclass : #GtPlotterContinuousScale,
-	#category : #'GToolkit-Plotter-Scale'
+	#name : 'GtPlotterDurationScale',
+	#superclass : 'GtPlotterContinuousScale',
+	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : #'api - domain' }
+{ #category : 'api - domain' }
 GtPlotterDurationScale >> domainFrom: aStartDuration to: anEndDuration [
 	domain := GtPlotterScaleMagnitudeDomain from: aStartDuration to: anEndDuration
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDurationScale >> initialize [
 	super initialize.
 	
 	domain := GtPlotterScaleMagnitudeDomain from: 0 days to: 1 day
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterDurationScale >> ticks: anAmount [
 	<return: #Array of: #Object>
 
@@ -26,12 +26,12 @@ GtPlotterDurationScale >> ticks: anAmount [
 		count: anAmount) asArray
 ]
 
-{ #category : #'operators-mapping' }
+{ #category : 'operators-mapping' }
 GtPlotterDurationScale >> transform: aDomainValue [
 	^ aDomainValue
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterDurationScale >> valuedTick: aTickObject [
 	^ aTickObject asDuration
 ]

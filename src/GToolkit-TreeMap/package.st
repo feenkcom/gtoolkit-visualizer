@@ -1,1 +1,1 @@
-Package { #name : #'GToolkit-TreeMap' }
+Package { #name : 'GToolkit-TreeMap' }

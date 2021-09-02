@@ -6,27 +6,27 @@ Is added to the connector itself
 
 "
 Class {
-	#name : #GtConnectorEventHandler,
-	#superclass : #BlCustomEventHandler,
+	#name : 'GtConnectorEventHandler',
+	#superclass : 'BlCustomEventHandler',
 	#instVars : [
 		'connector'
 	],
-	#category : #'GToolkit-Connector-Events'
+	#category : 'GToolkit-Connector-Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorEventHandler >> connector [
 	<return: #GtConnector>
 
 	^ connector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtConnectorEventHandler >> connector: aGtConnector [
 	connector := aGtConnector
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtConnectorEventHandler >> eventsToHandle [
 	^ {
 		GtConnectorVisualSourceElementAddedEvent.
@@ -34,7 +34,7 @@ GtConnectorEventHandler >> eventsToHandle [
 	}
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtConnectorEventHandler >> visualSourceAdded: anEvent [
 	self connector
 		emitSignalForEvent: anEvent;
@@ -42,7 +42,7 @@ GtConnectorEventHandler >> visualSourceAdded: anEvent [
 		linkLayoutSourcesFor: anEvent element
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtConnectorEventHandler >> visualTargetAdded: anEvent [
 	self connector
 		emitSignalForEvent: anEvent;

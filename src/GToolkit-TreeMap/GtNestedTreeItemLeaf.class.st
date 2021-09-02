@@ -1,27 +1,27 @@
 Class {
-	#name : #GtNestedTreeItemLeaf,
-	#superclass : #GtNestedTreeLeaf,
+	#name : 'GtNestedTreeItemLeaf',
+	#superclass : 'GtNestedTreeLeaf',
 	#instVars : [
 		'weight',
 		'item'
 	],
-	#category : #'GToolkit-TreeMap-Data Structures'
+	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedTreeItemLeaf >> initialize [
 	super initialize.
 	item := #().
 	weight := [ :anItem | anItem yourself ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeItemLeaf >> item [
 	<return: #Object>
 	^ item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeItemLeaf >> item: anObject [
 	self 
 		assert: [ anObject isNotNil ]
@@ -29,23 +29,23 @@ GtNestedTreeItemLeaf >> item: anObject [
 	item := anObject
 ]
 
-{ #category : #stream }
+{ #category : 'stream' }
 GtNestedTreeItemLeaf >> itemsTo: aStream [
 	aStream nextPut: self item
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtNestedTreeItemLeaf >> printOn: aStream [
 	self item ifNil: [ ^ super printOn: aStream ].
 	aStream print: self item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeItemLeaf >> weight [
 	^ weight value: self item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedTreeItemLeaf >> weight: aBlock [
 	"aBlock is an object that understands #value: message and returns a number"
 	self 

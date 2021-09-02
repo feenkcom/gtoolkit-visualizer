@@ -33,8 +33,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #GtNestedRectangleTreeMap,
-	#superclass : #BrStencil,
+	#name : 'GtNestedRectangleTreeMap',
+	#superclass : 'BrStencil',
 	#instVars : [
 		'traversalBlock',
 		'leavesCreationBlock',
@@ -44,15 +44,15 @@ Class {
 		'containerElementBlock',
 		'leafElementBlock'
 	],
-	#category : #'GToolkit-TreeMap-Core'
+	#category : 'GToolkit-TreeMap-Core'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> containerElement: aBlock [
 	containerElementBlock := aBlock
 ]
 
-{ #category : #implementation }
+{ #category : 'implementation' }
 GtNestedRectangleTreeMap >> create [
 	<return: #BlElement>
 	^ roots size = 1 
@@ -69,7 +69,7 @@ GtNestedRectangleTreeMap >> create [
 			anElement ]
 ]
 
-{ #category : #implementation }
+{ #category : 'implementation' }
 GtNestedRectangleTreeMap >> createContainerFor: aModelContext [
 	| containerElement |
 	containerElement := BlElement new
@@ -87,7 +87,7 @@ GtNestedRectangleTreeMap >> createContainerFor: aModelContext [
 	^ containerElement
 ]
 
-{ #category : #implementation }
+{ #category : 'implementation' }
 GtNestedRectangleTreeMap >> createFor: aModelContext [
 	| anElement theModelLeaves theModelNodes aWeight |
 	anElement := self createContainerFor: aModelContext.
@@ -101,7 +101,7 @@ GtNestedRectangleTreeMap >> createFor: aModelContext [
 	^ anElement
 ]
 
-{ #category : #implementation }
+{ #category : 'implementation' }
 GtNestedRectangleTreeMap >> createLeavesFor: aModelContext [
 	^ (leavesCreationBlock value: aModelContext model) collect: [ :aLeaf |
 		| aLeafElement aLeafContext |
@@ -117,12 +117,12 @@ GtNestedRectangleTreeMap >> createLeavesFor: aModelContext [
 		aLeafElement ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> deep: aBlock [
 	traversalBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtNestedRectangleTreeMap >> gtViewTreeMapRootsFor: aView [
 	<gtView>
 	^ aView list
@@ -130,7 +130,7 @@ GtNestedRectangleTreeMap >> gtViewTreeMapRootsFor: aView [
 		items: [ roots ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtNestedRectangleTreeMap >> initialize [
 	super initialize.
 	leavesSizeBlock := [ :aModel | 10 ].
@@ -145,42 +145,42 @@ GtNestedRectangleTreeMap >> initialize [
 	layoutIterator := GtNestedRectangleTreeMapContainerLayoutIterator new.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> leafElement: aBlock [
 	leafElementBlock := aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> leaves: aBlock [
 	leavesCreationBlock := aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> leavesSize: aBlock [
 	leavesSizeBlock := aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtNestedRectangleTreeMap >> newContainterBorder [
 	^ BlBorder paint: (Color gray alpha: 0.5) width: 2
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtNestedRectangleTreeMap >> newLeafBoder [
 	^ BlBorder paint: (Color gray alpha: 0.2) width: 2
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> root: anObject [
 	self roots: { anObject }
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> roots: aCollection [
 	roots := aCollection
 ]
 
-{ #category : #implementation }
+{ #category : 'implementation' }
 GtNestedRectangleTreeMap >> setup: anElement context: aModelContext withChildren: theChildren andLeaves: theLeaves [
 	(theChildren isEmpty and: [ theLeaves isEmpty ])
 		ifTrue: [ anElement size: 1 asPoint ]
@@ -189,7 +189,7 @@ GtNestedRectangleTreeMap >> setup: anElement context: aModelContext withChildren
 				addChildren: (theChildren collect: [ :aChild | self createFor: (aModelContext copyWithModel: aChild) ]) ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GtNestedRectangleTreeMap >> tree: aNestedTreeNode [
 	self roots: { aNestedTreeNode }
 ]

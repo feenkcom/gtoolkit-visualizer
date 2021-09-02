@@ -1,6 +1,6 @@
 Class {
-	#name : #GtPlotterTicksElement,
-	#superclass : #GtPlotterSingleScaleProportionalElement,
+	#name : 'GtPlotterTicksElement',
+	#superclass : 'GtPlotterSingleScaleProportionalElement',
 	#instVars : [
 		'ticks',
 		'tickElement',
@@ -8,27 +8,27 @@ Class {
 		'tickLayout',
 		'inversed'
 	],
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTicksElement >> defaultTickElement [
 	^ [ :aGtPlotterScaleContext | BlElement new ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTicksElement >> defaultTickLayout [
 	<return: #GtPlotterScaleBasedStencilEmbellisher>
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTicksElement >> defaultTickStyle [
 	^ [ :anElement :aGtPlotterScaleContext | anElement background: Color darkGray ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTicksElement >> initialize [
 	super initialize.
 
@@ -42,7 +42,7 @@ GtPlotterTicksElement >> initialize [
 	self initializeElements
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 GtPlotterTicksElement >> initializeElements [
 	| theTicks aScaleContext |
 	
@@ -70,53 +70,53 @@ GtPlotterTicksElement >> initializeElements [
 			scaleContext: aScaleContext) asElement ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTicksElement >> inverse [
 	inversed := true.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTicksElement >> tickElement [
 	^ tickElement
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterTicksElement >> tickElement: aBlockOrStencil [
 	tickElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTicksElement >> tickLayout [
 	^ tickLayout
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterTicksElement >> tickLayout: anObject [
 	tickLayout := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTicksElement >> tickStyle [
 	^ tickStyle
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterTicksElement >> tickStyle: anObject [
 	tickStyle := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTicksElement >> ticks [
 	<return: #Number>
 	
 	^ ticks
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterTicksElement >> ticks: anAmountOfTicks [
 	ticks := anAmountOfTicks.
 	self initializeElements

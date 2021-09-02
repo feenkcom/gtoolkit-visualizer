@@ -72,8 +72,8 @@ weights
 
 "
 Class {
-	#name : #GtGraphForceBasedLayout,
-	#superclass : #GtGraphEdgeDrivenLayout,
+	#name : 'GtGraphForceBasedLayout',
+	#superclass : 'GtGraphEdgeDrivenLayout',
 	#instVars : [
 		'oldPositions',
 		'nodes',
@@ -93,10 +93,10 @@ Class {
 		'initialLayout',
 		'nbIterations'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> accumulate: aQuad [ 
 
 	| cx cy k random |
@@ -124,12 +124,12 @@ GtGraphForceBasedLayout >> accumulate: aQuad [
 	aQuad cy: cy / aQuad charge.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphForceBasedLayout >> addEdge: anEdge [
 	self addEdges: (Array with: anEdge)
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphForceBasedLayout >> addEdges: someEdges [
 	someEdges
 		do: [ :e | 
@@ -141,7 +141,7 @@ GtGraphForceBasedLayout >> addEdges: someEdges [
 	edges := edges, someEdges
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphForceBasedLayout >> addNodes: nodeElements [
 	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
 	nodes := nodes, nodeElements.
@@ -152,24 +152,24 @@ GtGraphForceBasedLayout >> addNodes: nodeElements [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> charge: aFloat [
 	"Typically a negative value. E.g., -300"
 	charge := aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> chargeOf: aNode [ 
 
 	^ charges at: aNode ifAbsent: [ ^ charge ] 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 GtGraphForceBasedLayout >> defaultInitialLayout [
 	^ GtGraphGridLayout new
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphForceBasedLayout >> doExecute: nodeElements with: anExtentSpec [
 	self start: nodeElements with: anExtentSpec.
 
@@ -179,30 +179,30 @@ GtGraphForceBasedLayout >> doExecute: nodeElements with: anExtentSpec [
 	"nodes do: [ :e | translator translateTopLeftOf: e to: e position ]"
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> fix: aNode at: aPoint [
 
 	fixedNodes at: aNode put: aPoint  
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> gravityAt: aPoint [
 
 	center := aPoint 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> initialLayout: aLayout [
 	"Set the initial layout to be used before stepping"
 	initialLayout := aLayout
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphForceBasedLayout >> initialPositionOfNodes: nodeElements with: anExtentSpec [
 	initialLayout executeOnElements: nodeElements with: anExtentSpec
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 GtGraphForceBasedLayout >> initialize [
 	super initialize.
 	nbIterations := 0.
@@ -223,45 +223,45 @@ GtGraphForceBasedLayout >> initialize [
 	alpha := 0.1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtGraphForceBasedLayout >> isFixed: aNode [
 
 	^ fixedNodes includesKey: aNode 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> length: aFloat [
 	"Specifiy the length of the edges. E.g., 50"
 	length := aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> lengthOf: anEdge [
 
 	^ lengths at: anEdge ifAbsent: [ ^ length ] 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> nbIterations [
 	^ nbIterations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> nbIterations: anObject [
 	nbIterations := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> nodes [
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> nodes: elements [
 	nodes := elements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> prepareNodes: nodeElements [
 	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
 
@@ -283,23 +283,23 @@ GtGraphForceBasedLayout >> prepareNodes: nodeElements [
 	alpha := 0.1
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphForceBasedLayout >> removeAllEdges [
 	edges := OrderedCollection new
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphForceBasedLayout >> removeEdge: ed [
 	edges remove: ed
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphForceBasedLayout >> removeNode: node [
 	nodes remove: node.
 	node connectedEdges do: [ :ed | self removeEdge: ed. ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> repulse: aNode from: aQuad [
 	| dx dy dn k p |
 	dx := aQuad cx - aNode position x.
@@ -322,7 +322,7 @@ GtGraphForceBasedLayout >> repulse: aNode from: aQuad [
 						ifFalse: [ self repulse: aNode from: e ] ] ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphForceBasedLayout >> runLayoutSimply [
 	nbIterations = 0
 		ifTrue: [ 
@@ -336,38 +336,38 @@ GtGraphForceBasedLayout >> runLayoutSimply [
 					self step ] ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> set: aNode charge: aFloat [ 
 
 	charges at: aNode put: aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> set: anEdge length: aFloat [ 
 
 	lengths at: anEdge put: aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> set: anEdge length: aFloat strength: another [
 
 	lengths at: anEdge put: aFloat.
 	strengths at: anEdge put: another 
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> set: anEdge strength: aFloat [ 
 
 	strengths at: anEdge put: aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> start: nodeElements with: anExtentSpec [
 	self initialPositionOfNodes: nodeElements with: anExtentSpec.
 	self prepareNodes: nodeElements
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 GtGraphForceBasedLayout >> step [
 	"run a step of the force layout algorithm"
 
@@ -419,14 +419,14 @@ GtGraphForceBasedLayout >> step [
 			oldPositions at: e put: old ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphForceBasedLayout >> strength: aFloat [
 	"Set the force of attraction for the edges. A high value results in having nodes together.
 	The default value is 1.0"
 	strength := aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 GtGraphForceBasedLayout >> strengthOf: anEdge [
 
 	^ strengths at: anEdge ifAbsent: [ ^ strength ] 

@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterTimeEveryMonth,
-	#superclass : #GtPlotterTimeInterval,
-	#category : #'GToolkit-Plotter-Time'
+	#name : 'GtPlotterTimeEveryMonth',
+	#superclass : 'GtPlotterTimeInterval',
+	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeEveryMonth >> durationsFrom: aStartDuration to: anEndDuration do: aBlock [
 	| aCounter aCeilStart aFloorEnd |
 
@@ -18,7 +18,7 @@ GtPlotterTimeEveryMonth >> durationsFrom: aStartDuration to: anEndDuration do: a
 			aCounter := aCounter + 1 ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeEveryMonth >> from: aStartDateAndTime to: anEndDate do: aBlock [
 	| aCounter aCeilStart |
 	

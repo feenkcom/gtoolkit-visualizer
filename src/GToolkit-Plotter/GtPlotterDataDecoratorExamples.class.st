@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterDataDecoratorExamples,
-	#superclass : #GtPlotterDataExamples,
-	#category : #'GToolkit-Plotter-Example - Data'
+	#name : 'GtPlotterDataDecoratorExamples',
+	#superclass : 'GtPlotterDataExamples',
+	#category : 'GToolkit-Plotter-Example - Data'
 }
 
-{ #category : #'examples - decorations' }
+{ #category : 'examples - decorations' }
 GtPlotterDataDecoratorExamples >> colorDangerDifferently [
 	<gtExample>
 	| aGroup theColors |
@@ -39,7 +39,7 @@ GtPlotterDataDecoratorExamples >> colorDangerDifferently [
 	^ aGroup
 ]
 
-{ #category : #'examples - decorations' }
+{ #category : 'examples - decorations' }
 GtPlotterDataDecoratorExamples >> colorInBlockOnAllData [
 	<gtExample>
 	| aGroup |
@@ -57,7 +57,7 @@ GtPlotterDataDecoratorExamples >> colorInBlockOnAllData [
 	^ aGroup
 ]
 
-{ #category : #'examples - decorations' }
+{ #category : 'examples - decorations' }
 GtPlotterDataDecoratorExamples >> singleColorOnAllData [
 	<gtExample>
 	| aGroup |

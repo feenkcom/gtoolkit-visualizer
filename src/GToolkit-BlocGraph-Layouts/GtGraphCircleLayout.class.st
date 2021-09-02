@@ -4,18 +4,18 @@ A ROCircleLayout is xxxxxxxxx.
 
 "
 Class {
-	#name : #GtGraphCircleLayout,
-	#superclass : #GtGraphAbstractCircleLayout,
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
+	#name : 'GtGraphCircleLayout',
+	#superclass : 'GtGraphAbstractCircleLayout',
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtGraphCircleLayout class >> scaleBy: aNumber [
 	
 	^self new scaleBy: aNumber
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 GtGraphCircleLayout >> doExecute: elements with: anExtentSpec [
 	| angleIncrement angle rad center |
 	rad := self computeRadiusFor: elements.

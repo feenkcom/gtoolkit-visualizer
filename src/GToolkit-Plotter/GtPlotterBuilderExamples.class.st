@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterBuilderExamples,
-	#superclass : #Object,
-	#category : #'GToolkit-Plotter-Example - Builders'
+	#name : 'GtPlotterBuilderExamples',
+	#superclass : 'Object',
+	#category : 'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterBuilderExamples >> sequoias [
 	<gtExample>
 	
@@ -17,7 +17,7 @@ GtPlotterBuilderExamples >> sequoias [
 		} asDictionary ]
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterBuilderExamples >> sequoiasRaw [
 	^ { 
 		{ 'Sequoia affinis'. 'Sequoia'. false. 3360 }.
@@ -35,7 +35,7 @@ GtPlotterBuilderExamples >> sequoiasRaw [
 		{ 'Metasequoia disticha'. 'Metasequoia'. false . 1380 } }
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterBuilderExamples >> websiteVisits [
 	<gtExample>
 
@@ -47,7 +47,7 @@ GtPlotterBuilderExamples >> websiteVisits [
 		} asDictionary ]
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterBuilderExamples >> websiteVisitsRaw [
 	^ { 
 		{ 'Google.com'. (Duration days: 0 hours: 0 minutes: 12 seconds: 09). 14.66 }.

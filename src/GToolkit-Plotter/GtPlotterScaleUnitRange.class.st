@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterScaleUnitRange,
-	#superclass : #GtPlotterScaleRange,
-	#category : #'GToolkit-Plotter-Scale'
+	#name : 'GtPlotterScaleUnitRange',
+	#superclass : 'GtPlotterScaleRange',
+	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtPlotterScaleUnitRange >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -12,19 +12,19 @@ GtPlotterScaleUnitRange >> = anObject [
 	^ self class = anObject class
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtPlotterScaleUnitRange >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ self class hash
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 GtPlotterScaleUnitRange >> interpolate: aParameterValue [
 	^ aParameterValue
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtPlotterScaleUnitRange >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
