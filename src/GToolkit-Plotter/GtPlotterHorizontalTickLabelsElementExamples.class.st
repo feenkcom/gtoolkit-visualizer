@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterHorizontalTickLabelsElementExamples,
-	#superclass : #GtPlotterScaleBasedElementExamples,
-	#category : #'GToolkit-Plotter-Examples'
+	#name : 'GtPlotterHorizontalTickLabelsElementExamples',
+	#superclass : 'GtPlotterScaleBasedElementExamples',
+	#category : 'GToolkit-Plotter-Examples'
 }
 
-{ #category : #'examples - time' }
+{ #category : 'examples - time' }
 GtPlotterHorizontalTickLabelsElementExamples >> timeEveryFewMonths [
 	<gtExample>
 	| aScale theLabels |

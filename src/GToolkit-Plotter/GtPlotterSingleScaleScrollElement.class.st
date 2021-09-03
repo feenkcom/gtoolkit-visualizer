@@ -1,15 +1,15 @@
 Class {
-	#name : #GtPlotterSingleScaleScrollElement,
-	#superclass : #GtPlotterSingleScaleBasedElement,
+	#name : 'GtPlotterSingleScaleScrollElement',
+	#superclass : 'GtPlotterSingleScaleBasedElement',
 	#instVars : [
 		'list',
 		'values',
 		'stencil'
 	],
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSingleScaleScrollElement >> initialize [
 	super initialize.
 	
@@ -20,7 +20,7 @@ GtPlotterSingleScaleScrollElement >> initialize [
 	stencil := [ :eachRowValue :eachRowIndex | BlElement new ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSingleScaleScrollElement >> initializeList [
 	list hasParent
 		ifTrue: [ self removeChild: list ].
@@ -31,14 +31,14 @@ GtPlotterSingleScaleScrollElement >> initializeList [
 	self addChild: list
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 GtPlotterSingleScaleScrollElement >> stencil: aStencil [
 	stencil := aStencil.
 
 	self initializeList
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 GtPlotterSingleScaleScrollElement >> values: aCollectionOfValues [
 	values := aCollectionOfValues.
 

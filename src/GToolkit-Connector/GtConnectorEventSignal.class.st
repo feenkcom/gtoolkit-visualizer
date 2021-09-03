@@ -1,10 +1,10 @@
 Class {
-	#name : #GtConnectorEventSignal,
-	#superclass : #GtConnectorBasicEventSignal,
-	#category : #'GToolkit-Connector-Logging'
+	#name : 'GtConnectorEventSignal',
+	#superclass : 'GtConnectorBasicEventSignal',
+	#category : 'GToolkit-Connector-Logging'
 }
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtConnectorEventSignal >> gtCurrentElementFor: aView [
 	<gtView>
 	^ aView forward 
@@ -14,7 +14,7 @@ GtConnectorEventSignal >> gtCurrentElementFor: aView [
 		view: #gtPreviewFor:
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtConnectorEventSignal >> signalDetails [
 	^ super signalDetails, {
 			'Current element hash' -> self event element hash 

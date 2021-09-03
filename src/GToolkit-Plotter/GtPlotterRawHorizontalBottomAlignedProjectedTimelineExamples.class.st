@@ -5,12 +5,12 @@ I exemplify a vertical left aligned projected timeline.
 
 "
 Class {
-	#name : #GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples,
-	#superclass : #GtPlotterRawHorizontalTimelineExamples,
-	#category : #'GToolkit-Plotter-Example - Charts'
+	#name : 'GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples',
+	#superclass : 'GtPlotterRawHorizontalTimelineExamples',
+	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : #'examples - axis' }
+{ #category : 'examples - axis' }
 GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> axis [
 	<gtExample>
 
@@ -21,7 +21,7 @@ GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> axis [
 		addChildren: { self axisLabels }
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> axisLabels [
 	<gtExample>
 
@@ -42,7 +42,7 @@ GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> axisLabels [
 		values: self versions
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> content [
 	<gtExample>
 	
@@ -54,7 +54,7 @@ GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> content [
 				constraintsDo: [ :c | c frame vertical alignBottom ]. }
 ]
 
-{ #category : #'examples - plot' }
+{ #category : 'examples - plot' }
 GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> plot [
 	<gtExample>
 	
@@ -69,7 +69,7 @@ GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> plot [
 			self projectionLabels }
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> projectionLabels [
 	<gtExample>
 
@@ -84,7 +84,7 @@ GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> projectionLabels
 		values: self versions
 ]
 
-{ #category : #'examples - timeline' }
+{ #category : 'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedProjectedTimelineExamples >> projections [
 	<gtExample>
 

@@ -15,47 +15,47 @@ If we add to the same area another node, we end up with {{gtExample:GtGraphTreem
 
 "
 Class {
-	#name : #GtGraphTreemapSquarifyWorst,
-	#superclass : #Object,
+	#name : 'GtGraphTreemapSquarifyWorst',
+	#superclass : 'Object',
 	#instVars : [
 		'nodes',
 		'totalArea',
 		'length'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst class >> aspectRatio [
 	^ GtGraphTreemapSquarifyWorstAspectRatio new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst class >> default [
 	^ self aspectRatio
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtGraphTreemapSquarifyWorst >> >= aGtGraphTreemapSquarifyWorst [ 
 	^ self value >= aGtGraphTreemapSquarifyWorst value
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 GtGraphTreemapSquarifyWorst >> addNode: aNode [ 
 	self nodes: (self nodes copyWith: aNode)
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorst >> area [
 	^ self weight * self totalArea
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorst >> breadth [
 	^ self area / self length
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtNodesFor: aView [
 	<gtView>
 	^ GtGraphTreemapSquarifyWorstPreview new
@@ -63,7 +63,7 @@ GtGraphTreemapSquarifyWorst >> gtNodesFor: aView [
 		gtNodesFor: aView
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtPreviewFor: aView [
 	<gtView>
 	^ GtGraphTreemapSquarifyWorstPreview new
@@ -71,7 +71,7 @@ GtGraphTreemapSquarifyWorst >> gtPreviewFor: aView [
 		gtPreviewFor: aView
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtReversedPreviewFor: aView [
 	<gtView>
 	^ GtGraphTreemapSquarifyWorstPreview new
@@ -79,7 +79,7 @@ GtGraphTreemapSquarifyWorst >> gtReversedPreviewFor: aView [
 		gtReversedPreviewFor: aView
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorst >> gtWorstValueFor: aView [
 	<gtView>
 	^ GtGraphTreemapSquarifyWorstPreview new
@@ -87,76 +87,76 @@ GtGraphTreemapSquarifyWorst >> gtWorstValueFor: aView [
 		gtWorstValueFor: aView
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtGraphTreemapSquarifyWorst >> initialize [
 	super initialize.
 	nodes := #().
 	totalArea := 0.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst >> length [
 	^ length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst >> length: anObject [
 	length := anObject
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorst >> maxWeightNode [
 	<return: #GtGraphTreemapNode>
 	^ self nodes detectMax: [ :eachNode | eachNode weight ].
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorst >> minWeightNode [
 	<return: #GtGraphTreemapNode>
 	^ self nodes detectMin: [ :eachNode | eachNode weight ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst >> nodes: anArray [
 	nodes := anArray
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorst >> nodesBreadth [
 	^ self area / self length
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorst >> nodesCount [
 	<return: #Integer>
 	^ self nodes size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst >> totalArea [
 	<return: #Number>
 	^ totalArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorst >> totalArea: anObject [
 	totalArea := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 GtGraphTreemapSquarifyWorst >> value [
 	"Return worst aspect ratio value"
 	<return: #Number>
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorst >> weight [
 	"Return sum of all node weights"
 	<return: #Number>
@@ -165,7 +165,7 @@ GtGraphTreemapSquarifyWorst >> weight [
 		ifEmpty: [ 0 ]
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorst >> worstValueForNode: aNode [
 	"Worst value for a node"
 	^ self subclassResponsibility

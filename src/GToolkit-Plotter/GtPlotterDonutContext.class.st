@@ -1,25 +1,25 @@
 Class {
-	#name : #GtPlotterDonutContext,
-	#superclass : #GtPlotterSingleScaleContext,
+	#name : 'GtPlotterDonutContext',
+	#superclass : 'GtPlotterSingleScaleContext',
 	#instVars : [
 		'startAngle',
 		'endAngle',
 		'totalAngle'
 	],
-	#category : #'GToolkit-Plotter-Core - Context'
+	#category : 'GToolkit-Plotter-Core - Context'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDonutContext >> endAngle [
 	^ endAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDonutContext >> endAngle: anObject [
 	endAngle := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDonutContext >> initialize [
 	super initialize.
 	
@@ -28,22 +28,22 @@ GtPlotterDonutContext >> initialize [
 	totalAngle := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDonutContext >> startAngle [
 	^ startAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDonutContext >> startAngle: anObject [
 	startAngle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDonutContext >> totalAngle [
 	^ totalAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDonutContext >> totalAngle: anObject [
 	totalAngle := anObject
 ]

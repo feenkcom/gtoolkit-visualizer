@@ -1,10 +1,10 @@
 Class {
-	#name : #GtGraphGraphHorizontalDominanceTreeLayout,
-	#superclass : #GtGraphLayoutExamples,
-	#category : #'GToolkit-BlocGraph-Layouts-Examples'
+	#name : 'GtGraphGraphHorizontalDominanceTreeLayout',
+	#superclass : 'GtGraphLayoutExamples',
+	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 GtGraphGraphHorizontalDominanceTreeLayout >> binaryTree [
 	<gtExample>
 	| aParentNode aLayout |

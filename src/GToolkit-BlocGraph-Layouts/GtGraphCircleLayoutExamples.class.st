@@ -1,10 +1,10 @@
 Class {
-	#name : #GtGraphCircleLayoutExamples,
-	#superclass : #GtGraphLayoutExamples,
-	#category : #'GToolkit-BlocGraph-Layouts-Examples'
+	#name : 'GtGraphCircleLayoutExamples',
+	#superclass : 'GtGraphLayoutExamples',
+	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #example }
+{ #category : 'example' }
 GtGraphCircleLayoutExamples >> rectangularNodes [
 	<gtExample>
 	| aParentNode aLayout |
@@ -42,7 +42,7 @@ GtGraphCircleLayoutExamples >> rectangularNodes [
 	^ aParentNode
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 GtGraphCircleLayoutExamples >> squaredNodes [
 	<gtExample>
 	| aParentNode aLayout |

@@ -1,20 +1,20 @@
 Class {
-	#name : #GtGraphTreemapSquarifyStepPreview,
-	#superclass : #GtGraphTreemapSquarifyAbstractStep,
+	#name : 'GtGraphTreemapSquarifyStepPreview',
+	#superclass : 'GtGraphTreemapSquarifyAbstractStep',
 	#instVars : [
 		'step',
 		'nodes'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyStepPreview >> allSteps [
 	<return: #Array of: #GtGraphTreemapSquarifyAbstractStep>
 	^ self step allSteps
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyStepPreview >> asElementWithOccupiedArea [
 	| aContainer |
 	aContainer := BlElement new.
@@ -35,34 +35,34 @@ GtGraphTreemapSquarifyStepPreview >> asElementWithOccupiedArea [
 	^ aContainer
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyStepPreview >> asPreviewStep [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyStepPreview >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
 	^ nodes
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtGraphTreemapSquarifyStepPreview >> nodesDo: aBlock [
 	self nodes do: aBlock
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyStepPreview >> occupiedWeight [
 	^ self step occupiedWeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyStepPreview >> rectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ self step rectangle
 ]
 
-{ #category : #squarifying }
+{ #category : 'squarifying' }
 GtGraphTreemapSquarifyStepPreview >> squarifyNodes [
 	nodes := Array streamContents: [ :aStream | 
 		self step nodesDo: [ :eachNode | 
@@ -70,18 +70,18 @@ GtGraphTreemapSquarifyStepPreview >> squarifyNodes [
 	self step rectangle squarifyStep: self.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyStepPreview >> step [
 	^ step
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyStepPreview >> step: anObject [
 	step := anObject.
 	self squarifyNodes.
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyStepPreview >> worstValue [
 	<return: #Number>
 	^ self step worstValue

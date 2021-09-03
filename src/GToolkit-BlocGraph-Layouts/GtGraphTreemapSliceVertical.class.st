@@ -10,18 +10,18 @@ The following example shows an area with three nodes:
 
 "
 Class {
-	#name : #GtGraphTreemapSliceVertical,
-	#superclass : #GtGraphTreemapSlice,
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#name : 'GtGraphTreemapSliceVertical',
+	#superclass : 'GtGraphTreemapSlice',
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSliceVertical >> extent [
 	<return: #Point>
 	^ self breadth @ self length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSliceVertical >> remainingExtent [
 	<return: #Point>
 	^ self nodes 
@@ -29,14 +29,14 @@ GtGraphTreemapSliceVertical >> remainingExtent [
 		ifEmpty: [ self extent ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphTreemapSliceVertical >> updateExtentFor: aNode [
 	| aNodeLength |
 	aNodeLength := self length * aNode weight.
 	aNode extent: self breadth @ aNodeLength
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtGraphTreemapSliceVertical >> updatePositionFor: aNode [
 	aNode position: self nodes last bottomLeft
 ]

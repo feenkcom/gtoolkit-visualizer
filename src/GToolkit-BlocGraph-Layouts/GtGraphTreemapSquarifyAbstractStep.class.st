@@ -1,10 +1,10 @@
 Class {
-	#name : #GtGraphTreemapSquarifyAbstractStep,
-	#superclass : #Object,
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#name : 'GtGraphTreemapSquarifyAbstractStep',
+	#superclass : 'Object',
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtGraphTreemapSquarifyAbstractStep >> allAreas [
 	self 
 		deprecated: 'Please use #allSteps instead.'
@@ -12,38 +12,38 @@ GtGraphTreemapSquarifyAbstractStep >> allAreas [
 	^ self allSteps
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyAbstractStep >> allSteps [
 	<return: #Array of: #GtGraphTreemapSquarifyAbstractStep>
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyAbstractStep >> asElementWithOccupiedArea [
 	<return: #BlElement>
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyAbstractStep >> asPreviewStep [
 	^ GtGraphTreemapSquarifyStepPreview new step: self
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> gtAllStepsFor: aView [
 	<gtView>
 	^ aView columnedList 
 		title: 'Steps';
 		priority: 3;
 		items: [ self allSteps ];
-		column: 'Success' item: [ :aStep | aStep  successName ] width: 80;
-		column: 'Type' item: [ :aStep | aStep orientationName ] width: 100;
-		column: 'Worst Aspect' item: [ :aStep | aStep  worstString ];
-		column: 'Nodes' item: [ :aStep | aStep nodesCount ] width: 50; 
-		column: 'Bounds' item: [ :aStep | aStep rectangleBounds ].
+		column: 'Success' text: [ :aStep | aStep  successName ] width: 80;
+		column: 'Type' text: [ :aStep | aStep orientationName ] width: 100;
+		column: 'Worst Aspect' text: [ :aStep | aStep  worstString ];
+		column: 'Nodes' text: [ :aStep | aStep nodesCount ] width: 50; 
+		column: 'Bounds' text: [ :aStep | aStep rectangleBounds ].
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
@@ -51,12 +51,12 @@ GtGraphTreemapSquarifyAbstractStep >> gtNodesFor: aView [
 		title: 'Nodes';
 		priority: 2;
 		items: [ self nodes ];
-		column: 'Weight' item: [ :aNode | aNode weight ] width: 100; 
-		column: 'Position' item: [ :aNode | aNode position ifNil: [ '<uninitialized>' asRopedText foreground: Color lightGray ] ];
-		column: 'Extent' item: [ :aNode | aNode extent ifNil: [ '<uninitialized>' asRopedText foreground: Color lightGray ] ].
+		column: 'Weight' text: [ :aNode | aNode weight ] width: 100; 
+		column: 'Position' text: [ :aNode | aNode position ifNil: [ '<uninitialized>' asRopedText foreground: Color lightGray ] ];
+		column: 'Extent' text: [ :aNode | aNode extent ifNil: [ '<uninitialized>' asRopedText foreground: Color lightGray ] ].
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> gtPreviewFor: aView [
 	<gtView>
 	self rectangle ifNil: [ ^ aView empty ].
@@ -67,7 +67,7 @@ GtGraphTreemapSquarifyAbstractStep >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> gtWorstValueFor: aView [
 	<gtView>
 	^ (self worstValue gtPreviewFor: aView)
@@ -75,30 +75,30 @@ GtGraphTreemapSquarifyAbstractStep >> gtWorstValueFor: aView [
 		priority: 5
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtGraphTreemapSquarifyAbstractStep >> isDefinedStep [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyAbstractStep >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyAbstractStep >> rectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ self subclassResponsibility
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> worstValue [
 	<return: #Number>
 	^ self subclassResponsibility
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyAbstractStep >> worstValueRounded [
 	<return: #Number>
 	^ self worstValue asFloat round: 2

@@ -1,38 +1,38 @@
 Class {
-	#name : #GtGraphTreemapSquarifyNoStep,
-	#superclass : #GtGraphTreemapSquarifyAbstractStep,
+	#name : 'GtGraphTreemapSquarifyNoStep',
+	#superclass : 'GtGraphTreemapSquarifyAbstractStep',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 GtGraphTreemapSquarifyNoStep class >> cleanUniqueInstance [
 	uniqueInstance := nil
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 GtGraphTreemapSquarifyNoStep class >> cleanUp [
 	self cleanUniqueInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyNoStep class >> default [
 	^ self uniqueInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyNoStep class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtGraphTreemapSquarifyNoStep >> allSteps [
 	^ #()
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyNoStep >> asElementWithOccupiedArea [
 	<return: #BlElement>
 	^ GtGraphUtilities default
@@ -40,34 +40,34 @@ GtGraphTreemapSquarifyNoStep >> asElementWithOccupiedArea [
 		extent: 300@300
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtGraphTreemapSquarifyNoStep >> isDefinedStep [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyNoStep >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyNoStep >> rectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ GtGraphTreemapSquarifyAreaRectangle null
 ]
 
-{ #category : #squarifying }
+{ #category : 'squarifying' }
 GtGraphTreemapSquarifyNoStep >> squarifyNode: aGtGraphTreemapNode in: aGtGraphTreemapSquarifyStep [ 
 	aGtGraphTreemapSquarifyStep squarifyHereNode: aGtGraphTreemapNode
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtGraphTreemapSquarifyNoStep >> stepsDo: anOneArgBlock [
 	"do nothing"
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyNoStep >> worstValue [
 	<return: #Number>
 	^ Float nan

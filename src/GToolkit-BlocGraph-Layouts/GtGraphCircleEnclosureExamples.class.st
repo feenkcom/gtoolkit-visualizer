@@ -1,17 +1,17 @@
 Class {
-	#name : #GtGraphCircleEnclosureExamples,
-	#superclass : #Object,
-	#category : #'GToolkit-BlocGraph-Layouts-Examples'
+	#name : 'GtGraphCircleEnclosureExamples',
+	#superclass : 'Object',
+	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphCircleEnclosureExamples >> emptyEnclosure [
 	<gtExample>
 
 	^ GtGraphCircleEnclosure new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GtGraphCircleEnclosureExamples >> enclosureWithFourCircles [
 	<gtExample>
 
@@ -22,7 +22,7 @@ GtGraphCircleEnclosureExamples >> enclosureWithFourCircles [
 			center: 240@50)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GtGraphCircleEnclosureExamples >> enclosureWithOneCircle [
 	<gtExample>
 
@@ -33,7 +33,7 @@ GtGraphCircleEnclosureExamples >> enclosureWithOneCircle [
 			center: 50@50)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GtGraphCircleEnclosureExamples >> enclosureWithThreeCircles [
 	<gtExample>
 
@@ -44,7 +44,7 @@ GtGraphCircleEnclosureExamples >> enclosureWithThreeCircles [
 			center: 140@0)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GtGraphCircleEnclosureExamples >> enclosureWithTwoCircles [
 	<gtExample>
 	

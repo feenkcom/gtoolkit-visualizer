@@ -1,42 +1,42 @@
 Class {
-	#name : #GtPlotterSingleScaleContext,
-	#superclass : #GtPlotterScaleContext,
+	#name : 'GtPlotterSingleScaleContext',
+	#superclass : 'GtPlotterScaleContext',
 	#instVars : [
 		'scale',
 		'scaledValue',
 		'mappedValue'
 	],
-	#category : #'GToolkit-Plotter-Core - Context'
+	#category : 'GToolkit-Plotter-Core - Context'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleContext >> mappedValue [
 	^ mappedValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleContext >> mappedValue: anObject [
 	"Mapped value is an object returned by the ==map:== of the scale"
 
 	mappedValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleContext >> scale [
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleContext >> scale: anObject [
 	scale := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleContext >> scaledValue [
 	^ scaledValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleContext >> scaledValue: anObject [
 	"An object that was given to the scale to be mapped and transformed into the ==mappedValue=="
 

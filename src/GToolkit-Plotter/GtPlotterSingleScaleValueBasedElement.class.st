@@ -1,31 +1,31 @@
 Class {
-	#name : #GtPlotterSingleScaleValueBasedElement,
-	#superclass : #GtPlotterSingleScaleProportionalElement,
+	#name : 'GtPlotterSingleScaleValueBasedElement',
+	#superclass : 'GtPlotterSingleScaleProportionalElement',
 	#instVars : [
 		'values',
 		'valueStyle',
 		'valueElement',
 		'valueLayout'
 	],
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSingleScaleValueBasedElement >> defaultValueElement [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSingleScaleValueBasedElement >> defaultValueLayout [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSingleScaleValueBasedElement >> defaultValueStyle [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSingleScaleValueBasedElement >> initialize [
 	super initialize.
 
@@ -38,7 +38,7 @@ GtPlotterSingleScaleValueBasedElement >> initialize [
 	self initializeElements
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 GtPlotterSingleScaleValueBasedElement >> initializeElements [
 	| aScaleContext theChildren |
 
@@ -79,47 +79,47 @@ GtPlotterSingleScaleValueBasedElement >> initializeElements [
 	self addChildren: (elements := theChildren)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleValueBasedElement >> valueElement [
 	^ valueElement
 ]
 
-{ #category : #'api - values' }
+{ #category : 'api - values' }
 GtPlotterSingleScaleValueBasedElement >> valueElement: aBlockOrStencil [
 	valueElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleValueBasedElement >> valueLayout [
 	^ valueLayout
 ]
 
-{ #category : #'api - values' }
+{ #category : 'api - values' }
 GtPlotterSingleScaleValueBasedElement >> valueLayout: anObject [
 	valueLayout := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleValueBasedElement >> valueStyle [
 	^ valueStyle
 ]
 
-{ #category : #'api - values' }
+{ #category : 'api - values' }
 GtPlotterSingleScaleValueBasedElement >> valueStyle: anObject [
 	valueStyle := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSingleScaleValueBasedElement >> values [
 	<return: #Collection of: #Object>
 
 	^ values
 ]
 
-{ #category : #'api - values' }
+{ #category : 'api - values' }
 GtPlotterSingleScaleValueBasedElement >> values: aCollectionOfScaleValues [
 	values := aCollectionOfScaleValues.
 	self initializeElements

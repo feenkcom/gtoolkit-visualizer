@@ -1,27 +1,27 @@
 Class {
-	#name : #GtGraphAbstractVerticalTreeLayout,
-	#superclass : #GtGraphAbstractRegularTreeLayout,
-	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
+	#name : 'GtGraphAbstractVerticalTreeLayout',
+	#superclass : 'GtGraphAbstractRegularTreeLayout',
+	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtGraphAbstractVerticalTreeLayout class >> isAbstract [
 	^ self = GtGraphAbstractVerticalTreeLayout
 ]
 
-{ #category : #'hook-private' }
+{ #category : 'hook-private' }
 GtGraphAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 GtGraphAbstractVerticalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 3
 ]
 
-{ #category : #'hook-private' }
+{ #category : 'hook-private' }
 GtGraphAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
 	| treeSize childrenPosition x y middleOfTree |
 	aNodeCollection isEmpty ifTrue: [ ^ 0 ].
@@ -40,17 +40,17 @@ GtGraphAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atL
 	^ x - aPoint x - self horizontalGap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphAbstractVerticalTreeLayout >> levelDistance: aNumber [
 	self verticalGap: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphAbstractVerticalTreeLayout >> nodeDistance: aNumber [
 	self horizontalGap: aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtGraphAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 	| cursor layerDepthSize |
 	cursor := self topGap.

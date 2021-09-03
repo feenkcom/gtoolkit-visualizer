@@ -1,15 +1,15 @@
 Class {
-	#name : #GtPlotterSeriesElement,
-	#superclass : #GtPlotterDoubleScaleBasedElement,
+	#name : 'GtPlotterSeriesElement',
+	#superclass : 'GtPlotterDoubleScaleBasedElement',
 	#instVars : [
 		'values',
 		'valueX',
 		'valueY'
 	],
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterSeriesElement >> initialize [
 	super initialize.
 	
@@ -18,24 +18,24 @@ GtPlotterSeriesElement >> initialize [
 	valueY := [ :each | each ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterSeriesElement >> values [
 	^ values
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterSeriesElement >> values: aCollectionOfScaleValues [
 	values := aCollectionOfScaleValues.
 	self initializeElements
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterSeriesElement >> x: aBlock [
 	valueX := aBlock.
 	self initializeElements
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterSeriesElement >> y: aBlock [
 	valueY := aBlock.
 	self initializeElements

@@ -1,30 +1,30 @@
 Class {
-	#name : #GtPlotterDataGroupWithStacking,
-	#superclass : #GtPlotterDataGroupDecorator,
+	#name : 'GtPlotterDataGroupWithStacking',
+	#superclass : 'GtPlotterDataGroupDecorator',
 	#instVars : [
 		'isStacking'
 	],
-	#category : #'GToolkit-Plotter-Data'
+	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDataGroupWithStacking >> initialize [
 	super initialize.
 	
 	isStacking := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDataGroupWithStacking >> isStacking [
 	^ isStacking
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDataGroupWithStacking >> isStacking: anObject [
 	isStacking := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtPlotterDataGroupWithStacking >> printOn: aStream [
 	aStream
 		nextPutAll: ('Stacking: {1} (' format: { self isStacking });

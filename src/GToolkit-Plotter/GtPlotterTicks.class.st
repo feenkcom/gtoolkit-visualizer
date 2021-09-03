@@ -1,6 +1,6 @@
 Class {
-	#name : #GtPlotterTicks,
-	#superclass : #Object,
+	#name : 'GtPlotterTicks',
+	#superclass : 'Object',
 	#instVars : [
 		'from',
 		'to',
@@ -10,15 +10,15 @@ Class {
 	#classVars : [
 		'timeIntervals'
 	],
-	#category : #'GToolkit-Plotter-Tick'
+	#category : 'GToolkit-Plotter-Tick'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTicks class >> from: aStart to: aStop count: aCount [
 	^ self new from: aStart to: aStop count: aCount
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GtPlotterTicks class >> initialize [
 	timeIntervals := {
 		1 second -> (GtPlotterTimeEverySecond step: 1).
@@ -42,26 +42,26 @@ GtPlotterTicks class >> initialize [
 		1 year ->  (GtPlotterTimeEveryYear step: 1) }
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtPlotterTicks >> asArray [
 	<return: #Array of: #Number>
 
 	^ self ticks asArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtPlotterTicks >> computedTicks [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTicks >> from: aStart to: aStop count: aCount [
 	from := aStart.
 	to := aStop.
 	count := aCount
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtPlotterTicks >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -112,7 +112,7 @@ GtPlotterTicks >> gtPreviewFor: aView [
 		]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtPlotterTicks >> gtTicksFor: aView [
 	<gtView>
 	
@@ -122,7 +122,7 @@ GtPlotterTicks >> gtTicksFor: aView [
 		items: [ self asArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTicks >> ticks [
 	<return: #Collection of: #Object>
 

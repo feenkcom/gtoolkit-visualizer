@@ -6,24 +6,24 @@ https://en.wikipedia.org/wiki/Range_(mathematics)
 
 "
 Class {
-	#name : #GtPlotterScaleRange,
-	#superclass : #Object,
-	#category : #'GToolkit-Plotter-Scale'
+	#name : 'GtPlotterScaleRange',
+	#superclass : 'Object',
+	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : #'api - polymorphism' }
+{ #category : 'api - polymorphism' }
 GtPlotterScaleRange >> cull: aParameterValue [
 	^ self interpolate: aParameterValue
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 GtPlotterScaleRange >> interpolate: aParameterValue [
 	"I take a parameter t in [0,1] and returns the corresponding range value x in [a,b]."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'api - polymorphism' }
+{ #category : 'api - polymorphism' }
 GtPlotterScaleRange >> value: aParameterValue [
 	^ self interpolate: aParameterValue
 ]

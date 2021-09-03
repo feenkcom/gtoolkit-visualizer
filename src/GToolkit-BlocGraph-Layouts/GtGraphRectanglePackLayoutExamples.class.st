@@ -1,16 +1,16 @@
 Class {
-	#name : #GtGraphRectanglePackLayoutExamples,
-	#superclass : #GtGraphLayoutExamples,
-	#category : #'GToolkit-BlocGraph-Layouts-Examples'
+	#name : 'GtGraphRectanglePackLayoutExamples',
+	#superclass : 'GtGraphLayoutExamples',
+	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GtGraphRectanglePackLayoutExamples >> circlesData [
 	^ Collection withAllSubclasses collect: [ :aClass | 
 		aClass name  -> (30*( (aClass numberOfMethods max: 1) ln asInteger)) ]
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 GtGraphRectanglePackLayoutExamples >> circlesRaw [
 	<gtExample>
 	| view data |
@@ -48,7 +48,7 @@ GtGraphRectanglePackLayoutExamples >> circlesRaw [
 	^ view
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 GtGraphRectanglePackLayoutExamples >> powersOfTwo [
 	<gtExample>
 	

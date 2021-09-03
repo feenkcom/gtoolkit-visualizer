@@ -1,15 +1,15 @@
 Class {
-	#name : #GtPlotterDoubleScaleBasedElement,
-	#superclass : #GtPlotterScaleBasedElement,
+	#name : 'GtPlotterDoubleScaleBasedElement',
+	#superclass : 'GtPlotterScaleBasedElement',
 	#instVars : [
 		'scaleX',
 		'scaleY',
 		'elements'
 	],
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDoubleScaleBasedElement >> initialize [
 	super initialize.
 	
@@ -19,28 +19,28 @@ GtPlotterDoubleScaleBasedElement >> initialize [
 	elements := #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterDoubleScaleBasedElement >> initializeElements [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDoubleScaleBasedElement >> scaleX [
 	^ scaleX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDoubleScaleBasedElement >> scaleX: anObject [
 	scaleX := anObject.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDoubleScaleBasedElement >> scaleY [
 	^ scaleY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDoubleScaleBasedElement >> scaleY: anObject [
 	scaleY := anObject.
 	self initializeElements

@@ -1,28 +1,28 @@
 Class {
-	#name : #GtPlotterTimeInterval,
-	#superclass : #Object,
+	#name : 'GtPlotterTimeInterval',
+	#superclass : 'Object',
 	#instVars : [
 		'step'
 	],
-	#category : #'GToolkit-Plotter-Time'
+	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTimeInterval class >> step: aNumber [
 	^ self new step: aNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeInterval >> durationsFrom: aStartDuration to: anEndDuration do: aBlock [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeInterval >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterTimeInterval >> step: aStep [
 	step := aStep
 ]

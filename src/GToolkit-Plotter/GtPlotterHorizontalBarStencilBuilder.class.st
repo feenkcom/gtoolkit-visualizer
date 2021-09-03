@@ -1,25 +1,25 @@
 Class {
-	#name : #GtPlotterHorizontalBarStencilBuilder,
-	#superclass : #BrStencilBuilder,
+	#name : 'GtPlotterHorizontalBarStencilBuilder',
+	#superclass : 'BrStencilBuilder',
 	#instVars : [
 		'bar',
 		'group',
 		'value'
 	],
-	#category : #'GToolkit-Plotter-Builder - Bar Chart'
+	#category : 'GToolkit-Plotter-Builder - Bar Chart'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarStencilBuilder >> bar [
 	^ bar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarStencilBuilder >> bar: anObject [
 	bar := anObject
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalBarStencilBuilder >> buildDefault [
 	<return: #BrStencil or: #BlElement>
 
@@ -40,17 +40,17 @@ GtPlotterHorizontalBarStencilBuilder >> buildDefault [
 		values: { self value }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarStencilBuilder >> group [
 	^ group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarStencilBuilder >> group: anObject [
 	group := anObject
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterHorizontalBarStencilBuilder >> paramsOn: aStencilExecutor [
 	aStencilExecutor
 		push: self bar;
@@ -58,12 +58,12 @@ GtPlotterHorizontalBarStencilBuilder >> paramsOn: aStencilExecutor [
 		push: self group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarStencilBuilder >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterHorizontalBarStencilBuilder >> value: anObject [
 	value := anObject
 ]

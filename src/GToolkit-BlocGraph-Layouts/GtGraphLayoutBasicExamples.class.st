@@ -26,12 +26,12 @@ To add a visual queue, we need to explicitly add a line element.
 
 "
 Class {
-	#name : #GtGraphLayoutBasicExamples,
-	#superclass : #Object,
-	#category : #'GToolkit-BlocGraph-Layouts-Examples'
+	#name : 'GtGraphLayoutBasicExamples',
+	#superclass : 'Object',
+	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : #'examples - graph' }
+{ #category : 'examples - graph' }
 GtGraphLayoutBasicExamples >> elementsTreeWithEdges [
 	<gtExample>
 	| elementToVisualize root |
@@ -62,7 +62,7 @@ GtGraphLayoutBasicExamples >> elementsTreeWithEdges [
 	^ root
 ]
 
-{ #category : #'examples - graph' }
+{ #category : 'examples - graph' }
 GtGraphLayoutBasicExamples >> elementsTreeWithEdgesAndLines [
 	<gtExample>
 	| root elementToVisualize |

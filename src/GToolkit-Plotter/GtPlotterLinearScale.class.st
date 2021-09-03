@@ -1,20 +1,20 @@
 Class {
-	#name : #GtPlotterLinearScale,
-	#superclass : #GtPlotterContinuousScale,
-	#category : #'GToolkit-Plotter-Scale'
+	#name : 'GtPlotterLinearScale',
+	#superclass : 'GtPlotterContinuousScale',
+	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : #'api - domain' }
+{ #category : 'api - domain' }
 GtPlotterLinearScale >> domainFrom: aStartMagnitude to: anEndMagnitude [
 	domain := GtPlotterScaleMagnitudeDomain from: aStartMagnitude to: anEndMagnitude
 ]
 
-{ #category : #'api - range' }
+{ #category : 'api - range' }
 GtPlotterLinearScale >> rangeFrom: aStartMagnitude to: anEndMagnitude [
 	range := GtPlotterScaleIntervalRange from: aStartMagnitude to: anEndMagnitude
 ]
 
-{ #category : #'api - ticks' }
+{ #category : 'api - ticks' }
 GtPlotterLinearScale >> ticks: anAmount [
 	<return: #Array of: #Object>
 
@@ -24,7 +24,7 @@ GtPlotterLinearScale >> ticks: anAmount [
 		count: anAmount) asArray
 ]
 
-{ #category : #'operators-mapping' }
+{ #category : 'operators-mapping' }
 GtPlotterLinearScale >> transform: aDomainValue [
 	^ aDomainValue
 ]

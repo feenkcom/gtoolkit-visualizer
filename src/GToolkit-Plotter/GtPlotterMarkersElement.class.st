@@ -7,22 +7,22 @@ I draw marker of plot series.
 {{gtExample:GtPlotterRawVerticalTimelineExamples>>#dots|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : #GtPlotterMarkersElement,
-	#superclass : #GtPlotterSeriesElement,
+	#name : 'GtPlotterMarkersElement',
+	#superclass : 'GtPlotterSeriesElement',
 	#instVars : [
 		'markerLayout',
 		'markerElement',
 		'markerStyle'
 	],
-	#category : #'GToolkit-Plotter-Core - Elements'
+	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterMarkersElement >> horizontalMarkerLayout [
 	self markerLayout: self newHorizontalMarkerLayout.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterMarkersElement >> initialize [
 	super initialize.
 	
@@ -31,7 +31,7 @@ GtPlotterMarkersElement >> initialize [
 	markerLayout := self newVerticalMarkerLayout.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterMarkersElement >> initializeElements [
 	| aScaleContext |
 
@@ -59,40 +59,40 @@ GtPlotterMarkersElement >> initializeElements [
 			scaleContext: aScaleContext) asElement ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterMarkersElement >> markerElement [
 	^ markerElement
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterMarkersElement >> markerElement: aBlockOrStencil [
 	markerElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder..
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterMarkersElement >> markerLayout [
 	^ markerLayout
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterMarkersElement >> markerLayout: anObject [
 	markerLayout := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterMarkersElement >> markerStyle [
 	^ markerStyle
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterMarkersElement >> markerStyle: anObject [
 	markerStyle := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterMarkersElement >> newHorizontalMarkerLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
@@ -102,7 +102,7 @@ GtPlotterMarkersElement >> newHorizontalMarkerLayout [
 		] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterMarkersElement >> newVerticalMarkerLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
@@ -112,7 +112,7 @@ GtPlotterMarkersElement >> newVerticalMarkerLayout [
 		] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : #'api - markers' }
+{ #category : 'api - markers' }
 GtPlotterMarkersElement >> verticalMarkerLayout [
 	self markerLayout: self newVerticalMarkerLayout.
 ]

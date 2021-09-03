@@ -1,6 +1,6 @@
 Class {
-	#name : #GtPlotterTimeline,
-	#superclass : #GtPlotterBuilder,
+	#name : 'GtPlotterTimeline',
+	#superclass : 'GtPlotterBuilder',
 	#instVars : [
 		'timelineStencil',
 		'timelineLabelFormat',
@@ -17,16 +17,16 @@ Class {
 		'AxisProjection',
 		'AxisTicks'
 	],
-	#category : #'GToolkit-Plotter-Builder - Timeline'
+	#category : 'GToolkit-Plotter-Builder - Timeline'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GtPlotterTimeline class >> initialize [	
 	AxisProjection := #projection.
 	AxisTicks := #ticks
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTimeline >> initialize [
 	super initialize.
 	
@@ -46,61 +46,61 @@ GtPlotterTimeline >> initialize [
 	axisType := AxisProjection
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> projectionData: aBlock [
 	projectionDataBlock := aBlock
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> projectionLabelFormat: aBlock [
 	projectionLabelFormat := aBlock
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> projectionLineStencil: aStencil [
 	"Set a stencil used to create a horizontal line of the data point projections"
 
 	projectionLineStencil := aStencil asStencil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtPlotterTimeline >> spacing [
 	^ 15
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> timelineData: aBlock [
 	timelineDataBlock := aBlock
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> timelineFrom: aFromDate to: aToDate [
 	timeScale domainFrom: aFromDate to: aToDate
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> timelineLabelFormat: aBlock [
 	timelineLabelFormat := aBlock
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> timelineStencil: aStencil [
 	"Set a stencil used to create a vertical timeline line on which we display data points"
 
 	timelineStencil := aStencil asStencil
 ]
 
-{ #category : #'api - instance creation' }
+{ #category : 'api - instance creation' }
 GtPlotterTimeline >> with: aCollectionOfDomainObjects [
 	data := aCollectionOfDomainObjects
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> withProjectionAxis [
 	axisType := AxisProjection
 ]
 
-{ #category : #'api - builder' }
+{ #category : 'api - builder' }
 GtPlotterTimeline >> withTickAxis: anAmountOfTicks [
 	axisType := AxisTicks.
 	amountOfTicks := anAmountOfTicks

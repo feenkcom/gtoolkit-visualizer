@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterTimeScaleExamples,
-	#superclass : #GtPlotterScaleExamples,
-	#category : #'GToolkit-Plotter-Examples'
+	#name : 'GtPlotterTimeScaleExamples',
+	#superclass : 'GtPlotterScaleExamples',
+	#category : 'GToolkit-Plotter-Examples'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeScaleExamples >> defaultTimeScale [
 	<gtExample>
 	| aScale |
@@ -22,7 +22,7 @@ GtPlotterTimeScaleExamples >> defaultTimeScale [
 	^ aScale
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeScaleExamples >> everyWeek [
 	<gtExample>
 	| aScale |

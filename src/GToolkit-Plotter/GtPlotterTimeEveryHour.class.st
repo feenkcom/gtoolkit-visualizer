@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterTimeEveryHour,
-	#superclass : #GtPlotterTimeInterval,
-	#category : #'GToolkit-Plotter-Time'
+	#name : 'GtPlotterTimeEveryHour',
+	#superclass : 'GtPlotterTimeInterval',
+	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterTimeEveryHour >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock [
 	| aCeilStart |
 	

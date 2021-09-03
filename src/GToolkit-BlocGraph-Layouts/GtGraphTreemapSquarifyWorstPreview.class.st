@@ -4,15 +4,15 @@ I keep utility methods that are useful for {{gtClass:GtGraphTreemapSquarifyWorst
 
 "
 Class {
-	#name : #GtGraphTreemapSquarifyWorstPreview,
-	#superclass : #Object,
+	#name : 'GtGraphTreemapSquarifyWorstPreview',
+	#superclass : 'Object',
 	#instVars : [
 		'worst'
 	],
-	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyWorstPreview >> asElement [
 	^ GtGraphUtilities default 
 		rectangleOn: self 
@@ -20,14 +20,14 @@ GtGraphTreemapSquarifyWorstPreview >> asElement [
 		margin: (BlInsets all: 0)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyWorstPreview >> asElementWithInformation [
 	^ GtGraphUtilities default 
 		informationForRectangle: self asElement 
 		bounds: self bounds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyWorstPreview >> asElementWithNodes [
 	| aContainer aNextNodePosition |
 	aContainer := BlElement new.
@@ -56,7 +56,7 @@ GtGraphTreemapSquarifyWorstPreview >> asElementWithNodes [
 	^ aContainer
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyWorstPreview >> asReversedElement [
 	^ GtGraphUtilities default 
 		rectangleOn: self 
@@ -64,14 +64,14 @@ GtGraphTreemapSquarifyWorstPreview >> asReversedElement [
 		margin: (BlInsets all: 0)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyWorstPreview >> asReversedElementWithInformation [
 	^ GtGraphUtilities default 
 		informationForRectangle: self asReversedElement 
 		bounds: self reversedBounds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtGraphTreemapSquarifyWorstPreview >> asReversedElementWithNodes [
 	| aContainer aNextNodePosition |
 	aContainer := BlElement new.
@@ -100,23 +100,23 @@ GtGraphTreemapSquarifyWorstPreview >> asReversedElementWithNodes [
 	^ aContainer
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorstPreview >> bounds [
 	^ 0@0 extent: self extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorstPreview >> breadth [
 	^ self worst breadth
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorstPreview >> extent [
 	<return: #Point>
 	^ self breadth @ self length
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorstPreview >> gtNodesFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
@@ -124,22 +124,20 @@ GtGraphTreemapSquarifyWorstPreview >> gtNodesFor: aView [
 		title: 'Nodes';
 		items: [ self nodes ];
 		column: 'Weight' 
-			item: [ :aNode | aNode weight ] 
-			format: [ :aNumber | self printNumber: aNumber ];
+			text: [ :aNode | self printNumber: aNode weight ];
 		column: 'Worst Value' 
-			item: [ :aNode | self worstValueForNode: aNode ] 
-			format: [ :aNumber | self printNumber: aNumber ];
+			text: [ :aNode | self printNumber: (self worstValueForNode: aNode) ];
 		column: 'Vertical Extent'
-			item: [ :aNode | | anExtent | 
+			text: [ :aNode | | anExtent | 
 				anExtent := (self nodeExtent: aNode) asFloatPoint.
 				anExtent x rounded @ anExtent y rounded ];
 		column: 'Horizontal Extent'
-			item: [ :aNode | | anExtent | 
+			text: [ :aNode | | anExtent | 
 				anExtent := (self nodeReversedExtent: aNode) asFloatPoint.
 				anExtent x rounded @ anExtent y rounded ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorstPreview >> gtPreviewFor: aView [
 	<gtView>
 	self length ifNil: [ ^ aView empty ].
@@ -151,7 +149,7 @@ GtGraphTreemapSquarifyWorstPreview >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorstPreview >> gtReversedPreviewFor: aView [
 	<gtView>
 	self length ifNil: [ ^ aView empty ].
@@ -163,7 +161,7 @@ GtGraphTreemapSquarifyWorstPreview >> gtReversedPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtGraphTreemapSquarifyWorstPreview >> gtWorstValueFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
@@ -173,79 +171,79 @@ GtGraphTreemapSquarifyWorstPreview >> gtWorstValueFor: aView [
 		title: 'Worst Aspect Ratio'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorstPreview >> length [
 	^ self worst length
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorstPreview >> nodeArea: aNode [
 	^ aNode weight * self totalArea
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorstPreview >> nodeExtent: aNode [
 	^ self nodesBreadth @ (self nodeLength: aNode)
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorstPreview >> nodeLength: aNode [
 	^ (self nodeArea: aNode) / self nodesBreadth
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorstPreview >> nodeReversedExtent: aNode [
 	^ (self nodeLength: aNode) @ self nodesBreadth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorstPreview >> nodes [
 	^ self worst nodes
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorstPreview >> nodesBreadth [
 	^ self worst nodesBreadth
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtGraphTreemapSquarifyWorstPreview >> printNumber: aNumber [
 	<return: #String>
 	^ GtGraphUtilities default printNumber: aNumber
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorstPreview >> reversedBounds [
 	^ 0@0 extent: self reversedExtent
 ]
 
-{ #category : #'accessing - occupied area' }
+{ #category : 'accessing - occupied area' }
 GtGraphTreemapSquarifyWorstPreview >> reversedExtent [
 	<return: #Point>
 	^ self length @ self breadth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorstPreview >> totalArea [
 	^ self worst totalArea
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 GtGraphTreemapSquarifyWorstPreview >> value [
 	^ self worst value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorstPreview >> worst [
 	^ worst
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtGraphTreemapSquarifyWorstPreview >> worst: anObject [
 	worst := anObject
 ]
 
-{ #category : #'accessing - nodes' }
+{ #category : 'accessing - nodes' }
 GtGraphTreemapSquarifyWorstPreview >> worstValueForNode: aNode [
 	^ self worst worstValueForNode: aNode
 ]

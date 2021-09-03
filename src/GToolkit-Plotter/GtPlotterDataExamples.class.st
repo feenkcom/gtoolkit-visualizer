@@ -1,10 +1,10 @@
 Class {
-	#name : #GtPlotterDataExamples,
-	#superclass : #Object,
-	#category : #'GToolkit-Plotter-Example - Data'
+	#name : 'GtPlotterDataExamples',
+	#superclass : 'Object',
+	#category : 'GToolkit-Plotter-Example - Data'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDataExamples class >> browserData [
 	^ #(
 		#('Firefox' 3492 false #medium)
@@ -10010,12 +10010,12 @@ GtPlotterDataExamples class >> browserData [
 	)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterDataExamples class >> browsers [
 	^ { 'Chrome' . 'Safari' . 'Firefox' . 'Opera' . 'Edge' }
 ]
 
-{ #category : #'raw data' }
+{ #category : 'raw data' }
 GtPlotterDataExamples >> browserData [
 	<gtExample>
 
@@ -10029,14 +10029,14 @@ GtPlotterDataExamples >> browserData [
 				yourself ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterDataExamples >> browserDataGroup [
 	<gtExample>
 
 	^ GtPlotterDataGroup new values: self browserData
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterDataExamples >> browserDataGroupSortedByBrowser [
 	<gtExample>
 	| aGroup |
@@ -10054,7 +10054,7 @@ GtPlotterDataExamples >> browserDataGroupSortedByBrowser [
 	^ aGroup
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtPlotterDataExamples >> browserDataGroupSortedByDanger [
 	<gtExample>
 	| aGroup theDanger |

@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPlotterTimeTicksExamples,
-	#superclass : #GtPlotterTicksExamples,
-	#category : #'GToolkit-Plotter-Examples'
+	#name : 'GtPlotterTimeTicksExamples',
+	#superclass : 'GtPlotterTicksExamples',
+	#category : 'GToolkit-Plotter-Examples'
 }

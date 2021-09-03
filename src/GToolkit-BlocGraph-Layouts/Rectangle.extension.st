@@ -1,6 +1,6 @@
-Extension { #name : #Rectangle }
+Extension { #name : 'Rectangle' }
 
-{ #category : #'*GToolkit-BlocGraph-Layouts' }
+{ #category : '*GToolkit-BlocGraph-Layouts' }
 Rectangle >> gtHalfPerimeter [
 	^ self width + self height
 ]

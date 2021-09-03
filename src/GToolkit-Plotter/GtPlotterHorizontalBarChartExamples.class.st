@@ -2,12 +2,12 @@
 I exemplify {{gtClass:GtPlotterHorizontalBarChart}}.
 "
 Class {
-	#name : #GtPlotterHorizontalBarChartExamples,
-	#superclass : #GtPlotterBuilderExamples,
-	#category : #'GToolkit-Plotter-Example - Builders'
+	#name : 'GtPlotterHorizontalBarChartExamples',
+	#superclass : 'GtPlotterBuilderExamples',
+	#category : 'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : #'example - dependencies' }
+{ #category : 'example - dependencies' }
 GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 	<gtExample>
 	| projects packages theData maxLines aBarWidthScale barChart |
@@ -41,7 +41,7 @@ GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 	^ barChart
 ]
 
-{ #category : #'example - browser data' }
+{ #category : 'example - browser data' }
 GtPlotterHorizontalBarChartExamples >> browserDataChart [
 	<gtExample>
 	| theColors theData barChart aMaxDuration aBarWidthScale |
@@ -78,7 +78,7 @@ GtPlotterHorizontalBarChartExamples >> browserDataChart [
 	^ barChart
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterHorizontalBarChartExamples >> chartWebsiteVisits [
 	<gtExample>
 	| theData |
@@ -90,7 +90,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisits [
 	^ self websiteVisitsChartFromData: theData
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZone [
 	<gtExample>
 	| theData |
@@ -104,7 +104,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZone [
 	^ self websiteVisitsChartFromData: theData
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZoneAndColored [
 	<gtExample>
 	| theData theColors |
@@ -127,7 +127,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZoneAndColored
 	^ self websiteVisitsChartFromData: theData
 ]
 
-{ #category : #'example - sequoia' }
+{ #category : 'example - sequoia' }
 GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	<gtExample>
 	| theData barChart aMaxPages aBarWidthScale |
@@ -151,7 +151,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	^ barChart
 ]
 
-{ #category : #'example - sequoia' }
+{ #category : 'example - sequoia' }
 GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenus [
 	<gtExample>
 	| theData barChart aMaxPages aBarWidthScale |
@@ -187,7 +187,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenus [
 	^ barChart
 ]
 
-{ #category : #'example - sequoia' }
+{ #category : 'example - sequoia' }
 GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenusAndExtinctAsAdjacentBars [
 	<gtExample>
 	| theData barChart aMaxPages aBarWidthScale aBarHeightScale |
@@ -228,7 +228,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenusAndExti
 	^ barChart
 ]
 
-{ #category : #'example - website visits' }
+{ #category : 'example - website visits' }
 GtPlotterHorizontalBarChartExamples >> websiteVisitsChartFromData: theData [
 	| aMaxDuration aBarWidthScale aMaxFrequency aBarHeightScale barChart |
 

@@ -1,28 +1,28 @@
 Class {
-	#name : #GtPlotterScaleBasedStencilEmbellisher,
-	#superclass : #GtPlotterScaleBasedStencilBuilder,
+	#name : 'GtPlotterScaleBasedStencilEmbellisher',
+	#superclass : 'GtPlotterScaleBasedStencilBuilder',
 	#instVars : [
 		'element'
 	],
-	#category : #'GToolkit-Plotter-Core - Stencils'
+	#category : 'GToolkit-Plotter-Core - Stencils'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterScaleBasedStencilEmbellisher >> buildDefault [
 	^ self element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterScaleBasedStencilEmbellisher >> element [
 	^ element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtPlotterScaleBasedStencilEmbellisher >> element: anObject [
 	element := anObject
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 GtPlotterScaleBasedStencilEmbellisher >> paramsOn: aStencilExecutor [
 	aStencilExecutor
 		push: self element.

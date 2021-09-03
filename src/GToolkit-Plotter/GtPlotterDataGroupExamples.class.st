@@ -24,12 +24,12 @@ Clipboard clipboardText: (String streamContents: [ :aStream |
 
 "
 Class {
-	#name : #GtPlotterDataGroupExamples,
-	#superclass : #GtPlotterDataExamples,
-	#category : #'GToolkit-Plotter-Example - Data'
+	#name : 'GtPlotterDataGroupExamples',
+	#superclass : 'GtPlotterDataExamples',
+	#category : 'GToolkit-Plotter-Example - Data'
 }
 
-{ #category : #'examples - grouping' }
+{ #category : 'examples - grouping' }
 GtPlotterDataGroupExamples >> groupByBrowser [
 	<gtExample>
 	| aGroup |
@@ -66,14 +66,14 @@ GtPlotterDataGroupExamples >> groupByBrowser [
 	^ aGroup
 ]
 
-{ #category : #'examples - grouping' }
+{ #category : 'examples - grouping' }
 GtPlotterDataGroupExamples >> groupByBrowserThenByDanger [
 	<gtExample>
 	
 	^ self groupByBrowser groupedBy: [ :eachItem | eachItem at: #danger ]
 ]
 
-{ #category : #'examples - colored' }
+{ #category : 'examples - colored' }
 GtPlotterDataGroupExamples >> groupByBrowserThenByDangerWithColor [
 	<gtExample>
 	| theColors |
@@ -89,7 +89,7 @@ GtPlotterDataGroupExamples >> groupByBrowserThenByDangerWithColor [
 		colored: [ :aDangerValue | theColors at: aDangerValue ]
 ]
 
-{ #category : #'examples - labelled' }
+{ #category : 'examples - labelled' }
 GtPlotterDataGroupExamples >> groupByBrowserWithLabel [
 	<gtExample>
 	| theGroups theLabels |
@@ -108,7 +108,7 @@ GtPlotterDataGroupExamples >> groupByBrowserWithLabel [
 	^ theGroups
 ]
 
-{ #category : #'examples - labelled' }
+{ #category : 'examples - labelled' }
 GtPlotterDataGroupExamples >> groupByBrowserWithLabelSorted [
 	<gtExample>
 	| theGroups theLabels |
@@ -126,7 +126,7 @@ GtPlotterDataGroupExamples >> groupByBrowserWithLabelSorted [
 	^ theGroups
 ]
 
-{ #category : #'examples - named grouping' }
+{ #category : 'examples - named grouping' }
 GtPlotterDataGroupExamples >> groupByBrowserWithMultipleDecorations [
 	<gtExample>
 
@@ -140,7 +140,7 @@ GtPlotterDataGroupExamples >> groupByBrowserWithMultipleDecorations [
 		]
 ]
 
-{ #category : #'examples - named grouping' }
+{ #category : 'examples - named grouping' }
 GtPlotterDataGroupExamples >> groupByBrowserWithName [
 	<gtExample>
 
@@ -149,7 +149,7 @@ GtPlotterDataGroupExamples >> groupByBrowserWithName [
 		named: #Browser
 ]
 
-{ #category : #'examples - named grouping' }
+{ #category : 'examples - named grouping' }
 GtPlotterDataGroupExamples >> groupByBrowserWithNameThenByDangerWithName [
 	<gtExample>
 
@@ -158,7 +158,7 @@ GtPlotterDataGroupExamples >> groupByBrowserWithNameThenByDangerWithName [
 		named: #Danger
 ]
 
-{ #category : #'examples - named grouping' }
+{ #category : 'examples - named grouping' }
 GtPlotterDataGroupExamples >> groupByBrowserWithNameThenByDangerWithNameThenByVisted [
 	<gtExample>
 
