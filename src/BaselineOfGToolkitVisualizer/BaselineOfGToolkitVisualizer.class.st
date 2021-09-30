@@ -24,24 +24,24 @@ Connector is an engine for scripting a visual exploration of a graph. For exampl
 
 "
 Class {
-	#name : 'BaselineOfGToolkitVisualizer',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfGToolkitVisualizer'
+	#name : #BaselineOfGToolkitVisualizer,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfGToolkitVisualizer
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 BaselineOfGToolkitVisualizer class >> itself [
 	<gtExample>
 	^ self
 ]
 
-{ #category : 'baseline' }
+{ #category : #baseline }
 BaselineOfGToolkitVisualizer >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.391/src' ].
+				spec repository: 'github://feenkcom/Brick:v0.8.392/src' ].
 		spec
 			baseline: 'Beacon' with: [
 				spec repository: 'github://feenkcom/pharo-beacon:a119e739bc378ca2a95883e074090d90fed4edeb/repository' ].

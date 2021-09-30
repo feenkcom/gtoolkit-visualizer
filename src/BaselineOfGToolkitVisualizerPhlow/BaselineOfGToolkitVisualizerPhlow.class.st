@@ -5,21 +5,21 @@ I am a utility component that provides Phlow (see {{gtClass:BaselineOfGToolkitPh
 
 "
 Class {
-	#name : 'BaselineOfGToolkitVisualizerPhlow',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfGToolkitVisualizerPhlow'
+	#name : #BaselineOfGToolkitVisualizerPhlow,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfGToolkitVisualizerPhlow
 }
 
-{ #category : 'baseline' }
+{ #category : #baseline }
 BaselineOfGToolkitVisualizerPhlow >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec
 			baseline: 'GToolkitPhlow' with: [
-				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.417/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.418/src' ].
 		spec
 			baseline: 'GToolkitVisualizer' with: [
-				spec repository: 'github://feenkcom/gtoolkit-visualizer:v0.8.450/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-visualizer:v0.8.451/src' ].
 
 		spec package: 'GToolkit-Mondrian-Phlow' with: [
 			spec requires: #('GToolkitPhlow' 'GToolkitVisualizer') ].
