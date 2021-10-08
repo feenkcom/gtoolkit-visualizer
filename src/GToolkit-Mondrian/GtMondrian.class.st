@@ -12,55 +12,24 @@ Class {
 	#category : #'GToolkit-Mondrian'
 }
 
-{ #category : #accessing }
+{ #category : #ui }
 GtMondrian >> asElement [
-	^ self asPannableElement
+	^ self root removeFromParent
 ]
 
 { #category : #ui }
 GtMondrian >> asPannableElement [
-	| pannable |
-	pannable := BlPannableElement new.
-	pannable
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ].	
-	pannable contentElement: self root removeFromParent.
-	pannable zoomableElement clipChildren: false.
-	^ pannable
+	^ self asElement
 ]
 
 { #category : #ui }
 GtMondrian >> asScalableElement [
-	| scalable |
-	scalable := BlScalableElement new.
-	scalable
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ].
-	scalable contentElement: self topStep root.
-	^ scalable
+	^ self asElement
 ]
 
 { #category : #scripting }
 GtMondrian >> edges [
 	^ GtMondrianEdgeBuilder new mondrian: self
-]
-
-{ #category : #ui }
-GtMondrian >> gtInspectorLiveIn: composite [
-	<gtInspectorPresentationOrder: 0>
-	
-	^ composite blocMondrian 
-		title: 'Live';
-		initializeView: [ self ];
-		when: [ self topStep root hasParent not ]
-]
-
-{ #category : #ui }
-GtMondrian >> gtInspectorPreviewIn: composite [
-	<gtInspectorPresentationOrder: 1>
-	self topStep root gtInspectorPreviewIn: composite
 ]
 
 { #category : #ui }
@@ -76,12 +45,12 @@ GtMondrian >> gtLiveFor: aView [
 GtMondrian >> initialize [
 	stack := Stack new.
 	stack push: (GtMondrianStep new 
-		root: ((BlElement new
-			beInSingleCompositionLayer;
+		root: ((BlCanvassableElement new
+			enableAutoScale;
 			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
 			constraintsDo: [ :c |
-				c horizontal fitContent.
-				c vertical fitContent.
+				c horizontal matchParent.
+				c vertical matchParent.
 				c padding: (BlInsets all: 50) ];
 			background: Color white;
 			zIndex: 1)))
