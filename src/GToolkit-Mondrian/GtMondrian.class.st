@@ -19,7 +19,7 @@ GtMondrian >> asElement [
 
 { #category : #ui }
 GtMondrian >> asPannableElement [
-	^ self asElement
+	^ self asElement asPannableElement
 ]
 
 { #category : #ui }
@@ -45,6 +45,15 @@ GtMondrian >> gtLiveFor: aView [
 GtMondrian >> initialize [
 	stack := Stack new.
 	stack push: (GtMondrianStep new 
+		root: ((BlElement new
+			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
+			constraintsDo: [ :c |
+				c horizontal fitContent.
+				c vertical fitContent.
+				c padding: (BlInsets all: 50) ];
+			background: Color white;
+			zIndex: 1)))
+	"stack push: (GtMondrianStep new 
 		root: ((BlCanvassableElement new
 			enableAutoScale;
 			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
@@ -53,7 +62,7 @@ GtMondrian >> initialize [
 				c vertical matchParent.
 				c padding: (BlInsets all: 50) ];
 			background: Color white;
-			zIndex: 1)))
+			zIndex: 1)))"
 ]
 
 { #category : #scripting }
