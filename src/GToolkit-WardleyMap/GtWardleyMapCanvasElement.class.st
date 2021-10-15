@@ -1,6 +1,6 @@
 Class {
 	#name : #GtWardleyMapCanvasElement,
-	#superclass : #BlCanvassableElement,
+	#superclass : #BlPannableElement,
 	#traits : 'TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
 	#category : #'GToolkit-WardleyMap-! Views'
