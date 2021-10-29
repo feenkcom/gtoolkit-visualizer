@@ -47,6 +47,7 @@ GtMondrian >> initialize [
 	stack push: (GtMondrianStep new 
 		root: ((BlElement new
 			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
+			beInSingleCompositionLayer;
 			constraintsDo: [ :c |
 				c horizontal fitContent.
 				c vertical fitContent.
