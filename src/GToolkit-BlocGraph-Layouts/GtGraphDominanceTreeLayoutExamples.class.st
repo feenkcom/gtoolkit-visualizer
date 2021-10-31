@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphDominanceTreeLayoutExamples',
-	#superclass : 'GtGraphLayoutExamples',
+	#name : #GtGraphDominanceTreeLayoutExamples,
+	#superclass : #GtGraphLayoutExamples,
 	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 GtGraphDominanceTreeLayoutExamples >> binaryTree [
 	<gtExample>
 	| aParentNode aLayout |

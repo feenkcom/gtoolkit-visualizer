@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterTickLabelsElement',
-	#superclass : 'GtPlotterSingleScaleProportionalElement',
+	#name : #GtPlotterTickLabelsElement,
+	#superclass : #GtPlotterSingleScaleProportionalElement,
 	#instVars : [
 		'labels',
 		'labelElement',
@@ -11,7 +11,7 @@ Class {
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterTickLabelsElement >> defaultLabelElement [
 	^ [ :aGtPlotterScaleContext |
 		BlTextElement new 
@@ -20,17 +20,17 @@ GtPlotterTickLabelsElement >> defaultLabelElement [
 			asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterTickLabelsElement >> defaultLabelLayout [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterTickLabelsElement >> defaultLabelStyle [
 	^ [ :anElement :aGtPlotterScaleContext | anElement ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterTickLabelsElement >> initialize [
 	super initialize.
 
@@ -46,7 +46,7 @@ GtPlotterTickLabelsElement >> initialize [
 	self initializeElements
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterTickLabelsElement >> initializeElements [
 	| theTicks aScaleContext |
 	
@@ -77,37 +77,37 @@ GtPlotterTickLabelsElement >> initializeElements [
 			scaleContext: aScaleContext) asElement ])
 ]
 
-{ #category : 'api - labels' }
+{ #category : #'api - labels' }
 GtPlotterTickLabelsElement >> inverse [
 	inversed := true.
 	self initializeElements
 ]
 
-{ #category : 'api - labels' }
+{ #category : #'api - labels' }
 GtPlotterTickLabelsElement >> labelElement: aBlockOrStencil [
 	labelElement := aBlockOrStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 	self initializeElements
 ]
 
-{ #category : 'api - labels' }
+{ #category : #'api - labels' }
 GtPlotterTickLabelsElement >> labelFormat: aBlock [
 	scale tickFormat: aBlock.
 	self initializeElements
 ]
 
-{ #category : 'api - labels' }
+{ #category : #'api - labels' }
 GtPlotterTickLabelsElement >> labelLayout: anObject [
 	labelLayout := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : 'api - labels' }
+{ #category : #'api - labels' }
 GtPlotterTickLabelsElement >> labelStyle: anObject [
 	labelStyle := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
 	self initializeElements
 ]
 
-{ #category : 'api - labels' }
+{ #category : #'api - labels' }
 GtPlotterTickLabelsElement >> labels: anAmountOfLabels [
 	labels := anAmountOfLabels.
 	self initializeElements

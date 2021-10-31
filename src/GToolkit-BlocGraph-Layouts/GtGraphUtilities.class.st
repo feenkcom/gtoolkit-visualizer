@@ -13,35 +13,35 @@ I can draw a rectangle with bounds values:
 
 "
 Class {
-	#name : 'GtGraphUtilities',
-	#superclass : 'Object',
+	#name : #GtGraphUtilities,
+	#superclass : #Object,
 	#classInstVars : [
 		'uniqueInstance'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Utilities'
 }
 
-{ #category : 'cleanup' }
+{ #category : #cleanup }
 GtGraphUtilities class >> cleanUp [
 	self resetUniqueInstance
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphUtilities class >> default [
 	^ self uniqueInstance
 ]
 
-{ #category : 'cleanup' }
+{ #category : #cleanup }
 GtGraphUtilities class >> resetUniqueInstance [
 	uniqueInstance := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphUtilities class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : 'factory - rectangle' }
+{ #category : #'factory - rectangle' }
 GtGraphUtilities >> informationForRectangle: aContainer bounds: aBounds [
 	| aFontSize aTopLeftLabel aTopRightLabel aBottomRightLabel aBottomLeftLabel |
 	
@@ -82,7 +82,7 @@ GtGraphUtilities >> informationForRectangle: aContainer bounds: aBounds [
 	^ aContainer
 ]
 
-{ #category : 'printing - numberss' }
+{ #category : #'printing - numberss' }
 GtGraphUtilities >> printNumber: aNumber [
 	"print a number as float or as an original number, plus float"
 	<return: #String>
@@ -90,13 +90,13 @@ GtGraphUtilities >> printNumber: aNumber [
 	^ aNumber printString, ' = ', (aNumber asFloat round: 4) printString
 ]
 
-{ #category : 'factory - rectangle' }
+{ #category : #'factory - rectangle' }
 GtGraphUtilities >> rectangleOn: anObject extent: anExtent [
 	<return: #BlElement>
 	^ self rectangleOn: anObject extent: anExtent margin: (BlInsets all: 0)
 ]
 
-{ #category : 'factory - rectangle' }
+{ #category : #'factory - rectangle' }
 GtGraphUtilities >> rectangleOn: anObject extent: anExtent margin: aMargin [
 	<return: #BlElement>
 	| aContainer aMarginRectangle anActualRectangle aBorderWidth aFloatExtent aFloatExtentAndMargin |

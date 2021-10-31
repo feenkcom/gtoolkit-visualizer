@@ -12,24 +12,24 @@ In the following example, I occupy top-right side of a total area with {{gtExamp
 
 "
 Class {
-	#name : 'GtGraphTreemapSquarifyPortraitRectangle',
-	#superclass : 'GtGraphTreemapSquarifyAreaRectangle',
+	#name : #GtGraphTreemapSquarifyPortraitRectangle,
+	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyPortraitRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
 	<return: #Number>
 	^ self width
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyPortraitRectangle >> name [
 	^ 'Portrait'
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyPortraitRectangle >> squarifyStep: aStep [
 	| anOriginalArea anOccupiedArea anExtentToOccupy aNextNodePosition |
 	self ifNoSpace: [ ^ self squarifyStepInNoSpace: aStep ].
@@ -47,7 +47,7 @@ GtGraphTreemapSquarifyPortraitRectangle >> squarifyStep: aStep [
 		aNextNodePosition := eachNode topRight ].
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyPortraitRectangle >> updateOccupiedArea: aStep [
 	| anOccupiedArea anExtentToOccupy anOccupiedRectangle aRemainingRectangle |
 	anOccupiedArea := self original volume * aStep occupiedWeight.

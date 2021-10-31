@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterScaleContext',
-	#superclass : 'Object',
+	#name : #GtPlotterScaleContext,
+	#superclass : #Object,
 	#instVars : [
 		'originalValue',
 		'index'
@@ -8,17 +8,17 @@ Class {
 	#category : 'GToolkit-Plotter-Core - Context'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleContext >> index [
 	^ index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleContext >> index: anObject [
 	index := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterScaleContext >> initialize [
 	super initialize.
 	
@@ -26,12 +26,12 @@ GtPlotterScaleContext >> initialize [
 	originalValue := 0
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleContext >> originalValue [
 	^ originalValue
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleContext >> originalValue: anObject [
 	originalValue := anObject
 ]

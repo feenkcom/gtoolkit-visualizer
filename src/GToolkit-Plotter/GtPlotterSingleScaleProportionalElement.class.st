@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterSingleScaleProportionalElement',
-	#superclass : 'GtPlotterSingleScaleBasedElement',
+	#name : #GtPlotterSingleScaleProportionalElement,
+	#superclass : #GtPlotterSingleScaleBasedElement,
 	#instVars : [
 		'scale',
 		'scaleData',
@@ -11,13 +11,13 @@ Class {
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterSingleScaleProportionalElement >> hideOverlapping [
 	shouldHideOverlapping := true.
 	self requestLayout
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterSingleScaleProportionalElement >> initialize [
 	super initialize.
 
@@ -28,12 +28,12 @@ GtPlotterSingleScaleProportionalElement >> initialize [
 	shouldHideOverlapping := false
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterSingleScaleProportionalElement >> initializeElements [
 	self subclassResponsibility
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 GtPlotterSingleScaleProportionalElement >> onLayout: aBounds context: aBlElementBoundsUpdater [
 	| aFirstVisibleLabel aLastVisibleLabel aLeftHalfOfElements aRightHalfOfElements |
 	super onLayout: aBounds context: aBlElementBoundsUpdater.
@@ -79,44 +79,44 @@ GtPlotterSingleScaleProportionalElement >> onLayout: aBounds context: aBlElement
 				ifFalse: [ aRightElement visibility: BlVisibility hidden ] ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterSingleScaleProportionalElement >> scale [
 	<return: #GtPlotterScale>
 
 	^ scale
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterSingleScaleProportionalElement >> scale: aGtPlotterScale [
 	scale := aGtPlotterScale.
 	self initializeElements
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterSingleScaleProportionalElement >> scaleData: aBlock [
 	scaleData := aBlock.
 	self initializeElements
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 GtPlotterSingleScaleProportionalElement >> shouldHideOverlapping [
 	<return: #Boolean>
 
 	^ shouldHideOverlapping
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterSingleScaleProportionalElement >> showOverlapping [
 	shouldHideOverlapping := false.
 	self requestLayout
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterSingleScaleProportionalElement >> weight [
 	^ weight
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterSingleScaleProportionalElement >> weight: aNumber [
 	weight := aNumber
 ]

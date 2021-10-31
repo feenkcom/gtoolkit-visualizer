@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtPlotterReversedAxisStencil',
-	#superclass : 'BrStencil',
+	#name : #GtPlotterReversedAxisStencil,
+	#superclass : #BrStencil,
 	#instVars : [
 		'stencil'
 	],
 	#category : 'GToolkit-Plotter-Builder - Composite Chart'
 }
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtPlotterReversedAxisStencil >> create [
 	| aContainer allChildren |
 	aContainer := self stencil asElement.
@@ -21,12 +21,12 @@ GtPlotterReversedAxisStencil >> create [
 	^ aContainer
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterReversedAxisStencil >> stencil [
 	^ stencil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterReversedAxisStencil >> stencil: anObject [
 	stencil := anObject
 ]

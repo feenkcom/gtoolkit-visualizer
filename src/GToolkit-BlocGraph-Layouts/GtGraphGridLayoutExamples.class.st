@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphGridLayoutExamples',
-	#superclass : 'GtGraphLayoutExamples',
+	#name : #GtGraphGridLayoutExamples,
+	#superclass : #GtGraphLayoutExamples,
 	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : 'example' }
+{ #category : #example }
 GtGraphGridLayoutExamples >> squareOfSquares [
 	<gtExample>
 	| aParentNode aLayout |

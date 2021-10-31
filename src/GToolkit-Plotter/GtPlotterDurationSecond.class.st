@@ -1,15 +1,15 @@
 Class {
-	#name : 'GtPlotterDurationSecond',
-	#superclass : 'GtPlotterDuration',
+	#name : #GtPlotterDurationSecond,
+	#superclass : #GtPlotterDuration,
 	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtPlotterDurationSecond >> asDuration [
 	^ self amount seconds
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDurationSecond >> name [
 	^ 'second'
 ]

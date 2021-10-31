@@ -4,12 +4,12 @@ My subclasses exemplify vertical timeline charts of the following timeline:
 See my subclasses {{gtClass:GtPlotterRawVerticalTimelineExamples|expanded=true|show=#gtSubclassesFor:|height=150}}
 "
 Class {
-	#name : 'GtPlotterRawVerticalTimelineExamples',
-	#superclass : 'GtPlotterRawTimelineExamples',
+	#name : #GtPlotterRawVerticalTimelineExamples,
+	#superclass : #GtPlotterRawTimelineExamples,
 	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawVerticalTimelineExamples >> dots [
 	<gtExample>
 	
@@ -26,7 +26,7 @@ GtPlotterRawVerticalTimelineExamples >> dots [
 		values: self versions
 ]
 
-{ #category : 'examples - axis' }
+{ #category : #'examples - axis' }
 GtPlotterRawVerticalTimelineExamples >> labels [
 	<gtExample>
 	
@@ -38,7 +38,7 @@ GtPlotterRawVerticalTimelineExamples >> labels [
 		labels: 10
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawVerticalTimelineExamples >> line [
 	<gtExample>
 	
@@ -50,7 +50,7 @@ GtPlotterRawVerticalTimelineExamples >> line [
 			c frame horizontal alignCenterAt: 0.5 ]
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawVerticalTimelineExamples >> timeline [
 	<gtExample>
 	

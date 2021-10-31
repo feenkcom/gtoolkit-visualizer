@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtGraphRectanglePackTree',
-	#superclass : 'Object',
+	#name : #GtGraphRectanglePackTree,
+	#superclass : #Object,
 	#instVars : [
 		'root'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
 }
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtGraphRectanglePackTree >> add: aRectangle [
 
 	root ifNil: [ root := GtGraphRectanglePackTreeNode new
@@ -27,7 +27,7 @@ GtGraphRectanglePackTree >> add: aRectangle [
 		]
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphRectanglePackTree >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -37,7 +37,7 @@ GtGraphRectanglePackTree >> gtPreviewFor: aView [
 	^ root gtPreviewFor: aView
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphRectanglePackTree >> gtTreeFor: aView [
 	<gtView>
 	
@@ -47,7 +47,7 @@ GtGraphRectanglePackTree >> gtTreeFor: aView [
 	^ root gtTreeFor: aView
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTree >> root [
 	^ root
 ]

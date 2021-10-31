@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtPlotterTimeEveryMinute',
-	#superclass : 'GtPlotterTimeInterval',
+	#name : #GtPlotterTimeEveryMinute,
+	#superclass : #GtPlotterTimeInterval,
 	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterTimeEveryMinute >> durationsFrom: aStartDuration to: anEndDuration do: aBlock [
 	| aCounter aCeilStart aFloorEnd |
 
@@ -18,7 +18,7 @@ GtPlotterTimeEveryMinute >> durationsFrom: aStartDuration to: anEndDuration do: 
 			aCounter := aCounter + 1 ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterTimeEveryMinute >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock [
 	| aCeilStart |
 	

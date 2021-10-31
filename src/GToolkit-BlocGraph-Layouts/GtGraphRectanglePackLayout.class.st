@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphRectanglePackLayout',
-	#superclass : 'GtGraphLayout',
+	#name : #GtGraphRectanglePackLayout,
+	#superclass : #GtGraphLayout,
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRectanglePackLayout >> doExecute: theElements with: anExtentSpec [
 	| sortedElements aTree |
 
@@ -14,7 +14,7 @@ GtGraphRectanglePackLayout >> doExecute: theElements with: anExtentSpec [
 	sortedElements do: [ :eachElement | self fit: eachElement in: aTree ]
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRectanglePackLayout >> fit: anElement in: aTree [
 	| aRectangle |
 	
@@ -24,7 +24,7 @@ GtGraphRectanglePackLayout >> fit: anElement in: aTree [
 	anElement position: aRectangle origin
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRectanglePackLayout >> pickRoot: theElements [
 	| width height margin |
 
@@ -44,7 +44,7 @@ GtGraphRectanglePackLayout >> pickRoot: theElements [
 		rectangle: ((GtGraphRectangle x: 0 y: 0 width: width height: height) margin: margin)
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRectanglePackLayout >> sorted: theElements [
 	| sortedElements |
 

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphCircleNeighbourhood',
-	#superclass : 'Object',
+	#name : #GtGraphCircleNeighbourhood,
+	#superclass : #Object,
 	#instVars : [
 		'circles',
 		'neighbourCircle'
@@ -8,7 +8,7 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood class >> computeNeighbourCenter: aCircle [
 	"I calculate the center of aCircle in a neighbourhood consisting of just that one circle"	
 	<return: #Point>
@@ -16,7 +16,7 @@ GtGraphCircleNeighbourhood class >> computeNeighbourCenter: aCircle [
 	^ 0@0
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood class >> computeNeighbourCenter: aCircle near: anAnotherCircle [
 	"I calculate the center of aCircle according to its radius and tangency of aCircleNode to aOneCircle and anAnotherCircle"	
 	<return: #Point>
@@ -30,7 +30,7 @@ GtGraphCircleNeighbourhood class >> computeNeighbourCenter: aCircle near: anAnot
 	^ c1 + (r1 @ 0) + (r @ 0)
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood class >> computeNeighbourCenter: aCircle near: aOneCircle and: anAnotherCircle [
 	"I calculate the center of aCircle according to its radius and tangency of aCircleNode to aOneCircle and anAnotherCircle"	
 	<return: #Point>
@@ -53,7 +53,7 @@ GtGraphCircleNeighbourhood class >> computeNeighbourCenter: aCircle near: aOneCi
 	^ c
 ]
 
-{ #category : 'api - adding' }
+{ #category : #'api - adding' }
 GtGraphCircleNeighbourhood >> addCircle: aCircle [
 	| theCircles aNeighbourCircle |
 	"The last added circle is a neighbour circle"
@@ -67,17 +67,17 @@ GtGraphCircleNeighbourhood >> addCircle: aCircle [
 	self circles: theCircles neighbour: aNeighbourCircle
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood >> allCircles [
 	^ circles, { neighbourCircle }
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphCircleNeighbourhood >> asElement [
 	^ GtGraphCircleNeighbourhoodElement new neighbourhood: self
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood >> averageOutgoingEdgeVector: aCircle [
 	| theVectors allPairCircles |
 
@@ -89,19 +89,19 @@ GtGraphCircleNeighbourhood >> averageOutgoingEdgeVector: aCircle [
 	^ theVectors average
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood >> averageRadius [
 	self isEmpty
 		ifTrue: [ ^ 0 ].
 	^ (self allCircles collect: #outerRadius) average
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleNeighbourhood >> circles [
 	^ circles
 ]
 
-{ #category : 'initialize' }
+{ #category : #initialize }
 GtGraphCircleNeighbourhood >> circles: aCollectionOfCircles neighbour: aNeighbourCircle [
 
 	self
@@ -113,7 +113,7 @@ GtGraphCircleNeighbourhood >> circles: aCollectionOfCircles neighbour: aNeighbou
 	neighbourCircle center: self computeNeighbourCenter
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood >> computeNeighbourCenter [
 	"Compute a neighbour center based on how many neighbours there are"
 	<return: #Point>
@@ -130,7 +130,7 @@ GtGraphCircleNeighbourhood >> computeNeighbourCenter [
 	self error: 'Too many circles in a neighbourhood'
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphCircleNeighbourhood >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -139,22 +139,22 @@ GtGraphCircleNeighbourhood >> gtPreviewFor: aView [
 		stencil: [ self asElement asScalableElement margin: (BlInsets all: 10)]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphCircleNeighbourhood >> isEmpty [
 	^ self size isZero
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood >> largestCircle [
 	^ self allCircles detectMax: #outerRadius
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleNeighbourhood >> neighbourCircle [
 	^ neighbourCircle
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleNeighbourhood >> neighbourProjection [
 	<return: #Point>
 
@@ -183,7 +183,7 @@ GtGraphCircleNeighbourhood >> neighbourProjection [
 	self error: 'Too many circles in a neighbourhood'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleNeighbourhood >> size [
 	^ circles size + neighbourCircle isNotNil asBit
 ]

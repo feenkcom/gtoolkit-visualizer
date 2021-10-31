@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphQuadTree',
-	#superclass : 'Object',
+	#name : #GtGraphQuadTree,
+	#superclass : #Object,
 	#instVars : [
 		'charge',
 		'x',
@@ -13,10 +13,10 @@ Class {
 		'cx',
 		'cy'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 GtGraphQuadTree class >> withAll: aNodeCollection [
 	^ self
 		withAll: aNodeCollection
@@ -28,7 +28,7 @@ GtGraphQuadTree class >> withAll: aNodeCollection [
 				@ (aNodeCollection collect: [ :e | e position y ]) max
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 GtGraphQuadTree class >> withAll: aNodeCollection origin: aPoint corner: anotherPoint [
 	| dx dy root |
 	dx := anotherPoint x - aPoint x.
@@ -52,7 +52,7 @@ GtGraphQuadTree class >> withAll: aNodeCollection origin: aPoint corner: another
 				corner: (aPoint x + dy) @ anotherPoint y ]
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtGraphQuadTree >> add: aNode [
 
 	self isLeaf
@@ -83,7 +83,7 @@ GtGraphQuadTree >> add: aNode [
 			node := aNode ]
 ]
 
-{ #category : 'private - adding' }
+{ #category : #'private - adding' }
 GtGraphQuadTree >> addChild: aNode [
 	| center |
 	
@@ -133,18 +133,18 @@ GtGraphQuadTree >> addChild: aNode [
 					(nodes at: 4) add: aNode ] ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtGraphQuadTree >> allNodes [
 	^ Array streamContents: [ :aStream | self allNodesDo: [ :each | aStream nextPut: each ] ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtGraphQuadTree >> allNodesDo: aBlock [
 	aBlock value: self.
 	self nodes do: [ :each | each ifNotNil: [ each allNodesDo: aBlock ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> center [
 	| sx sy |
 
@@ -154,52 +154,52 @@ GtGraphQuadTree >> center [
 	^ sx @ sy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> charge [
 	^ charge
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> charge: anObject [
 	charge := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> corner [
 	^ corner
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> corner: anObject [
 	corner := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> cx [
 	^ cx
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> cx: aFloat [
 	cx := aFloat
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> cy [
 	^ cy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> cy: aFloat [
 	cy := aFloat
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> extent [
 	^ self corner - self origin
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphQuadTree >> gtMapFor: aView [
 	<gtView>
 	^ aView explicit
@@ -221,7 +221,7 @@ GtGraphQuadTree >> gtMapFor: aView [
 		]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphQuadTree >> gtTreeFor: aView [
 	<gtView>
 	
@@ -230,12 +230,12 @@ GtGraphQuadTree >> gtTreeFor: aView [
 		painting: [ :aMondrian | self paintTreeWith: aMondrian ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> height [
 	^ self corner y - self origin y
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphQuadTree >> initialize [ 
 
 	super initialize.
@@ -244,44 +244,44 @@ GtGraphQuadTree >> initialize [
 	nodes := Array new: 4
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphQuadTree >> isLeaf [
 	^ leaf
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> leaf [
 	^ leaf
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> node [
 	^ node
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> nodes [
 	^ nodes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> origin [
 	^ origin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> origin: aPoint [
 	origin := aPoint
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphQuadTree >> paintTreeWith: view [
 	view nodes
 		shape: [ :each |
 			BlElement new
 				size: 10@10;
 				padding: (BlInsets all: 13);
-				geometry: (BlCircle new);
+				geometry: (BlCircleGeometry new);
 				border: (each isLeaf
 					ifTrue: [BlBorder paint: BrGlamorousColors primaryBorderColor width: 2 ]
 					ifFalse: [ BlBorder paint: Color gray width: 1 ]);
@@ -298,7 +298,7 @@ GtGraphQuadTree >> paintTreeWith: view [
 		levelDistance: 20
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphQuadTree >> width [
 	^ self corner x - self origin x
 ]

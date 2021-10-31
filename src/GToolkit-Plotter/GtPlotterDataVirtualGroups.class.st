@@ -1,17 +1,17 @@
 Class {
-	#name : 'GtPlotterDataVirtualGroups',
-	#superclass : 'GtPlotterDataGroups',
+	#name : #GtPlotterDataVirtualGroups,
+	#superclass : #GtPlotterDataGroups,
 	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtPlotterDataVirtualGroups >> isVirtual [
 	<return: #Boolean>
 
 	^ true
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDataVirtualGroups >> printOn: aStream [
 	aStream
 		nextPutAll: 'Virtual groups (';

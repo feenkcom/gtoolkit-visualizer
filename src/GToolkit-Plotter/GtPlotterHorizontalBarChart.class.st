@@ -10,8 +10,8 @@ See {{gtClass:GtPlotterHorizontalBarChartExamples}}.
 
 "
 Class {
-	#name : 'GtPlotterHorizontalBarChart',
-	#superclass : 'GtPlotterBuilder',
+	#name : #GtPlotterHorizontalBarChart,
+	#superclass : #GtPlotterBuilder,
 	#instVars : [
 		'axisWidth',
 		'barHeightScale',
@@ -37,127 +37,127 @@ Class {
 	#category : 'GToolkit-Plotter-Builder - Bar Chart'
 }
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> amountOfTicks [
 	<return: #Number>
 
 	^ amountOfTicks
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> amountOfTicks: aNumber [
 	amountOfTicks := aNumber
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barElement: aStencil [
 	"[ :aGtPlotterSingleScaleContext | BlElement new ]"
 	barElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> barGap [
 	<return: #Number>
 
 	^ barGap
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> barGap: aNumber [
 	barGap := aNumber
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barGroupStencil: aGtPlotterHorizontalBarGroupStencilBuilder [
 	"[ :aGtPlotterBar :aGtPlotterDataEntity | ]"
 	barGroupStencil := aGtPlotterHorizontalBarGroupStencilBuilder asStencilBuilder: GtPlotterHorizontalBarGroupStencilBuilder
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barHeightData: aBlock [
 	barHeightDataBlock := aBlock
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterHorizontalBarChart >> barHeightScale [
 	<return: #GtPlotterScale>
 
 	^ barHeightScale
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterHorizontalBarChart >> barHeightScale: aGtPlotterScale [
 	barHeightScale := aGtPlotterScale
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barLabelAptitudeStencil: aStencil [
 	barLabelLookStencil := aStencil asStencil
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barLabelColor [
 	<return: #Color>
 	
 	^ barLabelColor
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barLabelColor: aColor [
 	barLabelColor := aColor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterHorizontalBarChart >> barLabelFormat: aBlock [
 	barLabelFormat := aBlock
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barLabelLookStencil [
 	^ barLabelLookStencil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterHorizontalBarChart >> barLabelStencil: aBrColumnCellStencilBuilder [
 	barLabelStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> barLabelWidth [
 	<return: #Number>
 
 	^ barLabelWidth
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> barLabelWidth: aNumber [
 	barLabelWidth := aNumber
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barStencil: aGtPlotterHorizontalBarStencilBuilder [
 	"[ :aGtPlotterBar :anObject :aGtPlotterDataEntity | ]"
 	barStencil := aGtPlotterHorizontalBarStencilBuilder asStencilBuilder: GtPlotterHorizontalBarStencilBuilder
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barWidthData: aBlock [
 	barWidthDataBlock := aBlock
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterHorizontalBarChart >> barWidthScale [
 	<return: #GtPlotterScale>
 
 	^ barWidthScale
 ]
 
-{ #category : 'api - scale' }
+{ #category : #'api - scale' }
 GtPlotterHorizontalBarChart >> barWidthScale: aGtPlotterScale [
 	barWidthScale := aGtPlotterScale
 ]
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtPlotterHorizontalBarChart >> create [
 	<return: #Object>
 	| aContainer theBars |
@@ -191,7 +191,7 @@ GtPlotterHorizontalBarChart >> create [
 	^ aContainer
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 GtPlotterHorizontalBarChart >> createBarRowFor: aGtPlotterDataEntity grouping: shouldGroup [
 	| aRowLabel aContainer aRowLabelElement |
 
@@ -221,7 +221,7 @@ GtPlotterHorizontalBarChart >> createBarRowFor: aGtPlotterDataEntity grouping: s
 	^ aContainer
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 GtPlotterHorizontalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	|  isStacking theBars aContainer |
 	
@@ -246,7 +246,7 @@ GtPlotterHorizontalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 GtPlotterHorizontalBarChart >> createLeafBarsFor: aGtPlotterDataEntity [
 	"Create non composite bars"
 	|  isStacking aContainer |
@@ -277,7 +277,7 @@ GtPlotterHorizontalBarChart >> createLeafBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 GtPlotterHorizontalBarChart >> createVerticalSeparator [
 	^ BlElement new
 		constraintsDo: [ :c |
@@ -286,22 +286,22 @@ GtPlotterHorizontalBarChart >> createVerticalSeparator [
 		background: Color gray
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> gridlineOffset [
 	^ 20
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> groupSpacing [
 	^ groupSpacing
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> groupSpacing: aNumber [
 	groupSpacing := aNumber
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterHorizontalBarChart >> initialize [
 	super initialize.
 	
@@ -336,43 +336,43 @@ GtPlotterHorizontalBarChart >> initialize [
 	
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> tickLabelColor [
 	<return: #Color>
 	
 	^ tickLabelColor
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> tickLabelColor: aColor [
 	tickLabelColor := aColor
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> tickLabelFormat [
 	<return: #BlockClosure>
 
 	^ tickLabelFormat
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> tickLabelFormat: aBlock [
 	tickLabelFormat := aBlock
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> tickLabelLook [
 	<return: #BrStencil>
 
 	^ tickLabelLookStencil
 ]
 
-{ #category : 'api - ticks' }
+{ #category : #'api - ticks' }
 GtPlotterHorizontalBarChart >> tickLabelLook: aStencil [
 	tickLabelLookStencil := aStencil asStencil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterHorizontalBarChart >> ticks [
 	<return: #Number>
 	
@@ -383,7 +383,7 @@ GtPlotterHorizontalBarChart >> ticks [
 	^ self amountOfTicks
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterHorizontalBarChart >> ticks: anAmountOfTicks [
 
 	self
@@ -395,17 +395,17 @@ GtPlotterHorizontalBarChart >> ticks: anAmountOfTicks [
 	self amountOfTicks: anAmountOfTicks
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterHorizontalBarChart >> with: aGtPlotterDataGroup [
 	data := aGtPlotterDataGroup
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> withAdjacentBars [
 	self barGroupStencil: GtPlotterHorizontalAdjacentBarGroupStencilBuilder new
 ]
 
-{ #category : 'api - bars' }
+{ #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> withSeparateBars [
 	self barGroupStencil: GtPlotterHorizontalSeparateBarGroupStencilBuilder new
 ]

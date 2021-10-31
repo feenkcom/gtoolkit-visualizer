@@ -4,12 +4,12 @@ I exemplify {{gtClass:GtPlotterNumberTicks}}.
 {{gtExample:GtPlotterNumberTicksExamples>>#from_0_to_10_count_10|codeExpanded=false|previewExpanded=true|previewHeight=150}}
 "
 Class {
-	#name : 'GtPlotterNumberTicksExamples',
-	#superclass : 'GtPlotterTicksExamples',
+	#name : #GtPlotterNumberTicksExamples,
+	#superclass : #GtPlotterTicksExamples,
 	#category : 'GToolkit-Plotter-Examples'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterNumberTicksExamples >> from_0_to_10_count_10 [
 	<gtExample>
 	| theTicks |
@@ -20,7 +20,7 @@ GtPlotterNumberTicksExamples >> from_0_to_10_count_10 [
 	^ theTicks
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterNumberTicksExamples >> from_20_to_40_count_5 [
 	<gtExample>
 	| theTicks |

@@ -1,28 +1,28 @@
 Class {
-	#name : 'GtPlotterBuilder',
-	#superclass : 'BrStencil',
+	#name : #GtPlotterBuilder,
+	#superclass : #BrStencil,
 	#instVars : [
 		'chartStyle'
 	],
 	#category : 'GToolkit-Plotter-! Plotter'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterBuilder class >> plotter: aGtPlotter [
 	^ self new plotter: aGtPlotter
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBuilder >> chartStyle [
 	^ chartStyle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBuilder >> chartStyle: aBlockOrStencilBuilder [
 	chartStyle := aBlockOrStencilBuilder asStencilBuilder: GtPlotterStyleBuilder
 ]
 
-{ #category : 'private - instantiation' }
+{ #category : #'private - instantiation' }
 GtPlotterBuilder >> styleChartElement: anElement [
 	self chartStyle
 		ifNotNil: [ :aStencilBuilder | 

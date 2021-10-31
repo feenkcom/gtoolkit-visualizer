@@ -14,8 +14,8 @@ lineItemsCountBlock
 
 "
 Class {
-	#name : 'GtGraphAbstractGridLayout',
-	#superclass : 'GtGraphLayout',
+	#name : #GtGraphAbstractGridLayout,
+	#superclass : #GtGraphLayout,
 	#instVars : [
 		'gapSize',
 		'lineItemsCountBlock'
@@ -23,12 +23,12 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 GtGraphAbstractGridLayout class >> isAbstract [
 	^ self name = #GtGraphAbstractGridLayout
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphAbstractGridLayout class >> withGap: anInteger [ 
 
 	^ self new 
@@ -36,7 +36,7 @@ GtGraphAbstractGridLayout class >> withGap: anInteger [
 			yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphAbstractGridLayout class >> withGap: anInteger withLineItemsCount: aBlock [
 	
 	^self new
@@ -45,7 +45,7 @@ GtGraphAbstractGridLayout class >> withGap: anInteger withLineItemsCount: aBlock
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphAbstractGridLayout class >> withLineItemsCount: aBlock [
 	
 	^self new
@@ -53,12 +53,12 @@ GtGraphAbstractGridLayout class >> withLineItemsCount: aBlock [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractGridLayout >> defaultGapSize [
 	^ 5
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGridLayout >> defaultLineItemsCount [
 	
 	^ [ :elements | 
@@ -71,31 +71,31 @@ GtGraphAbstractGridLayout >> defaultLineItemsCount [
 					width @ height ]) x ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGridLayout >> gapSize [
 	
 	^ gapSize
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGridLayout >> gapSize: anInteger [
 	gapSize := anInteger
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractGridLayout >> initialize [
 	super initialize.
 	gapSize := self defaultGapSize.
 	lineItemsCountBlock := self defaultLineItemsCount.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGridLayout >> lineItemsCount: aNumberOrASymbolOrABlock [
 	"The argument will be evaluated (using rtValue:) against the set of elements to perform the layout on. The result of this evaluation has to be a number, which indicates the number of elements per line"
 	lineItemsCountBlock := aNumberOrASymbolOrABlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGridLayout >> lineItemsCountBlock [
 	
 	^ lineItemsCountBlock

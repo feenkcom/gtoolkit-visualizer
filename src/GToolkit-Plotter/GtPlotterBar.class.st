@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterBar',
-	#superclass : 'Object',
+	#name : #GtPlotterBar,
+	#superclass : #Object,
 	#instVars : [
 		'widthScale',
 		'widthData',
@@ -12,62 +12,62 @@ Class {
 	#category : 'GToolkit-Plotter-Builder - Bar Chart'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> gap [
 	^ gap
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> gap: anObject [
 	gap := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> heightData [
 	^ heightData
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> heightData: anObject [
 	heightData := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> heightScale [
 	^ heightScale
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> heightScale: anObject [
 	heightScale := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> stencil [
 	^ elementStencil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> stencil: aStencilBuilder [
 	elementStencil := aStencilBuilder
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> widthData [
 	^ widthData
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> widthData: anObject [
 	widthData := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> widthScale [
 	^ widthScale
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterBar >> widthScale: anObject [
 	widthScale := anObject
 ]

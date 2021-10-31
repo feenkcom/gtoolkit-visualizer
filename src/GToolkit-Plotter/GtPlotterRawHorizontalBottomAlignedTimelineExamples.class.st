@@ -4,12 +4,12 @@ I exemplify vertical left aligned timeline chart.
 {{gtExample:GtPlotterRawHorizontalBottomAlignedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : 'GtPlotterRawHorizontalBottomAlignedTimelineExamples',
-	#superclass : 'GtPlotterRawHorizontalTimelineExamples',
+	#name : #GtPlotterRawHorizontalBottomAlignedTimelineExamples,
+	#superclass : #GtPlotterRawHorizontalTimelineExamples,
 	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : 'examples - axis' }
+{ #category : #'examples - axis' }
 GtPlotterRawHorizontalBottomAlignedTimelineExamples >> axis [
 	<gtExample>
 
@@ -20,7 +20,7 @@ GtPlotterRawHorizontalBottomAlignedTimelineExamples >> axis [
 		addChildren: { self labels }
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedTimelineExamples >> content [
 	<gtExample>
 	
@@ -32,7 +32,7 @@ GtPlotterRawHorizontalBottomAlignedTimelineExamples >> content [
 				constraintsDo: [ :c | c frame vertical alignBottom ]. }
 ]
 
-{ #category : 'examples - plot' }
+{ #category : #'examples - plot' }
 GtPlotterRawHorizontalBottomAlignedTimelineExamples >> plot [
 	<gtExample>
 	
@@ -47,7 +47,7 @@ GtPlotterRawHorizontalBottomAlignedTimelineExamples >> plot [
 			self axis. }
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedTimelineExamples >> projectionLabels [
 	<gtExample>
 
@@ -61,7 +61,7 @@ GtPlotterRawHorizontalBottomAlignedTimelineExamples >> projectionLabels [
 		values: self versions
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawHorizontalBottomAlignedTimelineExamples >> projections [
 	<gtExample>
 

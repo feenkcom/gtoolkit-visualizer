@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtPlotterCompositeChartExamples',
-	#superclass : 'GtPlotterBuilderExamples',
+	#name : #GtPlotterCompositeChartExamples,
+	#superclass : #GtPlotterBuilderExamples,
 	#category : 'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterCompositeChartExamples >> totalAndIndividualUserCommits [
 	<gtExample>
 	

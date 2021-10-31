@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtPlotter',
-	#superclass : 'BrStencil',
+	#name : #GtPlotter,
+	#superclass : #BrStencil,
 	#instVars : [
 		'plots'
 	],
 	#category : 'GToolkit-Plotter-! Plotter'
 }
 
-{ #category : 'private - plots' }
+{ #category : #'private - plots' }
 GtPlotter >> addPlot: aPlotterBuilder [
 	<return: #GtPlotterBuilder>
 	
@@ -15,7 +15,7 @@ GtPlotter >> addPlot: aPlotterBuilder [
 	^ aPlotterBuilder
 ]
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtPlotter >> create [
 	<return: #Object>
 	| aContainer |
@@ -28,7 +28,7 @@ GtPlotter >> create [
 	^ aContainer
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotter >> gtLiveFor: aView [
 	<gtView>
 	^ aView explicit
@@ -36,24 +36,24 @@ GtPlotter >> gtLiveFor: aView [
 		stencil: [ self asElement ]
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotter >> horizontalBarChart [
 	^ self addPlot: GtPlotterHorizontalBarChart new
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotter >> horizontalTimeline [
 	^ self addPlot: GtPlotterHorizontalTimeline new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotter >> initialize [
 	super initialize.
 	
 	plots := OrderedCollection new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotter >> root [
 	self
 		deprecated: 'Use #asElement instead.'
@@ -62,12 +62,12 @@ GtPlotter >> root [
 	^ self asElement
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotter >> verticalBarChart [
 	^ self addPlot: nil
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotter >> verticalTimeline [
 	^ self addPlot: GtPlotterVerticalTimeline new
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterScaleIntervalDomain',
-	#superclass : 'GtPlotterScaleDomain',
+	#name : #GtPlotterScaleIntervalDomain,
+	#superclass : #GtPlotterScaleDomain,
 	#instVars : [
 		'from',
 		'to'
@@ -8,12 +8,12 @@ Class {
 	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterScaleIntervalDomain class >> from: aFrom to: anEnd [
 	^ self new from: aFrom to: anEnd
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 GtPlotterScaleIntervalDomain >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -22,49 +22,49 @@ GtPlotterScaleIntervalDomain >> = anObject [
 	^ to = anObject to and: [ from = anObject from ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleIntervalDomain >> from [
 	^ from
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterScaleIntervalDomain >> from: aFrom to: anEnd [
 	from := aFrom.
 	to := anEnd
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 GtPlotterScaleIntervalDomain >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ to hash bitXor: from hash
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleIntervalDomain >> max [
 	^ to
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleIntervalDomain >> min [
 	^ from
 ]
 
-{ #category : 'interpolation' }
+{ #category : #interpolation }
 GtPlotterScaleIntervalDomain >> normalize: aValue [
 	^ from < to
 		ifTrue: [ self normalize: aValue between: from and: to ]
 		ifFalse: [ self normalize: aValue between: to and: from ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtPlotterScaleIntervalDomain >> normalize: aValue between: aStart and: anEnd [
 	<return: #Number>
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterScaleIntervalDomain >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
@@ -79,7 +79,7 @@ GtPlotterScaleIntervalDomain >> printOn: aStream [
 		nextPutAll: ']'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterScaleIntervalDomain >> to [
 	^ to
 ]

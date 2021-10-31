@@ -22,8 +22,8 @@ initialRadius
 
 "
 Class {
-	#name : 'GtGraphAbstractCircleLayout',
-	#superclass : 'GtGraphLayout',
+	#name : #GtGraphAbstractCircleLayout,
+	#superclass : #GtGraphLayout,
 	#instVars : [
 		'initialAngle',
 		'initialIncrementalAngle',
@@ -33,12 +33,12 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 GtGraphAbstractCircleLayout class >> isAbstract [
 	^ self name = #GtGraphAbstractCircleLayout
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
 	
@@ -47,7 +47,7 @@ GtGraphAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 		ifFalse: [ initialIncrementalAngle ]
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractCircleLayout >> computeRadiusFor: elements [
 	"Return the radius of the circle. If none has been set (i.e., initialRadius = 0), then it is computed as the scale factor times the number of elements"
 	^ initialRadius = 0 
@@ -55,59 +55,59 @@ GtGraphAbstractCircleLayout >> computeRadiusFor: elements [
 		ifFalse: [ initialRadius ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialAngle [
 	"Return the initial angle, in radian"
 	^ initialAngle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialAngle: aFloat [
 	"aFloat is an angle in Radian."
 	initialAngle := aFloat
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialAngleInDegree [ 
 	"Return the initial angle in degree"
 	^ self initialAngle * 180 / Float pi
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialAngleInDegree: aNumber [
 	"Set the initial angle in radian"
 	self initialAngle: aNumber * Float pi / 180
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialIncrementalAngle [
 	"Return the initial incremental angle"
 	^ initialIncrementalAngle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialIncrementalAngle: aNumberInRadian [
 	initialIncrementalAngle := aNumberInRadian
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialIncrementalAngleInDegree: aNumberInDegree [
 	self initialIncrementalAngle: aNumberInDegree * Float pi / 180
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialRadius [
 	"Return the radius in pixels of the circle"
 	^ initialRadius
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> initialRadius: aNumber [
 	"Set the radius of the circle"
 	initialRadius := aNumber
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractCircleLayout >> initialize [
 	"Initialize a newly created instance. This method must answer the receiver."
 	
@@ -124,18 +124,18 @@ GtGraphAbstractCircleLayout >> initialize [
 	initialIncrementalAngle := 0.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> radius: aNumber [
 	^ self initialRadius: aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> scaleBy: aNumber [
 	
 	factor := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractCircleLayout >> scaleFactor [
 	^ factor
 ]

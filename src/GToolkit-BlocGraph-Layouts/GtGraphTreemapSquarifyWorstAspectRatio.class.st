@@ -5,12 +5,12 @@ See {{gtClass:GtGraphTreemapSquarifyWorst}} for more details and examples.
 
 "
 Class {
-	#name : 'GtGraphTreemapSquarifyWorstAspectRatio',
-	#superclass : 'GtGraphTreemapSquarifyWorst',
+	#name : #GtGraphTreemapSquarifyWorstAspectRatio,
+	#superclass : #GtGraphTreemapSquarifyWorst,
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyWorstAspectRatio >> aspectRatioForNode: aNode [
 	<return: #Number>
 	| aNodeArea aNodeLength anOccupiedBreadth |
@@ -22,26 +22,26 @@ GtGraphTreemapSquarifyWorstAspectRatio >> aspectRatioForNode: aNode [
 	^ aNodeLength / anOccupiedBreadth max: anOccupiedBreadth / aNodeLength
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyWorstAspectRatio >> maxWeightNodeAspectRatio [
 	<return: #Number>
 	^ self aspectRatioForNode: self maxWeightNode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyWorstAspectRatio >> minWeightNodeAspectRatio [
 	<return: #Number>
 	^ self aspectRatioForNode: self minWeightNode
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 GtGraphTreemapSquarifyWorstAspectRatio >> value [
 	"Return worst aspect ratio value"
 	<return: #Number>
 	^ self maxWeightNodeAspectRatio max: self minWeightNodeAspectRatio
 ]
 
-{ #category : 'accessing - nodes' }
+{ #category : #'accessing - nodes' }
 GtGraphTreemapSquarifyWorstAspectRatio >> worstValueForNode: aNode [
 	<return: #Number>
 	^ self aspectRatioForNode: aNode

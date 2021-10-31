@@ -402,7 +402,7 @@ GtMondrianDomainExamples >> structureOfAnElement [
 			m nodes 
 				stencil: [
 					BlElement new
-						geometry: BlCircle new;
+						geometry: BlCircleGeometry new;
 						size: 10@10;
 						background: (each = root 
 							ifTrue: [Color red darker] 

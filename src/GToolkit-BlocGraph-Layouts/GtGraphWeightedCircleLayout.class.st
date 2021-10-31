@@ -12,12 +12,12 @@ v
 
 "
 Class {
-	#name : 'GtGraphWeightedCircleLayout',
-	#superclass : 'GtGraphAbstractWeightedCircleLayout',
+	#name : #GtGraphWeightedCircleLayout,
+	#superclass : #GtGraphAbstractWeightedCircleLayout,
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphWeightedCircleLayout >> doExecute: elements with: anExtentSpec [
 	| angle rad center angleIncrement |
 	rad := self computeRadiusFor: elements.

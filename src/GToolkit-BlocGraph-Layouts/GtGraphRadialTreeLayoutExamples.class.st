@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphRadialTreeLayoutExamples',
-	#superclass : 'GtGraphLayoutExamples',
+	#name : #GtGraphRadialTreeLayoutExamples,
+	#superclass : #GtGraphLayoutExamples,
 	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 GtGraphRadialTreeLayoutExamples >> binaryTree [
 	<gtExample>
 	| aParentNode aLayout |

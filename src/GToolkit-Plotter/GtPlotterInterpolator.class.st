@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtPlotterInterpolator',
-	#superclass : 'Object',
+	#name : #GtPlotterInterpolator,
+	#superclass : #Object,
 	#category : 'GToolkit-Plotter-Interpolator'
 }
 
-{ #category : 'interpolation' }
+{ #category : #interpolation }
 GtPlotterInterpolator >> interpolate: aValue [
 	^ self subclassResponsibility
 ]

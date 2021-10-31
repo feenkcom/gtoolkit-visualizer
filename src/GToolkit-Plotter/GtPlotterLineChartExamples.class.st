@@ -2,24 +2,24 @@
 I exemplify {{gtClass:GtPlotterLineChart}}.
 "
 Class {
-	#name : 'GtPlotterLineChartExamples',
-	#superclass : 'GtPlotterBuilderExamples',
+	#name : #GtPlotterLineChartExamples,
+	#superclass : #GtPlotterBuilderExamples,
 	#category : 'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterLineChartExamples >> commits [
 	<gtExample>
 	^ GtPlotterRawLineExamples new commits
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterLineChartExamples >> commitsAndUserData [
 	<gtExample>
 	^ GtPlotterDataGroup new values: self commitsAndUserValues
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterLineChartExamples >> commitsAndUserDataGroupedByMonth [
 	<gtExample>
 	| aData |
@@ -31,7 +31,7 @@ GtPlotterLineChartExamples >> commitsAndUserDataGroupedByMonth [
 	^ aData
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUser [
 	<gtExample>
 	| aData colors |
@@ -49,7 +49,7 @@ GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUser [
 	^ aData
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUserAndMonth [
 	<gtExample>
 	| aData |
@@ -60,7 +60,7 @@ GtPlotterLineChartExamples >> commitsAndUserDataGroupedByUserAndMonth [
 	^ aData
 ]
 
-{ #category : 'example - value' }
+{ #category : #'example - value' }
 GtPlotterLineChartExamples >> commitsAndUserRawValues [
 	<gtExample>
 
@@ -441,7 +441,7 @@ GtPlotterLineChartExamples >> commitsAndUserRawValues [
 	}
 ]
 
-{ #category : 'example - value' }
+{ #category : #'example - value' }
 GtPlotterLineChartExamples >> commitsAndUserValues [
 	<gtExample>
 	^ self commitsAndUserRawValues collect: [ :e | 
@@ -452,7 +452,7 @@ GtPlotterLineChartExamples >> commitsAndUserValues [
 			yourself ]
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> commitsBasicChart [
 	<gtExample>
 	| aData lineChart |
@@ -470,7 +470,7 @@ GtPlotterLineChartExamples >> commitsBasicChart [
 	^ lineChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> commitsChart [
 	<gtExample>
 	| lineChart |
@@ -483,13 +483,13 @@ GtPlotterLineChartExamples >> commitsChart [
 	^ lineChart
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterLineChartExamples >> commitsPerDayOfAllUsersData [
 	<gtExample>
 	^ GtPlotterDataGroup new values: self commitsPerDayOfAllUsersValues
 ]
 
-{ #category : 'example - value' }
+{ #category : #'example - value' }
 GtPlotterLineChartExamples >> commitsPerDayOfAllUsersValues [
 	<gtExample>
 	| theValues aGroup perDay |
@@ -508,7 +508,7 @@ GtPlotterLineChartExamples >> commitsPerDayOfAllUsersValues [
 	^ perDay
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> definedLineColor [
 	<gtExample>
 	| aData lineChart |
@@ -528,7 +528,7 @@ GtPlotterLineChartExamples >> definedLineColor [
 	^ lineChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plot [
 	<gtExample>
 	| aData lineChart |
@@ -550,7 +550,7 @@ GtPlotterLineChartExamples >> plot [
 	^ lineChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotCommitsByMonth [
 	<gtExample>
 	| aData aChart |
@@ -571,7 +571,7 @@ GtPlotterLineChartExamples >> plotCommitsByMonth [
 	^ aChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotCommitsOfAllUsers [
 	<gtExample>
 	| aData aChart |
@@ -592,7 +592,7 @@ GtPlotterLineChartExamples >> plotCommitsOfAllUsers [
 	^ aChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotCommitsPerUser [
 	<gtExample>
 	| aData aChart |
@@ -613,7 +613,7 @@ GtPlotterLineChartExamples >> plotCommitsPerUser [
 	^ aChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotCommitsPerUserAndMonth [
 	<gtExample>
 	| aData aChart |
@@ -634,7 +634,7 @@ GtPlotterLineChartExamples >> plotCommitsPerUserAndMonth [
 	^ aChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotEmptyData [
 	<gtExample>
 	| aData lineChart |
@@ -656,7 +656,7 @@ GtPlotterLineChartExamples >> plotEmptyData [
 	^ lineChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotWithDefaultProjections [
 	<gtExample>
 	| lineChart |
@@ -668,7 +668,7 @@ GtPlotterLineChartExamples >> plotWithDefaultProjections [
 	^ lineChart
 ]
 
-{ #category : 'example - chart' }
+{ #category : #'example - chart' }
 GtPlotterLineChartExamples >> plotWithProjections [
 	<gtExample>
 	| lineChart |

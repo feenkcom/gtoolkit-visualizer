@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphDominanceTreeLayout',
-	#superclass : 'GtGraphAbstractVerticalTreeLayout',
+	#name : #GtGraphDominanceTreeLayout,
+	#superclass : #GtGraphAbstractVerticalTreeLayout,
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'hook-private' }
+{ #category : #'hook-private' }
 GtGraphDominanceTreeLayout >> computeChildrenFor: aNode [
 	^ self childrenWithHighestNestingLevelFor: aNode
 ]

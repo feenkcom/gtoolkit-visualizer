@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphCirclePackLayoutExamples',
-	#superclass : 'GtGraphLayoutExamples',
+	#name : #GtGraphCirclePackLayoutExamples,
+	#superclass : #GtGraphLayoutExamples,
 	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : 'example' }
+{ #category : #example }
 GtGraphCirclePackLayoutExamples >> squaredNodes [
 	<gtExample>
 	| aParentNode aLayout |

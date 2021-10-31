@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtGraphCirclePackLayout',
-	#superclass : 'GtGraphLayout',
+	#name : #GtGraphCirclePackLayout,
+	#superclass : #GtGraphLayout,
 	#instVars : [
 		'enclosureCircle'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
-{ #category : 'measure' }
+{ #category : #measure }
 GtGraphCirclePackLayout >> childrenBoundingBox: aParentNode [
 	| anActualBoundingBox anActualSquaredBoundingBox aCircleBoundingBox |
 	
@@ -19,7 +19,7 @@ GtGraphCirclePackLayout >> childrenBoundingBox: aParentNode [
 	^ anActualSquaredBoundingBox expandBy: aCircleBoundingBox extent - anActualSquaredBoundingBox extent
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphCirclePackLayout >> doExecute: theElements with: anExtentSpec [
 	"Performs the layout"
 	| sortedElements aChain |
@@ -31,7 +31,7 @@ GtGraphCirclePackLayout >> doExecute: theElements with: anExtentSpec [
 	enclosureCircle := aChain enclosureCircle
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphCirclePackLayout >> fit: anElement in: aFrontChain [
 	| aNewCircle |
 	aNewCircle := GtGraphCirclePackNode for: anElement.
@@ -61,14 +61,14 @@ GtGraphCirclePackLayout >> fit: anElement in: aFrontChain [
 	aFrontChain nextCircle: aNewCircle
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphCirclePackLayout >> initialize [
 	super initialize.
 	
 	enclosureCircle := GtGraphCircle new
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphCirclePackLayout >> pickChain: theElements [
 	| aChain |
 	
@@ -115,7 +115,7 @@ GtGraphCirclePackLayout >> pickChain: theElements [
 	^ aChain
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphCirclePackLayout >> sorted: theElements [
 	| sortedElements |
 

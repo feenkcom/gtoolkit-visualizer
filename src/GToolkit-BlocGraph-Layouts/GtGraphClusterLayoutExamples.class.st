@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphClusterLayoutExamples',
-	#superclass : 'GtGraphLayoutExamples',
+	#name : #GtGraphClusterLayoutExamples,
+	#superclass : #GtGraphLayoutExamples,
 	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : 'example' }
+{ #category : #example }
 GtGraphClusterLayoutExamples >> forestOfClusters [
 	<gtExample>
 	| aParentNode aLayout |

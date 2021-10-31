@@ -1,23 +1,23 @@
 Class {
-	#name : 'GtPlotterDataGroupWithCriteria',
-	#superclass : 'GtPlotterDataGroupDecorator',
+	#name : #GtPlotterDataGroupWithCriteria,
+	#superclass : #GtPlotterDataGroupDecorator,
 	#instVars : [
 		'criteria'
 	],
 	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupWithCriteria >> criteria [
 	^ criteria
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupWithCriteria >> criteria: anObject [
 	criteria := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDataGroupWithCriteria >> printOn: aStream [
 	aStream
 		nextPutAll: ('{1} (' format: { self criteria });
