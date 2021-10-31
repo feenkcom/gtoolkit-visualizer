@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterTimeEveryWeekDay',
-	#superclass : 'GtPlotterTimeInterval',
+	#name : #GtPlotterTimeEveryWeekDay,
+	#superclass : #GtPlotterTimeInterval,
 	#instVars : [
 		'day'
 	],

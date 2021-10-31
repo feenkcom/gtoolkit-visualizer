@@ -4,12 +4,12 @@ I draw vertical chart tick labels.
 {{gtExample:GtPlotterRawVerticalTimelineExamples>>#labels|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : 'GtPlotterVerticalTickLabelsElement',
-	#superclass : 'GtPlotterTickLabelsElement',
+	#name : #GtPlotterVerticalTickLabelsElement,
+	#superclass : #GtPlotterTickLabelsElement,
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterVerticalTickLabelsElement >> defaultLabelLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtHorizontalSparklineStencil',
-	#superclass : 'BrStencil',
+	#name : #GtHorizontalSparklineStencil,
+	#superclass : #BrStencil,
 	#instVars : [
 		'values',
 		'maxY',
@@ -12,17 +12,17 @@ Class {
 	#category : 'GToolkit-Plotter-! Plotter - Stencils'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> color [
 	^ color
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> color: aColorBlock [
 	color := aColorBlock
 ]
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtHorizontalSparklineStencil >> create [
 	<return: #Object>
 	| theData aMinY aMaxY aMinX aMaxX aScaleX aScaleY |
@@ -59,7 +59,7 @@ GtHorizontalSparklineStencil >> create [
 		with: theData) asElement
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtHorizontalSparklineStencil >> initialize [
 	super initialize.
 	
@@ -70,52 +70,52 @@ GtHorizontalSparklineStencil >> initialize [
 	values := #()
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> maxX [
 	^ maxX
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> maxX: anObject [
 	maxX := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> maxY [
 	^ maxY
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> maxY: anObject [
 	maxY := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> minX [
 	^ minX
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> minX: anObject [
 	minX := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> minY [
 	^ minY
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> minY: anObject [
 	minY := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> values [
 	^ values
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtHorizontalSparklineStencil >> values: anObject [
 	values := anObject
 ]

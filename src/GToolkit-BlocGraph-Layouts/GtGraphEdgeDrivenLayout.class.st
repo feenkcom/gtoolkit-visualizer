@@ -1,41 +1,41 @@
 Class {
-	#name : 'GtGraphEdgeDrivenLayout',
-	#superclass : 'GtGraphLayout',
+	#name : #GtGraphEdgeDrivenLayout,
+	#superclass : #GtGraphLayout,
 	#instVars : [
 		'edges'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphEdgeDrivenLayout class >> isAbstract [
 	^ self = GtGraphEdgeDrivenLayout
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphEdgeDrivenLayout >> doExecute: elements with: anExtentSpec [
 	
 	self subclassResponsibility
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphEdgeDrivenLayout >> edges [
 	^ edges
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphEdgeDrivenLayout >> edges: aCollection [
 	edges := aCollection asOrderedCollection
 ]
 
-{ #category : 'iterator' }
+{ #category : #iterator }
 GtGraphEdgeDrivenLayout >> edgesDo: aBlock [
 	"Iterates over all the edges of the receiver."
 	edges do: aBlock
 
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphEdgeDrivenLayout >> executeOnElements: elements with: anExtentSpec [
 	"Execute the layout, myself, on the elements"
 
@@ -44,14 +44,14 @@ GtGraphEdgeDrivenLayout >> executeOnElements: elements with: anExtentSpec [
 	super executeOnElements: elements with: anExtentSpec
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphEdgeDrivenLayout >> initialize [
 	super initialize.
 
 	edges := OrderedCollection new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphEdgeDrivenLayout >> setEdgesFromElements: aCollectionOfLayoutChildNodes [
 	| aConstraintsMap theIncomingEdges |
 	aCollectionOfLayoutChildNodes isEmpty

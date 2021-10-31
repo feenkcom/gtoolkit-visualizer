@@ -1,1 +1,1 @@
-Package { #name : 'GToolkit-Plotter' }
+Package { #name : #'GToolkit-Plotter' }

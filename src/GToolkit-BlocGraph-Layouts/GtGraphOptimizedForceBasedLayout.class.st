@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtGraphOptimizedForceBasedLayout',
-	#superclass : 'GtGraphForceBasedLayout',
+	#name : #GtGraphOptimizedForceBasedLayout,
+	#superclass : #GtGraphForceBasedLayout,
 	#instVars : [
 		'mockElements'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphOptimizedForceBasedLayout >> executeOnElements: elements with: anExtentSpec [
 	"The argument is the set of Roassal elements"
 	mockElements := elements collect: [ :e | GtGraphMockElement new realElement: e ].
@@ -15,7 +15,7 @@ GtGraphOptimizedForceBasedLayout >> executeOnElements: elements with: anExtentSp
 	mockElements do: #applyToRealElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphOptimizedForceBasedLayout >> setEdgesFromElements: elements [ 
 	| view realElements realEdges mockEdges |
 	elements isEmpty ifTrue: [ ^ self ].

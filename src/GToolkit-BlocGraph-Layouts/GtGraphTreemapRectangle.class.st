@@ -5,8 +5,8 @@ See my subclasses for more details and examples: {{gtClass:GtGraphTreemapRectang
 
 "
 Class {
-	#name : 'GtGraphTreemapRectangle',
-	#superclass : 'Object',
+	#name : #GtGraphTreemapRectangle,
+	#superclass : #Object,
 	#instVars : [
 		'extent',
 		'position'
@@ -14,42 +14,42 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapRectangle >> asElement [
 	^ GtGraphUtilities default rectangleOn: self extent: self extent margin: self margin
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapRectangle >> asElementWithInformation [
 	^ GtGraphUtilities default informationForRectangle: self asElement bounds: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> bottomLeft [
 	^ self position + (0 @ self extent y)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> bottomRight [
 	^ self position + self extent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> bounds [
 	^ self position extent: self extent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> extent [
 	^ extent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> extent: anObject [
 	extent := anObject
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphTreemapRectangle >> gtPreviewFor: aView [
 	<gtView>
 	self position ifNil: [ ^ aView empty ].
@@ -61,45 +61,45 @@ GtGraphTreemapRectangle >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapRectangle >> hasBounds [
 	^ self position isNotNil and: [ 
 		self extent isNotNil ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> height [
 	^ self extent y
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapRectangle >> margin [
 	<return: #BlInsets>
 
 	^ BlInsets all: 0
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> position [
 	^ position
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> position: anObject [
 	position := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> topLeft [
 	^ self position
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> topRight [
 	^ self position + (self extent x @ 0)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapRectangle >> width [
 	^ self extent x
 ]

@@ -5,12 +5,12 @@ I exemplify a line chart.
 
 "
 Class {
-	#name : 'GtPlotterRawLineExamples',
-	#superclass : 'Object',
+	#name : #GtPlotterRawLineExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisX [
 	<gtExample>
 
@@ -25,7 +25,7 @@ GtPlotterRawLineExamples >> axisX [
 		}
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXLabels [
 	<gtExample>
 	
@@ -39,7 +39,7 @@ GtPlotterRawLineExamples >> axisXLabels [
 		labels: 10
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXLine [
 	<gtExample>
 	
@@ -51,7 +51,7 @@ GtPlotterRawLineExamples >> axisXLine [
 			c frame vertical alignBottom ]
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXName [
 	<gtExample>
 
@@ -65,7 +65,7 @@ GtPlotterRawLineExamples >> axisXName [
 			c linear horizontal alignRight ]
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXProjectionLabels [
 	<gtExample>
 
@@ -83,7 +83,7 @@ GtPlotterRawLineExamples >> axisXProjectionLabels [
 		values: self peekCommits
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXProjections [
 	<gtExample>
 
@@ -98,7 +98,7 @@ GtPlotterRawLineExamples >> axisXProjections [
 		values: self peekCommits
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXTicks [
 	<gtExample>
 	
@@ -110,7 +110,7 @@ GtPlotterRawLineExamples >> axisXTicks [
 		ticks: 10
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisY [
 	<gtExample>
 
@@ -124,7 +124,7 @@ GtPlotterRawLineExamples >> axisY [
 			self axisYTicks width: 10. }
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisYLabels [
 	<gtExample>
 
@@ -146,7 +146,7 @@ GtPlotterRawLineExamples >> axisYLabels [
 		labels: 7
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisYLine [
 	<gtExample>
 	
@@ -158,7 +158,7 @@ GtPlotterRawLineExamples >> axisYLine [
 			c frame horizontal alignLeft ]
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisYName [
 	<gtExample>
 
@@ -180,7 +180,7 @@ GtPlotterRawLineExamples >> axisYName [
 				t rotateBy: 270 ])
 ]
 
-{ #category : 'example - axis' }
+{ #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisYTicks [
 	<gtExample>
 	
@@ -192,7 +192,7 @@ GtPlotterRawLineExamples >> axisYTicks [
 		ticks: 7
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterRawLineExamples >> commits [
 	<gtExample>
 
@@ -212,7 +212,7 @@ GtPlotterRawLineExamples >> commits [
 	}
 ]
 
-{ #category : 'example - plot' }
+{ #category : #'example - plot' }
 GtPlotterRawLineExamples >> content [
 	<gtExample>
 	^ BrFrame new
@@ -224,7 +224,7 @@ GtPlotterRawLineExamples >> content [
 			self axisXProjections. }
 ]
 
-{ #category : 'example - plot' }
+{ #category : #'example - plot' }
 GtPlotterRawLineExamples >> contentLine [
 	<gtExample>
 	^ BlElement new
@@ -236,7 +236,7 @@ GtPlotterRawLineExamples >> contentLine [
 			c vertical matchParent ]
 ]
 
-{ #category : 'example - plot' }
+{ #category : #'example - plot' }
 GtPlotterRawLineExamples >> contentLineVertices [
 	<gtExample>
 	| aScaleY aScaleX theVertices |
@@ -248,7 +248,7 @@ GtPlotterRawLineExamples >> contentLineVertices [
 	^ theVertices
 ]
 
-{ #category : 'example - plot' }
+{ #category : #'example - plot' }
 GtPlotterRawLineExamples >> corner [
 	<gtExample>
 	^ BlElement new
@@ -256,14 +256,14 @@ GtPlotterRawLineExamples >> corner [
 		visibility: BlVisibility hidden
 ]
 
-{ #category : 'example - data' }
+{ #category : #'example - data' }
 GtPlotterRawLineExamples >> peekCommits [
 	<gtExample>
 
 	^ self commits select: [ :e | e value > 20 ]
 ]
 
-{ #category : 'example - plot' }
+{ #category : #'example - plot' }
 GtPlotterRawLineExamples >> plot [
 	<gtExample>
 	^ BrHorizontalGrid new
@@ -281,7 +281,7 @@ GtPlotterRawLineExamples >> plot [
 		 }
 ]
 
-{ #category : 'example - scale' }
+{ #category : #'example - scale' }
 GtPlotterRawLineExamples >> scaleX [
 	<gtExample>
 
@@ -290,7 +290,7 @@ GtPlotterRawLineExamples >> scaleX [
 		to: self commits last key asMonth + 60 days.
 ]
 
-{ #category : 'example - scale' }
+{ #category : #'example - scale' }
 GtPlotterRawLineExamples >> scaleY [
 	<gtExample>
 

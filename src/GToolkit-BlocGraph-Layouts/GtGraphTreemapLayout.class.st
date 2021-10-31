@@ -9,51 +9,51 @@ See my subclasses for more details and examples: {{gtClass:GtGraphTreemapLayout|
 
 "
 Class {
-	#name : 'GtGraphTreemapLayout',
-	#superclass : 'BlLayout',
+	#name : #GtGraphTreemapLayout,
+	#superclass : #BlLayout,
 	#instVars : [
 		'sortFunction'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
-{ #category : 'constraints' }
+{ #category : #constraints }
 GtGraphTreemapLayout class >> constraints [
 	^ GtGraphTreemapLayoutConstraints new
 ]
 
-{ #category : 'factory' }
+{ #category : #factory }
 GtGraphTreemapLayout class >> horizontalSlice [
 	^ GtGraphTreemapSliceHorizontalLayout new
 ]
 
-{ #category : 'factory' }
+{ #category : #factory }
 GtGraphTreemapLayout class >> squarify [
 	^ GtGraphTreemapSquarifiedLayout new
 ]
 
-{ #category : 'factory' }
+{ #category : #factory }
 GtGraphTreemapLayout class >> verticalSlice [
 	^ GtGraphTreemapSliceVerticalLayout new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphTreemapLayout >> defaultSortFunction [
 	^ [ :theElements | theElements ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphTreemapLayout >> descendentSortFunction [
 	^ [ :theElements | theElements sort: [ :a :b | a constraints treemap weight > b constraints treemap weight ] ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphTreemapLayout >> initialize [
 	super initialize.
 	sortFunction := self defaultSortFunction.
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 GtGraphTreemapLayout >> layout: anElement in: aRectangle context: aBlElementBoundsUpdateContext [
 
 	anElement children accountedByLayout do: [ :child |
@@ -62,7 +62,7 @@ GtGraphTreemapLayout >> layout: anElement in: aRectangle context: aBlElementBoun
 	self layoutIgnored: anElement context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	| aTree aTotalWeight theChildren anAssoc |
 
@@ -118,12 +118,12 @@ GtGraphTreemapLayout >> measure: anElement with: anExtentSpec [
 	self measureIgnored: anElement with: anExtentSpec
 ]
 
-{ #category : 'sorting' }
+{ #category : #sorting }
 GtGraphTreemapLayout >> sortChildren: theChildren [
 	sortFunction value: theChildren
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphTreemapLayout >> treeFrom: anExtent [
 	<return: #GtGraphTreemap>
 	^ self subclassResponsibility

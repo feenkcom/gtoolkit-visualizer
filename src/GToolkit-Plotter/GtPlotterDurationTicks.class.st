@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtPlotterDurationTicks',
-	#superclass : 'GtPlotterTicks',
+	#name : #GtPlotterDurationTicks,
+	#superclass : #GtPlotterTicks,
 	#category : 'GToolkit-Plotter-Tick'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtPlotterDurationTicks class >> tickInterval: aStartDateAndTime stop: aStopDateAndTime count: aCount [
 	| aTarget anIndex anInterval |
 
@@ -35,7 +35,7 @@ GtPlotterDurationTicks class >> tickInterval: aStartDateAndTime stop: aStopDateA
 	^ anInterval
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtPlotterDurationTicks >> computedTicks [
 	| isReverse aStartDuration aStopDuration anInterval theTicks |
 

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphAbstractCompactTree',
-	#superclass : 'GtGraphAbstractGraphLayout',
+	#name : #GtGraphAbstractCompactTree,
+	#superclass : #GtGraphAbstractGraphLayout,
 	#instVars : [
 		'sonsDictionary',
 		'root',
@@ -10,7 +10,7 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphAbstractCompactTree class >> horizontalGap: anInt [
 
 	| new |
@@ -21,7 +21,7 @@ GtGraphAbstractCompactTree class >> horizontalGap: anInt [
 	^ new 
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphAbstractCompactTree class >> horizontalGap: anInt verticalGap: another [
 
 	| new |
@@ -34,12 +34,12 @@ GtGraphAbstractCompactTree class >> horizontalGap: anInt verticalGap: another [
 	^ new 
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphAbstractCompactTree class >> isAbstract [
 	^ self = GtGraphAbstractCompactTree
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphAbstractCompactTree class >> verticalGap: anInt [
 
 	| new |
@@ -50,14 +50,14 @@ GtGraphAbstractCompactTree class >> verticalGap: anInt [
 	^ new 
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractCompactTree >> childrenFor: aNode [ 
 
 	sonsDictionary isEmpty ifTrue: [ ^ super childrenFor: aNode ] 
 							ifFalse: [ ^sonsDictionary at: aNode ifAbsent: [ ^ OrderedCollection new ] ]
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
 
@@ -81,7 +81,7 @@ GtGraphAbstractCompactTree >> compareContourOf: aNode with: another [
 	^ max
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> computePosition: aNode [
 "compute the position of the given node and of his sons recursively"
 
@@ -110,12 +110,12 @@ GtGraphAbstractCompactTree >> computePosition: aNode [
 													nodeA pointer: (self followRightContour: neighbor toLayer: (nodeA layer +1) ) ] ] 
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractCompactTree >> coordinate: aNode withMod: aFloat [
 	self subclassResponsibility
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractCompactTree >> doExecute: nodeElements with: anExtentSpec [
 	| rootNodes |
 	
@@ -135,12 +135,12 @@ GtGraphAbstractCompactTree >> doExecute: nodeElements with: anExtentSpec [
 					self draw:e withMod: 0  ]
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractCompactTree >> draw: aNode withMod: aFloat [
 	self subclassResponsibility
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> followLeftContour: aNode toLayer: anInteger [
 	"return the last node in the left contour begining at anode"
 	
@@ -153,7 +153,7 @@ GtGraphAbstractCompactTree >> followLeftContour: aNode toLayer: anInteger [
 			  				ifFalse: [ ^ (self followLeftContour: (self leftContourOf: aNode) toLayer: anInteger ) ]
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> followRightContour: aNode toLayer: anInteger [
 	"return the node in the right contour begining at anode in layer anInteger"
 
@@ -166,7 +166,7 @@ GtGraphAbstractCompactTree >> followRightContour: aNode toLayer: anInteger [
 			  				ifFalse: [ ^ (self followRightContour: (self rightContourOf: aNode) toLayer: anInteger ) ]
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger [
 
 	| node x |
@@ -186,17 +186,17 @@ GtGraphAbstractCompactTree >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger 
 	^ x
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractCompactTree >> greedyCycleRemoval: aGraph [
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractCompactTree >> initialLayout: aLayout [
 
 	initialLayout := aLayout 
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractCompactTree >> initialize [ 
 
 	super initialize.
@@ -206,7 +206,7 @@ GtGraphAbstractCompactTree >> initialize [
 	sonsDictionary := Dictionary new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractCompactTree >> initialize: aNode whoseFatherIs: another [ 
 
 	self fatherOf: aNode put: another.
@@ -216,7 +216,7 @@ GtGraphAbstractCompactTree >> initialize: aNode whoseFatherIs: another [
 	( self childrenFor: aNode ) do: [ :e | self initialize: e whoseFatherIs: aNode ]
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> leftSiblingOf: aNode [
 "return the left sibling of the given node "
 
@@ -228,13 +228,13 @@ GtGraphAbstractCompactTree >> leftSiblingOf: aNode [
 																    ifFalse: [^ children at: ((children indexOf: aNode) - 1) ] ]
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphAbstractCompactTree >> nodeAbcissaWithNeighbor: aNode [
 
 	self subclassResponsibility 
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractCompactTree >> root: aNode [ 
 
 	root := aNode 

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphCircle',
-	#superclass : 'Object',
+	#name : #GtGraphCircle,
+	#superclass : #Object,
 	#instVars : [
 		'center',
 		'radius',
@@ -9,7 +9,7 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphCircle >> asElement [
 	| aContainer aMarginCircle anActualCircle aCenter aBorderWidth aCenterBounds |
 
@@ -49,22 +49,22 @@ GtGraphCircle >> asElement [
 	^ aContainer
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 GtGraphCircle >> bounds [
 	^ self origin extent: (self outerRadius * 2.0) asPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> center [
 	^ center
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> center: aPoint [
 	center := aPoint
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 GtGraphCircle >> encloses: anotherCircle [
 	<return: #Boolean>
 	| dr dx dy |
@@ -77,7 +77,7 @@ GtGraphCircle >> encloses: anotherCircle [
 	^ (dr < 0 or: [ (dr * dr) < ((dx * dx) + (dy * dy)) ]) not
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 GtGraphCircle >> enclosesWeak: anotherCircle [
 	<return: #Boolean>
 	| dr dx dy |
@@ -89,14 +89,14 @@ GtGraphCircle >> enclosesWeak: anotherCircle [
 	^ dr > 0 and: [ (dr * dr) > ((dx * dx) + (dy * dy)) ]
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 GtGraphCircle >> enclosesWeakAll: theCircles [
 	<return: #Boolean>
 
 	^ theCircles allSatisfy: [ :eachCircle | self enclosesWeak: eachCircle ]
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphCircle >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -105,7 +105,7 @@ GtGraphCircle >> gtPreviewFor: aView [
 		stencil: [ self asElement asScalableElement ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphCircle >> initialize [
 	super initialize.
 	
@@ -114,7 +114,7 @@ GtGraphCircle >> initialize [
 	margin := 0.
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 GtGraphCircle >> intersects: anotherCircle [
 	| aCenterVector aMagnitude |
 	
@@ -124,32 +124,32 @@ GtGraphCircle >> intersects: anotherCircle [
 	^ aMagnitude < (self radius + anotherCircle radius - 1.0e-6)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> margin [
 	^ margin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> margin: aNumber [
 	margin := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> origin [
 	^ self center - self outerRadius asPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> outerRadius [
 	^ self radius + self margin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> radius [
 	^ radius
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircle >> radius: aNumber [
 	radius := aNumber
 ]

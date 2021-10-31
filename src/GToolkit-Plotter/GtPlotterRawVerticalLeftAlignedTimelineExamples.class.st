@@ -4,12 +4,12 @@ I exemplify vertical left aligned timeline chart.
 {{gtExample:GtPlotterRawVerticalLeftAlignedTimelineExamples>>#plot|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : 'GtPlotterRawVerticalLeftAlignedTimelineExamples',
-	#superclass : 'GtPlotterRawVerticalTimelineExamples',
+	#name : #GtPlotterRawVerticalLeftAlignedTimelineExamples,
+	#superclass : #GtPlotterRawVerticalTimelineExamples,
 	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : 'examples - axis' }
+{ #category : #'examples - axis' }
 GtPlotterRawVerticalLeftAlignedTimelineExamples >> axis [
 	<gtExample>
 
@@ -20,7 +20,7 @@ GtPlotterRawVerticalLeftAlignedTimelineExamples >> axis [
 		addChildren: { self labels }
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawVerticalLeftAlignedTimelineExamples >> content [
 	<gtExample>
 	
@@ -31,7 +31,7 @@ GtPlotterRawVerticalLeftAlignedTimelineExamples >> content [
 			self timeline }
 ]
 
-{ #category : 'examples - plot' }
+{ #category : #'examples - plot' }
 GtPlotterRawVerticalLeftAlignedTimelineExamples >> plot [
 	<gtExample>
 	
@@ -46,7 +46,7 @@ GtPlotterRawVerticalLeftAlignedTimelineExamples >> plot [
 			self projectionLabels }
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawVerticalLeftAlignedTimelineExamples >> projectionLabels [
 	<gtExample>
 
@@ -60,7 +60,7 @@ GtPlotterRawVerticalLeftAlignedTimelineExamples >> projectionLabels [
 		values: self versions
 ]
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterRawVerticalLeftAlignedTimelineExamples >> projections [
 	<gtExample>
 

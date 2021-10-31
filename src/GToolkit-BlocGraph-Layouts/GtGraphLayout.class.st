@@ -4,8 +4,8 @@ I am an abstract graph layout. My subclasses define the concrete algorithm.
 
 "
 Class {
-	#name : 'GtGraphLayout',
-	#superclass : 'BlFitLayout',
+	#name : #GtGraphLayout,
+	#superclass : #BlFitLayout,
 	#traits : 'TGtGraphLayoutUtils',
 	#classTraits : 'TGtGraphLayoutUtils classTrait',
 	#instVars : [
@@ -14,12 +14,12 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Basic'
 }
 
-{ #category : 'constraints' }
+{ #category : #constraints }
 GtGraphLayout class >> constraints [
 	^ GtGraphConstraints new
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> applyOn: elements with: anExtentSpec [
 	"Return quickly if there is nothing to do"
 	(elements isEmpty)
@@ -27,24 +27,24 @@ GtGraphLayout >> applyOn: elements with: anExtentSpec [
 	self executeOnElements: elements with: anExtentSpec
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> doExecute: elements with: anExtentSpec [
 	"Performs the layout"
 
 	self subclassResponsibility
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> doInitialize: elements with: anExtentSpec [
 	"Method executed before beginning the layout. Useful when the graph to be ordered need to be prepared"
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> doPost: elements with: anExtentSpec [
 	"Method executed after performing the layout"
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> executeOnElements: elements with: anExtentSpec [
 	"Execute the layout, myself, on the elements"
 
@@ -53,7 +53,7 @@ GtGraphLayout >> executeOnElements: elements with: anExtentSpec [
 	self doPost: elements with: anExtentSpec
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 GtGraphLayout >> groupBounds: aCollectionOfElements [
 	"Return encompassing bounds of a collection of elements"
 
@@ -62,14 +62,14 @@ GtGraphLayout >> groupBounds: aCollectionOfElements [
 		ifNotEmpty: [ Rectangle merging: (aCollectionOfElements collect: [ :anElement | anElement measuredBounds asRectangle ]) ])
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphLayout >> initialize [
 	super initialize.
 
 	translator := GtGraphLayoutTranslator default
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 GtGraphLayout >> measureChildrenPositions: aParentLayoutNode [
 	self applyOn: aParentLayoutNode withGraphEdges children with: aParentLayoutNode extentSpec.
 
@@ -78,21 +78,21 @@ GtGraphLayout >> measureChildrenPositions: aParentLayoutNode [
 		normalizePositions
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> on: elements [
 	self shouldNotImplement
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphLayout >> step [
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphLayout >> translator [
 	^ translator
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphLayout >> translator: t [
 	translator := t
 ]

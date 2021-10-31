@@ -44,7 +44,7 @@ GtMondrian >> gtLiveFor: aView [
 { #category : #initialize }
 GtMondrian >> initialize [
 	stack := Stack new.
-	stack push: (GtMondrianStep new 
+	"stack push: (GtMondrianStep new 
 		root: ((BlElement new
 			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
 			beInSingleCompositionLayer;
@@ -53,8 +53,8 @@ GtMondrian >> initialize [
 				c vertical fitContent.
 				c padding: (BlInsets all: 50) ];
 			background: Color white;
-			zIndex: 1)))
-	"stack push: (GtMondrianStep new 
+			zIndex: 1)))"
+	stack push: (GtMondrianStep new 
 		root: ((BlCanvassableElement new
 			enableAutoScale;
 			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
@@ -63,7 +63,7 @@ GtMondrian >> initialize [
 				c vertical matchParent.
 				c padding: (BlInsets all: 50) ];
 			background: Color white;
-			zIndex: 1)))"
+			zIndex: 1)))
 ]
 
 { #category : #scripting }

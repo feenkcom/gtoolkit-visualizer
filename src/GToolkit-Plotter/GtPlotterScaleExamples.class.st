@@ -1,5 +1,5 @@
 Class {
-	#name : 'GtPlotterScaleExamples',
-	#superclass : 'Object',
+	#name : #GtPlotterScaleExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-Plotter-Examples'
 }

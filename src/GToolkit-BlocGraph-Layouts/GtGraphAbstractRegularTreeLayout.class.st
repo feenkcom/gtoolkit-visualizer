@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphAbstractRegularTreeLayout',
-	#superclass : 'GtGraphAbstractGraphLayout',
+	#name : #GtGraphAbstractRegularTreeLayout,
+	#superclass : #GtGraphAbstractGraphLayout,
 	#instVars : [
 		'alreadyLayoutedNodes',
 		'topGap',
@@ -13,19 +13,19 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphAbstractRegularTreeLayout class >> isAbstract [
 	^ self = GtGraphAbstractRegularTreeLayout
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 	| collection |
 	collection := nodesByLayer at: aNumber ifAbsentPut: [OrderedCollection new].
 	collection addAll: aNodeCollection
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractRegularTreeLayout >> doExecute: elements with: anExtentSpec [
 	| rootNodes |
 	alreadyLayoutedNodes := OrderedCollection new.
@@ -39,18 +39,18 @@ GtGraphAbstractRegularTreeLayout >> doExecute: elements with: anExtentSpec [
 		self rearrangeByLayers: elements ]
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractRegularTreeLayout >> doPost: elements with: anExtentSpec [
 	shouldBeHorizontallyReversed ifTrue: [ self horizontallyReverse: elements ].
 	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> horizontallyReverse [
 	shouldBeHorizontallyReversed := true
 ]
 
-{ #category : 'reversing' }
+{ #category : #reversing }
 GtGraphAbstractRegularTreeLayout >> horizontallyReverse: elements [
 	"Horizontally reverse the elements, as well as the attachpoints"
 	| largeur |
@@ -61,7 +61,7 @@ GtGraphAbstractRegularTreeLayout >> horizontallyReverse: elements [
 		do: [ :el | self translator translate: el to: (largeur - el position x) @ el position y ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphAbstractRegularTreeLayout >> initialize [
 	super initialize.
 	topGap := 5.
@@ -71,83 +71,83 @@ GtGraphAbstractRegularTreeLayout >> initialize [
 	shouldBeVerticallyReversed := false
 ]
 
-{ #category : 'reversing' }
+{ #category : #reversing }
 GtGraphAbstractRegularTreeLayout >> inverseAttachPoint [
 	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> isLayered [
 	"Is the layout layered"
 	
 	^ isLayered
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> isLayered: boolean [
 	"Is the layout layered"
 	
 	isLayered := boolean
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> layered [
 	self isLayered: true
 ]
 
-{ #category : 'hook-private' }
+{ #category : #'hook-private' }
 GtGraphAbstractRegularTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> leftGap [
 	^ leftGap
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> leftGap: anInteger [
 	leftGap := anInteger
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> levelDistance: aNumber [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> nodeDistance: aNumber [
 	self subclassResponsibility
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> shouldBeHorizontallyReversed [
 	"Return if the layout is horizontally reversed"
 	^ shouldBeHorizontallyReversed 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> shouldBeVerticallyReversed [
 	"Return if the layout is vertically reversed"
 	^ shouldBeVerticallyReversed
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> topGap [
 	^ topGap
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> topGap: anInteger [
 	topGap := anInteger
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractRegularTreeLayout >> verticallyReverse [
 	"Reverse the edge extremities"
 	"Here is an example:
@@ -164,7 +164,7 @@ b
 
 ]
 
-{ #category : 'reversing' }
+{ #category : #reversing }
 GtGraphAbstractRegularTreeLayout >> verticallyReverse: elements [
 	"Vertically reverse the elements, as well as the attachpoints"
 	| hauteur |

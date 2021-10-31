@@ -7,8 +7,8 @@ See my subclasses for more details and examples: {{gtClass:GtGraphTreemapSquarif
 
 "
 Class {
-	#name : 'GtGraphTreemapSquarifyAreaRectangle',
-	#superclass : 'GtGraphTreemapRectangle',
+	#name : #GtGraphTreemapSquarifyAreaRectangle,
+	#superclass : #GtGraphTreemapRectangle,
 	#instVars : [
 		'rootRectangle',
 		'remainingRectangle',
@@ -17,19 +17,19 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphTreemapSquarifyAreaRectangle class >> null [
 	^ GtGraphTreemapSquarifyNoRectangle uniqueInstance
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphTreemapSquarifyAreaRectangle class >> position: aPosition extent: anExtent [
 	^ anExtent x > anExtent y
 		ifTrue: [ GtGraphTreemapSquarifyLandscapeRectangle new position: aPosition; extent: anExtent ] 
 		ifFalse: [ GtGraphTreemapSquarifyPortraitRectangle new position: aPosition; extent: anExtent ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapSquarifyAreaRectangle >> asElementWithInformation [
 	<return: #BlElement>
 	| anElement anOriginal |
@@ -42,7 +42,7 @@ GtGraphTreemapSquarifyAreaRectangle >> asElementWithInformation [
 	^ anOriginal
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [ 
 	<return: #BlElement>
 	^ self occupiedRectangle 
@@ -51,7 +51,7 @@ GtGraphTreemapSquarifyAreaRectangle >> asElementWithOccupiedArea [
 		ifNil: [ self asElementWithInformation ]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphTreemapSquarifyAreaRectangle >> gtPreviewFor: aView [
 	<gtView>
 	self position ifNil: [ ^ aView empty ].
@@ -63,18 +63,18 @@ GtGraphTreemapSquarifyAreaRectangle >> gtPreviewFor: aView [
 			margin: (BlInsets all: 10) ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapSquarifyAreaRectangle >> hasSpace [
 	<return: #Boolean>
 	^ self width isZero or: [ self height isZero ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapSquarifyAreaRectangle >> ifNoSpace: aBlockClosure [ 
 	^ self hasSpace ifTrue: aBlockClosure
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphTreemapSquarifyAreaRectangle >> initialize [
 	super initialize.
 	extent := position := 0@0.
@@ -82,58 +82,58 @@ GtGraphTreemapSquarifyAreaRectangle >> initialize [
 	rootRectangle := self.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapSquarifyAreaRectangle >> isDefined [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapSquarifyAreaRectangle >> isRoot [
 	<return: #Boolean>
 	^ self original == self.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> length [
 	"gives the length of the shortest side of the remaining subrectangle in which the current row is placed"
 	<return: #Number>
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> name [
 	^ 'Rectangle'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> occupiedBounds [
 	<return: #Rectangle>
 	^ self occupiedRectangle bounds
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ occupiedRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> occupiedRectangle: aRectangle [ 
 	occupiedRectangle := aRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> original [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ rootRectangle ifNil: [ self ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> original: aGtGraphTreemapSquarifyRectangle [
 	rootRectangle := aGtGraphTreemapSquarifyRectangle
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtGraphTreemapSquarifyAreaRectangle >> printOn: aStream [
 	aStream nextPutAll: self name asString.
 	(self position isNotNil and: [ self extent isNotNil ])
@@ -141,28 +141,28 @@ GtGraphTreemapSquarifyAreaRectangle >> printOn: aStream [
 		ifFalse: [ aStream nextPutAll: '<uninitialized>' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingBounds [
 	^ self remainingRectangle bounds
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ remainingRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> remainingRectangle: aGtGraphTreemapSquarifyRectangle [ 
 	remainingRectangle := aGtGraphTreemapSquarifyRectangle
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyAreaRectangle >> squarifyStep: aStep [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyAreaRectangle >> squarifyStepInNoSpace: aStep [ 
 	aStep nodesDo: [ :eachNode | 
 		eachNode 
@@ -170,12 +170,12 @@ GtGraphTreemapSquarifyAreaRectangle >> squarifyStepInNoSpace: aStep [
 			extent: 0@0 ]
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyAreaRectangle >> updateOccupiedArea: aStep [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyAreaRectangle >> volume [
 	<return: #Number>
 	^ self height * self width 

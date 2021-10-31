@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtGraphCircleNeighbourhoodElement',
-	#superclass : 'BlElement',
+	#name : #GtGraphCircleNeighbourhoodElement,
+	#superclass : #BlElement,
 	#instVars : [
 		'neighbourhood'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> createEdges: theCircleElements neighbour: aNeighbourCircleElement [
 	| theEdges |
 
@@ -23,7 +23,7 @@ GtGraphCircleNeighbourhoodElement >> createEdges: theCircleElements neighbour: a
 	^ theEdges
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> embellishCircle: aCircleElement at: anIndex [
 	| aCircle aCenterLabel aCenterLabelElement |
 
@@ -38,7 +38,7 @@ GtGraphCircleNeighbourhoodElement >> embellishCircle: aCircleElement at: anIndex
 	aCircleElement addChild: aCenterLabelElement
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> embellishNeighbourCircle: aCircleElement [
 	| aCircle aCenterLabelElement |
 	aCircle := self neighbourhood neighbourCircle.
@@ -54,7 +54,7 @@ GtGraphCircleNeighbourhoodElement >> embellishNeighbourCircle: aCircleElement [
 		background: self theme default primaryBorderColor
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphCircleNeighbourhoodElement >> initializeElement [
 	| theCircleElements aNeighbourCircleElement theEdges |
 	
@@ -85,7 +85,7 @@ GtGraphCircleNeighbourhoodElement >> initializeElement [
 	self initializeProjection: aNeighbourCircleElement
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphCircleNeighbourhoodElement >> initializeProjection: aNeighbourCircleElement [
 	| aProjectionElement aProjectionLine aProjectionLabel |
 	
@@ -104,12 +104,12 @@ GtGraphCircleNeighbourhoodElement >> initializeProjection: aNeighbourCircleEleme
 	self addChild: aProjectionLine
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> labelFontSize [
 	^ self neighbourhood averageRadius / 6.0
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> lineBetween: aCircleElement and: anotherCircleElement [
 	| aLine aCenter anAnotherCenter |
 	
@@ -125,19 +125,19 @@ GtGraphCircleNeighbourhoodElement >> lineBetween: aCircleElement and: anotherCir
 	^ aLine
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleNeighbourhoodElement >> neighbourhood [
 	^ neighbourhood
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleNeighbourhoodElement >> neighbourhood: aGtGraphCircleNeighbourhood [
 	neighbourhood := aGtGraphCircleNeighbourhood.
 	
 	self initializeElement
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleNeighbourhoodElement >> newLabel: aLabelText for: aCircleElement circle: aCircle [ 
 	| aCenterLabelElement aCenterBounds aCenterLabelDistance aCenterLabelPosition |
 
@@ -153,7 +153,7 @@ GtGraphCircleNeighbourhoodElement >> newLabel: aLabelText for: aCircleElement ci
 	^ aCenterLabelElement
 ]
 
-{ #category : 'private - elements projection' }
+{ #category : #'private - elements projection' }
 GtGraphCircleNeighbourhoodElement >> projectionElement [
 	| anExtent |
 
@@ -166,7 +166,7 @@ GtGraphCircleNeighbourhoodElement >> projectionElement [
 		background: (Color black alpha: 0.6)
 ]
 
-{ #category : 'private - elements projection' }
+{ #category : #'private - elements projection' }
 GtGraphCircleNeighbourhoodElement >> projectionLabelElement [
 	| aProjectionLabel aProjectionLabelElement aProjectionLabelDistance aProjection aProjectionVector |
 	

@@ -4,12 +4,12 @@ I draw vertical chart ticks.
 {{gtExample:GtPlotterRawVerticalCenteredTimelineExamples>>#ticks|codeExpanded=false|previewExpanded=true|previewHeight=500}}
 "
 Class {
-	#name : 'GtPlotterVerticalTicksElement',
-	#superclass : 'GtPlotterTicksElement',
+	#name : #GtPlotterVerticalTicksElement,
+	#superclass : #GtPlotterTicksElement,
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterVerticalTicksElement >> defaultTickLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |

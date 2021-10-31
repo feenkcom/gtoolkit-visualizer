@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtGraphCircleEnclosureElement',
-	#superclass : 'BlElement',
+	#name : #GtGraphCircleEnclosureElement,
+	#superclass : #BlElement,
 	#instVars : [
 		'enclosure'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleEnclosureElement >> embellishCircle: aCircleElement at: anIndex [
 	| aCircle aCenterLabel aCenterLabelElement |
 
@@ -22,7 +22,7 @@ GtGraphCircleEnclosureElement >> embellishCircle: aCircleElement at: anIndex [
 	aCircleElement addChild: aCenterLabelElement
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleEnclosureElement >> embellishEnclosureCircle: aCircleElement [
 	| anActualCircle |
 	anActualCircle := aCircleElement childNamed: #circle.
@@ -34,18 +34,18 @@ GtGraphCircleEnclosureElement >> embellishEnclosureCircle: aCircleElement [
 	(aCircleElement childNamed: #center) background: Color transparent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleEnclosureElement >> enclosure [
 	^ enclosure
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleEnclosureElement >> enclosure: anObject [
 	enclosure := anObject.
 	self initializeElement
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphCircleEnclosureElement >> initializeElement [
 	| theCircleElements anEnclosureCircle anEnclosureCircleElement |
 	
@@ -70,12 +70,12 @@ GtGraphCircleEnclosureElement >> initializeElement [
 	self addChildren: theCircleElements.
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleEnclosureElement >> labelFontSize [
 	^ self enclosure averageRadius / 6.0
 ]
 
-{ #category : 'private - elements' }
+{ #category : #'private - elements' }
 GtGraphCircleEnclosureElement >> newLabel: aLabelText for: aCircleElement circle: aCircle [ 
 	| aCenterLabelElement aCenterBounds aCenterLabelDistance aCenterLabelPosition |
 

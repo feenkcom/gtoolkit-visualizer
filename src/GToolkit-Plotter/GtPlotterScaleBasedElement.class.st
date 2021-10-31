@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtPlotterScaleBasedElement',
-	#superclass : 'BlElement',
+	#name : #GtPlotterScaleBasedElement,
+	#superclass : #BlElement,
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterScaleBasedElement >> initialize [
 	super initialize.
 	

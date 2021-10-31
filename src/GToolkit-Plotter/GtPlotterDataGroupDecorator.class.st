@@ -1,49 +1,49 @@
 Class {
-	#name : 'GtPlotterDataGroupDecorator',
-	#superclass : 'GtPlotterDataEntity',
+	#name : #GtPlotterDataGroupDecorator,
+	#superclass : #GtPlotterDataEntity,
 	#instVars : [
 		'entity'
 	],
 	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> at: anIndex [
 	^ self copy entity: (self entity at: anIndex)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> children [
 	^ { self entity }
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> collect: aBlock [
 	^ self entity collect: aBlock
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 GtPlotterDataGroupDecorator >> copyWithDeepestEntity: anEntity [
 	^ self entity isDecorator
 		ifTrue: [ self copy entity: (self entity copyWithDeepestEntity: anEntity) ]
 		ifFalse: [ self copy entity: anEntity ]
 ]
 
-{ #category : 'api - decorators' }
+{ #category : #'api - decorators' }
 GtPlotterDataGroupDecorator >> decorated: aDecorationBlock [
 	<return: #GtPlotterDataEntity>
 	
 	^ self copy entity: (self entity decorated: aDecorationBlock)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> decoratedEntity [
 	^ self entity isDecorator
 		ifTrue: [ self entity decoratedEntity ]
 		ifFalse: [ self entity ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroupDecorator >> detectDecorator: aBlock ifFound: aFoundBlock ifNone: anExceptionBlock [
 	^ self entity
 		detectDecorator: aBlock
@@ -53,53 +53,53 @@ GtPlotterDataGroupDecorator >> detectDecorator: aBlock ifFound: aFoundBlock ifNo
 			ifFalse: anExceptionBlock ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroupDecorator >> do: aBlock [
 	aBlock value: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> entities [
 	^ self entity entities
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> entity [
 	^ entity
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> entity: anObject [
 	entity := anObject
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroupDecorator >> groupedBy: aBlock sorted: aSortBlock decorated: aDecorationBlock [
 	<return: #GtPlotterDataGroups>
 
 	^ self copy entity: (self entity groupedBy: aBlock sorted: aSortBlock decorated: aDecorationBlock)
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroupDecorator >> groupedBy: aBlock then: eachGroupBlock [
 	<return: #GtPlotterDataGroups>
 
 	^ self copy entity: (self entity groupedBy: aBlock then: eachGroupBlock)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> groups [
 	<return: #GtPlotterDataGroups>
 
 	^ GtPlotterDataVirtualGroups new entities: (self entities collect: [ :eachEntity | self copyWithDeepestEntity: eachEntity ])
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> groupsDo: aBlock [
 	self decoratedEntity groupsDo: [ :eachGroup | aBlock value: (self copyWithDeepestEntity: eachGroup) ]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtPlotterDataGroupDecorator >> gtGroupsFor: aView [
 	<gtView>
 
@@ -111,7 +111,7 @@ GtPlotterDataGroupDecorator >> gtGroupsFor: aView [
 		children: #children
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtPlotterDataGroupDecorator >> gtItemsFor: aView [
 	<gtView>
 
@@ -119,51 +119,51 @@ GtPlotterDataGroupDecorator >> gtItemsFor: aView [
 		gtItemsFor: aView
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterDataGroupDecorator >> initialize [
 	super initialize.
 	
 	entity := GtPlotterDataGroup new
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtPlotterDataGroupDecorator >> isComposite [
 	^ self entity isComposite
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtPlotterDataGroupDecorator >> isDecorator [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtPlotterDataGroupDecorator >> isLogicalGroup [
 	^ self entity isLogicalGroup
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 GtPlotterDataGroupDecorator >> postCopy [
 	entity := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupDecorator >> size [
 	<return: #Number>
 
 	^ self entity size
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> values [
 	^ self entity values
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> valuesDo: aBlock [
 	self entity valuesDo: aBlock
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroupDecorator >> withIndexCollect: aBlock [
 	^ self entity withIndexCollect: aBlock
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphRectanglePackTreeNode',
-	#superclass : 'Object',
+	#name : #GtGraphRectanglePackTreeNode,
+	#superclass : #Object,
 	#instVars : [
 		'x',
 		'y',
@@ -10,15 +10,15 @@ Class {
 		'down',
 		'right'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode class >> rectangle: aRectangle [
 	^ self new rectangle: aRectangle.
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphRectanglePackTreeNode >> asElement [
 	| aContainer anOrigin |
 	
@@ -45,14 +45,14 @@ GtGraphRectanglePackTreeNode >> asElement [
 	^ aContainer
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> children [
 	^ Array streamContents: [ :aStream |
 		right ifNotNil: [ :aNode | aStream nextPut: aNode ].
 		down ifNotNil: [ :aNode | aStream nextPut: aNode ] ]
 ]
 
-{ #category : 'api - tree' }
+{ #category : #'api - tree' }
 GtGraphRectanglePackTreeNode >> detect: aRectangle ifFound: aFoundBlock ifNone: anExceptionBlock [
 	^ self isLeaf
 		ifFalse: [ self down
@@ -69,19 +69,19 @@ GtGraphRectanglePackTreeNode >> detect: aRectangle ifFound: aFoundBlock ifNone: 
 				ifFalse: [ anExceptionBlock value ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> down [
 	<return: #GtGraphRectanglePackTreeNode>
 
 	^ down
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> down: aGtRectanglePackTree [
 	down := aGtRectanglePackTree
 ]
 
-{ #category : 'api - growing' }
+{ #category : #'api - growing' }
 GtGraphRectanglePackTreeNode >> grow: aRectangle [
 	<return: #GtGraphRectanglePackTreeNode>
 	| canGrowDown canGrowRight shouldGrowRight shouldGrowDown |
@@ -110,7 +110,7 @@ GtGraphRectanglePackTreeNode >> grow: aRectangle [
 	self error: 'Can not grow, need to ensure sensible root starting size to avoid this happening'
 ]
 
-{ #category : 'api - growing' }
+{ #category : #'api - growing' }
 GtGraphRectanglePackTreeNode >> growDown: aRectangle [
 	<return: #GtGraphRectanglePackTree>
 	^ self class new
@@ -126,7 +126,7 @@ GtGraphRectanglePackTreeNode >> growDown: aRectangle [
 		right: self
 ]
 
-{ #category : 'api - growing' }
+{ #category : #'api - growing' }
 GtGraphRectanglePackTreeNode >> growRight: aRectangle [
 	<return: #GtGraphRectanglePackTreeNode>
 	^ self class new
@@ -142,7 +142,7 @@ GtGraphRectanglePackTreeNode >> growRight: aRectangle [
 			height: self height)
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphRectanglePackTreeNode >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -152,7 +152,7 @@ GtGraphRectanglePackTreeNode >> gtPreviewFor: aView [
 		stencil: [ self asElement asScalableElement margin: (BlInsets all: 10) ]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphRectanglePackTreeNode >> gtTreeFor: aView [
 	<gtView>
 
@@ -162,17 +162,17 @@ GtGraphRectanglePackTreeNode >> gtTreeFor: aView [
 		painting: [ :aMondrian | self paintTreeWith: aMondrian ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> height [
 	^ height
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> height: aNumber [
 	height := aNumber
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphRectanglePackTreeNode >> initialize [
 	super initialize.
 		
@@ -181,29 +181,29 @@ GtGraphRectanglePackTreeNode >> initialize [
 	right := nil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphRectanglePackTreeNode >> isEmpty [
 	^ rectangle isNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphRectanglePackTreeNode >> isLeaf [
 	^ right isNil and: [ down isNil ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> origin [
 	^ self x @ self y
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtGraphRectanglePackTreeNode >> paintTreeWith: view [
 	view nodes
 		shape: [ :each |
 			BlElement new
 				size: 10@10;
 				padding: (BlInsets all: 13);
-				geometry: (BlCircle new);
+				geometry: (BlCircleGeometry new);
 				border: (BlBorder paint: Color gray width: 1);
 				background: Color white;
 				zIndex: 10 ];
@@ -218,7 +218,7 @@ GtGraphRectanglePackTreeNode >> paintTreeWith: view [
 		levelDistance: 20
 ]
 
-{ #category : 'api - adding' }
+{ #category : #'api - adding' }
 GtGraphRectanglePackTreeNode >> put: aGraphRectangle [
 	| aNode |
 	self
@@ -230,29 +230,29 @@ GtGraphRectanglePackTreeNode >> put: aGraphRectangle [
 	aNode rectangle: aGraphRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> rectangle [
 	^ rectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> rectangle: aGtGraphRectangle [
 	rectangle := aGtGraphRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> right [
 	<return: #GtGraphRectanglePackTreeNode>
 
 	^ right
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> right: anObject [
 	right := anObject
 ]
 
-{ #category : 'api - tree' }
+{ #category : #'api - tree' }
 GtGraphRectanglePackTreeNode >> split: aGraphRectangle [
 	<return: #GtGraphRectanglePackTreeNode>
 	| rightSpace bottomSpace |
@@ -265,13 +265,13 @@ GtGraphRectanglePackTreeNode >> split: aGraphRectangle [
 		ifFalse: [ self splitVertically: aGraphRectangle ]
 ]
 
-{ #category : 'api - tree' }
+{ #category : #'api - tree' }
 GtGraphRectanglePackTreeNode >> splitHorizontally: aGraphRectangle [
 	^ (self splitHorizontallyOnce: aGraphRectangle)
 		splitVerticallyOnce: aGraphRectangle
 ]
 
-{ #category : 'api - tree' }
+{ #category : #'api - tree' }
 GtGraphRectanglePackTreeNode >> splitHorizontallyOnce: aGraphRectangle [
 	"left"
 	down := self class new
@@ -290,13 +290,13 @@ GtGraphRectanglePackTreeNode >> splitHorizontallyOnce: aGraphRectangle [
 	^ down
 ]
 
-{ #category : 'api - tree' }
+{ #category : #'api - tree' }
 GtGraphRectanglePackTreeNode >> splitVertically: aGraphRectangle [
 	^ (self splitVerticallyOnce: aGraphRectangle)
 		splitHorizontallyOnce: aGraphRectangle
 ]
 
-{ #category : 'api - tree' }
+{ #category : #'api - tree' }
 GtGraphRectanglePackTreeNode >> splitVerticallyOnce: aGraphRectangle [
 	"top"
 	down := self class new
@@ -315,32 +315,32 @@ GtGraphRectanglePackTreeNode >> splitVerticallyOnce: aGraphRectangle [
 	^ down
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> width [
 	^ width
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> width: aNumber [
 	width := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> x [
 	^ x
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> x: aNumber [
 	x := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> y [
 	^ y
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectanglePackTreeNode >> y: aNumber [
 	y := aNumber
 ]

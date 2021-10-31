@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtPlotterNumberInterpolator',
-	#superclass : 'GtPlotterTwoValuesInterpolator',
+	#name : #GtPlotterNumberInterpolator,
+	#superclass : #GtPlotterTwoValuesInterpolator,
 	#category : 'GToolkit-Plotter-Interpolator'
 }
 
-{ #category : 'interpolation' }
+{ #category : #interpolation }
 GtPlotterNumberInterpolator >> interpolate: aValue [
 	^ (from * (1 - aValue)) + (to * aValue)
 ]

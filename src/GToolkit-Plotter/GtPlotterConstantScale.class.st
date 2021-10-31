@@ -1,30 +1,30 @@
 Class {
-	#name : 'GtPlotterConstantScale',
-	#superclass : 'GtPlotterContinuousScale',
+	#name : #GtPlotterConstantScale,
+	#superclass : #GtPlotterContinuousScale,
 	#instVars : [
 		'constant'
 	],
 	#category : 'GToolkit-Plotter-Scale'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterConstantScale >> constant [
 	^ constant
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterConstantScale >> constant: anObject [
 	constant := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterConstantScale >> initialize [
 	super initialize.
 	
 	constant := 0
 ]
 
-{ #category : 'operators-mapping' }
+{ #category : #'operators-mapping' }
 GtPlotterConstantScale >> transform: aDomainValue [
 	^ constant
 ]

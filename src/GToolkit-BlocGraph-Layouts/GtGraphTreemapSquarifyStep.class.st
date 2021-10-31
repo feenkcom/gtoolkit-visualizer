@@ -20,8 +20,8 @@ See the {{gtClass:GtGraphTreemapSquarify}} class comment for more details.
 
 "
 Class {
-	#name : 'GtGraphTreemapSquarifyStep',
-	#superclass : 'GtGraphTreemapSquarifyAbstractStep',
+	#name : #GtGraphTreemapSquarifyStep,
+	#superclass : #GtGraphTreemapSquarifyAbstractStep,
 	#instVars : [
 		'nodes',
 		'rectangle',
@@ -32,24 +32,24 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
-{ #category : 'factory' }
+{ #category : #factory }
 GtGraphTreemapSquarifyStep class >> null [
 	^ GtGraphTreemapSquarifyNoStep default
 ]
 
-{ #category : 'accessing - nodes' }
+{ #category : #'accessing - nodes' }
 GtGraphTreemapSquarifyStep >> addNode: aNode [ 
 	self nodes: (self nodes copyWith: aNode).
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtGraphTreemapSquarifyStep >> allSteps [
 	<return: #Array of: #GtGraphTreemapSquarifyStep>
 	^ Array streamContents: [ :aStream | 
 		self stepsDo: [ :eachRow | aStream nextPut: eachRow ] ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapSquarifyStep >> asElementWithOccupiedArea [
 	| anElement |
 	anElement := self asPreviewStep asElementWithOccupiedArea.
@@ -58,34 +58,34 @@ GtGraphTreemapSquarifyStep >> asElementWithOccupiedArea [
 	^ anElement
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphTreemapSquarifyStep >> asRejectedStep [
 	^ GtGraphTreemapSquarifyRejectedStep new step: self
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 GtGraphTreemapSquarifyStep >> copyWithNode: aNode [ 
 	^ self class new 
 		nodes: self nodes with: aNode;
 		rectangle: self rectangle copy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> extent [
 	^ rectangle extent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> extent: aPoint [ 
 	self rectangle: (GtGraphTreemapSquarifyAreaRectangle position: 0@0 extent: aPoint).
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapSquarifyStep >> hasNextStep [
 	^ self nextStep isDefinedStep
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphTreemapSquarifyStep >> initialize [
 	super initialize.
 	nextStep := self class null.
@@ -95,66 +95,66 @@ GtGraphTreemapSquarifyStep >> initialize [
 	worst := GtGraphTreemapSquarifyWorst default.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphTreemapSquarifyStep >> isRejectedStep [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> nextStep [
 	^ nextStep
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> nextStep: anObject [
 	nextStep := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> nodes [
 	^ nodes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> nodes: aGtGraphTreemapSquarifyNodes [
 	nodes := aGtGraphTreemapSquarifyNodes.
 	worst nodes: aGtGraphTreemapSquarifyNodes.
 	self updateOccupiedArea
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> nodes: anArray with: aNode [
 	self nodes: (anArray copyWith: aNode)
 ]
 
-{ #category : 'accessing - nodes' }
+{ #category : #'accessing - nodes' }
 GtGraphTreemapSquarifyStep >> nodesCount [
 	^ self nodes size
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtGraphTreemapSquarifyStep >> nodesDo: anOneArgBlock [
 	self nodes do: anOneArgBlock
 ]
 
-{ #category : 'accessing - nodes' }
+{ #category : #'accessing - nodes' }
 GtGraphTreemapSquarifyStep >> occupiedWeight [
 	^ self nodes 
 		ifNotEmpty: [ :theNodes | theNodes sum: #weight ]
 		ifEmpty: [ 0 ]
 ]
 
-{ #category : 'accessing - rectangle' }
+{ #category : #'accessing - rectangle' }
 GtGraphTreemapSquarifyStep >> orientationName [
 	^ self rectangle name
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> rectangle [
 	^ rectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> rectangle: aGtGraphTreemapSquarifyAreaRectangle [
 	rectangle := aGtGraphTreemapSquarifyAreaRectangle.
 	worst totalArea: rectangle original height * rectangle original width.
@@ -162,22 +162,22 @@ GtGraphTreemapSquarifyStep >> rectangle: aGtGraphTreemapSquarifyAreaRectangle [
 	self updateOccupiedArea.
 ]
 
-{ #category : 'accessing - rectangle' }
+{ #category : #'accessing - rectangle' }
 GtGraphTreemapSquarifyStep >> rectangleBounds [
 	^ self rectangle bounds
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> rejectedStep [
 	^ rejectedStep
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> rejectedStep: aStep [
 	rejectedStep := aStep asRejectedStep
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyStep >> squarifyHereNode: aNode [ 
 	| aNewStep |
 	self nodes ifEmpty: [ 
@@ -198,57 +198,57 @@ GtGraphTreemapSquarifyStep >> squarifyHereNode: aNode [
 			self nextStep squarifyHereNode: aNode ].
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyStep >> squarifyNode: aNode [ 
 	self nextStep squarifyNode: aNode in: self
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyStep >> squarifyNode: aGtGraphTreemapNode in: aGtGraphTreemapSquarifyStep [ 
 	self squarifyNode: aGtGraphTreemapNode
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyStep >> squarifyNodes [
 	self rectangle squarifyStep: self
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtGraphTreemapSquarifyStep >> stepsDo: anOneArgBlock [
 	anOneArgBlock cull: self.
 	self rejectedStep stepsDo: anOneArgBlock.
 	self nextStep stepsDo: anOneArgBlock
 ]
 
-{ #category : 'accessing - step' }
+{ #category : #'accessing - step' }
 GtGraphTreemapSquarifyStep >> successName [
 	<return: #BlRope>
 	^ 'Accepted' asRopedText foreground: BrGlamorousColors successBackgroundColor
 ]
 
-{ #category : 'squarifying' }
+{ #category : #squarifying }
 GtGraphTreemapSquarifyStep >> updateOccupiedArea [
 	self rectangle updateOccupiedArea: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> worst [
 	<return: #GtGraphTreemapSquarifyWorst>
 	^ worst
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> worst: aGtGraphTreemapSquarifyWorst [
 	worst := aGtGraphTreemapSquarifyWorst
 ]
 
-{ #category : 'accessing - worst' }
+{ #category : #'accessing - worst' }
 GtGraphTreemapSquarifyStep >> worstString [
 	<return: #String>
 	^ GtGraphUtilities default printNumber: self worstValue
 ]
 
-{ #category : 'accessing - worst' }
+{ #category : #'accessing - worst' }
 GtGraphTreemapSquarifyStep >> worstValue [
 	^ self worst value
 ]

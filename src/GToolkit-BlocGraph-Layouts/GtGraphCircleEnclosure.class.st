@@ -24,15 +24,15 @@ Starting with four circles, an enclosure should be computed recursively by build
 
 "
 Class {
-	#name : 'GtGraphCircleEnclosure',
-	#superclass : 'Object',
+	#name : #GtGraphCircleEnclosure,
+	#superclass : #Object,
 	#instVars : [
 		'circles'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure class >> enclosure: aCircle [
 	<return: #GtGraphCircle>
 
@@ -41,7 +41,7 @@ GtGraphCircleEnclosure class >> enclosure: aCircle [
 		radius: aCircle outerRadius
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure class >> enclosure: aCircle and: anotherCircle [
 	<return: #GtGraphCircle>
 	|
@@ -80,7 +80,7 @@ GtGraphCircleEnclosure class >> enclosure: aCircle and: anotherCircle [
 		radius: r
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure class >> enclosure: aFirstCircle and: aSecondCircle and: aThirdCircle [
 	<return: #GtGraphCircle>
 	|
@@ -139,7 +139,7 @@ GtGraphCircleEnclosure class >> enclosure: aFirstCircle and: aSecondCircle and: 
 		radius: r
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure class >> enclosureAll: theCircles [
 	<return: #GtGraphCircle>
 	| aBasis theShuffledCircles anIndex aLength anEnclosureCircle |
@@ -165,7 +165,7 @@ GtGraphCircleEnclosure class >> enclosureAll: theCircles [
 	^ anEnclosureCircle
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure class >> enclosureOfZero [
 	<return: #GtGraphCircle>
 
@@ -173,7 +173,7 @@ GtGraphCircleEnclosure class >> enclosureOfZero [
 	
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure class >> extendBasis: anEnclosure with: aCircle [
 	<return: #GtGraphCircleEnclosure>
 	
@@ -202,24 +202,24 @@ GtGraphCircleEnclosure class >> extendBasis: anEnclosure with: aCircle [
 	self error: 'Something went very wrong!'
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtGraphCircleEnclosure >> addCircle: aCircle [
 	self circles: circles, { aCircle }
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphCircleEnclosure >> asElement [
 	^ GtGraphCircleEnclosureElement new enclosure: self
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure >> averageRadius [
 	self circles
 		ifEmpty: [ ^ 0 ].
 	^ (self circles collect: #outerRadius) average
 ]
 
-{ #category : 'private - algebra' }
+{ #category : #'private - algebra' }
 GtGraphCircleEnclosure >> basisEnclosureCircle [
 	<return: #GtGraphCircle>
 	
@@ -238,24 +238,24 @@ GtGraphCircleEnclosure >> basisEnclosureCircle [
 	^ self class enclosureAll: circles
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleEnclosure >> circles [
 	^ circles
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphCircleEnclosure >> circles: aCollectionOfCircles [
 	circles := aCollectionOfCircles
 ]
 
-{ #category : 'algebra' }
+{ #category : #algebra }
 GtGraphCircleEnclosure >> enclosureCircle [
 	<return: #GtGraphCircle>
 	
 	^ self class enclosureAll: circles
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphCircleEnclosure >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -264,7 +264,7 @@ GtGraphCircleEnclosure >> gtPreviewFor: aView [
 		stencil: [ self asElement asScalableElement margin: (BlInsets all: 10)]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphCircleEnclosure >> initialize [
 	super initialize.
 	

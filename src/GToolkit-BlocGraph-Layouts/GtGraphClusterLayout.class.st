@@ -18,8 +18,8 @@ maxLayer
 
 "
 Class {
-	#name : 'GtGraphClusterLayout',
-	#superclass : 'GtGraphAbstractGraphLayout',
+	#name : #GtGraphClusterLayout,
+	#superclass : #GtGraphAbstractGraphLayout,
 	#instVars : [
 		'externalLayer',
 		'maxLayer',
@@ -28,7 +28,7 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphClusterLayout >> computePosition: aNode [
 	| children previous |
 	children := self childrenFor: aNode.
@@ -42,7 +42,7 @@ GtGraphClusterLayout >> computePosition: aNode [
 		ifFalse: [ self xOf: aNode put: ((self xOf: (self leftContourOf: aNode)) + (self xOf: (self rightContourOf: aNode))) / 2 ]
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphClusterLayout >> doExecute: nodeElements  with: anExtentSpec [
 
 	| root gap |
@@ -68,14 +68,14 @@ GtGraphClusterLayout >> doExecute: nodeElements  with: anExtentSpec [
 	
 ]
 
-{ #category : 'drawing-general' }
+{ #category : #'drawing-general' }
 GtGraphClusterLayout >> draw: aNode [
 
 	(self childrenFor: aNode) do: [ :e | self draw: e ].
 	translator translateTopLeftOf: aNode to: (Point gtR: maxLayer - (self layerOf: aNode) * verticalGap theta: (maxAbcissa - (self xOf: aNode) / maxAbcissa) * 2 * Float pi )
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphClusterLayout >> initialize [ 
 
 	super initialize.
@@ -84,7 +84,7 @@ GtGraphClusterLayout >> initialize [
 	externalLayer := OrderedCollection new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphClusterLayout >> initializeNode: aNode [
 
 	|children|

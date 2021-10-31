@@ -1,25 +1,25 @@
 Class {
-	#name : 'GtGraphLayoutExamples',
-	#superclass : 'Object',
+	#name : #GtGraphLayoutExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-BlocGraph-Layouts-Examples'
 }
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtGraphLayoutExamples class >> gtExamplesProvider [
 	^ self new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtGraphLayoutExamples >> applyLayoutIn: anElement [
 	anElement forceLayout
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> connect: nodes from: aBlockOrASymbol [
 	^ self connect: nodes from: aBlockOrASymbol to: #yourself
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> connect: nodes from: aFromBlock to: aBlockOrSymbol [
 
 	^ nodes
@@ -35,7 +35,7 @@ GtGraphLayoutExamples >> connect: nodes from: aFromBlock to: aBlockOrSymbol [
 		thenSelect: #isNotNil
 ]
 
-{ #category : 'building - edges' }
+{ #category : #'building - edges' }
 GtGraphLayoutExamples >> connectPairsOfNodes: nodes pairs: pairsOfNodes [
 	pairsOfNodes do: [ :aPair |
 		((aPair key between: 1 and: nodes size)
@@ -51,13 +51,13 @@ GtGraphLayoutExamples >> connectPairsOfNodes: nodes pairs: pairsOfNodes [
 					toNode addConnectedEdge: anEdge ] ]
 ]
 
-{ #category : 'building - edges' }
+{ #category : #'building - edges' }
 GtGraphLayoutExamples >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 	^ (self shouldCreateEdgeFrom: fromElement to: toElement)
 		ifTrue: [ (self edgeFrom: fromElement to: toElement) ]
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> createGraph: anAmountOfNodes extent: anExtent pairs: anArrayOfPairs [
 	| theNodes |
 
@@ -72,7 +72,7 @@ GtGraphLayoutExamples >> createGraph: anAmountOfNodes extent: anExtent pairs: an
 		children: theNodes
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> createGraph: anAmountOfNodes pairs: anArrayOfPairs [
 	| theNodes |
 
@@ -87,7 +87,7 @@ GtGraphLayoutExamples >> createGraph: anAmountOfNodes pairs: anArrayOfPairs [
 		children: theNodes
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> createNodes: anAmountOfNodes extent: anExtent [
 	| theNodes |
 
@@ -100,44 +100,44 @@ GtGraphLayoutExamples >> createNodes: anAmountOfNodes extent: anExtent [
 		children: theNodes
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphLayoutExamples >> defaultNode [
 	^ BlElement new
 		background: Color lightGray;
 		size: 6@6
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 GtGraphLayoutExamples >> defaultView [
 	^ BlElement new
 		background: Color blue
 ]
 
-{ #category : 'building - edges' }
+{ #category : #'building - edges' }
 GtGraphLayoutExamples >> edgeFrom: aFromLayoutNode to: aToLayoutNode [
 	^ BlLayoutEdge new
 		fromNode: aFromLayoutNode;
 		toNode: aToLayoutNode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphLayoutExamples >> nodeExtent [
 	^ 50@20
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> nodeFor: aModel [
 	^ self defaultNode
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> nodes: aDataCollection [
 	^ self
 		nodes: aDataCollection
 		extent: self nodeExtent
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> nodes: aDataCollection extent: anExtent [
 	^ aDataCollection collect: [ :model |
 		| childConstraints child |
@@ -154,7 +154,7 @@ GtGraphLayoutExamples >> nodes: aDataCollection extent: anExtent [
 		child withEdges: #() ]
 ]
 
-{ #category : 'building - edges' }
+{ #category : #'building - edges' }
 GtGraphLayoutExamples >> shouldCreateEdgeFrom: fromElement to: toElement [
 	"Return true if an edge has to be created"
 	fromElement == toElement ifTrue: [ ^ false ].
@@ -162,7 +162,7 @@ GtGraphLayoutExamples >> shouldCreateEdgeFrom: fromElement to: toElement [
 	^ true
 ]
 
-{ #category : 'building - graph' }
+{ #category : #'building - graph' }
 GtGraphLayoutExamples >> view [
 	^ self defaultView
 		constraintsDo: [ :constraints |

@@ -4,12 +4,12 @@ I exemplify {{gtClass:GtPlotterVerticalTimeline}}.
 {{gtExample:GtPlotterVerticalTimelineExamples>>exampleVersions|previewExpanded=true|codeExpanded=false}}
 "
 Class {
-	#name : 'GtPlotterVerticalTimelineExamples',
-	#superclass : 'GtPlotterBuilderExamples',
+	#name : #GtPlotterVerticalTimelineExamples,
+	#superclass : #GtPlotterBuilderExamples,
 	#category : 'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : 'examples - timeline' }
+{ #category : #'examples - timeline' }
 GtPlotterVerticalTimelineExamples >> exampleVersions [
 	<gtExample>
 	| aPlotter |

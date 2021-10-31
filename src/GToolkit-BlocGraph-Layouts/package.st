@@ -1,1 +1,1 @@
-Package { #name : 'GToolkit-BlocGraph-Layouts' }
+Package { #name : #'GToolkit-BlocGraph-Layouts' }

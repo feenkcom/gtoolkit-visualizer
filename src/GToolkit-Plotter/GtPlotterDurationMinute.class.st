@@ -1,15 +1,15 @@
 Class {
-	#name : 'GtPlotterDurationMinute',
-	#superclass : 'GtPlotterDuration',
+	#name : #GtPlotterDurationMinute,
+	#superclass : #GtPlotterDuration,
 	#category : 'GToolkit-Plotter-Time'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtPlotterDurationMinute >> asDuration [
 	^ self amount minutes
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDurationMinute >> name [
 	^ 'minute'
 ]

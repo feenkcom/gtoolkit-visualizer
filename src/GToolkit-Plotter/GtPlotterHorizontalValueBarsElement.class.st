@@ -1,15 +1,15 @@
 Class {
-	#name : 'GtPlotterHorizontalValueBarsElement',
-	#superclass : 'GtPlotterSingleScaleValueBasedElement',
+	#name : #GtPlotterHorizontalValueBarsElement,
+	#superclass : #GtPlotterSingleScaleValueBasedElement,
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterHorizontalValueBarsElement >> defaultValueElement [
 	^ [ :aGtPlotterScaleContext | BlElement new ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterHorizontalValueBarsElement >> defaultValueLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |
@@ -23,7 +23,7 @@ GtPlotterHorizontalValueBarsElement >> defaultValueLayout [
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterHorizontalValueBarsElement >> defaultValueStyle [
 	^ [ :anElement :aGtPlotterScaleContext | anElement background: (Color gray alpha: 0.5) ] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]

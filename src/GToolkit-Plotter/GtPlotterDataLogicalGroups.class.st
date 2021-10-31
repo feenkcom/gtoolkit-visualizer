@@ -1,17 +1,17 @@
 Class {
-	#name : 'GtPlotterDataLogicalGroups',
-	#superclass : 'GtPlotterDataGroups',
+	#name : #GtPlotterDataLogicalGroups,
+	#superclass : #GtPlotterDataGroups,
 	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtPlotterDataLogicalGroups >> isLogical [
 	<return: #Boolean>
 
 	^ true
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDataLogicalGroups >> printOn: aStream [
 	aStream
 		nextPutAll: 'Logical groups (';

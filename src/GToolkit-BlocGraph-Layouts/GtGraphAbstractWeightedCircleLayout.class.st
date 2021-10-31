@@ -4,17 +4,17 @@ I am the abstract root class of weighted circle layout. Look at the class commen
 
 "
 Class {
-	#name : 'GtGraphAbstractWeightedCircleLayout',
-	#superclass : 'GtGraphCircleLayout',
+	#name : #GtGraphAbstractWeightedCircleLayout,
+	#superclass : #GtGraphCircleLayout,
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractWeightedCircleLayout >> doExecute: elements with: anExtentSpec [
 	"This method is used polymorphically"
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractWeightedCircleLayout >> weightSum: elements [
 	"Computes the sum of all elements 'weight' or size"
 	| sum |

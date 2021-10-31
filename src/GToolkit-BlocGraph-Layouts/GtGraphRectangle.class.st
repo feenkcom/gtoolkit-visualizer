@@ -1,18 +1,18 @@
 Class {
-	#name : 'GtGraphRectangle',
-	#superclass : 'BlBounds',
+	#name : #GtGraphRectangle,
+	#superclass : #BlBounds,
 	#instVars : [
 		'margin'
 	],
 	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtGraphRectangle class >> x: aX y: aY width: aWidth height: aHeight [
 	^ self left: aX top: aY right: aX + aWidth bottom: aY + aHeight
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphRectangle >> asElement [
 	| aContainer aMarginRectangle anActualRectangle aBorderWidth |
 
@@ -41,7 +41,7 @@ GtGraphRectangle >> asElement [
 	^ aContainer
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtGraphRectangle >> asElementWithInformation [
 	| aContainer aFontSize aTopLeftLabel aTopRightLabel aBottomRightLabel aBottomLeftLabel |
 	
@@ -84,7 +84,7 @@ GtGraphRectangle >> asElementWithInformation [
 	^ aContainer
 ]
 
-{ #category : 'gt-inspector-extension' }
+{ #category : #'gt-inspector-extension' }
 GtGraphRectangle >> gtPreviewFor: aView [
 	<gtView>
 	
@@ -93,31 +93,31 @@ GtGraphRectangle >> gtPreviewFor: aView [
 		stencil: [ self asElementWithInformation asScalableElement margin: (BlInsets all: 10) ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtGraphRectangle >> initialize [
 	super initialize.
 	
 	margin := BlInsets empty
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectangle >> margin [
 	<return: #BlInsets>
 
 	^ margin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectangle >> margin: aBlInsets [
 	margin := aBlInsets
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectangle >> outerHeight [
 	^ self height + self margin height
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphRectangle >> outerWidth [
 	^ self width + self margin width
 ]

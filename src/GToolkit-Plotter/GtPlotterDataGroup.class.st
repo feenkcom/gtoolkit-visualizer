@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtPlotterDataGroup',
-	#superclass : 'GtPlotterDataEntity',
+	#name : #GtPlotterDataGroup,
+	#superclass : #GtPlotterDataEntity,
 	#instVars : [
 		'values'
 	],
 	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : 'api - utility' }
+{ #category : #'api - utility' }
 GtPlotterDataGroup class >> groupByDecorator: aCollectionOfDecorators [
 	| aPreviousDecorator theGroups |
 	aCollectionOfDecorators size <= 1
@@ -27,22 +27,22 @@ GtPlotterDataGroup class >> groupByDecorator: aCollectionOfDecorators [
 		as: Array
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> at: anIndex [
 	^ self class new values: { self values at: anIndex }
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> children [
 	^ #()
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroup >> collect: aBlock [
 	^ self values collect: aBlock
 ]
 
-{ #category : 'api - decorators' }
+{ #category : #'api - decorators' }
 GtPlotterDataGroup >> decorated: aDecorationBlock [
 	| theDecoratedValues theGroups |
 	<return: #GtPlotterDataGroups>
@@ -65,17 +65,17 @@ GtPlotterDataGroup >> decorated: aDecorationBlock [
 		ifFalse: [ GtPlotterDataVirtualGroups new entities: theGroups ]
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroup >> do: aBlock [
 	aBlock value: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> entities [
 	^ #()
 ]
 
-{ #category : 'grouping' }
+{ #category : #grouping }
 GtPlotterDataGroup >> groupIntervals [
 	^ { 
 		(GtPlotterDuration years: 3) -> (GtPlotterDuration years: Float infinity).
@@ -86,7 +86,7 @@ GtPlotterDataGroup >> groupIntervals [
 		(GtPlotterDuration months: 0) -> (GtPlotterDuration months: 1) }
 ]
 
-{ #category : 'api - grouping' }
+{ #category : #'api - grouping' }
 GtPlotterDataGroup >> groupedBy: aBlock sorted: aSortBlock decorated: aDecorationBlock [
 	<return: #GtPlotterDataGroups>
 	| theGroupedValues theAssociations theGroups |
@@ -106,7 +106,7 @@ GtPlotterDataGroup >> groupedBy: aBlock sorted: aSortBlock decorated: aDecoratio
 	^ GtPlotterDataLogicalGroups new entities: theGroups
 ]
 
-{ #category : 'api - grouping' }
+{ #category : #'api - grouping' }
 GtPlotterDataGroup >> groupedBy: aBlock then: eachGroupBlock [
 	<return: #GtPlotterDataGroups>
 	| theGroupedValues theAssociations theGroups |
@@ -123,26 +123,26 @@ GtPlotterDataGroup >> groupedBy: aBlock then: eachGroupBlock [
 	^ GtPlotterDataLogicalGroups new entities: theGroups
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> groups [
 	<return: #GtPlotterDataGroups>
 
 	^ GtPlotterDataVirtualGroups new entities: { self }
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroup >> groupsDo: aBlock [
 	aBlock value: self
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtPlotterDataGroup >> gtGroupsFor: aView [
 	<gtView>
 
 	^ aView empty
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtPlotterDataGroup >> gtItemsFor: aView [
 	<gtView>
 
@@ -152,19 +152,19 @@ GtPlotterDataGroup >> gtItemsFor: aView [
 		items: [ self values ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterDataGroup >> initialize [
 	super initialize.
 	
 	values := #()
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtPlotterDataGroup >> isComposite [
 	^ false
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDataGroup >> printOn: aStream [
 	aStream
 		nextPutAll: 'Values (';
@@ -172,36 +172,36 @@ GtPlotterDataGroup >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> size [
 	<return: #Number>
 
 	^ self values size
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroup >> sorted: aBlock [
 	^ self class new values: (self values sorted: aBlock)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> values [
 	<return: #Collection>
 
 	^ values
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroup >> values: aCollection [
 	values := aCollection
 ]
 
-{ #category : 'api - enumerating' }
+{ #category : #'api - enumerating' }
 GtPlotterDataGroup >> valuesDo: aBlock [
 	self values do: aBlock
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtPlotterDataGroup >> withIndexCollect: aBlock [
 	^ self values withIndexCollect: aBlock
 ]

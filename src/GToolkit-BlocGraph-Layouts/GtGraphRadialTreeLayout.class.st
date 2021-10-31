@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtGraphRadialTreeLayout',
-	#superclass : 'GtGraphAbstractCompactTree',
+	#name : #GtGraphRadialTreeLayout,
+	#superclass : #GtGraphAbstractCompactTree,
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
 
@@ -28,7 +28,7 @@ GtGraphRadialTreeLayout >> compareContourOf: aNode with: another [
 	^ max
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRadialTreeLayout >> computeGap: aNode [
 	" compute the vertical gap needed for drawing the radial tree "
 	| gap maxAbcissa i abc nodeL nodeR layer |	
@@ -50,7 +50,7 @@ GtGraphRadialTreeLayout >> computeGap: aNode [
 	((verticalGap isNil) or: [gap > verticalGap])  ifTrue: [ self verticalGap: gap ]
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> computePosition: aNode [
 "compute the position of the given node and of his sons recursively"
 
@@ -81,7 +81,7 @@ GtGraphRadialTreeLayout >> computePosition: aNode [
 											
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> diameterOf: aNode [
 
 	|diam|
@@ -92,7 +92,7 @@ GtGraphRadialTreeLayout >> diameterOf: aNode [
 	^ diam
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRadialTreeLayout >> doExecute: nodeElements with: anExtentSpec [
 	| rootNodes xOffset maximumRadius |
 
@@ -115,13 +115,13 @@ GtGraphRadialTreeLayout >> doExecute: nodeElements with: anExtentSpec [
 
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphRadialTreeLayout >> gap [
 	
 	^ self verticalGap
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> halfDiameterOf: aNode [
 
 	|diam|
@@ -132,7 +132,7 @@ GtGraphRadialTreeLayout >> halfDiameterOf: aNode [
 	^ diam / 2
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngle to: aToAngle [
 	
 	| delta childRadius maximumRadius myRadius fromAngle toAngle |
@@ -174,13 +174,13 @@ GtGraphRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFro
 	^maximumRadius
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> nodeAbcissaWithNeighbor: aNode [
 
 	^ aNode x + (horizontalGap / aNode layer /2) + ((self halfDiameterOf: aNode) / aNode layer)
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> radialDraw: aNode [
 	"draw the subtree induced by the given node"
 
@@ -194,7 +194,7 @@ GtGraphRadialTreeLayout >> radialDraw: aNode [
 	^ r + max.
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRadialTreeLayout >> rotateSubtreeFrom: aNode by: aFloat [
 	
 	aNode theta: aNode theta + aFloat.
@@ -202,7 +202,7 @@ GtGraphRadialTreeLayout >> rotateSubtreeFrom: aNode by: aFloat [
 	(self childrenFor: aNode) do: [ :e | self rotateSubtreeFrom: e by: aFloat ]
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphRadialTreeLayout >> spreadNodes: nodeElements around: aNode [
 
 	|nodeL nodeR i angle beta lay1 |
@@ -222,7 +222,7 @@ GtGraphRadialTreeLayout >> spreadNodes: nodeElements around: aNode [
 	lay1 do: [ :e | self rotateSubtreeFrom: e by: (lay1 indexOf: e) - 1 * beta ].
 ]
 
-{ #category : 'algorithm' }
+{ #category : #algorithm }
 GtGraphRadialTreeLayout >> toRadialTree: aNode withMod: aFloat [
 	"compute polar coordinates of the subtree induced by anode from its cartesian coordinates "
 	| children |

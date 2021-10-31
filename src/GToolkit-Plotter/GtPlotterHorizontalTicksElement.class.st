@@ -4,12 +4,12 @@ I draw horizontal chart ticks.
 {{gtExample:GtPlotterRawHorizontalCenteredTimelineExamples>>#ticks|codeExpanded=false|previewExpanded=true|previewHeight=150}}
 "
 Class {
-	#name : 'GtPlotterHorizontalTicksElement',
-	#superclass : 'GtPlotterTicksElement',
+	#name : #GtPlotterHorizontalTicksElement,
+	#superclass : #GtPlotterTicksElement,
 	#category : 'GToolkit-Plotter-Core - Elements'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterHorizontalTicksElement >> defaultTickLayout [
 	^ [ :anElement :aGtPlotterScaleContext |
 		anElement constraintsDo: [ :c |

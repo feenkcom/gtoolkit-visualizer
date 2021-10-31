@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphAbstractGraphLayout',
-	#superclass : 'GtGraphEdgeDrivenLayout',
+	#name : #GtGraphAbstractGraphLayout,
+	#superclass : #GtGraphEdgeDrivenLayout,
 	#instVars : [
 		'verticalGap',
 		'horizontalGap',
@@ -11,38 +11,38 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'constants' }
+{ #category : #constants }
 GtGraphAbstractGraphLayout class >> horizontalGap [
 	
 	^3.0
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtGraphAbstractGraphLayout class >> isAbstract [
 	^ self = GtGraphAbstractGraphLayout
 ]
 
-{ #category : 'constants' }
+{ #category : #constants }
 GtGraphAbstractGraphLayout class >> verticalGap [
 	
 	^20.0
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> cachedChildren [
 	
 	cachedChildren ifNil: [cachedChildren := IdentityDictionary new: 1000].
 	^cachedChildren
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> cachedParents [
 	
 	cachedParents ifNil: [cachedParents := IdentityDictionary new: 1000].
 	^cachedParents
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> cachedParentsWithHighestNestings [
 	
 	cachedParentsWithHighestNestings
@@ -50,7 +50,7 @@ GtGraphAbstractGraphLayout >> cachedParentsWithHighestNestings [
 	^cachedParentsWithHighestNestings
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> childrenFor: aNode [
 	^ self cachedChildren
 		at: aNode
@@ -64,7 +64,7 @@ GtGraphAbstractGraphLayout >> childrenFor: aNode [
 			nodes ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
 	
 	^(self childrenFor: aNode) 
@@ -73,14 +73,14 @@ GtGraphAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
 	"we are explicitly not using the default Collection>>difference: behavior here because we want to preserve the order of the collection"
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> childrenWithHighestNestingLevelFor: aNode [
 	
 	^(self childrenFor: aNode)
 		select: [:eachChild | (self highestNestingParentFor: eachChild) == aNode]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> clear [
 	
 	cachedParents := nil.
@@ -88,20 +88,20 @@ GtGraphAbstractGraphLayout >> clear [
 	cachedParentsWithHighestNestings := nil
 ]
 
-{ #category : 'default values' }
+{ #category : #'default values' }
 GtGraphAbstractGraphLayout >> defaultFromPositions [
 	
 	^#(#bottomCenter)
 ]
 
-{ #category : 'hook' }
+{ #category : #hook }
 GtGraphAbstractGraphLayout >> doInitialize: elements with: anExtentSpec [
 	super doInitialize: elements with: anExtentSpec.
 	self clear.
 	self greedyCycleRemoval: elements
 ]
 
-{ #category : 'battista' }
+{ #category : #battista }
 GtGraphAbstractGraphLayout >> greedyCycleRemoval: aCollection [
 	"Di Battista Greedy-Cycle-Removal algorithm. Chapter 9.4, page 297. The last part is not like in the book. The original algorithm only takes
 	 local optimas into account. This will break ordinary trees sometimes. This version also takes global optimas into account."
@@ -149,7 +149,7 @@ GtGraphAbstractGraphLayout >> greedyCycleRemoval: aCollection [
 	self clear
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
 	
 	| parents |
@@ -163,19 +163,19 @@ GtGraphAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
 					[parents detectMax: [:eachParent | self nestingLevelFor: eachParent]]]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGraphLayout >> horizontalGap [
 	
 	^horizontalGap ifNil: [ self class horizontalGap ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGraphLayout >> horizontalGap: anInteger [
 	
 	horizontalGap := anInteger
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> maximumDiameter: aCollection [
 	
 	^aCollection
@@ -184,7 +184,7 @@ GtGraphAbstractGraphLayout >> maximumDiameter: aCollection [
  
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> maximumRadius: aCollection [
 	
 	^aCollection
@@ -192,7 +192,7 @@ GtGraphAbstractGraphLayout >> maximumRadius: aCollection [
 		into: [:max :node | max max: node constraints graph radius ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 	
 	| parents parentsNesting |
@@ -205,7 +205,7 @@ GtGraphAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> parentsFor: aNode [
 	^ self cachedParents
 		at: aNode
@@ -218,14 +218,14 @@ GtGraphAbstractGraphLayout >> parentsFor: aNode [
 			nodes ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> rootNodesFor: aCollection [
 	^ aCollection select: [:node | 
 		(self parentsFor: node) isEmpty ].
 	
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtGraphAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 	
 	aNode position: (aNode position + aPoint).
@@ -233,13 +233,13 @@ GtGraphAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 		do: [:child | self shiftTree: child by: aPoint]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGraphLayout >> verticalGap [
 	
 	^verticalGap ifNil: [self class verticalGap]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphAbstractGraphLayout >> verticalGap: anInteger [
 	
 	verticalGap := anInteger

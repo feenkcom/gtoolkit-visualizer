@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtPlotterDataGroupWithColor',
-	#superclass : 'GtPlotterDataGroupDecorator',
+	#name : #GtPlotterDataGroupWithColor,
+	#superclass : #GtPlotterDataGroupDecorator,
 	#instVars : [
 		'color'
 	],
 	#category : 'GToolkit-Plotter-Data'
 }
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 GtPlotterDataGroupWithColor >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -18,31 +18,31 @@ GtPlotterDataGroupWithColor >> = anObject [
 	^ color = anObject color
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupWithColor >> color [
 	^ color
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterDataGroupWithColor >> color: anObject [
 	color := anObject
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 GtPlotterDataGroupWithColor >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ color hash
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterDataGroupWithColor >> initialize [
 	super initialize.
 
 	color := Color gray
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtPlotterDataGroupWithColor >> printOn: aStream [
 	aStream
 		nextPutAll: ('{1} (' format: { self color });

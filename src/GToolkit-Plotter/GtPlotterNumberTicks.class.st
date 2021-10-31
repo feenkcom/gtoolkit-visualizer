@@ -9,8 +9,8 @@ I am used by {{gtClass:GtPlotterLinearScale}} in {{gtMethod:GtPlotterLinearScale
 {{gtExample:GtPlotterNumberTicksExamples>>#from_20_to_40_count_5|codeExpanded=false|previewExpanded=true|previewHeight=150}}
 "
 Class {
-	#name : 'GtPlotterNumberTicks',
-	#superclass : 'GtPlotterTicks',
+	#name : #GtPlotterNumberTicks,
+	#superclass : #GtPlotterTicks,
 	#classVars : [
 		'e10',
 		'e2',
@@ -20,7 +20,7 @@ Class {
 	#category : 'GToolkit-Plotter-Tick'
 }
 
-{ #category : 'class initialization' }
+{ #category : #'class initialization' }
 GtPlotterNumberTicks class >> initialize [
 	e2 := 2 sqrt.
 	e5 := 10 sqrt.
@@ -28,7 +28,7 @@ GtPlotterNumberTicks class >> initialize [
 	ln10 := 10 ln
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtPlotterNumberTicks class >> tickIncrement: aStart stop: aStop count: aCount [
 	<return: #Number>
 	| aStep aPower anError anErrorFactor |
@@ -54,7 +54,7 @@ GtPlotterNumberTicks class >> tickIncrement: aStart stop: aStop count: aCount [
 		ifFalse: [ (10 raisedTo: aPower negated) negated / (anErrorFactor) ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtPlotterNumberTicks class >> tickStep: aStart stop: aStop count: aCount [
 	<return: #Number>
 	| aStep0 aStep1 anError |
@@ -79,7 +79,7 @@ GtPlotterNumberTicks class >> tickStep: aStart stop: aStop count: aCount [
 		ifFalse: [ aStep1 ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtPlotterNumberTicks >> computedTicks [
 	| isReverse aStart aStop aStep theTicks |
 

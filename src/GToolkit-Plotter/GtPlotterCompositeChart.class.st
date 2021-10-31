@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtPlotterCompositeChart',
-	#superclass : 'GtPlotterBuilder',
+	#name : #GtPlotterCompositeChart,
+	#superclass : #GtPlotterBuilder,
 	#instVars : [
 		'plots'
 	],
 	#category : 'GToolkit-Plotter-Builder - Composite Chart'
 }
 
-{ #category : 'private - plots' }
+{ #category : #'private - plots' }
 GtPlotterCompositeChart >> addPlot: aPlotterBuilder [
 	<return: #GtPlotterBuilder>
 	
@@ -15,7 +15,7 @@ GtPlotterCompositeChart >> addPlot: aPlotterBuilder [
 	^ aPlotterBuilder
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> axisXStencils [
 	| aCollection aUniqueCollection |
 	aCollection := plots collect: [ :eachPlot | eachPlot axisXStencil ].
@@ -26,7 +26,7 @@ GtPlotterCompositeChart >> axisXStencils [
 	^ aUniqueCollection
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> axisYStencils [
 	| aCollection aUniqueCollection |
 	aCollection := plots collect: [ :eachPlot | eachPlot axisYStencil ].
@@ -37,12 +37,12 @@ GtPlotterCompositeChart >> axisYStencils [
 	^ aUniqueCollection
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> contentStencils [
 	^ plots collect: [ :eachPlot | eachPlot contentStencil ]
 ]
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtPlotterCompositeChart >> create [
 	<return: #Object>
 	| aContainer axisYStencils projectionLabelXStencils |
@@ -109,7 +109,7 @@ GtPlotterCompositeChart >> create [
 	^ aContainer
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterCompositeChart >> gtLiveFor: aView [
 	<gtView>
 	^ aView explicit
@@ -117,7 +117,7 @@ GtPlotterCompositeChart >> gtLiveFor: aView [
 		stencil: [ self asElement ]
 ]
 
-{ #category : 'gt extensions' }
+{ #category : #'gt extensions' }
 GtPlotterCompositeChart >> gtPlotsFor: aView [
 	<gtView>
 	self plots ifNil: [ ^ aView empty ].
@@ -128,29 +128,29 @@ GtPlotterCompositeChart >> gtPlotsFor: aView [
 		column: 'Plot' text: #yourself
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotterCompositeChart >> horizontalBarChart [
 	^ self addPlot: GtPlotterHorizontalBarChart new
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotterCompositeChart >> horizontalTimeline [
 	^ self addPlot: GtPlotterHorizontalTimeline new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtPlotterCompositeChart >> initialize [
 	super initialize.
 	
 	plots := OrderedCollection new
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotterCompositeChart >> lineChart [
 	^ self addPlot: GtPlotterLineChart new
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> newAxisYLineElement [
 	^ BlElement new
 		width: 2;
@@ -160,14 +160,14 @@ GtPlotterCompositeChart >> newAxisYLineElement [
 			c frame horizontal alignLeft ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> newEmptyElement [
 	^ BlElement new
 		size: 0@0;
 		visibility: BlVisibility hidden
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> newNoDataElement [
 	^ BrLabel new 
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color lightGray);
@@ -177,24 +177,24 @@ GtPlotterCompositeChart >> newNoDataElement [
 			c grid vertical alignCenter ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterCompositeChart >> plots [
 	^ plots
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtPlotterCompositeChart >> projectionLabelXStencils [
 	^ plots
 		collect: [ :eachPlot | eachPlot projectionLabelXStencil ]
 		thenReject: #isNil
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotterCompositeChart >> verticalBarChart [
 	^ self addPlot: nil
 ]
 
-{ #category : 'api - builders' }
+{ #category : #'api - builders' }
 GtPlotterCompositeChart >> verticalTimeline [
 	^ self addPlot: GtPlotterVerticalTimeline new
 ]

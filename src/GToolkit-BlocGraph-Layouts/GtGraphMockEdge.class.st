@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtGraphMockEdge',
-	#superclass : 'Object',
+	#name : #GtGraphMockEdge,
+	#superclass : #Object,
 	#instVars : [
 		'from',
 		'to'
@@ -8,22 +8,22 @@ Class {
 	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphMockEdge >> from [
 	^ from
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphMockEdge >> from: aMockElement [
 	from := aMockElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphMockEdge >> to [
 	^ to
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtGraphMockEdge >> to: aMockElement [
 	to := aMockElement
 ]

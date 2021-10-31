@@ -4,12 +4,12 @@ Charts use the following scale: {{gtExample:GtPlotterRawTimelineExamples>>#scale
 See my subclasses for more example: {{gtClass:GtPlotterRawTimelineExamples|expanded=true|show=#gtSubclassesFor:|height=200}}
 "
 Class {
-	#name : 'GtPlotterRawTimelineExamples',
-	#superclass : 'Object',
+	#name : #GtPlotterRawTimelineExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-Plotter-Example - Charts'
 }
 
-{ #category : 'examples - scale' }
+{ #category : #'examples - scale' }
 GtPlotterRawTimelineExamples >> scale [
 	<gtExample>
 
@@ -17,7 +17,7 @@ GtPlotterRawTimelineExamples >> scale [
 		domainFrom: self versions first key year asYear to: (self versions last key year + 1) asYear
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtPlotterRawTimelineExamples >> versions [
 	<gtExample>
 

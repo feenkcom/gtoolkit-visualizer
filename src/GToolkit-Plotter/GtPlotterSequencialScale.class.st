@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtPlotterSequencialScale',
-	#superclass : 'GtPlotterContinuousScale',
+	#name : #GtPlotterSequencialScale,
+	#superclass : #GtPlotterContinuousScale,
 	#instVars : [
 		'interpolator'
 	],
