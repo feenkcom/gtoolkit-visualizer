@@ -87,6 +87,14 @@ GtGraphIterator >> isNotEmpty [
 ]
 
 { #category : #'api - enumeration' }
+GtGraphIterator >> select: aBlock [ 
+	^ Array streamContents: [ :aStream |
+			self do: [ :each |
+				(aBlock value: each)
+					ifTrue: [ aStream nextPut: each ] ] ]
+]
+
+{ #category : #'api - enumeration' }
 GtGraphIterator >> select: selectBlock thenDo: doBlock [
 	"Utility method to improve readability.
 	Do not create the intermediate collection."
