@@ -96,6 +96,11 @@ GtMondrianEdgeBuilder >> connect: aCollection toAll: aToBlock [
 		toAll: aToBlock
 ]
 
+{ #category : #accessing }
+GtMondrianEdgeBuilder >> connectAssociations: aCollectionOfAssociations [
+	^ self connect: aCollectionOfAssociations from: #key to: #value
+]
+
 { #category : #scripting }
 GtMondrianEdgeBuilder >> connectFrom: aFromBlock [
 	^ self
