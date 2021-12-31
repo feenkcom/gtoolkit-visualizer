@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtConnectorElementContext',
-	#superclass : 'Object',
+	#name : #GtConnectorElementContext,
+	#superclass : #Object,
 	#instVars : [
 		'model',
 		'hasModel',
@@ -14,20 +14,20 @@ Class {
 	#category : 'GToolkit-Connector-Core'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtConnectorElementContext class >> on: anElement [
 	^ self new 
 		element: anElement;
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> beConnectedTo: anObject [ 
 	connectorConnections ifNil: [ connectorConnections := Set new ].
 	connectorConnections add: anObject.
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 GtConnectorElementContext >> beLayoutSource [
 	self assert: [ isLayoutSource = false ].
 	isLayoutSource := true.
@@ -42,7 +42,7 @@ GtConnectorElementContext >> beLayoutSource [
 				element: anEvent currentTarget) ]
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 GtConnectorElementContext >> beLayoutTarget [
 	self assert: [ isLayoutTarget = false ].
 	isLayoutTarget := true.
@@ -57,12 +57,12 @@ GtConnectorElementContext >> beLayoutTarget [
 				element: anEvent currentTarget) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> beNotConnectedTo: anObject [ 
 	connectorConnections ifNotNil: [ connectorConnections remove: anObject ].
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 GtConnectorElementContext >> beVisualSource [
 	self assert: [ isVisualSource = false ].
 	isVisualSource := true.
@@ -82,7 +82,7 @@ GtConnectorElementContext >> beVisualSource [
 				element: anEvent currentTarget) ]
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 GtConnectorElementContext >> beVisualTarget [
 	self assert: [ isVisualTarget = false ].
 	isVisualTarget := true.
@@ -102,17 +102,17 @@ GtConnectorElementContext >> beVisualTarget [
 				element: anEvent currentTarget) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> element [
 	^ element
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> element: anObject [
 	element := anObject
 ]
 
-{ #category : 'logging' }
+{ #category : #logging }
 GtConnectorElementContext >> emitSignalForEvent: anEvent forRole: aSymbol [
 	GtConnectorContextEventSignal new 
 		event: anEvent;
@@ -120,13 +120,13 @@ GtConnectorElementContext >> emitSignalForEvent: anEvent forRole: aSymbol [
 		emit
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtConnectorElementContext >> hasModel [
 	"I indicate if the context has a model, as nil can also be a valid model value."
 	^ hasModel
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtConnectorElementContext >> initialize [
 	hasModel := false.
 	isLayoutSource := false.
@@ -135,50 +135,50 @@ GtConnectorElementContext >> initialize [
 	isVisualTarget := false.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtConnectorElementContext >> isConnectedTo: anObject [ 
 	^ 	connectorConnections isNotNil and: [ connectorConnections includes: anObject  ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> isLayoutSource [
 	^ isLayoutSource
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> isLayoutTarget [
 	^ isLayoutTarget
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> isVisualSource [
 	^ isVisualSource
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> isVisualTarget [
 	^ isVisualTarget
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> model [
 	^ model
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> model: anObject [
 	self assert: [ hasModel not ].
 	model := anObject.
 	hasModel := true. 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> modelContains: anObject [
 	hasModel ifFalse: [ ^ false ].
 	^ model = anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorElementContext >> modelDo: aBloc [
 	hasModel ifTrue:  [ aBloc value: model ].
 ]

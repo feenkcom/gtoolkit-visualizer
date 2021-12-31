@@ -1,6 +1,6 @@
-Extension { #name : 'Object' }
+Extension { #name : #Object }
 
-{ #category : '*GToolkit-Connector' }
+{ #category : #'*GToolkit-Connector' }
 Object >> gtConnectionsFor: aView [
 	<gtView>
 	^ aView explicit
@@ -109,7 +109,7 @@ Object >> gtConnectionsFor: aView [
 			gtconnector asPannableElement ]
 ]
 
-{ #category : '*GToolkit-Connector' }
+{ #category : #'*GToolkit-Connector' }
 Object >> gtObjectConnectorTableIn: connector [
 	| variableNodes list |
 	variableNodes := OrderedCollection new: self class allSlots size.

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtConnectorExampleStyler',
-	#superclass : 'BrRBTextStyler',
+	#name : #GtConnectorExampleStyler,
+	#superclass : #BrRBTextStyler,
 	#instVars : [
 		'exampleAction',
 		'previousLinks'
@@ -8,7 +8,7 @@ Class {
 	#category : 'GToolkit-Connector-Extensions'
 }
 
-{ #category : 'factory' }
+{ #category : #factory }
 GtConnectorExampleStyler class >> editorElementOnSourceCode: aString inClass: aClass [
 	| styler editor editorElement text |
 	
@@ -32,17 +32,17 @@ GtConnectorExampleStyler class >> editorElementOnSourceCode: aString inClass: aC
 	^ editorElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorExampleStyler >> exampleAction [
 	^ exampleAction
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorExampleStyler >> exampleAction: anObject [
 	exampleAction := anObject
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnectorExampleStyler >> extraStyle: aText ast: ast [
 	| selfSendsExamples |
 	
@@ -67,7 +67,7 @@ GtConnectorExampleStyler >> extraStyle: aText ast: ast [
 	
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnectorExampleStyler >> findExampleSendsIn: anAST [
 	^ anAST allChildren asSet asArray select: [ :each | 
 		each isMessage and: [ 
@@ -77,14 +77,14 @@ GtConnectorExampleStyler >> findExampleSendsIn: anAST [
 						(anAST methodNode methodClass lookupSelector: each selector) isGTExampleMethod ] ] ] ] ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtConnectorExampleStyler >> initialize [
 	super initialize.
 
 	previousLinks := OrderedCollection new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorExampleStyler >> links [
 	<return: #SequenceableCollection of: #GtConnectorLink>
 
