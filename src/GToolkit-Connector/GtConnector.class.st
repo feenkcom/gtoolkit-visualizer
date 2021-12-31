@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtConnector',
-	#superclass : 'BlElement',
+	#name : #GtConnector,
+	#superclass : #BlElement,
 	#instVars : [
 		'stencil',
 		'referencedEntitiesBlock',
@@ -11,7 +11,7 @@ Class {
 	#category : 'GToolkit-Connector-Core'
 }
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements."
 	| aLineElement |
@@ -59,7 +59,7 @@ GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
 	
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 GtConnector >> addEntity: anEntity [
 	"Create a new element for the given entity, add it to the scene. 
 	Conector also accepts nil as an entity."
@@ -69,7 +69,7 @@ GtConnector >> addEntity: anEntity [
 	self createAndAddElementForEntity: anEntity.
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> addVisualLineFrom: aSourceElement to: aTargetElement [
 	"Add a line connecting two given elements."
 	| aLineElement |
@@ -124,7 +124,7 @@ GtConnector >> addVisualLineFrom: aSourceElement to: aTargetElement [
 	
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtConnector >> asScalableElement [
 	| scalable |
 	scalable := BlScalableElement new.
@@ -136,7 +136,7 @@ GtConnector >> asScalableElement [
 	^ scalable
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnector >> createAndAddElementForEntity: anEntity [
 	"Open a given entity without connecting it to other"	
 	| entityElement |	
@@ -165,12 +165,12 @@ GtConnector >> createAndAddElementForEntity: anEntity [
 	^ entityElement
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtConnector >> doesExist: anElement [
 	^ (anElement hasParent: self) or: [ anElement isAttachedToSceneGraph ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnector >> drawLinesFromVisualSource: anElement [
 	self assert: [ anElement connector isVisualSource ].
 	
@@ -181,7 +181,7 @@ GtConnector >> drawLinesFromVisualSource: anElement [
 		thenDo: [ :aTargetElement | self addVisualLineFrom: anElement to: aTargetElement ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnector >> drawLinesToVisualTarget: anElement [
 	self assert: [ anElement connector isVisualTarget ].
 	
@@ -192,7 +192,7 @@ GtConnector >> drawLinesToVisualTarget: anElement [
 		thenDo: [ :aSourceElement | self addVisualLineFrom: aSourceElement to: anElement ] 
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 	"Search for an element containg a given entity
 	and evaluate aBlock with it as argument if such an element is found.
@@ -206,14 +206,14 @@ GtConnector >> elementWithEntity: anEntity ifPresent: aBlock [
 			aBlock cull: anEditorElement ]
 ]
 
-{ #category : 'logging' }
+{ #category : #logging }
 GtConnector >> emitSignalForEvent: anEvent [
 	GtConnectorEventSignal new 
 		event: anEvent;
 		emit
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> ensureEdgeConstraitFrom: aSourceElement to: aTargetElement [
 	"Ensure there is a graph edge between the two given elements."
 	| hasEdge newEdge |
@@ -234,14 +234,14 @@ GtConnector >> ensureEdgeConstraitFrom: aSourceElement to: aTargetElement [
 	aTargetElement constraints graph addConnectedEdge: newEdge.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtConnector >> ensureEntityHandlerFor: anElement [
 	
 	anElement removeEventHandler: entityEventHandler.
 	anElement addEventHandler: entityEventHandler
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [	
 	self
 		assert: [ aSourceElement isNotNil ]
@@ -261,7 +261,7 @@ GtConnector >> ensureLayoutLinkFrom: aSourceElement to: aTargetElement [
 	self requestLayout
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnector >> entityElements [
 	"Return a collection of existing elements that are already added to the tree"
 	<return: #SequenceableCollection of: #BlElement>
@@ -270,7 +270,7 @@ GtConnector >> entityElements [
 		anElement isKindOf: BlCurveElement ]
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> goUpToSourceLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
@@ -281,7 +281,7 @@ GtConnector >> goUpToSourceLayoutElement: anElement [
 	^ result
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> goUpToTargetLayoutElement: anElement [
 	"I go up the BlElement containment heirarchy to find the first parent that is a layout target"
 	| result |
@@ -292,7 +292,7 @@ GtConnector >> goUpToTargetLayoutElement: anElement [
 	^ result
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtConnector >> gtLiveFor: aView [
 	<gtView>
 	^ (super gtLiveFor: aView) 
@@ -307,7 +307,7 @@ GtConnector >> gtLiveFor: aView [
 				ifNil: [ self asScalableElement ] ]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtConnector >> gtOptionsFor: aView [
 	<gtView>
 	
@@ -318,7 +318,7 @@ GtConnector >> gtOptionsFor: aView [
 		view: #gtOptionsFor:
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 GtConnector >> hasElement: anElement eventHandlerWithId: anId [
 	^ anElement eventDispatcher handlers anySatisfy: [ :each |
 		(each isKindOf: GtConnectorEntityEventHandler) and: [ 
@@ -326,7 +326,7 @@ GtConnector >> hasElement: anElement eventHandlerWithId: anId [
 	
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtConnector >> hasOpenedEntity: anEntity [
 	"Return true if there already exists a connector element for the given entity, false otheriwse"
 	<return: #Boolean>
@@ -335,7 +335,7 @@ GtConnector >> hasOpenedEntity: anEntity [
 	^ false
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtConnector >> initialize [
 	super initialize.
 
@@ -354,7 +354,7 @@ GtConnector >> initialize [
 	referencedEntitiesBlock := [ :anEntity | #() ]
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> layoutSourceElementsConnectedTo: aTargetEntity [
 	"Return a collection of layout source elements that could be connected to
 	the given target entity for a visual target. There should be a connection:
@@ -366,7 +366,7 @@ GtConnector >> layoutSourceElementsConnectedTo: aTargetEntity [
 	  (self layoutSourcesWithReferencesTo: aTargetEntity)
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> layoutSourcesVisuallyConnectedTo: aTargetEntity [
 	"Return a collection of layout source elements connected with the given target entity. 
 	They are connected if the layout source contains a visual source that has the given entity as a model."
@@ -376,7 +376,7 @@ GtConnector >> layoutSourcesVisuallyConnectedTo: aTargetEntity [
 			self goUpToSourceLayoutElement: aVisualSourceElement ] 
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> layoutSourcesWithReferencesTo: aTargetEntity [
 	"Return a collection of layout source elements that reference the given entity."
 	<return: #SequenceableCollection of: #BlElement>
@@ -391,7 +391,7 @@ GtConnector >> layoutSourcesWithReferencesTo: aTargetEntity [
 		isReferenced ]	
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> layoutTargetElementsConnectedTo: aSourceEntity [
 	"Return a collection of layout target elements that could be connected to
 	the given source entity for a visual source. There should be a connection:
@@ -401,7 +401,7 @@ GtConnector >> layoutTargetElementsConnectedTo: aSourceEntity [
 	^ self layoutTargetsVisuallyConnectedTo: aSourceEntity
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> layoutTargetsVisuallyConnectedTo: aSourceEntity [
 	"Return a collection of layout targets elements connected with the given source entity. 
 	They are connected if the layout target contains a visual target that has the given entity as a model."
@@ -411,7 +411,7 @@ GtConnector >> layoutTargetsVisuallyConnectedTo: aSourceEntity [
 			self goUpToTargetLayoutElement: aVisualTargetElement ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnector >> lineElements [
 	"Return a collection of existing line element from the connector"
 	<return: #SequenceableCollection of: #BlElement>
@@ -420,7 +420,7 @@ GtConnector >> lineElements [
 		anElement isKindOf: BlCurveElement ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnector >> linkLayoutSourcesFor: anElement [
 	"I create a logical edge between elements at the level of the layout"
 	| layoutSourceElement |
@@ -436,7 +436,7 @@ GtConnector >> linkLayoutSourcesFor: anElement [
 				self ensureLayoutLinkFrom: layoutSourceElement to: layoutTargetElement ] ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtConnector >> linkLayoutTargetsFor: aVisualTarget [
 	"I create a logical edge between elements at the level of the layout."
 	| layoutTargetElement |
@@ -452,29 +452,29 @@ GtConnector >> linkLayoutTargetsFor: aVisualTarget [
 				self ensureLayoutLinkFrom: layoutSourceElement to: layoutTargetElement ] ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnector >> options [
 	<return: #GtConnectorOptions>
 
 	^ options 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnector >> options: anOptionsObject [
 	options := anOptionsObject
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 GtConnector >> referencedEntities: aBlock [ 
 	referencedEntitiesBlock := aBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnector >> referencedEntitiesBlock [
 	^ referencedEntitiesBlock
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> removeAndDisconnectEdge: anEdge [
 	self assert: [ anEdge isNotNil ].
 	
@@ -482,7 +482,7 @@ GtConnector >> removeAndDisconnectEdge: anEdge [
 	anEdge toElement constraints graph removeConnectedEdge: anEdge.
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> removeAndDisconnectLineElement: aLineElement [
 	| sourceElement targetElement |
 	self assert: [ aLineElement isNotNil ].
@@ -494,7 +494,7 @@ GtConnector >> removeAndDisconnectLineElement: aLineElement [
 	aLineElement removeFromParent.
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> removeEdgeConstraintsFrom: sourceElement [
 	self assert: [ sourceElement isNotNil ].
 	self assert: [ sourceElement connector isLayoutSource ].
@@ -503,7 +503,7 @@ GtConnector >> removeEdgeConstraintsFrom: sourceElement [
 		self removeAndDisconnectEdge: anEdge ]
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> removeEdgeConstraintsTo: targetElement [
 	self assert: [ targetElement isNotNil ].
 	self assert: [ targetElement connector isLayoutTarget ].
@@ -512,7 +512,7 @@ GtConnector >> removeEdgeConstraintsTo: targetElement [
 		self removeAndDisconnectEdge: anEdge ]
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> removeLinesFrom: sourceElement [
 	self assert: [ sourceElement isNotNil ].
 	self assert: [ sourceElement connector isVisualSource or: [
@@ -525,7 +525,7 @@ GtConnector >> removeLinesFrom: sourceElement [
 			self removeAndDisconnectLineElement: aLineElement ]
 ]
 
-{ #category : 'private - adding / removing' }
+{ #category : #'private - adding / removing' }
 GtConnector >> removeLinesTo: targetElement [
 	self assert: [ targetElement isNotNil ].
 	self assert: [ targetElement connector isVisualTarget or: [
@@ -538,7 +538,7 @@ GtConnector >> removeLinesTo: targetElement [
 			self removeAndDisconnectLineElement: aLineElement ]
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> sourceElementsWith: anEntity [
 	"Return a collection of visual source elements whose model is a given object."
 	<return: #SequenceableCollection of: #BlElement>
@@ -550,17 +550,17 @@ GtConnector >> sourceElementsWith: anEntity [
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnector >> stencil [ 
 	^ stencil
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 GtConnector >> stencil: aStencil [
 	stencil := aStencil
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> targetElementsWith: anEntity [
 	"Return a collection of visual target elements whose model is a given object"
 	<return: #SequenceableCollection of: #BlElement>
@@ -572,7 +572,7 @@ GtConnector >> targetElementsWith: anEntity [
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> visualSourceElementsWithModel: aSourceEntity [
 	"Return a collection of source elements whose model is a given object"
 	<return: #SequenceableCollection of: #BlElement>
@@ -584,7 +584,7 @@ GtConnector >> visualSourceElementsWithModel: aSourceEntity [
 					ifTrue: [ aStream nextPut: aChildElement ] ] ]
 ]
 
-{ #category : 'search' }
+{ #category : #search }
 GtConnector >> visualTargetElementsWithModel: aSource [
 	"Return a collection of target elements whose model is a given object"
 	<return: #SequenceableCollection of: #BlElement>

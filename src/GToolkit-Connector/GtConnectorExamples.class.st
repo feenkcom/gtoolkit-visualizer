@@ -1,12 +1,12 @@
 Class {
-	#name : 'GtConnectorExamples',
-	#superclass : 'Object',
+	#name : #GtConnectorExamples,
+	#superclass : #Object,
 	#traits : 'TBlExample',
 	#classTraits : 'TBlExample classTrait',
 	#category : 'GToolkit-Connector-Examples'
 }
 
-{ #category : 'examples - container' }
+{ #category : #'examples - container' }
 GtConnectorExamples >> basicContainer [
 	<gtExample>
 	| aContainer |
@@ -16,7 +16,7 @@ GtConnectorExamples >> basicContainer [
 	^ aContainer
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 GtConnectorExamples >> buildCloseButton [
 	^ (GtInspectorRoundButtonStencil new 
 	size: 15@15)
@@ -31,7 +31,7 @@ GtConnectorExamples >> buildCloseButton [
 		action: [ :aButton | aButton parent removeFromParent ]
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 GtConnectorExamples >> createContainerElement [
 	^ BlElement new
 		geometry: (BlRoundedRectangleGeometry cornerRadius: 5);
@@ -41,14 +41,14 @@ GtConnectorExamples >> createContainerElement [
 		 addChild: self buildCloseButton
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 GtConnectorExamples >> createLabelWithText: aLabel [ 	
 	^ BrLabel new
 		aptitude: BrGlamorousLabelAptitude;
 		text: aLabel
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 GtConnectorExamples >> createVisualSourceButtonForModel: anEntity withLabel: aLabel withAction: anAction [
 	| button |
 	button := BrButton new
@@ -61,7 +61,7 @@ GtConnectorExamples >> createVisualSourceButtonForModel: anEntity withLabel: aLa
 	^ button
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 GtConnectorExamples >> createVisualSourceButtonWithLabel: aLabel withAction: anAction [
 	| button |
 	button := BrButton new
@@ -74,13 +74,13 @@ GtConnectorExamples >> createVisualSourceButtonWithLabel: aLabel withAction: anA
 	^ button
 ]
 
-{ #category : 'examples - container' }
+{ #category : #'examples - container' }
 GtConnectorExamples >> entityOne [
 	<gtExample>
 	^ self class >> #entityOne
 ]
 
-{ #category : 'examples - container' }
+{ #category : #'examples - container' }
 GtConnectorExamples >> entityOneContainer [
 	<gtExample>
 	| aContainer anEntity |
@@ -92,13 +92,13 @@ GtConnectorExamples >> entityOneContainer [
 	^ aContainer
 ]
 
-{ #category : 'examples - container' }
+{ #category : #'examples - container' }
 GtConnectorExamples >> entityTwo [
 	<gtExample>
 	^ self class >> #entityTwo
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> exampleMethodsExample [
 	<gtExample>
 	| gtconnector |
@@ -156,7 +156,7 @@ GtConnectorExamples >> exampleMethodsExample [
 	^ gtconnector
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> linearDependenciesExample [
 	<gtExample>
 	| gtconnector |
@@ -215,7 +215,7 @@ GtConnectorExamples >> linearDependenciesExample [
 	^ gtconnector
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
 	<gtExample>
 	| gtconnector |
@@ -278,7 +278,7 @@ GtConnectorExamples >> linearDependenciesWithButtonContainerExample [
 	^ gtconnector
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> linearDoubleDependenciesExample [
 	<gtExample>
 	| gtconnector |
@@ -352,7 +352,7 @@ GtConnectorExamples >> linearDoubleDependenciesExample [
 	^ gtconnector
 ]
 
-{ #category : 'examples-raw' }
+{ #category : #'examples-raw' }
 GtConnectorExamples >> rawObjectExample [
 	<gtExample>
 	| gtconnector |
@@ -456,7 +456,7 @@ GtConnectorExamples >> rawObjectExample [
 	^ gtconnector
 ]
 
-{ #category : 'examples - container' }
+{ #category : #'examples - container' }
 GtConnectorExamples >> replaceEntityOneByEntityTwoContainer [
 	<gtExample>
 	| aContainer anEntity anOldContent |
@@ -469,7 +469,7 @@ GtConnectorExamples >> replaceEntityOneByEntityTwoContainer [
 	^ aContainer
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndExplicitReferences [
 	<gtExample>
 	| gtconnector |
@@ -483,7 +483,7 @@ GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndExplicitRefere
 	^ gtconnector
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndNoExplicitReferences [
 	<gtExample>
 	| gtconnector |
@@ -556,7 +556,7 @@ GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndNoExplicitRefe
 	^ gtconnector
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 GtConnectorExamples >> treeDependeciesExampleWithVisibleVisualSourceAndNoExplicitReferences [
 	<gtExample>
 	| gtconnector |

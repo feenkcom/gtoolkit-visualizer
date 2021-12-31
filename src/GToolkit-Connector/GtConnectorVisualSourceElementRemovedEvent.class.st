@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtConnectorVisualSourceElementRemovedEvent',
-	#superclass : 'GtConnectorVisualElementEvent',
+	#name : #GtConnectorVisualSourceElementRemovedEvent,
+	#superclass : #GtConnectorVisualElementEvent,
 	#category : 'GToolkit-Connector-Events'
 }
 
-{ #category : 'sending' }
+{ #category : #sending }
 GtConnectorVisualSourceElementRemovedEvent >> sendTo: anObject [
 	anObject visualSourceRemoved: self
 ]

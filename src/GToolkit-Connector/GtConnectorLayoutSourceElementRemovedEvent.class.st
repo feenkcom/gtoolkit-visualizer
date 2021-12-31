@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtConnectorLayoutSourceElementRemovedEvent',
-	#superclass : 'GtConnectorLayoutElementEvent',
+	#name : #GtConnectorLayoutSourceElementRemovedEvent,
+	#superclass : #GtConnectorLayoutElementEvent,
 	#category : 'GToolkit-Connector-Events'
 }
 
-{ #category : 'sending' }
+{ #category : #sending }
 GtConnectorLayoutSourceElementRemovedEvent >> sendTo: anObject [
 	anObject layoutSourceRemoved: self
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtConnectorLineContext',
-	#superclass : 'Object',
+	#name : #GtConnectorLineContext,
+	#superclass : #Object,
 	#instVars : [
 		'lineElement',
 		'fromElement',
@@ -9,39 +9,39 @@ Class {
 	#category : 'GToolkit-Connector-Core'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtConnectorLineContext class >> on: anElement [
 	^ self new 
 		lineElement: anElement;
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorLineContext >> fromElement [
 	^ fromElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorLineContext >> fromElement: anObject [
 	fromElement := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorLineContext >> lineElement [
 	^ lineElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorLineContext >> lineElement: anObject [
 	lineElement := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorLineContext >> toElement [
 	^ toElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorLineContext >> toElement: anObject [
 	toElement := anObject
 ]
