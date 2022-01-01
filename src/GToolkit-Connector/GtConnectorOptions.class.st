@@ -1,25 +1,25 @@
 Class {
-	#name : 'GtConnectorOptions',
-	#superclass : 'Object',
+	#name : #GtConnectorOptions,
+	#superclass : #Object,
 	#instVars : [
 		'drawLines'
 	],
 	#category : 'GToolkit-Connector-Core'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorOptions >> drawLines [
 	<return: #Boolean>
 
 	^ drawLines
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorOptions >> drawLines: aBoolean [
 	drawLines := aBoolean
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtConnectorOptions >> gtOptionsFor: aView [
 	<gtExample>
 	
@@ -33,7 +33,7 @@ GtConnectorOptions >> gtOptionsFor: aView [
 		column: 'Value' text: [ :each | each value ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtConnectorOptions >> initialize [
 	super initialize.
 

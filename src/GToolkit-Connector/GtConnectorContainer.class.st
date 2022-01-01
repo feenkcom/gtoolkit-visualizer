@@ -10,8 +10,8 @@ I display: {{gtExample:GtConnectorExamples>>#entityOneContainer|codeExpanded=fal
 
 "
 Class {
-	#name : 'GtConnectorContainer',
-	#superclass : 'BlElement',
+	#name : #GtConnectorContainer,
+	#superclass : #BlElement,
 	#traits : 'TBrLayoutResizable',
 	#classTraits : 'TBrLayoutResizable classTrait',
 	#instVars : [
@@ -20,13 +20,13 @@ Class {
 	#category : 'GToolkit-Connector-Core'
 }
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtConnectorContainer >> entity [
 	"Return an entity for which a view is created."
 	^ entity
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtConnectorContainer >> entity: anEntity [
 	"Set an entity for which a view is created."
 	entity = anEntity ifTrue: [ ^ self ].
@@ -34,7 +34,7 @@ GtConnectorContainer >> entity: anEntity [
 	self onEntityChanged.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtConnectorContainer >> initialize [
 	super initialize.
 
@@ -43,12 +43,12 @@ GtConnectorContainer >> initialize [
 	self addAptitude: BrLayoutResizerAptitude inherit.
 ]
 
-{ #category : 'private - hooks' }
+{ #category : #'private - hooks' }
 GtConnectorContainer >> onEntityChanged [
 	self updateView.
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtConnectorContainer >> updateView [
 	| aView |
 	self removeChildren.

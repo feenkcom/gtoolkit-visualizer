@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtInspectorConnectorSwitchStencil',
-	#superclass : 'BrStencil',
+	#name : #GtInspectorConnectorSwitchStencil,
+	#superclass : #BrStencil,
 	#category : 'GToolkit-Connector-Extensions'
 }
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtInspectorConnectorSwitchStencil >> create [
 	^ BrButton new
 		background: Color white;

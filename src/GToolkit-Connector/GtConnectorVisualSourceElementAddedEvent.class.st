@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtConnectorVisualSourceElementAddedEvent',
-	#superclass : 'GtConnectorVisualElementEvent',
+	#name : #GtConnectorVisualSourceElementAddedEvent,
+	#superclass : #GtConnectorVisualElementEvent,
 	#category : 'GToolkit-Connector-Events'
 }
 
-{ #category : 'sending' }
+{ #category : #sending }
 GtConnectorVisualSourceElementAddedEvent >> sendTo: anObject [
 	anObject visualSourceAdded: self
 ]
