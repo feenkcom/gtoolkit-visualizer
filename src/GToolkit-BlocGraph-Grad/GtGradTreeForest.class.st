@@ -28,6 +28,32 @@ GtGradTreeForest class >> addChildNodesToLeaves: theRootNode [
 
 ]
 
+{ #category : #'private - depth-first-search' }
+GtGradTreeForest class >> dfs: theRootNode visited: aVisitedDictionary [
+	self subclassResponsibility 
+]
+
+{ #category : #'instance-creation' }
+GtGradTreeForest class >> from: aCollectionOfElements separateSubtrees: aBool [
+	"Create a forest of node trees using depth-first-search algorithm"
+
+	| allTrees visitedDictionary |
+	allTrees := OrderedDictionary new.
+	visitedDictionary := IdentityDictionary new.
+	aCollectionOfElements
+		do:
+			[ :aNodeElement | 
+			((visitedDictionary includesKey: aNodeElement) or: [ aNodeElement hasNodesAlongIncomingEdges ])
+				ifFalse:
+					[ | aTreeNode |
+					aTreeNode := GtGradTreeNode on: aNodeElement.
+					visitedDictionary at: aNodeElement put: aTreeNode.
+					self dfs: aTreeNode visited: visitedDictionary.
+					aBool ifTrue: [ self addChildNodesToLeaves: aTreeNode ].
+					allTrees at: aTreeNode root put: #root ] ].
+	^ self new trees: allTrees keys
+]
+
 { #category : #'api - visiting' }
 GtGradTreeForest >> accept: aVisitor [
 	aVisitor visitForest: self.
