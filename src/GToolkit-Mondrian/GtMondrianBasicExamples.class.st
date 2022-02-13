@@ -122,6 +122,34 @@ GtMondrianBasicExamples >> edgesBetweenNodes [
 ]
 
 { #category : #'tutorial - shapes' }
+GtMondrianBasicExamples >> edgesWithChangingColorsOnHover [
+	<gtExample>
+	| m |
+	m := GtMondrian new.
+	m nodes
+		shape: [ :x | 
+			BlElement new
+				border: (BlBorder paint: Color black);
+				geometry: BlEllipseGeometry new;
+				size: x * 2 @ (x * 2);
+				when: BlMouseEnterEvent do: [ :anEvent | 
+					anEvent currentTarget graph connectedEdges do: [ :inner | 
+							inner element border: (BlBorder paint: (Color red alpha: 0.5)) ] ];
+				when: BlMouseLeaveEvent do: [ :anEvent | 
+					anEvent currentTarget graph connectedEdges do: [ :inner | 
+							inner element border: (BlBorder paint: (Color blue alpha: 0.5)) ] ] ];
+		with: (1 to: 9).
+	m edges
+		stencil: [ :x | 
+			BlLineElement new
+				zIndex: -1;
+				border: (BlBorder paint: (Color blue alpha: 0.5)) ];
+		connectFrom: [ :x | x // 2 ].
+	m layout tree.
+	^ m
+]
+
+{ #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> edgesWithTextAndThickerLinesHorizontalTree [
 	<gtExample>
 	| view |
