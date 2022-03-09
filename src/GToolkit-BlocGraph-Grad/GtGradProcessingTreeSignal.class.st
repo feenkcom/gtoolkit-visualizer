@@ -7,6 +7,11 @@ Class {
 	#category : 'GToolkit-BlocGraph-Grad-Signals'
 }
 
+{ #category : #testing }
+GtGradProcessingTreeSignal class >> gtNormalOperationSignal [
+	^ true
+]
+
 { #category : #accessing }
 GtGradProcessingTreeSignal >> root [
 	^ root

@@ -8,6 +8,11 @@ Class {
 	#category : 'GToolkit-BlocGraph-Grad-Signals'
 }
 
+{ #category : #testing }
+GtGradTreeLayoutCorrectionSignal class >> gtNormalOperationSignal [
+	^ true
+]
+
 { #category : #accessing }
 GtGradTreeLayoutCorrectionSignal >> alignmentCorrection [
 	^ alignmentCorrection
