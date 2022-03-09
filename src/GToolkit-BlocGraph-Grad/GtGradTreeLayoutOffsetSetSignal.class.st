@@ -9,6 +9,11 @@ Class {
 	#category : 'GToolkit-BlocGraph-Grad-Signals'
 }
 
+{ #category : #testing }
+GtGradTreeLayoutOffsetSetSignal class >> gtNormalOperationSignal [
+	^ true
+]
+
 { #category : #accessing }
 GtGradTreeLayoutOffsetSetSignal >> node [
 	^ node
