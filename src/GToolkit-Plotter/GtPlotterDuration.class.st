@@ -23,6 +23,11 @@ GtPlotterDuration class >> hours: aNumber [
 ]
 
 { #category : #'instance creation' }
+GtPlotterDuration class >> milliSeconds: aNumber [
+	^ GtPlotterDurationMillisecond amount: aNumber
+]
+
+{ #category : #'instance creation' }
 GtPlotterDuration class >> minutes: aNumber [
 	^ GtPlotterDurationMinute amount: aNumber
 ]
