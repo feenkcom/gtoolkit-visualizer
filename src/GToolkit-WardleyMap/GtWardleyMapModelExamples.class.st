@@ -27,6 +27,18 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 	^ aWardleyMapElement
 ]
 
+{ #category : #accessing }
+GtWardleyMapModelExamples >> mapWithNodesEqualsEvaluatedStoreString [
+
+	<gtExample>
+	| map |
+	map := self newMapWithNodes.
+	self
+		assert: (Smalltalk compiler evaluate: map storeString)
+		equals: map.
+	^ map
+]
+
 { #category : #examples }
 GtWardleyMapModelExamples >> newMap [
 	<gtExample>
