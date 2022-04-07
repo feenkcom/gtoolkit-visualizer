@@ -14,7 +14,10 @@ Class {
 { #category : #accessing }
 GtPhlowMondrianView >> asElementDo: aBlock [
 	| wrapper |
-	paintingStencilBuilder value: mondrianInstance.
+	
+	self 
+		performBlock: [ paintingStencilBuilder value: mondrianInstance ] 
+		onExceptionErrorElement: [ :anErrorElement | ^ aBlock value: anErrorElement ].
 	wrapper := BrFrame new matchParent.
 	mondrianElement := mondrianInstance asPannableElement.
 	mondrianElement

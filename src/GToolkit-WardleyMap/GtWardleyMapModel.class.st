@@ -244,3 +244,13 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 	aGtWardleyMapNodeModel removeParent.
 	self announce: (GtWardleyMapNodeModelRemoved new nodeModel: aGtWardleyMapNodeModel)
 ]
+
+{ #category : #printing }
+GtWardleyMapModel >> storeOn: aStream [
+	aStream
+		nextPut: $(;
+		nextPutAll:
+			'GtWardleyMapFromDictionaryImporter new importWardleyMapFrom: (STONJSON fromString: ';
+		nextPutAll: self asJSONForExport storeString;
+		nextPutAll: '))'
+]
