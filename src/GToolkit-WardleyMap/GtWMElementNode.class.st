@@ -2,7 +2,7 @@ Class {
 	#name : #GtWMElementNode,
 	#superclass : #GtWMProgramNode,
 	#instVars : [
-		'componentToken',
+		'typeToken',
 		'name',
 		'coords',
 		'decorators',
@@ -17,14 +17,13 @@ GtWMElementNode >> acceptVisitor: aProgramVisitor [
 	^ aProgramVisitor visitElement: self
 ]
 
-{ #category : #generated }
-GtWMElementNode >> componentToken [
-	^ componentToken
-]
-
-{ #category : #generated }
-GtWMElementNode >> componentToken: aSmaCCToken [
-	componentToken := aSmaCCToken
+{ #category : #converting }
+GtWMElementNode >> asWardleyMapNode [
+	| node |
+	node := GtWardleyMapNodeModel new.
+	name ifNotNil: [ node label: name source ].
+	coords ifNotNil: [ node coordinate: coords maturity source asNumber @ (1 - coords visibility source asNumber) ].
+	^ node
 ]
 
 { #category : #generated }
@@ -101,5 +100,15 @@ GtWMElementNode >> nodeVariables [
 
 { #category : #generated }
 GtWMElementNode >> tokenVariables [
-	^ #(#componentToken #name #inertiaToken)
+	^ #(#typeToken #name #inertiaToken)
+]
+
+{ #category : #generated }
+GtWMElementNode >> typeToken [
+	^ typeToken
+]
+
+{ #category : #generated }
+GtWMElementNode >> typeToken: aSmaCCToken [
+	typeToken := aSmaCCToken
 ]

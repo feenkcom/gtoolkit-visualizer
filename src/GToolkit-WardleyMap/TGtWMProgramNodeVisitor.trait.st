@@ -31,11 +31,6 @@ TGtWMProgramNodeVisitor >> visitDecorator: aDecorator [
 ]
 
 { #category : #generated }
-TGtWMProgramNodeVisitor >> visitEcosystem: anEcosystem [
-	^ self visitProgram: anEcosystem
-]
-
-{ #category : #generated }
 TGtWMProgramNodeVisitor >> visitElement: anElement [
 	^ self visitProgram: anElement
 ]
@@ -73,11 +68,6 @@ TGtWMProgramNodeVisitor >> visitLink: aLink [
 { #category : #generated }
 TGtWMProgramNodeVisitor >> visitManyCoords: aManyCoords [
 	^ self visitProgram: aManyCoords
-]
-
-{ #category : #generated }
-TGtWMProgramNodeVisitor >> visitMarket: aMarket [
-	^ self visitProgram: aMarket
 ]
 
 { #category : #generated }

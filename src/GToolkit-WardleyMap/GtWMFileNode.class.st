@@ -53,6 +53,35 @@ GtWMFileNode >> annotations: anOrderedCollection [
 	self setParents: self annotations to: self
 ]
 
+{ #category : #converting }
+GtWMFileNode >> asWardleyMapModel [
+	| model nodes |
+	nodes := Dictionary new.
+	model := GtWardleyMapModel new.
+	elements do: [ :each | each asWardleyMapNode ifNotNil: [ :node | nodes at: node label put: node ] ].
+	markets do: [ :each | each asWardleyMapNode ifNotNil: [ :node | nodes at: node label put: node ] ].
+	ecosystems do: [ :each | each asWardleyMapNode ifNotNil: [ :node | nodes at: node label put: node ] ].
+	nodes do: [ :each | model addNode: each ].
+	links
+		do:
+			[ :each | 
+			nodes
+				at: each start source
+				ifPresent:
+					[ :from | 
+					nodes
+						at: each end source
+						ifPresent:
+							[ :to | 
+							model
+								addEdge:
+									((GtWardleyMapEdgeModel new)
+										fromNode: from;
+										toNode: to;
+										yourself) ] ] ].
+	^ model
+]
+
 { #category : #generated }
 GtWMFileNode >> attitudes [
 	^ attitudes
@@ -116,6 +145,17 @@ GtWMFileNode >> evolves: anOrderedCollection [
 	self setParents: self evolves to: nil.
 	evolves := anOrderedCollection.
 	self setParents: self evolves to: self
+]
+
+{ #category : #converting }
+GtWMFileNode >> gtLiveFor: aView [
+	<gtView>
+	
+	^ (aView forward)
+		title: 'Live';
+		priority: 30;
+		object: [ self asWardleyMapModel ];
+		view: #gtLiveFor:
 ]
 
 { #category : #'generated-initialize-release' }
