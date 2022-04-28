@@ -526,6 +526,7 @@ GtWardleyMapScanner >> scanForTokenX3 [
 
 { #category : #private }
 GtWardleyMapScanner >> scanNameAt: anInteger [
+	returnMatchBlock := [ :token | ^ token ].
 	stream position: anInteger - 1.
 	self resetScanner.
 	^ self nodeName

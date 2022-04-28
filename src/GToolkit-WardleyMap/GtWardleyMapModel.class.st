@@ -101,6 +101,34 @@ GtWardleyMapModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #converting }
+GtWardleyMapModel >> asWardleyMapScript [
+	^ String
+		streamContents:
+			[ :stream | 
+			self nodes
+				do:
+					[ :each | 
+					stream
+						nextPutAll: 'component ';
+						nextPutAll: each label;
+						nextPutAll: ' [ ';
+						print: 1 - each y;
+						nextPutAll: ', ';
+						print: each x;
+						nextPutAll: ' ]';
+						cr ].
+			stream cr.
+			self edges
+				do:
+					[ :each | 
+					stream
+						nextPutAll: each fromNode label;
+						nextPutAll: '->';
+						nextPutAll: each toNode label;
+						cr ] ]
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> edges [
 	^ edges
@@ -132,6 +160,20 @@ GtWardleyMapModel >> gtLiveFor: aView [
 			GtWardleyMapElement new
 				wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: self);
 				yourself ]
+]
+
+{ #category : #'api - export / import' }
+GtWardleyMapModel >> gtWardleyScriptFor: aView [
+	<gtView>
+	
+	^ (aView textEditor)
+		title: 'Script';
+		priority: 9;
+		aptitude: [ BrGlamorousCodeEditorAptitude ];
+		styler: [ GtWardleyMapParser gtStyler ];
+		text: [ self asWardleyMapScript ];
+		actionUpdateButtonTooltip: 'Update Script';
+		actionButtonLabel: 'Copy' action: [ Clipboard clipboardText: self asWardleyMapScript ]
 ]
 
 { #category : #testing }
