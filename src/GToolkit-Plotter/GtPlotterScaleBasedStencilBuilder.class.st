@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'scaleContext'
 	],
-	#category : 'GToolkit-Plotter-Core - Stencils'
+	#category : #'GToolkit-Plotter-Core - Stencils'
 }
 
 { #category : #'api - instantiation' }
@@ -18,6 +18,11 @@ GtPlotterScaleBasedStencilBuilder >> buildDefault [
 GtPlotterScaleBasedStencilBuilder >> paramsOn: aStencilExecutor [
 	aStencilExecutor
 		push: self scaleContext
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedStencilBuilder >> reset [
+	scaleContext := nil
 ]
 
 { #category : #accessing }

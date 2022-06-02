@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'chartElement'
 	],
-	#category : 'GToolkit-Plotter-! Plotter'
+	#category : #'GToolkit-Plotter-! Plotter'
 }
 
 { #category : #'api - instantiation' }
@@ -28,4 +28,9 @@ GtPlotterStyleBuilder >> chartElement: anObject [
 GtPlotterStyleBuilder >> paramsOn: aStencilExecutor [
 	super paramsOn: aStencilExecutor.
 	aStencilExecutor push: self chartElement.
+]
+
+{ #category : #accessing }
+GtPlotterStyleBuilder >> reset [
+	chartElement := nil
 ]

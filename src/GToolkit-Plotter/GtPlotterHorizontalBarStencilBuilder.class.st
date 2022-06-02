@@ -6,7 +6,7 @@ Class {
 		'group',
 		'value'
 	],
-	#category : 'GToolkit-Plotter-Builder - Bar Chart'
+	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #accessing }
@@ -56,6 +56,13 @@ GtPlotterHorizontalBarStencilBuilder >> paramsOn: aStencilExecutor [
 		push: self bar;
 		push: self value;
 		push: self group
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBarStencilBuilder >> reset [
+	bar := nil.
+	group := nil.
+	value := nil
 ]
 
 { #category : #accessing }
