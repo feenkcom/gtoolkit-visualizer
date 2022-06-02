@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'element'
 	],
-	#category : 'GToolkit-Plotter-Core - Stencils'
+	#category : #'GToolkit-Plotter-Core - Stencils'
 }
 
 { #category : #'api - instantiation' }
@@ -28,4 +28,11 @@ GtPlotterScaleBasedStencilEmbellisher >> paramsOn: aStencilExecutor [
 		push: self element.
 
 	super paramsOn: aStencilExecutor
+]
+
+{ #category : #accessing }
+GtPlotterScaleBasedStencilEmbellisher >> reset [
+	super reset.
+	
+	element := nil
 ]
