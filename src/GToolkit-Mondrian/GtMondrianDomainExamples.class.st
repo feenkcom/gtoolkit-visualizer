@@ -134,6 +134,19 @@ GtMondrianDomainExamples >> collectionHierarchy [
 ]
 
 { #category : #examples }
+GtMondrianDomainExamples >> collectionSetBagHierarchy [
+	<gtExample>
+
+	^ self classHierarchyFor: { 
+		Collection.
+		HashedCollection.
+		Set.
+		Dictionary.
+		IdentityDictionary.
+		Bag }
+]
+
+{ #category : #examples }
 GtMondrianDomainExamples >> editorElementWithPreviews [
 	<gtExample>
 	| root element editor ropeMondrian elementsMondrian block |
@@ -393,6 +406,24 @@ GtMondrianDomainExamples >> packageDependencies [
 		connect: dependencies from: #first to: #second.
 	view layout circle radius: 300.
 	^ view
+]
+
+{ #category : #examples }
+GtMondrianDomainExamples >> sequenceableCollectionHierarchy [
+	<gtExample>
+
+	^ self
+		classHierarchyFor: {SequenceableCollection.
+				ArrayedCollection.
+				Array.
+				String.
+				ByteString.
+				Symbol.
+				Text.
+				OrderedCollection.
+				SortedCollection.
+				LinkedList.
+				Interval}
 ]
 
 { #category : #examples }

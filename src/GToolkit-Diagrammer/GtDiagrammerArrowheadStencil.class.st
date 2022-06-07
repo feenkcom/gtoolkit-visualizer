@@ -1,7 +1,7 @@
 Class {
 	#name : #GtDiagrammerArrowheadStencil,
 	#superclass : #GtDiagrammerStencil,
-	#category : 'GToolkit-Diagrammer-Stencils - Arrowheads'
+	#category : #'GToolkit-Diagrammer-Stencils - Arrowheads'
 }
 
 { #category : #comparing }
@@ -56,15 +56,6 @@ GtDiagrammerArrowheadStencil >> createFor: aCurveElement [
 	<return: #BlArrowheadElement>
 
 	^ self create border: aCurveElement border copy
-]
-
-{ #category : #'gt-inspector-extension' }
-GtDiagrammerArrowheadStencil >> gtInspectorPreviewIn: aComposite [
-	<gtInspectorPresentationOrder: 5>
-
-	^ aComposite bloc
-		title: 'Preview';
-		display: [ self asArrowheadInLine ]
 ]
 
 { #category : #'gt-extension' }
