@@ -30,7 +30,7 @@ GtDiagrammerLabelledElement >> initialize [
 
 { #category : #initialization }
 GtDiagrammerLabelledElement >> initializeEditor [
-	editor := BrTextEditor new.
+	editor := BrTextEditorModel new.
 	editorElement := BrEditorElement new.
 	editorElement editor: editor.
 	editorElement beDiagrammerSelectionLeaf.

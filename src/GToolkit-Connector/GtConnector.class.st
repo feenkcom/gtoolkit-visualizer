@@ -8,7 +8,7 @@ Class {
 		'entityEventHandler',
 		'connectorEventHandler'
 	],
-	#category : 'GToolkit-Connector-Core'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #'private - adding / removing' }
@@ -299,7 +299,7 @@ GtConnector >> gtLiveFor: aView [
 		stencil: [ 
 			self space
 				ifNotNil: [ BrEditorElement new 
-					editor: (BrTextEditor new
+					editor: (BrTextEditorModel new
 						text: (self printString, ' element cannot be currently displayed here as it is already displayed in another view') asRopedText readonly);
 					constraintsDo: [ :c | 
 						c horizontal matchParent.

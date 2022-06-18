@@ -137,7 +137,7 @@ GtConnectorExamples >> exampleMethodsExample [
 		styler exampleAction: [ :anExampleMethod | gtconnector addEntity: anExampleMethod ].
 		styler classOrMetaClass: method methodClass.
 
-		editor := BrTextEditor new.
+		editor := BrTextEditorModel new.
 		editor styler: styler.
 
 		editorElement editor: editor.

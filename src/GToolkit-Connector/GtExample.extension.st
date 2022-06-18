@@ -56,7 +56,7 @@ GtExample >> buildEditor: aMethod for: gtconnector [
 			c horizontal matchParent.
 			c vertical matchParent.
 			c padding: (BlInsets all: 10) ].
-	editor := BrTextEditor new.
+	editor := BrTextEditorModel new.
 	editor styler: styler.
 	editorElement editor: editor.	
 	text := aMethod sourceCode asRopedText glamorousCodeFontDo: #beNotOverwritableByStyler.
