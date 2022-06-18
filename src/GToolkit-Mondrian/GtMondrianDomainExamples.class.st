@@ -171,7 +171,7 @@ GtMondrianDomainExamples >> editorElementWithPreviews [
 			c horizontal matchParent ].
 	root layout: (BlGridLayout new cellSpacing: 20; columnCount: 1).
 	element := BrEditorElement new.
-	editor := BrTextEditor new.
+	editor := BrTextEditorModel new.
 	editor text: BlRopedTextExamples new textWithAttributes.
 	editor when: BrTextEditorInsertedEvent do: block.
 	editor when: BrTextEditorDeletedEvent do: block.
@@ -216,7 +216,7 @@ GtMondrianDomainExamples >> editorElements [
 	| text element editor view |
 	text := BlRopedTextExamples new textWithAttributes.
 	element := BrEditorElement new.
-	editor := BrTextEditor new.
+	editor := BrTextEditorModel new.
 	editor text: text.
 	editor moveCursorTo: 30.
 	element editor: editor.

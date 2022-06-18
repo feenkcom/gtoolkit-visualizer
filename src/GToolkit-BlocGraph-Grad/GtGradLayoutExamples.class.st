@@ -55,7 +55,7 @@ GtGradLayoutExamples >> editor [
 	<gtExample>
 	| anEditorModel anEditorElement |
 
-	anEditorModel := BrTextEditor new.
+	anEditorModel := BrTextEditorModel new.
 	anEditorModel text: 'a' asRopedText.
 
 	anEditorElement := BrEditorElement new.

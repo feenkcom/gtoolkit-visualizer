@@ -223,7 +223,7 @@ GtGradCircleLayoutExamples >> editorNodes10WithRandomContent [
 	^((Character space split: String loremIpsum) first: 10) collect: [ :word |
 		| anEditor anEditorModel|
 		
-		anEditorModel := BrTextEditor new.
+		anEditorModel := BrTextEditorModel new.
 		anEditorModel text: word asRopedText.
 
 		anEditor := BrEditorElement new.

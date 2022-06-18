@@ -15,7 +15,7 @@ GtConnectorExampleStyler class >> editorElementOnSourceCode: aString inClass: aC
 	text := aString asRopedText.
 	styler := self new.
 	styler classOrMetaClass: aClass.
-	editor := BrTextEditor new.
+	editor := BrTextEditorModel new.
 	editor styler: styler.
 	editor text: text.
 	
