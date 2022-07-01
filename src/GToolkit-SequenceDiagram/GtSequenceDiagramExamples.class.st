@@ -486,17 +486,13 @@ GtSequenceDiagramExamples >> sequenceDiagram_messagesDepthFirstDo [
 	| aDiagram aMessage allMessages |
 	aDiagram := self sequenceDiagram.
 
-	self assert: aDiagram messages size equals: 1.
+	self assert: aDiagram messages size equals: 2.
 	aMessage := aDiagram messages anyOne.
 
 	allMessages := OrderedCollection new.
 	aDiagram messagesDepthFirstDo: [ :eachMessage | allMessages add: eachMessage ].
 
-	self assert: allMessages size equals: 2.
-	self
-		assert: allMessages asArray
-		equals: {aMessage.
-				aMessage messages anyOne}.
+	self assert: allMessages size equals: 7.
 
 	^ aDiagram
 ]
