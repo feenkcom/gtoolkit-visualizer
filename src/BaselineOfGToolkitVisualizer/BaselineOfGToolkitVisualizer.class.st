@@ -64,6 +64,8 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-Plotter' with: [
 				spec requires: #('Brick' ). ];
 			package: 'GToolkit-WardleyMap' with: [
+				spec requires: #('Brick' ). ];
+			package: 'GToolkit-SequenceDiagram' with: [
 				spec requires: #('Brick' ). ]. ].
 
 ]

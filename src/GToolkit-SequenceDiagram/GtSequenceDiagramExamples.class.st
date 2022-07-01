@@ -1,0 +1,515 @@
+Class {
+	#name : #GtSequenceDiagramExamples,
+	#superclass : #Object,
+	#instVars : [
+		'userActor',
+		'securityLogon',
+		'accountDb',
+		'system'
+	],
+	#category : #'GToolkit-SequenceDiagram-Examples'
+}
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> accountDbClassRole [
+	<gtExample>
+	accountDb ifNotNil: [ :aParticipant | ^ aParticipant ].
+
+	accountDb := self basicClassRole.
+	accountDb classRole: 'AccountDB'.
+
+	self assert: accountDb name equals: ':AccountDB'.
+
+	^ accountDb
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> accountDbElement [
+	<gtExample>
+	| anElement aViewModel |
+	anElement := self basicClassRoleElement.
+	aViewModel := self accountDbViewModel.
+
+	anElement participantViewModel: aViewModel.
+
+	self assert: anElement hasParticipantViewModel.
+	self assert: anElement participantViewModel equals: aViewModel.
+
+	^ anElement
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> accountDbViewModel [
+	<gtExample>
+	| aViewModel aParticipant allAnnouncements |
+	aViewModel := self basicParticipantViewModel.
+	aParticipant := self accountDbClassRole.
+
+	allAnnouncements := OrderedCollection new.
+	aViewModel weak
+		when: GtSequenceDiagramParticipantChanged
+		send: #add:
+		to: allAnnouncements.
+
+	aViewModel participant: aParticipant.
+	self assert: aViewModel hasParticipant.
+	self assert: aViewModel participant equals: aParticipant.
+	self assert: allAnnouncements size equals: 1.
+	self assert: allAnnouncements anyOne participant equals: aParticipant.
+
+	^ aViewModel
+]
+
+{ #category : #'examples - actor' }
+GtSequenceDiagramExamples >> actor [
+	<gtExample>
+	userActor ifNotNil: [ :anActor | ^ anActor ].
+
+	userActor := self basicActor.
+	userActor name: 'User'.
+
+	self assert: userActor name equals: 'User'.
+
+	^ userActor
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> actorElement [
+	<gtExample>
+	| anElement aViewModel |
+	anElement := self basicClassRoleElement.
+	aViewModel := self actorViewModel.
+
+	anElement participantViewModel: aViewModel.
+
+	self assert: anElement hasParticipantViewModel.
+	self assert: anElement participantViewModel equals: aViewModel.
+
+	^ anElement
+]
+
+{ #category : #'examples - actor' }
+GtSequenceDiagramExamples >> actorViewModel [
+	<gtExample>
+	| aViewModel aParticipant allAnnouncements |
+	aViewModel := self basicParticipantViewModel.
+	aParticipant := self actor.
+
+	allAnnouncements := OrderedCollection new.
+	aViewModel weak
+		when: GtSequenceDiagramParticipantChanged
+		send: #add:
+		to: allAnnouncements.
+
+	aViewModel participant: aParticipant.
+	self assert: aViewModel hasParticipant.
+	self assert: aViewModel participant equals: aParticipant.
+	self assert: allAnnouncements size equals: 1.
+	self assert: allAnnouncements anyOne participant equals: aParticipant.
+
+	^ aViewModel
+]
+
+{ #category : #'examples - actor' }
+GtSequenceDiagramExamples >> basicActor [
+	<gtExample>
+	| aParticipant |
+	aParticipant := GtSequenceDiagramActor new.
+
+	self assert: aParticipant name equals: 'Actor'.
+
+	^ aParticipant
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> basicClassRole [
+	<gtExample>
+	| aParticipant |
+	aParticipant := GtSequenceDiagramClassRole new.
+
+	self assert: aParticipant classRole isNil.
+	self assert: aParticipant name equals: ':Object'.
+
+	^ aParticipant
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> basicClassRoleElement [
+	<gtExample>
+	| anElement |
+	anElement := GtSequenceDiagramClassRoleElement new.
+
+	self assert: anElement hasParticipantViewModel not.
+
+	^ anElement
+]
+
+{ #category : #'examples - view model' }
+GtSequenceDiagramExamples >> basicParticipantViewModel [
+	<gtExample>
+	| aViewModel |
+	aViewModel := GtSequenceDiagramParticipantViewModel new.
+
+	self assert: aViewModel hasParticipant not.
+
+	^ aViewModel
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> basicSelfMessage [
+	<gtExample>
+	| aMessage |
+	aMessage := GtSequenceDiagramSelfMessage new.
+
+	^ aMessage
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> basicSequenceDiagram [
+	<gtExample>
+	| aDiagram |
+	aDiagram := GtSequenceDiagram new.
+
+	self assert: aDiagram participants size equals: 0.
+
+	^ aDiagram
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> basicSequenceDiagramElement [
+	<gtExample>
+	| anElement |
+	anElement := GtSequenceDiagramElement new.
+
+	self assert: anElement hasSequenceDiagramViewModel not.
+
+	^ anElement
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> basicSequenceDiagramViewModel [
+	<gtExample>
+	| aViewModel |
+	aViewModel := GtSequenceDiagramViewModel new.
+
+	self assert: aViewModel hasSequenceDiagram not.
+
+	^ aViewModel
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> basicSynchronousMessage [
+	<gtExample>
+	| aMessage |
+	aMessage := GtSequenceDiagramSynchronousMessage new.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> displayLogonScreenMessage [
+	<gtExample>
+	| aMessage |
+	aMessage := self basicSelfMessage.
+
+	aMessage
+		participant: self securityLogonClassRole;
+		name: 'displayLogonScreen()'.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> isInDatabaseMessage [
+	<gtExample>
+	| aMessage aSystem anAccountDb |
+	aMessage := self basicSynchronousMessage.
+
+	anAccountDb := self accountDbClassRole.
+	aSystem := self systemClassRole.
+
+	aMessage
+		sender: anAccountDb;
+		receiver: aSystem;
+		name: 'isInDatabase(name)'.
+
+	self assert: aMessage sender equals: anAccountDb.
+	self assert: aMessage receiver equals: aSystem.
+	self assert: aMessage name equals: 'isInDatabase(name)'.
+	self assert: aMessage messages size equals: 0.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> isInDatabaseResponseMessage [
+	<gtExample>
+	| aMessage aSystem anAccountDb |
+	aMessage := self basicSynchronousMessage.
+
+	anAccountDb := self accountDbClassRole.
+	aSystem := self systemClassRole.
+
+	aMessage
+		sender: aSystem;
+		receiver: anAccountDb;
+		name: 'userType'.
+
+	self assert: aMessage sender equals: aSystem.
+	self assert: aMessage receiver equals: anAccountDb.
+	self assert: aMessage name equals: 'userType'.
+	self assert: aMessage messages size equals: 0.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> isValidMessage [
+	<gtExample>
+	| aMessage anInnerMessage aSecurityLogon anAccountDb aResponseMessage |
+	aMessage := self basicSynchronousMessage.
+
+	aSecurityLogon := self securityLogonClassRole.
+	anAccountDb := self accountDbClassRole.
+	anInnerMessage := self isInDatabaseMessage.
+	aResponseMessage := self isInDatabaseResponseMessage.
+
+	aMessage
+		sender: aSecurityLogon;
+		receiver: anAccountDb;
+		name: 'isValid(name, password)';
+		message: anInnerMessage;
+		message: aResponseMessage.
+
+	self assert: aMessage receiver equals: anInnerMessage sender.
+	self assert: aMessage sender equals: aSecurityLogon.
+	self assert: aMessage receiver equals: anAccountDb.
+	self assert: aMessage messages size equals: 2.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> isValidResponseMessage [
+	<gtExample>
+	| aMessage aSecurityLogon anAccountDb |
+	aMessage := self basicSynchronousMessage.
+
+	aSecurityLogon := self securityLogonClassRole.
+	anAccountDb := self accountDbClassRole.
+
+	aMessage
+		sender: anAccountDb;
+		receiver: aSecurityLogon;
+		name: 'valid'.
+
+	self assert: aMessage sender equals: anAccountDb.
+	self assert: aMessage receiver equals: aSecurityLogon.
+	self assert: aMessage messages size equals: 0.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> nameAndPasswordMessage [
+	<gtExample>
+	| aMessage anInnerMessage aSecurityLogon anActor anInnerResponse |
+	aMessage := self basicSynchronousMessage.
+
+	anActor := self actor.
+	aSecurityLogon := self securityLogonClassRole.
+	anInnerMessage := self isValidMessage.
+	anInnerResponse := self isValidResponseMessage.
+
+	aMessage
+		sender: anActor;
+		receiver: aSecurityLogon;
+		name: 'name and password';
+		message: anInnerMessage;
+		message: anInnerResponse.
+
+	self assert: aMessage receiver equals: anInnerMessage sender.
+	self assert: aMessage sender equals: anActor.
+	self assert: aMessage receiver equals: aSecurityLogon.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
+GtSequenceDiagramExamples >> requestLogonMessage [
+	<gtExample>
+	| aMessage anInnerMessage aSecurityLogon anActor |
+	aMessage := self basicSynchronousMessage.
+
+	anActor := self actor.
+	aSecurityLogon := self securityLogonClassRole.
+	anInnerMessage := self displayLogonScreenMessage.
+
+	aMessage
+		sender: anActor;
+		receiver: aSecurityLogon;
+		name: 'requestLogon()';
+		message: anInnerMessage.
+
+	self assert: aMessage receiver equals: anInnerMessage participant.
+	self assert: aMessage sender equals: anActor.
+	self assert: aMessage receiver equals: aSecurityLogon.
+
+	^ aMessage
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> securityLogonClassRole [
+	<gtExample>
+	securityLogon ifNotNil: [ :aParticipant | ^ aParticipant ].
+
+	securityLogon := self basicClassRole.
+	securityLogon classRole: 'SecurityLogon'.
+
+	self assert: securityLogon name equals: ':SecurityLogon'.
+
+	^ securityLogon
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> securityLogonElement [
+	<gtExample>
+	| anElement aViewModel |
+	anElement := self basicClassRoleElement.
+	aViewModel := self securityLogonViewModel.
+
+	anElement participantViewModel: aViewModel.
+
+	self assert: anElement hasParticipantViewModel.
+	self assert: anElement participantViewModel equals: aViewModel.
+
+	^ anElement
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> securityLogonViewModel [
+	<gtExample>
+	| aViewModel aParticipant allAnnouncements |
+	aViewModel := self basicParticipantViewModel.
+	aParticipant := self securityLogonClassRole.
+
+	allAnnouncements := OrderedCollection new.
+	aViewModel weak
+		when: GtSequenceDiagramParticipantChanged
+		send: #add:
+		to: allAnnouncements.
+
+	aViewModel participant: aParticipant.
+	self assert: aViewModel hasParticipant.
+	self assert: aViewModel participant equals: aParticipant.
+	self assert: allAnnouncements size equals: 1.
+	self assert: allAnnouncements anyOne participant equals: aParticipant.
+
+	^ aViewModel
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> sequenceDiagram [
+	<gtExample>
+	| aDiagram anActor aLogon anAccountDB aLogonMessage nameAndPasswordMessage aSystem |
+	aDiagram := self basicSequenceDiagram.
+	anActor := self actor.
+	aLogon := self securityLogonClassRole.
+	anAccountDB := self accountDbClassRole.
+	aSystem := self systemClassRole.
+	aLogonMessage := self requestLogonMessage.
+	nameAndPasswordMessage := self nameAndPasswordMessage.
+
+	aDiagram participant: anActor.
+	aDiagram participant: aLogon.
+	aDiagram participant: anAccountDB.
+	aDiagram participant: aSystem.
+	aDiagram message: aLogonMessage.
+	aDiagram message: nameAndPasswordMessage.
+
+	self assert: aDiagram participants size equals: 4.
+	self
+		assert: aDiagram participants asArray
+		equals: {anActor.
+				aLogon.
+				anAccountDB.
+				aSystem}.
+
+	self assert: aDiagram messages size equals: 2.
+	self assert: aDiagram messages first equals: aLogonMessage.
+
+	^ aDiagram
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> sequenceDiagramElement [
+	<gtExample>
+	| anElement aViewModel |
+	anElement := self basicSequenceDiagramElement.
+	aViewModel := self sequenceDiagramViewModel.
+
+	anElement sequenceDiagramViewModel: aViewModel.
+
+	self assert: anElement hasSequenceDiagramViewModel.
+	self assert: anElement sequenceDiagramViewModel equals: aViewModel.
+
+	^ anElement asPannableElement
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> sequenceDiagramViewModel [
+	<gtExample>
+	| aViewModel aDiagram allAnnouncements |
+	aViewModel := self basicSequenceDiagramViewModel.
+	aDiagram := self sequenceDiagram.
+
+	allAnnouncements := OrderedCollection new.
+	aViewModel weak
+		when: GtSequenceDiagramChangedAnnouncement
+		send: #add:
+		to: allAnnouncements.
+
+	aViewModel sequenceDiagram: aDiagram.
+	self assert: aViewModel hasSequenceDiagram.
+	self assert: aViewModel sequenceDiagram equals: aDiagram.
+	self assert: aViewModel participantViewModels size equals: 4.
+	self assert: aViewModel messageViewModels size equals: 7.
+	self assert: allAnnouncements size equals: 1.
+	self assert: allAnnouncements anyOne sequenceDiagram equals: aDiagram.
+
+	^ aViewModel
+]
+
+{ #category : #'examples - sequence diagram' }
+GtSequenceDiagramExamples >> sequenceDiagram_messagesDepthFirstDo [
+	<gtExample>
+	| aDiagram aMessage allMessages |
+	aDiagram := self sequenceDiagram.
+
+	self assert: aDiagram messages size equals: 1.
+	aMessage := aDiagram messages anyOne.
+
+	allMessages := OrderedCollection new.
+	aDiagram messagesDepthFirstDo: [ :eachMessage | allMessages add: eachMessage ].
+
+	self assert: allMessages size equals: 2.
+	self
+		assert: allMessages asArray
+		equals: {aMessage.
+				aMessage messages anyOne}.
+
+	^ aDiagram
+]
+
+{ #category : #'examples - class role' }
+GtSequenceDiagramExamples >> systemClassRole [
+	<gtExample>
+	system ifNotNil: [ :aParticipant | ^ aParticipant ].
+
+	system := self basicClassRole.
+	system classRole: 'System'.
+
+	self assert: system name equals: ':System'.
+
+	^ system
+]
