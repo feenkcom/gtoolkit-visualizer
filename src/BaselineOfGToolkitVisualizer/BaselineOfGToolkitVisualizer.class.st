@@ -41,7 +41,7 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.616/src' ].
+				spec repository: 'github://feenkcom/Brick:v0.8.617/src' ].
 		spec
 			baseline: 'Beacon' with: [
 				spec repository: 'github://feenkcom/pharo-beacon:d9b5ea5ea796d8de032c693fe555f182754be5ff/repository' ].
@@ -65,6 +65,8 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 		spec package: 'GToolkit-Plotter' with: [
 			spec requires: #('Brick') ].
 		spec package: 'GToolkit-WardleyMap' with: [
+			spec requires: #('Brick') ].
+		spec package: 'GToolkit-SequenceDiagram' with: [
 			spec requires: #('Brick') ].
 	]
 ]
