@@ -156,6 +156,15 @@ GtSequenceDiagramExamples >> basicParticipantViewModel [
 ]
 
 { #category : #'examples - message' }
+GtSequenceDiagramExamples >> basicResponseMessage [
+	<gtExample>
+	| aMessage |
+	aMessage := GtSequenceDiagramResponseMessage new.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
 GtSequenceDiagramExamples >> basicSelfMessage [
 	<gtExample>
 	| aMessage |
@@ -201,7 +210,7 @@ GtSequenceDiagramExamples >> basicSequenceDiagramViewModel [
 GtSequenceDiagramExamples >> basicSynchronousMessage [
 	<gtExample>
 	| aMessage |
-	aMessage := GtSequenceDiagramSynchronousMessage new.
+	aMessage := GtSequenceDiagramSendMessage new.
 
 	^ aMessage
 ]
@@ -231,7 +240,8 @@ GtSequenceDiagramExamples >> isInDatabaseMessage [
 	aMessage
 		sender: anAccountDb;
 		receiver: aSystem;
-		name: 'isInDatabase(name)'.
+		name: 'isInDatabase(name)';
+		model: {'name' -> 'Joe Doe'} asDictionary.
 
 	self assert: aMessage sender equals: anAccountDb.
 	self assert: aMessage receiver equals: aSystem.
@@ -245,7 +255,7 @@ GtSequenceDiagramExamples >> isInDatabaseMessage [
 GtSequenceDiagramExamples >> isInDatabaseResponseMessage [
 	<gtExample>
 	| aMessage aSystem anAccountDb |
-	aMessage := self basicSynchronousMessage.
+	aMessage := self basicResponseMessage.
 
 	anAccountDb := self accountDbClassRole.
 	aSystem := self systemClassRole.
@@ -253,7 +263,8 @@ GtSequenceDiagramExamples >> isInDatabaseResponseMessage [
 	aMessage
 		sender: aSystem;
 		receiver: anAccountDb;
-		name: 'userType'.
+		name: 'userType';
+		model: {'userType' -> 'Client'} asDictionary.
 
 	self assert: aMessage sender equals: aSystem.
 	self assert: aMessage receiver equals: anAccountDb.
@@ -278,6 +289,8 @@ GtSequenceDiagramExamples >> isValidMessage [
 		sender: aSecurityLogon;
 		receiver: anAccountDb;
 		name: 'isValid(name, password)';
+		model: {'name' -> 'Joe Doe'.
+				'password' -> 'a secret password'} asDictionary;
 		message: anInnerMessage;
 		message: aResponseMessage.
 
@@ -293,7 +306,7 @@ GtSequenceDiagramExamples >> isValidMessage [
 GtSequenceDiagramExamples >> isValidResponseMessage [
 	<gtExample>
 	| aMessage aSecurityLogon anAccountDb |
-	aMessage := self basicSynchronousMessage.
+	aMessage := self basicResponseMessage.
 
 	aSecurityLogon := self securityLogonClassRole.
 	anAccountDb := self accountDbClassRole.
@@ -301,7 +314,8 @@ GtSequenceDiagramExamples >> isValidResponseMessage [
 	aMessage
 		sender: anAccountDb;
 		receiver: aSecurityLogon;
-		name: 'valid'.
+		name: 'valid';
+		model: {'is_valid' -> true} asDictionary.
 
 	self assert: aMessage sender equals: anAccountDb.
 	self assert: aMessage receiver equals: aSecurityLogon.
@@ -325,6 +339,8 @@ GtSequenceDiagramExamples >> nameAndPasswordMessage [
 		sender: anActor;
 		receiver: aSecurityLogon;
 		name: 'name and password';
+		model: {'name' -> 'Joe Doe'.
+				'password' -> 'a secret password'} asDictionary;
 		message: anInnerMessage;
 		message: anInnerResponse.
 

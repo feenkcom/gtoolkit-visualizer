@@ -8,6 +8,11 @@ Class {
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
 
+{ #category : #'instance creation' }
+GtSequenceDiagram class >> builder [
+	^ GtSequenceDiagramBuilder new sequenceDiagram: self new
+]
+
 { #category : #'api - building' }
 GtSequenceDiagram >> actor [
 	<return: #GtSequenceDiagramActor>
@@ -20,6 +25,17 @@ GtSequenceDiagram >> actorNamed: aName [
 	^ self participant: (GtSequenceDiagramActor new name: aName)
 ]
 
+{ #category : #converting }
+GtSequenceDiagram >> asElement [
+	^ GtSequenceDiagramElement new
+		sequenceDiagramViewModel: (GtSequenceDiagramViewModel new sequenceDiagram: self)
+]
+
+{ #category : #'api - building' }
+GtSequenceDiagram >> builder [
+	^ GtSequenceDiagramBuilder new sequenceDiagram: self
+]
+
 { #category : #'api - building' }
 GtSequenceDiagram >> classRoleNamed: aName [
 	<return: #GtSequenceDiagramClassRole>
@@ -30,7 +46,7 @@ GtSequenceDiagram >> classRoleNamed: aName [
 GtSequenceDiagram >> from: aSender to: aReceiver [
 	<return: #TGtSequenceDiagramMessage>
 	| aMessage |
-	aMessage := GtSequenceDiagramSynchronousMessage new.
+	aMessage := GtSequenceDiagramSendMessage new.
 	self messages: (self messages copyWith: aMessage).
 	^ aMessage
 ]

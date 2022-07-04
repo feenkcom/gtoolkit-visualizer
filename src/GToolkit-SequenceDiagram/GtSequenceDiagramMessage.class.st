@@ -5,10 +5,16 @@ Class {
 	#classTraits : 'TGtSequenceDiagramMessage classTrait',
 	#instVars : [
 		'messages',
-		'name'
+		'name',
+		'model'
 	],
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
+
+{ #category : #testing }
+GtSequenceDiagramMessage >> hasModel [
+	^ model isNotNil
+]
 
 { #category : #initialization }
 GtSequenceDiagramMessage >> initialize [
@@ -35,6 +41,16 @@ GtSequenceDiagramMessage >> messages: anObject [
 ]
 
 { #category : #accessing }
+GtSequenceDiagramMessage >> model [
+	^ model ifNotNil: #value
+]
+
+{ #category : #accessing }
+GtSequenceDiagramMessage >> model: anObject [
+	model := GtSequenceDiagramValue new value: anObject
+]
+
+{ #category : #accessing }
 GtSequenceDiagramMessage >> name [
 	^ name
 ]
@@ -42,6 +58,12 @@ GtSequenceDiagramMessage >> name [
 { #category : #accessing }
 GtSequenceDiagramMessage >> name: aString [
 	name := aString
+]
+
+{ #category : #'instance creation' }
+GtSequenceDiagramMessage >> newMessageEdgeElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #GtSequenceDiagramMessageEdgeElement>
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

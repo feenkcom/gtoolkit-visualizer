@@ -30,6 +30,12 @@ GtSequenceDiagramMessageViewModel >> depth: anObject [
 	depth := anObject
 ]
 
+{ #category : #testing }
+GtSequenceDiagramMessageViewModel >> hasModel [
+	<return: #Boolean>
+	^ self message hasModel
+]
+
 { #category : #initialization }
 GtSequenceDiagramMessageViewModel >> initialize [
 	super initialize.
@@ -37,8 +43,19 @@ GtSequenceDiagramMessageViewModel >> initialize [
 ]
 
 { #category : #accessing }
+GtSequenceDiagramMessageViewModel >> model [
+	^ self message model
+]
+
+{ #category : #accessing }
 GtSequenceDiagramMessageViewModel >> name [
 	^ self hasMessage ifTrue: [ self message name ] ifFalse: [ '<unknown>' ]
+]
+
+{ #category : #'instance creation' }
+GtSequenceDiagramMessageViewModel >> newMessageEdgeElementUsingBuilder: aBuilder [
+	<return: #GtSequenceDiagramMessageEdgeElement>
+	^ self message newMessageEdgeElementUsingBuilder: aBuilder viewModel: self
 ]
 
 { #category : #accessing }

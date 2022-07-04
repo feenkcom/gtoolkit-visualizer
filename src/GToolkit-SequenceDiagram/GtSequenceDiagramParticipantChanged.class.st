@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'participant'
 	],
-	#category : #'GToolkit-SequenceDiagram-Announcments'
+	#category : #'GToolkit-SequenceDiagram-Announcements'
 }
 
 { #category : #accessing }

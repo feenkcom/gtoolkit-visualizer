@@ -41,13 +41,14 @@ GtSequenceDiagramElementChildrenBuilder >> buildParticipantHeaderElements [
 
 { #category : #building }
 GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMessageViewModel [
-	| aFromNodeElement aToNodeElement anEdgeElement aFromNodeIndex aToNodeIndex aMessageSpecification aLabel |
+	| aFromNodeElement aToNodeElement anEdgeElement aFromNodeIndex aToNodeIndex aMessageSpecification |
 	aMessageViewModel senderViewModel = aMessageViewModel receiverViewModel
 		ifTrue: [ ^ nil ].
 
 	aFromNodeElement := GtSequenceDiagramMessageNodeElement new.
 	aToNodeElement := GtSequenceDiagramMessageNodeElement new.
-	anEdgeElement := GtSequenceDiagramMessageEdgeElement new.
+	anEdgeElement := GtSequenceDiagramMessageResponseEdgeElement new.
+	anEdgeElement := aMessageViewModel newMessageEdgeElementUsingBuilder: self.
 
 	aFromNodeElement graph beNode.
 	aFromNodeElement messageViewModel: aMessageViewModel.
@@ -63,26 +64,9 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 		toAnchor: (BlNearestPositionBoundsAnchor
 				referenceElement: aToNodeElement anchorElement
 				relatedTo: aFromNodeElement anchorElement);
-		toHead: (BlArrowheadTriangle new
-				background: Color black;
-				border: (BlBorder paint: Color black width: 1));
 		clipChildren: false;
 		zIndex: 2.
-
-	aLabel := BrLabel new
-			fitContent;
-			aptitude: ((BrGlamorousLabelAptitude new 
-				fontSize: 6;
-				background: Color white));
-			text: aMessageViewModel name;
-			zIndex: 3;
-			constraintsDo: [ :c | 
-				c ignoreByLayout.
-				c ignored horizontal alignCenter.
-				c ignored vertical alignCenter.
-				c margin: (BlInsets top: -1) ].
-	anEdgeElement addChild: aLabel.
-
+	
 	aFromNodeIndex := self positionOfParticipant: aMessageViewModel senderViewModel.
 	aToNodeIndex := self positionOfParticipant: aMessageViewModel receiverViewModel.
 
@@ -97,9 +81,19 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 			anElement
 				ifNil: [ aMessageSpecification
 						at: anIndex
-						putElement: GtSequenceDiagramMessageNodeElement new	"(BlElement new size: 3 @ 3)" ] ].
+						putElement: GtSequenceDiagramMessageNodeElement new ] ].
 
 	^ aMessageSpecification
+]
+
+{ #category : #'instace creation' }
+GtSequenceDiagramElementChildrenBuilder >> newMessageCallEdgeElementForViewModel: aViewModel [
+	^ GtSequenceDiagramMessageSendEdgeElement new
+]
+
+{ #category : #'instace creation' }
+GtSequenceDiagramElementChildrenBuilder >> newMessageResponseEdgeElementForViewModel: aViewModel [
+	^ GtSequenceDiagramMessageResponseEdgeElement new
 ]
 
 { #category : #building }
