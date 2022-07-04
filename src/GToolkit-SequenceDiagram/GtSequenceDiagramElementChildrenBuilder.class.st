@@ -41,6 +41,30 @@ GtSequenceDiagramElementChildrenBuilder >> buildParticipantHeaderElements [
 
 { #category : #building }
 GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMessageViewModel [
+	<return: #GtSequenceDiagramMessageChildren>
+	^ aMessageViewModel newMessageElementUsingBuilder: self.
+]
+
+{ #category : #building }
+GtSequenceDiagramElementChildrenBuilder >> computeSelfMessageViewModelElements: aMessageViewModel [
+	<return: #GtSequenceDiagramMessageChildren>
+	| aNodeElement aMessageSpecification aNodeIndex |
+	aNodeElement := GtSequenceDiagramSelfMessageNodeElement new
+			messageViewModel: aMessageViewModel.
+
+	aNodeIndex := self positionOfParticipant: aMessageViewModel senderViewModel.
+
+	aMessageSpecification := GtSequenceDiagramMessageChildren new
+			positions: self specification numberOfParticipants;
+			at: aNodeIndex putFromNodeElement: aNodeElement.
+
+	self fillMessageSpecificationEmptyNodes: aMessageSpecification.
+
+	^ aMessageSpecification
+]
+
+{ #category : #building }
+GtSequenceDiagramElementChildrenBuilder >> computeSendMessageViewModelElements: aMessageViewModel [
 	| aFromNodeElement aToNodeElement anEdgeElement aFromNodeIndex aToNodeIndex aMessageSpecification |
 	aMessageViewModel senderViewModel = aMessageViewModel receiverViewModel
 		ifTrue: [ ^ nil ].
@@ -65,8 +89,8 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 				referenceElement: aToNodeElement anchorElement
 				relatedTo: aFromNodeElement anchorElement);
 		clipChildren: false;
-		zIndex: 2.
-	
+		zIndex: GtSequenceDiagramUtility messageZIndex.
+
 	aFromNodeIndex := self positionOfParticipant: aMessageViewModel senderViewModel.
 	aToNodeIndex := self positionOfParticipant: aMessageViewModel receiverViewModel.
 
@@ -75,15 +99,19 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 			edgeElement: anEdgeElement;
 			at: aFromNodeIndex putFromNodeElement: aFromNodeElement;
 			at: aToNodeIndex putToNodeElement: aToNodeElement.
+	self fillMessageSpecificationEmptyNodes: aMessageSpecification.
 
+	^ aMessageSpecification
+]
+
+{ #category : #building }
+GtSequenceDiagramElementChildrenBuilder >> fillMessageSpecificationEmptyNodes: aMessageSpecification [
 	aMessageSpecification nodeElements
 		withIndexDo: [ :anElement :anIndex | 
 			anElement
 				ifNil: [ aMessageSpecification
 						at: anIndex
-						putElement: GtSequenceDiagramMessageNodeElement new ] ].
-
-	^ aMessageSpecification
+						putElement: GtSequenceDiagramMessageNodeElement new ] ]
 ]
 
 { #category : #'instace creation' }
