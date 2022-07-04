@@ -16,6 +16,11 @@ GtSequenceDiagramMessageNodeElement >> anchorElement [
 ]
 
 { #category : #initialization }
+GtSequenceDiagramMessageNodeElement >> defaultWidth [
+	^ 1
+]
+
+{ #category : #initialization }
 GtSequenceDiagramMessageNodeElement >> initialize [
 	super initialize.
 	self initializeChildren.
@@ -31,19 +36,19 @@ GtSequenceDiagramMessageNodeElement >> initializeChildren [
 	| aLineOne aLineTwo |
 	aLineOne := BlElement new.
 	aLineOne
-		size: 2 @ 18;
+		size: self defaultWidth @ 18;
 		background: Color gray;
 		constraintsDo: [ :c | c linear horizontal alignCenter ].
 
 	anchorElement := BlElement new.
 	anchorElement
-		size: 2 @ 2;
+		size: self defaultWidth @ 2;
 		background: Color gray;
 		constraintsDo: [ :c | c linear horizontal alignCenter ].
 
 	aLineTwo := BlElement new.
 	aLineTwo
-		size: 2 @ 7;
+		size: self defaultWidth @ 7;
 		background: Color gray;
 		constraintsDo: [ :c | c linear horizontal alignCenter ].
 
