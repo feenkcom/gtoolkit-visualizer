@@ -41,7 +41,7 @@ GtSequenceDiagramElementChildrenBuilder >> buildParticipantHeaderElements [
 
 { #category : #building }
 GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMessageViewModel [
-	| aFromNodeElement aToNodeElement anEdgeElement aFromNodeIndex aToNodeIndex aMessageSpecification aLabel |
+	| aFromNodeElement aToNodeElement anEdgeElement aFromNodeIndex aToNodeIndex aMessageSpecification |
 	aMessageViewModel senderViewModel = aMessageViewModel receiverViewModel
 		ifTrue: [ ^ nil ].
 
@@ -66,21 +66,7 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 				relatedTo: aFromNodeElement anchorElement);
 		clipChildren: false;
 		zIndex: 2.
-
-	aLabel := BrLabel new
-			fitContent;
-			aptitude: (BrGlamorousLabelAptitude new
-					fontSize: 6;
-					background: Color white);
-			text: aMessageViewModel name;
-			zIndex: 3;
-			constraintsDo: [ :c | 
-				c ignoreByLayout.
-				c ignored horizontal alignCenter.
-				c ignored vertical alignCenter.
-				c margin: (BlInsets top: -1) ].
-	anEdgeElement addChild: aLabel.
-
+	
 	aFromNodeIndex := self positionOfParticipant: aMessageViewModel senderViewModel.
 	aToNodeIndex := self positionOfParticipant: aMessageViewModel receiverViewModel.
 
@@ -103,17 +89,11 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 { #category : #'instace creation' }
 GtSequenceDiagramElementChildrenBuilder >> newMessageCallEdgeElementForViewModel: aViewModel [
 	^ GtSequenceDiagramMessageSendEdgeElement new
-		toHead: (BlArrowheadTriangle new
-				background: Color black;
-				border: (BlBorder paint: Color black width: 1))
 ]
 
 { #category : #'instace creation' }
 GtSequenceDiagramElementChildrenBuilder >> newMessageResponseEdgeElementForViewModel: aViewModel [
 	^ GtSequenceDiagramMessageResponseEdgeElement new
-		toHead: (BlArrowheadTriangle new
-				background: Color lightGray;
-				border: (BlBorder paint: Color lightGray width: 1))
 ]
 
 { #category : #building }

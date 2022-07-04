@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSequenceDiagramSynchronousMessage,
+	#name : #GtSequenceDiagramSendMessage,
 	#superclass : #GtSequenceDiagramMessage,
 	#instVars : [
 		'sender',
@@ -9,31 +9,31 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtSequenceDiagramSynchronousMessage >> newMessageEdgeElementUsingBuilder: aBuilder viewModel: aViewModel [
+GtSequenceDiagramSendMessage >> newMessageEdgeElementUsingBuilder: aBuilder viewModel: aViewModel [
 	<return: #GtSequenceDiagramMessageEdgeElement>
 	^ aBuilder newMessageCallEdgeElementForViewModel: aViewModel
 ]
 
 { #category : #accessing }
-GtSequenceDiagramSynchronousMessage >> receiver [
+GtSequenceDiagramSendMessage >> receiver [
 
 	^ receiver
 ]
 
 { #category : #accessing }
-GtSequenceDiagramSynchronousMessage >> receiver: anObject [
+GtSequenceDiagramSendMessage >> receiver: anObject [
 
 	receiver := anObject
 ]
 
 { #category : #accessing }
-GtSequenceDiagramSynchronousMessage >> sender [
+GtSequenceDiagramSendMessage >> sender [
 
 	^ sender
 ]
 
 { #category : #accessing }
-GtSequenceDiagramSynchronousMessage >> sender: anObject [
+GtSequenceDiagramSendMessage >> sender: anObject [
 
 	sender := anObject
 ]

@@ -30,10 +30,21 @@ GtSequenceDiagramMessageViewModel >> depth: anObject [
 	depth := anObject
 ]
 
+{ #category : #testing }
+GtSequenceDiagramMessageViewModel >> hasModel [
+	<return: #Boolean>
+	^ self message hasModel
+]
+
 { #category : #initialization }
 GtSequenceDiagramMessageViewModel >> initialize [
 	super initialize.
 	announcer := Announcer new
+]
+
+{ #category : #accessing }
+GtSequenceDiagramMessageViewModel >> model [
+	^ self message model
 ]
 
 { #category : #accessing }
