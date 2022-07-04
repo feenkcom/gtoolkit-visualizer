@@ -156,6 +156,15 @@ GtSequenceDiagramExamples >> basicParticipantViewModel [
 ]
 
 { #category : #'examples - message' }
+GtSequenceDiagramExamples >> basicResponseMessage [
+	<gtExample>
+	| aMessage |
+	aMessage := GtSequenceDiagramResponseMessage new.
+
+	^ aMessage
+]
+
+{ #category : #'examples - message' }
 GtSequenceDiagramExamples >> basicSelfMessage [
 	<gtExample>
 	| aMessage |
@@ -245,7 +254,7 @@ GtSequenceDiagramExamples >> isInDatabaseMessage [
 GtSequenceDiagramExamples >> isInDatabaseResponseMessage [
 	<gtExample>
 	| aMessage aSystem anAccountDb |
-	aMessage := self basicSynchronousMessage.
+	aMessage := self basicResponseMessage.
 
 	anAccountDb := self accountDbClassRole.
 	aSystem := self systemClassRole.
@@ -293,7 +302,7 @@ GtSequenceDiagramExamples >> isValidMessage [
 GtSequenceDiagramExamples >> isValidResponseMessage [
 	<gtExample>
 	| aMessage aSecurityLogon anAccountDb |
-	aMessage := self basicSynchronousMessage.
+	aMessage := self basicResponseMessage.
 
 	aSecurityLogon := self securityLogonClassRole.
 	anAccountDb := self accountDbClassRole.

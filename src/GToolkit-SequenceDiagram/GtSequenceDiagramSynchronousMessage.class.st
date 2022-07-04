@@ -8,6 +8,12 @@ Class {
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
 
+{ #category : #'instance creation' }
+GtSequenceDiagramSynchronousMessage >> newMessageEdgeElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #GtSequenceDiagramMessageEdgeElement>
+	^ aBuilder newMessageCallEdgeElementForViewModel: aViewModel
+]
+
 { #category : #accessing }
 GtSequenceDiagramSynchronousMessage >> receiver [
 

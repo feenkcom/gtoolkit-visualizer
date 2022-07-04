@@ -44,6 +44,12 @@ GtSequenceDiagramMessage >> name: aString [
 	name := aString
 ]
 
+{ #category : #'instance creation' }
+GtSequenceDiagramMessage >> newMessageEdgeElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #GtSequenceDiagramMessageEdgeElement>
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 GtSequenceDiagramMessage >> receiver [
 	<return: #TGtSequenceDiagramParticipant>

@@ -41,6 +41,12 @@ GtSequenceDiagramMessageViewModel >> name [
 	^ self hasMessage ifTrue: [ self message name ] ifFalse: [ '<unknown>' ]
 ]
 
+{ #category : #'instance creation' }
+GtSequenceDiagramMessageViewModel >> newMessageEdgeElementUsingBuilder: aBuilder [
+	<return: #GtSequenceDiagramMessageEdgeElement>
+	^ self message newMessageEdgeElementUsingBuilder: aBuilder viewModel: self
+]
+
 { #category : #accessing }
 GtSequenceDiagramMessageViewModel >> receiverViewModel [
 

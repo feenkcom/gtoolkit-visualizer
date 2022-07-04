@@ -47,7 +47,8 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 
 	aFromNodeElement := GtSequenceDiagramMessageNodeElement new.
 	aToNodeElement := GtSequenceDiagramMessageNodeElement new.
-	anEdgeElement := GtSequenceDiagramMessageEdgeElement new.
+	anEdgeElement := GtSequenceDiagramMessageResponseEdgeElement new.
+	anEdgeElement := aMessageViewModel newMessageEdgeElementUsingBuilder: self.
 
 	aFromNodeElement graph beNode.
 	aFromNodeElement messageViewModel: aMessageViewModel.
@@ -63,17 +64,14 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 		toAnchor: (BlNearestPositionBoundsAnchor
 				referenceElement: aToNodeElement anchorElement
 				relatedTo: aFromNodeElement anchorElement);
-		toHead: (BlArrowheadTriangle new
-				background: Color black;
-				border: (BlBorder paint: Color black width: 1));
 		clipChildren: false;
 		zIndex: 2.
 
 	aLabel := BrLabel new
 			fitContent;
-			aptitude: ((BrGlamorousLabelAptitude new 
-				fontSize: 6;
-				background: Color white));
+			aptitude: (BrGlamorousLabelAptitude new
+					fontSize: 6;
+					background: Color white);
 			text: aMessageViewModel name;
 			zIndex: 3;
 			constraintsDo: [ :c | 
@@ -97,9 +95,25 @@ GtSequenceDiagramElementChildrenBuilder >> computeMessageViewModelElements: aMes
 			anElement
 				ifNil: [ aMessageSpecification
 						at: anIndex
-						putElement: GtSequenceDiagramMessageNodeElement new	"(BlElement new size: 3 @ 3)" ] ].
+						putElement: GtSequenceDiagramMessageNodeElement new ] ].
 
 	^ aMessageSpecification
+]
+
+{ #category : #'instace creation' }
+GtSequenceDiagramElementChildrenBuilder >> newMessageCallEdgeElementForViewModel: aViewModel [
+	^ GtSequenceDiagramMessageSendEdgeElement new
+		toHead: (BlArrowheadTriangle new
+				background: Color black;
+				border: (BlBorder paint: Color black width: 1))
+]
+
+{ #category : #'instace creation' }
+GtSequenceDiagramElementChildrenBuilder >> newMessageResponseEdgeElementForViewModel: aViewModel [
+	^ GtSequenceDiagramMessageResponseEdgeElement new
+		toHead: (BlArrowheadTriangle new
+				background: Color lightGray;
+				border: (BlBorder paint: Color lightGray width: 1))
 ]
 
 { #category : #building }
