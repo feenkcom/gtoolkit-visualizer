@@ -30,8 +30,10 @@ GtSequenceDiagramElement >> initializeAsyncElementFuture [
 	self
 		withAsyncFutureDo: [ :anAsyncElementFuture | 
 			anAsyncElementFuture
-				whenSuccess: [ :aPreviewElement :aSpecification | 
-					self updateElementWithSpecification: aSpecification ] ]
+				whenError: [ :aPreviewElement :anError | 
+					self removeChildren.
+					self addChild: anError asDebuggableElement fitContent ];
+				whenSuccess: [ :aPreviewElement :aSpecification | self updateElementWithSpecification: aSpecification ] ]
 ]
 
 { #category : #'private - announcement handling' }
@@ -70,9 +72,8 @@ GtSequenceDiagramElement >> updateElementWithSpecification: aSpecification [
 	self addChildren: aSpecification participantHeaderElements.
 
 	aSpecification messageChildren
-		do: [ :aMessageChild | 
-			self addChildren: aMessageChild nodeElements. ].
+		do: [ :aMessageChild | self addChildren: aMessageChild nodeElements ].
 
 	aSpecification messageChildren
-		do: [ :aMessageChild | self addChild: aMessageChild edgeElement ]
+		do: [ :aMessageChild | aMessageChild edgeElement ifNotNil: [ :anElement | self addChild: anElement ] ]
 ]

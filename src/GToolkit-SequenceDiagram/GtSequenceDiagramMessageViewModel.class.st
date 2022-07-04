@@ -58,6 +58,12 @@ GtSequenceDiagramMessageViewModel >> newMessageEdgeElementUsingBuilder: aBuilder
 	^ self message newMessageEdgeElementUsingBuilder: aBuilder viewModel: self
 ]
 
+{ #category : #'instance creation' }
+GtSequenceDiagramMessageViewModel >> newMessageElementUsingBuilder: aBuilder [
+	<return: #GtSequenceDiagramMessageChildren>
+	^ self message newMessageElementUsingBuilder: aBuilder viewModel: self
+]
+
 { #category : #accessing }
 GtSequenceDiagramMessageViewModel >> receiverViewModel [
 

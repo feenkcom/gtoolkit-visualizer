@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #accessing }
+GtSequenceDiagramSelfMessage >> newMessageElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #GtSequenceDiagramMessageChildren>
+	^ aBuilder computeSelfMessageViewModelElements: aViewModel
+]
+
+{ #category : #accessing }
 GtSequenceDiagramSelfMessage >> participant [
 	<return: #TGtSequenceDiagramParticipant>
 	^ participant

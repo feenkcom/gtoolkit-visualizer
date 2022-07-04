@@ -8,10 +8,16 @@ Class {
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 GtSequenceDiagramResponseMessage >> newMessageEdgeElementUsingBuilder: aBuilder viewModel: aViewModel [
 	<return: #GtSequenceDiagramMessageEdgeElement>
 	^ aBuilder newMessageResponseEdgeElementForViewModel: aViewModel
+]
+
+{ #category : #'instance creation' }
+GtSequenceDiagramResponseMessage >> newMessageElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #GtSequenceDiagramMessageChildren>
+	^ aBuilder computeSendMessageViewModelElements: aViewModel
 ]
 
 { #category : #accessing }
