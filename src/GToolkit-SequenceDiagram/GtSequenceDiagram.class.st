@@ -25,6 +25,12 @@ GtSequenceDiagram >> actorNamed: aName [
 	^ self participant: (GtSequenceDiagramActor new name: aName)
 ]
 
+{ #category : #converting }
+GtSequenceDiagram >> asElement [
+	^ GtSequenceDiagramElement new
+		sequenceDiagramViewModel: (GtSequenceDiagramViewModel new sequenceDiagram: self)
+]
+
 { #category : #'api - building' }
 GtSequenceDiagram >> builder [
 	^ GtSequenceDiagramBuilder new sequenceDiagram: self
