@@ -121,6 +121,15 @@ GtSequenceDiagramExamples >> basicActor [
 	^ aParticipant
 ]
 
+{ #category : #'examples - builder' }
+GtSequenceDiagramExamples >> basicBuilder [
+	<gtExample>
+	| aBuilder |
+	aBuilder := GtSequenceDiagram builder.
+
+	^ aBuilder
+]
+
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> basicClassRole [
 	<gtExample>
@@ -213,6 +222,40 @@ GtSequenceDiagramExamples >> basicSynchronousMessage [
 	aMessage := GtSequenceDiagramSendMessage new.
 
 	^ aMessage
+]
+
+{ #category : #'examples - builder' }
+GtSequenceDiagramExamples >> builderWithOneMessage [
+	<gtExample>
+	| aBuilder aSender aReceiver |
+	aBuilder := self basicBuilder.
+
+	aBuilder participant classRole: 'AccountDB'.
+	aSender := aBuilder participant classRole: 'AccountDB'.
+	aReceiver := aBuilder participant classRole: 'System'.
+
+	aBuilder message
+		sender: aSender;
+		receiver: aReceiver;
+		name: 'isInDatabase(name)'.
+
+	^ aBuilder
+]
+
+{ #category : #'examples - builder' }
+GtSequenceDiagramExamples >> diagramWithOneMessage [
+	<gtExample>
+	| aBuilder aDiagram |
+	aBuilder := self builderWithOneMessage.
+	aDiagram := aBuilder build.
+
+	self assert: aDiagram participants size equals: 2.
+	self assert: aDiagram participants first classRole equals: 'AccountDB'.
+	self assert: aDiagram participants second classRole equals: 'System'.
+
+	self assert: aDiagram messages size equals: 1.
+
+	^ aDiagram
 ]
 
 { #category : #'examples - message' }

@@ -2,16 +2,45 @@ Class {
 	#name : #GtSequenceDiagramBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'sequenceDiagram'
+		'sequenceDiagram',
+		'createdParticipants'
 	],
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
 
 { #category : #'api - building' }
 GtSequenceDiagramBuilder >> build [
-	"Everything is ready. Later, we will do some model checks."
+	self collectMessageParticipants.
 
 	^ self sequenceDiagram
+]
+
+{ #category : #'private - building' }
+GtSequenceDiagramBuilder >> collectMessageParticipants [
+	"We add to the diagram only participants that are used during a communication."
+
+	| notRegisteredParticipants toAddParticipants |
+	notRegisteredParticipants := Set new.
+
+	self sequenceDiagram
+		messagesDepthFirstDo: [ :aMessage :aDepth | 
+			aMessage
+				participantsDo: [ :eachParticipant | 
+					(self sequenceDiagram participants includes: eachParticipant)
+						ifFalse: [ notRegisteredParticipants add: eachParticipant ] ] ].
+
+	toAddParticipants := createdParticipants
+			select: [ :eachParticipant | notRegisteredParticipants includes: eachParticipant ].
+
+	toAddParticipants
+		do: [ :eachParticipant | self sequenceDiagram participant: eachParticipant ]
+]
+
+{ #category : #accessing }
+GtSequenceDiagramBuilder >> initialize [
+	super initialize.
+
+	createdParticipants := OrderedCollection new
 ]
 
 { #category : #'api - building' }
@@ -27,7 +56,7 @@ GtSequenceDiagramBuilder >> participant [
 	<return: #TGtSequenceDiagramParticipant>
 	| aParticipant |
 	aParticipant := GtSequenceDiagramClassRole new.
-	^ self sequenceDiagram participant: aParticipant
+	^ createdParticipants add: aParticipant
 ]
 
 { #category : #'api - building' }

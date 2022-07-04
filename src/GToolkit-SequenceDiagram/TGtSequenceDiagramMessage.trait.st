@@ -25,12 +25,12 @@ TGtSequenceDiagramMessage >> messages [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 TGtSequenceDiagramMessage >> messagesDepthFirstDo: aBlock [
 	self messagesDepthFirstDo: aBlock depth: 1
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 TGtSequenceDiagramMessage >> messagesDepthFirstDo: aBlock depth: aDepth [
 	self messages
 		do: [ :aMessage | 
@@ -42,6 +42,13 @@ TGtSequenceDiagramMessage >> messagesDepthFirstDo: aBlock depth: aDepth [
 TGtSequenceDiagramMessage >> name [
 	<return: #String>
 	^ self explicitRequirement
+]
+
+{ #category : #enumerating }
+TGtSequenceDiagramMessage >> participantsDo: aBlock [
+	aBlock cull: self sender.
+	self receiver = self sender ifTrue: [ ^ self ].
+	aBlock cull: self receiver
 ]
 
 { #category : #accessing }
