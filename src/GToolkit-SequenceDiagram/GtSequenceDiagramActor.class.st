@@ -4,16 +4,32 @@ Class {
 	#traits : 'TGtSequenceDiagramParticipant',
 	#classTraits : 'TGtSequenceDiagramParticipant classTrait',
 	#instVars : [
-		'name'
+		'name',
+		'model'
 	],
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
+
+{ #category : #testing }
+GtSequenceDiagramActor >> hasModel [
+	^ model isNotNil
+]
 
 { #category : #accessing }
 GtSequenceDiagramActor >> initialize [
 	super initialize.
 
 	name := 'Actor'
+]
+
+{ #category : #accessing }
+GtSequenceDiagramActor >> model [
+	^ model ifNotNil: #value
+]
+
+{ #category : #accessing }
+GtSequenceDiagramActor >> model: anObject [
+	model := GtSequenceDiagramValue new value: anObject
 ]
 
 { #category : #accessing }

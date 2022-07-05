@@ -21,10 +21,20 @@ GtSequenceDiagramParticipantViewModel >> asHeadElement [
 	^ GtSequenceDiagramClassRoleElement new participantViewModel: self
 ]
 
+{ #category : #testing }
+GtSequenceDiagramParticipantViewModel >> hasModel [
+	^ self hasParticipant and: [ self participant hasModel ]
+]
+
 { #category : #initialization }
 GtSequenceDiagramParticipantViewModel >> initialize [
 	super initialize.
 	announcer := Announcer new
+]
+
+{ #category : #accessing }
+GtSequenceDiagramParticipantViewModel >> model [
+	^ self participant model
 ]
 
 { #category : #'private - notifying' }

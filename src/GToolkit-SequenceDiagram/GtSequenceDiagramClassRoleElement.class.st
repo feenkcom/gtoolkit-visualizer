@@ -10,10 +10,17 @@ Class {
 	#category : #'GToolkit-SequenceDiagram-UI'
 }
 
+{ #category : #testing }
+GtSequenceDiagramClassRoleElement >> hasInspecteableModel [
+	^ self hasParticipantViewModel and: [ self participantViewModel hasModel ]
+]
+
 { #category : #initialization }
 GtSequenceDiagramClassRoleElement >> initialize [
 	super initialize.
 	self initializeChildren.
+	self initializeStyle.
+	self initializeEventHandlers.
 	self initializeAsyncElementFuture.
 
 	self fitContent
@@ -46,6 +53,25 @@ GtSequenceDiagramClassRoleElement >> initializeChildren [
 	self addChild: objectElement
 ]
 
+{ #category : #initialization }
+GtSequenceDiagramClassRoleElement >> initializeEventHandlers [
+	self when: BlClickEvent do: [ :anEvent | self onMouseClick: anEvent ]
+]
+
+{ #category : #initialization }
+GtSequenceDiagramClassRoleElement >> initializeStyle [
+	self
+		aptitude: (BrStyleCommonAptitude new
+				hovered: [ :aStyle | aStyle do: [ self styleHovered ] after: [ self styleDefault ] ])
+]
+
+{ #category : #'private - event handling' }
+GtSequenceDiagramClassRoleElement >> onMouseClick: anEvent [
+	self hasInspecteableModel ifFalse: [ ^ self ].
+
+	self phlow spawnObject: self participantViewModel model
+]
+
 { #category : #'private - announcement handling' }
 GtSequenceDiagramClassRoleElement >> onParticipantChanged: anAnnouncement [
 	self requestElementUpdate
@@ -60,6 +86,34 @@ GtSequenceDiagramClassRoleElement >> onParticipantViewModelChanged [
 GtSequenceDiagramClassRoleElement >> requestElementUpdate [
 	self
 		withAsyncFutureDo: [ :anAsyncElementFuture | anAsyncElementFuture future: [ self participantViewModel participant ] ]
+]
+
+{ #category : #initialization }
+GtSequenceDiagramClassRoleElement >> styleDefault [
+	labelElement aptitude
+		foreground: Color black;
+		underlineColor: Color black.
+
+	objectElement
+		border: (BlBorder builder
+				paint: Color black;
+				width: 1;
+				build)
+]
+
+{ #category : #'private - styling' }
+GtSequenceDiagramClassRoleElement >> styleHovered [
+	self hasInspecteableModel ifFalse: [ ^ self ].
+
+	labelElement aptitude
+		foreground: BrGlamorousColors hoveredButtonTextColor;
+		underlineColor: BrGlamorousColors hoveredButtonBorderColor.
+
+	objectElement
+		border: (BlBorder builder
+				paint: BrGlamorousColors hoveredButtonBorderColor;
+				width: 1;
+				build)
 ]
 
 { #category : #'api - participant view model' }
@@ -77,5 +131,7 @@ GtSequenceDiagramClassRoleElement >> unsubscribeFromParticipantViewModel [
 
 { #category : #'private - updating' }
 GtSequenceDiagramClassRoleElement >> updateElementWithParticipant: aParticipant [
-	labelElement text: aParticipant name
+	labelElement text: aParticipant name.
+	
+	aParticipant hasModel ifFalse: [ ^ self ].
 ]
