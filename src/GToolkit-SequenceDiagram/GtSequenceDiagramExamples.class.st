@@ -67,6 +67,12 @@ GtSequenceDiagramExamples >> actor [
 
 	userActor := self basicActor.
 	userActor name: 'User'.
+	userActor
+		model: {'firstname' -> 'Joe'.
+				'familyname' -> 'Doe'.
+				'username' -> 'Joe Doe'.
+				'password' -> 'a secret password'.
+				'city' -> 'Heaven'} asDictionary.
 
 	self assert: userActor name equals: 'User'.
 

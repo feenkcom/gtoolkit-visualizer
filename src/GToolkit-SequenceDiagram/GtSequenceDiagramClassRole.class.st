@@ -4,7 +4,8 @@ Class {
 	#traits : 'TGtSequenceDiagramParticipant',
 	#classTraits : 'TGtSequenceDiagramParticipant classTrait',
 	#instVars : [
-		'classRole'
+		'classRole',
+		'model'
 	],
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
@@ -19,6 +20,21 @@ GtSequenceDiagramClassRole >> classRole [
 GtSequenceDiagramClassRole >> classRole: anObject [
 
 	classRole := anObject
+]
+
+{ #category : #testing }
+GtSequenceDiagramClassRole >> hasModel [
+	^ model isNotNil
+]
+
+{ #category : #accessing }
+GtSequenceDiagramClassRole >> model [
+	^ model ifNotNil: #value
+]
+
+{ #category : #accessing }
+GtSequenceDiagramClassRole >> model: anObject [
+	model := GtSequenceDiagramValue new value: anObject
 ]
 
 { #category : #accessing }
