@@ -7,8 +7,8 @@ Class {
 { #category : #initialization }
 GtSequenceDiagramMessageResponseEdgeElement >> defaultBorder [
 	^ BlBorder builder
-		paint: Color lightGray;
-		width: 2;
+		paint: self defaultColor;
+		width: 1;
 		dashArray: #(4 4);
 		build
 ]
@@ -24,6 +24,7 @@ GtSequenceDiagramMessageResponseEdgeElement >> initializeHead [
 	self
 		toHead: (BlArrowheadTriangle new
 				background: self defaultColor;
+				scale: 3;
 				border: (BlBorder paint: self defaultColor width: 1))
 ]
 
@@ -36,7 +37,7 @@ GtSequenceDiagramMessageResponseEdgeElement >> styleHovered [
 	self
 		border: (BlBorder builder
 				paint: BrGlamorousColors hoveredButtonBorderColor;
-				width: 2;
+				width: 1;
 				dashArray: #(4 4);
 				build)
 ]
