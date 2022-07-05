@@ -17,7 +17,7 @@ GtSequenceDiagramSelfMessageNodeElement >> anchorElement [
 
 { #category : #initialization }
 GtSequenceDiagramSelfMessageNodeElement >> defaultColor [
-	^ Color gray
+	^ Color black
 ]
 
 { #category : #initialization }
@@ -43,7 +43,7 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 	aLineOne := BlElement new.
 	aLineOne
 		size: self defaultWidth @ 7;
-		background: Color gray;
+		background: Color lightGray;
 		constraintsDo: [ :c | c linear horizontal alignCenter ].
 
 	aContainer := BrHorizontalPane new.
@@ -62,7 +62,7 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 		addChild: (BrFrame new
 				vMatchParent;
 				hExact: self defaultWidth;
-				background: Color gray;
+				background: Color lightGray;
 				constraintsDo: [ :c | c linear horizontal alignCenter ]).
 
 	aContainer
@@ -121,14 +121,14 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 	aLineThree := BlElement new.
 	aLineThree
 		size: self defaultWidth @ 6;
-		background: Color gray;
+		background: Color lightGray;
 		constraintsDo: [ :c | c linear horizontal alignCenter ].
 
 
 	labelElement := GtSequenceDiagramUtility newMessageLabel
 			constraintsDo: [ :c | 
 				c ignoreByLayout.
-				c ignored horizontal alignRightAt: 1.4.
+				c ignored horizontal alignRightAt: 1.6.
 				c ignored vertical alignCenter ].
 
 	aContainer

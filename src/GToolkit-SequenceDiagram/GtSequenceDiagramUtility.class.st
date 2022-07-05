@@ -19,7 +19,7 @@ GtSequenceDiagramUtility class >> newMessageLabel [
 	^ BrLabel new
 		fitContent;
 		aptitude: (BrGlamorousLabelAptitude new
-				fontSize: 6;
+				fontSize: 9;
 				background: Color white);
 		margin: (BlInsets top: -1);
 		text: ''

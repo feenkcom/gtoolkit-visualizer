@@ -14,7 +14,7 @@ Class {
 GtSequenceDiagramMessageEdgeElement >> defaultBorder [
 	^ BlBorder builder
 		paint: Color black;
-		width: 2;
+		width: 1;
 		build
 ]
 
@@ -42,7 +42,7 @@ GtSequenceDiagramMessageEdgeElement >> initializeChildren [
 	labelElement := BrLabel new
 			fitContent;
 			aptitude: (BrGlamorousLabelAptitude new
-					fontSize: 6;
+					glamorousCodeTinySize;
 					background: Color white);
 			text: '';
 			zIndex: 3;

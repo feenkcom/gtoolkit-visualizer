@@ -15,6 +15,7 @@ GtSequenceDiagramMessageSendEdgeElement >> initializeHead [
 	self
 		toHead: (BlArrowheadTriangle new
 				background: self defaultColor;
+				scale: 3;
 				border: (BlBorder paint: self defaultColor width: 1))
 ]
 
@@ -25,5 +26,5 @@ GtSequenceDiagramMessageSendEdgeElement >> styleHovered [
 	super styleHovered.
 
 	self
-		border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 2)
+		border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 1)
 ]

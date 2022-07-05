@@ -42,8 +42,8 @@ GtSequenceDiagramMessageNodeElement >> initializeChildren [
 
 	anchorElement := BlElement new.
 	anchorElement
-		size: self defaultWidth @ 2;
-		background: Color gray;
+		size: self defaultWidth @ 1;
+		background: Color veryLightGray;
 		constraintsDo: [ :c | c linear horizontal alignCenter ].
 
 	aLineTwo := BlElement new.
