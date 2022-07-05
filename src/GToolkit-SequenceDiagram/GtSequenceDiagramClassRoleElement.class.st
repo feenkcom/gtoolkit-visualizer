@@ -91,12 +91,12 @@ GtSequenceDiagramClassRoleElement >> requestElementUpdate [
 { #category : #initialization }
 GtSequenceDiagramClassRoleElement >> styleDefault [
 	labelElement aptitude
-		foreground: BrGlamorousColors defaultButtonTextColor;
-		underlineColor: BrGlamorousColors defaultButtonTextColor.
+		foreground: Color black;
+		underlineColor: Color black.
 
 	objectElement
 		border: (BlBorder builder
-				paint: BrGlamorousColors defaultButtonTextColor;
+				paint: Color black;
 				width: 1;
 				build)
 ]
