@@ -6,7 +6,7 @@ Class {
 
 { #category : #initialization }
 GtSequenceDiagramMessageSendEdgeElement >> defaultColor [
-	^ Color black
+	^ GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
 ]
 
 { #category : #initialization }
@@ -16,7 +16,9 @@ GtSequenceDiagramMessageSendEdgeElement >> initializeHead [
 		toHead: (BlArrowheadTriangle new
 				background: self defaultColor;
 				scale: 3;
-				border: (BlBorder paint: self defaultColor width: 1))
+				border: (BlBorder
+						paint: self defaultColor
+						width: GtSequenceDiagramUtility messageLineWidth))
 ]
 
 { #category : #'private - styling' }
@@ -26,5 +28,7 @@ GtSequenceDiagramMessageSendEdgeElement >> styleHovered [
 	super styleHovered.
 
 	self
-		border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 1)
+		border: (BlBorder
+				paint: GtSequenceDiagramUtility hoveredBackgroundColor
+				width: GtSequenceDiagramUtility messageLineWidth)
 ]

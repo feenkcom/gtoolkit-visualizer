@@ -1,23 +1,28 @@
 Class {
 	#name : #GtSequenceDiagramSelfMessageNodeElement,
-	#superclass : #BrVerticalPane,
+	#superclass : #BrFrame,
 	#traits : 'TGtWithSequenceDiagramMessageViewModel',
 	#classTraits : 'TGtWithSequenceDiagramMessageViewModel classTrait',
 	#instVars : [
-		'labelElement'
+		'labelElement',
+		'messageContainer'
 	],
 	#category : #'GToolkit-SequenceDiagram-UI'
 }
 
-{ #category : #accessing }
-GtSequenceDiagramSelfMessageNodeElement >> anchorElement [
-
-	^ container
-]
-
 { #category : #initialization }
 GtSequenceDiagramSelfMessageNodeElement >> defaultColor [
 	^ Color black
+]
+
+{ #category : #initialization }
+GtSequenceDiagramSelfMessageNodeElement >> defaultMessageContainerHeight [
+	^ GtSequenceDiagramUtility verticalLineSegmetHeight - 8
+]
+
+{ #category : #initialization }
+GtSequenceDiagramSelfMessageNodeElement >> defaultMessageContainerWidth [
+	^ GtSequenceDiagramUtility verticalLineWidth + (2 * 36)
 ]
 
 { #category : #initialization }
@@ -30,7 +35,8 @@ GtSequenceDiagramSelfMessageNodeElement >> initialize [
 	super initialize.
 	self initializeChildren.
 
-	self fitContent.
+	self hFitContent.
+	self vExact: GtSequenceDiagramUtility verticalLineSegmetHeight.
 	self background: BlBackground transparent.
 	self clipChildren: false.
 
@@ -39,64 +45,64 @@ GtSequenceDiagramSelfMessageNodeElement >> initialize [
 
 { #category : #initialization }
 GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
-	| aLineOne aLineThree aLeftTop aRightTop aLeftBottom aRightBottom anArrowOne anArrowTwo anArrowThree aContainer |
-	aLineOne := BlElement new.
-	aLineOne
-		size: self defaultWidth @ 7;
-		background: Color lightGray;
-		constraintsDo: [ :c | c linear horizontal alignCenter ].
+	| anObjectLine aLeftTop aRightTop aLeftBottom aRightBottom anArrowOne anArrowTwo anArrowThree |
+	anObjectLine := BrFrame new.
+	anObjectLine
+		hExact: GtSequenceDiagramUtility verticalLineWidth;
+		vMatchParent;
+		background: GtSequenceDiagramUtility verticalLineDefaultBackgroundColor;
+		constraintsDo: [ :c | 
+			c frame horizontal alignCenter.
+			c frame vertical alignCenter ].
 
-	aContainer := BrHorizontalPane new.
-	aContainer
-		exact: (self defaultWidth + (2 * 36)) @ 14;
+	messageContainer := BrFrame new.
+	messageContainer
+		hExact: self defaultMessageContainerWidth;
+		vExact: self defaultMessageContainerHeight;
 		background: BlBackground transparent;
-		constraintsDo: [ :c | c linear horizontal alignCenter ];
+		constraintsDo: [ :c | 
+			c frame horizontal alignCenter.
+			c frame vertical alignCenter ];
 		clipChildren: false.
 
-	aContainer
-		addChild: (BrFrame new
-				matchParent;
-				background: BlBackground transparent).
-
-	aContainer
-		addChild: (BrFrame new
-				vMatchParent;
-				hExact: self defaultWidth;
-				background: Color lightGray;
-				constraintsDo: [ :c | c linear horizontal alignCenter ]).
-
-	aContainer
-		addChild: (BrFrame new
-				matchParent;
-				addChild: (aLeftTop := BlElement new
-							size: 1 @ 1;
-							constraintsDo: [ :c | 
-								c frame horizontal alignLeft.
-								c frame vertical alignTop ]);
-				addChild: (aRightTop := BlElement new
-							size: 1 @ 1;
-							constraintsDo: [ :c | 
-								c frame horizontal alignRight.
-								c frame vertical alignTop ]);
-				addChild: (aLeftBottom := BlElement new
-							size: 1 @ 1;
-							constraintsDo: [ :c | 
-								c frame horizontal alignLeft.
-								c frame vertical alignBottom ]);
-				addChild: (aRightBottom := BlElement new
-							size: 1 @ 1;
-							constraintsDo: [ :c | 
-								c frame horizontal alignRight.
-								c frame vertical alignBottom ])).
+	messageContainer
+		addChild: (aLeftTop := BlElement new
+					size: (GtSequenceDiagramUtility verticalLineWidth + 2) @ 1;
+					visibility: BlVisibility hidden;
+					constraintsDo: [ :c | 
+						c frame horizontal alignCenter.
+						c frame vertical alignTop ]);
+		addChild: (aRightTop := BlElement new
+					size: 1 @ 1;
+					visibility: BlVisibility hidden;
+					constraintsDo: [ :c | 
+						c frame horizontal alignRight.
+						c frame vertical alignTop ]);
+		addChild: (aRightBottom := BlElement new
+					size: (GtSequenceDiagramUtility verticalLineWidth + 2) @ 1;
+					visibility: BlVisibility hidden;
+					constraintsDo: [ :c | 
+						c frame horizontal alignRight.
+						c frame vertical alignBottom ]);
+		addChild: (aLeftBottom := BlElement new
+					size: 1 @ 1;
+					visibility: BlVisibility hidden;
+					constraintsDo: [ :c | 
+						c frame horizontal alignCenter.
+						c frame vertical alignBottom ]).
 
 	anArrowOne := BlLineElement new
-			border: (BlBorder paint: self defaultColor width: 1);
+			border: (BlBorder
+					paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
+					width: GtSequenceDiagramUtility messageLineWidth);
 			fromAnchor: (BlNearestPositionBoundsAnchor referenceElement: aLeftTop relatedTo: aRightTop);
 			toAnchor: (BlNearestPositionBoundsAnchor referenceElement: aRightTop relatedTo: aLeftTop);
 			clipChildren: false.
 
 	anArrowTwo := BlLineElement new
-			border: (BlBorder paint: self defaultColor width: 1);
+			border: (BlBorder
+					paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
+					width: GtSequenceDiagramUtility messageLineWidth);
 			fromAnchor: (BlNearestPositionBoundsAnchor
 					referenceElement: aRightTop
 					relatedTo: aRightBottom);
@@ -106,7 +112,9 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 			clipChildren: false.
 
 	anArrowThree := BlLineElement new
-			border: (BlBorder paint: self defaultColor width: 1);
+			border: (BlBorder
+					paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
+					width: GtSequenceDiagramUtility messageLineWidth);
 			fromAnchor: (BlNearestPositionBoundsAnchor
 					referenceElement: aRightBottom
 					relatedTo: aLeftBottom);
@@ -115,15 +123,9 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 					relatedTo: aRightBottom);
 			toHead: (BlArrowheadTriangle new
 					background: self defaultColor;
+					scale: 3;
 					border: (BlBorder paint: self defaultColor width: 1));
 			clipChildren: false.
-
-	aLineThree := BlElement new.
-	aLineThree
-		size: self defaultWidth @ 6;
-		background: Color lightGray;
-		constraintsDo: [ :c | c linear horizontal alignCenter ].
-
 
 	labelElement := GtSequenceDiagramUtility newMessageLabel
 			constraintsDo: [ :c | 
@@ -131,16 +133,15 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 				c ignored horizontal alignRightAt: 1.6.
 				c ignored vertical alignCenter ].
 
-	aContainer
+	messageContainer
 		addChild: anArrowOne;
 		addChild: anArrowTwo;
 		addChild: anArrowThree;
 		addChild: labelElement.
 
 	self
-		addChild: aLineOne;
-		addChild: aContainer;
-		addChild: aLineThree
+		addChild: anObjectLine;
+		addChild: messageContainer
 ]
 
 { #category : #'api - message view model' }
@@ -150,5 +151,13 @@ GtSequenceDiagramSelfMessageNodeElement >> onMessageViewModelChanged [
 
 { #category : #'private - updating' }
 GtSequenceDiagramSelfMessageNodeElement >> updateElement [
-	labelElement text: self messageViewModel name asString
+	| aName |
+	aName := self messageViewModel name asString.
+	labelElement text: aName.
+
+	aName size < 15
+		ifTrue: [ messageContainer hExact: self defaultMessageContainerWidth ]
+		ifFalse: [ | anExtraWidth |
+			anExtraWidth := (aName size - 15).
+			messageContainer hExact: self defaultMessageContainerWidth + anExtraWidth ]
 ]
