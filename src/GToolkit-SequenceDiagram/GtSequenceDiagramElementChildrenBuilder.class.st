@@ -83,7 +83,7 @@ GtSequenceDiagramElementChildrenBuilder >> computeSelfMessageViewModelElements: 
 GtSequenceDiagramElementChildrenBuilder >> computeSendMessageViewModelElements: aMessageViewModel [
 	| aFromNodeElement aToNodeElement anEdgeElement aFromNodeIndex aToNodeIndex aMessageSpecification |
 	aMessageViewModel senderViewModel = aMessageViewModel receiverViewModel
-		ifTrue: [ ^ nil ].
+		ifTrue: [ ^ self computeSelfMessageViewModelElements: aMessageViewModel ].
 
 	aFromNodeElement := GtSequenceDiagramMessageNodeElement new.
 	aToNodeElement := GtSequenceDiagramMessageNodeElement new.

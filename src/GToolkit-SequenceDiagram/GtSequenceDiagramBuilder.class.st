@@ -3,10 +3,19 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'sequenceDiagram',
-		'createdParticipants'
+		'createdParticipants',
+		'messageOwnerStack'
 	],
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
+
+{ #category : #'api - building' }
+GtSequenceDiagramBuilder >> actor [
+	<return: #TGtSequenceDiagramParticipant>
+	| aParticipant |
+	aParticipant := GtSequenceDiagramActor new.
+	^ createdParticipants add: aParticipant
+]
 
 { #category : #'api - building' }
 GtSequenceDiagramBuilder >> build [
@@ -36,19 +45,40 @@ GtSequenceDiagramBuilder >> collectMessageParticipants [
 		do: [ :eachParticipant | self sequenceDiagram participant: eachParticipant ]
 ]
 
+{ #category : #'api - building' }
+GtSequenceDiagramBuilder >> forAll: rootModels children: aChildrenBlock do: aDoBlock [
+	rootModels
+		do: [ :eachModel | 
+			| aMessage aModelChildren |
+			aMessage := aDoBlock cull: eachModel.
+			messageOwnerStack push: aMessage.
+			aModelChildren := aChildrenBlock cull: eachModel.
+			self
+				forAll: aModelChildren
+				children: aChildrenBlock
+				do: aDoBlock.
+			messageOwnerStack pop ]
+]
+
 { #category : #accessing }
 GtSequenceDiagramBuilder >> initialize [
 	super initialize.
 
-	createdParticipants := OrderedCollection new
+	createdParticipants := OrderedCollection new.
+	messageOwnerStack := Stack new.
 ]
 
 { #category : #'api - building' }
 GtSequenceDiagramBuilder >> message [
 	<return: #TGtSequenceDiagramMessage>
 	| aMessage |
+	self
+		assert: [ messageOwnerStack isNotEmpty ]
+		description: [ 'Sequence diagram must be initialized before any message creation' ].
+
 	aMessage := GtSequenceDiagramSendMessage new.
-	^ self sequenceDiagram message: aMessage
+	messageOwnerStack top message: aMessage.
+	^ aMessage
 ]
 
 { #category : #'api - building' }
@@ -77,10 +107,22 @@ GtSequenceDiagramBuilder >> selfMessage [
 
 { #category : #accessing }
 GtSequenceDiagramBuilder >> sequenceDiagram [
-	^ sequenceDiagram ifNil: [ sequenceDiagram := GtSequenceDiagram new ]
+	^ sequenceDiagram
+		ifNil: [ | aDiagram |
+			aDiagram := GtSequenceDiagram new.
+			self sequenceDiagram: aDiagram.
+			aDiagram ]
 ]
 
 { #category : #accessing }
 GtSequenceDiagramBuilder >> sequenceDiagram: aSequenceDiagram [
-	sequenceDiagram := aSequenceDiagram
+	self
+		assert: [ sequenceDiagram isNil ]
+		description: [ 'Sequence diagram must be initialized only once' ].
+	self
+		assert: [ messageOwnerStack isEmpty ]
+		description: [ 'Sequence diagram must be initialized before message owner stack' ].
+
+	sequenceDiagram := aSequenceDiagram.
+	messageOwnerStack push: aSequenceDiagram
 ]

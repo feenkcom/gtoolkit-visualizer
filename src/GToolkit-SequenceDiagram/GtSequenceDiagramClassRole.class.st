@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TGtSequenceDiagramParticipant classTrait',
 	#instVars : [
 		'classRole',
-		'model'
+		'model',
+		'instance'
 	],
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
@@ -28,6 +29,18 @@ GtSequenceDiagramClassRole >> hasModel [
 ]
 
 { #category : #accessing }
+GtSequenceDiagramClassRole >> instance [
+
+	^ instance
+]
+
+{ #category : #accessing }
+GtSequenceDiagramClassRole >> instance: anObject [
+
+	instance := anObject
+]
+
+{ #category : #accessing }
 GtSequenceDiagramClassRole >> model [
 	^ model ifNotNil: #value
 ]
@@ -43,13 +56,22 @@ GtSequenceDiagramClassRole >> name [
 	aSize := self classRole
 			ifNil: [ 6 + 1 ]
 			ifNotNil: [ :aString | aString size + 1 ].
+
+	aSize := aSize
+			+ (self instance ifNil: [ 0 ] ifNotNil: [ :aString | aString size + 1 ]).
+
 	^ String
 		new: aSize
 		streamContents: [ :aStream | 
+			self instance
+				ifNotNil: [ :aString | 
+					aStream
+						nextPutAll: aString asString;
+						space ].
 			aStream nextPut: $:.
 			self classRole
 				ifNil: [ aStream nextPutAll: 'Object' ]
-				ifNotNil: [ :aString | aStream nextPutAll: aString ] ]
+				ifNotNil: [ :aString | aStream nextPutAll: aString asString ] ]
 ]
 
 { #category : #printing }
