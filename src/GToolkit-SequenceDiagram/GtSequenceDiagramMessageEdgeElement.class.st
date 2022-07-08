@@ -13,8 +13,8 @@ Class {
 { #category : #initialization }
 GtSequenceDiagramMessageEdgeElement >> defaultBorder [
 	^ BlBorder builder
-		paint: Color black;
-		width: 1;
+		paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor;
+		width: GtSequenceDiagramUtility messageLineWidth;
 		build
 ]
 
@@ -39,13 +39,7 @@ GtSequenceDiagramMessageEdgeElement >> initialize [
 
 { #category : #initialization }
 GtSequenceDiagramMessageEdgeElement >> initializeChildren [
-	labelElement := BrLabel new
-			fitContent;
-			aptitude: (BrGlamorousLabelAptitude new
-					glamorousCodeTinySize;
-					background: Color white);
-			text: '';
-			zIndex: 3;
+	labelElement := GtSequenceDiagramUtility newMessageLabel
 			constraintsDo: [ :c | 
 				c ignoreByLayout.
 				c ignored horizontal alignCenter.
@@ -98,13 +92,14 @@ GtSequenceDiagramMessageEdgeElement >> styleDefault [
 GtSequenceDiagramMessageEdgeElement >> styleHovered [
 	self hasInspecteableModel ifFalse: [ ^ self ].
 
-	labelElement aptitude foreground: BrGlamorousColors hoveredButtonTextColor.
+	labelElement aptitude
+		foreground: GtSequenceDiagramUtility hoveredBackgroundColor.
 
 	toHead ifNil: [ ^ self ].
-	toHead background: BrGlamorousColors hoveredButtonBorderColor.
+	toHead background: GtSequenceDiagramUtility hoveredBackgroundColor.
 	toHead
 		border: (BlBorder builder
-				paint: BrGlamorousColors hoveredButtonBorderColor;
+				paint: GtSequenceDiagramUtility hoveredBackgroundColor;
 				width: 2;
 				build)
 ]

@@ -33,9 +33,25 @@ GtSequenceDiagramElementChildrenBuilder >> buildMessageElements [
 
 { #category : #building }
 GtSequenceDiagramElementChildrenBuilder >> buildParticipantHeaderElements [
-	| allHeaderElements |
+	| allHeaderElements aLongestMethodName aMargin |
+	aLongestMethodName := self specification messageViewModels
+			detectMax: [ :each | each name size ].
+	aMargin := aLongestMethodName
+			ifNil: [ BlInsets left: 5 right: 5 ]
+			ifNotNil: [ | aNameLegth |
+				aNameLegth := aLongestMethodName name size.
+				aNameLegth < 15
+					ifTrue: [ BlInsets left: 5 right: 5 ]
+					ifFalse: [ | anExtra |
+						anExtra := (aNameLegth - 15) * 2.
+						BlInsets left: 5 + anExtra right: 5 + anExtra ] ].
+
 	allHeaderElements := self specification participantViewModels
-			collect: [ :eachViewModel | eachViewModel asHeadElement margin: (BlInsets left: 5 right: 5) ].
+			collect: [ :eachViewModel | 
+				| aHeadElement |
+				aHeadElement := eachViewModel asHeadElement.
+				aHeadElement margin: aMargin.
+				aHeadElement ].
 	self specification participantHeaderElements: allHeaderElements
 ]
 
@@ -111,7 +127,7 @@ GtSequenceDiagramElementChildrenBuilder >> fillMessageSpecificationEmptyNodes: a
 			anElement
 				ifNil: [ aMessageSpecification
 						at: anIndex
-						putElement: GtSequenceDiagramMessageNodeElement new ] ]
+						putElement: GtSequenceDiagramVerticalLineElement new ] ]
 ]
 
 { #category : #'instace creation' }

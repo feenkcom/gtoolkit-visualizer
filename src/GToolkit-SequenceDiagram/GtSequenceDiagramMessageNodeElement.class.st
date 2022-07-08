@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSequenceDiagramMessageNodeElement,
-	#superclass : #BrVerticalPane,
+	#superclass : #BrFrame,
 	#traits : 'TGtWithSequenceDiagramMessageViewModel',
 	#classTraits : 'TGtWithSequenceDiagramMessageViewModel classTrait',
 	#instVars : [
@@ -16,8 +16,13 @@ GtSequenceDiagramMessageNodeElement >> anchorElement [
 ]
 
 { #category : #initialization }
+GtSequenceDiagramMessageNodeElement >> defaultColor [
+	^ GtSequenceDiagramUtility verticalLineDefaultBackgroundColor 
+]
+
+{ #category : #initialization }
 GtSequenceDiagramMessageNodeElement >> defaultWidth [
-	^ 1
+	^ GtSequenceDiagramUtility verticalLineWidth
 ]
 
 { #category : #initialization }
@@ -25,35 +30,24 @@ GtSequenceDiagramMessageNodeElement >> initialize [
 	super initialize.
 	self initializeChildren.
 
-	self fitContent.
-	self background: BlBackground transparent.
+	self hExact: GtSequenceDiagramUtility verticalLineWidth.
+	self vExact: GtSequenceDiagramUtility verticalLineSegmetHeight.
+	self background: GtSequenceDiagramUtility verticalLineDefaultBackgroundColor.
 
+	self alignCenter.
 	self constraintsDo: [ :c | c grid horizontal alignCenter ]
 ]
 
 { #category : #initialization }
 GtSequenceDiagramMessageNodeElement >> initializeChildren [
-	| aLineOne aLineTwo |
-	aLineOne := BlElement new.
-	aLineOne
-		size: self defaultWidth @ 18;
-		background: Color gray;
-		constraintsDo: [ :c | c linear horizontal alignCenter ].
-
 	anchorElement := BlElement new.
 	anchorElement
-		size: self defaultWidth @ 1;
-		background: Color veryLightGray;
-		constraintsDo: [ :c | c linear horizontal alignCenter ].
+		size: (GtSequenceDiagramUtility verticalLineWidth + 2) @ 1;
+		background: BlBackground transparent;
+		visibility: BlVisibility hidden;
+		constraintsDo: [ :c | 
+			c frame horizontal alignCenter.
+			c frame vertical alignCenter ].
 
-	aLineTwo := BlElement new.
-	aLineTwo
-		size: self defaultWidth @ 7;
-		background: Color gray;
-		constraintsDo: [ :c | c linear horizontal alignCenter ].
-
-	self
-		addChild: aLineOne;
-		addChild: anchorElement;
-		addChild: aLineTwo
+	self addChild: anchorElement
 ]
