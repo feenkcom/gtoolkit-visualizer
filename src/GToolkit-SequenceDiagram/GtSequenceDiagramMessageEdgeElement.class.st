@@ -20,7 +20,7 @@ GtSequenceDiagramMessageEdgeElement >> defaultBorder [
 
 { #category : #initialization }
 GtSequenceDiagramMessageEdgeElement >> defaultColor [
-	^ Color black
+	^ GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
 ]
 
 { #category : #testing }
@@ -35,6 +35,7 @@ GtSequenceDiagramMessageEdgeElement >> initialize [
 	self initializeHead.
 	self initializeStyle.
 	self initializeEventHandlers.
+	self styleDefault.
 ]
 
 { #category : #initialization }
@@ -61,7 +62,6 @@ GtSequenceDiagramMessageEdgeElement >> initializeHead [
 GtSequenceDiagramMessageEdgeElement >> initializeStyle [
 	self
 		aptitude: (BrStyleCommonAptitude new
-				default: [ :aStyle | aStyle border: self defaultBorder ];
 				hovered: [ :aStyle | aStyle do: [ self styleHovered ] after: [ self styleDefault ] ])
 ]
 
@@ -80,7 +80,8 @@ GtSequenceDiagramMessageEdgeElement >> onMouseClick: anEvent [
 { #category : #'private - styling' }
 GtSequenceDiagramMessageEdgeElement >> styleDefault [
 	self border: self defaultBorder.
-	labelElement aptitude foreground: BrGlamorousColors defaultButtonTextColor.
+	labelElement aptitude
+		foreground: GtSequenceDiagramUtility messageLabelDefaultForegroudColor.
 
 	toHead ifNil: [ ^ self ].
 

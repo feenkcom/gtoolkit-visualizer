@@ -5,14 +5,24 @@ Class {
 	#classTraits : 'TGtWithSequenceDiagramMessageViewModel classTrait',
 	#instVars : [
 		'labelElement',
-		'messageContainer'
+		'messageContainer',
+		'arrowOne',
+		'arrowTwo',
+		'arrowThree'
 	],
 	#category : #'GToolkit-SequenceDiagram-UI'
 }
 
 { #category : #initialization }
+GtSequenceDiagramSelfMessageNodeElement >> defaultArrowBorder [
+	^ BlBorder
+		paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
+		width: GtSequenceDiagramUtility messageLineWidth
+]
+
+{ #category : #initialization }
 GtSequenceDiagramSelfMessageNodeElement >> defaultColor [
-	^ Color black
+	^ GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
 ]
 
 { #category : #initialization }
@@ -30,11 +40,26 @@ GtSequenceDiagramSelfMessageNodeElement >> defaultWidth [
 	^ 1
 ]
 
+{ #category : #testing }
+GtSequenceDiagramSelfMessageNodeElement >> hasInspecteableModel [
+	^ self hasMessageViewModel and: [ self messageViewModel hasModel ]
+]
+
+{ #category : #initialization }
+GtSequenceDiagramSelfMessageNodeElement >> hoveredArrowBorder [
+	^ BlBorder
+		paint: GtSequenceDiagramUtility hoveredBackgroundColor
+		width: GtSequenceDiagramUtility messageLineWidth
+]
+
 { #category : #initialization }
 GtSequenceDiagramSelfMessageNodeElement >> initialize [
 	super initialize.
 	self initializeChildren.
+	self initializeStyle.
+	self initializeEventHandlers.
 
+	self styleDefault.
 	self hFitContent.
 	self vExact: GtSequenceDiagramUtility verticalLineSegmetHeight.
 	self background: BlBackground transparent.
@@ -45,7 +70,7 @@ GtSequenceDiagramSelfMessageNodeElement >> initialize [
 
 { #category : #initialization }
 GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
-	| anObjectLine aLeftTop aRightTop aLeftBottom aRightBottom anArrowOne anArrowTwo anArrowThree |
+	| anObjectLine aLeftTop aRightTop aLeftBottom aRightBottom |
 	anObjectLine := BrFrame new.
 	anObjectLine
 		hExact: GtSequenceDiagramUtility verticalLineWidth;
@@ -91,15 +116,13 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 						c frame horizontal alignCenter.
 						c frame vertical alignBottom ]).
 
-	anArrowOne := BlLineElement new
-			border: (BlBorder
-					paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
-					width: GtSequenceDiagramUtility messageLineWidth);
+	arrowOne := BlLineElement new
+			border: self defaultArrowBorder;
 			fromAnchor: (BlNearestPositionBoundsAnchor referenceElement: aLeftTop relatedTo: aRightTop);
 			toAnchor: (BlNearestPositionBoundsAnchor referenceElement: aRightTop relatedTo: aLeftTop);
 			clipChildren: false.
 
-	anArrowTwo := BlLineElement new
+	arrowTwo := BlLineElement new
 			border: (BlBorder
 					paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
 					width: GtSequenceDiagramUtility messageLineWidth);
@@ -111,7 +134,7 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 					relatedTo: aRightTop);
 			clipChildren: false.
 
-	anArrowThree := BlLineElement new
+	arrowThree := BlLineElement new
 			border: (BlBorder
 					paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
 					width: GtSequenceDiagramUtility messageLineWidth);
@@ -122,9 +145,11 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 					referenceElement: aLeftBottom
 					relatedTo: aRightBottom);
 			toHead: (BlArrowheadTriangle new
-					background: self defaultColor;
+					background: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor;
 					scale: 3;
-					border: (BlBorder paint: self defaultColor width: 1));
+					border: (BlBorder
+							paint: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor
+							width: GtSequenceDiagramUtility messageLineWidth));
 			clipChildren: false.
 
 	labelElement := GtSequenceDiagramUtility newMessageLabel
@@ -134,9 +159,9 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 				c ignored vertical alignCenter ].
 
 	messageContainer
-		addChild: anArrowOne;
-		addChild: anArrowTwo;
-		addChild: anArrowThree;
+		addChild: arrowOne;
+		addChild: arrowTwo;
+		addChild: arrowThree;
 		addChild: labelElement.
 
 	self
@@ -144,9 +169,56 @@ GtSequenceDiagramSelfMessageNodeElement >> initializeChildren [
 		addChild: messageContainer
 ]
 
+{ #category : #initialization }
+GtSequenceDiagramSelfMessageNodeElement >> initializeEventHandlers [
+	self when: BlClickEvent do: [ :anEvent | self onMouseClick: anEvent ]
+]
+
+{ #category : #initialization }
+GtSequenceDiagramSelfMessageNodeElement >> initializeStyle [
+	self
+		aptitude: (BrStyleCommonAptitude new
+				hovered: [ :aStyle | aStyle do: [ self styleHovered ] after: [ self styleDefault ] ])
+]
+
 { #category : #'api - message view model' }
 GtSequenceDiagramSelfMessageNodeElement >> onMessageViewModelChanged [
 	self updateElement
+]
+
+{ #category : #'private - event handling' }
+GtSequenceDiagramSelfMessageNodeElement >> onMouseClick: anEvent [
+	self hasInspecteableModel ifFalse: [ ^ self ].
+
+	self phlow spawnObject: self messageViewModel model
+]
+
+{ #category : #'private - styling' }
+GtSequenceDiagramSelfMessageNodeElement >> styleDefault [
+	labelElement aptitude
+		foreground: GtSequenceDiagramUtility messageLabelDefaultForegroudColor.
+
+	arrowOne border: self defaultArrowBorder.
+	arrowTwo border: self defaultArrowBorder.
+	arrowThree border: self defaultArrowBorder.
+	arrowThree toHead
+		background: GtSequenceDiagramUtility messageSendLineDefaultBackgroundColor;
+		border: self defaultArrowBorder
+]
+
+{ #category : #'private - styling' }
+GtSequenceDiagramSelfMessageNodeElement >> styleHovered [
+	self hasInspecteableModel ifFalse: [ ^ self ].
+
+	labelElement aptitude
+		foreground: GtSequenceDiagramUtility hoveredBackgroundColor.
+
+	arrowOne border: self hoveredArrowBorder.
+	arrowTwo border: self hoveredArrowBorder.
+	arrowThree border: self hoveredArrowBorder.
+	arrowThree toHead
+		background: GtSequenceDiagramUtility hoveredBackgroundColor;
+		border: self hoveredArrowBorder
 ]
 
 { #category : #'private - updating' }
@@ -155,9 +227,9 @@ GtSequenceDiagramSelfMessageNodeElement >> updateElement [
 	aName := self messageViewModel name asString.
 	labelElement text: aName.
 
-	aName size < 15
+	aName size < 10
 		ifTrue: [ messageContainer hExact: self defaultMessageContainerWidth ]
 		ifFalse: [ | anExtraWidth |
-			anExtraWidth := (aName size - 15).
+			anExtraWidth := (aName size - 10).
 			messageContainer hExact: self defaultMessageContainerWidth + anExtraWidth ]
 ]

@@ -16,7 +16,7 @@ GtSequenceDiagramUtility class >> labelZIndex [
 
 { #category : #'api - instance creation' }
 GtSequenceDiagramUtility class >> messageLabelDefaultForegroudColor [
-	^ Color black
+	^ BrGlamorousColors defaultButtonTextColor
 ]
 
 { #category : #'api - constants' }

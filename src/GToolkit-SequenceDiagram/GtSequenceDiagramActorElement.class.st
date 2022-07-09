@@ -1,22 +1,22 @@
 Class {
-	#name : #GtSequenceDiagramClassRoleElement,
+	#name : #GtSequenceDiagramActorElement,
 	#superclass : #BrVerticalPane,
 	#traits : 'TGtWithSequenceDiagramParticipantViewModel',
 	#classTraits : 'TGtWithSequenceDiagramParticipantViewModel classTrait',
 	#instVars : [
 		'labelElement',
-		'objectElement'
+		'actorElement'
 	],
 	#category : #'GToolkit-SequenceDiagram-UI'
 }
 
 { #category : #testing }
-GtSequenceDiagramClassRoleElement >> hasInspecteableModel [
+GtSequenceDiagramActorElement >> hasInspecteableModel [
 	^ self hasParticipantViewModel and: [ self participantViewModel hasModel ]
 ]
 
 { #category : #initialization }
-GtSequenceDiagramClassRoleElement >> initialize [
+GtSequenceDiagramActorElement >> initialize [
 	super initialize.
 	self initializeChildren.
 	self initializeStyle.
@@ -28,7 +28,7 @@ GtSequenceDiagramClassRoleElement >> initialize [
 ]
 
 { #category : #initialization }
-GtSequenceDiagramClassRoleElement >> initializeAsyncElementFuture [
+GtSequenceDiagramActorElement >> initializeAsyncElementFuture [
 	self
 		withAsyncFutureDo: [ :anAsyncElementFuture | 
 			anAsyncElementFuture
@@ -39,63 +39,65 @@ GtSequenceDiagramClassRoleElement >> initializeAsyncElementFuture [
 ]
 
 { #category : #initialization }
-GtSequenceDiagramClassRoleElement >> initializeChildren [
-	objectElement := BrVerticalPane new
-			fitContent;
-			border: (BlBorder paint: Color black width: 1).
+GtSequenceDiagramActorElement >> initializeChildren [
+	| aScalableActorElement |
+	actorElement := BrGlamorousVectorIcons actor asElement.
+
+	aScalableActorElement := actorElement asScalableElement
+			height: 42;
+			constraintsDo: [ :c | c linear horizontal alignCenter ].
 
 	labelElement := BrLabel new
 			fitContent;
-			aptitude: (BrGlamorousLabelAptitude new underlineColor: Color black);
-			margin: (BlInsets all: 5);
-			text: ':?'.
+			aptitude: BrGlamorousLabelAptitude new;
+			text: 'Actor';
+			constraintsDo: [ :c | c linear horizontal alignCenter ].
 
-	objectElement addChild: labelElement.
-	self addChild: objectElement
+	self addChild: aScalableActorElement.
+	self addChild: labelElement
 ]
 
 { #category : #initialization }
-GtSequenceDiagramClassRoleElement >> initializeEventHandlers [
+GtSequenceDiagramActorElement >> initializeEventHandlers [
 	self when: BlClickEvent do: [ :anEvent | self onMouseClick: anEvent ]
 ]
 
 { #category : #initialization }
-GtSequenceDiagramClassRoleElement >> initializeStyle [
+GtSequenceDiagramActorElement >> initializeStyle [
 	self
 		aptitude: (BrStyleCommonAptitude new
 				hovered: [ :aStyle | aStyle do: [ self styleHovered ] after: [ self styleDefault ] ])
 ]
 
 { #category : #'private - event handling' }
-GtSequenceDiagramClassRoleElement >> onMouseClick: anEvent [
+GtSequenceDiagramActorElement >> onMouseClick: anEvent [
 	self hasInspecteableModel ifFalse: [ ^ self ].
 
 	self phlow spawnObject: self participantViewModel model
 ]
 
 { #category : #'private - announcement handling' }
-GtSequenceDiagramClassRoleElement >> onParticipantChanged: anAnnouncement [
+GtSequenceDiagramActorElement >> onParticipantChanged: anAnnouncement [
 	self requestElementUpdate
 ]
 
 { #category : #'api - participant view model' }
-GtSequenceDiagramClassRoleElement >> onParticipantViewModelChanged [
+GtSequenceDiagramActorElement >> onParticipantViewModelChanged [
 	self requestElementUpdate
 ]
 
 { #category : #'private - updating' }
-GtSequenceDiagramClassRoleElement >> requestElementUpdate [
+GtSequenceDiagramActorElement >> requestElementUpdate [
 	self
 		withAsyncFutureDo: [ :anAsyncElementFuture | anAsyncElementFuture future: [ self participantViewModel participant ] ]
 ]
 
 { #category : #initialization }
-GtSequenceDiagramClassRoleElement >> styleDefault [
+GtSequenceDiagramActorElement >> styleDefault [
 	labelElement aptitude
-		foreground: Color black;
-		underlineColor: Color black.
+		foreground: Color black.
 
-	objectElement
+	actorElement
 		border: (BlBorder builder
 				paint: Color black;
 				width: 1;
@@ -103,14 +105,13 @@ GtSequenceDiagramClassRoleElement >> styleDefault [
 ]
 
 { #category : #'private - styling' }
-GtSequenceDiagramClassRoleElement >> styleHovered [
+GtSequenceDiagramActorElement >> styleHovered [
 	self hasInspecteableModel ifFalse: [ ^ self ].
 
 	labelElement aptitude
-		foreground: BrGlamorousColors hoveredButtonTextColor;
-		underlineColor: BrGlamorousColors hoveredButtonBorderColor.
+		foreground: BrGlamorousColors hoveredButtonTextColor.
 
-	objectElement
+	actorElement
 		border: (BlBorder builder
 				paint: BrGlamorousColors hoveredButtonBorderColor;
 				width: 1;
@@ -118,7 +119,7 @@ GtSequenceDiagramClassRoleElement >> styleHovered [
 ]
 
 { #category : #'api - participant view model' }
-GtSequenceDiagramClassRoleElement >> subscribeToParticipantViewModel [
+GtSequenceDiagramActorElement >> subscribeToParticipantViewModel [
 	self participantViewModel weak
 		when: GtSequenceDiagramParticipantChanged
 		send: #onParticipantChanged:
@@ -126,12 +127,12 @@ GtSequenceDiagramClassRoleElement >> subscribeToParticipantViewModel [
 ]
 
 { #category : #'api - participant view model' }
-GtSequenceDiagramClassRoleElement >> unsubscribeFromParticipantViewModel [
+GtSequenceDiagramActorElement >> unsubscribeFromParticipantViewModel [
 	self participantViewModel unsubscribe: self
 ]
 
 { #category : #'private - updating' }
-GtSequenceDiagramClassRoleElement >> updateElementWithParticipant: aParticipant [
+GtSequenceDiagramActorElement >> updateElementWithParticipant: aParticipant [
 	labelElement text: aParticipant name.
 	
 	aParticipant hasModel ifFalse: [ ^ self ].

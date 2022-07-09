@@ -25,3 +25,9 @@ TGtSequenceDiagramParticipant >> name [
 	<return: #String>
 	^ self explicitRequirement
 ]
+
+{ #category : #ui }
+TGtSequenceDiagramParticipant >> newParticipatElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #BlElement>
+	^ self explicitRequirement
+]
