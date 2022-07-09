@@ -44,6 +44,12 @@ GtSequenceDiagramActor >> name: anObject [
 	name := anObject
 ]
 
+{ #category : #ui }
+GtSequenceDiagramActor >> newParticipatElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #BlElement>
+	^ aBuilder newActorParticipantForViewModel: aViewModel
+]
+
 { #category : #accessing }
 GtSequenceDiagramActor >> printOn: aStream [
 	super printOn: aStream.

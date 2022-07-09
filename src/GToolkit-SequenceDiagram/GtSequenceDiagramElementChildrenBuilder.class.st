@@ -49,7 +49,7 @@ GtSequenceDiagramElementChildrenBuilder >> buildParticipantHeaderElements [
 	allHeaderElements := self specification participantViewModels
 			collect: [ :eachViewModel | 
 				| aHeadElement |
-				aHeadElement := eachViewModel asHeadElement.
+				aHeadElement := eachViewModel newParticipantElementUsingBuilder: self.
 				aHeadElement margin: aMargin.
 				aHeadElement ].
 	self specification participantHeaderElements: allHeaderElements
@@ -128,6 +128,16 @@ GtSequenceDiagramElementChildrenBuilder >> fillMessageSpecificationEmptyNodes: a
 				ifNil: [ aMessageSpecification
 						at: anIndex
 						putElement: GtSequenceDiagramVerticalLineElement new ] ]
+]
+
+{ #category : #'instace creation' }
+GtSequenceDiagramElementChildrenBuilder >> newActorParticipantForViewModel: aViewModel [
+	^ GtSequenceDiagramActorElement new participantViewModel: aViewModel
+]
+
+{ #category : #'instace creation' }
+GtSequenceDiagramElementChildrenBuilder >> newClassRoleParticipantForViewModel: aViewModel [
+	^ GtSequenceDiagramClassRoleElement new participantViewModel: aViewModel
 ]
 
 { #category : #'instace creation' }

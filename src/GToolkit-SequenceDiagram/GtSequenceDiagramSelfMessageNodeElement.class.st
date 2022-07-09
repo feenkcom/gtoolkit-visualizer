@@ -227,9 +227,9 @@ GtSequenceDiagramSelfMessageNodeElement >> updateElement [
 	aName := self messageViewModel name asString.
 	labelElement text: aName.
 
-	aName size < 15
+	aName size < 10
 		ifTrue: [ messageContainer hExact: self defaultMessageContainerWidth ]
 		ifFalse: [ | anExtraWidth |
-			anExtraWidth := (aName size - 15).
+			anExtraWidth := (aName size - 10).
 			messageContainer hExact: self defaultMessageContainerWidth + anExtraWidth ]
 ]

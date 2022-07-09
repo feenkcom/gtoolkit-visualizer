@@ -74,6 +74,12 @@ GtSequenceDiagramClassRole >> name [
 				ifNotNil: [ :aString | aStream nextPutAll: aString asString ] ]
 ]
 
+{ #category : #ui }
+GtSequenceDiagramClassRole >> newParticipatElementUsingBuilder: aBuilder viewModel: aViewModel [
+	<return: #BlElement>
+	^ aBuilder newClassRoleParticipantForViewModel: aViewModel
+]
+
 { #category : #printing }
 GtSequenceDiagramClassRole >> printOn: aStream [
 	super printOn: aStream.

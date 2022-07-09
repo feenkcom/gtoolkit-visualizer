@@ -15,12 +15,6 @@ GtSequenceDiagramParticipantViewModel >> announcer [
 	^ announcer
 ]
 
-{ #category : #converting }
-GtSequenceDiagramParticipantViewModel >> asHeadElement [
-	<return: #BlElement>
-	^ GtSequenceDiagramClassRoleElement new participantViewModel: self
-]
-
 { #category : #testing }
 GtSequenceDiagramParticipantViewModel >> hasModel [
 	^ self hasParticipant and: [ self participant hasModel ]
@@ -35,6 +29,12 @@ GtSequenceDiagramParticipantViewModel >> initialize [
 { #category : #accessing }
 GtSequenceDiagramParticipantViewModel >> model [
 	^ self participant model
+]
+
+{ #category : #converting }
+GtSequenceDiagramParticipantViewModel >> newParticipantElementUsingBuilder: aBuilder [
+	<return: #BlElement>
+	^ self participant newParticipatElementUsingBuilder: aBuilder viewModel: self
 ]
 
 { #category : #'private - notifying' }

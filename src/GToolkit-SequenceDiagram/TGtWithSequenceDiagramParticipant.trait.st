@@ -6,12 +6,6 @@ Trait {
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
 
-{ #category : #converting }
-TGtWithSequenceDiagramParticipant >> asHeadElement [
-	<return: #BlElement>
-	^ self explicitRequirement
-]
-
 { #category : #'api - participant' }
 TGtWithSequenceDiagramParticipant >> hasParticipant [
 	"Return a true if nil is assigned to the receiver, false otherwise"
@@ -26,6 +20,12 @@ TGtWithSequenceDiagramParticipant >> hasParticipant [
 TGtWithSequenceDiagramParticipant >> name [
 	self hasParticipant ifFalse: [ ^ '?' ].
 	^ self participant name
+]
+
+{ #category : #converting }
+TGtWithSequenceDiagramParticipant >> newParticipantElementUsingBuilder: aBuilder [
+	<return: #BlElement>
+	^ self explicitRequirement
 ]
 
 { #category : #'api - participant' }
