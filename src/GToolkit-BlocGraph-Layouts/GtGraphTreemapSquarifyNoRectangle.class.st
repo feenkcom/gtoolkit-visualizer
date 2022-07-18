@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #cleanup }
@@ -29,14 +29,13 @@ GtGraphTreemapSquarifyNoRectangle class >> uniqueInstance [
 
 { #category : #squarifying }
 GtGraphTreemapSquarifyNoRectangle >> asElementWithOccupiedArea [
-	^ (GtGraphUtilities default rectangleOn: self extent: 100@50)
+	^ (GtGraphUtilities default rectangleOn: self extent: 100 @ 50)
 		addChild: (BrLabel new
-			aptitude: BrGlamorousLabelAptitude;
-			text: ('Uninitialized' asRopedText foreground: Color lightGray);
-			constraintsDo: [ :c | 
-				c ignoreByLayout.
-				c ignored horizontal alignCenter.
-				c ignored vertical alignCenter ])
+				text: ('Uninitialized' asRopedText foreground: Color lightGray);
+				constraintsDo: [ :c | 
+					c ignoreByLayout.
+					c ignored horizontal alignCenter.
+					c ignored vertical alignCenter ])
 ]
 
 { #category : #accessing }

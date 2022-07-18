@@ -49,7 +49,6 @@ GtSequenceDiagramActorElement >> initializeChildren [
 
 	labelElement := BrLabel new
 			fitContent;
-			aptitude: BrGlamorousLabelAptitude new;
 			text: 'Actor';
 			constraintsDo: [ :c | c linear horizontal alignCenter ].
 
