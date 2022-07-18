@@ -44,20 +44,25 @@ BlElement >> explainer [
 { #category : #'*GToolkit-Connector' }
 BlElement >> gtExplainerTreeFor: aView [
 	<gtView>
-	self explainer isExplanationHolder ifFalse: [ ^ aView empty].
+	self explainer isExplanationHolder ifFalse: [ ^ aView empty ].
 	^ aView mondrian
 		title: 'Explainer';
 		painting: [ :m | 
-			m nodes 
+			m nodes
 				stencil: [ :each | 
 					| el |
 					el := (each explainer isExplanation or: [ each explainer isTarget ])
-						ifTrue: [ BrLabel new aptitude: BrGlamorousLabelAptitude; text: ((each explainer model asString) asRopedText foreground: Color white); geometry: (BlRoundedRectangleGeometry cornerRadius: 4); background: Color orange]
-						ifFalse: [ BlElement new geometry: BlEllipseGeometry new; border: (BlBorder paint: Color black); size: 5@5 ].
-					el when: BlClickEvent do: [:e | e target phlow spawnObject: each ] 
-				];
+							ifTrue: [ BrLabel new
+									text: (each explainer model asString asRopedText foreground: Color white);
+									geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
+									background: Color orange ]
+							ifFalse: [ BlElement new
+									geometry: BlEllipseGeometry new;
+									border: (BlBorder paint: Color black);
+									size: 5 @ 5 ].
+					el when: BlClickEvent do: [ :e | e target phlow spawnObject: each ] ];
 				with: self withAllChildrenBreadthFirst.
-			m edges 
+			m edges
 				fromRightCenter;
 				toLeftCenter;
 				connectFrom: #parent.
@@ -66,15 +71,20 @@ BlElement >> gtExplainerTreeFor: aView [
 				fromRightCenter;
 				toRightCenter;
 				stencil: [ :e | 
-					BlParabollaArcElement new 
+					BlParabollaArcElement new
 						zIndex: 0;
 						curvatureFraction: 0.3;
 						border: (BlBorder paint: (Color orange alpha: 0.8) width: 2);
 						toHead: (BlArrowheadSimpleArrow new
-							border: (BlBorder builder paint: (Color orange alpha: 0.8); width: 4; build)) ];
-				connect: ((self withAllChildrenBreadthFirst select: [:each | each explainer model notNil]) groupedBy: [:each | each explainer model ]) values
-				fromAll: [:assoc | assoc select: [:el | el explainer isExplanation ] ]
-				toAll: [:assoc | assoc select: [:el | el explainer isTarget ] ].
+								border: (BlBorder builder
+										paint: (Color orange alpha: 0.8);
+										width: 4;
+										build)) ];
+				connect: ((self withAllChildrenBreadthFirst
+							select: [ :each | each explainer model notNil ])
+							groupedBy: [ :each | each explainer model ]) values
+					fromAll: [ :assoc | assoc select: [ :el | el explainer isExplanation ] ]
+					toAll: [ :assoc | assoc select: [ :el | el explainer isTarget ] ].
 			m layout horizontalTree.
 			m ]
 ]

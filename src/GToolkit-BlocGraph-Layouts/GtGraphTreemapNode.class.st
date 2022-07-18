@@ -12,18 +12,18 @@ Class {
 		'value',
 		'totalValue'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #converting }
 GtGraphTreemapNode >> asElement [
-	^ super asElement addChild: (BrLabel new
-		aptitude: BrGlamorousLabelAptitude;
-		text: (self value asRopedText foreground: Color lightGray);
-		constraintsDo: [ :c | 
-			c ignoreByLayout.
-			c ignored horizontal alignCenter.
-			c ignored vertical alignCenter ])
+	^ super asElement
+		addChild: (BrLabel new
+				text: (self value asRopedText foreground: Color lightGray);
+				constraintsDo: [ :c | 
+					c ignoreByLayout.
+					c ignored horizontal alignCenter.
+					c ignored vertical alignCenter ])
 ]
 
 { #category : #accessing }

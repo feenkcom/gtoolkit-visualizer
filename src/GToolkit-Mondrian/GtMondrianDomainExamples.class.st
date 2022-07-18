@@ -75,7 +75,6 @@ GtMondrianDomainExamples >> buttonLabelLookEventPropagation [
 
 { #category : #utility }
 GtMondrianDomainExamples >> classHierarchyFor: classes [
-
 	"This is a simpler visualization than the umlClasses one, with just class names."
 
 	<gtExample>
@@ -86,22 +85,21 @@ GtMondrianDomainExamples >> classHierarchyFor: classes [
 			BrLabel new
 				border: (BlBorder paint: Color gray);
 				text: c name;
-				aptitude: BrGlamorousLabelAptitude;
 				padding: (BlInsets
-						 top: 5
-						 right: 5
-						 bottom: 5
-						 left: 5) ];
+						top: 5
+						right: 5
+						bottom: 5
+						left: 5) ];
 		with: classes.
 	m edges
 		fromCenterBottom;
 		toCenterTop;
 		stencil: [ :c | 
-			BlLineElement new 
-				border: (BlBorder paint: Color gray );
+			BlLineElement new
+				border: (BlBorder paint: Color gray);
 				fromHead: (BlArrowheadTriangle new
 						scale: 4;
-						 border: (BlBorder paint: Color gray  )) ];
+						border: (BlBorder paint: Color gray)) ];
 		connectFrom: #superclass.
 	m layout tree levelDistance: 20.
 	^ m
