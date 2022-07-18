@@ -42,6 +42,13 @@ GtConnectorExamples >> createContainerElement [
 ]
 
 { #category : #utils }
+GtConnectorExamples >> createLabelWithText: aLabel [ 	
+	^ BrLabel new
+		aptitude: BrGlamorousLabelAptitude;
+		text: aLabel
+]
+
+{ #category : #utils }
 GtConnectorExamples >> createVisualSourceButtonForModel: anEntity withLabel: aLabel withAction: anAction [
 	| button |
 	button := BrButton new
@@ -533,66 +540,68 @@ GtConnectorExamples >> treeDependeciesExampleWithNoVisualSourceAndNoExplicitRefe
 	| gtconnector |
 	gtconnector := GtConnector new.
 
-	gtconnector
-		stencil: [ :data | 
-			| label container dotButtonOne dotButtonTwo buttonOneData buttonTwoData toggleButtonOne toggleButtonTwo |
-			container := self createContainerElement.
-			container size: 90 @ 70.
-			container connector
-				model: data;
-				beLayoutSource;
-				beLayoutTarget;
-				beVisualTarget.
+	gtconnector stencil: [ :data |
+		| label container dotButtonOne dotButtonTwo buttonOneData buttonTwoData toggleButtonOne toggleButtonTwo |
+		container := self createContainerElement.
+		container size: 90 @ 70.
+		container connector 
+			model: data;
+			beLayoutSource;
+			beLayoutTarget;
+			beVisualTarget.
 
-			label := BrLabel new text: data.
-			label relocate: 10 @ 25.
-			container addChild: label.
+		label := self createLabelWithText: data.
+		label relocate: 10 @ 25.
+		container addChild: label.
 
-			buttonOneData := data , '0'.
-			dotButtonOne := self
-					createVisualSourceButtonWithLabel: '+0'
-					withAction: [ gtconnector addEntity: buttonOneData ].
-			dotButtonOne relocate: 50 @ 5.
-
-			dotButtonOne connector
-				model: buttonOneData;
-				beVisualSource.
-
-			buttonTwoData := data , '1'.
-			dotButtonTwo := self
-					createVisualSourceButtonWithLabel: '+1'
-					withAction: [ gtconnector addEntity: buttonTwoData ].
-			dotButtonTwo relocate: 50 @ 45.
-
-			dotButtonTwo connector
-				model: buttonTwoData;
-				beVisualSource.
-
-			toggleButtonOne := BrToggle new
-					aptitude: BrHydraSwitchWithoutTrackAptitude new;
-					when: BrToggleActivatedEvent
-						do: [ :anEvent | container addChild: dotButtonOne ];
-					when: BrToggleDeactivatedEvent
-						do: [ :anEvent | container removeChild: dotButtonOne ].
-			toggleButtonOne relocate: 5 @ 5.
-
-			toggleButtonTwo := BrToggle new
-					aptitude: BrHydraSwitchWithoutTrackAptitude new;
-					when: BrToggleActivatedEvent
-						do: [ :anEvent | container addChild: dotButtonTwo ];
-					when: BrToggleDeactivatedEvent
-						do: [ :anEvent | container removeChild: dotButtonTwo ].
-			toggleButtonTwo relocate: 5 @ 45.
-
-			container addChild: toggleButtonOne.
-			container addChild: toggleButtonTwo.
-
-			container ].
+		buttonOneData := data, '0'.
+		dotButtonOne := self 
+			createVisualSourceButtonWithLabel: '+0'
+			withAction: [ 
+				gtconnector addEntity: buttonOneData ].
+		dotButtonOne relocate: 50 @ 5.
+		
+		dotButtonOne connector 
+			model: buttonOneData;
+			beVisualSource.
+			
+		buttonTwoData := data, '1'.
+		dotButtonTwo := self 
+			createVisualSourceButtonWithLabel: '+1'
+			withAction: [ 
+				gtconnector addEntity: buttonTwoData ].		
+		dotButtonTwo relocate: 50 @ 45.
+		
+		dotButtonTwo connector 
+			model: buttonTwoData;
+			beVisualSource.
+		
+		toggleButtonOne := BrToggle new
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
+			when: BrToggleActivatedEvent do: [ :anEvent | 
+				container addChild: dotButtonOne ];
+			when: BrToggleDeactivatedEvent do: [ :anEvent | 
+				container removeChild: dotButtonOne ].
+		toggleButtonOne relocate: 5 @ 5.
+		
+		toggleButtonTwo := BrToggle new
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
+			when: BrToggleActivatedEvent do: [ :anEvent | 
+				container addChild: dotButtonTwo. ];
+			when: BrToggleDeactivatedEvent do: [ :anEvent | 
+				container removeChild: dotButtonTwo. ].
+		toggleButtonTwo relocate: 5 @ 45.
+		
+		container addChild: toggleButtonOne.
+		container addChild: toggleButtonTwo.
+		
+		container
+	].
 
 	gtconnector addEntity: '0'.
 	gtconnector addEntity: '00'.
 	gtconnector addEntity: '01'.
-
+	
 	gtconnector addEntity: '000'.
 	gtconnector addEntity: '001'.
 	^ gtconnector
@@ -604,68 +613,68 @@ GtConnectorExamples >> treeDependeciesExampleWithVisibleVisualSourceAndNoExplici
 	| gtconnector |
 	gtconnector := GtConnector new.
 
-	gtconnector
-		stencil: [ :data | 
-			| label container dotButtonOne dotButtonTwo buttonOneData buttonTwoData toggleButtonOne toggleButtonTwo |
-			container := self createContainerElement.
-			container size: 90 @ 70.
-			container connector
-				model: data;
-				beLayoutSource;
-				beLayoutTarget;
-				beVisualTarget.
+	gtconnector stencil: [ :data |
+		| label container dotButtonOne dotButtonTwo buttonOneData buttonTwoData toggleButtonOne toggleButtonTwo |
+		container := self createContainerElement.
+		container size: 90 @ 70.
+		container connector 
+			model: data;
+			beLayoutSource;
+			beLayoutTarget;
+			beVisualTarget.
+		
+		label := self createLabelWithText: data.
+		label relocate: 10 @ 27.
+		container addChild: label.
 
-			label := BrLabel new text: data.
-			label relocate: 10 @ 27.
-			container addChild: label.
+		buttonOneData := data, '0'.
+		dotButtonOne := self 
+			createVisualSourceButtonWithLabel: '+0'
+			withAction: [ gtconnector addEntity: buttonOneData ].
+		dotButtonOne relocate: 50 @ 5.
+		
+		dotButtonOne connector 
+			model: buttonOneData;
+			beVisualSource.
+			
+		buttonTwoData := data, '1'.
+		dotButtonTwo := self 
+			createVisualSourceButtonWithLabel: '+1'
+			withAction: [ gtconnector addEntity: buttonTwoData ].		
+		dotButtonTwo relocate: 50 @ 45.
+		
+		dotButtonTwo connector 
+			model: buttonTwoData;
+			beVisualSource.
 
-			buttonOneData := data , '0'.
-			dotButtonOne := self
-					createVisualSourceButtonWithLabel: '+0'
-					withAction: [ gtconnector addEntity: buttonOneData ].
-			dotButtonOne relocate: 50 @ 5.
-
-			dotButtonOne connector
-				model: buttonOneData;
-				beVisualSource.
-
-			buttonTwoData := data , '1'.
-			dotButtonTwo := self
-					createVisualSourceButtonWithLabel: '+1'
-					withAction: [ gtconnector addEntity: buttonTwoData ].
-			dotButtonTwo relocate: 50 @ 45.
-
-			dotButtonTwo connector
-				model: buttonTwoData;
-				beVisualSource.
-
-			toggleButtonOne := BrToggle new
-					aptitude: BrHydraSwitchWithoutTrackAptitude new;
-					when: BrToggleActivatedEvent
-						do: [ :anEvent | container addChild: dotButtonOne ];
-					when: BrToggleDeactivatedEvent
-						do: [ :anEvent | container removeChild: dotButtonOne ];
-					activate.
-			toggleButtonOne relocate: 5 @ 5.
-
-			toggleButtonTwo := BrToggle new
-					aptitude: BrHydraSwitchWithoutTrackAptitude new;
-					when: BrToggleActivatedEvent
-						do: [ :anEvent | container addChild: dotButtonTwo ];
-					when: BrToggleDeactivatedEvent
-						do: [ :anEvent | container removeChild: dotButtonTwo ];
-					activate.
-			toggleButtonTwo relocate: 5 @ 45.
-
-			container addChild: toggleButtonOne.
-			container addChild: toggleButtonTwo.
-
-			container ].
+		toggleButtonOne := BrToggle new
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
+			when: BrToggleActivatedEvent do: [ :anEvent | 
+				container addChild: dotButtonOne ];
+			when: BrToggleDeactivatedEvent do: [ :anEvent | 
+				container removeChild: dotButtonOne ];
+			activate.
+		toggleButtonOne relocate: 5 @ 5.
+		
+		toggleButtonTwo := BrToggle new
+			aptitude: BrHydraSwitchWithoutTrackAptitude new;
+			when: BrToggleActivatedEvent do: [ :anEvent | 
+				container addChild: dotButtonTwo. ];
+			when: BrToggleDeactivatedEvent do: [ :anEvent | 
+				container removeChild: dotButtonTwo. ];
+			activate.
+		toggleButtonTwo relocate: 5 @ 45.
+		
+		container addChild: toggleButtonOne.
+		container addChild: toggleButtonTwo.
+		
+		container
+	].
 
 	gtconnector addEntity: '0'.
 	gtconnector addEntity: '00'.
 	gtconnector addEntity: '01'.
-
+	
 	gtconnector addEntity: '000'.
 	gtconnector addEntity: '001'.
 	^ gtconnector

@@ -14,26 +14,27 @@ Class {
 { #category : #initialization }
 GtWardleyMapEdgeEditorElement >> createLineArrowPicker [
 	| aPicker |
+
 	aPicker := BrHorizontalPane new
-			fitContent;
-			alignCenterLeft;
-			cellSpacing: 5.
+		fitContent;
+		alignCenterLeft;
+		cellSpacing: 5.
 
-	aPicker
-		addChild: (arrowHeadCheckbox := BrCheckbox new
-					uncheck;
-					aptitude: BrGlamorousCheckboxAptitude;
-					whenCheckedDo: [ self wardleyMapEdgeViewModel addLineArrow ];
-					whenUncheckedDo: [ self wardleyMapEdgeViewModel removeLineArrow ]).
-
-	aPicker addChild: (BrLabel new text: 'arrowhead').
-
-	aPicker
-		addChild: (BrButton new
-				beSmallSize;
-				aptitude: BrGlamorousButtonWithLabelAptitude new;
-				label: 'Reverse';
-				action: [ self wardleyMapEdgeViewModel reverse ]).
+	aPicker addChild: (arrowHeadCheckbox := BrCheckbox new
+		uncheck;
+		aptitude: BrGlamorousCheckboxAptitude;
+		whenCheckedDo: [ self wardleyMapEdgeViewModel addLineArrow ];
+		whenUncheckedDo: [ self wardleyMapEdgeViewModel removeLineArrow ]).
+		
+	aPicker addChild: (BrLabel new
+		aptitude: BrGlamorousLabelAptitude;
+		text: 'arrowhead').
+		
+	aPicker addChild: (BrButton new
+			beSmallSize;
+			aptitude: (BrGlamorousButtonWithLabelAptitude new);
+			label: 'Reverse';
+			action: [ self wardleyMapEdgeViewModel reverse  ] ).
 
 	^ aPicker
 ]

@@ -26,19 +26,16 @@ GtPhlowMondrianViewExamples >> mondrianPhlowViewHandlesClickEventsOnCustomElemen
 	<gtExample>
 	| mondrianView mondrianViewElement nodeElement objectToSpawn |
 	mondrianView := GtPhlowMondrianView new.
-	mondrianView
-		painting: [ :m | 
-			m nodes
-				stencil: [ :each | BrLabel new text: each asString ];
-				with: {42} ].
-	mondrianView asElementDo: [ :e | mondrianViewElement := e ].
-	mondrianViewElement
-		allChildrenBreadthFirstDetect: [ :each | each isKindOf: BrLabel ]
-		ifFound: [ :x | nodeElement := x ].
+	mondrianView painting: [:m | 
+		m nodes
+			stencil: [:each | BrLabel new aptitude: BrGlamorousLabelAptitude; text: each asString ]; 
+			with: {42} ].
+	mondrianView asElementDo: [:e | mondrianViewElement := e ].
+	mondrianViewElement 
+		allChildrenBreadthFirstDetect: [:each | each isKindOf: BrLabel] 
+		ifFound: [:x | nodeElement := x ].
 	self assert: nodeElement graph model = 42.
-	mondrianViewElement
-		when: GtPhlowObjectToSpawn
-		do: [ :event | objectToSpawn := event ].
+	mondrianViewElement when: GtPhlowObjectToSpawn do: [:event | objectToSpawn := event].
 	nodeElement children first fireEvent: BlClickEvent new.
 	self assert: objectToSpawn notNil.
 	^ mondrianViewElement
