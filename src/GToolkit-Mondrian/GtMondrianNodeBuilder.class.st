@@ -56,19 +56,18 @@ GtMondrianNodeBuilder >> initialize [
 
 { #category : #accessing }
 GtMondrianNodeBuilder >> labelled: aBlock [
-	self
-		stencil: [ :anObject | 
-			| childrenContainer |
-			childrenContainer := BrHorizontalPane new
-					fitContent;
-					alignCenter;
-					padding: (BlInsets all: 5).
-			childrenContainer graph beChildrenContainer: #default.
-			BrVerticalPane new
-				fitContent;
-				alignCenter;
-				addChild: (BrLabel new text: (aBlock cull: anObject));
-				addChild: childrenContainer ]
+	self stencil: [ :anObject | 
+		| childrenContainer |
+		childrenContainer := BrHorizontalPane new
+			                     fitContent;
+			                     alignCenter;
+			                     padding: (BlInsets all: 5).
+		childrenContainer graph beChildrenContainer: #default.
+		BrVerticalPane new
+			fitContent;
+			alignCenter;
+			addChild: (BrLabel new aptitude: BrGlamorousLabelAptitude; text: (aBlock cull: anObject));
+			addChild: childrenContainer ]
 ]
 
 { #category : #scripting }
