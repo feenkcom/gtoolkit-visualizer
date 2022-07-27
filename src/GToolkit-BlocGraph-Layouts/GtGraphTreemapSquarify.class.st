@@ -3,7 +3,7 @@ I split an area into rectangles that are close to squares (aspect ratio 1) as mu
 I use {{gtMethod:GtGraphTreemapNode>>#weight}} node values to split an area into.
 I use {{gtClass:GtGraphTreemapSquarifyStep}} to split area into sub-areas and measure {{gtClass:GtGraphTreemapNode}} positions and extends.
 
-The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" [[PDF](https://www.win.tue.nl/~vanwijk/stm.pdf)].
+The algorithm is implemented as described in the paper by Mark Bruls, Kees Huizing, and Jarke J. van Wij, ""Squarified Treemaps"" ([PDF](https://www.win.tue.nl/~vanwijk/stm.pdf)).
 1. # Algorithm Explanation
 
 This is an adapted extract from the paper Squarified Treemaps mentioned above. Suppose we have a rectangle with width {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#width}} and height {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#height}}, and furthermore suppose that this rectangle must be subdivided in seven rectangles with areas {{gtExample:GtGraphTreemapLayoutExamples>>#squarifyWithSevenNodes|label=#nodeValues}}. The area will be subdivided as follows:
@@ -45,7 +45,7 @@ Class {
 		'extent',
 		'firstStep'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #enumerating }
