@@ -78,7 +78,6 @@ GtMondrianDomainExamples >> classHierarchyFor: classes [
 
 	"This is a simpler visualization than the umlClasses one, with just class names."
 
-	<gtExample>
 	| m |
 	m := GtMondrian new.
 	m nodes
