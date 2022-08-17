@@ -39,18 +39,18 @@ Similarly, we can also customize the container element. For example, let's add a
 
 "
 Class {
-	#name : 'GtBuildingTreeMapsExplanation',
-	#superclass : 'Object',
+	#name : #GtBuildingTreeMapsExplanation,
+	#superclass : #Object,
 	#category : 'GToolkit-TreeMap-Examples'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> fileReference [
 	<gtExample>
 	^ GtResourcesUtility resourceAtPath: 'feenkcom/gtoolkit/doc' 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> fileReferenceTreeMap [
 	<gtExample>
 	^ GtNestedRectangleTreeMap new
@@ -59,14 +59,14 @@ GtBuildingTreeMapsExplanation >> fileReferenceTreeMap [
 		deep: [ :aNode | aNode directories ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> fileReferenceTreeMapWithLeavesSize [
 	<gtExample>
 	^ self fileReferenceTreeMap 
 		leavesSize: [ :aNode | aNode size max: 1000 ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> tree [
 	<gtExample>
 	^ GtNestedTreeBuilder new
@@ -78,7 +78,7 @@ GtBuildingTreeMapsExplanation >> tree [
 		build.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemap [
 	<gtExample>
 	^ GtNestedRectangleTreeMap new
@@ -87,7 +87,7 @@ GtBuildingTreeMapsExplanation >> treemap [
 		deep: [ :aNode | aNode nodes ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemapWithCustomContainerElement [ 
 	<gtExample>
 	^ self treemapWithCustomLeafElement 
@@ -103,7 +103,7 @@ GtBuildingTreeMapsExplanation >> treemapWithCustomContainerElement [
 			anElement padding: (BlInsets all: 1) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemapWithCustomLeafElement [
 	<gtExample>
 	^ self treemapWithLeavesSize
@@ -123,7 +123,7 @@ GtBuildingTreeMapsExplanation >> treemapWithCustomLeafElement [
 						ifFalse: [ Color transparent ]]) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemapWithLeavesSize [
 	<gtExample>
 	^ self treemap 

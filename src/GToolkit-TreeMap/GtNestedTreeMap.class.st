@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtNestedTreeMap',
-	#superclass : 'BrStencil',
+	#name : #GtNestedTreeMap,
+	#superclass : #BrStencil,
 	#instVars : [
 		'traversalBlock',
 		'leavesCreationBlock',
@@ -12,12 +12,12 @@ Class {
 	#category : 'GToolkit-TreeMap-Core'
 }
 
-{ #category : 'api' }
+{ #category : #api }
 GtNestedTreeMap >> containerEllipse: aBlock [
 	containerEllipseBlock := aBlock
 ]
 
-{ #category : 'implementation' }
+{ #category : #implementation }
 GtNestedTreeMap >> create [
 	<return: #BlElement>
 	^ roots size = 1 
@@ -32,7 +32,7 @@ GtNestedTreeMap >> create [
 			element ]
 ]
 
-{ #category : 'implementation' }
+{ #category : #implementation }
 GtNestedTreeMap >> createContainerFor: anObject [
 	| containerElement |
 	containerElement := BlElement new
@@ -46,7 +46,7 @@ GtNestedTreeMap >> createContainerFor: anObject [
 	^ containerElement
 ]
 
-{ #category : 'implementation' }
+{ #category : #implementation }
 GtNestedTreeMap >> createFor: anObject [
 	| element leaves children |
 	element := self createContainerFor: anObject.
@@ -56,7 +56,7 @@ GtNestedTreeMap >> createFor: anObject [
 	^ element
 ]
 
-{ #category : 'implementation' }
+{ #category : #implementation }
 GtNestedTreeMap >> createLeavesFor: anObject [
 	^ (leavesCreationBlock value: anObject) collect: [ :leaf |
 		| leafElement |
@@ -70,12 +70,12 @@ GtNestedTreeMap >> createLeavesFor: anObject [
 		leafElement ]
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 GtNestedTreeMap >> deep: aBlock [
 	traversalBlock := aBlock
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtNestedTreeMap >> initialize [
 	super initialize.
 	leavesSizeBlock := [ :x | 10 ].
@@ -85,27 +85,27 @@ GtNestedTreeMap >> initialize [
 	leafEllipseBlock := [ :ellipse | ellipse ]
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 GtNestedTreeMap >> leafEllipse: aBlock [
 	leafEllipseBlock := aBlock
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 GtNestedTreeMap >> leaves: aBlock [
 	leavesCreationBlock := aBlock
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 GtNestedTreeMap >> leavesSize: aBlock [
 	leavesSizeBlock := aBlock
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 GtNestedTreeMap >> roots: aCollection [
 	roots := aCollection
 ]
 
-{ #category : 'implementation' }
+{ #category : #implementation }
 GtNestedTreeMap >> setup: element withChildren: children andLeaves: leaves [
 	(children isEmpty and: [ leaves isEmpty ])
 		ifTrue: [ element size: 1 asPoint ]

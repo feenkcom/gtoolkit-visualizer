@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtNestedTreeBuilderExamples',
-	#superclass : 'Object',
+	#name : #GtNestedTreeBuilderExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-TreeMap-Examples'
 }
 
-{ #category : 'examples - ui' }
+{ #category : #'examples - ui' }
 GtNestedTreeBuilderExamples >> basicNestedRectangleTreemap [
 	<gtExample>
 	| aBuilder |
@@ -12,7 +12,7 @@ GtNestedTreeBuilderExamples >> basicNestedRectangleTreemap [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> basicTreeBuilder [
 	<gtExample>
 	| aBuilder |
@@ -24,7 +24,7 @@ GtNestedTreeBuilderExamples >> basicTreeBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'utilities - disk content' }
+{ #category : #'utilities - disk content' }
 GtNestedTreeBuilderExamples >> createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels in: aDirectory [ 
 	aMaxLevels <= 0 ifTrue: [ ^ self ].
 	self createDirectories: (aMaxDirectories // 2 to: aMaxDirectories) atRandom in: aDirectory.
@@ -33,20 +33,20 @@ GtNestedTreeBuilderExamples >> createDirectories: aMaxDirectories files: aMaxFil
 		self createDirectories: aMaxDirectories files: aMaxFiles upTo: aMaxLevels - 1 in: eachDirectory ]
 ]
 
-{ #category : 'utilities - disk content' }
+{ #category : #'utilities - disk content' }
 GtNestedTreeBuilderExamples >> createDirectories: aNumberOfDirectories in: aDirectory [ 
 	aNumberOfDirectories timesCollect: [ :anIndex | 
 		(aDirectory / ('dir-', anIndex asString)) ensureCreateDirectory ]
 ]
 
-{ #category : 'utilities - disk content' }
+{ #category : #'utilities - disk content' }
 GtNestedTreeBuilderExamples >> createFiles: aNumberOfFiles in: aDirectory [ 
 	aNumberOfFiles timesCollect: [ :anIndex | 
 		(aDirectory / ('file-', anIndex asString, '.txt')) writeStreamEncoded: #utf8 do: [ :aStream | 
 			aStream nextPutAll: (String loremIpsum: (50 to: 100) atRandom) ] ]
 ]
 
-{ #category : 'examples - model' }
+{ #category : #'examples - model' }
 GtNestedTreeBuilderExamples >> directory [
 	<gtExample>
 	| aFileSystem |
@@ -55,7 +55,7 @@ GtNestedTreeBuilderExamples >> directory [
 	^ aFileSystem workingDirectory
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> directoryBuilder [
 	<gtExample>
 	| aBuilder |
@@ -66,7 +66,7 @@ GtNestedTreeBuilderExamples >> directoryBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - collect nodes and leaves' }
+{ #category : #'examples - collect nodes and leaves' }
 GtNestedTreeBuilderExamples >> directoryStructure [
 	<gtExample>
 	| aBuilder aResult |
@@ -80,7 +80,7 @@ GtNestedTreeBuilderExamples >> directoryStructure [
 	^ aResult
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> groupByColorAndNameAndInstrumentBuilder [
 	<gtExample>
 	| aBuilder |
@@ -91,7 +91,7 @@ GtNestedTreeBuilderExamples >> groupByColorAndNameAndInstrumentBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> groupByColorAndNameBuilder [
 	<gtExample>
 	| aBuilder |
@@ -102,7 +102,7 @@ GtNestedTreeBuilderExamples >> groupByColorAndNameBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> groupByColorAndNameSummarizeBuilder [
 	<gtExample>
 	| aBuilder |
@@ -112,7 +112,7 @@ GtNestedTreeBuilderExamples >> groupByColorAndNameSummarizeBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> groupByColorAndSummarizeBuilder [
 	<gtExample>
 	| aBuilder |
@@ -122,7 +122,7 @@ GtNestedTreeBuilderExamples >> groupByColorAndSummarizeBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> groupByColorBuilder [
 	<gtExample>
 	| aBuilder |
@@ -133,7 +133,7 @@ GtNestedTreeBuilderExamples >> groupByColorBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> groupByColorRejectPeterBuilder [
 	<gtExample>
 	| aBuilder |
@@ -144,7 +144,7 @@ GtNestedTreeBuilderExamples >> groupByColorRejectPeterBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> hundredByColor [
 	<gtExample>
 	| aBuilder aResult |
@@ -158,7 +158,7 @@ GtNestedTreeBuilderExamples >> hundredByColor [
 	^ aResult
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> hundredByColorAndName [
 	<gtExample>
 	| aBuilder aResult |
@@ -172,7 +172,7 @@ GtNestedTreeBuilderExamples >> hundredByColorAndName [
 	^ aResult
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> hundredGroupByColorAndNameAndInstrument [
 	<gtExample>
 	| aBuilder aResult |
@@ -186,7 +186,7 @@ GtNestedTreeBuilderExamples >> hundredGroupByColorAndNameAndInstrument [
 	^ aResult
 ]
 
-{ #category : 'examples - ui' }
+{ #category : #'examples - ui' }
 GtNestedTreeBuilderExamples >> hundredNestedRectangleTreemap [
 	<gtExample>
 	| aBuilder |
@@ -199,13 +199,13 @@ GtNestedTreeBuilderExamples >> hundredNestedRectangleTreemap [
 	^ aBuilder asElement 
 ]
 
-{ #category : 'examples - model' }
+{ #category : #'examples - model' }
 GtNestedTreeBuilderExamples >> hundredRandomModels [
 	<gtExample>
 	^ 100 timesCollect: [ self oneRandomModel ]
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> noGroupingBuilder [
 	<gtExample>
 	| aBuilder |
@@ -215,7 +215,7 @@ GtNestedTreeBuilderExamples >> noGroupingBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> noGroupingSummarizeBuilder [
 	<gtExample>
 	| aBuilder |
@@ -225,7 +225,7 @@ GtNestedTreeBuilderExamples >> noGroupingSummarizeBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - model' }
+{ #category : #'examples - model' }
 GtNestedTreeBuilderExamples >> oneRandomModel [
 	<gtExample>
 	^ Array 
@@ -235,7 +235,7 @@ GtNestedTreeBuilderExamples >> oneRandomModel [
 		with: #( 'guitar' 'violine' 'saxophone' 'piano')
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> rejectPeterGroupByColorBuilder [
 	<gtExample>
 	| aBuilder |
@@ -247,7 +247,7 @@ GtNestedTreeBuilderExamples >> rejectPeterGroupByColorBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - rejecting' }
+{ #category : #'examples - rejecting' }
 GtNestedTreeBuilderExamples >> rejectingSix [
 	<gtExample>
 	| aBuilder aResult |
@@ -261,7 +261,7 @@ GtNestedTreeBuilderExamples >> rejectingSix [
 	^ aResult
 ]
 
-{ #category : 'examples - rejecting' }
+{ #category : #'examples - rejecting' }
 GtNestedTreeBuilderExamples >> rejectingSixAndAnna [
 	<gtExample>
 	| aBuilder aResult |
@@ -275,7 +275,7 @@ GtNestedTreeBuilderExamples >> rejectingSixAndAnna [
 	^ aResult
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> rejectingSixAndAnnaBuilder [
 	<gtExample>
 	| aBuilder |
@@ -285,7 +285,7 @@ GtNestedTreeBuilderExamples >> rejectingSixAndAnnaBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - tree builder' }
+{ #category : #'examples - tree builder' }
 GtNestedTreeBuilderExamples >> rejectingSixBuilder [
 	<gtExample>
 	| aBuilder |
@@ -295,7 +295,7 @@ GtNestedTreeBuilderExamples >> rejectingSixBuilder [
 	^ aBuilder
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> sevenByColor [
 	<gtExample>
 	| aBuilder aResult |
@@ -314,7 +314,7 @@ GtNestedTreeBuilderExamples >> sevenByColor [
 	^ aResult
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> sevenByColorAndName [
 	<gtExample>
 	| aBuilder aResult |
@@ -334,7 +334,7 @@ GtNestedTreeBuilderExamples >> sevenByColorAndName [
 	^ aResult
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> sevenGroupByColorAndNameSummarize [
 	<gtExample>
 	| aBuilder aResult |
@@ -355,7 +355,7 @@ GtNestedTreeBuilderExamples >> sevenGroupByColorAndNameSummarize [
 	^ aResult
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> sevenGroupByColorAndSummarize [
 	<gtExample>
 	| aBuilder aResult |
@@ -372,7 +372,7 @@ GtNestedTreeBuilderExamples >> sevenGroupByColorAndSummarize [
 	^ aResult
 ]
 
-{ #category : 'examples - model' }
+{ #category : #'examples - model' }
 GtNestedTreeBuilderExamples >> sevenModel [
 	<gtExample>
 	^ { 
@@ -385,7 +385,7 @@ GtNestedTreeBuilderExamples >> sevenModel [
 		{ 1. Color yellow. 'peter' } }
 ]
 
-{ #category : 'examples - ui' }
+{ #category : #'examples - ui' }
 GtNestedTreeBuilderExamples >> sevenNestedRectangleTreemap [
 	<gtExample>
 	| aBuilder |
@@ -410,7 +410,7 @@ GtNestedTreeBuilderExamples >> sevenNestedRectangleTreemap [
 	^ aBuilder asElement 
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> sevenNoGrouping [
 	<gtExample>
 	| aBuilder aResult |
@@ -424,7 +424,7 @@ GtNestedTreeBuilderExamples >> sevenNoGrouping [
 	^ aResult
 ]
 
-{ #category : 'examples - grouping' }
+{ #category : #'examples - grouping' }
 GtNestedTreeBuilderExamples >> sevenNoGroupingSummarize [
 	<gtExample>
 	| aBuilder aResult |

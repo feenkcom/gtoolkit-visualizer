@@ -1,58 +1,58 @@
 Class {
-	#name : 'GtNestedTreeBuilderLastStep',
-	#superclass : 'GtNestedTreeBuilderStep',
+	#name : #GtNestedTreeBuilderLastStep,
+	#superclass : #GtNestedTreeBuilderStep,
 	#classInstVars : [
 		'uniqueInstance'
 	],
 	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : 'cleanup' }
+{ #category : #cleanup }
 GtNestedTreeBuilderLastStep class >> cleanUniqueInstance [
 	uniqueInstance := nil
 ]
 
-{ #category : 'cleanup' }
+{ #category : #cleanup }
 GtNestedTreeBuilderLastStep class >> cleanUp [
 	self cleanUniqueInstance
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderLastStep class >> default [
 	^ self uniqueInstance
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderLastStep class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtNestedTreeBuilderLastStep >> addItems: anArray to: aTreeItem [
 	aTreeItem nodes: anArray
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 GtNestedTreeBuilderLastStep >> buildRoot: aStepContext [ 
 	^ self newItemNamed: 'Root' withContext: aStepContext
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderLastStep >> collectNodes: aNodesBlock leaves: aLeavesBlock in: aBuilderOrStep [
 	aBuilderOrStep step: (self newCollectStep nodes: aNodesBlock; leaves: aLeavesBlock; step: self)
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderLastStep >> groupBy: aBlockClosure in: aBuilderOrStep [ 
 	aBuilderOrStep step: (self newGroupByStep groupBy: aBlockClosure)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderLastStep >> name [
 	^ 'Leaves'
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtNestedTreeBuilderLastStep >> newItemNamed: aName withContext: aStepContext [ 
 	<return: #GtNestedTreeItem>
 	| aTreeItem |
@@ -61,17 +61,17 @@ GtNestedTreeBuilderLastStep >> newItemNamed: aName withContext: aStepContext [
 	^ aTreeItem
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderLastStep >> reject: aBlockClosure in: aBuilderOrStep [
 	aBuilderOrStep step: (self newRejectStep reject: aBlockClosure)
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtNestedTreeBuilderLastStep >> stepsTo: aStream [
 	aStream nextPut: self
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderLastStep >> summarizeIn: aBuilderOrStep [
 	aBuilderOrStep step: self newSummarizeStep
 ]
