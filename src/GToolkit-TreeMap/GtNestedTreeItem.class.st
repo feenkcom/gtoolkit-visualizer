@@ -1,25 +1,25 @@
 Class {
-	#name : 'GtNestedTreeItem',
-	#superclass : 'Object',
+	#name : #GtNestedTreeItem,
+	#superclass : #Object,
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
-	#category : 'GToolkit-TreeMap-Data Structures'
+	#category : #'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtNestedTreeItem >> allItems [
 	<return: #Collection>
 	^ Array streamContents: [ :aStream | 
 		self itemsTo: aStream ]
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 GtNestedTreeItem >> children [
 	<return: #Array>
 	^ self subclassResponsibility
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtNestedTreeItem >> gtTreeFor: aView [
 	<gtView>
 	^ aView columnedTree
@@ -30,7 +30,7 @@ GtNestedTreeItem >> gtTreeFor: aView [
 		expandUpTo: 1;
 		column: 'Name' text: [ :anItem | anItem ];
 		column: 'Weight' text: [ :anItem | anItem weight asFloat round: 2 ] width: 80;
-		column: 'Porcentage' 
+		column: 'Percentage' 
 			text: [ :anItem | 
 				| aWeight |
 				aWeight := self weight.
@@ -40,22 +40,22 @@ GtNestedTreeItem >> gtTreeFor: aView [
 			width: 80
 ]
 
-{ #category : 'stream' }
+{ #category : #stream }
 GtNestedTreeItem >> itemsTo: aStream [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeItem >> leaves [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeItem >> nodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 GtNestedTreeItem >> weight [
 	<return: #Number>
 	^ self subclassResponsibility

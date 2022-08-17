@@ -1,15 +1,15 @@
 Class {
-	#name : 'GtNestedTreeCollection',
-	#superclass : 'GtNestedTreeItem',
+	#name : #GtNestedTreeCollection,
+	#superclass : #GtNestedTreeItem,
 	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtNestedTreeCollection class >> isAbstract [
 	^ self name = #GtNestedTreeCollection 
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtNestedTreeCollection >> gtSquarifiedTreemapFor: aView [
 	<gtView>
 	^ aView explicit
@@ -30,7 +30,7 @@ GtNestedTreeCollection >> gtSquarifiedTreemapFor: aView [
 			]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtNestedTreeCollection >> sum: aBlockClosure in: aCollection [ 
 	<return: #Number>
 	^ aCollection

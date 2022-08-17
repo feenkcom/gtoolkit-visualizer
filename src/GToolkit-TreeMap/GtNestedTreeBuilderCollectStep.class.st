@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtNestedTreeBuilderCollectStep',
-	#superclass : 'GtNestedTreeBuilderInnerStep',
+	#name : #GtNestedTreeBuilderCollectStep,
+	#superclass : #GtNestedTreeBuilderInnerStep,
 	#instVars : [
 		'nodes',
 		'leaves'
@@ -8,13 +8,13 @@ Class {
 	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : 'building' }
+{ #category : #building }
 GtNestedTreeBuilderCollectStep >> buildRoot: aStepContext [
 	<return: #GtNestedTreeItem>
 	^ self createTreeFrom: aStepContext.
 ]
 
-{ #category : 'implementation' }
+{ #category : #implementation }
 GtNestedTreeBuilderCollectStep >> createTreeFrom: aStepContext [
 	<return: #GtNestedTreeItem>
 	| theNodeObjects theLeafObjects theNodes theLeaves aNode |
@@ -30,28 +30,28 @@ GtNestedTreeBuilderCollectStep >> createTreeFrom: aStepContext [
 	^ aNode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderCollectStep >> leaves [
 	^ leaves
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderCollectStep >> leaves: anObject [
 	leaves := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderCollectStep >> name [
 	<return: #String>
 	^ 'Collect'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderCollectStep >> nodes [
 	^ nodes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderCollectStep >> nodes: anObject [
 	nodes := anObject
 ]

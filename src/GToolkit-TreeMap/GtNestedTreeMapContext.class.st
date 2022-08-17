@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtNestedTreeMapContext',
-	#superclass : 'Object',
+	#name : #GtNestedTreeMapContext,
+	#superclass : #Object,
 	#instVars : [
 		'level',
 		'model'
@@ -8,29 +8,29 @@ Class {
 	#category : 'GToolkit-TreeMap-Core'
 }
 
-{ #category : 'copying' }
+{ #category : #copying }
 GtNestedTreeMapContext >> copyWithModel: anObject [
 	^ self copy
 		model: anObject;
 		level: self level + 1
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeMapContext >> level [
 	^ level
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeMapContext >> level: anObject [
 	level := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeMapContext >> model [
 	^ model
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeMapContext >> model: anObject [
 	model := anObject
 ]

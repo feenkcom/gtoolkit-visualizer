@@ -1,60 +1,60 @@
 Class {
-	#name : 'GtNestedTreeBuilderGroupByStep',
-	#superclass : 'GtNestedTreeBuilderInnerStep',
+	#name : #GtNestedTreeBuilderGroupByStep,
+	#superclass : #GtNestedTreeBuilderInnerStep,
 	#instVars : [
 		'groupBy'
 	],
 	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtNestedTreeBuilderGroupByStep >> addItems: anArray to: aTreeItem [
 	aTreeItem nodes: anArray
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 GtNestedTreeBuilderGroupByStep >> buildRoot: aStepContext [
 	<return: #GtNestedTreeItem>
 	^ self newItemNamed: 'Root' withContext: aStepContext
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtNestedTreeBuilderGroupByStep >> defaultGroupBy [
 	^ [ :anItem | anItem yourself ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderGroupByStep >> description [
 	^ self groupBy printString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderGroupByStep >> groupBy [
 	^ groupBy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderGroupByStep >> groupBy: anObject [
 	groupBy := anObject
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderGroupByStep >> groupBy: aBlockClosure in: aBuilderOrStep [
 	self step groupBy: aBlockClosure in: self
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtNestedTreeBuilderGroupByStep >> initialize [
 	super initialize.
 	groupBy := self defaultGroupBy.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeBuilderGroupByStep >> name [
 	^ 'GroupBy'
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtNestedTreeBuilderGroupByStep >> newItemNamed: aName withContext: aStepContext [ 
 	<return: #GtNestedTreeItem>
 	| aTreeItem aData theNodes |
@@ -72,7 +72,7 @@ GtNestedTreeBuilderGroupByStep >> newItemNamed: aName withContext: aStepContext 
 	^ aTreeItem
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderGroupByStep >> reject: aBlockClosure in: aBuilderOrStep [ 
 	| aRejectStep |
 	aRejectStep := self newRejectStep reject: aBlockClosure.
@@ -80,7 +80,7 @@ GtNestedTreeBuilderGroupByStep >> reject: aBlockClosure in: aBuilderOrStep [
 	aBuilderOrStep step: aRejectStep.
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 GtNestedTreeBuilderGroupByStep >> summarizeIn: aBuilderOrStep [
 	self step summarizeIn: self
 ]

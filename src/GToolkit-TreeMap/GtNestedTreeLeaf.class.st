@@ -1,25 +1,25 @@
 Class {
-	#name : 'GtNestedTreeLeaf',
-	#superclass : 'GtNestedTreeItem',
+	#name : #GtNestedTreeLeaf,
+	#superclass : #GtNestedTreeItem,
 	#category : 'GToolkit-TreeMap-Data Structures'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtNestedTreeLeaf class >> isAbstract [
 	^ self name = #GtNestedTreeLeaf 
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 GtNestedTreeLeaf >> children [
 	^ #()
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeLeaf >> leaves [
 	^ #()
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtNestedTreeLeaf >> nodes [
 	^ #()
 ]
