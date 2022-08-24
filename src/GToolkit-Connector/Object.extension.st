@@ -2,7 +2,7 @@ Extension { #name : #Object }
 
 { #category : #'*GToolkit-Connector' }
 Object >> gtConnectionsFor: aView [
-	<gtView>
+	"<gtView>"
 	
 	^ (aView explicit)
 		title: 'Connections';
