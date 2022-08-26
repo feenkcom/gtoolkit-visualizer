@@ -106,5 +106,5 @@ GtGraphCirclePackNode >> intersects: anotherCircle [
 GtGraphCirclePackNode >> radius [
 	<return: #Number>
 
-	^ circle radius
+	^ circle outerRadius
 ]
