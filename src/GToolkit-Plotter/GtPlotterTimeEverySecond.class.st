@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterTimeEverySecond,
 	#superclass : #GtPlotterTimeInterval,
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }
 
 { #category : #'instance creation' }
@@ -16,4 +16,15 @@ GtPlotterTimeEverySecond >> durationsFrom: aStartDuration to: anEndDuration do: 
 			aCounter % step = 0
 				ifTrue: [ aBlock value: (GtPlotterDuration seconds: anAmountOfMinutes) ].
 			aCounter := aCounter + 1 ]
+]
+
+{ #category : #accessing }
+GtPlotterTimeEverySecond >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock [
+	| aCeilStart |
+	
+	aCeilStart := (aStartDateAndTime seconds isZero)
+		ifTrue: [ aStartDateAndTime ]
+		ifFalse: [ aStartDateAndTime rounded ].
+		
+	(aCeilStart to: anEndDateAndTime by: step seconds) scheduleDo: aBlock
 ]
