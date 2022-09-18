@@ -22,7 +22,10 @@ GtPlotterTimeTicks class >> tickInterval: aStartDateAndTime stop: aStopDateAndTi
 			anIndex = 1
 				ifTrue: [
 					| aStep |
-					aStep := GtPlotterNumberTicks tickStep: aStartDateAndTime / 1 milliSecond stop: aStopDateAndTime / 1 milliSecond count: aCount.
+					aStep := GtPlotterNumberTicks 
+						tickStep: 0 
+						stop: aTargetDuration asMilliSeconds 
+						count: aCount.
 					aPlotterTimeInterval := GtPlotterTimeEveryMillisecond step: (aStep max: 1) ]
 				ifFalse: [
 					| anAssociation |
