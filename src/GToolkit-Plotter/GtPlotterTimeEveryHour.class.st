@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterTimeEveryHour,
 	#superclass : #GtPlotterTimeInterval,
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }
 
 { #category : #'instance creation' }
@@ -12,5 +12,5 @@ GtPlotterTimeEveryHour >> from: aStartDateAndTime to: anEndDateAndTime do: aBloc
 		ifTrue: [ aStartDateAndTime ]
 		ifFalse: [ aStartDateAndTime rounded ].
 		
-	(aCeilStart to: anEndDateAndTime by: step minutes) scheduleDo: aBlock
+	(aCeilStart to: anEndDateAndTime by: step hours) scheduleDo: aBlock
 ]

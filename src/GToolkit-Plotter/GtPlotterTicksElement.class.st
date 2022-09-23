@@ -8,7 +8,7 @@ Class {
 		'tickLayout',
 		'inversed'
 	],
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
@@ -45,7 +45,6 @@ GtPlotterTicksElement >> initialize [
 { #category : #'private - initialization' }
 GtPlotterTicksElement >> initializeElements [
 	| theTicks aScaleContext |
-	
 	theTicks := scale ticks: ticks.
 	aScaleContext := GtPlotterSingleScaleContext new.
 
