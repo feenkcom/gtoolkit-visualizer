@@ -33,8 +33,13 @@ Class {
 		'labelFormatY',
 		'isAlreadyInitialized'
 	],
-	#category : 'GToolkit-Plotter-Builder - Line Chart'
+	#category : #'GToolkit-Plotter-Builder - Line Chart'
 }
+
+{ #category : #accessing }
+GtPlotterLineChart >> autoscale: aBoolean [
+	isAlreadyInitialized := aBoolean not
+]
 
 { #category : #'api - instantiation' }
 GtPlotterLineChart >> axisXStencil [
