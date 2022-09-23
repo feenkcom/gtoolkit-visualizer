@@ -6,7 +6,7 @@ I draw vertical chart ticks.
 Class {
 	#name : #GtPlotterVerticalTicksElement,
 	#superclass : #GtPlotterTicksElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
@@ -15,11 +15,11 @@ GtPlotterVerticalTicksElement >> defaultTickLayout [
 		anElement constraintsDo: [ :c |
 			c vertical exact: 1.
 			c horizontal matchParent.
-			c frame vertical
+			c frame horizontal
 				weight: weight;
 				alignCenter.
 			c frame vertical alignCenterAt: (inversed
-				ifTrue: [ 1.0 - aGtPlotterScaleContext mappedValue ]
-				ifFalse: [ aGtPlotterScaleContext mappedValue ]) ]
+				ifTrue: [ aGtPlotterScaleContext mappedValue ]
+				ifFalse: [ 1.0 - aGtPlotterScaleContext mappedValue]) ]
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
