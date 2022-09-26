@@ -17,7 +17,7 @@ Class {
 		'e5',
 		'ln10'
 	],
-	#category : 'GToolkit-Plotter-Tick'
+	#category : #'GToolkit-Plotter-Tick'
 }
 
 { #category : #'class initialization' }
@@ -105,8 +105,8 @@ GtPlotterNumberTicks >> computedTicks [
 			aStop := (aStop / aStep) floor.
 			theTicks := aStart * aStep to: aStop * aStep by: aStep ]
 		ifFalse: [
-			aStart := (aStart * aStep) floor.
-			aStop := (aStop * aStep) ceiling.
+			aStart := (aStart * aStep) ceiling.
+			aStop := (aStop * aStep) floor.
 			theTicks := aStart / aStep to: aStop / aStep by: 1.0 / aStep negated ].
 
 	^ isReverse
