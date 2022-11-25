@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'translator'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Basic'
+	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
 
 { #category : #constraints }
@@ -59,7 +59,7 @@ GtGraphLayout >> groupBounds: aCollectionOfElements [
 
 	^ (aCollectionOfElements 
 		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]
-		ifNotEmpty: [ Rectangle merging: (aCollectionOfElements collect: [ :anElement | anElement measuredBounds asRectangle ]) ])
+		ifNotEmpty: [ Rectangle merging: (aCollectionOfElements collect: [ :anElement | anElement bounds asRectangle ]) ])
 ]
 
 { #category : #initialization }
