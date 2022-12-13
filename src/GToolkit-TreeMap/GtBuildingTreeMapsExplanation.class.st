@@ -41,7 +41,7 @@ Similarly, we can also customize the container element. For example, let's add a
 Class {
 	#name : #GtBuildingTreeMapsExplanation,
 	#superclass : #Object,
-	#category : 'GToolkit-TreeMap-Examples'
+	#category : #'GToolkit-TreeMap-Examples'
 }
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ GtBuildingTreeMapsExplanation >> treemapWithCustomContainerElement [
 		containerElement: [ :anElement :aNodeContext | 
 			aNodeContext level = 2 ifTrue: [ 
 				anElement addChild: (BrLabel new 
-					text: (aNodeContext  model name name removePrefix: 'Brick-'); 
+					text: (aNodeContext  model name name withoutPrefix: 'Brick-'); 
 					aptitude: (BrGlamorousLabelAptitude new fontSize: 8; foreground: Color gray); 
 					constraintsDo: [ :c | c ignoreByLayout. ])].
 			anElement border: (BlBorder 
