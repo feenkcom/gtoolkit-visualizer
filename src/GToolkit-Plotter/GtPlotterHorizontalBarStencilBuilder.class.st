@@ -35,7 +35,7 @@ GtPlotterHorizontalBarStencilBuilder >> buildDefault [
 				c horizontal matchParent.
 				c vertical exact: (self bar heightScale map: (self bar heightData gtValue: aGtPlotterScaleContext originalValue)).
 				c frame vertical alignCenter.
-				c frame horizontal weight: aGtPlotterScaleContext mappedValue ];
+				c frame horizontal weight: (aGtPlotterScaleContext mappedValue max: 0) ];
 				yourself ];
 		values: { self value }
 ]
