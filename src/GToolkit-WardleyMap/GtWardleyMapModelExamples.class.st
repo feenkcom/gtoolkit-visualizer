@@ -27,6 +27,30 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 	^ aWardleyMapElement
 ]
 
+{ #category : #examples }
+GtWardleyMapModelExamples >> mapElementWithPipelines [
+	<gtExample>
+	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
+
+	aWardleyMap := self newMapWithPipelines.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+
+	aWardleyMapElement := GtWardleyMapElement new.
+	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
+
+	aWardleyMapElement evolutionSections: {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity'
+	}.
+	self assert: aWardleyMapElement children size equals: 2.
+	"3 nodes, 1 pipeline, 1 edge"
+	self assert: aWardleyMapElement children last children size equals: 5.
+	^ aWardleyMapElement
+]
+
 { #category : #accessing }
 GtWardleyMapModelExamples >> mapWithNodesEqualsEvaluatedStoreString [
 
@@ -63,7 +87,8 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 	aNodeB coordinate: (0.5@0.25).
 	aNodeB color: (Color black alpha: 0.2).
 	aNodeB label: 'Node B'.
-
+	aNodeB labelModel coordinate: (-1.5 @ -1.5). 
+	
 	aNodeC := GtWardleyMapNodeModelExamples new newNode.
 	aNodeC coordinate: (0.75@0.5).
 	aNodeC color: Color red darker.
@@ -80,6 +105,30 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 	aWardleyMap addNode: aNodeB.
 	aWardleyMap addNode: aNodeC.
 	aWardleyMap addEdge: anEdgeAtoB.
+	
+	self assert: aWardleyMap nodes size equals: 3.
+	self assert: aWardleyMap edges size equals: 1.
+
+	^ aWardleyMap
+]
+
+{ #category : #examples }
+GtWardleyMapModelExamples >> newMapWithPipelines [
+	<gtExample>
+	| aWardleyMap aNodeA |
+
+	aWardleyMap := self newMapWithNodes.
+	
+	aNodeA := aWardleyMap nodes first.
+	aNodeA labelModel coordinate: (-1.5 @ -1.5). 
+	aNodeA pipelineCoordinate: (0.15 @ 0.4).
+	
+	self assert: aNodeA labelModel coordinate equals: (-1.5 @ -1.5).
+	self assert: aNodeA pipelineCoordinate equals: (0.15 @ 0.4).
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	self assert: aNodeA isPipelineVisible.
 	
 	self assert: aWardleyMap nodes size equals: 3.
 	self assert: aWardleyMap edges size equals: 1.

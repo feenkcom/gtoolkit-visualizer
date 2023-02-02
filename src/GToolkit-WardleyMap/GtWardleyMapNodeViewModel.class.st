@@ -52,6 +52,11 @@ GtWardleyMapNodeViewModel >> increaseNodeSize [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> isPipelineVisible [
+	^ self wardleyMapNodeModel isPipelineVisible
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> label [
 	^ self wardleyMapNodeModel label
 ]
@@ -142,6 +147,29 @@ GtWardleyMapNodeViewModel >> onWardleyMapNodeModelChanged [
 	"Is sent when a new wardleyMapNode model is assigned to the view model"
 	
 	
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> pipelineColor [
+	^ self wardleyMapNodeModel color
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> pipelineCoordinateLeft [
+	<return: #Number>
+	^ self wardleyMapNodeModel pipelineCoordinate x
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> pipelineCoordinateRight [
+	<return: #Number>
+	^ self wardleyMapNodeModel pipelineCoordinate y
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> pipelineCoordinateTop [
+	<return: #Number>
+	^ self wardleyMapNodeModel coordinate y
 ]
 
 { #category : #'api - node' }
