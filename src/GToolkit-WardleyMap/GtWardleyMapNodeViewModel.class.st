@@ -57,6 +57,11 @@ GtWardleyMapNodeViewModel >> isPipelineVisible [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> isPipelineVisible: aBoolean [
+	self wardleyMapNodeModel isPipelineVisible: aBoolean
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> label [
 	^ self wardleyMapNodeModel label
 ]
@@ -145,6 +150,11 @@ GtWardleyMapNodeViewModel >> onNodeMoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodePipelineVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapNodeViewModelPipelineVisibilityChanged new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeResized: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelResized new nodeViewModel: self)
 ]
@@ -162,21 +172,46 @@ GtWardleyMapNodeViewModel >> pipelineColor [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> pipelineCoordinate [
+	<return: #Number>
+	| aPipelineCoordinate aNodeCoordinate aNewPipelineCoordinate |
+	aPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
+	aNewPipelineCoordinate := aPipelineCoordinate.
+	aNodeCoordinate := self coordinateX.
+
+	aPipelineCoordinate x <= aNodeCoordinate
+		ifFalse: [ aNewPipelineCoordinate := aNodeCoordinate @ aNewPipelineCoordinate y ].
+
+	aNodeCoordinate <= aPipelineCoordinate y
+		ifFalse: [ aNewPipelineCoordinate := aNewPipelineCoordinate x @ aNodeCoordinate ].
+
+	aNewPipelineCoordinate = aPipelineCoordinate
+		ifFalse: [ self pipelineCoordinate: aNewPipelineCoordinate ].
+
+	^ self wardleyMapNodeModel pipelineCoordinate
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNodeViewModel >> pipelineCoordinate: aPipelineCoordinate [
+	self wardleyMapNodeModel pipelineCoordinate: aPipelineCoordinate
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> pipelineCoordinateLeft [
 	<return: #Number>
-	^ self wardleyMapNodeModel pipelineCoordinate x
+	^ self pipelineCoordinate x
 ]
 
 { #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> pipelineCoordinateRight [
 	<return: #Number>
-	^ self wardleyMapNodeModel pipelineCoordinate y
+	^ self pipelineCoordinate y
 ]
 
 { #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> pipelineCoordinateTop [
 	<return: #Number>
-	^ self wardleyMapNodeModel coordinate y
+	^ self coordinate y
 ]
 
 { #category : #'api - node' }
@@ -193,7 +228,8 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 	self wardleyMapNodeModel weak
 		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
 		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self;
-		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self.
+		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self;
+		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self.
 	
 	self wardleyMapNodeModel labelModel weak
 		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;

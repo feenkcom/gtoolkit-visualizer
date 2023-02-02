@@ -159,6 +159,23 @@ GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 		ifNone: [  ]
 ]
 
+{ #category : #'api - wardley map view model' }
+GtWardleyMapCanvasElement >> onNodePipelineVisibilityChanged: anAnnouncement [
+	| aChangedNodeViewModel |
+	aChangedNodeViewModel := anAnnouncement nodeViewModel.
+
+	self
+		pipelineViewFor: aChangedNodeViewModel
+		ifFound: [ :aPipelineView | 
+			aChangedNodeViewModel isPipelineVisible
+				ifTrue: [ GtWardleyMapUtility
+						updatePipelineElement: aPipelineView
+						nodeViewModel: aChangedNodeViewModel ]
+				ifFalse: [ aPipelineView removeFromParent ] ]
+		ifNone: [ aChangedNodeViewModel isPipelineVisible
+				ifTrue: [ self addChildFirst: (self createPipelineViewFor: aChangedNodeViewModel) ] ]
+]
+
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeRemoved: anAnnouncement [
 	self
@@ -193,7 +210,9 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 { #category : #private }
 GtWardleyMapCanvasElement >> pipelineViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
-		detect: [ :eachChild | eachChild wardley isPipeline ]
+		detect: [ :eachChild | 
+			eachChild wardley isPipeline
+				and: [ eachChild wardleyMapNodeViewModel = aNodeViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
 ]
@@ -208,6 +227,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved: to: self;
 		when: GtWardleyMapNodeViewModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self
 ]

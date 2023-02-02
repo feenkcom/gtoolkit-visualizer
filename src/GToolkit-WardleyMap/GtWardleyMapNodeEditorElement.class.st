@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
 		'predefinedColorsElement',
-		'nodeSizeEditor'
+		'nodeSizeEditor',
+		'pipelineVisibilityElement'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -46,6 +47,33 @@ GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
 		label: 'Delete';
 		action: [ self wardleyMapNodeViewModel removeFromMap.
 			self fireEvent: BrDropdownHideWish new ]
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityCheckbox [
+	^ GtWardleyMapPipelineVisibilityCheckbox new
+		checked: false;
+		whenCheckedDo: [ :anEvent |  ];
+		whenUncheckedDo: [ :anEvent |  ];
+		margin:
+			(BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0)
+]
+
+{ #category : #initialization }
+GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityLabel [
+	^ BrLabel new
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+		margin:
+			(BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0);
+		text: 'Pipeline:'
 ]
 
 { #category : #initialization }
@@ -112,7 +140,9 @@ GtWardleyMapNodeEditorElement >> createPropertyEditorElements [
 		self createNodeColorLabel.
 		(predefinedColorsElement := self createColorPicker).
 		self createNodeSizeLabel.
-		self createNodeSizePicker
+		self createNodeSizePicker.
+		self createNodePipelineVisibilityLabel.
+		pipelineVisibilityElement := self createNodePipelineVisibilityCheckbox.
 	}
 ]
 
@@ -127,6 +157,10 @@ GtWardleyMapNodeEditorElement >> initialize [
 		padding: (BlInsets all: 3).
 
 	aContainer := self createPropertiesEditorContainer.
+	
+	pipelineVisibilityElement
+		whenCheckedDo: [ :anEvent | self wardleyMapNodeViewModel isPipelineVisible: true ];
+		whenUncheckedDo: [ :anEvent | self wardleyMapNodeViewModel isPipelineVisible: false ].
 
 	self
 		addChild:
@@ -142,11 +176,18 @@ GtWardleyMapNodeEditorElement >> onNodeSizeChanged [
 	nodeSizeEditor text: (self wardleyMapNodeViewModel nodeSize min asString)
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged [
+	pipelineVisibilityElement
+		checked: self wardleyMapNodeViewModel isPipelineVisible
+]
+
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeEditorElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
 
-	self onNodeSizeChanged
+	self onNodeSizeChanged.
+	self onPipelineVisibilityChanged
 ]
 
 { #category : #'api - wardley map view model' }
@@ -165,8 +206,13 @@ GtWardleyMapNodeEditorElement >> subscribeToWardleyMapNodeViewModel [
 	"Is sent after a new WardleyMapNode view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
-	
-	self wardleyMapNodeViewModel weak when: GtWardleyMapNodeViewModelResized send: #onNodeSizeChanged to: self
+
+	self wardleyMapNodeViewModel weak
+		when: GtWardleyMapNodeViewModelResized
+			send: #onNodeSizeChanged
+			to: self;
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged
+			send: #onPipelineVisibilityChanged to: self
 ]
 
 { #category : #'api - wardley map node view model' }

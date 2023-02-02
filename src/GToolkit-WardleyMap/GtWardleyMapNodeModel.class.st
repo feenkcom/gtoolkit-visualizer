@@ -39,6 +39,14 @@ GtWardleyMapNodeModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> ensurePipelineCoordinate [
+	pipelineCoordinate ifNotNil: [ ^ self ].
+
+	pipelineCoordinate := (self coordinate x - 0.2 max: 0.0)
+			@ (self coordinate x + 0.2 min: 1.0)
+]
+
 { #category : #'api - export / import' }
 GtWardleyMapNodeModel >> gtJSONFor: aView [
 	<gtView>
@@ -86,7 +94,7 @@ GtWardleyMapNodeModel >> initialize [
 	coordinate := 0.5@0.5.
 	size := 12@12.
 	id := nil.
-	pipelineCoordinate := 0.3@0.7.
+	pipelineCoordinate := nil.
 	isPipelineVisible := false.
 ]
 
@@ -99,8 +107,12 @@ GtWardleyMapNodeModel >> isPipelineVisible [
 ]
 
 { #category : #'api - pipeline' }
-GtWardleyMapNodeModel >> isPipelineVisible: aBoolean [ 
-	isPipelineVisible := aBoolean
+GtWardleyMapNodeModel >> isPipelineVisible: aBoolean [
+	self isPipelineVisible = aBoolean ifTrue: [ ^ self ].
+
+	isPipelineVisible := aBoolean.
+
+	self notifyPipelineVisibityChanged
 ]
 
 { #category : #accessing }
@@ -146,6 +158,12 @@ GtWardleyMapNodeModel >> notifyPipelineCoordinateChanged [
 		propagateAnnouncement: (GtWardleyMapNodeModelPipelineResized new nodeModel: self)
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> notifyPipelineVisibityChanged [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeModelPipelineVisibilityChanged new nodeModel: self)
+]
+
 { #category : #'api - size' }
 GtWardleyMapNodeModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeModelResized new nodeModel: self)
@@ -159,6 +177,8 @@ GtWardleyMapNodeModel >> pipelineCoordinate [
 	Both values are between 0 and 1.
 	X < Y"
 	<return: #Point>
+	self ensurePipelineCoordinate.
+	
 	^ pipelineCoordinate
 ]
 
