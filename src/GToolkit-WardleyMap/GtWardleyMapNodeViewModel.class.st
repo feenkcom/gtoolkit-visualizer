@@ -93,7 +93,14 @@ GtWardleyMapNodeViewModel >> moveNodeLabelTo: aNormalizedPoint [
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
-	self wardleyMapNodeModel coordinate: aNormalizedPoint
+	| anOldNodeCoordinate aDiff aNormalizedPipelineCoordinate anOldPipelineCoordinate |
+	anOldNodeCoordinate := self wardleyMapNodeModel coordinate.
+	aDiff := aNormalizedPoint - anOldNodeCoordinate.
+	anOldPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
+	aNormalizedPipelineCoordinate := anOldPipelineCoordinate + (aDiff x @ aDiff x).
+	
+	self wardleyMapNodeModel coordinate: aNormalizedPoint.
+	self wardleyMapNodeModel pipelineCoordinate: aNormalizedPipelineCoordinate.
 ]
 
 { #category : #'api - accessing' }

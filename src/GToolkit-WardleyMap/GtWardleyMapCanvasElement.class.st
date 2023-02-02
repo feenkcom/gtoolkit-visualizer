@@ -66,12 +66,13 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
-		constraintsDo: [ :c | 
-			c frame horizontal alignLeftAt: aNodeViewModel pipelineCoordinateLeft.
-			c frame vertical alignTopAt: aNodeViewModel pipelineCoordinateTop.
-			c frame horizontal
-				weight: aNodeViewModel pipelineCoordinateRight - aNodeViewModel pipelineCoordinateLeft.
-			c horizontal matchParent ]
+		in: [ :thePipelineElement | 
+			thePipelineElement wardley bePipeline.
+		
+			GtWardleyMapUtility
+				updatePipelineElement: thePipelineElement
+				nodeViewModel: aNodeViewModel ];
+		yourself
 ]
 
 { #category : #private }
@@ -138,15 +139,23 @@ GtWardleyMapCanvasElement >> onNodeAdded: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 	| aMovedNodeViewModel |
-
 	aMovedNodeViewModel := anAnnouncement nodeViewModel.
 
 	self
 		nodeViewFor: aMovedNodeViewModel
-		ifFound: [ :aNodeView |
-			aNodeView constraintsDo: [ :c |
-				c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
-				c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+		ifFound: [ :aNodeView | 
+			aNodeView
+				constraintsDo: [ :c | 
+					c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
+					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+		ifNone: [  ].
+
+	self
+		pipelineViewFor: aMovedNodeViewModel
+		ifFound: [ :aPipelineView | 
+			GtWardleyMapUtility
+				updatePipelineElement: aPipelineView
+				nodeViewModel: aMovedNodeViewModel ]
 		ifNone: [  ]
 ]
 
@@ -179,6 +188,14 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 		self createEdgeViewFor: eachEdgeViewModel ].
 
 	self addChildren: theEdgeElements.
+]
+
+{ #category : #private }
+GtWardleyMapCanvasElement >> pipelineViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self children
+		detect: [ :eachChild | eachChild wardley isPipeline ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
 ]
 
 { #category : #'api - wardley map view model' }
