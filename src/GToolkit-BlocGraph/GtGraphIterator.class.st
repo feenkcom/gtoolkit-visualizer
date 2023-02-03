@@ -49,6 +49,14 @@ GtGraphIterator >> graphElement: aGtGraphEement [
 	graphElement := aGtGraphEement
 ]
 
+{ #category : #accessing }
+GtGraphIterator >> gtItemsFor: aView [ 
+	<gtView>
+	^ aView list 
+		title: 'Items';
+		items: [ self asArray ]
+]
+
 { #category : #'api - testing' }
 GtGraphIterator >> hasAny [
 	"Return true if I have any items"
