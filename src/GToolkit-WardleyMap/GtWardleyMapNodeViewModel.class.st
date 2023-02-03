@@ -97,15 +97,31 @@ GtWardleyMapNodeViewModel >> moveNodeLabelTo: aNormalizedPoint [
 ]
 
 { #category : #'api - node' }
-GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
-	| anOldNodeCoordinate aDiff aNormalizedPipelineCoordinate anOldPipelineCoordinate |
-	anOldNodeCoordinate := self wardleyMapNodeModel coordinate.
-	aDiff := aNormalizedPoint - anOldNodeCoordinate.
-	anOldPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
-	aNormalizedPipelineCoordinate := anOldPipelineCoordinate + (aDiff x @ aDiff x).
+GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint [
+	"aNormalizedPoint is a position (x, y) of the pipeline.
+	We need to adjust the pipeline coordinate to (oldLeft+diffX, oldRight+diffX)
+	We need to move the node coordinate too by (oldX + diff, aNormalizedPoint y)"
+	| aCurrentPipelineCoordinate aDiffX aNewPipelineCoordinate aNewNodeCoordinate aDiffY aCurrentNodeCoordinate |
 	
-	self wardleyMapNodeModel coordinate: aNormalizedPoint.
-	self wardleyMapNodeModel pipelineCoordinate: aNormalizedPipelineCoordinate.
+	self isPipelineVisible ifFalse: [ ^ self ].
+	
+	"Let's compute the pipeline diff to move it properly"
+	aCurrentPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
+	aDiffX := aNormalizedPoint x - aCurrentPipelineCoordinate x.
+	aNewPipelineCoordinate := aCurrentPipelineCoordinate + (aDiffX @ aDiffX).
+	
+	"Let's compute node normalized point to move it properly"
+	aCurrentNodeCoordinate := self wardleyMapNodeModel coordinate.
+	aDiffY := aNormalizedPoint y - aCurrentNodeCoordinate y.
+	aNewNodeCoordinate := aCurrentNodeCoordinate + (aDiffX @ aDiffY).
+	
+	self moveNodeTo: aNewNodeCoordinate.
+	self wardleyMapNodeModel pipelineCoordinate: aNewPipelineCoordinate.
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
+	self wardleyMapNodeModel coordinate: aNormalizedPoint
 ]
 
 { #category : #'api - accessing' }

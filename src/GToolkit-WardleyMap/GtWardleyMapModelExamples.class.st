@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Examples'
 }
 
-{ #category : #examples }
+{ #category : #'examples - elements' }
 GtWardleyMapModelExamples >> mapElementWithNodes [
 	<gtExample>
 	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
@@ -27,14 +27,12 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 	^ aWardleyMapElement
 ]
 
-{ #category : #examples }
+{ #category : #'examples - elements' }
 GtWardleyMapModelExamples >> mapElementWithPipelines [
 	<gtExample>
-	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
+	| aWardleyMapViewModel aWardleyMapElement |
 
-	aWardleyMap := self newMapWithPipelines.
-	aWardleyMapViewModel := GtWardleyMapViewModel new.
-	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+	aWardleyMapViewModel := self mapViewModelWithPipelines.
 
 	aWardleyMapElement := GtWardleyMapElement new.
 	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
@@ -51,7 +49,128 @@ GtWardleyMapModelExamples >> mapElementWithPipelines [
 	^ aWardleyMapElement
 ]
 
-{ #category : #accessing }
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelines [
+	<gtExample>
+	| aWardleyMap aWardleyMapViewModel |
+	aWardleyMap := self newMapWithPipelines.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+
+	self assert: aWardleyMapViewModel wardleyMapModel equals: aWardleyMap.
+	self assert: aWardleyMapViewModel nodeViewModels size equals: 3.
+	self assert: aWardleyMapViewModel edgeViewModels size equals: 1.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelines_moveNodeA [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelines.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.4.
+
+	aNodeAViewModel moveNodeTo: 0.5 @ 0.6.
+
+	self assert: aNodeAViewModel coordinate equals: 0.5 @ 0.6.
+	
+	"We do not recompute pipeline coordinate on #moveNodeTo:, 
+	yet we adjust the pipeline coordinate when requested 
+	if the node is away of the pipeline horizontal range.
+	It is the node view model that recomputes it."
+	self
+		assert: aNodeAViewModel wardleyMapNodeModel pipelineCoordinate
+		equals: 0.15 @ 0.4.
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.5.
+	self
+		assert: aNodeAViewModel wardleyMapNodeModel pipelineCoordinate
+		equals: 0.15 @ 0.5.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelines_moveNodeB [
+	<gtExample>
+	| aWardleyMapViewModel aNodeBViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelines.
+
+	aNodeBViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node B' ].
+
+	self
+		assert: aNodeBViewModel isPipelineVisible not
+		description: [ 'Pipeline must not be visible' ].
+	self assert: aNodeBViewModel coordinate equals: 0.5 @ 0.25.
+
+	aNodeBViewModel moveNodeTo: 0.6 @ 0.2.
+
+	self assert: aNodeBViewModel coordinate equals: 0.6 @ 0.2.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelines_movePipelineA [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelines.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel coordinate equals: 0.25@0.75.
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.4.
+
+	aNodeAViewModel moveNodePipelineTo: 0.5 @ 0.6.
+	
+	self
+		assert: aNodeAViewModel wardleyMapNodeModel pipelineCoordinate
+		equals: 0.5 @ 0.75.
+	self
+		assert: aNodeAViewModel wardleyMapNodeModel coordinate
+		equals: 0.6 @ 0.6.
+
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.5 @ 0.75.
+	self assert: aNodeAViewModel coordinate equals: 0.6 @ 0.6.
+		
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelines_movePipelineB [
+	<gtExample>
+	| aWardleyMapViewModel aNodeBViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelines.
+
+	aNodeBViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node B' ].
+
+	self
+		assert: aNodeBViewModel isPipelineVisible not
+		description: [ 'Pipeline must NOT be visible' ].
+	self assert: aNodeBViewModel coordinate equals: 0.5 @ 0.25.
+
+	aNodeBViewModel moveNodePipelineTo: 0.6 @ 0.2.
+
+	"Nothing happens if the pipeline is not visible"
+	self assert: aNodeBViewModel coordinate equals: 0.5 @ 0.25.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> mapWithNodesEqualsEvaluatedStoreString [
 
 	<gtExample>
@@ -63,7 +182,7 @@ GtWardleyMapModelExamples >> mapWithNodesEqualsEvaluatedStoreString [
 	^ map
 ]
 
-{ #category : #examples }
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMap [
 	<gtExample>
 	| aWardleyMap |
@@ -73,7 +192,7 @@ GtWardleyMapModelExamples >> newMap [
 	^ aWardleyMap
 ]
 
-{ #category : #examples }
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithNodes [
 	<gtExample>
 	| aWardleyMap aNodeA aNodeB aNodeC anEdgeAtoB |
@@ -112,7 +231,7 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 	^ aWardleyMap
 ]
 
-{ #category : #examples }
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithPipelines [
 	<gtExample>
 	| aWardleyMap aNodeA |
@@ -136,7 +255,7 @@ GtWardleyMapModelExamples >> newMapWithPipelines [
 	^ aWardleyMap
 ]
 
-{ #category : #examples }
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> understandingWhenMapChanges [
 	<gtExample>
 	| aWardleyMap theAnnouncements |

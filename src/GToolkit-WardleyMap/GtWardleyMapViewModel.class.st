@@ -85,6 +85,17 @@ GtWardleyMapViewModel >> edgeViewModels: anObject [
 	edgeViewModels := anObject
 ]
 
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtLiveFor: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Live';
+		priority: 2;
+		stencil: [ GtWardleyMapElement new
+				wardleyMapViewModel: self;
+				yourself ]
+]
+
 { #category : #initialization }
 GtWardleyMapViewModel >> initialize [
 	super initialize.

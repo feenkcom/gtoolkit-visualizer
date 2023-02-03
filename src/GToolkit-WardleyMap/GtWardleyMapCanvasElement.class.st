@@ -47,25 +47,38 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
-		addEventHandler: (GtWardleyMapPullHandler new
-			containerElement: self;
-			whenPulled: [ :aPulledElement :aNormalizedPosition | aNodeViewModel moveNodeTo: aNormalizedPosition ]);
+		addEventHandler: (GtWardleyMapNodePullHandler new
+				containerElement: self;
+				disallowOutOfBounds;
+				in: [ :theHandler | 
+					aNodeViewModel isPipelineVisible
+						ifTrue: [ theHandler
+								beWithPipelineMin: aNodeViewModel pipelineCoordinateLeft
+								max: aNodeViewModel pipelineCoordinateRight ]
+						ifFalse: [ theHandler beWithoutPipeline ] ];
+				whenPulled: [ :aPulledElement :aNormalizedPosition |
+					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
-		constraintsDo: [ :c |
+		constraintsDo: [ :c | 
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 			c frame vertical alignCenterAt: aNodeViewModel coordinateY.
 			c graph beNode ];
 		addAptitude: (BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: aNodeViewModel nodeSize / 2.0;
-					geometry: BlEllipseGeometry new ]
-			content: [ self createNodeEditorFor: aNodeViewModel ])
+				handle: [ BlElement new
+						size: aNodeViewModel nodeSize / 2.0;
+						geometry: BlEllipseGeometry new ]
+				content: [ self createNodeEditorFor: aNodeViewModel ])
 ]
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
+		addEventHandler: (GtWardleyMapPipelinePullHandler new
+			disallowOutOfBounds;
+			containerElement: self;
+			whenPulled: [ :aPulledElement :aNormalizedPosition |
+				aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
 		in: [ :thePipelineElement | 
 			thePipelineElement wardley bePipeline.
 		

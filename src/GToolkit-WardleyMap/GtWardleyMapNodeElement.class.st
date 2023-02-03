@@ -31,12 +31,15 @@ GtWardleyMapNodeElement >> initialize [
 			aptitude: BrGlamorousRegularEditorAptitude new;
 			when: BrEditorAcceptWish
 				do: [ :aWish | self wardleyMapNodeViewModel label: aWish text asString ];
-			text: 'Label'.	"we have to wrap the editable label in a pullable element to allow text selection with drag"
+			text: 'Label'.	
+			
+	"we have to wrap the editable label in a pullable element to allow text selection with drag"
 	labelContainer := BrHorizontalPane new
 			fitContent;
 			addEventHandler: (GtWardleyMapPullHandler new
 					containerElement: self;
-					whenPulled: [ :aPulledElement :aNormalizedPosition | self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
+					whenPulled: [ :aPulledElement :aNormalizedPosition | 
+						self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
 			addChild: labelElement.
 	self addChild: labelContainer.
 	self
@@ -83,8 +86,13 @@ GtWardleyMapNodeElement >> onNodeLabelTextChanged [
 { #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 	self wardleyMapNodeViewModel isPipelineVisible
-		ifTrue: [ self beSquareGeometry ]
-		ifFalse: [ self beEllipseGeometry ]
+		ifTrue: [ self beSquareGeometry.
+			self
+				dispatchEvent: (GtWardleyMapNodeElementWithPipelineEvent new
+						minHorizontalCoordinate: self wardleyMapNodeViewModel pipelineCoordinateLeft;
+						maxHorizontalCoordinate: self wardleyMapNodeViewModel pipelineCoordinateRight) ]
+		ifFalse: [ self beEllipseGeometry.
+			self dispatchEvent: GtWardleyMapNodeElementWithoutPipelineEvent new ]
 ]
 
 { #category : #'event handling' }
