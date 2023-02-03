@@ -115,13 +115,26 @@ GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint [
 	aDiffY := aNormalizedPoint y - aCurrentNodeCoordinate y.
 	aNewNodeCoordinate := aCurrentNodeCoordinate + (aDiffX @ aDiffY).
 	
-	self moveNodeTo: aNewNodeCoordinate.
+	self wardleyMapNodeModel coordinate: aNewNodeCoordinate.
 	self wardleyMapNodeModel pipelineCoordinate: aNewPipelineCoordinate.
 ]
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
-	self wardleyMapNodeModel coordinate: aNormalizedPoint
+	"If a pipeline is visible, we keep the node inside of the pipeline width"
+
+	| aCorrectedPoint |
+	aCorrectedPoint := self isPipelineVisible
+			ifTrue: [
+				| aPipelineCoordinate aCorrectedX aNodeCoordinate |
+				aPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
+				aNodeCoordinate := self wardleyMapNodeModel coordinate.
+				aCorrectedX := (aPipelineCoordinate x max: aNormalizedPoint x)
+						min: aPipelineCoordinate y.
+				aCorrectedX @ aNodeCoordinate y ]
+			ifFalse: [ aNormalizedPoint ].
+
+	self wardleyMapNodeModel coordinate: aCorrectedPoint
 ]
 
 { #category : #'api - accessing' }
@@ -190,20 +203,6 @@ GtWardleyMapNodeViewModel >> pipelineColor [
 { #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> pipelineCoordinate [
 	<return: #Number>
-	| aPipelineCoordinate aNodeCoordinate aNewPipelineCoordinate |
-	aPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
-	aNewPipelineCoordinate := aPipelineCoordinate.
-	aNodeCoordinate := self coordinateX.
-
-	aPipelineCoordinate x <= aNodeCoordinate
-		ifFalse: [ aNewPipelineCoordinate := aNodeCoordinate @ aNewPipelineCoordinate y ].
-
-	aNodeCoordinate <= aPipelineCoordinate y
-		ifFalse: [ aNewPipelineCoordinate := aNewPipelineCoordinate x @ aNodeCoordinate ].
-
-	aNewPipelineCoordinate = aPipelineCoordinate
-		ifFalse: [ self pipelineCoordinate: aNewPipelineCoordinate ].
-
 	^ self wardleyMapNodeModel pipelineCoordinate
 ]
 

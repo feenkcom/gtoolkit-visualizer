@@ -86,13 +86,8 @@ GtWardleyMapNodeElement >> onNodeLabelTextChanged [
 { #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 	self wardleyMapNodeViewModel isPipelineVisible
-		ifTrue: [ self beSquareGeometry.
-			self
-				dispatchEvent: (GtWardleyMapNodeElementWithPipelineEvent new
-						minHorizontalCoordinate: self wardleyMapNodeViewModel pipelineCoordinateLeft;
-						maxHorizontalCoordinate: self wardleyMapNodeViewModel pipelineCoordinateRight) ]
-		ifFalse: [ self beEllipseGeometry.
-			self dispatchEvent: GtWardleyMapNodeElementWithoutPipelineEvent new ]
+		ifTrue: [ self beSquareGeometry ]
+		ifFalse: [ self beEllipseGeometry ]
 ]
 
 { #category : #'event handling' }

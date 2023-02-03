@@ -76,23 +76,36 @@ GtWardleyMapModelExamples >> mapViewModelWithPipelines_moveNodeA [
 	self
 		assert: aNodeAViewModel isPipelineVisible
 		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel coordinate equals: 0.25@0.75.
 	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.4.
 
 	aNodeAViewModel moveNodeTo: 0.5 @ 0.6.
 
-	self assert: aNodeAViewModel coordinate equals: 0.5 @ 0.6.
-	
-	"We do not recompute pipeline coordinate on #moveNodeTo:, 
-	yet we adjust the pipeline coordinate when requested 
-	if the node is away of the pipeline horizontal range.
-	It is the node view model that recomputes it."
+	self assert: aNodeAViewModel coordinate equals: 0.4 @ 0.75.
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.4.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelines_moveNodeA_toTheLeft [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelines.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+
 	self
-		assert: aNodeAViewModel wardleyMapNodeModel pipelineCoordinate
-		equals: 0.15 @ 0.4.
-	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.5.
-	self
-		assert: aNodeAViewModel wardleyMapNodeModel pipelineCoordinate
-		equals: 0.15 @ 0.5.
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel coordinate equals: 0.25@0.75.
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.4.
+
+	aNodeAViewModel moveNodeTo: 0.1 @ 0.6.
+
+	self assert: aNodeAViewModel coordinate equals: 0.15 @ 0.75.
+	self assert: aNodeAViewModel pipelineCoordinate equals: 0.15 @ 0.4.
 
 	^ aWardleyMapViewModel
 ]

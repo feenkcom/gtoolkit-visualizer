@@ -47,15 +47,9 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
-		addEventHandler: (GtWardleyMapNodePullHandler new
+		addEventHandler: (GtWardleyMapPullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
-				in: [ :theHandler | 
-					aNodeViewModel isPipelineVisible
-						ifTrue: [ theHandler
-								beWithPipelineMin: aNodeViewModel pipelineCoordinateLeft
-								max: aNodeViewModel pipelineCoordinateRight ]
-						ifFalse: [ theHandler beWithoutPipeline ] ];
 				whenPulled: [ :aPulledElement :aNormalizedPosition |
 					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
