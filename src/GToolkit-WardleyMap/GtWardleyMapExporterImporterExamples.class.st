@@ -7,7 +7,7 @@ Class {
 { #category : #export }
 GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
 	<gtExample>
-	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary |
+	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary aFirstNodePipelineDictionary |
 
 	aWardleyMap := GtWardleyMapModelExamples new newMapWithNodes.
 	anExportedDictionary := aWardleyMap accept: GtWardleyMapAsDictionaryExporter new.
@@ -19,7 +19,7 @@ GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
 	self assert: (anExportedDictionary at: #nodes) size equals: 3.
 	
 	aFirstNodeDictionary := (anExportedDictionary at: #nodes) at: 1.
-	self assert: aFirstNodeDictionary size equals: 7.
+	self assert: aFirstNodeDictionary size equals: 8.
 	self assert: (aFirstNodeDictionary at: #x) equals: 0.25.
 	self assert: (aFirstNodeDictionary at: #y) equals: 0.75.
 	self assert: (aFirstNodeDictionary at: #width) equals: 12.
@@ -31,8 +31,12 @@ GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
 	self assert: (aFirstNodeLabelDictionary at: #y) equals: 2.0.
 	self assert: (aFirstNodeLabelDictionary at: #text) equals: 'Node A'.
 	
+	aFirstNodePipelineDictionary := aFirstNodeDictionary at: #pipeline.
+	self assert: aFirstNodePipelineDictionary size equals: 1.
+	self assert: (aFirstNodePipelineDictionary at: #isVisible) equals:false.
+
 	aSecondNodeDictionary := (anExportedDictionary at: #nodes) at: 2.
-	self assert: aSecondNodeDictionary size equals: 7.
+	self assert: aSecondNodeDictionary size equals: 8.
 	self assert: (aSecondNodeDictionary at: #x) equals: 0.5.
 	self assert: (aSecondNodeDictionary at: #y) equals: 0.25.
 	self assert: (aSecondNodeDictionary at: #width) equals: 12.
