@@ -245,6 +245,45 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 ]
 
 { #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
+	<gtExample>
+	| aWardleyMap aNodeA aNodeD aNodeE aNodeF aNodeG |
+	aWardleyMap := self newMapWithPipelines.
+
+	aNodeA := aWardleyMap nodes first.
+
+	aNodeD := GtWardleyMapNodeModelExamples new newNode.
+	aNodeD coordinate: 0.2 @ 0.76.
+	aNodeD color: Color blue.
+	aNodeD label: 'Node D'.
+
+	aNodeE := GtWardleyMapNodeModelExamples new newNode.
+	aNodeE coordinate: 0.3 @ 0.76.
+	aNodeE color: Color blue.
+	aNodeE label: 'Node E'.
+
+	aNodeF := GtWardleyMapNodeModelExamples new newNode.
+	aNodeF coordinate: 0.41 @ 0.76.
+	aNodeF color: Color yellow darker.
+	aNodeF label: 'Node F'.
+	
+	aNodeG := GtWardleyMapNodeModelExamples new newNode.
+	aNodeG coordinate: 0.38 @ 0.78.
+	aNodeG color: Color yellow darker.
+	aNodeG label: 'Node G'.
+
+	aWardleyMap addNode: aNodeD.
+	aWardleyMap addNode: aNodeE.
+	aWardleyMap addNode: aNodeF.
+	aWardleyMap addNode: aNodeG.
+	
+	self assert: aWardleyMap nodes size equals: 7.
+	self assert: aWardleyMap edges size equals: 1.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithPipelines [
 	<gtExample>
 	| aWardleyMap aNodeA |
