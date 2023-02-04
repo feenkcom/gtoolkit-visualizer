@@ -127,7 +127,7 @@ GtMondrianBasicExamples >> edgesWithChangingColorsOnHover [
 	| m |
 	m := GtMondrian new.
 	m nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				border: (BlBorder paint: Color black);
 				geometry: BlEllipseGeometry new;
@@ -157,7 +157,7 @@ GtMondrianBasicExamples >> edgesWithTextAndThickerLinesHorizontalTree [
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4) width: x) ];
+		stencil: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4) width: x) ];
 		connectFrom: [ :x | x // 2 ].
 	view topStep root graph edgeChildren do: [ :edgeChild | 
 		self assert: edgeChild border width > 1 ].
@@ -171,12 +171,28 @@ GtMondrianBasicExamples >> edgesWithThickerLines [
 	| view |
 	view := self nodesWithEllipses.
 	view edges
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlLineElement new
 				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
 	view topStep root graph edgeChildren do: [ :edgeChild | 
-		self assert: edgeChild border width > 1 ].
+		self assert: edgeChild border width = edgeChild graph connectedNodes asArray last graph model ].
+	view layout tree.
+	^ view
+]
+
+{ #category : #'tutorial - shapes' }
+GtMondrianBasicExamples >> edgesWithThickerLinesDependingOnTheFromNode [
+	<gtExample>
+	| view |
+	view := self nodesWithEllipses.
+	view edges
+		stencil: [ :aNumber :fromElement :toElement | 
+			BlLineElement new
+				border: (BlBorder paint: (Color blue alpha: 0.5) width: fromElement graph model) ];
+		connectFrom: [ :x | x // 2 ].
+	view topStep root graph edgeChildren
+		do: [ :edgeChild | self assert: edgeChild border width = edgeChild graph connectedNodes asArray first graph model ].
 	view layout tree.
 	^ view
 ]
@@ -187,7 +203,7 @@ GtMondrianBasicExamples >> edgesWithThickerLinesHorizontalTree [
 	| view |
 	view := self nodesWithEllipses.
 	view edges
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlLineElement new
 				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
@@ -203,7 +219,7 @@ GtMondrianBasicExamples >> elipseWithCustomShape [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :anInteger | 
+		stencil: [ :anInteger | 
 			BlElement new
 				geometry: BlEllipseGeometry new;
 				border: (BlBorder paint: Color black width: 2);
@@ -235,7 +251,7 @@ GtMondrianBasicExamples >> elipseWithReusedShape [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :anInteger :anElement | 
+		stencil: [ :anInteger :anElement | 
 			anElement
 				geometry: BlEllipseGeometry new;
 				size: (anInteger max: 5) asPoint;
@@ -425,7 +441,7 @@ GtMondrianBasicExamples >> nodesWithEllipses [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new 
 				border: (BlBorder paint: Color black);
 				geometry: BlEllipseGeometry new; 
