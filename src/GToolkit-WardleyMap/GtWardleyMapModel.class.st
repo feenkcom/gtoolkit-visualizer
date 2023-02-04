@@ -251,13 +251,6 @@ GtWardleyMapModel >> nodes [
 	^ nodes
 ]
 
-{ #category : #private }
-GtWardleyMapModel >> rebuildUniqueIds [
-	self nodes
-		collect: [ :eachNode | eachNode -> self nextUniqueId ]
-		thenDo: [ :anAssoc | anAssoc key id: anAssoc value ]
-]
-
 { #category : #'api - edges' }
 GtWardleyMapModel >> removeEdge: aGtWardleyMapEdgeModel [
 	self

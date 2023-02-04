@@ -6,7 +6,9 @@ Class {
 	#instVars : [
 		'announcer',
 		'labelModel',
-		'id'
+		'id',
+		'pipelineCoordinate',
+		'isPipelineVisible'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -35,6 +37,14 @@ GtWardleyMapNodeModel >> accept: aWardleyMapVisitor [
 GtWardleyMapNodeModel >> announcer [
 	<return: #Announcer>
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> ensurePipelineCoordinate [
+	pipelineCoordinate ifNotNil: [ ^ self ].
+
+	pipelineCoordinate := (self coordinate x - 0.2 max: 0.0)
+			@ (self coordinate x + 0.2 min: 1.0)
 ]
 
 { #category : #'api - export / import' }
@@ -83,7 +93,26 @@ GtWardleyMapNodeModel >> initialize [
 	color := Color black.
 	coordinate := 0.5@0.5.
 	size := 12@12.
-	id := nil
+	id := nil.
+	pipelineCoordinate := nil.
+	isPipelineVisible := false.
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> isPipelineVisible [
+	"True means that a pipeline should be displayed, false otherwise"
+
+	<return: #Boolean>
+	^ isPipelineVisible
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> isPipelineVisible: aBoolean [
+	self isPipelineVisible = aBoolean ifTrue: [ ^ self ].
+
+	isPipelineVisible := aBoolean.
+
+	self notifyPipelineVisibityChanged
 ]
 
 { #category : #accessing }
@@ -123,9 +152,43 @@ GtWardleyMapNodeModel >> notifyParentChanged [
 	
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> notifyPipelineCoordinateChanged [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeModelPipelineResized new nodeModel: self)
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> notifyPipelineVisibityChanged [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeModelPipelineVisibilityChanged new nodeModel: self)
+]
+
 { #category : #'api - size' }
 GtWardleyMapNodeModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeModelResized new nodeModel: self)
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> pipelineCoordinate [
+	"Return a pipeline left and right side positions.
+	X is left relative position value.
+	Y is right relative position value.
+	Both values are between 0 and 1.
+	X < Y"
+	<return: #Point>
+	self ensurePipelineCoordinate.
+	
+	^ pipelineCoordinate
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> pipelineCoordinate: aPoint [
+	self pipelineCoordinate = aPoint ifTrue: [ ^ self ].
+
+	pipelineCoordinate := aPoint.
+
+	self notifyPipelineCoordinateChanged
 ]
 
 { #category : #printing }

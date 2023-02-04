@@ -48,18 +48,38 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
 		addEventHandler: (GtWardleyMapPullHandler new
-			containerElement: self;
-			whenPulled: [ :aPulledElement :aNormalizedPosition | aNodeViewModel moveNodeTo: aNormalizedPosition ]);
+				containerElement: self;
+				disallowOutOfBounds;
+				whenPulled: [ :aPulledElement :aNormalizedPosition |
+					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
-		constraintsDo: [ :c |
+		constraintsDo: [ :c | 
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 			c frame vertical alignCenterAt: aNodeViewModel coordinateY.
 			c graph beNode ];
 		addAptitude: (BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: aNodeViewModel nodeSize / 2.0;
-					geometry: BlEllipseGeometry new ]
-			content: [ self createNodeEditorFor: aNodeViewModel ])
+				handle: [ BlElement new
+						size: aNodeViewModel nodeSize / 2.0;
+						geometry: BlEllipseGeometry new ]
+				content: [ self createNodeEditorFor: aNodeViewModel ])
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
+	^ GtWardleyMapPipelineElement new
+		wardleyMapNodeViewModel: aNodeViewModel;
+		addEventHandler: (GtWardleyMapPipelinePullHandler new
+			disallowOutOfBounds;
+			containerElement: self;
+			whenPulled: [ :aPulledElement :aNormalizedPosition |
+				aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
+		in: [ :thePipelineElement | 
+			thePipelineElement wardley bePipeline.
+		
+			GtWardleyMapUtility
+				updatePipelineElement: thePipelineElement
+				nodeViewModel: aNodeViewModel ];
+		yourself
 ]
 
 { #category : #private }
@@ -126,16 +146,41 @@ GtWardleyMapCanvasElement >> onNodeAdded: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 	| aMovedNodeViewModel |
-
 	aMovedNodeViewModel := anAnnouncement nodeViewModel.
 
 	self
 		nodeViewFor: aMovedNodeViewModel
-		ifFound: [ :aNodeView |
-			aNodeView constraintsDo: [ :c |
-				c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
-				c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+		ifFound: [ :aNodeView | 
+			aNodeView
+				constraintsDo: [ :c | 
+					c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
+					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+		ifNone: [  ].
+
+	self
+		pipelineViewFor: aMovedNodeViewModel
+		ifFound: [ :aPipelineView | 
+			GtWardleyMapUtility
+				updatePipelineElement: aPipelineView
+				nodeViewModel: aMovedNodeViewModel ]
 		ifNone: [  ]
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapCanvasElement >> onNodePipelineVisibilityChanged: anAnnouncement [
+	| aChangedNodeViewModel |
+	aChangedNodeViewModel := anAnnouncement nodeViewModel.
+
+	self
+		pipelineViewFor: aChangedNodeViewModel
+		ifFound: [ :aPipelineView | 
+			aChangedNodeViewModel isPipelineVisible
+				ifTrue: [ GtWardleyMapUtility
+						updatePipelineElement: aPipelineView
+						nodeViewModel: aChangedNodeViewModel ]
+				ifFalse: [ aPipelineView removeFromParent ] ]
+		ifNone: [ aChangedNodeViewModel isPipelineVisible
+				ifTrue: [ self addChildFirst: (self createPipelineViewFor: aChangedNodeViewModel) ] ]
 ]
 
 { #category : #'event handling' }
@@ -149,18 +194,34 @@ GtWardleyMapCanvasElement >> onNodeRemoved: anAnnouncement [
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
-	| theNodeElements theEdgeElements |
+	| theNodeElements theEdgeElements thePipelineElements |
 
 	self removeChildren.
 	theNodeElements := self wardleyMapViewModel nodeViewModels collect: [ :eachNodeViewModel |
 		self createNodeViewFor: eachNodeViewModel ].
 	
+	thePipelineElements := Array streamContents: [ :aStream |  
+		self wardleyMapViewModel nodeViewModels do: [ :eachNodeViewModel | 
+			eachNodeViewModel isPipelineVisible ifTrue: [ 
+				aStream nextPut: (self createPipelineViewFor: eachNodeViewModel) ] ] ].
+	
+	self addChildren: thePipelineElements.
 	self addChildren: theNodeElements.
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
 
 	self addChildren: theEdgeElements.
+]
+
+{ #category : #private }
+GtWardleyMapCanvasElement >> pipelineViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self children
+		detect: [ :eachChild | 
+			eachChild wardley isPipeline
+				and: [ eachChild wardleyMapNodeViewModel = aNodeViewModel ] ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
 ]
 
 { #category : #'api - wardley map view model' }
@@ -173,6 +234,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved: to: self;
 		when: GtWardleyMapNodeViewModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self
 ]

@@ -23,8 +23,6 @@ GtWardleyMapEdgeBuilder >> containerElement: anObject [
 GtWardleyMapEdgeBuilder >> dragEndEvent: anEvent [
 	anEvent consumed: true.
 	
-	
-	
 	lineToAnchorElement
 		ifNil: [ ^ self ].
 
