@@ -50,6 +50,15 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 		at: #width put: aWardleyMapNode width;
 		at: #height put: aWardleyMapNode height;
 		at: #label put: (aWardleyMapNode labelModel accept: self);
+		at: #pipeline
+			put: (Dictionary new
+					at: #isVisible put: aWardleyMapNode isPipelineVisible;
+					in: [ :theDictionary | 
+						aWardleyMapNode hasPipelineCoordinates ifTrue: [
+							theDictionary
+								at: #x put: aWardleyMapNode pipelineCoordinate x;
+								at: #y put: aWardleyMapNode pipelineCoordinate y ] ];
+					yourself);
 		yourself
 ]
 

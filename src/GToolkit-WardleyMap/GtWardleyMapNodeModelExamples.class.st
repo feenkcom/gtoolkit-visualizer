@@ -14,6 +14,8 @@ GtWardleyMapNodeModelExamples >> newNode [
 	self assert: aWardleyNode coordinate equals: 0.5 @ 0.5.
 	self assert: aWardleyNode size equals: 12@12.
 	self assert: aWardleyNode color equals: Color black.
+	self assert: aWardleyNode isPipelineVisible not.
+	
 
 	^ aWardleyNode
 ]

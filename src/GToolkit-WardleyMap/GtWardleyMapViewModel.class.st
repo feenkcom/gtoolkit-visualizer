@@ -85,6 +85,17 @@ GtWardleyMapViewModel >> edgeViewModels: anObject [
 	edgeViewModels := anObject
 ]
 
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtLiveFor: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Live';
+		priority: 2;
+		stencil: [ GtWardleyMapElement new
+				wardleyMapViewModel: self;
+				yourself ]
+]
+
 { #category : #initialization }
 GtWardleyMapViewModel >> initialize [
 	super initialize.
@@ -151,6 +162,16 @@ GtWardleyMapViewModel >> onNodeAdded: aNodeAddedAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapViewModel >> onNodePipelineVisibilityChanged: aNodeAddedAnnouncement [
+	self
+		nodeViewModelFor: aNodeAddedAnnouncement nodeModel
+		ifFound: [ :aNodeViewModel | 
+			self
+				announce: (GtWardleyMapNodeViewModelPipelineVisibilityChanged new nodeViewModel: aNodeViewModel) ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
 	self 
 		nodeViewModelFor: aNodeAddedAnnouncement nodeModel
@@ -195,6 +216,7 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	self wardleyMapModel weak
 		when: GtWardleyMapNodeModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self;
+		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self
 ]

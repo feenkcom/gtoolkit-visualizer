@@ -1,7 +1,7 @@
 "
 I am a specialized pull handler that transforms the absolute position into a normalized proportional position for the frame layout alignment
 
-
+I compute a relative new position that is considered to be a center of an element: {{gtMethod:GtWardleyMapPullHandler >> #onPulled:from:to:by:starting: | expanded=true | label=#selector }}
 "
 Class {
 	#name : #GtWardleyMapPullHandler,
@@ -54,7 +54,7 @@ GtWardleyMapPullHandler >> wantsEvent: anEvent [
 	^ (super wantsEvent: anEvent) and: [ anEvent modifiers isPrimaryModifier not ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GtWardleyMapPullHandler >> whenPulled: aBlockClosure [
 	pulledAction := aBlockClosure
 ]
