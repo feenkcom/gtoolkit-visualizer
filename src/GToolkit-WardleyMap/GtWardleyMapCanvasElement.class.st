@@ -69,13 +69,15 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
 		addEventHandler: (GtWardleyMapPipelinePullHandler new
-			disallowOutOfBounds;
-			containerElement: self;
-			whenPulled: [ :aPulledElement :aNormalizedPosition |
-				aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
+				disallowOutOfBounds;
+				containerElement: self;
+				whenPulled: [ :aPulledElement :aNormalizedPosition :innerNodeElements | 
+					aNodeViewModel
+						moveNodePipelineTo: aNormalizedPosition
+						innerNodeViewModels: (innerNodeElements collect: #wardleyMapNodeViewModel) ]);
 		in: [ :thePipelineElement | 
 			thePipelineElement wardley bePipeline.
-		
+
 			GtWardleyMapUtility
 				updatePipelineElement: thePipelineElement
 				nodeViewModel: aNodeViewModel ];

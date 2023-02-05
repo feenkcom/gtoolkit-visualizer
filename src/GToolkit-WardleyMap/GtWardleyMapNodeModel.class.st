@@ -66,6 +66,15 @@ GtWardleyMapNodeModel >> hasId [
 	^ id notNil
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> hasPipelineCoordinates [
+	"True means that a pipeline was already computed at some point.
+	It implies that they must be kept in sync with node coordinates."
+
+	<return: #Boolean>
+	^ pipelineCoordinate isNotNil
+]
+
 { #category : #comparing }
 GtWardleyMapNodeModel >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
