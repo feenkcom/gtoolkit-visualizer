@@ -8,29 +8,10 @@ Class {
 	#superclass : #BlPullHandler,
 	#instVars : [
 		'containerElement',
-		'pulledAction',
-		'innerNodeElements'
+		'pulledAction'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
-
-{ #category : #'event handling' }
-GtWardleyMapPipelinePullHandler >> collectInnerNodesFor: aNodePipelineElement [
-	self containerElement ifNil: [ ^ #() ].
-
-	^ Array
-		streamContents: [ :aStream | 
-			self containerElement
-				childrenDo: [ :eachChild | 
-					(eachChild graph isNode
-						and: [ | aChildViewModel |
-							aChildViewModel := eachChild wardleyMapNodeViewModel.
-							aChildViewModel isPipelineVisible not
-								and: [ (eachChild == aNodePipelineElement) not
-										and: [ aNodePipelineElement bounds inParent asRectangle
-												containsRect: eachChild bounds inParent asRectangle ] ] ])
-						ifTrue: [ aStream nextPut: eachChild ] ] ]
-]
 
 { #category : #accessing }
 GtWardleyMapPipelinePullHandler >> containerElement [
@@ -43,16 +24,7 @@ GtWardleyMapPipelinePullHandler >> containerElement: anObject [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapPipelinePullHandler >> dragEndEvent: anEvent [
-	innerNodeElements := nil.
-
-	super dragEndEvent: anEvent
-]
-
-{ #category : #'event handling' }
 GtWardleyMapPipelinePullHandler >> dragStartEvent: anEvent [
-	innerNodeElements := self collectInnerNodesFor: anEvent currentTarget.
-
 	anEvent currentTarget relocate: anEvent currentTarget position.
 	super dragStartEvent: anEvent
 ]
@@ -61,7 +33,7 @@ GtWardleyMapPipelinePullHandler >> dragStartEvent: anEvent [
 GtWardleyMapPipelinePullHandler >> initialize [
 	super initialize.
 	
-	pulledAction := [ :aPulledElement :aNormalizedPosition :innerNodeElements |  ]
+	pulledAction := [ :aPulledElement :aNormalizedPosition |  ]
 ]
 
 { #category : #'event handling' }
@@ -74,7 +46,7 @@ GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosit
 		ifTrue: [ 0@0 ]
 		ifFalse: [ aNewPosition / aContainerExtent ].
 	
-	pulledAction cull: aPulledElement cull: newRelativePosition cull: (innerNodeElements ifNil: [ #() ])
+	pulledAction value: aPulledElement value: newRelativePosition
 ]
 
 { #category : #'api - event managing' }

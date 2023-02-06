@@ -50,6 +50,40 @@ GtWardleyMapModelExamples >> mapElementWithPipelines [
 ]
 
 { #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes [
+	<gtExample>
+	| aWardleyMap aWardleyMapViewModel aNodeAViewModel |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+
+	self assert: aWardleyMapViewModel wardleyMapModel equals: aWardleyMap.
+	self assert: aWardleyMapViewModel nodeViewModels size equals: 7.
+	self assert: aWardleyMapViewModel edgeViewModels size equals: 1.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 2.
+
+	aNodeAViewModel innerNodeViewModels
+		detect: [ :eachViewModel | eachViewModel label = 'Node D' ].
+	aNodeAViewModel innerNodeViewModels
+		detect: [ :eachViewModel | eachViewModel label = 'Node E' ].
+
+	aNodeAViewModel innerNodeViewModels
+		do: [ :eachInnerNodeViewModel | 
+			self
+				assert: eachInnerNodeViewModel pipelineNodeViewModel
+				equals: aNodeAViewModel ].
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
 GtWardleyMapModelExamples >> mapViewModelWithPipelines [
 	<gtExample>
 	| aWardleyMap aWardleyMapViewModel |

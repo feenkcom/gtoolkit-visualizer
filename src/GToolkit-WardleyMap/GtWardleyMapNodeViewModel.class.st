@@ -5,16 +5,38 @@ Class {
 	#classTraits : 'TGtWithWardleyMapNodeModel classTrait + TGtAnnouncer classTrait',
 	#instVars : [
 		'announcer',
-		'wardleyMapViewModel'
+		'wardleyMapViewModel',
+		'innerNodeViewModels',
+		'pipelineNodeViewModel'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> addInnerNode: aNodeViewModel [
+	"Let the node model be part of my pipeline."
+	
+	aNodeViewModel ifNil: [ ^ self ].
+	self isPipelineVisible ifFalse: [ ^ self ].
+	
+	self wardleyMapNodeModel addInnerNode: self.
+]
 
 { #category : #announcer }
 GtWardleyMapNodeViewModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> beInnerNodeIn: aPipelineNodeViewModel [
+	"Let the node model be part of a pipeline."
+	
+	aPipelineNodeViewModel ifNil: [ ^ self ].
+	aPipelineNodeViewModel isPipelineVisible ifFalse: [ ^ self ].
+	
+	aPipelineNodeViewModel addInnerNode: self.
 ]
 
 { #category : #'api - node' }
@@ -49,6 +71,19 @@ GtWardleyMapNodeViewModel >> decreaseNodeSize [
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> increaseNodeSize [
 	self nodeSize: ((self nodeSize + self nodeSizeStep) roundTo: 1@1)
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> innerNodeViewModels [
+	<return: #Collection of: #GtWardleyMapNodeViewModel>
+	^ innerNodeViewModels ifNil: [ #() ]
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
+	"set view models of my inner nodes"
+
+	innerNodeViewModels := aNodeViewModels
 ]
 
 { #category : #'api - accessing' }
@@ -98,11 +133,6 @@ GtWardleyMapNodeViewModel >> moveNodeLabelTo: aNormalizedPoint [
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint [
-	self moveNodePipelineTo: aNormalizedPoint innerNodeViewModels: #()
-]
-
-{ #category : #'api - node' }
-GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint innerNodeViewModels: innerNodeViewModels [
 	"aNormalizedPoint is a position (x, y) of the pipeline.
 	We need to adjust the pipeline coordinate to (oldLeft+diffX, oldRight+diffX)
 	We need to move the node coordinate too by (oldX + diff, aNormalizedPoint y)"
@@ -125,7 +155,7 @@ GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint innerNodeViewM
 	self wardleyMapNodeModel pipelineCoordinate: aNewPipelineCoordinate.
 	
 	"Let's move inner nodes"
-	innerNodeViewModels do: [ :eachInnerNode |
+	self innerNodeViewModels do: [ :eachInnerNode |
 		eachInnerNode moveNodeTo: eachInnerNode coordinate + aDiff
 	 ]
 ]
@@ -136,14 +166,15 @@ GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
 
 	| aCorrectedPoint |
 	aCorrectedPoint := self isPipelineVisible
-			ifTrue: [
-				| aPipelineCoordinate aCorrectedX aNodeCoordinate |
+			ifTrue: [ | aPipelineCoordinate aCorrectedX aNodeCoordinate |
 				aPipelineCoordinate := self wardleyMapNodeModel pipelineCoordinate.
 				aNodeCoordinate := self wardleyMapNodeModel coordinate.
 				aCorrectedX := (aPipelineCoordinate x max: aNormalizedPoint x)
 						min: aPipelineCoordinate y.
 				aCorrectedX @ aNodeCoordinate y ]
-			ifFalse: [ aNormalizedPoint ].
+			ifFalse: [ self
+					flag: 'we need to sync pipeline coordinates in case the pipeline is not visible but already exists'.
+				aNormalizedPoint ].
 
 	self wardleyMapNodeModel coordinate: aCorrectedPoint
 ]
@@ -238,6 +269,19 @@ GtWardleyMapNodeViewModel >> pipelineCoordinateRight [
 GtWardleyMapNodeViewModel >> pipelineCoordinateTop [
 	<return: #Number>
 	^ self coordinate y
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> pipelineNodeViewModel [
+	<return: #GtWardleyMapNodeViewModel or: nil>
+	^ pipelineNodeViewModel
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> pipelineNodeViewModel: aPipelineNodeViewModel [
+	"Set my pipeline node view model"
+
+	pipelineNodeViewModel := aPipelineNodeViewModel
 ]
 
 { #category : #'api - node' }

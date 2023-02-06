@@ -184,12 +184,26 @@ GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
-	
-	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel |
-		self createNodeViewModelFor: eachNodeModel ] as: OrderedCollection.
-	
-	edgeViewModels := self wardleyMapModel edges collect: [ :eachEdgeModel |
-		self createEdgeViewModelFor: eachEdgeModel ] as: OrderedCollection.
+
+	nodeViewModels := self wardleyMapModel nodes
+			collect: [ :eachNodeModel | self createNodeViewModelFor: eachNodeModel ]
+			as: OrderedCollection.
+
+	"put together pipeline and inner node view models"
+	nodeViewModels
+		do: [ :eachPipelineViewModel | 
+			| innerNodeViewModels |
+			innerNodeViewModels := eachPipelineViewModel wardleyMapNodeModel innerNodes
+					collect: [ :eachInnerNode | 
+						nodeViewModels detect: [ :otherNodeViewModel | 
+							otherNodeViewModel wardleyMapNodeModel = eachInnerNode ] ].
+			eachPipelineViewModel innerNodeViewModels: innerNodeViewModels.
+			innerNodeViewModels do: [ :eachInnerNodeViewModel | 
+				eachInnerNodeViewModel pipelineNodeViewModel: eachPipelineViewModel ] ].
+
+	edgeViewModels := self wardleyMapModel edges
+			collect: [ :eachEdgeModel | self createEdgeViewModelFor: eachEdgeModel ]
+			as: OrderedCollection
 ]
 
 { #category : #accessing }
