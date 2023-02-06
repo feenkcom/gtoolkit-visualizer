@@ -8,7 +8,9 @@ Class {
 		'labelModel',
 		'id',
 		'pipelineCoordinate',
-		'isPipelineVisible'
+		'isPipelineVisible',
+		'pipelineNode',
+		'innerNodes'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -31,6 +33,25 @@ GtWardleyMapNodeModel >> = anObject [
 { #category : #visiting }
 GtWardleyMapNodeModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapNode: self
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
+	"Let the node model be part of my pipeline."
+
+	aNodeModel ifNil: [ ^ self ].
+	self isPipelineVisible ifFalse: [ ^ self ].
+
+	self
+		assert: [ aNodeModel parent == self parent ]
+		description: [ 'Pipeline node and its inner node must has the same parent: {1}, {2}'
+				format: {self parent.
+						aNodeModel parent} ].
+
+	aNodeModel removeFromPipeline.
+	aNodeModel pipelineNode: self.
+
+	self innerNodes: (self innerNodes copyWith: aNodeModel)
 ]
 
 { #category : #announcer }
@@ -105,6 +126,21 @@ GtWardleyMapNodeModel >> initialize [
 	id := nil.
 	pipelineCoordinate := nil.
 	isPipelineVisible := false.
+	innerNodes := #().
+	pipelineNode := nil.
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> innerNodes [
+	"Return inner nodes that are part of a pipeline"
+
+	<return: #Collection of: #GtWardleyMapNodeModel>
+	^ innerNodes
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> innerNodes: aCollectionOfNodes [
+	innerNodes := aCollectionOfNodes
 ]
 
 { #category : #'api - pipeline' }
@@ -200,6 +236,27 @@ GtWardleyMapNodeModel >> pipelineCoordinate: aPoint [
 	self notifyPipelineCoordinateChanged
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> pipelineNode [
+	"Return a pipeline node that I am part of"
+
+	<return: #GtWardleyMapNodeModel or: nil>
+	^ pipelineNode
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> pipelineNode: aNodeModel [
+	"Set a pipeline node that I am part of"
+
+	self
+		assert: [ pipelineNode isNil or: [ aNodeModel isNil ] ]
+		description: [ 'I can be part of one pipeline node only, current pipeline node: {1}, new pipeline: {2} '
+				format: {self pipelineNode.
+						aNodeModel} ].
+
+	pipelineNode := aNodeModel
+]
+
 { #category : #printing }
 GtWardleyMapNodeModel >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
@@ -217,4 +274,31 @@ GtWardleyMapNodeModel >> printOn: aStream [
 		nextPutAll: '; id: ';
 		print: id;
 		nextPutAll: ' }'
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> removeFromPipeline [
+	"Remove myself from a pipeline node."
+
+	self pipelineNode
+		ifNotNil: [ :aPipelinenNode | aPipelinenNode removeInnerNode: self ]
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> removeInnerNode: aNodeModel [
+	"Remove the given node model from my pipeline."
+
+	aNodeModel ifNil: [ ^ self ].
+	self isPipelineVisible ifFalse: [ ^ self ].
+
+	aNodeModel pipelineNode: nil.
+
+	self innerNodes: (self innerNodes copyWithout: aNodeModel)
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> removeInnerNodes [
+	"Remove all my inner nodes (if any)."
+
+	self innerNodes do: [ :anInnerNode | self removeInnerNode: anInnerNode ]
 ]

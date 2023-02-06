@@ -8,7 +8,8 @@ Class {
 	#superclass : #BlPullHandler,
 	#instVars : [
 		'containerElement',
-		'pulledAction'
+		'pulledAction',
+		'dradEndAction'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }

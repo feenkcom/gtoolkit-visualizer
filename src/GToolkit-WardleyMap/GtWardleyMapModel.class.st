@@ -277,6 +277,8 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 	self allEdgesConnecting: aGtWardleyMapNodeModel do: [ :eachEdge | self removeEdge: eachEdge ].
 	nodes remove: aGtWardleyMapNodeModel ifAbsent: [ ^ self ].
 	aGtWardleyMapNodeModel removeParent.
+	aGtWardleyMapNodeModel removeFromPipeline.
+	aGtWardleyMapNodeModel removeInnerNodes.
 	self announce: (GtWardleyMapNodeModelRemoved new nodeModel: aGtWardleyMapNodeModel)
 ]
 
