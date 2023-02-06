@@ -8,6 +8,9 @@ Class {
 GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: aPipelineElement [
 	^ aPipelineElement bounds inParent asRectangle
 		containsRect: aNodeElement bounds inParent asRectangle
+
+	"^ aPipelineElement bounds inParent asRectangle
+		containsPoint: aNodeElement bounds inParent asRectangle center"
 ]
 
 { #category : #'api - views' }

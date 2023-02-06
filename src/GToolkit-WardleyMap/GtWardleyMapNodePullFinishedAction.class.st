@@ -1,24 +1,24 @@
 Class {
-	#name : #GtWardleyMapNodePullFinishedHandler,
+	#name : #GtWardleyMapNodePullFinishedAction,
 	#superclass : #Object,
 	#instVars : [
 		'containerElement'
 	],
-	#category : #'GToolkit-WardleyMap-Helperss'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }
-GtWardleyMapNodePullFinishedHandler >> containerElement [
+GtWardleyMapNodePullFinishedAction >> containerElement [
 	^ containerElement
 ]
 
 { #category : #accessing }
-GtWardleyMapNodePullFinishedHandler >> containerElement: anObject [
+GtWardleyMapNodePullFinishedAction >> containerElement: anObject [
 	containerElement := anObject
 ]
 
 { #category : #'api - event handling' }
-GtWardleyMapNodePullFinishedHandler >> value: aPulledElement value: aDragDirection [
+GtWardleyMapNodePullFinishedAction >> value: aPulledElement value: aDragDirection [
 	aDragDirection ifNil: [ ^ self ].
 	self containerElement ifNil: [ ^ self ].
 	aDragDirection onPullFinished: aPulledElement mapElement: self containerElement

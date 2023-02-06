@@ -50,9 +50,9 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
-				whenPulled: [ :aPulledElement :aNormalizedPosition | 
-					aNodeViewModel moveNodeTo: aNormalizedPosition ];
-				whenFinished: (GtWardleyMapNodePullFinishedHandler new
+				whenPulled: (GtWardleyMapNodePulledAction new
+					containerElement: self);
+				whenFinished: (GtWardleyMapNodePullFinishedAction new
 					containerElement: self));
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
 		constraintsDo: [ :c | 

@@ -211,6 +211,12 @@ GtWardleyMapNodeViewModel >> onNodeMoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodePipelineResized: anAnnouncement [
+	self
+		announce: (GtWardleyMapNodeViewModelPipelinePipelineResized new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodePipelineVisibilityChanged: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelPipelineVisibilityChanged new nodeViewModel: self)
 ]
@@ -306,7 +312,8 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
 		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self;
 		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self;
-		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self.
+		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
+		when: GtWardleyMapNodeModelPipelineResized send: #onNodePipelineResized: to: self.
 	
 	self wardleyMapNodeModel labelModel weak
 		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;

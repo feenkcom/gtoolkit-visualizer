@@ -45,7 +45,7 @@ GtWardleyMapNodePullHandler >> dragStartEvent: anEvent [
 GtWardleyMapNodePullHandler >> initialize [
 	super initialize.
 	
-	pulledAction := [ :aPulledElement :aNormalizedPosition |  ].
+	pulledAction := [ :aPulledElement :aNormalizedPosition :aPullDirection |  ].
 	dragEndAction := [ :aPulledElement :aPullDirection |  ]
 ]
 
@@ -65,9 +65,19 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 			ifTrue: [ 0 @ 0 ]
 			ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
 
-	pullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
 
-	pulledAction value: aPulledElement value: newRelativePosition
+	pullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
+			
+	NonInteractiveTranscript stdout
+		show: 'on pulled event, original position: ';
+		show: originalPosition;
+		show: ', delta: ';
+		show: aDragDelta;
+		show: ', direction: ';
+		show: pullDirection;
+		cr.
+
+	pulledAction value: aPulledElement value: newRelativePosition value: pullDirection
 ]
 
 { #category : #'api - event managing' }
