@@ -47,16 +47,13 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
-		addEventHandler: (GtWardleyMapPullHandler new
+		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
-				whenPulled: [ :aPulledElement :aNormalizedPosition |
+				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					aNodeViewModel moveNodeTo: aNormalizedPosition ];
-				whenFinished: [ :aPulledElement |
-					"| aPipelineElement |
-					aPipelineElement := self pipelineElementForNode: aPulledElement.
-					aPipelineElement ifNotNil: [
-						aNodeViewModel beInnerNodeIn: aPipelineElement wardleyMapNodeViewModel ]" ]);
+				whenFinished: (GtWardleyMapNodePullFinishedHandler new
+					containerElement: self));
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
 		constraintsDo: [ :c | 
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
@@ -217,6 +214,24 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 		self createEdgeViewFor: eachEdgeViewModel ].
 
 	self addChildren: theEdgeElements.
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> pipelineElementForNode: aPulledElement [
+	"Return possible pipeline element for the given node element based on their bounds."
+
+	<return: #GtWardleyMapPipelineElement or: nil>
+	aPulledElement wardleyMapNodeViewModel isPipelineVisible ifTrue: [ ^ nil ].
+
+	self
+		childrenDo: [ :aPipelineElement | 
+			(aPipelineElement wardley isPipeline
+				and: [ | aPipelineViewModel |
+					aPipelineViewModel := aPipelineElement wardleyMapNodeViewModel.
+					aPipelineViewModel isPipelineVisible
+						and: [ aPipelineElement bounds inParent asRectangle
+								containsRect: aPulledElement bounds inParent asRectangle ] ])
+				ifTrue: [ ^ aPipelineElement ] ]
 ]
 
 { #category : #private }

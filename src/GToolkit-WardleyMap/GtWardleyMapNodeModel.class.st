@@ -41,6 +41,9 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 
 	aNodeModel ifNil: [ ^ self ].
 	self isPipelineVisible ifFalse: [ ^ self ].
+	self
+		assert: [ (aNodeModel == self) not ]
+		description: [ 'Cannot add inner node into itself: {1}' format: {self} ].
 
 	self
 		assert: [ aNodeModel parent == self parent ]
@@ -51,7 +54,9 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 	aNodeModel removeFromPipeline.
 	aNodeModel pipelineNode: self.
 
-	self innerNodes: (self innerNodes copyWith: aNodeModel)
+	self innerNodes: (self innerNodes copyWith: aNodeModel).
+
+	self notifyInnerNodeAdded: aNodeModel
 ]
 
 { #category : #announcer }
@@ -194,6 +199,22 @@ GtWardleyMapNodeModel >> notifyCoordinateChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeModelMoved new nodeModel: self)
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> notifyInnerNodeAdded: anInnerNodeModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeModelInnerNodeAdded new
+				nodeModel: self;
+				innerNodeModel: anInnerNodeModel)
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> notifyInnerNodeRemoved: anInnerNodeModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeModelInnerNodeRemoved new
+				nodeModel: self;
+				innerNodeModel: anInnerNodeModel)
+]
+
 { #category : #'api - parent' }
 GtWardleyMapNodeModel >> notifyParentChanged [
 	
@@ -287,14 +308,16 @@ GtWardleyMapNodeModel >> removeFromPipeline [
 ]
 
 { #category : #'api - pipeline' }
-GtWardleyMapNodeModel >> removeInnerNode: aNodeModel [
+GtWardleyMapNodeModel >> removeInnerNode: anInnerNodeModel [
 	"Remove the given node model from my pipeline."
 
-	aNodeModel ifNil: [ ^ self ].
+	anInnerNodeModel ifNil: [ ^ self ].
 
-	aNodeModel pipelineNode: nil.
+	anInnerNodeModel pipelineNode: nil.
 
-	self innerNodes: (self innerNodes copyWithout: aNodeModel)
+	self innerNodes: (self innerNodes copyWithout: anInnerNodeModel).
+	
+	self notifyInnerNodeRemoved: anInnerNodeModel
 ]
 
 { #category : #'api - pipeline' }

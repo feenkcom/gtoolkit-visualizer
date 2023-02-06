@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : #'api - pipeline' }
-GtWardleyMapNodeViewModel >> addInnerNode: aNodeViewModel [
+GtWardleyMapNodeViewModel >> addInnerNodeViewModel: aNodeViewModel [
 	"Let the node model be part of my pipeline."
 	
 	aNodeViewModel ifNil: [ ^ self ].
 	self isPipelineVisible ifFalse: [ ^ self ].
 	
-	self wardleyMapNodeModel addInnerNode: self.
+	self wardleyMapNodeModel addInnerNode: aNodeViewModel wardleyMapNodeModel.
 ]
 
 { #category : #announcer }
@@ -27,16 +27,6 @@ GtWardleyMapNodeViewModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #'api - pipeline' }
-GtWardleyMapNodeViewModel >> beInnerNodeIn: aPipelineNodeViewModel [
-	"Let the node model be part of a pipeline."
-	
-	aPipelineNodeViewModel ifNil: [ ^ self ].
-	aPipelineNodeViewModel isPipelineVisible ifFalse: [ ^ self ].
-	
-	aPipelineNodeViewModel addInnerNode: self.
 ]
 
 { #category : #'api - node' }
@@ -86,12 +76,12 @@ GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
 	innerNodeViewModels := aNodeViewModels
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> isPipelineVisible [
 	^ self wardleyMapNodeModel isPipelineVisible
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> isPipelineVisible: aBoolean [
 	self wardleyMapNodeModel isPipelineVisible: aBoolean
 ]
@@ -131,7 +121,7 @@ GtWardleyMapNodeViewModel >> moveNodeLabelTo: aNormalizedPoint [
 	self wardleyMapNodeModel labelModel coordinate: aNormalizedPoint
 ]
 
-{ #category : #'api - node' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint [
 	"aNormalizedPoint is a position (x, y) of the pipeline.
 	We need to adjust the pipeline coordinate to (oldLeft+diffX, oldRight+diffX)
@@ -237,35 +227,35 @@ GtWardleyMapNodeViewModel >> onWardleyMapNodeModelChanged [
 	
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineColor [
 	^ self wardleyMapNodeModel color
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineCoordinate [
 	<return: #Number>
 	^ self wardleyMapNodeModel pipelineCoordinate
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineCoordinate: aPipelineCoordinate [
 	self wardleyMapNodeModel pipelineCoordinate: aPipelineCoordinate
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineCoordinateLeft [
 	<return: #Number>
 	^ self pipelineCoordinate x
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineCoordinateRight [
 	<return: #Number>
 	^ self pipelineCoordinate y
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineCoordinateTop [
 	<return: #Number>
 	^ self coordinate y
@@ -284,9 +274,26 @@ GtWardleyMapNodeViewModel >> pipelineNodeViewModel: aPipelineNodeViewModel [
 	pipelineNodeViewModel := aPipelineNodeViewModel
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodeViewModel >> printOn: aStream [
+	super printOn: aStream.
+
+	self hasWardleyMapNode ifFalse: [ ^ self ].
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self label asString;
+		nextPut: $)
+]
+
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> removeFromMap [
 	self wardleyMapViewModel removeNodeViewModel: self
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> removeInnerNodeViewModel: anInnerNodeViewModel [
+	self wardleyMapNodeModel removeInnerNode: anInnerNodeViewModel wardleyMapNodeModel
 ]
 
 { #category : #'api - wardley map node model' }

@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: aPipelineElement [
+	^ aPipelineElement bounds inParent asRectangle
+		containsRect: aNodeElement bounds inParent asRectangle
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewModel: aNodeViewModel [
 	aPipelineElement
 		constraintsDo: [ :c | 

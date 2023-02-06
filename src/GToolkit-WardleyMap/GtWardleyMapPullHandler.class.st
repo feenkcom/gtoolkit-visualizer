@@ -8,8 +8,7 @@ Class {
 	#superclass : #BlPullHandler,
 	#instVars : [
 		'containerElement',
-		'pulledAction',
-		'dradEndAction'
+		'pulledAction'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -34,7 +33,7 @@ GtWardleyMapPullHandler >> dragStartEvent: anEvent [
 GtWardleyMapPullHandler >> initialize [
 	super initialize.
 	
-	pulledAction := [ :aPulledElement :aNormalizedPosition |  ]
+	pulledAction := [ :aPulledElement :aNormalizedPosition |  ].
 ]
 
 { #category : #'event handling' }

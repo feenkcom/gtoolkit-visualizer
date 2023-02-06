@@ -84,6 +84,70 @@ GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes [
 ]
 
 { #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes_addInnerNode [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel aNodeGViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelineInnerNodes.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+	aNodeGViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node G' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 2.
+	self assert: aNodeGViewModel pipelineNodeViewModel isNil.
+
+	aNodeAViewModel addInnerNodeViewModel: aNodeGViewModel.
+
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 3.
+	self assert: aNodeGViewModel pipelineNodeViewModel equals: aNodeAViewModel.
+
+	self assert: aNodeAViewModel wardleyMapNodeModel innerNodes size equals: 3.
+	self
+		assert: aNodeGViewModel wardleyMapNodeModel pipelineNode
+		equals: aNodeAViewModel wardleyMapNodeModel.
+		
+	"Let's move it explicitly into the pipeline to make it visually inside"
+	aNodeGViewModel moveNodeTo: (0.36 @ 0.76).
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes_removeInnerNode [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel aNodeEViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelineInnerNodes.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+	aNodeEViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node E' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 2.
+	self assert: aNodeEViewModel pipelineNodeViewModel equals: aNodeAViewModel.
+
+	aNodeAViewModel removeInnerNodeViewModel: aNodeEViewModel.
+
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 1.
+	self assert: aNodeEViewModel pipelineNodeViewModel isNil.
+
+	self assert: aNodeAViewModel wardleyMapNodeModel innerNodes size equals: 1.
+	self assert: aNodeEViewModel wardleyMapNodeModel pipelineNode isNil.	
+	
+	"Let's move it explicitly outside the pipeline to make it visually inside"
+	aNodeEViewModel moveNodeTo: 0.3 @ 0.78.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
 GtWardleyMapModelExamples >> mapViewModelWithPipelines [
 	<gtExample>
 	| aWardleyMap aWardleyMapViewModel |

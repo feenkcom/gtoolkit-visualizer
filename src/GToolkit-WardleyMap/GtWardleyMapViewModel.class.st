@@ -155,6 +155,37 @@ GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapViewModel >> onInnerNodeAdded: anAnnouncement [
+	self
+		nodeViewModelFor: anAnnouncement nodeModel
+		ifFound: [ :aPipelineViewNode | 
+			self
+				nodeViewModelFor: anAnnouncement innerNodeModel
+				ifFound: [ :anInnerNodeViewNode | 
+					aPipelineViewNode == anInnerNodeViewNode
+						ifFalse: [ aPipelineViewNode
+								innerNodeViewModels: (aPipelineViewNode innerNodeViewModels copyWith: anInnerNodeViewNode).
+							anInnerNodeViewNode pipelineNodeViewModel: aPipelineViewNode ] ]
+				ifNone: [  ] ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onInnerNodeRemoved: anAnnouncement [
+	self
+		nodeViewModelFor: anAnnouncement nodeModel
+		ifFound: [ :aPipelineViewNode | 
+			self
+				nodeViewModelFor: anAnnouncement innerNodeModel
+				ifFound: [ :anInnerNodeViewNode | 
+					aPipelineViewNode
+						innerNodeViewModels: (aPipelineViewNode innerNodeViewModels copyWithout: anInnerNodeViewNode).
+					anInnerNodeViewNode pipelineNodeViewModel: nil ]
+				ifNone: [  ] ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapViewModel >> onNodeAdded: aNodeAddedAnnouncement [
 	| aNodeViewModel |
 	nodeViewModels add: (aNodeViewModel := self createNodeViewModelFor: aNodeAddedAnnouncement nodeModel).
@@ -231,6 +262,8 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapNodeModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
+		when: GtWardleyMapNodeModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
+		when: GtWardleyMapNodeModelInnerNodeRemoved send: #onInnerNodeRemoved: to: self;
 		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self
 ]
