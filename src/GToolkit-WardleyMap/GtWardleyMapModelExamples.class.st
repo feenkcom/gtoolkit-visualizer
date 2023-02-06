@@ -384,6 +384,33 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_removePipelineNodeFrom
 ]
 
 { #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_switchOffPipelineNode [
+	<gtExample>
+	| aWardleyMap aNodeA aNodeD aNodeE |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	aNodeD := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node D' ].
+	aNodeE := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node E' ].
+
+	self assert: aNodeA isPipelineVisible equals: true.
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeA innerNodes second equals: aNodeE.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: aNodeA.
+
+	aNodeA isPipelineVisible: false.
+	
+	self assert: aNodeA isPipelineVisible equals: false.
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeD pipelineNode equals: nil.
+	self assert: aNodeE pipelineNode equals: nil.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithPipelines [
 	<gtExample>
 	| aWardleyMap aNodeA |

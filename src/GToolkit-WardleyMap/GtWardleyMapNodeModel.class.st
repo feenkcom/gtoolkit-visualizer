@@ -156,6 +156,8 @@ GtWardleyMapNodeModel >> isPipelineVisible: aBoolean [
 	self isPipelineVisible = aBoolean ifTrue: [ ^ self ].
 
 	isPipelineVisible := aBoolean.
+	
+	aBoolean ifFalse: [ self removeInnerNodes ].
 
 	self notifyPipelineVisibityChanged
 ]
@@ -289,7 +291,6 @@ GtWardleyMapNodeModel >> removeInnerNode: aNodeModel [
 	"Remove the given node model from my pipeline."
 
 	aNodeModel ifNil: [ ^ self ].
-	self isPipelineVisible ifFalse: [ ^ self ].
 
 	aNodeModel pipelineNode: nil.
 
