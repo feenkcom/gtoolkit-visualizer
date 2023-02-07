@@ -6,7 +6,7 @@ Class {
 
 { #category : #private }
 GtWardleyMapNodeHorizontalPullDirection >> mayResizePipeline [
-	| anInnerNodeX aCurrentPipelineCoordinate aConstant innerNodeElements aMinInnerNodeViewModel aMaxInnerNodeViewModel aPipelineElement |
+	| anInnerNodeX aCurrentPipelineCoordinate aConstant aMinInnerNodeViewModel aMaxInnerNodeViewModel |
 	anInnerNodeX := nodeViewModel coordinateX.
 	aCurrentPipelineCoordinate := pipelineViewModel pipelineCoordinate.
 	aConstant := 0.01.
