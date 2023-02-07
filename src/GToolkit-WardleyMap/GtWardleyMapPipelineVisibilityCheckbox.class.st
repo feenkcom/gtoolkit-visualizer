@@ -3,7 +3,8 @@ Class {
 	#superclass : #BrHorizontalPane,
 	#instVars : [
 		'checkbox',
-		'label'
+		'label',
+		'disabledLabel'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -11,6 +12,19 @@ Class {
 { #category : #initialization }
 GtWardleyMapPipelineVisibilityCheckbox >> checked: aBoolean [
 	checkbox checked: aBoolean
+]
+
+{ #category : #accessing }
+GtWardleyMapPipelineVisibilityCheckbox >> enabled: aBoolean [
+	checkbox enabled: aBoolean.
+
+	aBoolean
+		ifTrue: [ checkbox visibility: BlVisibility visible.
+			label visibility: BlVisibility visible.
+			disabledLabel visibility: BlVisibility gone ]
+		ifFalse: [ checkbox visibility: BlVisibility gone.
+			label visibility: BlVisibility gone.
+			disabledLabel visibility: BlVisibility visible ]
 ]
 
 { #category : #initialization }
@@ -28,9 +42,15 @@ GtWardleyMapPipelineVisibilityCheckbox >> initialize [
 	label := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 			text: 'visible pipeline'.
+			
+	disabledLabel := BrLabel new
+			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+			text: 'Inner nodes cannot have pipelines';
+			visibility: BlVisibility gone.
 
 	self addChild: checkbox.
 	self addChild: label.
+	self addChild: disabledLabel.
 
 	self fitContent.
 	self alignCenterLeft
