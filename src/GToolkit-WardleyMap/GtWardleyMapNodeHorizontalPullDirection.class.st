@@ -5,22 +5,31 @@ Class {
 }
 
 { #category : #private }
-GtWardleyMapNodeHorizontalPullDirection >> mayExpandPipeline [
-	| anInnerNodeX aCurrentPipelineCoordinate aConstant |
-	anInnerNodeX := nodeViewModel coordinate x.
+GtWardleyMapNodeHorizontalPullDirection >> mayResizePipeline [
+	| anInnerNodeX aCurrentPipelineCoordinate aConstant innerNodeElements aMinInnerNodeViewModel aMaxInnerNodeViewModel aPipelineElement |
+	anInnerNodeX := nodeViewModel coordinateX.
 	aCurrentPipelineCoordinate := pipelineViewModel pipelineCoordinate.
 	aConstant := 0.01.
 
-	aCurrentPipelineCoordinate x < (anInnerNodeX - aConstant)
-		ifFalse: [ pipelineViewModel pipelineCoordinate: (anInnerNodeX - aConstant max: 0) @ aCurrentPipelineCoordinate y ].
-
-	(anInnerNodeX + aConstant) < aCurrentPipelineCoordinate y 
-		ifFalse: [ pipelineViewModel pipelineCoordinate: aCurrentPipelineCoordinate x @ (anInnerNodeX + aConstant min: 1) ].
+	aMinInnerNodeViewModel := pipelineViewModel.
+	aMaxInnerNodeViewModel := pipelineViewModel.
+	pipelineViewModel innerNodeViewModels 
+		do: [ :eachNodeViewModel | 
+			eachNodeViewModel coordinateX
+				< aMinInnerNodeViewModel coordinateX 
+					ifTrue: [ aMinInnerNodeViewModel := eachNodeViewModel ].
+			eachNodeViewModel coordinateX
+				> aMaxInnerNodeViewModel coordinateX 
+					ifTrue: [ aMaxInnerNodeViewModel := eachNodeViewModel ] ].
+	
+	pipelineViewModel pipelineCoordinate: 
+		(aMinInnerNodeViewModel coordinateX - aConstant max: 0) 
+			@ (aMaxInnerNodeViewModel coordinateX + aConstant min: 1).
 ]
 
 { #category : #execution }
 GtWardleyMapNodeHorizontalPullDirection >> onPulled [
 	self initializeViewModels.
 	
-	pipelineViewModel ifNotNil: [ self mayExpandPipeline ]
+	pipelineViewModel ifNotNil: [ self mayResizePipeline ]
 ]
