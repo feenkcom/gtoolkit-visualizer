@@ -190,7 +190,9 @@ GtWardleyMapModel >> gtWardleyScriptFor: aView [
 		styler: [ GtWardleyMapParser gtStyler ];
 		text: [ self asWardleyMapScript ];
 		actionUpdateButtonTooltip: 'Update Script';
-		actionButtonLabel: 'Copy' action: [ Clipboard clipboardText: self asWardleyMapScript ]
+		actionButtonLabel: 'Copy' action: [ Clipboard clipboardText: self asWardleyMapScript ];
+		actionButtonLabel: 'AST' tooltip: 'Parse script' action: [ :aButton | 
+			aButton phlow spawnObject: (GtWardleyMapParser parse: self asWardleyMapScript) ]
 ]
 
 { #category : #testing }
