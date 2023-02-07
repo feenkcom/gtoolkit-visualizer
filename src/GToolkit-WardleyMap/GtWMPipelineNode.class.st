@@ -28,6 +28,25 @@ GtWMPipelineNode >> comma: aSmaCCToken [
 	comma := aSmaCCToken
 ]
 
+{ #category : #'api - convenience' }
+GtWMPipelineNode >> coordinate [
+	<return: #Point or: nil>
+	| anXString anYString anXNumber anYNumber |
+	anXString := self maturity1 ifNotNil: #source.
+	anYString := self maturity2 ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+	anYString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+	anYNumber := anYString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+	anYNumber ifNil: [ ^ nil ].
+
+	^ anXNumber @ anYNumber
+]
+
 { #category : #generated }
 GtWMPipelineNode >> left [
 	^ left

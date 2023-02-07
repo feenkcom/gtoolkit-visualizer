@@ -1,11 +1,11 @@
 Class {
-	#name : #GtWardleyMapExporterImporterExamples,
+	#name : #GtWardleyMapJsonExporterImporterExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-WardleyMap-Examples'
 }
 
 { #category : #export }
-GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
+GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionary [
 	<gtExample>
 	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary aFirstNodePipelineDictionary |
 
@@ -53,7 +53,7 @@ GtWardleyMapExporterImporterExamples >> exportWardleyMapAsDictionary [
 ]
 
 { #category : #export }
-GtWardleyMapExporterImporterExamples >> exportWardleyMapWithPipelineInnerNodesAsDictionary [
+GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNodesAsDictionary [
 	<gtExample>
 	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary aFirstNodePipelineDictionary aFirstNodePipelineInnerNodesArray aFourthNodeDictionary aFifthNodeDictionary aSecondNodePipelineDictionary |
 
@@ -120,7 +120,7 @@ GtWardleyMapExporterImporterExamples >> exportWardleyMapWithPipelineInnerNodesAs
 ]
 
 { #category : #export }
-GtWardleyMapExporterImporterExamples >> importWardleyMapFromDictionary [
+GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionary [
 	<gtExample>
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
 	
@@ -137,7 +137,7 @@ GtWardleyMapExporterImporterExamples >> importWardleyMapFromDictionary [
 ]
 
 { #category : #export }
-GtWardleyMapExporterImporterExamples >> importWardleyMapWithPipelineInnerNodesFromDictionary [
+GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithPipelineInnerNodesFromDictionary [
 	<gtExample>
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
 	
