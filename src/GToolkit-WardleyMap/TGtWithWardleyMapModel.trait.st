@@ -17,6 +17,17 @@ TGtWithWardleyMapModel >> gtJSONFor: aView [
 		view: #gtJSONFor:
 ]
 
+{ #category : #'api - export / import' }
+TGtWithWardleyMapModel >> gtWardleyScriptFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Script';
+		priority: 9;
+		object: [ self wardleyMapModel ];
+		view: #gtWardleyScriptFor:
+]
+
 { #category : #'api - wardley map model' }
 TGtWithWardleyMapModel >> hasWardleyMap [
 	"Return a true if wardleyMap model is assigned to the receiver, false otherwise"

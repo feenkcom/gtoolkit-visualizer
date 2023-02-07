@@ -108,16 +108,34 @@ GtWardleyMapModel >> asWardleyMapScript [
 			[ :stream | 
 			self nodes
 				do:
-					[ :each | 
-					stream
-						nextPutAll: 'component ';
-						nextPutAll: each label;
-						nextPutAll: ' [ ';
-						print: 1 - each y;
-						nextPutAll: ', ';
-						print: each x;
-						nextPutAll: ' ]';
-						cr ].
+					[ :eachNode | 
+						stream
+							nextPutAll: 'component ';
+							nextPutAll: eachNode label;
+							nextPutAll: ' [ ';
+							print: 1 - eachNode y;
+							nextPutAll: ', ';
+							print: eachNode x;
+							nextPutAll: ' ] label [ ';
+							print: eachNode labelModel x;
+							nextPutAll: ', ';
+							print: eachNode labelModel y;
+							nextPutAll: ' ]' ;
+							cr.
+							
+						eachNode isPipelineVisible ifTrue: [ 
+							stream
+								nextPutAll: 'pipeline ';
+								nextPutAll: eachNode label;
+								nextPutAll: ' [ ';
+								print: eachNode pipelineCoordinate x;
+								nextPutAll: ', ';
+								print: eachNode pipelineCoordinate y;
+								nextPutAll: ' ]';
+								cr;
+								cr.
+						]
+					].
 			stream cr.
 			self edges
 				do:
