@@ -54,7 +54,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 			put: (Dictionary new
 					at: #is_visible put: aWardleyMapNode isPipelineVisible;
 					in: [ :theDictionary | 
-						aWardleyMapNode hasPipelineCoordinates ifTrue: [
+						aWardleyMapNode isPipelineVisible ifTrue: [
 							theDictionary
 								at: #x put: aWardleyMapNode pipelineCoordinate x;
 								at: #y put: aWardleyMapNode pipelineCoordinate y;

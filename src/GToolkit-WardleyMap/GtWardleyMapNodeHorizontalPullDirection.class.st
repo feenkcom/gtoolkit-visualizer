@@ -9,7 +9,7 @@ GtWardleyMapNodeHorizontalPullDirection >> mayResizePipeline [
 	| anInnerNodeX aCurrentPipelineCoordinate aConstant aMinInnerNodeViewModel aMaxInnerNodeViewModel |
 	anInnerNodeX := nodeViewModel coordinateX.
 	aCurrentPipelineCoordinate := pipelineViewModel pipelineCoordinate.
-	aConstant := 0.01.
+	aConstant := GtWardleyMapConstants pipelineRelativeOffset.
 
 	aMinInnerNodeViewModel := pipelineViewModel.
 	aMaxInnerNodeViewModel := pipelineViewModel.

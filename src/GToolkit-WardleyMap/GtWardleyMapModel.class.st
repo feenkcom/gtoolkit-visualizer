@@ -1,10 +1,9 @@
 "
-1. Wardley Map model
-Represents a Wardley Map model, see https://en.wikipedia.org/wiki/Wardley_map to learn more about the concept.
+#Wardley Map model
+Represents a Wardley Map model, see [](https://en.wikipedia.org/wiki/Wardley_map) to learn more about the concept.
 A map consists of {{gtClass:GtWardleyMapNodeModel}} that can be connected with {{gtClass:GtWardleyMapEdgeModel}}.
 {{gtExample:GtWardleyMapModelExamples>>#newMapWithNodes|codeExpanded=false|previewExpanded=true|previewShow=#gtLiveFor:|previewHeight=200}}
-1. # Visitor
-
+#Visitor
 Each model entity that uses {{gtClass:TGtWardleyMapVisitable}} is able to be visited by {{gtClass:TGtWardleyMapVisitor}}. One of the applications is an ability to export a map to various formats such as {{gtClass:Dictionary}} or {{gtClass:STONJSON}}:
 {{gtExample:GtWardleyMapModelExamples>>#newMapWithNodes|codeExpanded=false|previewExpanded=true|previewShow=#gtJSONFor:|previewHeight=300}}
 

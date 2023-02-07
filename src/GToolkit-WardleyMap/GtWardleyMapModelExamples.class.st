@@ -343,6 +343,79 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 ]
 
 { #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodes_displayPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA |
+	aWardleyMap := self newMapWithNodes.
+
+	aNodeA := aWardleyMap nodes first.
+
+	self assert: aNodeA coordinate equals: (0.25@0.75).
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA pipelineCoordinate equals: 0.175 @ 0.325.
+	
+	"make it visually nicer"
+	aNodeA labelModel coordinate: (-1.5 @ -1.5). 
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodes_nodeAtLeft_displayPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA |
+	aWardleyMap := self newMapWithNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	
+	aNodeA coordinate: (0.01@0.75).
+
+	self assert: aNodeA coordinate equals: (0.01@0.75).
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA pipelineCoordinate equals: 0.0 @ 0.15.
+	
+	"make it visually nicer"
+	aNodeA labelModel coordinate: (3.9 @ -0.5). 
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodes_nodeAtRight_displayPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA |
+	aWardleyMap := self newMapWithNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	
+	aNodeA coordinate: (0.99@0.45).
+
+	self assert: aNodeA coordinate equals: (0.99@0.45).
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: (aNodeA pipelineCoordinate closeTo: 0.85 @ 1.0 precision: 0.001).
+	
+	"make it visually nicer"
+	aNodeA labelModel coordinate: (-1.5 @ -2.25). 
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	<gtExample>
 	| aWardleyMap aNodeA aNodeD aNodeE aNodeF aNodeG |

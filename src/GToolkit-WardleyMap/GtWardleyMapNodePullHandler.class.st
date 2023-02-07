@@ -22,13 +22,6 @@ GtWardleyMapNodePullHandler >> containerElement: anObject [
 
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> dragEndEvent: anEvent [
-	NonInteractiveTranscript stdout
-		show: 'drag end event, original position: ';
-		show: originalPosition;
-		show: ', delta: ';
-		show: anEvent currentTarget constraints position - originalPosition;
-		cr.
-
 	dragEndAction
 		value: (self targetElementFor: anEvent)
 		value: (pullDirection ifNil: [ GtWardleyMapNodeVerticalPullDirection ]).
@@ -67,15 +60,6 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 
 
 	pullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
-			
-	NonInteractiveTranscript stdout
-		show: 'on pulled event, original position: ';
-		show: originalPosition;
-		show: ', delta: ';
-		show: aDragDelta;
-		show: ', direction: ';
-		show: pullDirection;
-		cr.
 
 	pulledAction value: aPulledElement value: newRelativePosition value: pullDirection
 ]

@@ -70,10 +70,21 @@ GtWardleyMapNodeModel >> announcer [
 
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> ensurePipelineCoordinate [
+	| aLeft aRight |
 	pipelineCoordinate ifNotNil: [ ^ self ].
+	aLeft := self coordinate x
+		- (GtWardleyMapConstants minPipelineRelativeWidth / 2).
+	aRight := self coordinate x 
+		+ (GtWardleyMapConstants minPipelineRelativeWidth / 2).
+	aLeft < 0 ifTrue: [
+		aRight := (aRight - aLeft) min: 1.0.
+		aLeft := 0 ].
+	aRight > 1 ifTrue: [ 
+		aLeft := aLeft - (aRight - 1.0) max: 0.0.
+		aRight := 1.0
+	].
 
-	pipelineCoordinate := (self coordinate x - 0.2 max: 0.0)
-			@ (self coordinate x + 0.2 min: 1.0)
+	pipelineCoordinate := (aLeft max: 0.0) @ (aRight min: 1.0)
 ]
 
 { #category : #'api - export / import' }
@@ -93,15 +104,6 @@ GtWardleyMapNodeModel >> gtJSONFor: aView [
 { #category : #testing }
 GtWardleyMapNodeModel >> hasId [
 	^ id notNil
-]
-
-{ #category : #'api - pipeline' }
-GtWardleyMapNodeModel >> hasPipelineCoordinates [
-	"True means that a pipeline was already computed at some point.
-	It implies that they must be kept in sync with node coordinates."
-
-	<return: #Boolean>
-	^ pipelineCoordinate isNotNil
 ]
 
 { #category : #comparing }
@@ -180,7 +182,9 @@ GtWardleyMapNodeModel >> isPipelineVisible [
 GtWardleyMapNodeModel >> isPipelineVisible: aBoolean [
 	self isPipelineVisible = aBoolean ifTrue: [ ^ self ].
 
-	aBoolean ifFalse: [ self removeInnerNodes ].
+	aBoolean ifFalse: [ 
+		self removeInnerNodes.
+		pipelineCoordinate := nil ].
 
 	isPipelineVisible := aBoolean.
 	
