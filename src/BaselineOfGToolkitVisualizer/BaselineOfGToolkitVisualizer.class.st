@@ -43,7 +43,12 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			baseline: 'Brick' with: [
 				spec repository: 'github://feenkcom/Brick:main/src' ];
 			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
+				spec repository: 'github://feenkcom/pharo-beacon/repository' ];
+			baseline: 'GToolkit4SmaCC' with: [
+				spec repository: 'github://feenkcom/gt4smacc:main/src' ];
+			baseline: 'GToolkitAnnouncerUtility' with: [
+				spec repository: 'github://feenkcom/gtoolkit-utility:main/src' ].
+				
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
 				spec requires: #('Brick' ). ];
@@ -64,8 +69,8 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-Plotter' with: [
 				spec requires: #('Brick' ). ];
 			package: 'GToolkit-WardleyMap' with: [
-				spec requires: #('Brick' ). ];
+				spec requires: #('Brick' 'GToolkit4SmaCC' 'GToolkitAnnouncerUtility' ). ];
 			package: 'GToolkit-SequenceDiagram' with: [
-				spec requires: #('Brick' ). ]. ].
+				spec requires: #('Brick' 'GToolkitAnnouncerUtility' ). ]. ].
 
 ]
