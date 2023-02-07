@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> minPipelineHeight [
+	"I represent a pipeline height in pixels.
+	It is a minimum pipeline height as we may need to enlarge considering inner node sizes."
+
+	^ 20
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> minPipelineRelativeWidth [
 	"I represent kind of padding in relative coordinates (0, 1)"
 
