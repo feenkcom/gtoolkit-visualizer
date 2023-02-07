@@ -17,17 +17,20 @@ Class {
 
 { #category : #comparing }
 GtWardleyMapNodeModel >> = anObject [
-	"Answer whether the receiver and anObject represent the same object."
-
 	self == anObject
 		ifTrue: [ ^ true ].
+
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ labelModel = anObject labelModel
-		and: [ id = anObject id
-			and: [ size = anObject size
-				and: [ coordinate = anObject coordinate
-					and: [ color = anObject color ] ] ] ]
+
+	^ self color = anObject color
+		and: [ self coordinate = anObject coordinate
+			and: [ self id = anObject id
+				and: [ self innerNodes = anObject innerNodes
+					and: [ self isPipelineVisible = anObject isPipelineVisible
+						and: [ self labelModel = anObject labelModel
+							and: [ self pipelineCoordinate = anObject pipelineCoordinate
+								and: [ self size = anObject size ] ] ] ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -103,9 +106,14 @@ GtWardleyMapNodeModel >> hasPipelineCoordinates [
 
 { #category : #comparing }
 GtWardleyMapNodeModel >> hash [
-	"Answer an integer value that is related to the identity of the receiver."
-
-	^ labelModel hash bitXor: id hash
+	^ self color hash
+		bitXor: (self coordinate hash
+			bitXor: (self id hash
+				bitXor: (self innerNodes hash
+					bitXor: (self isPipelineVisible hash
+						bitXor: (self labelModel hash
+							bitXor: (self pipelineCoordinate hash
+								bitXor: (self size hash)))))))
 ]
 
 { #category : #accessing }
@@ -137,7 +145,7 @@ GtWardleyMapNodeModel >> initialize [
 
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> innerNodes [
-	"Return inner nodes that are part of a pipeline"
+	"Return inner nodes that are part of my pipeline"
 
 	<return: #Collection of: #GtWardleyMapNodeModel>
 	^ innerNodes
@@ -145,6 +153,18 @@ GtWardleyMapNodeModel >> innerNodes [
 
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> innerNodes: aCollectionOfNodes [
+	"Set inner nodes that are part of my pipeline"
+
+	self
+		assert: [ self isPipelineVisible ]
+		description: [ 'Pipeline must be visible then inner nodes can be set' ].
+
+	aCollectionOfNodes do: [ :eachInnerNode | 
+		self 
+			assert: [ eachInnerNode isPipelineVisible not ] 
+			description: [ 'Inner nodes must be without pipeline, but {1} has pipeline visible.' 
+				format: { eachInnerNode label } ] ].
+
 	innerNodes := aCollectionOfNodes
 ]
 
@@ -160,10 +180,10 @@ GtWardleyMapNodeModel >> isPipelineVisible [
 GtWardleyMapNodeModel >> isPipelineVisible: aBoolean [
 	self isPipelineVisible = aBoolean ifTrue: [ ^ self ].
 
-	isPipelineVisible := aBoolean.
-	
 	aBoolean ifFalse: [ self removeInnerNodes ].
 
+	isPipelineVisible := aBoolean.
+	
 	self notifyPipelineVisibityChanged
 ]
 
@@ -181,6 +201,7 @@ GtWardleyMapNodeModel >> label: aString [
 
 { #category : #accessing }
 GtWardleyMapNodeModel >> labelModel [
+	<return: #GtWardleyMapNodeLabelModel>
 	^ labelModel
 ]
 
@@ -276,6 +297,10 @@ GtWardleyMapNodeModel >> pipelineNode: aNodeModel [
 		description: [ 'I can be part of one pipeline node only, current pipeline node: {1}, new pipeline: {2} '
 				format: {self pipelineNode.
 						aNodeModel} ].
+	
+	self
+		assert: [ self isPipelineVisible not ]
+		description: [ 'Inner nodes must have hidden pipeline.' ].
 
 	pipelineNode := aNodeModel
 ]

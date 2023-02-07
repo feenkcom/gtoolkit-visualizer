@@ -10,6 +10,37 @@ GtWardleyMapFromDictionaryImporter class >> importMapFromJSONString: aString [
 ]
 
 { #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> connectWardleyMapNodePipelines: theMapNodes from: theNodeDictionaries [ 
+
+	theMapNodes withIndexDo: [ :eachPipelineNode :anIndex |
+		eachPipelineNode isPipelineVisible ifTrue: [ 
+			| aNodeDictionary |
+			aNodeDictionary := theNodeDictionaries at: anIndex.
+			aNodeDictionary 
+				at: #pipeline 
+				ifPresent: [ :aPipelineDictionary | 
+					aPipelineDictionary 
+						at: #inner_nodes
+						ifPresent: [ :theInnerNodeIds | 
+							| theInnerNodes |
+							theInnerNodes := theInnerNodeIds 
+								collect: [ :eachInnerNodeId | 
+									| anId | 
+									anId := self importIdFrom: eachInnerNodeId.
+									theMapNodes 
+										detect: [ :otherNode | 
+											otherNode id = anId and: [ 
+												otherNode isPipelineVisible not ] ]
+										ifNone: [ nil ] ]
+								thenReject: #isNil.
+							eachPipelineNode innerNodes: theInnerNodes
+						]
+				]
+		]
+	]
+]
+
+{ #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> importColorFrom: aDictionary [
 	| aRed aGreen aBlue anAlpha |
 	
@@ -74,7 +105,9 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 	aWardleyMap := GtWardleyMapModel new.
 	(aDictionary at: #nodes ifPresent: [ :theNodeDictionaries |
 		theNodeDictionaries do: [ :eachNodeDictionary |
-			aWardleyMap addNode: (self importWardleyMapNodeFrom: eachNodeDictionary) ] ]).
+			aWardleyMap addNode: (self importWardleyMapNodeFrom: eachNodeDictionary) ].
+			
+		self connectWardleyMapNodePipelines: aWardleyMap nodes from: theNodeDictionaries ]).
 	
 	(aDictionary at: #edges ifPresent: [ :theEdgeDictionaries |
 		theEdgeDictionaries do: [ :eachEdgeDictionary |
@@ -94,7 +127,8 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 
 	aDictionary
 		at: #color
-		ifPresent: [ :aColorDictionary | aWardleyMapNode color: (self importColorFrom: aColorDictionary) ].
+		ifPresent: [ :aColorDictionary | 
+			aWardleyMapNode color: (self importColorFrom: aColorDictionary) ].
 
 	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNode x: anX ].
 	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNode y: anY ].
@@ -104,6 +138,19 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 	aDictionary
 		at: #label
 		ifPresent: [ :aLabelDictionary | aWardleyMapNode labelModel: (self importWardleyMapNodeLabelFrom: aLabelDictionary) ].
+		
+	aDictionary
+		at: #pipeline
+		ifPresent: [ :aPipelineDictionary | 
+			aPipelineDictionary 
+				at: #is_visible 
+				ifPresent: [ :aValue | aWardleyMapNode isPipelineVisible: aValue ].
+			aPipelineDictionary 
+				at: #x 
+				ifPresent: [ :aXValue | 
+					aPipelineDictionary 
+					at: #y 
+					ifPresent: [ :aYValue | aWardleyMapNode pipelineCoordinate: aXValue @ aYValue ] ] ].
 
 	^ aWardleyMapNode
 ]
