@@ -113,7 +113,9 @@ GtWardleyMapCanvasElement >> initialize [
 		do: [ :anEvent |
 			anEvent consumed: true.
 			(self width isZero or: [ self height isZero ])
-				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ]
+				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
+				
+	self addEventHandler: (GtWardleyMapInnerNodeSnapper new)
 ]
 
 { #category : #private }
@@ -214,6 +216,13 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 		self createEdgeViewFor: eachEdgeViewModel ].
 
 	self addChildren: theEdgeElements.
+]
+
+{ #category : #private }
+GtWardleyMapCanvasElement >> pipelineChildrenDo: aDoBlock [
+	^ self childrenDo: [ :eachChild | 
+		eachChild wardley isPipeline 
+			ifTrue: [ aDoBlock value: eachChild ] ]
 ]
 
 { #category : #private }
