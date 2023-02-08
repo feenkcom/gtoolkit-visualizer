@@ -6,6 +6,11 @@ Class {
 
 { #category : #'api - import and export' }
 GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoordiante: aPoint [ 
+	"Conversion is just an estimate. 
+	It is not possible to get two visually identical outputs, 
+	because the values are affected by variables such as the size of the Wardley area, 
+	the used font, etc."
+
 	| aCharCount aCharWidth aCharHalfHeight aLabelX aLabelY aNodeSize |
 	aCharCount := aNodeModel label size.
 	aCharWidth := 8.
@@ -16,6 +21,29 @@ GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoor
 	aLabelY := aPoint y - aCharHalfHeight.
 	
 	^ ((aLabelX @ aLabelY) / aNodeSize) asFloatPoint
+]
+
+{ #category : #'api - import and export' }
+GtWardleyMapUtility class >> estimateInnerNodesFor: aPipelineNode among: allNodes [
+	| candidateNodes aMinX aMaxX aMinY aMaxY aPipelineBounds |
+	aPipelineNode isPipelineVisible ifFalse: [ ^ #() ].
+
+	candidateNodes := allNodes select: [ :eachNode | 
+		eachNode isPipelineVisible not and: [ 
+			eachNode pipelineNode isNil ] ].
+			
+	candidateNodes ifEmpty: [ ^ #() ].
+			
+	aMinX := aPipelineNode pipelineCoordinate x.
+	aMaxX := aPipelineNode pipelineCoordinate y.
+	
+	aMinY := aPipelineNode coordinate y.
+	aMaxY := aMinY + (GtWardleyMapConstants pipelineRelativeOffset * 2). 
+	
+	aPipelineBounds := (aMinX @ aMinY) corner: (aMaxX @ aMaxY).
+			
+	^ candidateNodes select: [ :eachNode | 
+		(aPipelineBounds containsPoint: eachNode coordinate) ].
 ]
 
 { #category : #'api - views' }

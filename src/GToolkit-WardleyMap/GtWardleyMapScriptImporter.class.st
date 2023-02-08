@@ -29,6 +29,28 @@ GtWardleyMapScriptImporter class >> forString: aString [
 	^ self forStream: aString readStream
 ]
 
+{ #category : #'private - import' }
+GtWardleyMapScriptImporter >> estimateInnerNodes [
+
+	wardleyMap nodes do: [ :aPipelineNode | 
+		aPipelineNode isPipelineVisible ifTrue: [ 
+			self estimateInnerNodesFor: aPipelineNode
+		]
+	]
+]
+
+{ #category : #'private - import' }
+GtWardleyMapScriptImporter >> estimateInnerNodesFor: aPipelineNode [ 
+
+	| estimatedInnerNodes |
+	estimatedInnerNodes := GtWardleyMapUtility 
+		estimateInnerNodesFor: aPipelineNode 
+		among: wardleyMap nodes.
+		
+	estimatedInnerNodes ifNotEmpty: [
+		aPipelineNode innerNodes: estimatedInnerNodes ].
+]
+
 { #category : #'api - import' }
 GtWardleyMapScriptImporter >> import [
 	stream ifNil: [ ^ self ].
@@ -40,6 +62,7 @@ GtWardleyMapScriptImporter >> import [
 	self importNodes.
 	self importPipelines.
 	self importEdges.
+	self estimateInnerNodes.
 ]
 
 { #category : #'private - import' }
