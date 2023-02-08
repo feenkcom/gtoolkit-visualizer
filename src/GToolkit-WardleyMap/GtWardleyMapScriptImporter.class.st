@@ -78,7 +78,12 @@ GtWardleyMapScriptImporter >> importNodes [
 		aAstNode coords ifNotNil: [ :aNode | aNode coordinate 
 			ifNotNil: [ :aPoint | aNodeModel coordinate: (aPoint x @ (1 - aPoint y)) ] ].
 		aAstNode label ifNotNil: [ :aNode | aNode coordinate 
-			ifNotNil: [ :aPoint | aNodeModel labelModel coordinate: aPoint ] ].
+			ifNotNil: [ :aPoint | 
+				| aLabelCoordinate |
+				aLabelCoordinate := GtWardleyMapUtility 
+					convertWardleyScriptNodeModel: aNodeModel 
+					labelCoordiante: aPoint.
+				aNodeModel labelModel coordinate: aLabelCoordinate ] ].
 
 		wardleyMap addNode: aNodeModel.
 	]
