@@ -119,7 +119,7 @@ GtWardleyMapViewModel >> initialize [
 		Color red muchLighter.
 	}.
 	
-	defaultColor := Color gray
+	defaultColor := GtWardleyMapConstants nodeColor
 ]
 
 { #category : #'api - map' }

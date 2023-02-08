@@ -4,6 +4,20 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
+{ #category : #'api - import and export' }
+GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoordiante: aPoint [ 
+	| aCharCount aCharWidth aCharHalfHeight aLabelX aLabelY aNodeSize |
+	aCharCount := aNodeModel label size.
+	aCharWidth := 8.
+	aCharHalfHeight := 5.
+	aNodeSize := GtWardleyMapConstants nodeSize.
+	
+	aLabelX := aPoint x + (aCharCount / 2 * aCharWidth).
+	aLabelY := aPoint y - aCharHalfHeight.
+	
+	^ ((aLabelX @ aLabelY) / aNodeSize) asFloatPoint
+]
+
 { #category : #'api - views' }
 GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: aPipelineElement [
 	^ aPipelineElement bounds inParent asRectangle

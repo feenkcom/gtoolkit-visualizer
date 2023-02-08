@@ -20,6 +20,20 @@ GtWardleyMapConstants class >> minPipelineRelativeWidth [
 ]
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> nodeColor [
+	"I represent a default node model color"
+
+	^ Color gray
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> nodeSize [
+	"I represent a default node model size"
+
+	^ 12 @ 12
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> pipelineRelativeOffset [
 	"I represent kind of padding in relative coordinates (0, 1)"
 
