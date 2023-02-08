@@ -60,6 +60,7 @@ GtWardleyMapScriptImporter >> importEdges [
 						ifFound: [ :aStopNode | 
 							anEdgeModel fromNode: aStartNode.
 							anEdgeModel toNode: aStopNode.
+							anEdgeModel color: aStartNode color.
 							wardleyMap addEdge: anEdgeModel
 						]
 						ifNone: [ ] ] 

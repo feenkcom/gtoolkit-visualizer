@@ -151,7 +151,7 @@ GtWardleyMapModel >> edges [
 	^ edges
 ]
 
-{ #category : #'api - export / import' }
+{ #category : #'gt-extensions' }
 GtWardleyMapModel >> gtJSONFor: aView [
 	<gtView>
 
@@ -179,7 +179,32 @@ GtWardleyMapModel >> gtLiveFor: aView [
 				yourself ]
 ]
 
-{ #category : #'api - export / import' }
+{ #category : #'gt-extensions' }
+GtWardleyMapModel >> gtNodesFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Nodes';
+		priority: 20;
+		items: [ self nodes ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode color;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 35;
+		column: 'Name' text: #label;
+		column: 'With pipeline' text: #isPipelineVisible;
+		column: 'Inner nodes' text: [ :aNode | aNode innerNodes size ]
+		
+]
+
+{ #category : #'gt-extensions' }
 GtWardleyMapModel >> gtWardleyScriptFor: aView [
 	<gtView>
 	

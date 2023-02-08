@@ -135,9 +135,9 @@ GtWardleyMapNodeModel >> initialize [
 	labelModel := GtWardleyMapNodeLabelModel new.
 	labelModel parent: self.
 	
-	color := Color black.
+	color := GtWardleyMapConstants nodeColor.
 	coordinate := 0.5@0.5.
-	size := 12@12.
+	size := GtWardleyMapConstants nodeSize.
 	id := nil.
 	pipelineCoordinate := nil.
 	isPipelineVisible := false.
