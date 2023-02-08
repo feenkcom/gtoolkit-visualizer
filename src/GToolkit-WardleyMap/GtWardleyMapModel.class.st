@@ -1,10 +1,9 @@
 "
-1. Wardley Map model
-Represents a Wardley Map model, see https://en.wikipedia.org/wiki/Wardley_map to learn more about the concept.
+#Wardley Map model
+Represents a Wardley Map model, see [](https://en.wikipedia.org/wiki/Wardley_map) to learn more about the concept.
 A map consists of {{gtClass:GtWardleyMapNodeModel}} that can be connected with {{gtClass:GtWardleyMapEdgeModel}}.
 {{gtExample:GtWardleyMapModelExamples>>#newMapWithNodes|codeExpanded=false|previewExpanded=true|previewShow=#gtLiveFor:|previewHeight=200}}
-1. # Visitor
-
+#Visitor
 Each model entity that uses {{gtClass:TGtWardleyMapVisitable}} is able to be visited by {{gtClass:TGtWardleyMapVisitor}}. One of the applications is an ability to export a map to various formats such as {{gtClass:Dictionary}} or {{gtClass:STONJSON}}:
 {{gtExample:GtWardleyMapModelExamples>>#newMapWithNodes|codeExpanded=false|previewExpanded=true|previewShow=#gtJSONFor:|previewHeight=300}}
 
@@ -108,16 +107,34 @@ GtWardleyMapModel >> asWardleyMapScript [
 			[ :stream | 
 			self nodes
 				do:
-					[ :each | 
-					stream
-						nextPutAll: 'component ';
-						nextPutAll: each label;
-						nextPutAll: ' [ ';
-						print: 1 - each y;
-						nextPutAll: ', ';
-						print: each x;
-						nextPutAll: ' ]';
-						cr ].
+					[ :eachNode | 
+						stream
+							nextPutAll: 'component ';
+							nextPutAll: eachNode label;
+							nextPutAll: ' [ ';
+							print: 1 - eachNode y;
+							nextPutAll: ', ';
+							print: eachNode x;
+							nextPutAll: ' ] label [ ';
+							print: eachNode labelModel x;
+							nextPutAll: ', ';
+							print: eachNode labelModel y;
+							nextPutAll: ' ]' ;
+							cr.
+							
+						eachNode isPipelineVisible ifTrue: [ 
+							stream
+								nextPutAll: 'pipeline ';
+								nextPutAll: eachNode label;
+								nextPutAll: ' [ ';
+								print: eachNode pipelineCoordinate x;
+								nextPutAll: ', ';
+								print: eachNode pipelineCoordinate y;
+								nextPutAll: ' ]';
+								cr;
+								cr.
+						]
+					].
 			stream cr.
 			self edges
 				do:
@@ -173,7 +190,9 @@ GtWardleyMapModel >> gtWardleyScriptFor: aView [
 		styler: [ GtWardleyMapParser gtStyler ];
 		text: [ self asWardleyMapScript ];
 		actionUpdateButtonTooltip: 'Update Script';
-		actionButtonLabel: 'Copy' action: [ Clipboard clipboardText: self asWardleyMapScript ]
+		actionButtonLabel: 'Copy' action: [ Clipboard clipboardText: self asWardleyMapScript ];
+		actionButtonLabel: 'AST' tooltip: 'Parse script' action: [ :aButton | 
+			aButton phlow spawnObject: (GtWardleyMapParser parse: self asWardleyMapScript) ]
 ]
 
 { #category : #testing }
@@ -277,6 +296,8 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 	self allEdgesConnecting: aGtWardleyMapNodeModel do: [ :eachEdge | self removeEdge: eachEdge ].
 	nodes remove: aGtWardleyMapNodeModel ifAbsent: [ ^ self ].
 	aGtWardleyMapNodeModel removeParent.
+	aGtWardleyMapNodeModel removeFromPipeline.
+	aGtWardleyMapNodeModel removeInnerNodes.
 	self announce: (GtWardleyMapNodeModelRemoved new nodeModel: aGtWardleyMapNodeModel)
 ]
 

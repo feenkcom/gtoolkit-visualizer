@@ -12,13 +12,14 @@ Class {
 
 { #category : #comparing }
 GtWardleyMapNodeLabelModel >> = anObject [
-	"Answer whether the receiver and anObject represent the same object."
-
 	self == anObject
 		ifTrue: [ ^ true ].
+
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ label = anObject label
+
+	^ self coordinate = anObject coordinate
+		and: [ self label = anObject label ]
 ]
 
 { #category : #visiting }
@@ -49,9 +50,8 @@ GtWardleyMapNodeLabelModel >> gtJSONFor: aView [
 
 { #category : #comparing }
 GtWardleyMapNodeLabelModel >> hash [
-	"Answer an integer value that is related to the identity of the receiver."
-
-	^ label hash
+	^ self coordinate hash
+		bitXor: (self label hash)
 ]
 
 { #category : #initialization }

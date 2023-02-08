@@ -26,6 +26,25 @@ GtWMCoordsNode >> comma: aSmaCCToken [
 	comma := aSmaCCToken
 ]
 
+{ #category : #'api - convenience' }
+GtWMCoordsNode >> coordinate [
+	<return: #Point or: nil>
+	| anXString anYString anXNumber anYNumber |
+	anXString := self maturity ifNotNil: #source.
+	anYString := self visibility ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+	anYString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+	anYNumber := anYString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+	anYNumber ifNil: [ ^ nil ].
+
+	^ anXNumber @ anYNumber
+]
+
 { #category : #generated }
 GtWMCoordsNode >> left [
 	^ left

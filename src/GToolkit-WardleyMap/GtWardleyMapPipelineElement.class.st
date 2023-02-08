@@ -12,7 +12,7 @@ GtWardleyMapPipelineElement >> initialize [
 	self geometry: BlRectangleGeometry new.
 	self layout: BlFrameLayout new.
 	self border: (BlBorder paint: Color black width: 1).
-	self height: 20.
+	self height: GtWardleyMapConstants  minPipelineHeight.
 	self width: 100.
 ]
 
@@ -20,6 +20,13 @@ GtWardleyMapPipelineElement >> initialize [
 GtWardleyMapPipelineElement >> onNodeColored [
 	self
 		border: (BlBorder paint: self wardleyMapNodeViewModel pipelineColor width: 1)
+]
+
+{ #category : #'api - wardley map node view model' }
+GtWardleyMapPipelineElement >> onNodePipelineResized: anAnnouncement [
+	GtWardleyMapUtility
+		updatePipelineElement: self
+		nodeViewModel: self wardleyMapNodeViewModel
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -37,8 +44,11 @@ GtWardleyMapPipelineElement >> subscribeToWardleyMapNodeViewModel [
 
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelColored
-		send: #onNodeColored
-		to: self
+			send: #onNodeColored
+			to: self;
+		when: GtWardleyMapNodeViewModelPipelinePipelineResized
+			send: #onNodePipelineResized:
+			to: self
 ]
 
 { #category : #'api - wardley map node view model' }

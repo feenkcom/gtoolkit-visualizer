@@ -1,9 +1,9 @@
 "
-1. Wardley map
+#Wardley map
 This is a renderer, visual editor adn exporter of Wardley Maps.
-See https://en.wikipedia.org/wiki/Wardley_map to learn more.
-
-
+See [](https://en.wikipedia.org/wiki/Wardley_map) to learn more.
+#Example
+{{gtExample: GtWardleyMapModelExamples >> #newMapWithPipelineInnerNodes | noCode=true | previewHeight=500}}
 "
 Class {
 	#name : #GtWardleyMapElement,

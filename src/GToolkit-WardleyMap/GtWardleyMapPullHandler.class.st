@@ -33,7 +33,7 @@ GtWardleyMapPullHandler >> dragStartEvent: anEvent [
 GtWardleyMapPullHandler >> initialize [
 	super initialize.
 	
-	pulledAction := [ :aPulledElement :aNormalizedPosition |  ]
+	pulledAction := [ :aPulledElement :aNormalizedPosition |  ].
 ]
 
 { #category : #'event handling' }

@@ -27,6 +27,25 @@ GtWMLabelNode >> comma: aSmaCCToken [
 	comma := aSmaCCToken
 ]
 
+{ #category : #'api - convenience' }
+GtWMLabelNode >> coordinate [
+	<return: #Point or: nil>
+	| anXString anYString anXNumber anYNumber |
+	anXString := self x ifNotNil: #source.
+	anYString := self y ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+	anYString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+	anYNumber := anYString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+	anYNumber ifNil: [ ^ nil ].
+
+	^ anXNumber @ anYNumber
+]
+
 { #category : #generated }
 GtWMLabelNode >> labelToken [
 	^ labelToken

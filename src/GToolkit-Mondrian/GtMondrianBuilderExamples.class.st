@@ -1,8 +1,6 @@
 Class {
 	#name : #GtMondrianBuilderExamples,
 	#superclass : #Object,
-	#traits : 'TGtAssert',
-	#classTraits : 'TGtAssert classTrait',
 	#category : #'GToolkit-Mondrian-Examples'
 }
 

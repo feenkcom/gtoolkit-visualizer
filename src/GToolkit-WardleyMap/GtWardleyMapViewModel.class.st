@@ -155,6 +155,37 @@ GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapViewModel >> onInnerNodeAdded: anAnnouncement [
+	self
+		nodeViewModelFor: anAnnouncement nodeModel
+		ifFound: [ :aPipelineViewNode | 
+			self
+				nodeViewModelFor: anAnnouncement innerNodeModel
+				ifFound: [ :anInnerNodeViewNode | 
+					aPipelineViewNode == anInnerNodeViewNode
+						ifFalse: [ aPipelineViewNode
+								innerNodeViewModels: (aPipelineViewNode innerNodeViewModels copyWith: anInnerNodeViewNode).
+							anInnerNodeViewNode pipelineNodeViewModel: aPipelineViewNode ] ]
+				ifNone: [  ] ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onInnerNodeRemoved: anAnnouncement [
+	self
+		nodeViewModelFor: anAnnouncement nodeModel
+		ifFound: [ :aPipelineViewNode | 
+			self
+				nodeViewModelFor: anAnnouncement innerNodeModel
+				ifFound: [ :anInnerNodeViewNode | 
+					aPipelineViewNode
+						innerNodeViewModels: (aPipelineViewNode innerNodeViewModels copyWithout: anInnerNodeViewNode).
+					anInnerNodeViewNode pipelineNodeViewModel: nil ]
+				ifNone: [  ] ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapViewModel >> onNodeAdded: aNodeAddedAnnouncement [
 	| aNodeViewModel |
 	nodeViewModels add: (aNodeViewModel := self createNodeViewModelFor: aNodeAddedAnnouncement nodeModel).
@@ -184,12 +215,26 @@ GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
-	
-	nodeViewModels := self wardleyMapModel nodes collect: [ :eachNodeModel |
-		self createNodeViewModelFor: eachNodeModel ] as: OrderedCollection.
-	
-	edgeViewModels := self wardleyMapModel edges collect: [ :eachEdgeModel |
-		self createEdgeViewModelFor: eachEdgeModel ] as: OrderedCollection.
+
+	nodeViewModels := self wardleyMapModel nodes
+			collect: [ :eachNodeModel | self createNodeViewModelFor: eachNodeModel ]
+			as: OrderedCollection.
+
+	"put together pipeline and inner node view models"
+	nodeViewModels
+		do: [ :eachPipelineViewModel | 
+			| innerNodeViewModels |
+			innerNodeViewModels := eachPipelineViewModel wardleyMapNodeModel innerNodes
+					collect: [ :eachInnerNode | 
+						nodeViewModels detect: [ :otherNodeViewModel | 
+							otherNodeViewModel wardleyMapNodeModel = eachInnerNode ] ].
+			eachPipelineViewModel innerNodeViewModels: innerNodeViewModels.
+			innerNodeViewModels do: [ :eachInnerNodeViewModel | 
+				eachInnerNodeViewModel pipelineNodeViewModel: eachPipelineViewModel ] ].
+
+	edgeViewModels := self wardleyMapModel edges
+			collect: [ :eachEdgeModel | self createEdgeViewModelFor: eachEdgeModel ]
+			as: OrderedCollection
 ]
 
 { #category : #accessing }
@@ -217,6 +262,8 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapNodeModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
+		when: GtWardleyMapNodeModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
+		when: GtWardleyMapNodeModelInnerNodeRemoved send: #onInnerNodeRemoved: to: self;
 		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self
 ]

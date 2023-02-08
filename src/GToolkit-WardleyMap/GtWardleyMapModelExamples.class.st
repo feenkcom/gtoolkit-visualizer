@@ -50,6 +50,104 @@ GtWardleyMapModelExamples >> mapElementWithPipelines [
 ]
 
 { #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes [
+	<gtExample>
+	| aWardleyMap aWardleyMapViewModel aNodeAViewModel |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+
+	self assert: aWardleyMapViewModel wardleyMapModel equals: aWardleyMap.
+	self assert: aWardleyMapViewModel nodeViewModels size equals: 7.
+	self assert: aWardleyMapViewModel edgeViewModels size equals: 1.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 2.
+
+	aNodeAViewModel innerNodeViewModels
+		detect: [ :eachViewModel | eachViewModel label = 'Node D' ].
+	aNodeAViewModel innerNodeViewModels
+		detect: [ :eachViewModel | eachViewModel label = 'Node E' ].
+
+	aNodeAViewModel innerNodeViewModels
+		do: [ :eachInnerNodeViewModel | 
+			self
+				assert: eachInnerNodeViewModel pipelineNodeViewModel
+				equals: aNodeAViewModel ].
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes_addInnerNode [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel aNodeGViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelineInnerNodes.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+	aNodeGViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node G' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 2.
+	self assert: aNodeGViewModel pipelineNodeViewModel isNil.
+
+	aNodeAViewModel addInnerNodeViewModel: aNodeGViewModel.
+
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 3.
+	self assert: aNodeGViewModel pipelineNodeViewModel equals: aNodeAViewModel.
+
+	self assert: aNodeAViewModel wardleyMapNodeModel innerNodes size equals: 3.
+	self
+		assert: aNodeGViewModel wardleyMapNodeModel pipelineNode
+		equals: aNodeAViewModel wardleyMapNodeModel.
+		
+	"Let's move it explicitly into the pipeline to make it visually inside"
+	aNodeGViewModel moveNodeTo: (0.36 @ 0.76).
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
+GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes_removeInnerNode [
+	<gtExample>
+	| aWardleyMapViewModel aNodeAViewModel aNodeEViewModel |
+	aWardleyMapViewModel := self mapViewModelWithPipelineInnerNodes.
+
+	aNodeAViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node A' ].
+	aNodeEViewModel := aWardleyMapViewModel nodeViewModels
+			detect: [ :eachViewModel | eachViewModel label = 'Node E' ].
+
+	self
+		assert: aNodeAViewModel isPipelineVisible
+		description: [ 'Pipeline must be visible' ].
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 2.
+	self assert: aNodeEViewModel pipelineNodeViewModel equals: aNodeAViewModel.
+
+	aNodeAViewModel removeInnerNodeViewModel: aNodeEViewModel.
+
+	self assert: aNodeAViewModel innerNodeViewModels size equals: 1.
+	self assert: aNodeEViewModel pipelineNodeViewModel isNil.
+
+	self assert: aNodeAViewModel wardleyMapNodeModel innerNodes size equals: 1.
+	self assert: aNodeEViewModel wardleyMapNodeModel pipelineNode isNil.	
+	
+	"Let's move it explicitly outside the pipeline to make it visually inside"
+	aNodeEViewModel moveNodeTo: 0.3 @ 0.78.
+
+	^ aWardleyMapViewModel
+]
+
+{ #category : #'examples - view model' }
 GtWardleyMapModelExamples >> mapViewModelWithPipelines [
 	<gtExample>
 	| aWardleyMap aWardleyMapViewModel |
@@ -245,6 +343,79 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 ]
 
 { #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodes_displayPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA |
+	aWardleyMap := self newMapWithNodes.
+
+	aNodeA := aWardleyMap nodes first.
+
+	self assert: aNodeA coordinate equals: (0.25@0.75).
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA pipelineCoordinate equals: 0.175 @ 0.325.
+	
+	"make it visually nicer"
+	aNodeA labelModel coordinate: (-1.5 @ -1.5). 
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodes_nodeAtLeft_displayPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA |
+	aWardleyMap := self newMapWithNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	
+	aNodeA coordinate: (0.01@0.75).
+
+	self assert: aNodeA coordinate equals: (0.01@0.75).
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA pipelineCoordinate equals: 0.0 @ 0.15.
+	
+	"make it visually nicer"
+	aNodeA labelModel coordinate: (3.9 @ -0.5). 
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodes_nodeAtRight_displayPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA |
+	aWardleyMap := self newMapWithNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	
+	aNodeA coordinate: (0.99@0.45).
+
+	self assert: aNodeA coordinate equals: (0.99@0.45).
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeA isPipelineVisible not.
+	
+	aNodeA isPipelineVisible: true.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: (aNodeA pipelineCoordinate closeTo: 0.85 @ 1.0 precision: 0.001).
+	
+	"make it visually nicer"
+	aNodeA labelModel coordinate: (-1.5 @ -2.25). 
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	<gtExample>
 	| aWardleyMap aNodeA aNodeD aNodeE aNodeF aNodeG |
@@ -277,8 +448,135 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	aWardleyMap addNode: aNodeF.
 	aWardleyMap addNode: aNodeG.
 	
+	aNodeA addInnerNode: aNodeD.
+	aNodeA addInnerNode: aNodeE.
+	
 	self assert: aWardleyMap nodes size equals: 7.
 	self assert: aWardleyMap edges size equals: 1.
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeA innerNodes second equals: aNodeE.
+	
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: aNodeA.
+	self assert: aNodeF pipelineNode isNil.
+	self assert: aNodeG pipelineNode isNil.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_removeInnerNodesFromMap [
+	<gtExample>
+	| aWardleyMap aNodeA aNodeD aNodeE |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	aNodeD := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node D' ].
+	aNodeE := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node E' ].
+
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeA innerNodes second equals: aNodeE.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: aNodeA.
+
+	aWardleyMap removeNode: aNodeE.
+	
+	self assert: aNodeA innerNodes size equals: 1.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: nil.
+
+	aWardleyMap removeNode: aNodeD.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeD pipelineNode equals: nil.
+	self assert: aNodeE pipelineNode equals: nil.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_removeInnerNodesFromPipeline [
+	<gtExample>
+	| aWardleyMap aNodeA aNodeD aNodeE |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	aNodeD := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node D' ].
+	aNodeE := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node E' ].
+
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeA innerNodes second equals: aNodeE.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: aNodeA.
+
+	aNodeE removeFromPipeline.
+
+	self assert: aNodeA innerNodes size equals: 1.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: nil.
+
+	aNodeA removeInnerNode: aNodeD.
+
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeD pipelineNode equals: nil.
+	self assert: aNodeE pipelineNode equals: nil.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_removePipelineNodeFromMap [
+	<gtExample>
+	| aWardleyMap aNodeA aNodeD aNodeE |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	aNodeD := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node D' ].
+	aNodeE := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node E' ].
+
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeA innerNodes second equals: aNodeE.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: aNodeA.
+
+	aWardleyMap removeNode: aNodeA.
+	
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeD pipelineNode equals: nil.
+	self assert: aNodeE pipelineNode equals: nil.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_switchOffPipelineNode [
+	<gtExample>
+	| aWardleyMap aNodeA aNodeD aNodeE |
+	aWardleyMap := self newMapWithPipelineInnerNodes.
+
+	aNodeA := aWardleyMap nodes first.
+	aNodeD := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node D' ].
+	aNodeE := aWardleyMap nodes detect: [ :eachNode | eachNode label = 'Node E' ].
+
+	self assert: aNodeA isPipelineVisible equals: true.
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA innerNodes first equals: aNodeD.
+	self assert: aNodeA innerNodes second equals: aNodeE.
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	self assert: aNodeE pipelineNode equals: aNodeA.
+
+	aNodeA isPipelineVisible: false.
+	
+	self assert: aNodeA isPipelineVisible equals: false.
+	self assert: aNodeA innerNodes size equals: 0.
+	self assert: aNodeD pipelineNode equals: nil.
+	self assert: aNodeE pipelineNode equals: nil.
 
 	^ aWardleyMap
 ]
