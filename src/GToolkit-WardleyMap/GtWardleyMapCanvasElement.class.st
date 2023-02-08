@@ -216,24 +216,6 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	self addChildren: theEdgeElements.
 ]
 
-{ #category : #initialization }
-GtWardleyMapCanvasElement >> pipelineElementForNode: aPulledElement [
-	"Return possible pipeline element for the given node element based on their bounds."
-
-	<return: #GtWardleyMapPipelineElement or: nil>
-	aPulledElement wardleyMapNodeViewModel isPipelineVisible ifTrue: [ ^ nil ].
-
-	self
-		childrenDo: [ :aPipelineElement | 
-			(aPipelineElement wardley isPipeline
-				and: [ | aPipelineViewModel |
-					aPipelineViewModel := aPipelineElement wardleyMapNodeViewModel.
-					aPipelineViewModel isPipelineVisible
-						and: [ aPipelineElement bounds inParent asRectangle
-								containsRect: aPulledElement bounds inParent asRectangle ] ])
-				ifTrue: [ ^ aPipelineElement ] ]
-]
-
 { #category : #private }
 GtWardleyMapCanvasElement >> pipelineViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
