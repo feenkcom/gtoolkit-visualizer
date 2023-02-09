@@ -34,8 +34,13 @@ GtWardleyMapInnerNodeSnapper >> elementExtentChangedEvent: anEvent [
 						nodeViewFor: anInnerNodeViewModel
 						ifFound: [ :anInnerNodeElement | 
 							anInnerNodeElement constraintsDo: [ :c | 
-								c frame vertical alignCenterAt: aMiddleY ] ]
-						ifNone: [ ]
+								c frame vertical alignCenterAt: aMiddleY ].
+							GtWardleyMapBeaconInnerNodeSnapSignal new 
+								innerNodeElement: anInnerNodeElement;
+								pipelineElement: aPipelineElement;
+								mapElement: aCanvas;
+								emit ]
+						ifNone: [ ].
 				]
 			]
 		]

@@ -112,7 +112,13 @@ GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipeline
 	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
 	
 	anInnerNodeElement constraintsDo: [ :c | 
-		c frame vertical alignCenterAt: aMiddleY ]
+		c frame vertical alignCenterAt: aMiddleY ].
+		
+	GtWardleyMapBeaconInnerNodeSnapSignal new 
+		innerNodeElement: anInnerNodeElement;
+		pipelineElement: aPipelineElement;
+		mapElement: aCanvas;
+		emit
 ]
 
 { #category : #'api - views' }
@@ -164,5 +170,10 @@ GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewMod
 			c frame vertical alignTopAt: aPipelineViewModel pipelineCoordinateTop.
 			c frame horizontal weight: 
 				aPipelineViewModel pipelineCoordinateRight - aPipelineViewModel pipelineCoordinateLeft.
-			c horizontal matchParent ]
+			c horizontal matchParent ].
+			
+	GtWardleyMapBeaconPipelineMovedSignal new 
+		nodeElement: aPipelineElement;
+		mapElement: aPipelineElement parent;
+		emit
 ]

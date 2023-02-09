@@ -58,7 +58,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 							theDictionary
 								at: #x put: aWardleyMapNode pipelineCoordinate x;
 								at: #y put: aWardleyMapNode pipelineCoordinate y;
-								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id]) ] ];
+								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id] as: Array) ] ];
 					yourself);
 		yourself
 ]

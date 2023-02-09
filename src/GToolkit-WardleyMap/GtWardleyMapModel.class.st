@@ -199,8 +199,15 @@ GtWardleyMapModel >> gtNodesFor: aView [
 						c linear vertical alignCenter ] ] 
 			width: 35;
 		column: 'Name' text: #label;
-		column: 'With pipeline' text: #isPipelineVisible;
-		column: 'Inner nodes' text: [ :aNode | aNode innerNodes size ]
+		column: 'With pipeline' text: [ :aNode | aNode isPipelineVisible 
+			ifTrue: [ 'yes' ] 
+			ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ];
+		column: 'Inner nodes' text: [ :aNode | 
+			| aSize |
+			aSize := aNode innerNodes size.
+			aSize isZero 
+				ifTrue: [ aSize asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
+				ifFalse: [ aSize ] ]
 		
 ]
 
