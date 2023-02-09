@@ -59,6 +59,10 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 			c frame vertical alignCenterAt: aNodeViewModel coordinateY.
 			c graph beNode ];
+		in: [ :theElement |
+			GtWardleyMapBeaconNodeInitializedSignal new 
+				nodeElement: theElement;
+				mapElement: self ];
 		addAptitude: (BrGlamorousWithContextMenuAptitude
 				handle: [ BlElement new
 						size: aNodeViewModel nodeSize / 2.0;
@@ -170,7 +174,11 @@ GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 			aNodeView
 				constraintsDo: [ :c | 
 					c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
-					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ].
+				GtWardleyMapBeaconNodeMovedSignal new 
+					nodeElement: aNodeView;
+					mapElement: self;
+					emit ]
 		ifNone: [  ].
 
 	aMovedNodeViewModel isPipelineVisible ifFalse: [

@@ -49,6 +49,28 @@ GtWardleyMapModelExamples >> mapElementWithPipelines [
 	^ aWardleyMapElement
 ]
 
+{ #category : #'examples - elements' }
+GtWardleyMapModelExamples >> mapElementWithPipelinesInnerNodes [
+	<gtExample>
+	| aWardleyMapViewModel aWardleyMapElement |
+
+	aWardleyMapViewModel := self mapViewModelWithPipelineInnerNodes.
+
+	aWardleyMapElement := GtWardleyMapElement new.
+	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
+
+	aWardleyMapElement evolutionSections: {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity'
+	}.
+	self assert: aWardleyMapElement children size equals: 2.
+	"7 nodes, 1 pipeline, 1 edge"
+	self assert: aWardleyMapElement children last children size equals: 9.
+	^ aWardleyMapElement
+]
+
 { #category : #'examples - view model' }
 GtWardleyMapModelExamples >> mapViewModelWithPipelineInnerNodes [
 	<gtExample>
