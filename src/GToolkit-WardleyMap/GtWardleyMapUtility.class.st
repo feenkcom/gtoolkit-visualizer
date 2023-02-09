@@ -48,11 +48,11 @@ GtWardleyMapUtility class >> estimateInnerNodesFor: aPipelineNode among: allNode
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: aPipelineElement [
-	^ aPipelineElement bounds inParent asRectangle
-		containsRect: aNodeElement bounds inParent asRectangle
-
 	"^ aPipelineElement bounds inParent asRectangle
-		containsPoint: aNodeElement bounds inParent asRectangle center"
+		containsRect: aNodeElement bounds inParent asRectangle"
+
+	^ aPipelineElement bounds inParent asRectangle
+		containsPoint: aNodeElement bounds inParent asRectangle center
 ]
 
 { #category : #'api - model' }

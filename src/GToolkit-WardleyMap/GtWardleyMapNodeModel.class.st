@@ -54,6 +54,8 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 				format: {self parent.
 						aNodeModel parent} ].
 
+	(self innerNodes identityIncludes: aNodeModel) ifTrue: [ ^ self ].
+						
 	aNodeModel removeFromPipeline.
 	aNodeModel pipelineNode: self.
 
