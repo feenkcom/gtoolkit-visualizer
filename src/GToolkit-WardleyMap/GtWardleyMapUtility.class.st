@@ -99,8 +99,15 @@ GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel i
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipelineElement: aPipelineElement inCanvasElement: aCanvas [
+	"The problem with this implementation is that we expect that a canvas height value is a correct one.
+	The same for the pipeline element bounds. Imagine situation in which we request to move the pipeline element,
+	setting new constraints, and we immediately call this method to snap inner nodes. 
+	It may happen that we will use old pipeline bounds to compute the inner node element position."
+	
 	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
 
+	true ifTrue: [ ^ self ].
+	
 	aCanvas space ifNil: [ ^ self ].
 	
 	aCanvasHeight := aCanvas height.
