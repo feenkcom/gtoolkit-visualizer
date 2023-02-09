@@ -44,13 +44,11 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 
 	aNodeModel ifNil: [ ^ self ].
 	self isPipelineVisible ifFalse: [ ^ self ].
-	self
-		assert: [ (aNodeModel == self) not ]
-		description: [ 'Cannot add inner node into itself: {1}' format: {self} ].
+	aNodeModel == self ifTrue: [ ^ self ].
 
 	self
 		assert: [ aNodeModel parent == self parent ]
-		description: [ 'Pipeline node and its inner node must has the same parent: {1}, {2}'
+		description: [ 'Pipeline node and its inner node must have the same parent: {1}, {2}'
 				format: {self parent.
 						aNodeModel parent} ].
 
