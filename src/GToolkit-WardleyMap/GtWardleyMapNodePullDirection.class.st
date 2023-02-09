@@ -78,11 +78,10 @@ GtWardleyMapNodePullDirection >> mayRemoveInnerNodeFromPipeline [
 					ifFalse: [ 
 						pipelineViewModel removeInnerNodeViewModel: nodeViewModel ]
 					ifTrue: [
-						self mapElement ifNotNil: [
-							GtWardleyMapUtility 
-								snapInnerNodeViewModel: nodeViewModel 
-								inPipelineViewModel: pipelineViewModel
-								inCanvasElement: self mapElement ] ] ]
+						GtWardleyMapUtility 
+							snapInnerNodeElement: nodeElement 
+							inPipelineElement: aPipelineElement
+							inCanvasElement: mapElement ] ]
 		ifNone: [  ]
 ]
 

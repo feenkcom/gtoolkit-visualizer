@@ -98,12 +98,29 @@ GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel i
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
+GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipelineElement: aPipelineElement inCanvasElement: aCanvas [
+	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
 
-	| aCanvasHeight aPipelineElement anInnerNodeElement aPipelineRectangle aMinY aMaxY aMiddleY |
+	aCanvas space ifNil: [ ^ self ].
+	
 	aCanvasHeight := aCanvas height.
 	(aCanvasHeight closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
 	
+	aPipelineRectangle := aPipelineElement bounds inParent asRectangle.
+	aMinY := (aPipelineRectangle top) / aCanvasHeight.
+	aMaxY := (aPipelineRectangle bottom) / aCanvasHeight.
+	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
+	
+	anInnerNodeElement constraintsDo: [ :c | 
+		c frame vertical alignCenterAt: aMiddleY ]
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
+	| aPipelineElement anInnerNodeElement |
+	
+	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
+
 	aPipelineElement := aCanvas 
 		pipelineViewFor: aPipelineViewModel 
 		ifFound: [ :thePipelineElement | thePipelineElement ] 
@@ -114,13 +131,10 @@ GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipe
 		ifFound: [ :theElement | theElement ] 
 		ifNone: [ ^ self ].
 		
-	aPipelineRectangle := aPipelineElement bounds inParent asRectangle.
-	aMinY := (aPipelineRectangle top) / aCanvasHeight.
-	aMaxY := (aPipelineRectangle bottom) / aCanvasHeight.
-	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
-	
-	anInnerNodeElement constraintsDo: [ :c | 
-		c frame vertical alignCenterAt: aMiddleY ]
+	self 
+		snapInnerNodeElement: anInnerNodeElement 
+		inPipelineElement: aPipelineElement 
+		inCanvasElement: aCanvas
 ]
 
 { #category : #'api - views' }

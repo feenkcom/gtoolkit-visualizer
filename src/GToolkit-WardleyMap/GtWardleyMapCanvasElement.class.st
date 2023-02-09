@@ -223,8 +223,22 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
-
+		
 	self addChildren: theEdgeElements.
+
+	"When layout computation is finished, snap inner nodes"
+	self when: BlElementLayoutComputedEvent doOnce: [ :anEvent |
+		self space ifNotNil: [
+			thePipelineElements do: [ :aPipelineElement |
+				aPipelineElement wardleyMapNodeViewModel innerNodeViewModels do: [ :anInnerNodeViewModel |
+					GtWardleyMapUtility 
+						snapInnerNodeViewModel: anInnerNodeViewModel
+						inPipelineViewModel: aPipelineElement wardleyMapNodeViewModel 
+						inCanvasElement: self
+				]
+			]
+		] 
+	].
 ]
 
 { #category : #private }
