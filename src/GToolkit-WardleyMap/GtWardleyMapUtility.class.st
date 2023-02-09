@@ -55,6 +55,29 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 		containsPoint: aNodeElement bounds inParent asRectangle center"
 ]
 
+{ #category : #'api - model' }
+GtWardleyMapUtility class >> normalizePipelineCoordinate: aPoint [ 
+	"I ensure a minimum pipeline width"
+	
+	| aWidth anIncrease aLeft aRight |
+	aWidth := aPoint y - aPoint x.
+	aWidth >= GtWardleyMapConstants minPipelineRelativeWidth ifTrue: [ ^ aPoint ].
+	
+	anIncrease := GtWardleyMapConstants minPipelineRelativeWidth - aWidth.
+		
+	aLeft := aPoint x - (anIncrease / 2).
+	aRight := aPoint y + (anIncrease / 2).
+	aLeft < 0 ifTrue: [
+		aRight := (aRight - aLeft) min: 1.0.
+		aLeft := 0 ].
+	aRight > 1 ifTrue: [ 
+		aLeft := aLeft - (aRight - 1.0) max: 0.0.
+		aRight := 1.0
+	].
+	
+	^ aLeft @ aRight
+]
+
 { #category : #'api - views' }
 GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
 

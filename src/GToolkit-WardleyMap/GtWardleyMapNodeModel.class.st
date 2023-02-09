@@ -72,7 +72,7 @@ GtWardleyMapNodeModel >> announcer [
 GtWardleyMapNodeModel >> ensurePipelineCoordinate [
 	pipelineCoordinate ifNotNil: [ ^ self ].
 
-	pipelineCoordinate := self normalizePipelineCoordinate: self coordinate x @ self coordinate x
+	pipelineCoordinate := GtWardleyMapUtility normalizePipelineCoordinate: self coordinate x @ self coordinate x
 ]
 
 { #category : #'api - export / import' }
@@ -202,29 +202,6 @@ GtWardleyMapNodeModel >> labelModel: aGtWardleyMapNodeLabelModel [
 	labelModel := aGtWardleyMapNodeLabelModel
 ]
 
-{ #category : #'api - pipeline' }
-GtWardleyMapNodeModel >> normalizePipelineCoordinate: aPoint [ 
-	"I ensure a minimum pipeline width"
-	
-	| aWidth anIncrease aLeft aRight |
-	aWidth := aPoint y - aPoint x.
-	aWidth >= GtWardleyMapConstants minPipelineRelativeWidth ifTrue: [ ^ aPoint ].
-	
-	anIncrease := GtWardleyMapConstants minPipelineRelativeWidth - aWidth.
-		
-	aLeft := aPoint x - (anIncrease / 2).
-	aRight := aPoint y + (anIncrease / 2).
-	aLeft < 0 ifTrue: [
-		aRight := (aRight - aLeft) min: 1.0.
-		aLeft := 0 ].
-	aRight > 1 ifTrue: [ 
-		aLeft := aLeft - (aRight - 1.0) max: 0.0.
-		aRight := 1.0
-	].
-	
-	^ aLeft @ aRight
-]
-
 { #category : #'api - color' }
 GtWardleyMapNodeModel >> notifyColored [
 	self propagateAnnouncement: (GtWardleyMapNodeModelColored new nodeModel: self)
@@ -291,9 +268,10 @@ GtWardleyMapNodeModel >> pipelineCoordinate: aPoint [
 	| aNormalizedCoordinate |
 	self pipelineCoordinate = aPoint ifTrue: [ ^ self ].
 
+	"Allow a smaller pipeline if there are inner nodes."
 	aNormalizedCoordinate := aPoint.
 	self innerNodes ifEmpty: [
-		aNormalizedCoordinate := self normalizePipelineCoordinate: aPoint.
+		aNormalizedCoordinate := GtWardleyMapUtility normalizePipelineCoordinate: aPoint.
 		self pipelineCoordinate = aNormalizedCoordinate ifTrue: [ ^ self ] ].
 	
 	pipelineCoordinate := aNormalizedCoordinate.
@@ -364,7 +342,7 @@ GtWardleyMapNodeModel >> removeInnerNode: anInnerNodeModel [
 	self innerNodes: (self innerNodes copyWithout: anInnerNodeModel).
 	
 	self innerNodes ifEmpty: [ 
-		self pipelineCoordinate: (self normalizePipelineCoordinate: self pipelineCoordinate)
+		self pipelineCoordinate: (GtWardleyMapUtility normalizePipelineCoordinate: self pipelineCoordinate)
 	].
 	
 	self notifyInnerNodeRemoved: anInnerNodeModel

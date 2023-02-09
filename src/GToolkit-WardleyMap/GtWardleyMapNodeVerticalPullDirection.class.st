@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 GtWardleyMapNodeVerticalPullDirection >> mayResizePipeline [
-	| anInnerNodeX aCurrentPipelineCoordinate aConstant aMinInnerNodeViewModel aMaxInnerNodeViewModel |
+	| anInnerNodeX aCurrentPipelineCoordinate aConstant aMinInnerNodeViewModel aMaxInnerNodeViewModel aNewPipelineCoordinate |
 	anInnerNodeX := nodeViewModel coordinateX.
 	aCurrentPipelineCoordinate := pipelineViewModel pipelineCoordinate.
 	aConstant := 0.01.
@@ -23,9 +23,18 @@ GtWardleyMapNodeVerticalPullDirection >> mayResizePipeline [
 					> aMaxInnerNodeViewModel coordinateX 
 						ifTrue: [ aMaxInnerNodeViewModel := eachNodeViewModel ] ] ].
 	
-	pipelineViewModel pipelineCoordinate: 
+	aNewPipelineCoordinate := 
 		(aMinInnerNodeViewModel coordinateX - aConstant max: 0) 
 			@ (aMaxInnerNodeViewModel coordinateX + aConstant min: 1).
+	
+	pipelineViewModel innerNodeViewModels size > 1 
+		ifTrue: [ 
+			"Allow smaller pipelines if there are other inner nodes (not just the dragged)"
+			pipelineViewModel pipelineCoordinate: aNewPipelineCoordinate ]
+		ifFalse: [ 
+			"If a last node is dragged outside of the pipeline, ensure minimal pipeline width"
+			pipelineViewModel pipelineCoordinate: (
+				GtWardleyMapUtility normalizePipelineCoordinate: aNewPipelineCoordinate) ]
 ]
 
 { #category : #accessing }
