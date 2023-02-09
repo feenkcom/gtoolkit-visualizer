@@ -70,21 +70,9 @@ GtWardleyMapNodeModel >> announcer [
 
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> ensurePipelineCoordinate [
-	| aLeft aRight |
 	pipelineCoordinate ifNotNil: [ ^ self ].
-	aLeft := self coordinate x
-		- (GtWardleyMapConstants minPipelineRelativeWidth / 2).
-	aRight := self coordinate x 
-		+ (GtWardleyMapConstants minPipelineRelativeWidth / 2).
-	aLeft < 0 ifTrue: [
-		aRight := (aRight - aLeft) min: 1.0.
-		aLeft := 0 ].
-	aRight > 1 ifTrue: [ 
-		aLeft := aLeft - (aRight - 1.0) max: 0.0.
-		aRight := 1.0
-	].
 
-	pipelineCoordinate := (aLeft max: 0.0) @ (aRight min: 1.0)
+	pipelineCoordinate := self normalizePipelineCoordinate: self coordinate x @ self coordinate x
 ]
 
 { #category : #'api - export / import' }
@@ -214,6 +202,29 @@ GtWardleyMapNodeModel >> labelModel: aGtWardleyMapNodeLabelModel [
 	labelModel := aGtWardleyMapNodeLabelModel
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> normalizePipelineCoordinate: aPoint [ 
+	"I ensure a minimum pipeline width"
+	
+	| aWidth anIncrease aLeft aRight |
+	aWidth := aPoint y - aPoint x.
+	aWidth >= GtWardleyMapConstants minPipelineRelativeWidth ifTrue: [ ^ aPoint ].
+	
+	anIncrease := GtWardleyMapConstants minPipelineRelativeWidth - aWidth.
+		
+	aLeft := aPoint x - (anIncrease / 2).
+	aRight := aPoint y + (anIncrease / 2).
+	aLeft < 0 ifTrue: [
+		aRight := (aRight - aLeft) min: 1.0.
+		aLeft := 0 ].
+	aRight > 1 ifTrue: [ 
+		aLeft := aLeft - (aRight - 1.0) max: 0.0.
+		aRight := 1.0
+	].
+	
+	^ aLeft @ aRight
+]
+
 { #category : #'api - color' }
 GtWardleyMapNodeModel >> notifyColored [
 	self propagateAnnouncement: (GtWardleyMapNodeModelColored new nodeModel: self)
@@ -277,9 +288,15 @@ GtWardleyMapNodeModel >> pipelineCoordinate [
 
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> pipelineCoordinate: aPoint [
+	| aNormalizedCoordinate |
 	self pipelineCoordinate = aPoint ifTrue: [ ^ self ].
 
-	pipelineCoordinate := aPoint.
+	aNormalizedCoordinate := aPoint.
+	self innerNodes ifEmpty: [
+		aNormalizedCoordinate := self normalizePipelineCoordinate: aPoint.
+		self pipelineCoordinate = aNormalizedCoordinate ifTrue: [ ^ self ] ].
+	
+	pipelineCoordinate := aNormalizedCoordinate.
 
 	self notifyPipelineCoordinateChanged
 ]
@@ -345,6 +362,10 @@ GtWardleyMapNodeModel >> removeInnerNode: anInnerNodeModel [
 	anInnerNodeModel pipelineNode: nil.
 
 	self innerNodes: (self innerNodes copyWithout: anInnerNodeModel).
+	
+	self innerNodes ifEmpty: [ 
+		self pipelineCoordinate: (self normalizePipelineCoordinate: self pipelineCoordinate)
+	].
 	
 	self notifyInnerNodeRemoved: anInnerNodeModel
 ]
