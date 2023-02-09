@@ -76,6 +76,51 @@ GtWardleyMapNodeModel >> ensurePipelineCoordinate [
 	pipelineCoordinate := GtWardleyMapUtility normalizePipelineCoordinate: self coordinate x @ self coordinate x
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> gtInnerNodesFor: aView [
+	<gtView>
+	self innerNodes ifNil: [ ^ aView empty ].
+	self innerNodes ifEmpty: [ ^ aView empty ].
+	
+	^ aView columnedList
+		title: 'Inner Nodes';
+		priority: 5;
+		items: [ self innerNodes ifNil: [ #() ] ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode color;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 35;
+		column: 'Name' text: #label;
+		column: 'Has Pipeline' 
+			text: [ :aNode | 
+				aNode isInnerNode 
+					ifTrue: [ (aNode pipelineNode == self)
+						ifTrue: [ 'yes' asRopedText foreground: BrGlamorousColors successBackgroundColor ]
+						ifFalse: [ ('has {1} pipeline instead of {2}' 
+							format: {  aNode pipelineNode. self }) 
+								asRopedText foreground: 
+									BrGlamorousColors errorBackgroundColor ] ] 
+					ifFalse: [ 'pipeline model is missing' asRopedText
+						foreground: BrGlamorousColors errorBackgroundColor ] ]
+			weight: 2;
+		column: 'With pipeline' text: [ :aNode | aNode isPipelineVisible 
+			ifTrue: [ 'yes' asRopedText foreground: BrGlamorousColors errorBackgroundColor ] 
+			ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors successBackgroundColor ] ];
+		column: 'Inner nodes' text: [ :aNode | 
+			| aSize |
+			aSize := aNode innerNodes size.
+			aSize isZero 
+				ifTrue: [ aSize asRopedText foreground: BrGlamorousColors successBackgroundColor ]
+				ifFalse: [ aSize asRopedText foreground: BrGlamorousColors errorBackgroundColor ] ]
+]
+
 { #category : #'api - export / import' }
 GtWardleyMapNodeModel >> gtJSONFor: aView [
 	<gtView>
@@ -156,7 +201,16 @@ GtWardleyMapNodeModel >> innerNodes: aCollectionOfNodes [
 			description: [ 'Inner nodes must be without pipeline, but {1} has pipeline visible.' 
 				format: { eachInnerNode label } ] ].
 
+	aCollectionOfNodes do: [ :eachInnerNode | 
+		eachInnerNode pipelineNode: self ].
+				
 	innerNodes := aCollectionOfNodes
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> isInnerNode [
+	<return: #Boolean>
+	^ self pipelineNode isNotNil
 ]
 
 { #category : #'api - pipeline' }
