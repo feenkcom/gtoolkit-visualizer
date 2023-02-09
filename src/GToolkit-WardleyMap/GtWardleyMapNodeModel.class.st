@@ -58,7 +58,7 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 	aNodeModel removeFromPipeline.
 	aNodeModel pipelineNode: self.
 
-	self innerNodes: (self innerNodes copyWith: aNodeModel).
+	self basicInnerNodes: (self innerNodes copyWith: aNodeModel).
 
 	self notifyInnerNodeAdded: aNodeModel
 ]
@@ -67,6 +67,26 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 GtWardleyMapNodeModel >> announcer [
 	<return: #Announcer>
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> basicInnerNodes: aCollectionOfNodes [
+	"Set inner nodes that are part of my pipeline.
+	Keep in mind to call #pipelineNode: on inner nodes.
+	It is preferable to use #addInnerNode: and #removeInnerNode: instead.
+	I am used for initialization."
+
+	self
+		assert: [ self isPipelineVisible ]
+		description: [ 'Pipeline must be visible then inner nodes can be set' ].
+
+	aCollectionOfNodes do: [ :eachInnerNode | 
+		self 
+			assert: [ eachInnerNode isPipelineVisible not ] 
+			description: [ 'Inner nodes must be without pipeline, but {1} has pipeline visible.' 
+				format: { eachInnerNode label } ] ].
+				
+	innerNodes := aCollectionOfNodes
 ]
 
 { #category : #'api - pipeline' }
@@ -189,22 +209,14 @@ GtWardleyMapNodeModel >> innerNodes [
 
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> innerNodes: aCollectionOfNodes [
-	"Set inner nodes that are part of my pipeline"
+	"Set inner nodes that are part of my pipeline.
+	It is preferable to use #addInnerNode: and #removeInnerNode: instead.
+	I am used for initialization."
 
-	self
-		assert: [ self isPipelineVisible ]
-		description: [ 'Pipeline must be visible then inner nodes can be set' ].
-
+	self basicInnerNodes: aCollectionOfNodes.
+	
 	aCollectionOfNodes do: [ :eachInnerNode | 
-		self 
-			assert: [ eachInnerNode isPipelineVisible not ] 
-			description: [ 'Inner nodes must be without pipeline, but {1} has pipeline visible.' 
-				format: { eachInnerNode label } ] ].
-
-	aCollectionOfNodes do: [ :eachInnerNode | 
-		eachInnerNode pipelineNode: self ].
-				
-	innerNodes := aCollectionOfNodes
+		eachInnerNode pipelineNode: self ]
 ]
 
 { #category : #'api - pipeline' }
@@ -394,7 +406,7 @@ GtWardleyMapNodeModel >> removeInnerNode: anInnerNodeModel [
 
 	anInnerNodeModel pipelineNode: nil.
 
-	self innerNodes: (self innerNodes copyWithout: anInnerNodeModel).
+	self basicInnerNodes: (self innerNodes copyWithout: anInnerNodeModel).
 	
 	self innerNodes ifEmpty: [ 
 		self pipelineCoordinate: (GtWardleyMapUtility normalizePipelineCoordinate: self pipelineCoordinate)
