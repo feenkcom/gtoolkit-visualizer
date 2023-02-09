@@ -55,7 +55,7 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 		containsPoint: aNodeElement bounds inParent asRectangle center"
 ]
 
-{ #category : #'event handling' }
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
 
 	| aCanvasHeight aPipelineElement anInnerNodeElement aPipelineRectangle aMinY aMaxY aMiddleY |
@@ -87,7 +87,7 @@ GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewMod
 		constraintsDo: [ :c | 
 			c frame horizontal alignLeftAt: aPipelineViewModel pipelineCoordinateLeft.
 			c frame vertical alignTopAt: aPipelineViewModel pipelineCoordinateTop.
-			c frame horizontal
-				weight: aPipelineViewModel pipelineCoordinateRight - aPipelineViewModel pipelineCoordinateLeft.
+			c frame horizontal weight: 
+				aPipelineViewModel pipelineCoordinateRight - aPipelineViewModel pipelineCoordinateLeft.
 			c horizontal matchParent ]
 ]
