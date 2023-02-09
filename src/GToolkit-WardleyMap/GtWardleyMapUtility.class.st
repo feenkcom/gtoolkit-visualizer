@@ -78,6 +78,25 @@ GtWardleyMapUtility class >> normalizePipelineCoordinate: aPoint [
 	^ aLeft @ aRight
 ]
 
+{ #category : #'api - model' }
+GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel ignoring: anInnerNodeModelOrNil [
+
+	| aConstant aMinInnerNodeModel aMaxInnerNodeModel |
+	aConstant := GtWardleyMapConstants pipelineRelativeOffset.
+
+	aMinInnerNodeModel := aPipelineModel.
+	aMaxInnerNodeModel := aPipelineModel.
+	aPipelineModel innerNodes
+		do: [ :eachNodeModel | 
+			eachNodeModel == anInnerNodeModelOrNil ifFalse: [
+				eachNodeModel x < aMinInnerNodeModel x 
+					ifTrue: [ aMinInnerNodeModel := eachNodeModel ].
+				eachNodeModel x > aMaxInnerNodeModel x 
+					ifTrue: [ aMaxInnerNodeModel := eachNodeModel ] ] ].
+	
+	^ (aMinInnerNodeModel x - aConstant max: 0) @ (aMaxInnerNodeModel x + aConstant min: 1).
+]
+
 { #category : #'api - views' }
 GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
 

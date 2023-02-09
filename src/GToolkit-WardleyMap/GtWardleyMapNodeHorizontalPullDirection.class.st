@@ -6,25 +6,13 @@ Class {
 
 { #category : #private }
 GtWardleyMapNodeHorizontalPullDirection >> mayResizePipeline [
-	| anInnerNodeX aCurrentPipelineCoordinate aConstant aMinInnerNodeViewModel aMaxInnerNodeViewModel |
-	anInnerNodeX := nodeViewModel coordinateX.
-	aCurrentPipelineCoordinate := pipelineViewModel pipelineCoordinate.
-	aConstant := GtWardleyMapConstants pipelineRelativeOffset.
+	| aNewPipelineCoordinate |
 
-	aMinInnerNodeViewModel := pipelineViewModel.
-	aMaxInnerNodeViewModel := pipelineViewModel.
-	pipelineViewModel innerNodeViewModels 
-		do: [ :eachNodeViewModel | 
-			eachNodeViewModel coordinateX
-				< aMinInnerNodeViewModel coordinateX 
-					ifTrue: [ aMinInnerNodeViewModel := eachNodeViewModel ].
-			eachNodeViewModel coordinateX
-				> aMaxInnerNodeViewModel coordinateX 
-					ifTrue: [ aMaxInnerNodeViewModel := eachNodeViewModel ] ].
+	aNewPipelineCoordinate := GtWardleyMapUtility 
+		normalizePipelineWidthOfNodeModel: pipelineViewModel wardleyMapNodeModel
+		ignoring: nil.
 	
-	pipelineViewModel pipelineCoordinate: 
-		(aMinInnerNodeViewModel coordinateX - aConstant max: 0) 
-			@ (aMaxInnerNodeViewModel coordinateX + aConstant min: 1).
+	pipelineViewModel pipelineCoordinate: aNewPipelineCoordinate.
 ]
 
 { #category : #execution }
