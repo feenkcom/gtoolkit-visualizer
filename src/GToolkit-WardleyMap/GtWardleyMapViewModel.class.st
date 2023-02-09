@@ -163,9 +163,13 @@ GtWardleyMapViewModel >> onInnerNodeAdded: anAnnouncement [
 				nodeViewModelFor: anAnnouncement innerNodeModel
 				ifFound: [ :anInnerNodeViewNode | 
 					aPipelineViewNode == anInnerNodeViewNode
-						ifFalse: [ aPipelineViewNode
-								innerNodeViewModels: (aPipelineViewNode innerNodeViewModels copyWith: anInnerNodeViewNode).
-							anInnerNodeViewNode pipelineNodeViewModel: aPipelineViewNode ] ]
+						ifFalse: [ 
+							aPipelineViewNode innerNodeViewModels: (
+								aPipelineViewNode innerNodeViewModels copyWith: anInnerNodeViewNode).
+							anInnerNodeViewNode pipelineNodeViewModel: aPipelineViewNode.
+							self announce: (GtWardleyMapNodeViewModelInnerNodeAdded new 
+								pipelineViewModel: aPipelineViewNode;
+								innerNodeViewModel: anInnerNodeViewNode ) ] ]
 				ifNone: [  ] ]
 		ifNone: [  ]
 ]
