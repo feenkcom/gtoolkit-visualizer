@@ -46,7 +46,7 @@ GtWardleyMapPipelineElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelColored
 			send: #onNodeColored
 			to: self;
-		when: GtWardleyMapNodeViewModelPipelinePipelineResized
+		when: GtWardleyMapNodeViewModelPipelineResized
 			send: #onNodePipelineResized:
 			to: self
 ]

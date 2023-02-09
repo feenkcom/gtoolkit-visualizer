@@ -142,6 +142,15 @@ GtWardleyMapCanvasElement >> onEdgeRemoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
+
+	GtWardleyMapUtility 
+		snapInnerNodeViewModel: anAnnouncement innerNodeViewModel
+		inPipelineViewModel: anAnnouncement pipelineViewModel
+		inCanvasElement: self
+]
+
+{ #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeAdded: anAnnouncement [
 
 	self addChild: (self createNodeViewFor: anAnnouncement nodeViewModel)
@@ -246,6 +255,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
+		when: GtWardleyMapNodeViewModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self
 ]

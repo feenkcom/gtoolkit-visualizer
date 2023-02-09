@@ -213,7 +213,7 @@ GtWardleyMapNodeViewModel >> onNodeMoved: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodePipelineResized: anAnnouncement [
 	self
-		announce: (GtWardleyMapNodeViewModelPipelinePipelineResized new nodeViewModel: self)
+		announce: (GtWardleyMapNodeViewModelPipelineResized new nodeViewModel: self)
 ]
 
 { #category : #'event handling' }

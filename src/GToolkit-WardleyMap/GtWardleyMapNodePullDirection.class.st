@@ -56,13 +56,11 @@ GtWardleyMapNodePullDirection >> mapElement: anObject [
 
 { #category : #private }
 GtWardleyMapNodePullDirection >> mayAddInnerNodeToPipeline [
-	mapElement
-		childrenDo: [ :aPipelineElement | 
-			aPipelineElement wardley isPipeline
-				ifTrue: [ (GtWardleyMapUtility
-						isNodeElement: nodeElement
-						insidePipelineElement: aPipelineElement)
-							ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel ] ] ].
+	mapElement pipelineChildrenDo: [ :aPipelineElement | 
+		(GtWardleyMapUtility
+			isNodeElement: nodeElement
+			insidePipelineElement: aPipelineElement)
+				ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel ] ].
 ]
 
 { #category : #private }
