@@ -45,6 +45,7 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 	aNodeModel ifNil: [ ^ self ].
 	self isPipelineVisible ifFalse: [ ^ self ].
 	aNodeModel == self ifTrue: [ ^ self ].
+	aNodeModel isPipelineVisible ifTrue: [ ^ self ].
 
 	self
 		assert: [ aNodeModel parent == self parent ]
