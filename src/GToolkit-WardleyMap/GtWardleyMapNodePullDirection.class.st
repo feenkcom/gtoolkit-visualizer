@@ -59,8 +59,8 @@ GtWardleyMapNodePullDirection >> mayAddInnerNodeToPipeline [
 	mapElement pipelineChildrenDo: [ :aPipelineElement | 
 		(GtWardleyMapUtility
 			isNodeElement: nodeElement
-			insidePipelineElement: aPipelineElement)
-				ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel ] ].
+			insidePipelineElement: aPipelineElement) ifTrue: [ 
+				aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel ] ]
 ]
 
 { #category : #private }
@@ -75,7 +75,13 @@ GtWardleyMapNodePullDirection >> mayRemoveInnerNodeFromPipeline [
 			(GtWardleyMapUtility
 				isNodeElement: nodeElement
 				insidePipelineElement: aPipelineElement)
-				ifFalse: [ pipelineViewModel removeInnerNodeViewModel: nodeViewModel ] ]
+					ifFalse: [ 
+						pipelineViewModel removeInnerNodeViewModel: nodeViewModel ]
+					ifTrue: [
+						GtWardleyMapUtility 
+							snapInnerNodeElement: nodeElement 
+							inPipelineElement: aPipelineElement
+							inCanvasElement: mapElement ] ]
 		ifNone: [  ]
 ]
 

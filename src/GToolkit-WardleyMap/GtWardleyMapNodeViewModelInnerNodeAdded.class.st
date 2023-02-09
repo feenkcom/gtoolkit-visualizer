@@ -5,7 +5,7 @@ Class {
 		'pipelineViewModel',
 		'innerNodeViewModel'
 	],
-	#category : #'GToolkit-WardleyMap-Eventss'
+	#category : #'GToolkit-WardleyMap-Events'
 }
 
 { #category : #accessing }

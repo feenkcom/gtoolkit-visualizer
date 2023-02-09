@@ -58,7 +58,6 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 			ifTrue: [ 0 @ 0 ]
 			ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
 
-
 	pullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
 
 	pulledAction value: aPulledElement value: newRelativePosition value: pullDirection

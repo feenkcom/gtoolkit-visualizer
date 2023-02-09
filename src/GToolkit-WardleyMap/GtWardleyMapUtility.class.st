@@ -48,11 +48,11 @@ GtWardleyMapUtility class >> estimateInnerNodesFor: aPipelineNode among: allNode
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: aPipelineElement [
-	^ aPipelineElement bounds inParent asRectangle
-		containsRect: aNodeElement bounds inParent asRectangle
-
 	"^ aPipelineElement bounds inParent asRectangle
-		containsPoint: aNodeElement bounds inParent asRectangle center"
+		containsRect: aNodeElement bounds inParent asRectangle"
+
+	^ aPipelineElement bounds inParent asRectangle
+		containsPoint: aNodeElement bounds inParent asRectangle center
 ]
 
 { #category : #'api - model' }
@@ -78,13 +78,68 @@ GtWardleyMapUtility class >> normalizePipelineCoordinate: aPoint [
 	^ aLeft @ aRight
 ]
 
-{ #category : #'api - views' }
-GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
+{ #category : #'api - model' }
+GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel ignoring: anInnerNodeModelOrNil [
 
-	| aCanvasHeight aPipelineElement anInnerNodeElement aPipelineRectangle aMinY aMaxY aMiddleY |
+	| aConstant aMinInnerNodeModel aMaxInnerNodeModel |
+	aConstant := GtWardleyMapConstants pipelineRelativeOffset.
+
+	aMinInnerNodeModel := aPipelineModel.
+	aMaxInnerNodeModel := aPipelineModel.
+	aPipelineModel innerNodes
+		do: [ :eachNodeModel | 
+			eachNodeModel == anInnerNodeModelOrNil ifFalse: [
+				eachNodeModel x < aMinInnerNodeModel x 
+					ifTrue: [ aMinInnerNodeModel := eachNodeModel ].
+				eachNodeModel x > aMaxInnerNodeModel x 
+					ifTrue: [ aMaxInnerNodeModel := eachNodeModel ] ] ].
+	
+	^ (aMinInnerNodeModel x - aConstant max: 0) @ (aMaxInnerNodeModel x + aConstant min: 1).
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipelineElement: aPipelineElement inCanvasElement: aCanvas [
+	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
+
+	aCanvas space ifNil: [ ^ self ].
+	
 	aCanvasHeight := aCanvas height.
 	(aCanvasHeight closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
 	
+	aPipelineRectangle := aPipelineElement bounds inParent asRectangle.
+	aMinY := (aPipelineRectangle top) / aCanvasHeight.
+	aMaxY := (aPipelineRectangle bottom) / aCanvasHeight.
+	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
+	
+	anInnerNodeElement constraintsDo: [ :c | 
+		c frame vertical alignCenterAt: aMiddleY ]
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> snapInnerNodeElementsInPipelineElement: aPipelineElement inCanvasElement: aCanvas [
+	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
+
+	aCanvas space ifNil: [ ^ self ].
+	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
+	
+	aPipelineElement wardleyMapNodeViewModel innerNodeViewModels do: [ :anInnerNodeViewModel | 
+		aCanvas 
+			nodeViewFor: anInnerNodeViewModel 
+			ifFound: [ :anInnerNodeElement | 
+				self
+					snapInnerNodeElement: anInnerNodeElement 
+					inPipelineElement: aPipelineElement 
+					inCanvasElement: aCanvas ] 
+			ifNone: [ ] ]
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
+	| aPipelineElement anInnerNodeElement |
+	
+	aCanvas space ifNil: [ ^ self ].
+	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
+
 	aPipelineElement := aCanvas 
 		pipelineViewFor: aPipelineViewModel 
 		ifFound: [ :thePipelineElement | thePipelineElement ] 
@@ -95,13 +150,10 @@ GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipe
 		ifFound: [ :theElement | theElement ] 
 		ifNone: [ ^ self ].
 		
-	aPipelineRectangle := aPipelineElement bounds inParent asRectangle.
-	aMinY := (aPipelineRectangle top) / aCanvasHeight.
-	aMaxY := (aPipelineRectangle bottom) / aCanvasHeight.
-	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
-	
-	anInnerNodeElement constraintsDo: [ :c | 
-		c frame vertical alignCenterAt: aMiddleY ]
+	self 
+		snapInnerNodeElement: anInnerNodeElement 
+		inPipelineElement: aPipelineElement 
+		inCanvasElement: aCanvas
 ]
 
 { #category : #'api - views' }

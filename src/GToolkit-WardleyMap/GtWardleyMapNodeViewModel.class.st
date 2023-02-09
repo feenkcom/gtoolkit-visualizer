@@ -146,8 +146,7 @@ GtWardleyMapNodeViewModel >> moveNodePipelineTo: aNormalizedPoint [
 	
 	"Let's move inner nodes"
 	self innerNodeViewModels do: [ :eachInnerNode |
-		eachInnerNode moveNodeTo: eachInnerNode coordinate + aDiff
-	 ]
+		eachInnerNode moveNodeTo: eachInnerNode coordinate + aDiff ]
 ]
 
 { #category : #'api - node' }

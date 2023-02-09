@@ -35,7 +35,8 @@ GtWardleyMapConstants class >> nodeSize [
 
 { #category : #'api - constants' }
 GtWardleyMapConstants class >> pipelineRelativeOffset [
-	"I represent kind of padding in relative coordinates (0, 1)"
+	"I represent a kind of padding in relative coordinates (0, 1).
+	It is a space between an inner node and a pipeline border."
 
 	^ 0.02
 ]

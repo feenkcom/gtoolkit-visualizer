@@ -429,7 +429,7 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	aNodeD label: 'Node D'.
 
 	aNodeE := GtWardleyMapNodeModelExamples new newNode.
-	aNodeE coordinate: 0.3 @ 0.76.
+	aNodeE coordinate: 0.3 @ 0.762.
 	aNodeE color: Color blue.
 	aNodeE label: 'Node E'.
 

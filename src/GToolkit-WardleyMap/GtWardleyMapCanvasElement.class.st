@@ -74,7 +74,10 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 				disallowOutOfBounds;
 				containerElement: self;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
-					aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
+					aNodeViewModel moveNodePipelineTo: aNormalizedPosition.
+					GtWardleyMapUtility 
+						snapInnerNodeElementsInPipelineElement: aPulledElement 
+						inCanvasElement: self ]);
 		in: [ :thePipelineElement | 
 			thePipelineElement wardley bePipeline.
 
@@ -170,13 +173,14 @@ GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
 		ifNone: [  ].
 
-	self
-		pipelineViewFor: aMovedNodeViewModel
-		ifFound: [ :aPipelineView | 
-			GtWardleyMapUtility
-				updatePipelineElement: aPipelineView
-				nodeViewModel: aMovedNodeViewModel ]
-		ifNone: [  ]
+	aMovedNodeViewModel isPipelineVisible ifFalse: [
+		self
+			pipelineViewFor: aMovedNodeViewModel
+			ifFound: [ :aPipelineView | 
+				GtWardleyMapUtility
+					updatePipelineElement: aPipelineView
+					nodeViewModel: aMovedNodeViewModel ]
+			ifNone: [  ] ]
 ]
 
 { #category : #'api - wardley map view model' }
@@ -223,8 +227,22 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
-
+		
 	self addChildren: theEdgeElements.
+
+	"When layout computation is finished, snap inner nodes"
+	self when: BlElementLayoutComputedEvent doOnce: [ :anEvent |
+		self space ifNotNil: [
+			thePipelineElements do: [ :aPipelineElement |
+				aPipelineElement wardleyMapNodeViewModel innerNodeViewModels do: [ :anInnerNodeViewModel |
+					GtWardleyMapUtility 
+						snapInnerNodeViewModel: anInnerNodeViewModel
+						inPipelineViewModel: aPipelineElement wardleyMapNodeViewModel 
+						inCanvasElement: self
+				]
+			]
+		] 
+	].
 ]
 
 { #category : #private }
