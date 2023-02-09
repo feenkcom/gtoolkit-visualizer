@@ -112,14 +112,32 @@ GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipeline
 	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
 	
 	anInnerNodeElement constraintsDo: [ :c | 
-		c frame horizontal alignCenterAt: anInnerNodeElement wardleyMapNodeViewModel coordinateX.
 		c frame vertical alignCenterAt: aMiddleY ]
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> snapInnerNodeElementsInPipelineElement: aPipelineElement inCanvasElement: aCanvas [
+	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
+
+	aCanvas space ifNil: [ ^ self ].
+	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
+	
+	aPipelineElement wardleyMapNodeViewModel innerNodeViewModels do: [ :anInnerNodeViewModel | 
+		aCanvas 
+			nodeViewFor: anInnerNodeViewModel 
+			ifFound: [ :anInnerNodeElement | 
+				self
+					snapInnerNodeElement: anInnerNodeElement 
+					inPipelineElement: aPipelineElement 
+					inCanvasElement: aCanvas ] 
+			ifNone: [ ] ]
 ]
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
 	| aPipelineElement anInnerNodeElement |
 	
+	aCanvas space ifNil: [ ^ self ].
 	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
 
 	aPipelineElement := aCanvas 

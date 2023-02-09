@@ -74,7 +74,10 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 				disallowOutOfBounds;
 				containerElement: self;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
-					aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
+					aNodeViewModel moveNodePipelineTo: aNormalizedPosition.
+					GtWardleyMapUtility 
+						snapInnerNodeElementsInPipelineElement: aPulledElement 
+						inCanvasElement: self ]);
 		in: [ :thePipelineElement | 
 			thePipelineElement wardley bePipeline.
 
@@ -164,24 +167,13 @@ GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 	self
 		nodeViewFor: aMovedNodeViewModel
 		ifFound: [ :aNodeView | 
-			aMovedNodeViewModel pipelineNodeViewModel 
-				ifNotNil: [ :aPipelineViewModel |
-					self 
-						pipelineViewFor: aPipelineViewModel 
-						ifFound: [ :aPipelineView | 
-							GtWardleyMapUtility 
-								snapInnerNodeElement: aNodeView
-								inPipelineElement: aPipelineView 
-								inCanvasElement: self ]
-						ifNone: [ ] ]
-				ifNil: [ 
-					aNodeView
-						constraintsDo: [ :c | 
-							c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
-							c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ] ]
+			aNodeView
+				constraintsDo: [ :c | 
+					c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
+					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
 		ifNone: [  ].
 
-	aMovedNodeViewModel isPipelineVisible ifTrue: [
+	aMovedNodeViewModel isPipelineVisible ifFalse: [
 		self
 			pipelineViewFor: aMovedNodeViewModel
 			ifFound: [ :aPipelineView | 
