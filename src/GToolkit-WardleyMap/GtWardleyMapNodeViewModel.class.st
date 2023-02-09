@@ -18,6 +18,8 @@ GtWardleyMapNodeViewModel >> addInnerNodeViewModel: aNodeViewModel [
 	
 	aNodeViewModel ifNil: [ ^ self ].
 	self isPipelineVisible ifFalse: [ ^ self ].
+	self == aNodeViewModel ifTrue: [ ^ self ].
+	aNodeViewModel isPipelineVisible ifTrue: [ ^ self ].
 	
 	self wardleyMapNodeModel addInnerNode: aNodeViewModel wardleyMapNodeModel.
 ]
