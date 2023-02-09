@@ -164,19 +164,31 @@ GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 	self
 		nodeViewFor: aMovedNodeViewModel
 		ifFound: [ :aNodeView | 
-			aNodeView
-				constraintsDo: [ :c | 
-					c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
-					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ]
+			aMovedNodeViewModel pipelineNodeViewModel 
+				ifNotNil: [ :aPipelineViewModel |
+					self 
+						pipelineViewFor: aPipelineViewModel 
+						ifFound: [ :aPipelineView | 
+							GtWardleyMapUtility 
+								snapInnerNodeElement: aNodeView
+								inPipelineElement: aPipelineView 
+								inCanvasElement: self ]
+						ifNone: [ ] ]
+				ifNil: [ 
+					aNodeView
+						constraintsDo: [ :c | 
+							c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
+							c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ] ] ]
 		ifNone: [  ].
 
-	self
-		pipelineViewFor: aMovedNodeViewModel
-		ifFound: [ :aPipelineView | 
-			GtWardleyMapUtility
-				updatePipelineElement: aPipelineView
-				nodeViewModel: aMovedNodeViewModel ]
-		ifNone: [  ]
+	aMovedNodeViewModel isPipelineVisible ifTrue: [
+		self
+			pipelineViewFor: aMovedNodeViewModel
+			ifFound: [ :aPipelineView | 
+				GtWardleyMapUtility
+					updatePipelineElement: aPipelineView
+					nodeViewModel: aMovedNodeViewModel ]
+			ifNone: [  ] ]
 ]
 
 { #category : #'api - wardley map view model' }

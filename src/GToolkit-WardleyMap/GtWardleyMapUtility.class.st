@@ -112,6 +112,7 @@ GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipeline
 	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
 	
 	anInnerNodeElement constraintsDo: [ :c | 
+		c frame horizontal alignCenterAt: anInnerNodeElement wardleyMapNodeViewModel coordinateX.
 		c frame vertical alignCenterAt: aMiddleY ]
 ]
 
