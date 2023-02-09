@@ -36,6 +36,6 @@ GtWardleyMapBeaconNodeMovedSignal >> nodeLabel [
 { #category : #printing }
 GtWardleyMapBeaconNodeMovedSignal >> printOneLineContentsOn: stream [
 	stream 
-		nextPutAll: 'moved node label ';
+		nextPutAll: 'moved node ';
 		nextPutAll: self nodeLabel
 ]

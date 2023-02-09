@@ -22,9 +22,19 @@ GtWardleyMapNodePullHandler >> containerElement: anObject [
 
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> dragEndEvent: anEvent [
-	dragEndAction
-		value: (self targetElementFor: anEvent)
-		value: (pullDirection ifNil: [ GtWardleyMapNodeVerticalPullDirection ]).
+
+	| aPulledElement aPullDirection |
+	aPulledElement := self targetElementFor: anEvent.
+	aPullDirection := pullDirection.
+
+	BlFrameTelemetry
+			time: [ 'Wardley node {1} dragging ended in direction {2}' 
+				format: { aPulledElement. aPullDirection } ]
+			during: [
+				dragEndAction
+					value: (aPulledElement)
+					value: (aPullDirection ifNil: [ GtWardleyMapNodeVerticalPullDirection ]) ].
+					
 	super dragEndEvent: anEvent
 ]
 
@@ -44,7 +54,7 @@ GtWardleyMapNodePullHandler >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition by: aDragDelta starting: anOriginalPosition [
-	| newRelativePosition aContainerExtent |
+	| aNewRelativePosition aContainerExtent aPullDirection |
 	super
 		onPulled: aPulledElement
 		from: aPreviousPosition
@@ -53,14 +63,17 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 		starting: anOriginalPosition.
 
 	aContainerExtent := self containerElement extent.
-	newRelativePosition := (aContainerExtent x isZero
+	aNewRelativePosition := (aContainerExtent x isZero
 			or: [ aContainerExtent y isZero ])
 			ifTrue: [ 0 @ 0 ]
 			ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
 
-	pullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
+	pullDirection := aPullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
 
-	pulledAction value: aPulledElement value: newRelativePosition value: pullDirection
+	BlFrameTelemetry
+			time: [ 'Wardley node {1} pulled by {2} in direction {3}' 
+				format: { aPulledElement. aNewRelativePosition. aPullDirection } ]
+			during: [ pulledAction value: aPulledElement value: aNewRelativePosition value: aPullDirection ]
 ]
 
 { #category : #'api - event managing' }

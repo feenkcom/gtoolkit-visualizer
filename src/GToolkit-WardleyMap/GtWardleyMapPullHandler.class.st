@@ -38,15 +38,18 @@ GtWardleyMapPullHandler >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapPullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition [
-	| newRelativePosition aContainerExtent |
+	| aNewRelativePosition aContainerExtent |
 	super onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition.
 
 	aContainerExtent := self containerElement extent.
-	newRelativePosition := (aContainerExtent x isZero or: [ aContainerExtent y isZero ])
+	aNewRelativePosition := (aContainerExtent x isZero or: [ aContainerExtent y isZero ])
 		ifTrue: [ 0@0 ]
 		ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
 	
-	pulledAction value: aPulledElement value: newRelativePosition
+	BlFrameTelemetry
+		time: [ 'Wardley node label {1} pulled by {2}' 
+			format: { aPulledElement. aNewRelativePosition } ]
+		during: [ pulledAction value: aPulledElement value: aNewRelativePosition ].
 ]
 
 { #category : #'api - event managing' }
