@@ -11,7 +11,13 @@ Class {
 
 { #category : #'api - event managing' }
 GtWardleyMapInnerNodeSnapper >> elementExtentChangedEvent: anEvent [
+	"The problem with this implementation is that we expect that a canvas height value is a correct one.
+	The same for the pipeline element bounds. Imagine situation in which we request to move the pipeline element,
+	setting new constraints, and we immediately call this method to snap inner nodes. 
+	It may happen that we will use old pipeline bounds to compute inner node positions."
+
 	| aCanvas aCanvasHeight |
+	
 	aCanvas := anEvent currentTarget.
 	aCanvasHeight := aCanvas height.
 	(aCanvasHeight closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].

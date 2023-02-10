@@ -23,6 +23,10 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 	^ GtWardleyMapEdgeElement new
 		in: [ :aLineElement | aLineElement graph beEdge ];
 		wardleyMapEdgeViewModel: anEdgeViewModel;
+		addAptitude: (BrStyleCommonAptitude new 
+				hovered: [ :aStyle | aStyle 
+					do: [ :theElement | theElement background: anEdgeViewModel lineColor muchDarker ]
+					after: [ :theElement | theElement background: anEdgeViewModel lineColor ] ]);
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
 		zIndex: -1;
@@ -47,6 +51,14 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
+		addAptitude: (BrStyleCommonAptitude new 
+				hovered: [ :aStyle | 
+					aStyle effect: BrGlamorousFocusedShadowEffect new.
+					aStyle 
+						do: [ :theElement | 
+							theElement background: aNodeViewModel labelColor ]
+						after: [ :theElement | 
+							theElement background: aNodeViewModel nodeColor ] ]);
 		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
@@ -74,6 +86,8 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
+		addAptitude: (BrStyleCommonAptitude new 
+			hovered: [ :aStyle | aStyle effect: BrGlamorousFocusedShadowEffect new ]);
 		addEventHandler: (GtWardleyMapPipelinePullHandler new
 				disallowOutOfBounds;
 				containerElement: self;

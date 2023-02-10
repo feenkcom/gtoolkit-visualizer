@@ -163,9 +163,7 @@ GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
 				aCorrectedX := (aPipelineCoordinate x max: aNormalizedPoint x)
 						min: aPipelineCoordinate y.
 				aCorrectedX @ aNodeCoordinate y ]
-			ifFalse: [ self
-					flag: 'we need to sync pipeline coordinates in case the pipeline is not visible but already exists'.
-				aNormalizedPoint ].
+			ifFalse: [ aNormalizedPoint ].
 
 	self wardleyMapNodeModel coordinate: aCorrectedPoint
 ]
