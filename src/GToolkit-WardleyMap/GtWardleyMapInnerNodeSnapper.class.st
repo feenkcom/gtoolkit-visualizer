@@ -18,6 +18,8 @@ GtWardleyMapInnerNodeSnapper >> elementExtentChangedEvent: anEvent [
 
 	| aCanvas aCanvasHeight |
 	
+	true ifTrue: [ ^ self ].
+	
 	aCanvas := anEvent currentTarget.
 	aCanvasHeight := aCanvas height.
 	(aCanvasHeight closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].

@@ -54,7 +54,7 @@ GtWardleyMapNodePullHandler >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition by: aDragDelta starting: anOriginalPosition [
-	| aNewRelativePosition aContainerExtent aPullDirection |
+	| aNewRelativePosition aContainerExtent aPullDirection aNodeViewModel aNewPositionWithoutOffset |
 	super
 		onPulled: aPulledElement
 		from: aPreviousPosition
@@ -62,11 +62,22 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 		by: aDragDelta
 		starting: anOriginalPosition.
 
+	aNodeViewModel := aPulledElement wardleyMapNodeViewModel.
+	
+	aNewPositionWithoutOffset := aNodeViewModel pipelineNodeViewModel 
+		ifNil: [ aNewPosition ]
+		ifNotNil: [ :aPipelineNodeViewModel | 
+			"Pipeline widget is right below the node widget.
+			Let's subtract half of the node size to get proper y-node-coordinate"
+			aNewPosition 
+				- (0 @ (((aPipelineNodeViewModel nodeSize y / 2) 
+					+ (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat)) ].
+		
 	aContainerExtent := self containerElement extent.
 	aNewRelativePosition := (aContainerExtent x isZero
 			or: [ aContainerExtent y isZero ])
 			ifTrue: [ 0 @ 0 ]
-			ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
+			ifFalse: [ (aNewPositionWithoutOffset + (aPulledElement extent / 2.0)) / aContainerExtent ].
 
 	pullDirection := aPullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
 
