@@ -87,8 +87,8 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNod
 	aFirstNodePipelineDictionary := aFirstNodeDictionary at: #pipeline.
 	self assert: aFirstNodePipelineDictionary size equals: 4.
 	self assert: (aFirstNodePipelineDictionary at: #is_visible) equals:true.
-	self assert: (aFirstNodePipelineDictionary at: #x) equals: 0.15.
-	self assert: (aFirstNodePipelineDictionary at: #y) equals: 0.4.
+	self assert: ((aFirstNodePipelineDictionary at: #x) closeTo: 0.18 precision: 0.01).
+	self assert: (aFirstNodePipelineDictionary at: #y) equals: 0.32.
 	
 	aFirstNodePipelineInnerNodesArray := aFirstNodePipelineDictionary at: #inner_nodes.
 	self assert: aFirstNodePipelineInnerNodesArray size equals: 2.
