@@ -106,8 +106,6 @@ GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipeline
 	
 	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
 
-	true ifTrue: [ ^ self ].
-	
 	aCanvas space ifNil: [ ^ self ].
 	
 	aCanvasHeight := aCanvas height.
