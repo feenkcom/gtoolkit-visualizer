@@ -307,6 +307,11 @@ GtWardleyMapNodeViewModel >> removeInnerNodeViewModel: anInnerNodeViewModel [
 	self wardleyMapNodeModel removeInnerNode: anInnerNodeViewModel wardleyMapNodeModel
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> snapInnerNodeViewModel: anInnerNodeViewModel [
+	anInnerNodeViewModel wardleyMapNodeModel y: self coordinateY
+]
+
 { #category : #'api - wardley map node model' }
 GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 	"Is sent after a new wardleyMapNode model is assigned to the view model.

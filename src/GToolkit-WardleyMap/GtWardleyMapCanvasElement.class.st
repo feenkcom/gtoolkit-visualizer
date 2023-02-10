@@ -191,10 +191,7 @@ GtWardleyMapCanvasElement >> onEdgeRemoved: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
 
-	GtWardleyMapUtility 
-		snapInnerNodeViewModel: anAnnouncement innerNodeViewModel
-		inPipelineViewModel: anAnnouncement pipelineViewModel
-		inCanvasElement: self
+	self onNodeMoved: anAnnouncement
 ]
 
 { #category : #'event handling' }

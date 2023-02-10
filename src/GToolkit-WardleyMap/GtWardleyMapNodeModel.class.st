@@ -52,7 +52,9 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 		description: [ 'Pipeline node and its inner node must have the same parent: {1}, {2}'
 				format: {self parent.
 						aNodeModel parent} ].
-	(self innerNodes identityIncludes: aNodeModel) ifTrue: [ ^ self ].
+	(self innerNodes identityIncludes: aNodeModel) ifTrue: [ 
+		aNodeModel y: self y.
+		^ self ].
 	
 	self prepareInnerNode: aNodeModel.
 	self basicInnerNodes: (self innerNodes copyWith: aNodeModel).

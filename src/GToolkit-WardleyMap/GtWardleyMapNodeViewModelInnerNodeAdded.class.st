@@ -19,6 +19,11 @@ GtWardleyMapNodeViewModelInnerNodeAdded >> innerNodeViewModel: anObject [
 ]
 
 { #category : #accessing }
+GtWardleyMapNodeViewModelInnerNodeAdded >> nodeViewModel [
+	^ self innerNodeViewModel
+]
+
+{ #category : #accessing }
 GtWardleyMapNodeViewModelInnerNodeAdded >> pipelineViewModel [
 	^ pipelineViewModel
 ]
