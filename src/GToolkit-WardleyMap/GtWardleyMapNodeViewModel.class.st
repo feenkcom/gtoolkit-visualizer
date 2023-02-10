@@ -267,6 +267,12 @@ GtWardleyMapNodeViewModel >> pipelineCoordinateTop [
 ]
 
 { #category : #'api - pipeline' }
+GtWardleyMapNodeViewModel >> pipelineCoordinateWeight [
+	<return: #Number>
+	^ self pipelineCoordinate y - self pipelineCoordinate x
+]
+
+{ #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> pipelineNodeViewModel [
 	<return: #GtWardleyMapNodeViewModel or: nil>
 	^ pipelineNodeViewModel

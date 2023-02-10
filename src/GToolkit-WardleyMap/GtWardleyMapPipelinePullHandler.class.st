@@ -38,13 +38,20 @@ GtWardleyMapPipelinePullHandler >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition [
-	| aNewRelativePosition aContainerExtent |
+	| aNewRelativePosition aContainerExtent aNewPositionWithoutOffset aNodeViewModel |
 	super onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition.
 
+	aNodeViewModel := aPulledElement wardleyMapNodeViewModel.
+	
+	"Pipeline widget is right below the node widget.
+	Let's subtract half of the node size to get proper y-node-coordinate"
+	aNewPositionWithoutOffset := aNewPosition 
+		- (0 @ ((aNodeViewModel nodeSize y / 2) asFloat)).
+	
 	aContainerExtent := self containerElement extent.
 	aNewRelativePosition := (aContainerExtent x isZero or: [ aContainerExtent y isZero ])
 		ifTrue: [ 0@0 ]
-		ifFalse: [ aNewPosition / aContainerExtent ].
+		ifFalse: [ aNewPositionWithoutOffset / aContainerExtent ].
 	
 	BlFrameTelemetry
 		time: [ 'Wardley pipeline {1} pulled by {2}' 

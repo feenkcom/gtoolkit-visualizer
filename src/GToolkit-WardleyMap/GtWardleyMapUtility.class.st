@@ -106,6 +106,8 @@ GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipeline
 	
 	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
 
+	true ifTrue: [ ^ self ].
+	
 	aCanvas space ifNil: [ ^ self ].
 	
 	aCanvasHeight := aCanvas height.
@@ -169,16 +171,22 @@ GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipe
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewModel: aPipelineViewModel [
+	| aLeft aTop aWeight |
 	aPipelineElement
 		constraintsDo: [ :c | 
-			c frame horizontal alignLeftAt: aPipelineViewModel pipelineCoordinateLeft.
-			c frame vertical alignTopAt: aPipelineViewModel pipelineCoordinateTop.
+			c frame horizontal alignLeftAt: (aLeft := aPipelineViewModel pipelineCoordinateLeft).
+			c frame vertical alignCenterAt: aPipelineViewModel pipelineCoordinateTop offset: ((aPipelineViewModel nodeSize y / 2) + 10) asFloat.
+			
+			"c frame vertical alignCenterAt: (aTop := aPipelineViewModel pipelineCoordinateTop)."
 			c frame horizontal weight: 
-				aPipelineViewModel pipelineCoordinateRight - aPipelineViewModel pipelineCoordinateLeft.
+				(aWeight := aPipelineViewModel pipelineCoordinateRight - aLeft).
 			c horizontal matchParent ].
 			
-	GtWardleyMapBeaconPipelineMovedSignal new 
+	"GtWardleyMapBeaconPipelineMovedSignal new 
 		nodeElement: aPipelineElement;
 		mapElement: aPipelineElement parent;
-		emit
+		alignmentLeft: aLeft;
+		alignmentTop: aTop;
+		alignmentWeight: aWeight;
+		emit"
 ]

@@ -25,8 +25,8 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 		wardleyMapEdgeViewModel: anEdgeViewModel;
 		addAptitude: (BrStyleCommonAptitude new 
 				hovered: [ :aStyle | aStyle 
-					do: [ :theElement | theElement background: anEdgeViewModel lineColor muchDarker ]
-					after: [ :theElement | theElement background: anEdgeViewModel lineColor ] ]);
+					do: [ :theElement | theElement border: (BlBorder paint: (self hoverColorFrom: anEdgeViewModel lineColor) width: 1) ]
+					after: [ :theElement | theElement border: (BlBorder paint: anEdgeViewModel lineColor width: 1) ] ]);
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
 		zIndex: -1;
@@ -53,10 +53,9 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 		wardleyMapNodeViewModel: aNodeViewModel;
 		addAptitude: (BrStyleCommonAptitude new 
 				hovered: [ :aStyle | 
-					aStyle effect: BrGlamorousFocusedShadowEffect new.
 					aStyle 
 						do: [ :theElement | 
-							theElement background: aNodeViewModel labelColor ]
+							theElement background: (self hoverColorFrom: aNodeViewModel nodeColor) ]
 						after: [ :theElement | 
 							theElement background: aNodeViewModel nodeColor ] ]);
 		addEventHandler: (GtWardleyMapNodePullHandler new
@@ -69,7 +68,12 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
 		constraintsDo: [ :c | 
 			c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
-			c frame vertical alignCenterAt: aNodeViewModel coordinateY.
+			aNodeViewModel pipelineNodeViewModel 
+				ifNil: [ c frame vertical alignCenterAt: aNodeViewModel coordinateY ]
+				ifNotNil: [ :aPipelineNodeViewModel | 
+					c frame vertical 
+						alignCenterAt: aNodeViewModel coordinateY 
+						offset: ((aPipelineNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat ].
 			c graph beNode ];
 		in: [ :theElement |
 			GtWardleyMapBeaconNodeInitializedSignal new 
@@ -87,21 +91,27 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
 		addAptitude: (BrStyleCommonAptitude new 
-			hovered: [ :aStyle | aStyle effect: BrGlamorousFocusedShadowEffect new ]);
+			hovered: [ :aStyle | 
+				aStyle 
+						do: [ :theElement | 
+							theElement border: (BlBorder paint: (self hoverColorFrom: aNodeViewModel pipelineColor) width: 2) ]
+						after: [ :theElement | 
+							theElement border: (BlBorder paint: aNodeViewModel pipelineColor width: 1) ]
+				 ]);
 		addEventHandler: (GtWardleyMapPipelinePullHandler new
 				disallowOutOfBounds;
 				containerElement: self;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
-					aNodeViewModel moveNodePipelineTo: aNormalizedPosition.
-					GtWardleyMapUtility 
-						snapInnerNodeElementsInPipelineElement: aPulledElement 
-						inCanvasElement: self ]);
+					aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
 		in: [ :thePipelineElement | 
-			thePipelineElement wardley bePipeline.
-
-			GtWardleyMapUtility
-				updatePipelineElement: thePipelineElement
-				nodeViewModel: aNodeViewModel ];
+			thePipelineElement wardley bePipeline. ];
+		constraintsDo: [ :c | 
+			c frame horizontal alignLeftAt: aNodeViewModel pipelineCoordinateLeft.
+			c frame vertical 
+				alignCenterAt: aNodeViewModel coordinateY 
+				offset: ((aNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat.
+			c frame horizontal weight: aNodeViewModel pipelineCoordinateWeight.
+			c horizontal matchParent ];
 		yourself
 ]
 
@@ -111,6 +121,24 @@ GtWardleyMapCanvasElement >> edgeViewFor: anEdgeViewModel ifFound: aFoundBlock i
 		detect: [ :eachChild | eachChild graph isEdge and: [ eachChild wardleyMapEdgeViewModel = anEdgeViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
+]
+
+{ #category : #accessing }
+GtWardleyMapCanvasElement >> hoverColorFrom: aColor [
+	| aNewColor |
+	aNewColor := aColor muchDarker.
+	aColor = aNewColor ifFalse: [ ^ aNewColor ].
+	
+	aNewColor := aColor muchLighter.
+	aColor = aNewColor ifFalse: [ ^ aNewColor ].
+	
+	aNewColor := Color lightOrange.
+	aColor = aNewColor ifFalse: [ ^ aNewColor ].
+	
+	aNewColor := Color lightBrown.
+	aColor = aNewColor ifFalse: [ ^ aNewColor ].
+	
+	^ aColor
 ]
 
 { #category : #initialization }
@@ -135,8 +163,6 @@ GtWardleyMapCanvasElement >> initialize [
 			anEvent consumed: true.
 			(self width isZero or: [ self height isZero ])
 				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
-				
-	self addEventHandler: (GtWardleyMapInnerNodeSnapper new)
 ]
 
 { #category : #private }
@@ -188,20 +214,30 @@ GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
 			aNodeView
 				constraintsDo: [ :c | 
 					c frame horizontal alignCenterAt: aMovedNodeViewModel coordinateX.
-					c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ].
+					aMovedNodeViewModel pipelineNodeViewModel 
+						ifNil: [ c frame vertical alignCenterAt: aMovedNodeViewModel coordinateY ]
+						ifNotNil: [ :aPipelineNodeViewModel | 
+							c frame vertical 
+								alignCenterAt: aMovedNodeViewModel coordinateY 
+								offset: ((aPipelineNodeViewModel nodeSize y / 2) 
+									+ (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat ] ].
 				GtWardleyMapBeaconNodeMovedSignal new 
 					nodeElement: aNodeView;
 					mapElement: self;
 					emit ]
 		ifNone: [  ].
 
-	aMovedNodeViewModel isPipelineVisible ifFalse: [
+	aMovedNodeViewModel isPipelineVisible ifTrue: [
 		self
 			pipelineViewFor: aMovedNodeViewModel
 			ifFound: [ :aPipelineView | 
-				GtWardleyMapUtility
-					updatePipelineElement: aPipelineView
-					nodeViewModel: aMovedNodeViewModel ]
+				aPipelineView constraintsDo: [ :c | 
+					c frame horizontal alignLeftAt: aMovedNodeViewModel pipelineCoordinateLeft.
+					c frame vertical 
+						alignCenterAt: aMovedNodeViewModel coordinateY 
+						offset: ((aMovedNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat.
+					c frame horizontal weight: aMovedNodeViewModel pipelineCoordinateWeight.
+					c horizontal matchParent ] ]
 			ifNone: [  ] ]
 ]
 

@@ -52,14 +52,11 @@ GtWardleyMapNodeModel >> addInnerNode: aNodeModel [
 		description: [ 'Pipeline node and its inner node must have the same parent: {1}, {2}'
 				format: {self parent.
 						aNodeModel parent} ].
-
 	(self innerNodes identityIncludes: aNodeModel) ifTrue: [ ^ self ].
-						
-	aNodeModel removeFromPipeline.
-	aNodeModel pipelineNode: self.
-
+	
+	self prepareInnerNode: aNodeModel.
 	self basicInnerNodes: (self innerNodes copyWith: aNodeModel).
-
+	self basicRecomputePipelineCoordinate.
 	self notifyInnerNodeAdded: aNodeModel
 ]
 
@@ -87,6 +84,22 @@ GtWardleyMapNodeModel >> basicInnerNodes: aCollectionOfNodes [
 				format: { eachInnerNode label } ] ].
 				
 	innerNodes := aCollectionOfNodes
+]
+
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> basicRecomputePipelineCoordinate [
+	"I recompute pipeline coordinate based on the inner nodes coordinate x vales.
+	Pipeline left and right coordinates are min and max node x-coordinates.
+	I am a private method."
+	
+	| aCoordinate |
+	pipelineCoordinate ifNil: [ ^ self ].
+	
+	aCoordinate := GtWardleyMapUtility 
+		normalizePipelineWidthOfNodeModel: self
+		ignoring: nil.
+	
+	self pipelineCoordinate: aCoordinate.
 ]
 
 { #category : #'api - pipeline' }
@@ -211,12 +224,16 @@ GtWardleyMapNodeModel >> innerNodes [
 GtWardleyMapNodeModel >> innerNodes: aCollectionOfNodes [
 	"Set inner nodes that are part of my pipeline.
 	It is preferable to use #addInnerNode: and #removeInnerNode: instead.
-	I am used for initialization."
+	I am used for initialization. I do not notify that nodes were added."
 
-	self basicInnerNodes: aCollectionOfNodes.
+	self 
+		assert: [ self innerNodes isEmpty ] 
+		description: [ 'I can be used only for initialization' ].
 	
 	aCollectionOfNodes do: [ :eachInnerNode | 
-		eachInnerNode pipelineNode: self ]
+		self prepareInnerNode: eachInnerNode  ].
+	self basicInnerNodes: aCollectionOfNodes.
+	self basicRecomputePipelineCoordinate.
 ]
 
 { #category : #'api - pipeline' }
@@ -371,6 +388,20 @@ GtWardleyMapNodeModel >> pipelineNode: aNodeModel [
 	pipelineNode := aNodeModel
 ]
 
+{ #category : #'api - pipeline' }
+GtWardleyMapNodeModel >> prepareInnerNode: aNodeModel [
+	"I prepare a node to be added as my inner node"
+
+	aNodeModel isPipelineVisible: false.
+	aNodeModel removeFromPipeline.
+	aNodeModel pipelineNode: self.
+	
+	"Our model assumes that inners nodes has same vertical value as the pipeline node.
+	Doing so, we can easily locate inner node widgets always inside of the pipeline widgets
+	while using relative (0,1) coordinates."
+	aNodeModel y: self y
+]
+
 { #category : #printing }
 GtWardleyMapNodeModel >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
@@ -403,14 +434,14 @@ GtWardleyMapNodeModel >> removeInnerNode: anInnerNodeModel [
 	"Remove the given node model from my pipeline."
 
 	anInnerNodeModel ifNil: [ ^ self ].
+	
+	(self innerNodes identityIncludes: anInnerNodeModel) ifFalse: [ ^ self ].
 
 	anInnerNodeModel pipelineNode: nil.
 
 	self basicInnerNodes: (self innerNodes copyWithout: anInnerNodeModel).
 	
-	self innerNodes ifEmpty: [ 
-		self pipelineCoordinate: (GtWardleyMapUtility normalizePipelineCoordinate: self pipelineCoordinate)
-	].
+	self basicRecomputePipelineCoordinate.
 	
 	self notifyInnerNodeRemoved: anInnerNodeModel
 ]
