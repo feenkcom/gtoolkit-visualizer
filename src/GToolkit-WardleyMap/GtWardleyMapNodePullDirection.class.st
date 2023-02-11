@@ -84,9 +84,11 @@ GtWardleyMapNodePullDirection >> mayChangeInnerNodePipeline [
 							mapElement pipelineChildrenDo: [ :anotherPipelineElement |
 								(GtWardleyMapUtility
 									isNodeElement: nodeElement
-									insidePipelineElement: anotherPipelineElement) ifTrue: [ 
-											anotherPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel ]
-							] 
+									insidePipelineElement: anotherPipelineElement) ifTrue: [
+										anotherPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel.
+										^ self
+									]
+							]
 						] 
 					]
 					ifTrue: [

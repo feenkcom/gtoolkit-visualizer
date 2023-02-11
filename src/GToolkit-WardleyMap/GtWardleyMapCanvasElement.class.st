@@ -213,8 +213,25 @@ GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeAdded: anAnnouncement [
+	| aNodeElement aNodeViewModel |
+	aNodeViewModel := anAnnouncement nodeViewModel.
+	aNodeElement := self createNodeViewFor: aNodeViewModel.
 
-	self addChild: (self createNodeViewFor: anAnnouncement nodeViewModel)
+	"If the node element is added inside of a pipeline element,
+	let's add the node element also as a pipeline inner node."
+	(aNodeViewModel isPipelineVisible not
+		and: [ aNodeViewModel pipelineNodeViewModel isNil ]) ifTrue: [ 
+			aNodeElement
+				when: BlElementLayoutComputedEvent
+				doOnce: [ :anEvent | 
+					self pipelineChildrenDo: [ :aPipelineElement | 
+						aNodeViewModel pipelineNodeViewModel ifNil: [ 
+							(GtWardleyMapUtility
+								isNodeElement: aNodeElement
+								insidePipelineElement: aPipelineElement) ifTrue: [ 
+									aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aNodeViewModel ] ] ] ] ].
+									
+	self addChild: aNodeElement
 ]
 
 { #category : #'event handling' }
