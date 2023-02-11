@@ -4,6 +4,32 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> computePipelineVerticalCenterOffset: aPipelineNodeViewModel [
+	"I compute a pipeline element offset that should be used to
+	place the pipeline element below its node element.
+	I am used as the second argument for {{gtMethod: BlFrameLayoutConstraintsVertical >> #alignCenterAt:offset:}}.
+	Note that same offset is used for inner-nodes."
+
+	| aHalfOfNodeHeight aHalfOfPipelineHeight |
+	aHalfOfNodeHeight := aPipelineNodeViewModel nodeSize y / 2.
+	aHalfOfPipelineHeight := GtWardleyMapConstants pipelineHeight / 2.
+	
+	^ (aHalfOfNodeHeight + aHalfOfPipelineHeight) asFloat
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> computePipelineVerticalTopOffset: aPipelineNodeViewModel [
+	"I compute a pipeline element offset that should be used to
+	place the pipeline element below its node element.
+	The offset is expected to represent top y-coordinate (bounds)."
+
+	| aHalfOfNodeHeight |
+	aHalfOfNodeHeight := aPipelineNodeViewModel nodeSize y / 2.
+	
+	^ aHalfOfNodeHeight asFloat
+]
+
 { #category : #'api - import and export' }
 GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoordiante: aPoint [ 
 	"Conversion is just an estimate. 
@@ -105,6 +131,11 @@ GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel i
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNodeViewModel [
+	"I update node element layout constraints, based on model values.
+	If it is an inner node, we know that the y-cordinate is same as 
+	its parent (pipeline) node. We therefore offset the y-coordinate 
+	accordingly to be visually placed inside of a pipeline widget."
+
 	aNodeElement constraintsDo: [ :c | 
 		c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 		
@@ -115,20 +146,28 @@ GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNod
 				We add an offset to be in the middle of the pipelines widgets."
 				c frame vertical 
 					alignCenterAt: aNodeViewModel coordinateY 
-					offset: ((aPipelineNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  pipelineHeight / 2)) asFloat ].
+					offset: (self computePipelineVerticalCenterOffset: aPipelineNodeViewModel) ].
 		 ]
 ]
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewModel: aNodeViewModel [
-	aPipelineElement constraintsDo: [ :c | 
-		c frame horizontal alignLeftAt: aNodeViewModel pipelineCoordinateLeft.
-		
-		"Pipeline elements are placed just below their node elements"
-		c frame vertical 
-			alignCenterAt: aNodeViewModel coordinateY 
-			offset: ((aNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  pipelineHeight / 2)) asFloat.
-		c frame horizontal weight: aNodeViewModel pipelineCoordinateWeight.
-		
-		c horizontal matchParent ]
+	"I update pipeline element layout constraints, based on model values.
+	I use its node y-coordinate to place it vertically. 
+	For that reason I offset the pipeline element position accordingly."
+
+	aPipelineElement
+		constraintsDo: [ :c | 
+			
+			"Pipeline y-coordinate."
+			c frame vertical
+				alignCenterAt: aNodeViewModel coordinateY
+				offset: (self computePipelineVerticalCenterOffset: aNodeViewModel).
+
+			"Pipeline x-coordinate"
+			c frame horizontal alignLeftAt: aNodeViewModel pipelineCoordinateLeft.
+			
+			"Pipeline width"
+			c frame horizontal weight: aNodeViewModel pipelineCoordinateWeight.
+			c horizontal matchParent ]
 ]

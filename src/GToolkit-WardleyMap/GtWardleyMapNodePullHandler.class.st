@@ -58,11 +58,11 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 	aNewPositionWithoutOffset := aNodeViewModel pipelineNodeViewModel 
 		ifNil: [ aNewPosition ]
 		ifNotNil: [ :aPipelineNodeViewModel | 
-			"Pipeline widget is right below the node widget.
-			Let's subtract half of the node size to get proper y-node-coordinate"
-			aNewPosition 
-				- (0 @ (((aPipelineNodeViewModel nodeSize y / 2) 
-					+ (GtWardleyMapConstants  pipelineHeight / 2)) asFloat)) ].
+			| anOffset |
+			"Inner node widget has a layout vertical constraint offset 
+			that we need to subtract to properly compute aNewRelativePosition."
+			anOffset := GtWardleyMapUtility computePipelineVerticalCenterOffset: aNodeViewModel.
+			aNewPosition - (0 @ anOffset) ].
 		
 	aContainerExtent := self containerElement extent.
 	aNewRelativePosition := (aContainerExtent x isZero
