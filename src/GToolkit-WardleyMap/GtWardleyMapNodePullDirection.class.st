@@ -64,7 +64,7 @@ GtWardleyMapNodePullDirection >> mayAddInnerNodeToPipeline [
 ]
 
 { #category : #private }
-GtWardleyMapNodePullDirection >> mayRemoveInnerNodeFromPipeline [
+GtWardleyMapNodePullDirection >> mayChangeInnerNodePipeline [
 	pipelineViewModel isPipelineVisible
 		ifFalse: [ pipelineViewModel removeInnerNodeViewModel: nodeViewModel.
 			^ self ].
@@ -78,8 +78,19 @@ GtWardleyMapNodePullDirection >> mayRemoveInnerNodeFromPipeline [
 					ifFalse: [ 
 						pipelineViewModel removeInnerNodeViewModel: nodeViewModel ]
 					ifTrue: [
-						pipelineViewModel snapInnerNodeViewModel: nodeViewModel ] ]
-		ifNone: [  ]
+						pipelineViewModel snapInnerNodeViewModel: nodeViewModel.
+						^ self ] ]
+		ifNone: [  ].
+		
+	mapElement pipelineChildrenDo: [ :aPipelineElement |
+		aPipelineElement hasWardleyMapNodeViewModel ifTrue: [
+			(GtWardleyMapUtility
+				isNodeElement: nodeElement
+				insidePipelineElement: aPipelineElement) 
+					ifTrue: [ 
+						aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: nodeViewModel ]
+		]
+	]
 ]
 
 { #category : #accessing }
@@ -102,5 +113,5 @@ GtWardleyMapNodePullDirection >> onPulledFinished [
 	self initializeViewModels.
 	pipelineViewModel
 		ifNil: [ self mayAddInnerNodeToPipeline ]
-		ifNotNil: [ self mayRemoveInnerNodeFromPipeline ]
+		ifNotNil: [ self mayChangeInnerNodePipeline ]
 ]
