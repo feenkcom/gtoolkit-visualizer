@@ -58,15 +58,14 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 							theElement background: (self hoverColorFrom: aNodeViewModel nodeColor) ]
 						after: [ :theElement | 
 							theElement background: aNodeViewModel nodeColor ] ]);
-		in: [ :theElement | 
-			theElement labelElementDo: [ :aLabelElement | 
-				aLabelElement addAptitude: (BrStyleCommonAptitude new 
-					hovered: [ :aStyle | 
-						aStyle 
-							do: [ :theLabelElement | 
-								theLabelElement aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ]
-							after: [ :theLabelElement | 
-								theLabelElement aptitude foreground: (aNodeViewModel labelColor) ] ]) ] ];
+		labelElementDo: [ :aLabelElement | 
+			aLabelElement addAptitude: (BrStyleCommonAptitude new 
+				hovered: [ :aStyle | 
+					aStyle 
+						do: [ :theLabelElement | 
+							theLabelElement aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ]
+						after: [ :theLabelElement | 
+							theLabelElement aptitude foreground: (aNodeViewModel labelColor) ] ]) ];
 		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
@@ -84,10 +83,6 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 						alignCenterAt: aNodeViewModel coordinateY 
 						offset: ((aPipelineNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat ].
 			c graph beNode ];
-		in: [ :theElement |
-			GtWardleyMapBeaconNodeInitializedSignal new 
-				nodeElement: theElement;
-				mapElement: self ];
 		addAptitude: (BrGlamorousWithContextMenuAptitude
 				handle: [ BlElement new
 						size: aNodeViewModel nodeSize / 2.0;
@@ -121,7 +116,11 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 				offset: ((aNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat.
 			c frame horizontal weight: aNodeViewModel pipelineCoordinateWeight.
 			c horizontal matchParent ];
-		yourself
+		addAptitude: (BrGlamorousWithContextMenuAptitude
+				handle: [ BlElement new
+						size: aNodeViewModel nodeSize / 2.0;
+						geometry: BlEllipseGeometry new ]
+				content: [ self createNodeEditorFor: aNodeViewModel ])
 ]
 
 { #category : #private }
