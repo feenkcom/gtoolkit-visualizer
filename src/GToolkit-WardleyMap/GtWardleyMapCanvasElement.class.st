@@ -55,9 +55,14 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 				hovered: [ :aStyle | 
 					aStyle 
 						do: [ :theElement | 
-							theElement background: (self hoverColorFrom: aNodeViewModel nodeColor) ]
+							theElement background: (self hoverColorFrom: aNodeViewModel nodeColor).
+							theElement labelElementDo: [ :aLabelElement | 
+								aLabelElement aptitude foreground: (
+									self hoverColorFrom: aNodeViewModel labelColor) ] ]
 						after: [ :theElement | 
-							theElement background: aNodeViewModel nodeColor ] ]);
+							theElement background: aNodeViewModel nodeColor.
+							theElement labelElementDo: [ :aLabelElement | 
+								aLabelElement aptitude foreground: aNodeViewModel labelColor ] ] ]);
 		labelElementDo: [ :aLabelElement | 
 			aLabelElement addAptitude: (BrStyleCommonAptitude new 
 				hovered: [ :aStyle | 
