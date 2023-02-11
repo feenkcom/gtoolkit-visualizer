@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'containerElement',
 		'pulledAction',
-		'dragEndAction',
 		'pullDirection'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
@@ -22,19 +21,12 @@ GtWardleyMapNodePullHandler >> containerElement: anObject [
 
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> dragEndEvent: anEvent [
-
 	| aPulledElement aPullDirection |
 	aPulledElement := self targetElementFor: anEvent.
-	aPullDirection := pullDirection.
+	aPullDirection := pullDirection ifNil: [ GtWardleyMapNodeVerticalPullDirection ].
 
-	BlFrameTelemetry
-			time: [ 'Wardley node {1} dragging ended in direction {2}' 
-				format: { aPulledElement. aPullDirection } ]
-			during: [
-				dragEndAction
-					value: (aPulledElement)
-					value: (aPullDirection ifNil: [ GtWardleyMapNodeVerticalPullDirection ]) ].
-					
+	aPullDirection onPullFinished: aPulledElement mapElement: self containerElement.
+	
 	super dragEndEvent: anEvent
 ]
 
@@ -48,8 +40,7 @@ GtWardleyMapNodePullHandler >> dragStartEvent: anEvent [
 GtWardleyMapNodePullHandler >> initialize [
 	super initialize.
 	
-	pulledAction := [ :aPulledElement :aNormalizedPosition :aPullDirection |  ].
-	dragEndAction := [ :aPulledElement :aPullDirection |  ]
+	pulledAction := [ :aPulledElement :aNormalizedPosition |  ].
 ]
 
 { #category : #'event handling' }
@@ -80,21 +71,15 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 			ifFalse: [ (aNewPositionWithoutOffset + (aPulledElement extent / 2.0)) / aContainerExtent ].
 
 	pullDirection := aPullDirection := GtWardleyMapNodePullDirection fromDragDelta: aDragDelta.
-
-	BlFrameTelemetry
-			time: [ 'Wardley node {1} pulled by {2} in direction {3}' 
-				format: { aPulledElement. aNewRelativePosition. aPullDirection } ]
-			during: [ pulledAction value: aPulledElement value: aNewRelativePosition value: aPullDirection ]
+	
+	pulledAction value: aPulledElement value: aNewRelativePosition.
+	
+	aPullDirection onPulled: aPulledElement mapElement: self containerElement.
 ]
 
 { #category : #'api - event managing' }
 GtWardleyMapNodePullHandler >> wantsEvent: anEvent [
 	^ (super wantsEvent: anEvent) and: [ anEvent modifiers isPrimaryModifier not ]
-]
-
-{ #category : #initialization }
-GtWardleyMapNodePullHandler >> whenFinished: aBlockClosure [
-	dragEndAction := aBlockClosure
 ]
 
 { #category : #initialization }

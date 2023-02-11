@@ -69,10 +69,8 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
-				whenPulled: (GtWardleyMapNodePulledAction new
-					containerElement: self);
-				whenFinished: (GtWardleyMapNodePullFinishedAction new
-					containerElement: self));
+				whenPulled: [ :aPulledElement :aNormalizedPosition | 
+					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
 		constraintsDo: [ :c | 
 			c graph beNode ];
@@ -209,7 +207,7 @@ GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
 		ifFound: [ :aPipelineView | 
 			GtWardleyMapUtility
 				updatePipelineElement: aPipelineView
-				nodeViewModel: anInnerNodeViewModel ]
+				nodeViewModel: aPipelineNodeViewModel ]
 		ifNone: [  ]
 ]
 
