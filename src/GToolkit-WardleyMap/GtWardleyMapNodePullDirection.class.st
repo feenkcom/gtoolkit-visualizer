@@ -96,6 +96,24 @@ GtWardleyMapNodePullDirection >> mayChangeInnerNodePipeline [
 		ifNone: [  ].
 ]
 
+{ #category : #execution }
+GtWardleyMapNodePullDirection >> mayHighlightPipelineCandidate [
+	
+	nodeViewModel isPipelineVisible ifTrue: [ ^ self ].
+	
+	"Highligh pipeline elements to witch the node will be added if placed in this position"
+	mapElement pipelineChildrenDo: [ :aPipelineElement | 
+		((GtWardleyMapUtility 
+			isNodeElement: nodeElement 
+			insidePipelineElement: aPipelineElement) and: [
+				(aPipelineElement wardleyMapNodeViewModel 
+					== pipelineViewModel) not ])
+						ifTrue: [  aPipelineElement 
+							border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 2) ]
+						ifFalse: [ aPipelineElement onNodeColored ]
+	]
+]
+
 { #category : #accessing }
 GtWardleyMapNodePullDirection >> nodeElement [
 	^ nodeElement

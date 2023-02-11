@@ -26,5 +26,7 @@ GtWardleyMapNodeVerticalPullDirection >> mayResizePipeline [
 GtWardleyMapNodeVerticalPullDirection >> onPulled [
 	self initializeViewModels.
 	
-	pipelineViewModel ifNotNil: [ self mayResizePipeline ]
+	pipelineViewModel ifNotNil: [ self mayResizePipeline ].
+	
+	self mayHighlightPipelineCandidate.
 ]
