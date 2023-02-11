@@ -5,6 +5,26 @@ Class {
 }
 
 { #category : #accessing }
+GtWardleyMapNodeVerticalPullDirection >> mayHighlightPipelineCandidate [
+	
+	| isAlreadyHighlighted |
+	nodeViewModel isPipelineVisible ifTrue: [ ^ self ].
+	
+	"Highlight pipeline elements that the node will be added to if dropped in this position"
+	isAlreadyHighlighted := false.
+	mapElement pipelineChildrenDo: [ :aPipelineElement | 
+		((GtWardleyMapUtility 
+			isNodeElement: nodeElement 
+			insidePipelineElement: aPipelineElement) and: [
+				isAlreadyHighlighted not ])
+					ifTrue: [ aPipelineElement 
+						border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 2).
+						isAlreadyHighlighted := true ]
+					ifFalse: [ aPipelineElement onNodeColored ]
+	]
+]
+
+{ #category : #accessing }
 GtWardleyMapNodeVerticalPullDirection >> mayResizePipeline [
 	| aNewPipelineCoordinate |
 	
