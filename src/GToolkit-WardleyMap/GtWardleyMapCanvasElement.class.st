@@ -58,6 +58,15 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 							theElement background: (self hoverColorFrom: aNodeViewModel nodeColor) ]
 						after: [ :theElement | 
 							theElement background: aNodeViewModel nodeColor ] ]);
+		in: [ :theElement | 
+			theElement labelElementDo: [ :aLabelElement | 
+				aLabelElement addAptitude: (BrStyleCommonAptitude new 
+					hovered: [ :aStyle | 
+						aStyle 
+							do: [ :theLabelElement | 
+								theLabelElement aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ]
+							after: [ :theLabelElement | 
+								theLabelElement aptitude foreground: (aNodeViewModel labelColor) ] ]) ] ];
 		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
@@ -126,6 +135,8 @@ GtWardleyMapCanvasElement >> edgeViewFor: anEdgeViewModel ifFound: aFoundBlock i
 { #category : #accessing }
 GtWardleyMapCanvasElement >> hoverColorFrom: aColor [
 	| aNewColor |
+	true ifTrue: [ ^ BrGlamorousColors hoveredButtonBorderColor ].
+	
 	aNewColor := aColor muchDarker.
 	aColor = aNewColor ifFalse: [ ^ aNewColor ].
 	
