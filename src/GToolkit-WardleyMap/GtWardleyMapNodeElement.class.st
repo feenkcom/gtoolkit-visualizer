@@ -65,6 +65,11 @@ GtWardleyMapNodeElement >> initialize [
 				action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel increaseNodeSize ])
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodeElement >> labelElementDo: aBlock [
+	labelElement ifNotNil: aBlock
+]
+
 { #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeColored [
 	self background: self wardleyMapNodeViewModel nodeColor.

@@ -98,6 +98,7 @@ GtWardleyMapScriptImporter >> importNodes [
 	ast allNodesOfType: GtWMElementNode do: [ :aAstNode | 
 		| aNodeModel |
 		aNodeModel := GtWardleyMapNodeModel new.
+		aNodeModel color: Color black.
 		aAstNode name ifNotNil: [ :aToken | aNodeModel label: aToken source ].
 		aAstNode coords ifNotNil: [ :aNode | aNode coordinate 
 			ifNotNil: [ :aPoint | aNodeModel coordinate: (aPoint x @ (1 - aPoint y)) ] ].
