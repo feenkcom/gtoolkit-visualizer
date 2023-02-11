@@ -15,7 +15,7 @@ GtWardleyMapConstants class >> minPipelineRelativeWidth [
 GtWardleyMapConstants class >> nodeColor [
 	"I represent a default node model color"
 
-	^ Color gray
+	^ Color black
 ]
 
 { #category : #'api - constants' }
