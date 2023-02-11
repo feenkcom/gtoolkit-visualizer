@@ -38,15 +38,17 @@ GtWardleyMapPipelinePullHandler >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition [
-	| aNewRelativePosition aContainerExtent aNewPositionWithoutOffset aNodeViewModel |
+	| aNewRelativePosition aContainerExtent aNewPositionWithoutOffset aNodeViewModel anOffset |
 	super onPulled: aPulledElement from: aPreviousPosition to: aNewPosition  by: aDragDelta starting: anOriginalPosition.
 
 	aNodeViewModel := aPulledElement wardleyMapNodeViewModel.
 	
-	"Pipeline widget is right below the node widget.
-	Let's subtract half of the node size to get proper y-node-coordinate"
-	aNewPositionWithoutOffset := aNewPosition 
-		- (0 @ ((aNodeViewModel nodeSize y / 2) asFloat)).
+	"Pipeline widget uses a layout constraint offset.
+	Let's subtract that offset value to compute proper aNewRelativePosition.
+	Note that aNewPosition is a top-left pipeline element corner point,
+	not the pipeline center point."
+	anOffset := GtWardleyMapUtility computePipelineVerticalTopOffset: aNodeViewModel.
+	aNewPositionWithoutOffset := aNewPosition - (0 @ anOffset).
 	
 	aContainerExtent := self containerElement extent.
 	aNewRelativePosition := (aContainerExtent x isZero or: [ aContainerExtent y isZero ])
