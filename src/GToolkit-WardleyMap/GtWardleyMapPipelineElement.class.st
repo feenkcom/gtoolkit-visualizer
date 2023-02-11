@@ -12,7 +12,7 @@ GtWardleyMapPipelineElement >> initialize [
 	self geometry: BlRectangleGeometry new.
 	self layout: BlFrameLayout new.
 	self border: (BlBorder paint: Color black width: 1).
-	self height: GtWardleyMapConstants  minPipelineHeight.
+	self height: GtWardleyMapConstants  pipelineHeight.
 	self width: 100.
 ]
 

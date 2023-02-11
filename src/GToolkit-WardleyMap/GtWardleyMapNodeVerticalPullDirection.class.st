@@ -14,7 +14,7 @@ GtWardleyMapNodeVerticalPullDirection >> mayResizePipeline [
 	
 	pipelineViewModel innerNodeViewModels size > 1 
 		ifTrue: [ 
-			"Allow smaller pipelines if there are other inner nodes (not just the dragged)"
+			"Allow smaller pipelines if there are other inner nodes (not just the dragged one)"
 			pipelineViewModel pipelineCoordinate: aNewPipelineCoordinate ]
 		ifFalse: [ 
 			"If a last node is dragged outside of the pipeline, ensure minimal pipeline width"

@@ -57,7 +57,9 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 
 { #category : #'api - model' }
 GtWardleyMapUtility class >> normalizePipelineCoordinate: aPoint [ 
-	"I ensure a minimum pipeline width"
+	"I ensure a minimum pipeline width.
+	aPoint x is the left pipeline coordinate.
+	aPoint y is the right pipeline coordinate."
 	
 	| aWidth anIncrease aLeft aRight |
 	aWidth := aPoint y - aPoint x.
@@ -80,6 +82,10 @@ GtWardleyMapUtility class >> normalizePipelineCoordinate: aPoint [
 
 { #category : #'api - model' }
 GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel ignoring: anInnerNodeModelOrNil [
+	"I compute a pipeline relative width (in 0-1 coordinates).
+	I use the pipeline model coordinate and its inner node coordinates.
+	I may ignore a specific inner node to compute new pipeline coordinate.
+	The new pipeline coordinate may be smaller compared to the pipeline width without inner nodes."
 
 	| aConstant aMinInnerNodeModel aMaxInnerNodeModel |
 	aConstant := GtWardleyMapConstants pipelineRelativeOffset.
@@ -98,95 +104,31 @@ GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel i
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> snapInnerNodeElement: anInnerNodeElement inPipelineElement: aPipelineElement inCanvasElement: aCanvas [
-	"The problem with this implementation is that we expect that a canvas height value is a correct one.
-	The same for the pipeline element bounds. Imagine situation in which we request to move the pipeline element,
-	setting new constraints, and we immediately call this method to snap inner nodes. 
-	It may happen that we will use old pipeline bounds to compute the inner node element position."
-	
-	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
-
-	true ifTrue: [ ^ self ].
-	
-	aCanvas space ifNil: [ ^ self ].
-	
-	aCanvasHeight := aCanvas height.
-	(aCanvasHeight closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
-	
-	aPipelineRectangle := aPipelineElement bounds inParent asRectangle.
-	aMinY := (aPipelineRectangle top) / aCanvasHeight.
-	aMaxY := (aPipelineRectangle bottom) / aCanvasHeight.
-	aMiddleY := (aMinY + ((aMaxY - aMinY) / 2)) asFloat.
-	
-	anInnerNodeElement constraintsDo: [ :c | 
-		c frame vertical alignCenterAt: aMiddleY ].
+GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNodeViewModel [
+	aNodeElement constraintsDo: [ :c | 
+		c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 		
-	GtWardleyMapBeaconInnerNodeSnapSignal new 
-		innerNodeElement: anInnerNodeElement;
-		pipelineElement: aPipelineElement;
-		mapElement: aCanvas;
-		emit
+		aNodeViewModel pipelineNodeViewModel
+			ifNil: [ c frame vertical alignCenterAt: aNodeViewModel coordinateY ]
+			ifNotNil: [ :aPipelineNodeViewModel | 
+				"Inner nodes has the same y-coordinates as their pipeline nodes.
+				We add an offset to be in the middle of the pipelines widgets."
+				c frame vertical 
+					alignCenterAt: aNodeViewModel coordinateY 
+					offset: ((aPipelineNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  pipelineHeight / 2)) asFloat ].
+		 ]
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> snapInnerNodeElementsInPipelineElement: aPipelineElement inCanvasElement: aCanvas [
-	| aCanvasHeight aPipelineRectangle aMinY aMaxY aMiddleY |
-
-	aCanvas space ifNil: [ ^ self ].
-	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
-	
-	aPipelineElement wardleyMapNodeViewModel innerNodeViewModels do: [ :anInnerNodeViewModel | 
-		aCanvas 
-			nodeViewFor: anInnerNodeViewModel 
-			ifFound: [ :anInnerNodeElement | 
-				self
-					snapInnerNodeElement: anInnerNodeElement 
-					inPipelineElement: aPipelineElement 
-					inCanvasElement: aCanvas ] 
-			ifNone: [ ] ]
-]
-
-{ #category : #'api - views' }
-GtWardleyMapUtility class >> snapInnerNodeViewModel: anInnerNodeViewModel inPipelineViewModel: aPipelineViewModel inCanvasElement: aCanvas [
-	| aPipelineElement anInnerNodeElement |
-	
-	aCanvas space ifNil: [ ^ self ].
-	(aCanvas height closeTo: 0 precision: 0.1) ifTrue: [ ^ self ].
-
-	aPipelineElement := aCanvas 
-		pipelineViewFor: aPipelineViewModel 
-		ifFound: [ :thePipelineElement | thePipelineElement ] 
-		ifNone: [ ^ self ].
-	
-	anInnerNodeElement := aCanvas 
-		nodeViewFor: anInnerNodeViewModel 
-		ifFound: [ :theElement | theElement ] 
-		ifNone: [ ^ self ].
+GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewModel: aNodeViewModel [
+	aPipelineElement constraintsDo: [ :c | 
+		c frame horizontal alignLeftAt: aNodeViewModel pipelineCoordinateLeft.
 		
-	self 
-		snapInnerNodeElement: anInnerNodeElement 
-		inPipelineElement: aPipelineElement 
-		inCanvasElement: aCanvas
-]
-
-{ #category : #'api - views' }
-GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewModel: aPipelineViewModel [
-	| aLeft aTop aWeight |
-	aPipelineElement
-		constraintsDo: [ :c | 
-			c frame horizontal alignLeftAt: (aLeft := aPipelineViewModel pipelineCoordinateLeft).
-			c frame vertical alignCenterAt: aPipelineViewModel pipelineCoordinateTop offset: ((aPipelineViewModel nodeSize y / 2) + 10) asFloat.
-			
-			"c frame vertical alignCenterAt: (aTop := aPipelineViewModel pipelineCoordinateTop)."
-			c frame horizontal weight: 
-				(aWeight := aPipelineViewModel pipelineCoordinateRight - aLeft).
-			c horizontal matchParent ].
-			
-	"GtWardleyMapBeaconPipelineMovedSignal new 
-		nodeElement: aPipelineElement;
-		mapElement: aPipelineElement parent;
-		alignmentLeft: aLeft;
-		alignmentTop: aTop;
-		alignmentWeight: aWeight;
-		emit"
+		"Pipeline elements are placed just below their node elements"
+		c frame vertical 
+			alignCenterAt: aNodeViewModel coordinateY 
+			offset: ((aNodeViewModel nodeSize y / 2) + (GtWardleyMapConstants  pipelineHeight / 2)) asFloat.
+		c frame horizontal weight: aNodeViewModel pipelineCoordinateWeight.
+		
+		c horizontal matchParent ]
 ]
