@@ -81,11 +81,6 @@ GtWardleyMapNodeElement >> onNodeLabelMoved [
 	labelContainer constraintsDo: [ :c |
 		c frame horizontal alignCenterAt: self wardleyMapNodeViewModel labelCoordinateX.
 		c frame vertical alignCenterAt: self wardleyMapNodeViewModel labelCoordinateY ].
-		
-	GtWardleyMapBeaconNodeLabelMovedSignal new 
-		nodeElement: self;
-		mapElement: self parent;
-		emit
 ]
 
 { #category : #'event handling' }

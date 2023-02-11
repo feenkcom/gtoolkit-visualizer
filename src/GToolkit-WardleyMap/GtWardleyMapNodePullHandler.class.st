@@ -71,7 +71,7 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 			Let's subtract half of the node size to get proper y-node-coordinate"
 			aNewPosition 
 				- (0 @ (((aPipelineNodeViewModel nodeSize y / 2) 
-					+ (GtWardleyMapConstants  minPipelineHeight / 2)) asFloat)) ].
+					+ (GtWardleyMapConstants  pipelineHeight / 2)) asFloat)) ].
 		
 	aContainerExtent := self containerElement extent.
 	aNewRelativePosition := (aContainerExtent x isZero
