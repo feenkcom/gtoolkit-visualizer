@@ -38,6 +38,12 @@ GtWardleyMapNodePullDirection class >> onPulled: aNodeElement mapElement: aMapEl
 		onPulled
 ]
 
+{ #category : #private }
+GtWardleyMapNodePullDirection >> cleanAllPipelineHighlights [
+	mapElement pipelineChildrenDo: [ :aPipelineElement | 
+		aPipelineElement onNodeColored ]
+]
+
 { #category : #initialization }
 GtWardleyMapNodePullDirection >> initializeViewModels [
 	nodeViewModel := nodeElement wardleyMapNodeViewModel.
@@ -96,24 +102,6 @@ GtWardleyMapNodePullDirection >> mayChangeInnerNodePipeline [
 		ifNone: [  ].
 ]
 
-{ #category : #execution }
-GtWardleyMapNodePullDirection >> mayHighlightPipelineCandidate [
-	
-	nodeViewModel isPipelineVisible ifTrue: [ ^ self ].
-	
-	"Highligh pipeline elements to witch the node will be added if placed in this position"
-	mapElement pipelineChildrenDo: [ :aPipelineElement | 
-		((GtWardleyMapUtility 
-			isNodeElement: nodeElement 
-			insidePipelineElement: aPipelineElement) and: [
-				(aPipelineElement wardleyMapNodeViewModel 
-					== pipelineViewModel) not ])
-						ifTrue: [  aPipelineElement 
-							border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 2) ]
-						ifFalse: [ aPipelineElement onNodeColored ]
-	]
-]
-
 { #category : #accessing }
 GtWardleyMapNodePullDirection >> nodeElement [
 	^ nodeElement
@@ -132,6 +120,9 @@ GtWardleyMapNodePullDirection >> onPulled [
 { #category : #execution }
 GtWardleyMapNodePullDirection >> onPulledFinished [
 	self initializeViewModels.
+
+	self cleanAllPipelineHighlights.
+
 	pipelineViewModel
 		ifNil: [ self mayAddInnerNodeToPipeline ]
 		ifNotNil: [ self mayChangeInnerNodePipeline ]
