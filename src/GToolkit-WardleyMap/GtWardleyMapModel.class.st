@@ -111,26 +111,26 @@ GtWardleyMapModel >> asWardleyMapScript [
 						stream
 							nextPutAll: 'component ';
 							nextPutAll: eachNode label;
-							nextPutAll: ' [ ';
-							print: 1 - eachNode y;
+							nextPutAll: ' [';
+							print: ((1 - eachNode y) round: 2) ;
 							nextPutAll: ', ';
-							print: eachNode x;
-							nextPutAll: ' ] label [ ';
-							print: eachNode labelModel x;
+							print: (eachNode x round: 2);
+							nextPutAll: '] label [';
+							print: eachNode labelModel x asInteger;
 							nextPutAll: ', ';
-							print: eachNode labelModel y;
-							nextPutAll: ' ]' ;
+							print: eachNode labelModel y asInteger;
+							nextPutAll: ']' ;
 							cr.
 							
 						eachNode isPipelineVisible ifTrue: [ 
 							stream
 								nextPutAll: 'pipeline ';
 								nextPutAll: eachNode label;
-								nextPutAll: ' [ ';
-								print: eachNode pipelineCoordinate x;
+								nextPutAll: ' [';
+								print: (eachNode pipelineCoordinate x round: 2);
 								nextPutAll: ', ';
-								print: eachNode pipelineCoordinate y;
-								nextPutAll: ' ]';
+								print: (eachNode pipelineCoordinate y round: 2);
+								nextPutAll: ']';
 								cr;
 								cr.
 						]
