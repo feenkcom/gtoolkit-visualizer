@@ -120,7 +120,7 @@ GtWardleyMapModel >> asWardleyMapScript [
 							nextPutAll: ', ';
 							print: eachNode labelModel y asInteger;
 							nextPutAll: ']' ;
-							cr.
+							lf.
 							
 						eachNode isPipelineVisible ifTrue: [ 
 							stream
@@ -131,8 +131,8 @@ GtWardleyMapModel >> asWardleyMapScript [
 								nextPutAll: ', ';
 								print: (eachNode pipelineCoordinate y round: 2);
 								nextPutAll: ']';
-								cr;
-								cr.
+								lf;
+								lf.
 						]
 					].
 			stream cr.
@@ -143,7 +143,7 @@ GtWardleyMapModel >> asWardleyMapScript [
 						nextPutAll: each fromNode label;
 						nextPutAll: '->';
 						nextPutAll: each toNode label;
-						cr ] ]
+						lf ] ]
 ]
 
 { #category : #'api - edges' }
