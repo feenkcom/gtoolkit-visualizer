@@ -47,7 +47,7 @@ GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosit
 	Let's subtract that offset value to compute proper aNewRelativePosition.
 	Note that aNewPosition is a top-left pipeline element corner point,
 	not the pipeline center point."
-	anOffset := GtWardleyMapUtility computePipelineVerticalTopOffset: aNodeViewModel.
+	anOffset := GtWardleyMapUtility computePipelineViewModelVerticalTopOffset: aNodeViewModel.
 	aNewPositionWithoutOffset := aNewPosition - (0 @ anOffset).
 	
 	aContainerExtent := self containerElement extent.
