@@ -21,7 +21,12 @@ GtWardleyMapNodeHorizontalPullDirection >> mayHighlightPipelineCandidate [
 					ifTrue: [ aPipelineElement 
 						border: (BlBorder paint: BrGlamorousColors hoveredButtonBorderColor width: 2).
 						isAlreadyHighlighted := true ]
-					ifFalse: [ aPipelineElement onNodeColored ] ] 
+					ifFalse: [ aPipelineElement onNodeColored ].
+					
+			"Clean other pipeline element highlights"
+			mapElement pipelineChildrenDo: [ :otherPipelineElement | 
+				otherPipelineElement == aPipelineElement ifFalse: [
+					otherPipelineElement onNodeColored ] ] ] 
 		ifNone: [ ].
 ]
 

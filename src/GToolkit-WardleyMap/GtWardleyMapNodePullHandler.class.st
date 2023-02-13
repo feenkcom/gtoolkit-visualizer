@@ -24,6 +24,9 @@ GtWardleyMapNodePullHandler >> dragEndEvent: anEvent [
 	| aPulledElement aPullDirection |
 	aPulledElement := self targetElementFor: anEvent.
 	aPullDirection := pullDirection ifNil: [ GtWardleyMapNodeVerticalPullDirection ].
+	
+	"Reset the element elevation to the default value."
+	anEvent currentTarget zIndex: self containerElement defaultNodeElevationIndex.
 
 	aPullDirection onPullFinished: aPulledElement mapElement: self containerElement.
 	
@@ -33,6 +36,10 @@ GtWardleyMapNodePullHandler >> dragEndEvent: anEvent [
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> dragStartEvent: anEvent [
 	anEvent currentTarget relocate: anEvent currentTarget position.
+
+	"Elevate the element to ensure that it is on top of other elements while dragging."
+	anEvent currentTarget zIndex: self containerElement draggingNodeElevationIndex.
+	
 	super dragStartEvent: anEvent
 ]
 

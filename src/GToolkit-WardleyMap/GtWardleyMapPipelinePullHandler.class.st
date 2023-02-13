@@ -24,8 +24,21 @@ GtWardleyMapPipelinePullHandler >> containerElement: anObject [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapPipelinePullHandler >> dragEndEvent: anEvent [
+
+	"Reset the element elevation to the default value."
+	anEvent currentTarget zIndex: self containerElement defaultNodeElevationIndex.
+
+	super dragEndEvent: anEvent
+]
+
+{ #category : #'event handling' }
 GtWardleyMapPipelinePullHandler >> dragStartEvent: anEvent [
 	anEvent currentTarget relocate: anEvent currentTarget position.
+	
+	"Elevate the element to ensure that it is on top of other elements while dragging."
+	anEvent currentTarget zIndex: self containerElement draggingPipelineElevationIndex.
+	
 	super dragStartEvent: anEvent
 ]
 

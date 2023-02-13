@@ -1,3 +1,11 @@
+"
+#Technical details
+##Element elevations
+- {{gtClass:GtWardleyMapNodeElement}}'s {{gtMethod: BlElement>>#elevation | label=#selector}} default value is `-1`
+- {{gtClass: GtWardleyMapNodeElement}}'s {{gtMethod: BlElement>>#elevation | label=#selector}} default value is `2` and `3` while dragging
+- {{gtClass: GtWardleyMapPipelineElement}}'s {{gtMethod: BlElement>>#elevation | label=#selector}} default value is `0` and `1` while dragging
+
+"
 Class {
 	#name : #GtWardleyMapCanvasElement,
 	#superclass : #BlPannableElement,
@@ -77,6 +85,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
 		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];
 		in: [ :theElement |
@@ -105,6 +114,7 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 				containerElement: self;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					aNodeViewModel moveNodePipelineTo: aNormalizedPosition ]);
+		zIndex: self defaultPipelineElevationIndex;
 		in: [ :thePipelineElement | 
 			thePipelineElement wardley bePipeline. ];
 		in: [ :theElement |
@@ -116,6 +126,26 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 						size: aNodeViewModel nodeSize / 2.0;
 						geometry: BlEllipseGeometry new ]
 				content: [ self createNodeEditorFor: aNodeViewModel ])
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> defaultNodeElevationIndex [
+	^ 2
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> defaultPipelineElevationIndex [
+	^ 0
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> draggingNodeElevationIndex [
+	^ 3
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> draggingPipelineElevationIndex [
+	^ 1
 ]
 
 { #category : #private }
