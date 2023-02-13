@@ -59,26 +59,28 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
-		addAptitude: (BrStyleCommonAptitude new 
-				hovered: [ :aStyle | 
-					aStyle 
-						do: [ :theElement | 
-							theElement background: (self hoverColorFrom: aNodeViewModel nodeColor).
-							theElement labelElementDo: [ :aLabelElement | 
-								aLabelElement aptitude foreground: (
-									self hoverColorFrom: aNodeViewModel labelColor) ] ]
-						after: [ :theElement | 
-							theElement background: aNodeViewModel nodeColor.
-							theElement labelElementDo: [ :aLabelElement | 
-								aLabelElement aptitude foreground: aNodeViewModel labelColor ] ] ]);
+		when: BlMouseOverEvent 
+		do: [ :anEvent | 
+			anEvent consumed: true.
+			anEvent currentTarget background: (self hoverColorFrom: aNodeViewModel nodeColor).
+			anEvent currentTarget labelElementDo: [ :aLabelElement |
+				aLabelElement aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ] ];
+		when: BlMouseOutEvent 
+		do: [ :anEvent | 
+			anEvent consumed: true.
+			anEvent currentTarget background: aNodeViewModel nodeColor.
+			anEvent currentTarget labelElementDo: [ :aLabelElement |
+				aLabelElement aptitude foreground: (aNodeViewModel labelColor) ] ];
 		labelElementDo: [ :aLabelElement | 
-			aLabelElement addAptitude: (BrStyleCommonAptitude new 
-				hovered: [ :aStyle | 
-					aStyle 
-						do: [ :theLabelElement | 
-							theLabelElement aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ]
-						after: [ :theLabelElement | 
-							theLabelElement aptitude foreground: (aNodeViewModel labelColor) ] ]) ];
+			aLabelElement 
+				when: BlMouseOverEvent 
+				do: [ :anEvent | 
+					anEvent consumed: true.
+					anEvent currentTarget aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ];
+				when: BlMouseOutEvent 
+				do: [ :anEvent | 
+					anEvent consumed: true.
+					anEvent currentTarget aptitude foreground: (aNodeViewModel labelColor) ] ];
 		addEventHandler: (GtWardleyMapNodePullHandler new
 				containerElement: self;
 				disallowOutOfBounds;
@@ -158,22 +160,7 @@ GtWardleyMapCanvasElement >> edgeViewFor: anEdgeViewModel ifFound: aFoundBlock i
 
 { #category : #accessing }
 GtWardleyMapCanvasElement >> hoverColorFrom: aColor [
-	| aNewColor |
-	true ifTrue: [ ^ BrGlamorousColors hoveredButtonBorderColor ].
-	
-	aNewColor := aColor muchDarker.
-	aColor = aNewColor ifFalse: [ ^ aNewColor ].
-	
-	aNewColor := aColor muchLighter.
-	aColor = aNewColor ifFalse: [ ^ aNewColor ].
-	
-	aNewColor := Color lightOrange.
-	aColor = aNewColor ifFalse: [ ^ aNewColor ].
-	
-	aNewColor := Color lightBrown.
-	aColor = aNewColor ifFalse: [ ^ aNewColor ].
-	
-	^ aColor
+	^ BrGlamorousColors hoveredButtonBorderColor
 ]
 
 { #category : #initialization }
