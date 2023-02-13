@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Examples'
 }
 
-{ #category : #examples }
+{ #category : #'examples - imports' }
 GtWardleyMapScriptImporterExamples >> importScript [
 	<gtExample>
 	
@@ -15,8 +15,89 @@ GtWardleyMapScriptImporterExamples >> importScript [
 		stream: aScript readStream;
 		import.
 	
-	^ GtWardleyMapScriptImporterExampleResult new 
+	^ GtWardleyMapScriptExampleResult new 
 		originalWardleyMap: aWardleyMap;
-		script: aScript;
-		importedWardleyMap: anImporter wardleyMap
+		originalScript: aScript;
+		resultingWardleyMap: anImporter wardleyMap
+]
+
+{ #category : #'examples - imports' }
+GtWardleyMapScriptImporterExamples >> importScriptWithPipeline [
+	<gtExample>
+	
+	| aScript anImporter aMap aNodeA aNodeB aNodeC aNodeD aNodeE aNodeF |
+	aScript := self scriptWithPipeline.
+	anImporter := GtWardleyMapScriptImporter new 
+		stream: aScript readStream;
+		import.
+		
+	aMap := anImporter wardleyMap.
+	
+	self assert: aMap title equals: 'map with pipeline'.
+	self assert: aMap nodes size equals: 6.
+	self assert: aMap edges size equals: 1.
+	
+	aNodeA := aMap nodes detect: [ :each | each label = 'node a' ].
+	self assert: aNodeA x equals: 0.5.
+	self assert: aNodeA y equals: 1 - 0.86.
+	self assert: aNodeA innerNodes size equals: 4.
+	
+	aNodeB := aMap nodes detect: [ :each | each label = 'node b' ].
+	self assert: aNodeB x equals: 0.38.
+	self assert: aNodeB y equals: aNodeA y.
+	self assert: (aNodeA innerNodes identityIncludes: aNodeB).
+	
+	aNodeC := aMap nodes detect: [ :each | each label = 'node c' ].
+	self assert: aNodeC x equals: 0.46.
+	self assert: aNodeC y equals: aNodeA y.
+	self assert: (aNodeA innerNodes identityIncludes: aNodeC).
+
+	aNodeD := aMap nodes detect: [ :each | each label = 'node d' ].
+	self assert: aNodeD x equals: 0.61.
+	self assert: aNodeD y equals: aNodeA y.
+	self assert: (aNodeA innerNodes identityIncludes: aNodeD).
+
+	aNodeE := aMap nodes detect: [ :each | each label = 'node e' ].
+	self assert: aNodeE x equals: 0.71.
+	self assert: aNodeE y equals: aNodeA y.
+	self assert: (aNodeA innerNodes identityIncludes: aNodeE).
+
+	self 
+		assert: aNodeA pipelineCoordinate x 
+		equals: aNodeB x - GtWardleyMapConstants  pipelineRelativeOffset.
+	self 
+		assert: aNodeA pipelineCoordinate y 
+		equals: aNodeE x + GtWardleyMapConstants  pipelineRelativeOffset.
+	
+	aNodeF := aMap nodes detect: [ :each | each label = 'node f' ].
+	self assert: aNodeF x equals: 0.57.
+	self assert: aNodeF y equals: 1 - 0.96.
+	self assert: (aNodeA innerNodes identityIncludes: aNodeF) not.
+
+	
+	^ GtWardleyMapScriptExampleResult new 
+		originalScript: aScript;
+		resultingWardleyMap: anImporter wardleyMap
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptImporterExamples >> scriptWithPipeline [
+	<gtExample>
+	
+	^ 'style wardley
+
+title map with pipeline
+
+component node f [0.96, 0.57] label [-36, -9]
+
+component node b [0.84, 0.38] label [-46, 28]
+component node c [0.84, 0.46] label [-21, 25]
+component node d [0.84, 0.61] label [-32, 26]
+component node e [0.84, 0.71] label [-20, 26]
+component node a [0.86, 0.50] label [-35, -12]
+pipeline node a [0.37, 0.72]
+
+
+node f->node a
+'
 ]

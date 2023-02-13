@@ -47,7 +47,7 @@ GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosit
 	Let's subtract that offset value to compute proper aNewRelativePosition.
 	Note that aNewPosition is a top-left pipeline element corner point,
 	not the pipeline center point."
-	anOffset := GtWardleyMapUtility computePipelineVerticalTopOffset: aNodeViewModel.
+	anOffset := GtWardleyMapUtility computePipelineViewModelVerticalTopOffset: aNodeViewModel.
 	aNewPositionWithoutOffset := aNewPosition - (0 @ anOffset).
 	
 	aContainerExtent := self containerElement extent.
@@ -55,10 +55,7 @@ GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosit
 		ifTrue: [ 0@0 ]
 		ifFalse: [ aNewPositionWithoutOffset / aContainerExtent ].
 	
-	BlFrameTelemetry
-		time: [ 'Wardley pipeline {1} pulled by {2}' 
-			format: { aPulledElement. aNewRelativePosition. } ]
-		during: [ pulledAction value: aPulledElement value: aNewRelativePosition ]
+	pulledAction value: aPulledElement value: aNewRelativePosition
 ]
 
 { #category : #'api - event managing' }

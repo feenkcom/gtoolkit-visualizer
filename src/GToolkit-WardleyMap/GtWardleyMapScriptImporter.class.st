@@ -11,7 +11,9 @@ Class {
 	#instVars : [
 		'stream',
 		'ast',
-		'wardleyMap'
+		'wardleyMap',
+		'sourcePipelineHeight',
+		'sourceCanvasExtent'
 	],
 	#category : #'GToolkit-WardleyMap-Exporter/Importer'
 }
@@ -43,12 +45,44 @@ GtWardleyMapScriptImporter >> estimateInnerNodes [
 GtWardleyMapScriptImporter >> estimateInnerNodesFor: aPipelineNode [ 
 
 	| estimatedInnerNodes |
-	estimatedInnerNodes := GtWardleyMapUtility 
+	estimatedInnerNodes := self 
 		estimateInnerNodesFor: aPipelineNode 
 		among: wardleyMap nodes.
 		
 	estimatedInnerNodes ifNotEmpty: [
 		aPipelineNode innerNodes: estimatedInnerNodes ].
+]
+
+{ #category : #'private - import' }
+GtWardleyMapScriptImporter >> estimateInnerNodesFor: aPipelineNode among: allNodes [
+	"All nodes still have their imported coordinates.
+	All pipelines have their imported left and right coordinates."
+
+	| candidateNodes aMinX aMaxX aMinY aMaxY aPipelineBounds aMinYInPixels aMaxYInPixels |
+	aPipelineNode isPipelineVisible ifFalse: [ ^ #() ].
+
+	candidateNodes := allNodes select: [ :eachNode | 
+		eachNode isPipelineVisible not and: [ 
+			eachNode pipelineNode isNil and: [
+				(eachNode == aPipelineNode) not ] ] ].
+			
+	candidateNodes ifEmpty: [ ^ #() ].
+			
+	aMinX := aPipelineNode pipelineCoordinate x.
+	aMaxX := aPipelineNode pipelineCoordinate y.
+	
+	aMinY := aPipelineNode coordinate y.
+	aMinYInPixels := aMinY * self sourceCanvasExtent y.
+	aMaxYInPixels := aMinYInPixels 
+		+ (GtWardleyMapUtility
+			computePipelineModelVerticalTopOffset: aPipelineNode)
+		+ self sourcePipelineHeight.
+	aMaxY := aMinY + (aMaxYInPixels / self sourceCanvasExtent y).
+	
+	aPipelineBounds := (aMinX @ aMinY) corner: (aMaxX @ aMaxY).
+			
+	^ candidateNodes select: [ :eachNode | 
+		(aPipelineBounds containsPoint: eachNode coordinate) ].
 ]
 
 { #category : #'api - import' }
@@ -59,6 +93,7 @@ GtWardleyMapScriptImporter >> import [
 
 	wardleyMap := GtWardleyMapModel new.
 	
+	self importMap.
 	self importNodes.
 	self importPipelines.
 	self importEdges.
@@ -93,16 +128,25 @@ GtWardleyMapScriptImporter >> importEdges [
 ]
 
 { #category : #'private - import' }
+GtWardleyMapScriptImporter >> importMap [
+	ast allNodesOfType: GtWMTitleNode do: [ :anAstNode | 
+		| aName |
+		aName := anAstNode name ifNotNil: #source.
+		aName ifNotNil: [ 
+			wardleyMap title: aName ] ]
+]
+
+{ #category : #'private - import' }
 GtWardleyMapScriptImporter >> importNodes [
 
-	ast allNodesOfType: GtWMElementNode do: [ :aAstNode | 
+	ast allNodesOfType: GtWMElementNode do: [ :anAstNode | 
 		| aNodeModel |
 		aNodeModel := GtWardleyMapNodeModel new.
 		aNodeModel color: Color black.
-		aAstNode name ifNotNil: [ :aToken | aNodeModel label: aToken source ].
-		aAstNode coords ifNotNil: [ :aNode | aNode coordinate 
+		anAstNode name ifNotNil: [ :aToken | aNodeModel label: aToken source ].
+		anAstNode coords ifNotNil: [ :aNode | aNode coordinate 
 			ifNotNil: [ :aPoint | aNodeModel coordinate: (aPoint x @ (1 - aPoint y)) ] ].
-		aAstNode label ifNotNil: [ :aNode | aNode coordinate 
+		anAstNode label ifNotNil: [ :aNode | aNode coordinate 
 			ifNotNil: [ :aPoint | 
 				| aLabelCoordinate |
 				aLabelCoordinate := GtWardleyMapUtility 
@@ -117,15 +161,15 @@ GtWardleyMapScriptImporter >> importNodes [
 { #category : #'private - import' }
 GtWardleyMapScriptImporter >> importPipelines [
 
-	ast allNodesOfType: GtWMPipelineNode do: [ :aAstNode | 
+	ast allNodesOfType: GtWMPipelineNode do: [ :anAstNode | 
 		| aPipelineName |
-		aAstNode name ifNotNil: [ :aToken | aPipelineName := aToken source ].
+		anAstNode name ifNotNil: [ :aToken | aPipelineName := aToken source ].
 		
 		aPipelineName ifNotNil: [ 
 			self
 				nodeNamed: aPipelineName
 				ifFound: [ :aNodeModel | 
-					aAstNode coordinate ifNotNil: [ :aPoint | 
+					anAstNode coordinate ifNotNil: [ :aPoint | 
 						aNodeModel pipelineCoordinate: aPoint.
 						aNodeModel isPipelineVisible: true ] ]
 				ifNone: [ ]
@@ -140,6 +184,26 @@ GtWardleyMapScriptImporter >> nodeNamed: aNodeName ifFound: aFoundBlock ifNone: 
 			^ aFoundBlock value: eachNodeModel ] ].
 
 	^ aNoneBlock value
+]
+
+{ #category : #accessing }
+GtWardleyMapScriptImporter >> sourceCanvasExtent [
+	^ sourceCanvasExtent ifNil: [ sourceCanvasExtent := GtWardleyMapConstants externalCanvasExtent ]
+]
+
+{ #category : #accessing }
+GtWardleyMapScriptImporter >> sourceCanvasExtent: anObject [
+	sourceCanvasExtent := anObject
+]
+
+{ #category : #accessing }
+GtWardleyMapScriptImporter >> sourcePipelineHeight [
+	^ sourcePipelineHeight ifNil: [ sourcePipelineHeight := GtWardleyMapConstants externalPipelineHeight ]
+]
+
+{ #category : #accessing }
+GtWardleyMapScriptImporter >> sourcePipelineHeight: anObject [
+	sourcePipelineHeight := anObject
 ]
 
 { #category : #'api - initialization' }

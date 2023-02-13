@@ -6,7 +6,13 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 
 	<smaccStyler: #GtWardleyMapParser priority: 10>
 	^ (self forParser: aParserClass)
-		stylerRules: {GtSmaCCNodeVariableStylerRule
+		stylerRules: {
+				GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMPresentationStyleNode
+					variableNames: #(styleToken)
+					styleBlock: [ :styler | styler foreground: Color purple ].
+		
+				GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMTitleNode
 					variableNames: #(titleToken)
 					styleBlock: [ :styler | styler foreground: Color purple ].

@@ -18,7 +18,8 @@ Class {
 		'announcer',
 		'nodes',
 		'edges',
-		'sections'
+		'sections',
+		'title'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -102,48 +103,11 @@ GtWardleyMapModel >> announcer [
 
 { #category : #converting }
 GtWardleyMapModel >> asWardleyMapScript [
-	^ String
-		streamContents:
-			[ :stream | 
-			self nodes
-				do:
-					[ :eachNode | 
-						stream
-							nextPutAll: 'component ';
-							nextPutAll: eachNode label;
-							nextPutAll: ' [';
-							print: ((1 - eachNode y) round: 2) ;
-							nextPutAll: ', ';
-							print: (eachNode x round: 2);
-							nextPutAll: '] label [';
-							print: eachNode labelModel x asInteger;
-							nextPutAll: ', ';
-							print: eachNode labelModel y asInteger;
-							nextPutAll: ']' ;
-							lf.
-							
-						eachNode isPipelineVisible ifTrue: [ 
-							stream
-								nextPutAll: 'pipeline ';
-								nextPutAll: eachNode label;
-								nextPutAll: ' [';
-								print: (eachNode pipelineCoordinate x round: 2);
-								nextPutAll: ', ';
-								print: (eachNode pipelineCoordinate y round: 2);
-								nextPutAll: ']';
-								lf;
-								lf.
-						]
-					].
-			stream cr.
-			self edges
-				do:
-					[ :each | 
-					stream
-						nextPutAll: each fromNode label;
-						nextPutAll: '->';
-						nextPutAll: each toNode label;
-						lf ] ]
+	^ GtWardleyMapScriptExporter new 
+		beLfNewLine;
+		wardleyMap: self;
+		export;
+		script
 ]
 
 { #category : #'api - edges' }
@@ -341,4 +305,14 @@ GtWardleyMapModel >> storeOn: aStream [
 			'GtWardleyMapFromDictionaryImporter new importWardleyMapFrom: (STONJSON fromString: ';
 		nextPutAll: self asJSONForExport storeString;
 		nextPutAll: '))'
+]
+
+{ #category : #accessing }
+GtWardleyMapModel >> title [
+	^ title
+]
+
+{ #category : #accessing }
+GtWardleyMapModel >> title: anObject [
+	title := anObject
 ]

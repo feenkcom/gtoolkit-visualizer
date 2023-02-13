@@ -483,7 +483,7 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	self assert: aNodeA innerNodes size equals: 2.
 	self assert: aNodeA innerNodes first equals: aNodeD.
 	self assert: aNodeA innerNodes second equals: aNodeE.
-	self assert: (aNodeA pipelineCoordinate closeTo: 0.18 @ 0.32 precision: 0.01).
+	self assert: (aNodeA pipelineCoordinate closeTo: 0.19 @ 0.31 precision: 0.01).
 		
 	self assert: aNodeD pipelineNode equals: aNodeA.
 	self assert: aNodeE pipelineNode equals: aNodeA.
@@ -545,13 +545,13 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes_removeInnerNodesFromPi
 	self assert: aNodeA innerNodes second equals: aNodeE.
 	self assert: aNodeD pipelineNode equals: aNodeA.
 	self assert: aNodeE pipelineNode equals: aNodeA.
-	self assert: (aNodeA pipelineCoordinate closeTo: 0.18 @ 0.32 precision: 0.01).
+	self assert: (aNodeA pipelineCoordinate closeTo: 0.19 @ 0.31 precision: 0.01).
 	
 	aNodeE removeFromPipeline.
 
 	self assert: aNodeA innerNodes size equals: 1.
 	self assert: aNodeA innerNodes first equals: aNodeD.
-	self assert: (aNodeA pipelineCoordinate closeTo: 0.18 @ 0.27 precision: 0.01).
+	self assert: (aNodeA pipelineCoordinate closeTo: 0.19 @ 0.26 precision: 0.01).
 	self assert: aNodeD pipelineNode equals: aNodeA.
 	self assert: aNodeE pipelineNode equals: nil.
 
