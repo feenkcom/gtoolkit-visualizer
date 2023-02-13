@@ -11,6 +11,31 @@ Class {
 }
 
 { #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> basicExportNode: aNode [
+	stream
+		nextPutAll: 'component ';
+		nextPutAll: aNode label;
+		nextPutAll: ' ['.
+	self printNodeCoordinate: aNode.
+	stream
+		nextPutAll: '] label ['.
+	self printLabelCoordinateInPixels: aNode.
+	stream
+		nextPutAll: ']';
+		lf.
+	
+	aNode isPipelineVisible ifTrue: [ 
+		stream
+			nextPutAll: 'pipeline ';
+			nextPutAll: aNode label;
+			nextPutAll: ' ['.
+		self printPipelineCoordinate: aNode.
+		stream
+			nextPutAll: ']';
+			lf ]
+]
+
+{ #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> computeInnerNodeY: anInnerNode [
 
 	| aPipelineNode anOffset aPipelinePixelsY anInnerNodePixelsY |
@@ -39,8 +64,11 @@ GtWardleyMapScriptExporter >> export [
 
 		self exportMap.
 		
-		self nodes do: [ :eachNode | self exportNode: eachNode ].
-		stream cr.
+		self nodes do: [ :eachNode | 
+			eachNode pipelineNode ifNil: [
+				self exportNode: eachNode ] ].
+				
+		stream lf.
 		self edges do: [ :eachEdge | self exportEdge: eachEdge ].
 		
 		stream := nil ]
@@ -52,7 +80,7 @@ GtWardleyMapScriptExporter >> exportEdge: anEdge [
 		nextPutAll: anEdge fromNode label;
 		nextPutAll: '->';
 		nextPutAll: anEdge toNode label;
-		cr
+		lf
 ]
 
 { #category : #'api - export' }
@@ -63,35 +91,21 @@ GtWardleyMapScriptExporter >> exportMap [
 		stream 
 			nextPutAll: 'title ';
 			nextPutAll: aTitle;
-			cr;
-			cr
+			lf;
+			lf
 	]
 ]
 
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportNode: aNode [
-	stream
-		nextPutAll: 'component ';
-		nextPutAll: aNode label;
-		nextPutAll: ' ['.
-	self printNodeCoordinate: aNode.
-	stream
-		nextPutAll: '] label ['.
-	self printLabelCoordinateInPixels: aNode.
-	stream
-		nextPutAll: ']';
-		cr.
 	
-	aNode isPipelineVisible ifTrue: [ 
-		stream
-			nextPutAll: 'pipeline ';
-			nextPutAll: aNode label;
-			nextPutAll: ' ['.
-		self printPipelineCoordinate: aNode.
-		stream
-			nextPutAll: ']';
-			cr;
-			cr ]
+	aNode innerNodes do: [ :eachInnerNode | 
+		self basicExportNode: eachInnerNode.
+	].
+	
+	self basicExportNode: aNode.
+	
+	aNode pipelineNode ifNotNil: [ stream lf; lf ]
 ]
 
 { #category : #convenience }
@@ -173,8 +187,8 @@ GtWardleyMapScriptExporter >> targetCanvasExtent [
 ]
 
 { #category : #accessing }
-GtWardleyMapScriptExporter >> targetCanvasExtent: anObject [
-	targetCanvasExtent := anObject
+GtWardleyMapScriptExporter >> targetCanvasExtent: aPoint [
+	targetCanvasExtent := aPoint
 ]
 
 { #category : #accessing }
