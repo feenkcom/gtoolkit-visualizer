@@ -34,7 +34,7 @@ Class {
 		'barGroupStencil',
 		'groupSpacing'
 	],
-	#category : 'GToolkit-Plotter-Builder - Bar Chart'
+	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #'api - ticks' }
@@ -288,7 +288,7 @@ GtPlotterHorizontalBarChart >> createVerticalSeparator [
 
 { #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> gridlineOffset [
-	^ 20
+	^ 0
 ]
 
 { #category : #'api - layout' }
