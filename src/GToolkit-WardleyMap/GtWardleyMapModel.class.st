@@ -104,6 +104,7 @@ GtWardleyMapModel >> announcer [
 { #category : #converting }
 GtWardleyMapModel >> asWardleyMapScript [
 	^ GtWardleyMapScriptExporter new 
+		beLfNewLine;
 		wardleyMap: self;
 		export;
 		script

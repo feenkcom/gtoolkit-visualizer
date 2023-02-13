@@ -46,10 +46,7 @@ GtWardleyMapPullHandler >> onPulled: aPulledElement from: aPreviousPosition to: 
 		ifTrue: [ 0@0 ]
 		ifFalse: [ (aNewPosition + (aPulledElement extent / 2.0)) / aContainerExtent ].
 	
-	BlFrameTelemetry
-		time: [ 'Wardley node label {1} pulled by {2}' 
-			format: { aPulledElement. aNewRelativePosition } ]
-		during: [ pulledAction value: aPulledElement value: aNewRelativePosition ].
+	pulledAction value: aPulledElement value: aNewRelativePosition
 ]
 
 { #category : #'api - event managing' }

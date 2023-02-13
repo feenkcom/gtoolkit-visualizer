@@ -5,6 +5,22 @@ Class {
 }
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> externalCanvasExtent [
+	"The default extent was taken from a https://onlinewardleymaps.com website,
+	inspecting a HTML elements. It was an optimal canvas extent of a particular
+	wardley map graph for which all nodes where nicely located."
+
+	^ 1024 @ 716
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> externalPipelineHeight [
+	"I represent a pipeline height in pixels use in https://onlinewardleymaps.com."
+
+	^ 24
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> minPipelineRelativeWidth [
 	"I represent kind of padding in relative coordinates (0, 1)"
 
@@ -38,5 +54,5 @@ GtWardleyMapConstants class >> pipelineRelativeOffset [
 	"I represent a kind of padding in relative coordinates (0, 1).
 	It is a space between an inner node and a pipeline border."
 
-	^ 0.02
+	^ 0.01
 ]

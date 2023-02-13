@@ -10,11 +10,34 @@ GtWardleyMapUtility class >> computePipelineModelVerticalCenterOffset: aPipeline
 	place the pipeline element below its node element.
 	Note that same offset is used for inner-nodes."
 
+	^ self 
+		computePipelineModelVerticalCenterOffset: aPipelineNodeModel 
+		pipelineHeight: GtWardleyMapConstants  pipelineHeight
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> computePipelineModelVerticalCenterOffset: aPipelineNodeModel pipelineHeight: aHeight [
+	"I compute a pipeline element offset that should be used to
+	place the pipeline element below its node element.
+	Note that same offset is used for inner-nodes."
+
 	| aHalfOfNodeHeight aHalfOfPipelineHeight |
 	aHalfOfNodeHeight := aPipelineNodeModel y / 2.
-	aHalfOfPipelineHeight := GtWardleyMapConstants pipelineHeight / 2.
+	aHalfOfPipelineHeight := aHeight / 2.
 	
 	^ (aHalfOfNodeHeight + aHalfOfPipelineHeight) asFloat
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> computePipelineModelVerticalTopOffset: aPipelineNodeModel [
+	"I compute a pipeline element offset that should be used to
+	place the pipeline element below its node element.
+	The offset is expected to represent top y-coordinate (bounds)."
+
+	| aHalfOfNodeHeight |
+	aHalfOfNodeHeight := aPipelineNodeModel y / 2.
+	
+	^ aHalfOfNodeHeight asFloat
 ]
 
 { #category : #'api - views' }
@@ -33,10 +56,7 @@ GtWardleyMapUtility class >> computePipelineViewModelVerticalTopOffset: aPipelin
 	place the pipeline element below its node element.
 	The offset is expected to represent top y-coordinate (bounds)."
 
-	| aHalfOfNodeHeight |
-	aHalfOfNodeHeight := aPipelineNodeViewModel nodeSize y / 2.
-	
-	^ aHalfOfNodeHeight asFloat
+	^ self computePipelineModelVerticalTopOffset: aPipelineNodeViewModel wardleyMapNodeModel
 ]
 
 { #category : #'api - import and export' }
@@ -56,29 +76,6 @@ GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoor
 	aCenterY := aTopLeftPoint y - aCharHalfHeight.
 	
 	^ ((aCenterX @ aCenterY) / aNodeSize) asFloatPoint
-]
-
-{ #category : #'api - import and export' }
-GtWardleyMapUtility class >> estimateInnerNodesFor: aPipelineNode among: allNodes [
-	| candidateNodes aMinX aMaxX aMinY aMaxY aPipelineBounds |
-	aPipelineNode isPipelineVisible ifFalse: [ ^ #() ].
-
-	candidateNodes := allNodes select: [ :eachNode | 
-		eachNode isPipelineVisible not and: [ 
-			eachNode pipelineNode isNil ] ].
-			
-	candidateNodes ifEmpty: [ ^ #() ].
-			
-	aMinX := aPipelineNode pipelineCoordinate x.
-	aMaxX := aPipelineNode pipelineCoordinate y.
-	
-	aMinY := aPipelineNode coordinate y.
-	aMaxY := aMinY + (GtWardleyMapConstants pipelineRelativeOffset * 2). 
-	
-	aPipelineBounds := (aMinX @ aMinY) corner: (aMaxX @ aMaxY).
-			
-	^ candidateNodes select: [ :eachNode | 
-		(aPipelineBounds containsPoint: eachNode coordinate) ].
 ]
 
 { #category : #'api - views' }

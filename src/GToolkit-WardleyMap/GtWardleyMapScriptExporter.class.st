@@ -5,7 +5,8 @@ Class {
 		'wardleyMap',
 		'script',
 		'stream',
-		'targetCanvasExtent'
+		'targetCanvasExtent',
+		'newLine'
 	],
 	#category : #'GToolkit-WardleyMap-Exporter/Importer'
 }
@@ -21,8 +22,8 @@ GtWardleyMapScriptExporter >> basicExportNode: aNode [
 		nextPutAll: '] label ['.
 	self printLabelCoordinateInPixels: aNode.
 	stream
-		nextPutAll: ']';
-		lf.
+		nextPutAll: ']'.
+	self newLine.
 	
 	aNode isPipelineVisible ifTrue: [ 
 		stream
@@ -31,8 +32,23 @@ GtWardleyMapScriptExporter >> basicExportNode: aNode [
 			nextPutAll: ' ['.
 		self printPipelineCoordinate: aNode.
 		stream
-			nextPutAll: ']';
-			lf ]
+			nextPutAll: ']'.
+		self newLine. ]
+]
+
+{ #category : #'api - initialization' }
+GtWardleyMapScriptExporter >> beCrLfNewLine [
+	newLine := #crlf
+]
+
+{ #category : #'api - initialization' }
+GtWardleyMapScriptExporter >> beCrNewLine [
+	newLine := #cr
+]
+
+{ #category : #'api - initialization' }
+GtWardleyMapScriptExporter >> beLfNewLine [
+	newLine := #lf
 ]
 
 { #category : #'private - exporting' }
@@ -42,7 +58,9 @@ GtWardleyMapScriptExporter >> computeInnerNodeY: anInnerNode [
 	aPipelineNode := anInnerNode pipelineNode.
 
 	aPipelinePixelsY := anInnerNode y * self targetCanvasExtent y.
-	anOffset := GtWardleyMapUtility  computePipelineModelVerticalCenterOffset: aPipelineNode.
+	anOffset := GtWardleyMapUtility  
+		computePipelineModelVerticalCenterOffset: aPipelineNode
+		pipelineHeight: GtWardleyMapConstants  externalPipelineHeight.
 	anInnerNodePixelsY := aPipelinePixelsY + anOffset.
 	
 	^ anInnerNodePixelsY / self targetCanvasExtent y
@@ -68,7 +86,7 @@ GtWardleyMapScriptExporter >> export [
 			eachNode pipelineNode ifNil: [
 				self exportNode: eachNode ] ].
 				
-		stream lf.
+		self newLine.
 		self edges do: [ :eachEdge | self exportEdge: eachEdge ].
 		
 		stream := nil ]
@@ -76,36 +94,57 @@ GtWardleyMapScriptExporter >> export [
 
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportEdge: anEdge [
-	^ stream
+	stream
 		nextPutAll: anEdge fromNode label;
 		nextPutAll: '->';
-		nextPutAll: anEdge toNode label;
-		lf
+		nextPutAll: anEdge toNode label.
+	self newLine.
 ]
 
 { #category : #'api - export' }
 GtWardleyMapScriptExporter >> exportMap [
-	stream nextPutAll: 'style wardley'; cr; cr.
+	stream nextPutAll: 'style wardley'.
+	self newLine.
+	self newLine.
 
 	wardleyMap title ifNotNil: [ :aTitle |
 		stream 
 			nextPutAll: 'title ';
-			nextPutAll: aTitle;
-			lf;
-			lf
+			nextPutAll: aTitle.
+			
+		self newLine.
+		self newLine.
 	]
 ]
 
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportNode: aNode [
+	"aNode pipelineNode isNil"
 	
+	self assert: [ aNode pipelineNode isNil ].
+	
+	"First write down inner nodes"
 	aNode innerNodes do: [ :eachInnerNode | 
 		self basicExportNode: eachInnerNode.
 	].
 	
+	"then the pipeline (parent) node"
 	self basicExportNode: aNode.
 	
-	aNode pipelineNode ifNotNil: [ stream lf; lf ]
+	"and split the group by an empty line"
+	self newLine.
+]
+
+{ #category : #initialization }
+GtWardleyMapScriptExporter >> initialize [
+	super initialize.
+	
+	newLine := #cr
+]
+
+{ #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> newLine [
+	newLine value: stream
 ]
 
 { #category : #convenience }
@@ -155,8 +194,8 @@ GtWardleyMapScriptExporter >> printNodeCoordinate: aNode [
 GtWardleyMapScriptExporter >> printPipelineCoordinate: aNode [
 	| aLeftValue aRightValue |
 	
-	aLeftValue := aNode pipelineCoordinate x + GtWardleyMapConstants pipelineRelativeOffset.
-	aRightValue := aNode pipelineCoordinate y - GtWardleyMapConstants pipelineRelativeOffset.
+	aLeftValue := aNode pipelineCoordinate x" + GtWardleyMapConstants pipelineRelativeOffset".
+	aRightValue := aNode pipelineCoordinate y" - GtWardleyMapConstants pipelineRelativeOffset".
 	
 	stream
 		nextPutAll: (self roundedNodeCoordinate: aLeftValue);
@@ -183,7 +222,7 @@ GtWardleyMapScriptExporter >> targetCanvasExtent [
 	inspecting a HTML elements. It was an optimal canvas extent of a particular
 	wardley map graph for which all nodes where nicely located."
 
-	^ targetCanvasExtent ifNil: [ targetCanvasExtent := 1024 @ 716 "958 @ 705" ]
+	^ targetCanvasExtent ifNil: [ targetCanvasExtent := GtWardleyMapConstants externalCanvasExtent ]
 ]
 
 { #category : #accessing }

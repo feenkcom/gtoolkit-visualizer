@@ -55,10 +55,7 @@ GtWardleyMapPipelinePullHandler >> onPulled: aPulledElement from: aPreviousPosit
 		ifTrue: [ 0@0 ]
 		ifFalse: [ aNewPositionWithoutOffset / aContainerExtent ].
 	
-	BlFrameTelemetry
-		time: [ 'Wardley pipeline {1} pulled by {2}' 
-			format: { aPulledElement. aNewRelativePosition. } ]
-		during: [ pulledAction value: aPulledElement value: aNewRelativePosition ]
+	pulledAction value: aPulledElement value: aNewRelativePosition
 ]
 
 { #category : #'api - event managing' }
