@@ -119,8 +119,6 @@ GtWardleyMapScriptExporter >> exportMap [
 
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportNode: aNode [
-	"aNode pipelineNode isNil"
-	
 	self assert: [ aNode pipelineNode isNil ].
 	
 	"First write down inner nodes"
@@ -205,8 +203,12 @@ GtWardleyMapScriptExporter >> printPipelineCoordinate: aNode [
 
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> roundedNodeCoordinate: aNumber [
+	"#ceiling is used because if works in our tested examples.
+	With more examples, we may find better way to calculate final value."
 	| aRoundedValue |
-	aRoundedValue := aNumber roundTo: 0.01.
+	
+	"aRoundedValue := aNumber roundTo: 0.001."
+	aRoundedValue := (aNumber * 100) ceiling / 100.
 	
 	^ aRoundedValue printShowingDecimalPlaces: 2
 ]

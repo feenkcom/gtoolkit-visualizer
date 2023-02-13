@@ -22,7 +22,7 @@ GtWardleyMapUtility class >> computePipelineModelVerticalCenterOffset: aPipeline
 	Note that same offset is used for inner-nodes."
 
 	| aHalfOfNodeHeight aHalfOfPipelineHeight |
-	aHalfOfNodeHeight := aPipelineNodeModel y / 2.
+	aHalfOfNodeHeight := aPipelineNodeModel size y / 2.
 	aHalfOfPipelineHeight := aHeight / 2.
 	
 	^ (aHalfOfNodeHeight + aHalfOfPipelineHeight) asFloat
@@ -35,7 +35,7 @@ GtWardleyMapUtility class >> computePipelineModelVerticalTopOffset: aPipelineNod
 	The offset is expected to represent top y-coordinate (bounds)."
 
 	| aHalfOfNodeHeight |
-	aHalfOfNodeHeight := aPipelineNodeModel y / 2.
+	aHalfOfNodeHeight := aPipelineNodeModel size y / 2.
 	
 	^ aHalfOfNodeHeight asFloat
 ]
