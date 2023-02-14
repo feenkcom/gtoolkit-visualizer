@@ -144,3 +144,41 @@ GtWardleyMapScriptExamples >> withPipelineLf [
 	
 	^ aScript
 ]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withTwoPipelinesCr [
+	<gtExample>
+
+	| aScript |
+	aScript := 'style wardley
+
+component node b [0.85, 0.21] label [-76, -2]
+component node c [0.85, 0.81] label [40, -2]
+component node a [0.87, 0.49] label [-45, -12]
+pipeline node a [0.20, 0.82]
+
+component node e [0.75, 0.24] label [-100, 2]
+component node f [0.75, 0.65] label [-53, 23]
+component node g [0.75, 0.78] label [20, 9]
+component node d [0.77, 0.48] label [9, -5]
+pipeline node d [0.23, 0.79]
+
+
+'.
+
+	self assertCrNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withTwoPipelinesLf [
+	<gtExample>
+
+	| aScript |
+	aScript := self convertToLf: self withTwoPipelinesCr.
+
+	self assertLfNewLine: aScript.
+	
+	^ aScript
+]

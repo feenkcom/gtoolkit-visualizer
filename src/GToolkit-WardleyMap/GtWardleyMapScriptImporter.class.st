@@ -73,11 +73,9 @@ GtWardleyMapScriptImporter >> estimateInnerNodesFor: aPipelineNode among: allNod
 	
 	aMinY := aPipelineNode coordinate y.
 	aMinYInPixels := aMinY * self sourceCanvasExtent y.
-	aMaxYInPixels := aMinYInPixels 
-		+ (GtWardleyMapUtility
-			computePipelineModelVerticalTopOffset: aPipelineNode)
-		+ self sourcePipelineHeight.
-	aMaxY := aMinY + (aMaxYInPixels / self sourceCanvasExtent y).
+	"https://onlinewardleymaps.com pipeline's top position is in the middle of its node"
+	aMaxYInPixels := aMinYInPixels + self sourcePipelineHeight.
+	aMaxY := aMaxYInPixels / self sourceCanvasExtent y.
 	
 	aPipelineBounds := (aMinX @ aMinY) corner: (aMaxX @ aMaxY).
 			
