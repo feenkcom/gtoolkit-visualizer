@@ -28,6 +28,7 @@ GtWardleyMapNodeElement >> initialize [
 	self layout: BlFrameLayout new.
 	labelElement := BrEditableLabel new
 			fitContent;
+			id: GtWardleyMapNodeLabelId;
 			aptitude: BrGlamorousRegularEditorAptitude new;
 			when: BrEditorAcceptWish
 				do: [ :aWish | self wardleyMapNodeViewModel label: aWish text asString ];
