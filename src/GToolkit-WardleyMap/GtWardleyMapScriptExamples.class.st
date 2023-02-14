@@ -1,0 +1,146 @@
+Class {
+	#name : #GtWardleyMapScriptExamples,
+	#superclass : #Object,
+	#category : #'GToolkit-WardleyMap-Examples'
+}
+
+{ #category : #asserting }
+GtWardleyMapScriptExamples >> assertCrNewLine: aScript [
+	"Ensure only CR new line characters are used"
+
+	self
+		assert: [ (aScript includes: Character lf) not ]
+		description: [ 'Script must includes only CR new line characters' ]
+]
+
+{ #category : #asserting }
+GtWardleyMapScriptExamples >> assertLfNewLine: aScript [
+	"Ensure only LF new line characters are used"
+
+	self
+		assert: [ (aScript includes: Character cr) not ]
+		description: [ 'Script must includes only LF new line characters' ]
+]
+
+{ #category : #support }
+GtWardleyMapScriptExamples >> convertToLf: aScript [
+	^ aScript copyReplaceAll: String cr with: String lf
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withCommentCr [
+	<gtExample>
+
+	| aScript |
+	aScript := 'style wardley
+
+title map with pipeline and note
+
+// this is a comment
+note (+opportunity) [0.82, 0.13] // this is a comment
+
+component node b [0.85, 0.21] label [-76, -2] // this is a comment
+component node c [0.86, 0.81] label [40, -2] // this is a comment
+component node a [0.87, 0.49] label [-45, -12] // this is a comment
+pipeline node a [0.2, 0.82] // this is a comment
+
+component node d [0.65, 0.34] label [-55, 25]
+
+node d+<>node a // this is a comment
+node b->node d // this is a comment
+'.
+
+	self assertCrNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withCommentLf [
+	<gtExample>
+
+	| aScript |
+	aScript := self convertToLf: self withCommentCr.
+
+	self assertLfNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withNoteCr [
+	<gtExample>
+
+	| aScript |
+	aScript := 'style wardley
+
+title map with pipeline and note
+
+note (+opportunity) [0.82, 0.13]
+
+component node b [0.85, 0.21] label [-76, -2]
+component node c [0.86, 0.81] label [40, -2]
+component node a [0.87, 0.49] label [-45, -12]
+pipeline node a [0.2, 0.82]
+
+component node d [0.65, 0.34] label [-55, 25]
+
+node d+<>node a
+node b->node d
+'.
+
+	self assertCrNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withNoteLf [
+	<gtExample>
+
+	| aScript |
+	aScript := self convertToLf: self withNoteCr.
+
+	self assertLfNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withPipelineCr [
+	<gtExample>
+
+	| aScript |
+	aScript := 'style wardley
+
+title map with pipeline
+
+component node f [0.96, 0.57] label [-36, -9]
+
+component node b [0.84, 0.38] label [-46, 28]
+component node c [0.84, 0.46] label [-21, 25]
+component node d [0.84, 0.61] label [-32, 26]
+component node e [0.84, 0.71] label [-20, 26]
+component node a [0.86, 0.50] label [-35, -12]
+pipeline node a [0.37, 0.72]
+
+
+node f->node a
+'.
+
+	self assertCrNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withPipelineLf [
+	<gtExample>
+
+	| aScript |
+	aScript := self convertToLf: self withPipelineCr.
+
+	self assertLfNewLine: aScript.
+	
+	^ aScript
+]

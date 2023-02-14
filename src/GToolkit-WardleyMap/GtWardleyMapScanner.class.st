@@ -42,6 +42,7 @@ GtWardleyMapScanner >> nodeName [
 		whileTrue:
 			[ (String crlf includes: currentCharacter) ifTrue: [ ^ self reportLastMatch ].
 			self step ].
+			
 	[ currentCharacter = $[ ifTrue: [ ^ self reportLastMatch ].
 	currentCharacter = $+
 		ifTrue:
