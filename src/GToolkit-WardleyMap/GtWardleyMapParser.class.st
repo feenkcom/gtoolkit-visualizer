@@ -576,7 +576,7 @@ GtWardleyMapParser class >> transitionTable [
 GtWardleyMapParser >> actionsForCurrentToken [
 	| actions position nameToken previousState newPosition oldToken |
 	(currentToken value notEmpty
-		and: [ currentToken value first isLetter and: [ (currentToken ids includes: scanner nameId) not ] ])
+		and: [ (currentToken value first isLetter or: [ '(+' includes:  currentToken value first ]) and: [ (currentToken ids includes: scanner nameId) not ] ])
 		ifTrue:
 			[ position := scanner position.
 			nameToken := scanner scanNameAt: currentToken startPosition.

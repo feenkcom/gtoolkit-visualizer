@@ -88,21 +88,5 @@ GtWardleyMapScriptImporterExamples >> importScriptWithPipeline [
 { #category : #'examples - scripts' }
 GtWardleyMapScriptImporterExamples >> scriptWithPipeline [
 	<gtExample>
-	
-	^ 'style wardley
-
-title map with pipeline
-
-component node f [0.96, 0.57] label [-36, -9]
-
-component node b [0.84, 0.38] label [-46, 28]
-component node c [0.84, 0.46] label [-21, 25]
-component node d [0.84, 0.61] label [-32, 26]
-component node e [0.84, 0.71] label [-20, 26]
-component node a [0.86, 0.50] label [-35, -12]
-pipeline node a [0.37, 0.72]
-
-
-node f->node a
-'
+	^ GtWardleyMapScriptExamples new withPipelineCr
 ]
