@@ -65,8 +65,68 @@ GtWardleyMapScriptExporterExamples >> exportMapWithPipelineAndLfNewLines [
 		resultingScript: aCrNewLineScript
 ]
 
+{ #category : #accessing }
+GtWardleyMapScriptExporterExamples >> exportMapWithTwoPipelines [
+	<gtExample>
+	| aMap anExporter aScript aResult |
+	aResult := self resultWithImportedMapWithTwoPipelines.
+	aMap := aResult resultingWardleyMap.
+
+	anExporter := GtWardleyMapScriptExporter new.
+	aScript := anExporter
+		beCrNewLine;
+		wardleyMap: aMap;
+		export;
+		script.
+			
+	self 
+		assert: aScript
+		equals: aResult originalScript.
+
+	^ GtWardleyMapScriptExampleResult new
+		originalWardleyMap: aMap;
+		originalScript: aResult originalScript;
+		resultingScript: aScript
+]
+
+{ #category : #accessing }
+GtWardleyMapScriptExporterExamples >> exportMapWithTwoPipelinesAndLfNewLines [
+	<gtExample>
+	| aMap anExporter aScript aResult aCrNewLineScript |
+	aResult := self resultWithImportedMapWithTwoPipelines.
+	aMap := aResult resultingWardleyMap.
+
+	anExporter := GtWardleyMapScriptExporter new.
+	aScript := anExporter
+		beLfNewLine;
+		wardleyMap: aMap;
+		export;
+		script.
+		
+	self assert: (aScript includes: Character cr) not.
+		
+	self assert: (aScript = aResult originalScript) not.
+	
+	aCrNewLineScript := self convertWitCrNewLines: aScript.
+	
+	self 
+		assert: aCrNewLineScript
+		equals: aResult originalScript.
+
+	^ GtWardleyMapScriptExampleResult new
+		originalWardleyMap: aMap;
+		originalScript: aResult originalScript;
+		resultingScript: aCrNewLineScript
+]
+
 { #category : #'examples - model' }
 GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithPipeline [
 	<gtExample>
 	^ GtWardleyMapScriptImporterExamples new importScriptWithPipeline
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithTwoPipelines [
+	<gtExample>
+	^ GtWardleyMapScriptImporterExamples new importScriptWithTwoPipelines
 ]
