@@ -11,6 +11,9 @@ Class {
 	#superclass : #BlPannableElement,
 	#traits : 'TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
+	#instVars : [
+		'idGenerator'
+	],
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
@@ -30,6 +33,7 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 
 	^ GtWardleyMapEdgeElement new
 		in: [ :aLineElement | aLineElement graph beEdge ];
+		id: (self newEdgeId);
 		wardleyMapEdgeViewModel: anEdgeViewModel;
 		addAptitude: (BrStyleCommonAptitude new 
 				hovered: [ :aStyle | aStyle 
@@ -59,6 +63,7 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
+		id: (self newNodeId);
 		when: BlMouseOverEvent 
 		do: [ :anEvent | 
 			anEvent consumed: true.
@@ -103,6 +108,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
+		id: (self newPipelineId);
 		addAptitude: (BrStyleCommonAptitude new 
 			hovered: [ :aStyle | 
 				aStyle 
@@ -160,12 +166,14 @@ GtWardleyMapCanvasElement >> edgeViewFor: anEdgeViewModel ifFound: aFoundBlock i
 
 { #category : #accessing }
 GtWardleyMapCanvasElement >> hoverColorFrom: aColor [
-	^ BrGlamorousColors hoveredButtonBorderColor
+	^ GtWardleyMapConstants hoverColor
 ]
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> initialize [
 	super initialize.
+	
+	idGenerator := BlUniqueIdGenerator new.
 
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
@@ -185,6 +193,25 @@ GtWardleyMapCanvasElement >> initialize [
 			anEvent consumed: true.
 			(self width isZero or: [ self height isZero ])
 				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> newEdgeId [
+	^ #edge asBlocElementId indexed: idGenerator generateUniqueId
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> newNodeId [
+	^ #node asBlocElementId indexed: idGenerator generateUniqueId
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> newPipelineId [
+	^ #pipeline asBlocElementId indexed: idGenerator generateUniqueId
+]
+
+{ #category : #private }
+GtWardleyMapCanvasElement >> nextElementId [
 ]
 
 { #category : #private }

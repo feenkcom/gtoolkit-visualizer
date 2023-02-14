@@ -26,14 +26,7 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMElementNode
 					variableNames: #(name)
-					styleBlock: [ :styler | styler foreground: Color darkGray ])
-						continueOnMatch: true.
-						
-				(GtSmaCCNodeVariableStylerRule
-					nodeClassName: #GtWMElementNode
-					variableNames: #(coords)
-					styleBlock: [ :styler | styler foreground: Color blue darker ])
-						continueOnMatch: false.
+					styleBlock: [ :styler | styler foreground: Color darkGray ]).
 						
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMLabelNode
@@ -64,6 +57,21 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 					variableNames: #(left maturity1 comma maturity2 right)
 					styleBlock: [ :styler | styler foreground: Color blue darker ])
 						continueOnMatch: false.
+						
+				(GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMNoteNode
+					variableNames: #(noteToken)
+					styleBlock: [ :styler | styler foreground: Color purple ])
+						continueOnMatch: true.
+						
+				(GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMNoteNode
+					variableNames: #(label)
+					styleBlock: [ :styler | styler foreground: Color darkGray ]).
+						
+				(GtSmaCCNodeStylerRule
+					nodeClassName: #GtWMCoordsNode
+					styleBlock: [ :styler | styler foreground: Color blue darker ]).
 						
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMLinkNode

@@ -21,6 +21,11 @@ GtWardleyMapConstants class >> externalPipelineHeight [
 ]
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> hoverColor [
+	^ BrGlamorousColors hoveredButtonBorderColor
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> minPipelineRelativeWidth [
 	"I represent kind of padding in relative coordinates (0, 1)"
 

@@ -53,7 +53,9 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			baseline: 'GToolkit4Pharo' with: [
 				spec repository: 'github://feenkcom/gt4pharo:main/src' ];
 			baseline: 'GToolkitPresenter' with: [
-				spec repository: 'github://feenkcom/gtoolkit-presenter:main/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-presenter:main/src' ];
+			baseline: 'GToolkitCoder' with: [
+				spec repository: 'github://feenkcom/gtoolkit-coder:main/src' ].
 				
 		spec 
 			package: 'GToolkit-BlocGraph' with: [
@@ -88,7 +90,11 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 			package: 'GToolkit-Plotter' with: [
 				spec requires: #('Brick' ). ];
 			package: 'GToolkit-WardleyMap' with: [
-				spec requires: #('Brick' 'GToolkit4SmaCC' 'GToolkitAnnouncerUtility' ). ];
+				spec requires: #(
+					'Brick' 
+					'GToolkit4SmaCC' 
+					'GToolkitAnnouncerUtility'
+					'GToolkitCoder' ). ];
 			package: 'GToolkit-SequenceDiagram' with: [
 				spec requires: #('Brick' 'GToolkitAnnouncerUtility' ). ]. ].
 
