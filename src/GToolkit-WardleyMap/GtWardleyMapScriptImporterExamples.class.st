@@ -41,27 +41,32 @@ GtWardleyMapScriptImporterExamples >> importScriptWithPipeline [
 	self assert: aNodeA x equals: 0.5.
 	self assert: aNodeA y equals: 1 - 0.86.
 	self assert: aNodeA innerNodes size equals: 4.
+	self assert: aNodeA pipelineNode isNil.
 	
 	aNodeB := aMap nodes detect: [ :each | each label = 'node b' ].
 	self assert: aNodeB x equals: 0.38.
 	self assert: aNodeB y equals: aNodeA y.
 	self assert: (aNodeA innerNodes identityIncludes: aNodeB).
+	self assert: aNodeB pipelineNode equals: aNodeA.
 	
 	aNodeC := aMap nodes detect: [ :each | each label = 'node c' ].
 	self assert: aNodeC x equals: 0.46.
 	self assert: aNodeC y equals: aNodeA y.
 	self assert: (aNodeA innerNodes identityIncludes: aNodeC).
+	self assert: aNodeC pipelineNode equals: aNodeA.
 
 	aNodeD := aMap nodes detect: [ :each | each label = 'node d' ].
 	self assert: aNodeD x equals: 0.61.
 	self assert: aNodeD y equals: aNodeA y.
 	self assert: (aNodeA innerNodes identityIncludes: aNodeD).
-
+	self assert: aNodeD pipelineNode equals: aNodeA.
+	
 	aNodeE := aMap nodes detect: [ :each | each label = 'node e' ].
 	self assert: aNodeE x equals: 0.71.
 	self assert: aNodeE y equals: aNodeA y.
 	self assert: (aNodeA innerNodes identityIncludes: aNodeE).
-
+	self assert: aNodeE pipelineNode equals: aNodeA.
+	
 	self 
 		assert: aNodeA pipelineCoordinate x 
 		equals: aNodeB x - GtWardleyMapConstants  pipelineRelativeOffset.
@@ -73,7 +78,7 @@ GtWardleyMapScriptImporterExamples >> importScriptWithPipeline [
 	self assert: aNodeF x equals: 0.57.
 	self assert: aNodeF y equals: 1 - 0.96.
 	self assert: (aNodeA innerNodes identityIncludes: aNodeF) not.
-
+	self assert: aNodeF pipelineNode isNil.
 	
 	^ GtWardleyMapScriptExampleResult new 
 		originalScript: aScript;
