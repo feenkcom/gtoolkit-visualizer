@@ -41,13 +41,13 @@ GtConnector >> addEdgeLineFrom: aSourceElement to: aTargetElement [
 	aLineElement := BlParabollaArcElement new.
 	aLineElement curvatureFraction: 0.01.
 	aLineElement zIndex: -10.
-	aLineElement toHead: (BlArrowheadSimpleArrow new
-		border: (BlBorder builder paint: (Color gray alpha: 0.04); width: 10; build)).
 	aLineElement constraints ignoreByLayout.
 	aLineElement
-		border: (BlBorder paint: (Color gray alpha: 0.04) width: 20);
-		fromAnchor: (BlNearestPositionLooseCircleAnchor nearestTo:aTargetElement from: aSourceElement);
-		toAnchor: (BlNearestPositionLooseCircleAnchor nearestTo: aSourceElement from: aTargetElement).
+		border: (BlBorder paint: (Color lightGray alpha: 0.08) width: 10);
+		fromAnchor: (BlNearestPositionBoundsAnchor nearestTo:aTargetElement from: aSourceElement);
+		toAnchor: (BlNearestPositionBoundsAnchor nearestTo: aSourceElement from: aTargetElement).
+	aLineElement toHead: (BlArrowheadSimpleArrow new
+		border: (BlBorder paint: (Color lightGray alpha: 0.08) width: 10)).
 	
 	aLineElement connectorEdge 
 		fromElement: aSourceElement;
@@ -344,7 +344,7 @@ GtConnector >> initialize [
 		c vertical fitContent.
 		c padding: (BlInsets all: 40) ].
 
-	self layout: (GtGradHorizontalTreeLayout new levelDistance: 200; nodeDistance: 40).
+	self layout: (GtGradHorizontalTreeLayout new levelDistance: 100; nodeDistance: 40).
 	self options: GtConnectorOptions new.
 	
 	entityEventHandler := GtConnectorEntityEventHandler new connector: self.
