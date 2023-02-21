@@ -80,11 +80,11 @@ GtMondrianDomainExamples >> classHierarchyFor: classes [
 	| m |
 	m := GtMondrian new.
 	m nodes
-		shape: [ :c | 
+		stencil: [ :c | 
 			BrLabel new
 				border: (BlBorder paint: Color lightGray);
 				text: c name;
-				aptitude: BrGlamorousLabelAptitude;
+				aptitude: (BrGlamorousLabelAptitude new + (BrStyleCommonAptitude new hovered: [:aStyle | aStyle background: (Color blue alpha: 0.5) ]));
 				when: BlClickEvent
 					do: [ :e | e target phlow spawnTool: (GtClassCoderTool forClass: c). e consumed: true ];
 				padding: (BlInsets all: 5) ];
