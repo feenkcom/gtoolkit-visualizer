@@ -171,12 +171,10 @@ GtMondrianBasicExamples >> edgesWithThickerLines [
 	| view |
 	view := self nodesWithEllipses.
 	view edges
-		stencil: [ :x | 
-			BlLineElement new
-				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
+		stencil: [ :x | BlLineElement new border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
 	view topStep root graph edgeChildren do: [ :edgeChild | 
-		self assert: edgeChild border width = edgeChild graph connectedNodes asArray last graph model ].
+			self assert: edgeChild border width = edgeChild graph connectedNodes asArray last graph model ].
 	view layout tree.
 	^ view
 ]
