@@ -44,7 +44,7 @@ Class {
 		'containerElementBlock',
 		'leafElementBlock'
 	],
-	#category : 'GToolkit-TreeMap-Core'
+	#category : #'GToolkit-TreeMap-Core'
 }
 
 { #category : #api }
@@ -73,17 +73,18 @@ GtNestedRectangleTreeMap >> create [
 GtNestedRectangleTreeMap >> createContainerFor: aModelContext [
 	| containerElement |
 	containerElement := BlElement new
-		layout: layoutIterator nextLayout;
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent.
-			"c treemap weight: (leavesSizeBlock value: aModelContext model)" ];
-		when: BlClickEvent
-			do: [ :e | 
-			e target phlow spawnObject: aModelContext model.
-			e consumed: true ];
-		border: self newContainterBorder.
+			layout: layoutIterator nextLayout;
+			constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent ];
+			border: self newContainterBorder.
 	containerElementBlock cull: containerElement cull: aModelContext.
+	"(containerElement eventDispatcher wantsEventType: BlClickEvent)
+		ifFalse: [ containerElement
+				when: BlClickEvent
+				do: [ :e | 
+					e target phlow spawnObject: aModelContext model.
+					e consumed: true ] ]."
 	^ containerElement
 ]
 
@@ -103,18 +104,24 @@ GtNestedRectangleTreeMap >> createFor: aModelContext [
 
 { #category : #implementation }
 GtNestedRectangleTreeMap >> createLeavesFor: aModelContext [
-	^ (leavesCreationBlock value: aModelContext model) collect: [ :aLeaf |
-		| aLeafElement aLeafContext |
-		aLeafContext := aModelContext copyWithModel: aLeaf.
-		aLeafElement := BlElement new
-			constraintsDo: [ :c | 
-				c horizontal matchParent.
-				c vertical matchParent.
-				c treemap weight: (leavesSizeBlock value: aLeaf) ];
-			when: BlClickEvent do: [ :e | e target phlow spawnObject: aLeaf. e consumed: true ];
-			border: self newLeafBoder.
-		leafElementBlock cull: aLeafElement cull: aLeafContext.
-		aLeafElement ]
+	^ (leavesCreationBlock value: aModelContext model)
+		collect: [ :aLeaf | 
+			| aLeafElement aLeafContext |
+			aLeafContext := aModelContext copyWithModel: aLeaf.
+			aLeafElement := BlElement new
+					constraintsDo: [ :c | 
+						c horizontal matchParent.
+						c vertical matchParent.
+						c treemap weight: (leavesSizeBlock value: aLeaf) ];
+					border: self newLeafBoder.
+			leafElementBlock cull: aLeafElement cull: aLeafContext.
+			"(aLeafElement eventDispatcher wantsEventType: BlClickEvent)
+				ifFalse: [ 
+					aLeafElement
+						when: BlClickEvent
+						do: [ :e | 
+							e target phlow spawnObject: aLeaf ] ]."
+			aLeafElement ]
 ]
 
 { #category : #api }
