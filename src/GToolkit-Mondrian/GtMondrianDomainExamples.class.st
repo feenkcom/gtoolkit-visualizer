@@ -40,7 +40,7 @@ GtMondrianDomainExamples >> buttonLabelLookEventPropagation [
 	<gtExample>
 	| aView aButtonElement theNodes |
 
-	aButtonElement := BrButtonLabelLookExamples new buttonWithModelAndLookWithoutConstraints.
+	aButtonElement := BrButtonLabelAptitudeExamples new buttonWithModelAndLookWithoutConstraints.
 	theNodes := {
 		aButtonElement.
 		aButtonElement aptitude.
