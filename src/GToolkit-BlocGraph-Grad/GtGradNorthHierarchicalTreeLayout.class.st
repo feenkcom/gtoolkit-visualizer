@@ -5,24 +5,16 @@ Class {
 }
 
 { #category : #'private - layout' }
-GtGradNorthHierarchicalTreeLayout >> constructLayoutAlgorithm: anElementsCollection [
-	(self isATreeOrHasLessThanMaxBackEdges: anElementsCollection)
-		ifTrue: [ 
-			| treeAlignment |
-			treeAlignment := self alignment constructTreeAlignment.
-			^ GtGradVerticalDominanceTreeLayout new
-												 levelDistance: self levelDistance;
-												 nodeDistance: self nodesDistance;
-												 treesDistance: self componentsDistance;
-												 nodesAlignment: treeAlignment.
-		]
-		ifFalse: [ 
-			| hierarchicalAlignment |
-			hierarchicalAlignment := self alignment constructHierarchicalAlignment.
-			^ GtGradNorthHierarchicalLayout new
-												 interRanksSpacing: self levelDistance;
-												 intraRankSpacing: self nodesDistance;
-												 interHierarchySpacing: self componentsDistance;
-												 alignment: hierarchicalAlignment.
-		].
+GtGradNorthHierarchicalTreeLayout >> hierarchicalLayoutClass [
+	^ GtGradNorthHierarchicalLayout
+]
+
+{ #category : #accessing }
+GtGradNorthHierarchicalTreeLayout >> reverseLayout [
+	^false
+]
+
+{ #category : #'private - layout' }
+GtGradNorthHierarchicalTreeLayout >> treeLayoutClass [
+	^ GtGradVerticalDominanceTreeLayout
 ]
