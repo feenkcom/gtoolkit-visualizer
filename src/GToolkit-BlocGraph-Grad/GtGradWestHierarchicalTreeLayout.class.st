@@ -5,24 +5,16 @@ Class {
 }
 
 { #category : #'private - layout' }
-GtGradWestHierarchicalTreeLayout >> constructLayoutAlgorithm: anElementsCollection [
-	(self isATreeOrHasLessThanMaxBackEdges: anElementsCollection)
-		ifTrue: [ 
-			| treeAlignment |
-			treeAlignment := self alignment constructTreeAlignment.
-			^ GtGradHorizontalDominanceTreeLayout new
-												 levelDistance: self levelDistance;
-												 nodeDistance: self nodesDistance;
-												 treesDistance: self componentsDistance;
-												 nodesAlignment: treeAlignment.
-		]
-		ifFalse: [ 
-			| hierarchicalAlignment |
-			hierarchicalAlignment := self alignment constructHierarchicalAlignment.
-			^ GtGradWestHierarchicalLayout new
-												 interRanksSpacing: self levelDistance;
-												 intraRankSpacing: self nodesDistance;
-												 interHierarchySpacing: self componentsDistance;
-												 alignment: hierarchicalAlignment.
-		].
+GtGradWestHierarchicalTreeLayout >> hierarchicalLayoutClass [
+	^ GtGradWestHierarchicalLayout
+]
+
+{ #category : #accessing }
+GtGradWestHierarchicalTreeLayout >> reverseLayout [
+	^false
+]
+
+{ #category : #'private - layout' }
+GtGradWestHierarchicalTreeLayout >> treeLayoutClass [
+	^ GtGradHorizontalDominanceTreeLayout
 ]
