@@ -61,6 +61,20 @@ GtGradTreeNode >> addAll: aCollectionOfNodes [
 	self nodes addAll: aCollectionOfNodes
 ]
 
+{ #category : #'instance-creation' }
+GtGradTreeNode >> addChildNodesToLeaves [
+	| queue |
+	queue := OrderedCollection new.
+	queue add: self.
+
+	[ queue isNotEmpty ]
+		whileTrue: [ | theCurrentNode |
+			theCurrentNode := queue removeAt: 1.
+			theCurrentNode nodes isEmpty
+				ifTrue: [ theCurrentNode add: (GtGradTreeNode on: theCurrentNode element) ]
+				ifFalse: [ queue addAll: theCurrentNode nodes ] ]
+]
+
 { #category : #accessing }
 GtGradTreeNode >> contour [
 	^ contour

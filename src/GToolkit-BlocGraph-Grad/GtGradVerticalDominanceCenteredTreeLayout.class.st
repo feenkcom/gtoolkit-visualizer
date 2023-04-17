@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #initialization }
-GtGradVerticalDominanceCenteredTreeLayout >> formForestFrom: theNodes [
-	^ GtGradDominanceCenteredTreeForest from: theNodes separateSubtrees: separateSubtrees.
+GtGradVerticalDominanceCenteredTreeLayout >> forestClass [
+	^ GtGradDominanceCenteredTreeForest
 ]

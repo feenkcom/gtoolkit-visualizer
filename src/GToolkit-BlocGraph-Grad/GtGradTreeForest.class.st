@@ -7,27 +7,6 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
-{ #category : #'instance-creation' }
-GtGradTreeForest class >> addChildNodesToLeaves: theRootNode [
-	| queue |
-	queue := OrderedCollection new.
-	queue add: theRootNode.
-
-	[queue isNotEmpty]
-		whileTrue: [ 
-			| theCurrentNode |
-			theCurrentNode := queue removeAt: 1.
-			theCurrentNode nodes isEmpty
-				ifTrue: [ 
-					theCurrentNode add: (GtGradTreeNode on: theCurrentNode element).
-				]
-				ifFalse: [ 
-					queue addAll: theCurrentNode nodes.	
-				]
-		].
-
-]
-
 { #category : #'private - depth-first-search' }
 GtGradTreeForest class >> dfs: theRootNode visited: aVisitedDictionary [
 	self subclassResponsibility 
@@ -41,15 +20,14 @@ GtGradTreeForest class >> from: aCollectionOfElements separateSubtrees: aBool [
 	allTrees := OrderedDictionary new.
 	visitedDictionary := IdentityDictionary new.
 	aCollectionOfElements
-		do:
-			[ :aNodeElement | 
-			((visitedDictionary includesKey: aNodeElement) or: [ aNodeElement hasNodesAlongIncomingEdges ])
-				ifFalse:
-					[ | aTreeNode |
+		do: [ :aNodeElement | 
+			((visitedDictionary includesKey: aNodeElement)
+				or: [ aNodeElement hasNodesAlongIncomingEdges ])
+				ifFalse: [ | aTreeNode |
 					aTreeNode := GtGradTreeNode on: aNodeElement.
 					visitedDictionary at: aNodeElement put: aTreeNode.
 					self dfs: aTreeNode visited: visitedDictionary.
-					aBool ifTrue: [ self addChildNodesToLeaves: aTreeNode ].
+					aBool ifTrue: [ aTreeNode addChildNodesToLeaves ].
 					allTrees at: aTreeNode root put: #root ] ].
 	^ self new trees: allTrees keys
 ]
@@ -74,7 +52,6 @@ GtGradTreeForest >> gtNodesFor: aView [
 { #category : #initialization }
 GtGradTreeForest >> initialize [
 	super initialize.
-	
 	trees := OrderedCollection new
 ]
 

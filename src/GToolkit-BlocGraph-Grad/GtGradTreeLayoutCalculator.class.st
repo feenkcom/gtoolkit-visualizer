@@ -16,35 +16,28 @@ GtGradTreeLayoutCalculator >> initialize [
 
 { #category : #'private - layout' }
 GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aStartPoint bounds: bounds [
-	|  nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection |
-	self separateSubtrees
-		ifTrue: [ 
-			aTreeNode nodes isEmpty
-				ifTrue: [ ^self ]
-		].
+	| nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection |
+	self separateSubtrees ifTrue: [ aTreeNode nodes isEmpty ifTrue: [ ^ self ] ].
 	nodePosition := aTreeNode element position.
 	alignmentCorrection := self layout nodesAlignment
-		calculateCorrectionFor: aTreeNode
-		aRootNode: aRootNode
-		layout: layout.
+			calculateCorrectionFor: aTreeNode
+			aRootNode: aRootNode
+			layout: layout.
 	GtGradTreeLayoutCorrectionSignal new
 		node: aTreeNode;
 		alignmentCorrection: alignmentCorrection;
 		emit.
 	newNodePositionX := nodePosition x + aStartPoint x
-		+ (self layout nodeOffsetBreadth: aTreeNode)
-		+ alignmentCorrection x.
+			+ (self layout nodeOffsetBreadth: aTreeNode) + alignmentCorrection x.
 	newNodePositionY := nodePosition y + aStartPoint y
-		+ (self layout nodeOffsetLength: aTreeNode)
-		+ alignmentCorrection y.
+			+ (self layout nodeOffsetLength: aTreeNode) + alignmentCorrection y.
 	aTreeNode element position: newNodePositionX @ newNodePositionY.
 	self
 		updateNodeBounds: aTreeNode
 		bounds: bounds
 		positionX: newNodePositionX
 		positionY: newNodePositionY.
-	aTreeNode nodes isNotEmpty
-		ifFalse: [ ^ self ].
+	aTreeNode nodes isNotEmpty ifFalse: [ ^ self ].
 	firstChild := aTreeNode nodes first.
 	self
 		layout: aTreeNode
@@ -52,49 +45,35 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 		start: newNodePositionX @ newNodePositionY
 		bounds: bounds.
 	childrenOffsetX := newNodePositionX
-		+ (self layout nodeOffsetBreadth: firstChild).
+			+ (self layout nodeOffsetBreadth: firstChild).
 	childrenOffsetY := newNodePositionY
-		+ (self layout nodeOffsetLength: firstChild).
+			+ (self layout nodeOffsetLength: firstChild).
 	aTreeNode nodes
-		do: [ :child | 
-			child = firstChild
-				ifFalse: [ self
-							layout: aRootNode
-							currentNode: child
-							start: childrenOffsetX @ childrenOffsetY
-							bounds: bounds.
-					childrenOffsetX := childrenOffsetX
-						+ (self layout childOffsetBreadth: child).
-					childrenOffsetY := childrenOffsetY
-						+ (self layout childOffsetLength: child) ] ]
+		allButFirstDo: [ :child | 
+			self
+				layout: aRootNode
+				currentNode: child
+				start: childrenOffsetX @ childrenOffsetY
+				bounds: bounds.
+			childrenOffsetX := childrenOffsetX + (self layout childOffsetBreadth: child).
+			childrenOffsetY := childrenOffsetY + (self layout childOffsetLength: child) ]
 ]
 
 { #category : #'private - layout' }
 GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
-	| nodePosition  newNodePositionX newNodePositionY|
-	
-
- 	nodePosition := aTreeNode element position.
+	| nodePosition newNodePositionX newNodePositionY |
+	nodePosition := aTreeNode element position.
 	newNodePositionX := nodePosition x.
 	newNodePositionY := nodePosition y.
 
-	delta x > 0
-		ifTrue: [ 
-			newNodePositionX := (newNodePositionX + delta x).
-	 ].
- 	delta y > 0
-		ifTrue: [ 
-			newNodePositionY := (newNodePositionY + delta y).
-	 ].
-	
-	aTreeNode element position: newNodePositionX @ newNodePositionY .
- 	aTreeNode nodes do: [ :child |
-		(self layout separateSubtrees not or: [ child nodes isNotEmpty ])
-			ifTrue: [ 
-				self moveNode: child delta: delta.
-			]
-	].
+	delta x > 0 ifTrue: [ newNodePositionX := newNodePositionX + delta x ].
+	delta y > 0 ifTrue: [ newNodePositionY := newNodePositionY + delta y ].
 
+	aTreeNode element position: newNodePositionX @ newNodePositionY.
+	aTreeNode nodes
+		do: [ :child | 
+			(self layout separateSubtrees not or: [ child nodes isNotEmpty ])
+				ifTrue: [ self moveNode: child delta: delta ] ]
 ]
 
 { #category : #accessing }

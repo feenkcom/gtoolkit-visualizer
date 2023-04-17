@@ -13,10 +13,9 @@ GtGradAbstractHorizontalTreeLayout >> calculateTreePositionCorrection: delta [
 GtGradAbstractHorizontalTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
 	| x y |
 	x := startX.
-	y := bounds bottom + self treesDistance.
-	dy > 0
-		ifTrue: [ y := y + dy ].
-	
+	y := bounds bottom + treesDistance.
+	dy > 0 ifTrue: [ y := y + dy ].
+
 	^ x @ y
 ]
 
@@ -34,17 +33,6 @@ GtGradAbstractHorizontalTreeLayout >> childOffsetLength: aNodesChild [
 	<return: #Number>
 
 	^ aNodesChild offset y
-]
-
-{ #category : #initialization }
-GtGradAbstractHorizontalTreeLayout >> formForestFrom: theNodes [
-	self subclassResponsibility
-]
-
-{ #category : #initialization }
-GtGradAbstractHorizontalTreeLayout >> initialize [
-	super initialize.
-
 ]
 
 { #category : #'api - geometry' }

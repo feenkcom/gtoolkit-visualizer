@@ -54,9 +54,14 @@ GtGradAbstractTreeLayout >> childOffsetLength: aChildElement [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'api - accessing' }
-GtGradAbstractTreeLayout >> formForestFrom: theNodes [
+{ #category : #initialization }
+GtGradAbstractTreeLayout >> forestClass [
 	self subclassResponsibility
+]
+
+{ #category : #initialization }
+GtGradAbstractTreeLayout >> formForestFrom: theNodes [
+	^ self forestClass from: theNodes separateSubtrees: self separateSubtrees
 ]
 
 { #category : #initialization }
