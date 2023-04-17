@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #initialization }
-GtGradHorizontalTreeLayout >> formForestFrom: theNodes [
-	^ GtGradDFSTreeForest from: theNodes separateSubtrees: self separateSubtrees.
+GtGradHorizontalTreeLayout >> forestClass [
+	^ GtGradDFSTreeForest
 ]

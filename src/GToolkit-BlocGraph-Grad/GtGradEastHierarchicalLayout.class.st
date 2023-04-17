@@ -5,17 +5,6 @@ Class {
 }
 
 { #category : #'private-layout' }
-GtGradEastHierarchicalLayout >> placementStage: model initialX: initialX [
-	| coordinateAssignment | 
-	coordinateAssignment := GtGradEastHierarchicalCoordinateAssignmentStage new
-								 intraRankSpacing: self intraRankSpacing;
-								 interRanksSpacing: self interRanksSpacing;
-								 parallelEdgeSpacing: self parallelEdgeSpacing;
-								 initialX: initialX;
-								 model: model;
-								 alignment: self alignment.
-	coordinateAssignment execute.
-	^ coordinateAssignment limitX + self interHierarchySpacing.
-
-
+GtGradEastHierarchicalLayout >> coordinateAssignmentClass [
+	^ GtGradEastHierarchicalCoordinateAssignmentStage
 ]

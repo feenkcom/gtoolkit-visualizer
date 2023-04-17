@@ -30,17 +30,13 @@ GtGradHierarchicalLayout >> alignment: anAlignment [
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> crossingStage: model [
-	| crossingReduction |
-	crossingReduction := GtGradHierarchicalHybirdCrossingReductionStage new model: model.
-	crossingReduction execute
+GtGradHierarchicalLayout >> coordinateAssignmentClass [
+	self subclassResponsibility
 ]
 
 { #category : #'private-layout' }
-GtGradHierarchicalLayout >> cycleStage: model [
-	| cycleRemover |
-	cycleRemover := GtGradHierarchicalCycleRemovalStage new model: model.
-	cycleRemover execute
+GtGradHierarchicalLayout >> crossingStage: model [
+	(GtGradHierarchicalHybridCrossingReductionStage new model: model) execute
 ]
 
 { #category : #'private-layout' }
@@ -135,16 +131,7 @@ GtGradHierarchicalLayout >> isDescentantOf: childNode parentNode: parentNode [
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> layeringStage: model [
 	model calculateInitialRank.
-	model fixRanks.
-	model hierarchyNodesDictionary do: [ :aNode | 
-		GtGradHierarchicalLayoutNodeLayerSignal new
-										element: aNode element;
-										layer: aNode layer;
-										maxRank: aNode maxRank;
-										minRank: aNode minRank;
-										emit.										
-	]
-	
+	model fixRanks
 ]
 
 { #category : #measure }
@@ -184,8 +171,16 @@ GtGradHierarchicalLayout >> placementStage: anObject [
 
 { #category : #'private-layout' }
 GtGradHierarchicalLayout >> placementStage: model initialX: initialX [
-	self subclassResponsibility
-
+	| coordinateAssignment |
+	coordinateAssignment := self coordinateAssignmentClass new
+			intraRankSpacing: intraRankSpacing;
+			interRanksSpacing: interRanksSpacing;
+			parallelEdgeSpacing: parallelEdgeSpacing;
+			initialX: initialX;
+			model: model;
+			alignment: alignment.
+	coordinateAssignment execute.
+	^ coordinateAssignment limitX + interHierarchySpacing
 ]
 
 { #category : #accessing }
@@ -196,6 +191,40 @@ GtGradHierarchicalLayout >> positions [
 { #category : #accessing }
 GtGradHierarchicalLayout >> positions: anObject [
 	positions := anObject
+]
+
+{ #category : #'private-layout' }
+GtGradHierarchicalLayout >> removeCycles: model [
+	| aVisitedNodesSet aVisitedNodesSetCopy aRootNodesCollection visitor newRootsCandidates |
+	aVisitedNodesSet := Set new.
+	aRootNodesCollection := model rootNodes.
+	visitor := GtGradHierarchyCycleRemovalVisitor new
+			visitedNodes: aVisitedNodesSet.
+	model
+		visit: visitor
+		dfsRoots: aRootNodesCollection
+		trackAncestors: true
+		visitedNodes: aVisitedNodesSet.
+	newRootsCandidates := Set new.
+	aVisitedNodesSet size < model hierarchyNodesDictionary size
+		ifTrue: [ newRootsCandidates := model hierarchyNodesDictionary values
+					copyWithoutAll: aVisitedNodesSet ].
+
+	aVisitedNodesSetCopy := aVisitedNodesSet copy.
+	aRootNodesCollection removeAll.
+	newRootsCandidates isNotEmpty
+		ifTrue: [ aRootNodesCollection add: newRootsCandidates first ].
+	model
+		visit: visitor
+		dfsRoots: aRootNodesCollection
+		trackAncestors: true
+		visitedNodes: aVisitedNodesSetCopy.
+	newRootsCandidates
+		do: [ :aRootCandidate | 
+			| anElement |
+			anElement := aRootCandidate element.
+			anElement nodesAlongIncomingEdges isEmpty
+				ifTrue: [ model roots add: anElement ] ]
 ]
 
 { #category : #accessing }
@@ -215,47 +244,53 @@ GtGradHierarchicalLayout >> run: theGraphNodesList [
 	aHierarchyNodesCollection := OrderedCollection new.
 	visitedNodes := Set new.
 	self roots isNil
-		ifTrue: [
-			| filledNodesSet |
+		ifTrue: [ | filledNodesSet |
 			self roots: OrderedCollection new.
 			filledNodesSet := OrderedCollection new.
 			filledNodesSet addAll: theGraphNodesList.
-			[filledNodesSet isNotEmpty]
-				whileTrue: [
-					| rootCandidates |
+			[ filledNodesSet isNotEmpty ]
+				whileTrue: [ | rootCandidates |
 					rootCandidates := self findRoots: filledNodesSet.
-					rootCandidates do: [ :aRootCandidate |
-						| theCurrentNodesSet |
-						theCurrentNodesSet := Set new.
-						aHierarchyNodesCollection add: theCurrentNodesSet.
-						self traverse: aRootCandidate directed: false  visitedNodes: visitedNodes  currentComponent:  theCurrentNodesSet hierarchyComponents:  aHierarchyNodesCollection filledNodesSet: filledNodesSet
-					].
-					self roots addAll: rootCandidates.
-				]
-			]
-		ifFalse: [ 
-			self roots do: [ :aRoot |
-				| theCurrentNodesSet |
-				theCurrentNodesSet := Set new.
-				aHierarchyNodesCollection add: theCurrentNodesSet.
-				self traverse: aRoot directed: true  visitedNodes: visitedNodes  currentComponent:  theCurrentNodesSet hierarchyComponents:  aHierarchyNodesCollection filledNodesSet: nil
-			]
-	].
+					rootCandidates
+						do: [ :aRootCandidate | 
+							| theCurrentNodesSet |
+							theCurrentNodesSet := Set new.
+							aHierarchyNodesCollection add: theCurrentNodesSet.
+							self
+								traverse: aRootCandidate
+								directed: false
+								visitedNodes: visitedNodes
+								currentComponent: theCurrentNodesSet
+								hierarchyComponents: aHierarchyNodesCollection
+								filledNodesSet: filledNodesSet ].
+					self roots addAll: rootCandidates ] ]
+		ifFalse: [ self roots
+				do: [ :aRoot | 
+					| theCurrentNodesSet |
+					theCurrentNodesSet := Set new.
+					aHierarchyNodesCollection add: theCurrentNodesSet.
+					self
+						traverse: aRoot
+						directed: true
+						visitedNodes: visitedNodes
+						currentComponent: theCurrentNodesSet
+						hierarchyComponents: aHierarchyNodesCollection
+						filledNodesSet: nil ] ].	
+						
 	"Perform layout for each separate hierarchy"
 	initialX := 0.
-	aHierarchyNodesCollection do: [ :aHierarchySet |
-		| model |
-		GtGradHierarchicalLayoutCurrentComponentSignal new 
-								theCurrentComponent: aHierarchySet;
-								emit.
-		model := GtGradHierarchyModel from: aHierarchySet.
-		model roots: self roots.
-		self cycleStage: model.
-		self layeringStage: model.
-		self crossingStage: model.
-		initialX := self placementStage: model initialX: initialX.
-	]
-
+	aHierarchyNodesCollection
+		do: [ :aHierarchySet | 
+			| model |
+			GtGradHierarchicalLayoutCurrentComponentSignal new
+				theCurrentComponent: aHierarchySet;
+				emit.
+			model := GtGradHierarchyModel from: aHierarchySet.
+			model roots: self roots.
+			self removeCycles: model.
+			self layeringStage: model.
+			self crossingStage: model.
+			initialX := self placementStage: model initialX: initialX ]
 ]
 
 { #category : #'private-layout' }

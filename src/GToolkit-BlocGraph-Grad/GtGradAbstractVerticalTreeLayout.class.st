@@ -12,11 +12,10 @@ GtGradAbstractVerticalTreeLayout >> calculateTreePositionCorrection: delta [
 { #category : #'api - geometry' }
 GtGradAbstractVerticalTreeLayout >> calculateTreeStart: bounds nodesXCorrection: dx nodesYCorrection: dy startX: startX startY: startY [
 	| x y |
-	x := bounds right + self treesDistance.
-	dx > 0
-		ifTrue: [ x := x + dx ].
+	x := bounds right + treesDistance.
+	dx > 0 ifTrue: [ x := x + dx ].
 	y := startY.
-	
+
 	^ x @ y
 ]
 
@@ -34,17 +33,6 @@ GtGradAbstractVerticalTreeLayout >> childOffsetLength: aNodesChild [
 	<return: #Number>
 	
 	^ 0
-]
-
-{ #category : #initialization }
-GtGradAbstractVerticalTreeLayout >> formForestFrom: theNodes [
-	self subclassResponsibility
-]
-
-{ #category : #initialization }
-GtGradAbstractVerticalTreeLayout >> initialize [
-	super initialize.
-
 ]
 
 { #category : #'api - geometry' }
