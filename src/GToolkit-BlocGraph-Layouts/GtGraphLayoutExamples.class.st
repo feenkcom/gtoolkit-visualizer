@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphLayoutExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #examples }
@@ -132,9 +132,11 @@ GtGraphLayoutExamples >> nodeFor: aModel [
 
 { #category : #'building - graph' }
 GtGraphLayoutExamples >> nodes: aDataCollection [
-	^ self
-		nodes: aDataCollection
-		extent: self nodeExtent
+	^ aDataCollection collect: [ :model |
+		| child |
+		child := self nodeFor: model.
+		child userData at: #model put: model.
+		child ]
 ]
 
 { #category : #'building - graph' }
