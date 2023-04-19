@@ -106,7 +106,8 @@ GtGradHierarchicalHybridCrossingReductionStage >> execute [
 							aRank := self model ranks at: anIndex.
 							aRank
 								doWithIndex: [ :anElement :rankIndex | anElement rankPositionsAt: anIndex value: rankIndex - 1 ] ] ].
-			theCurrentIteration := theCurrentIteration + 1 ].	"update model ranks"
+			theCurrentIteration := theCurrentIteration + 1 ].	
+	"update model ranks"
 	self model ranks: nestedBestRanks
 ]
 
