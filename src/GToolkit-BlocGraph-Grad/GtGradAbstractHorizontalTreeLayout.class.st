@@ -86,10 +86,10 @@ GtGradAbstractHorizontalTreeLayout >> nodeTopAlignmentCorrection: aTreeNode aRoo
 
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> reversedPositionOfNode: aTreeNode rootPosition: theRootPosition bounds: theBounds [
-"calculate position of the node so that it the node is flipped
+	"calculate position of the node so that it the node is flipped
 over a vertical line containing the root node"
+
 	| nodePosition |
 	nodePosition := aTreeNode element position.
-
-	^ ( 2 * (theRootPosition x) - nodePosition  x + theBounds right) @ (nodePosition y)
+	^ (2 * theRootPosition x - nodePosition x + theBounds right) @ nodePosition y
 ]

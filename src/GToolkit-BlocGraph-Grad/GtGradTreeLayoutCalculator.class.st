@@ -23,10 +23,6 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 			calculateCorrectionFor: aTreeNode
 			aRootNode: aRootNode
 			layout: layout.
-	GtGradTreeLayoutCorrectionSignal new
-		node: aTreeNode;
-		alignmentCorrection: alignmentCorrection;
-		emit.
 	newNodePositionX := nodePosition x + aStartPoint x
 			+ (self layout nodeOffsetBreadth: aTreeNode) + alignmentCorrection x.
 	newNodePositionY := nodePosition y + aStartPoint y
@@ -71,36 +67,26 @@ GtGradTreeLayoutCalculator >> moveNode: aTreeNode delta: delta [
 
 	aTreeNode element position: newNodePositionX @ newNodePositionY.
 	aTreeNode nodes
-		do: [ :child | 
-			(self layout separateSubtrees not or: [ child nodes isNotEmpty ])
-				ifTrue: [ self moveNode: child delta: delta ] ]
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutCalculator >> origin [
-	<return: #Point>
-
-	^ origin
-]
-
-{ #category : #accessing }
-GtGradTreeLayoutCalculator >> origin: aPoint [
-	origin := aPoint
+		select: [ :child | self layout separateSubtrees not or: [ child nodes isNotEmpty ] ]
+		thenDo: [ :child | self moveNode: child delta: delta ]
 ]
 
 { #category : #'private - layout' }
 GtGradTreeLayoutCalculator >> reverse: aTreeNode rootPosition: theRootPosition bounds: bounds [
 	| newNodePosition |
-
-	newNodePosition := self layout reversedPositionOfNode:
-									aTreeNode rootPosition: theRootPosition
-									bounds: bounds.
+	newNodePosition := self layout
+			reversedPositionOfNode: aTreeNode
+			rootPosition: theRootPosition
+			bounds: bounds.
 
 	aTreeNode element position: newNodePosition.
 
-	aTreeNode nodes do: [ :child |
-		self reverse: child rootPosition: theRootPosition bounds: bounds
-	].
+	aTreeNode nodes
+		do: [ :child | 
+			self
+				reverse: child
+				rootPosition: theRootPosition
+				bounds: bounds ]
 ]
 
 { #category : #'private - layout' }
@@ -126,43 +112,33 @@ GtGradTreeLayoutCalculator >> updateNodeBounds: aTreeNode bounds: bounds positio
 
 { #category : #visiting }
 GtGradTreeLayoutCalculator >> visitRootNode: aTreeNode [
-	| bounds dx dy treePositionCorrection|
-
-	GtGradProcessingTreeSignal new
-		root: aTreeNode;
-		emit.
-
-	
+	| bounds dx dy treePositionCorrection aPoint |
 	bounds := BlBounds new.
 	bounds left: SmallInteger maxVal asFloat.
 	bounds top: SmallInteger maxVal asFloat.
 	self
 		layout: aTreeNode
 		currentNode: aTreeNode
-		start: self origin
+		start: origin
 		bounds: bounds.
 
-	dx := (self origin x) - (bounds left).
-	dy := (self origin y) - (bounds top).
-	treePositionCorrection := (self layout calculateTreePositionCorrection: dx@dy).
-	
-	(treePositionCorrection x > 0 or: [ treePositionCorrection  y > 0 ])
-		ifTrue: [
-			self moveNode: aTreeNode delta: treePositionCorrection
-	 ].
-	
+	dx := origin x - bounds left.
+	dy := origin y - bounds top.
+	treePositionCorrection := self layout calculateTreePositionCorrection: dx @ dy.
+
+	(treePositionCorrection x > 0 or: [ treePositionCorrection y > 0 ])
+		ifTrue: [ self moveNode: aTreeNode delta: treePositionCorrection ].
+
 	self reverse
-		ifTrue: [ 
-			self reverse: aTreeNode
-			     rootPosition: (aTreeNode element position)
-			     bounds: bounds
-		].
-
-	self origin: (self layout calculateTreeStart: bounds
-									  nodesXCorrection: dx
-									  nodesYCorrection: dy
-									  startX: self origin x
-									  startY: self origin y).
-	
-
+		ifTrue: [ self
+				reverse: aTreeNode
+				rootPosition: aTreeNode element position
+				bounds: bounds ].
+	aPoint := self layout
+			calculateTreeStart: bounds
+			nodesXCorrection: dx
+			nodesYCorrection: dy
+			startX: origin x
+			startY: origin y.
+	origin := aPoint
 ]

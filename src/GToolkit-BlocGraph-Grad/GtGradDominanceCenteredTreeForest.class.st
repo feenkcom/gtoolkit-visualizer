@@ -6,12 +6,10 @@ Class {
 
 { #category : #'private - breadth-first-search' }
 GtGradDominanceCenteredTreeForest class >> bfs: theRootNode nodesDepthDictionary: theNodesDepthsDictionary visited: aVisitedDictionary [
-	| theNodesOnLevelsDictionary |
-	theNodesOnLevelsDictionary := IdentityDictionary new.
 	self
 		formCenteredTreeBFS: theRootNode
 		nodesDepthsDictionary: theNodesDepthsDictionary
-		nodesOnLevelsDictionary: theNodesOnLevelsDictionary
+		nodesOnLevelsDictionary: IdentityDictionary new
 		visited: aVisitedDictionary
 ]
 
@@ -48,19 +46,17 @@ GtGradDominanceCenteredTreeForest class >> dfs: theRootNode visited: aVisitedDic
 
 { #category : #'private - breadth-first-search' }
 GtGradDominanceCenteredTreeForest class >> formCenteredTreeBFS: theRootNode nodesDepthsDictionary: theNodesDepthsDictionary nodesOnLevelsDictionary: theNodesOnLevelsDictionary visited: aVisitedDictionary [
-	| queue firstLevelNodes |
+	| queue firstLevelNodes theCurrentNode currentDepth outgoingEdges childrenDepth numOfNodesOnCurrentLevel currentNodeCenterDistance nodesOnNextLevel nodesOnCurrentLevel |
 	queue := OrderedCollection new.
 	queue add: theRootNode.
 	firstLevelNodes := OrderedCollection new.
 	firstLevelNodes add: theRootNode.
 	theNodesOnLevelsDictionary at: 1 put: firstLevelNodes.
 	[ queue isNotEmpty ]
-		whileTrue: [ | theCurrentNode currentDepth |
-			theCurrentNode := queue removeAt: 1.
+		whileTrue: [ theCurrentNode := queue removeAt: 1.
 			currentDepth := theCurrentNode depth + 1.
 			theCurrentNode element hasNodesAlongOutgoingEdges
-				ifTrue: [ | outgoingEdges childrenDepth numOfNodesOnCurrentLevel currentNodeCenterDistance nodesOnNextLevel nodesOnCurrentLevel |
-					childrenDepth := currentDepth + 1.
+				ifTrue: [ childrenDepth := currentDepth + 1.
 					outgoingEdges := theCurrentNode element nodesAlongOutgoingEdges.
 					nodesOnCurrentLevel := theNodesOnLevelsDictionary at: currentDepth.
 
@@ -108,10 +104,10 @@ GtGradDominanceCenteredTreeForest class >> from: aCollectionOfElements separateS
 	visitedDictionary := IdentityDictionary new.
 	aCollectionOfElements
 		do: [ :aNodeElement | 
+			| aTreeNode aNodesDepthsDictionary |
 			((visitedDictionary includesKey: aNodeElement)
 				or: [ aNodeElement hasNodesAlongIncomingEdges ])
-				ifFalse: [ | aTreeNode aNodesDepthsDictionary |
-					aTreeNode := GtGradTreeNode on: aNodeElement.
+				ifFalse: [ aTreeNode := GtGradTreeNode on: aNodeElement.
 					aNodesDepthsDictionary := self dfs: aTreeNode visited: visitedDictionary.
 					self
 						bfs: aTreeNode
@@ -122,7 +118,8 @@ GtGradDominanceCenteredTreeForest class >> from: aCollectionOfElements separateS
 							nodes as children of leaf nodes. This ensures the desired result without having
 							to modify the algorithm. If the graph has cycles, its nodes might be a leaves 
 							even though their element have outgoing edges."
-							aTreeNode addChildNodesToLeaves ].
+							aTreeNode
+								addChildNodesToLeaves ].
 					allTrees at: aTreeNode root put: #root ] ].
 	^ self new trees: allTrees keys
 ]
