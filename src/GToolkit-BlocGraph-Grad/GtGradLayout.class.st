@@ -7,12 +7,8 @@ Class {
 { #category : #measure }
 GtGradLayout >> measure: aParentLayoutNode [
 	self preMeasureChildrenNodes: aParentLayoutNode.
-
-	self flag: 'Grad layouts expect initial position be 0@0, otherwise nodes may overlap'.
 	aParentLayoutNode children do: [ :each | each position: 0@0 ].
-
 	self measureChildrenPositions: aParentLayoutNode.
-	
 	super measure: aParentLayoutNode
 ]
 

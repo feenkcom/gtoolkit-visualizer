@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGradTreeLayoutPreparator,
 	#superclass : #GtGradTreeLayouter,
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #'private - layout' }
@@ -156,20 +156,6 @@ GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 
 	^ aTotalBreadth
 	
-]
-
-{ #category : #visiting }
-GtGradTreeLayoutPreparator >> postVisitNode: aTreeNode [
-	GtGradTreeLayoutNodeProcessingFinishedSignal new
-		node: aTreeNode;
-		emit
-]
-
-{ #category : #visiting }
-GtGradTreeLayoutPreparator >> preVisitNode: aTreeNode [
-	GtGradTreeLayoutNodeProcessingStartedSignal new 
-		node: aTreeNode;
-		emit
 ]
 
 { #category : #visiting }
