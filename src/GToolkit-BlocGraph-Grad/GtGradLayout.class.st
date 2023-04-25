@@ -7,7 +7,7 @@ Class {
 { #category : #measure }
 GtGradLayout >> measure: aParentLayoutNode [
 	self preMeasureChildrenNodes: aParentLayoutNode.
-	aParentLayoutNode children do: [ :each | each position: 0@0 ].
+	aParentLayoutNode children do: [ :each | each position: 0@0 ]. self halt.
 	self measureChildrenPositions: aParentLayoutNode.
 	super measure: aParentLayoutNode
 ]
