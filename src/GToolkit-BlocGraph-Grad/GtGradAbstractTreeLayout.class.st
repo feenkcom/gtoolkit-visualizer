@@ -96,8 +96,7 @@ GtGradAbstractTreeLayout >> measureChildrenPositions: aParentLayoutNode [
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
 
 	aTreeForest := self formForestFrom: aParentGraphNode children.
-	
-	aTreeForest accept: (GtGradTreeLayoutPreparator on: self).
+	aTreeForest accept: (GtGradTreeLayoutPreparator on: self). 
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
 	
 	aParentGraphNode children normalizePositions
