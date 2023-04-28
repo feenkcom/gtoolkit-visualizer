@@ -1,5 +1,5 @@
 Class {
-	#name : #GtGradNodeContourLine,
+	#name : #GtGradNodeContourListLink,
 	#superclass : #Object,
 	#instVars : [
 		'position',
@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : #'private - layout' }
-GtGradNodeContourLine >> calculateOffsetTo: contour2 x: x y: y [
+GtGradNodeContourListLink >> calculateOffsetTo: contourLink x: x y: y [
 	| contour1y offset contour2y contour1x contour2x |
 	offset := 0.
-	contour1x := self position x.
-	contour1y := self position y.
-	contour2x := contour2 position x.
-	contour2y := contour2 position y.
+	contour1x := position x.
+	contour1y := position y.
+	contour2x := contourLink position x.
+	contour2y := contourLink position y.
 
 	(contour2x <= x or: [ x + contour1x <= 0 ]) ifTrue: [ ^ 0 ].
 	contour2x * contour1y - (contour1x * contour2y) > 0
@@ -32,49 +32,62 @@ GtGradNodeContourLine >> calculateOffsetTo: contour2 x: x y: y [
 ]
 
 { #category : #calculating }
-GtGradNodeContourLine >> connectingLine: otherLine x1: x1 y1: y1 x2: x2 y2: y2 [
-	| newX newY otherX otherY retLine nextLine|
+GtGradNodeContourListLink >> connectingLine: otherLink x1: x1 y1: y1 x2: x2 y2: y2 [
+	| newX newY otherX otherY retLink nextLink|
 
-	otherX := otherLine position x.
-	otherY := otherLine position y.
+	otherX := otherLink position x.
+	otherY := otherLink position y.
 	newX := x2 + otherX - x1.
 	newY := otherX = 0
 		ifTrue: [ otherY ]
 		ifFalse: [ (newX * otherY) / otherX ].
 		
-	retLine := self class new position: newX @ newY.
-	retLine next: (otherLine next).
-	nextLine := self class new position: 0@(y2 + otherY - newY - y1).
-	nextLine next: retLine.
-	self next: nextLine.
+	retLink := self class new position: newX @ newY.
+	retLink next: (otherLink next).
+	nextLink := self class new position: 0@(y2 + otherY - newY - y1).
+	nextLink next: retLink.
+	self next: nextLink.
 	
-	^ retLine.
+	^ retLink.
 	
 ]
 
 { #category : #initializing }
-GtGradNodeContourLine >> initialize [
+GtGradNodeContourListLink >> initialize [
 	super initialize.
 	
 	position := 0@0.
 ]
 
 { #category : #accessing }
-GtGradNodeContourLine >> next [
+GtGradNodeContourListLink >> next [
 	^ next
 ]
 
 { #category : #accessing }
-GtGradNodeContourLine >> next: aNodeContourLine [
+GtGradNodeContourListLink >> next: aNodeContourLine [
 	next := aNodeContourLine
 ]
 
 { #category : #accessing }
-GtGradNodeContourLine >> position [
+GtGradNodeContourListLink >> position [
 	^position
 ]
 
 { #category : #accessing }
-GtGradNodeContourLine >> position: aPoint [
+GtGradNodeContourListLink >> position: aPoint [
 	position := aPoint
+]
+
+{ #category : #printing }
+GtGradNodeContourListLink >> printOn: aStream [
+	| node |
+	node := self.
+	aStream << self class name << '('.
+	[node notNil and: [node next ~~ self]] whileTrue: [ 
+		node position printOn: aStream.
+		node := node next.
+	].
+	aStream << ')'.
+	^aStream
 ]

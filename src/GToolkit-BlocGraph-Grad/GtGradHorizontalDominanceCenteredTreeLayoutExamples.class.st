@@ -127,6 +127,38 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANode
 ]
 
 { #category : #'example - layout' }
+GtGradHorizontalDominanceCenteredTreeLayoutExamples >> simpleExampleToCheckOverlap [
+	<gtExample>
+	<NoTest>
+	| aParentNode aTreeLayout |
+	aParentNode := self
+			createGraph: 12
+			pairs: {1 -> 2.
+					1 -> 3.
+					1 -> 12.
+					2 -> 4.
+					4 -> 6.
+					4 -> 7.
+					4 -> 8.
+					12 -> 5.
+					5 -> 9.
+					5 -> 10.
+					5 -> 11.
+				}.
+
+	aTreeLayout := self centeredDominanceTreeLayout.
+	aTreeLayout measure: aParentNode.
+	"self
+		assert: (aParentNode children layoutBounds
+				anySatisfy: [ :rect1 | 
+					aParentNode children layoutBounds
+						anySatisfy: [ :rect2 | rect1 ~= rect2 and: [ rect1 intersects: rect2 ] ] ])
+				not."
+
+	^ aParentNode
+]
+
+{ #category : #'example - layout' }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> treeWithEdgesWhoseSoucesAreOnDifferentLevels [
 	<gtExample>
 	| aParentNode aTreeLayout |

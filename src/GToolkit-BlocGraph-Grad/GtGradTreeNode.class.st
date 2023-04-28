@@ -110,6 +110,19 @@ GtGradTreeNode >> element: anElement [
 ]
 
 { #category : #'gt-extension' }
+GtGradTreeNode >> gtContoursFor: aView [
+	<gtView>
+	^ aView tree
+		title: 'Contours';
+		priority: 2;
+		items: [ {self} ];
+		children: [ :aNode | aNode nodes ];
+		itemText: [ :aNode | aNode contour ];
+		transformation: [ :aNode | aNode contour];
+		expandAll
+]
+
+{ #category : #'gt-extension' }
 GtGradTreeNode >> gtNodesFor: aView [
 	<gtView>
 
@@ -147,7 +160,7 @@ GtGradTreeNode >> initialize [
 	parent := nil.
 	"by default we are not attached to any element"
 	element := nil.
-	contour := GtGradNodeContour new.
+	contour := GtGradNodeContourLists new.
 	offset := 0@0.
 ]
 
@@ -260,8 +273,8 @@ GtGradTreeNode >> offset [
 ]
 
 { #category : #accessing }
-GtGradTreeNode >> offset: anObject [
-	offset := anObject
+GtGradTreeNode >> offset: aPoint [
+	offset := aPoint
 ]
 
 { #category : #accessing }
