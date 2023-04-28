@@ -15,7 +15,7 @@ GtGradNodeContourLists class >> newWithHeight: nodeHeight width: nodeWidth dista
 	| contourList |
 	contourList := self new.
 	contourList addPointsToUpperHead: {(nodeHeight + distance) @ 0}.
-	contourList addPointsToLowerHead: { 0 @ (nodeWidth negated - distance). (nodeHeight + distance) @ 0 }.
+	contourList addPointsToLowerHead: {(nodeHeight + distance) @ 0 .  0 @ (nodeWidth negated - distance). }.
 	^ contourList
 ]
 
