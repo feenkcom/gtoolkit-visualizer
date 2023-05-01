@@ -15,7 +15,7 @@ GtGradNodeContourLists class >> newWithHeight: nodeHeight width: nodeWidth dista
 	| contourList |
 	contourList := self new.
 	contourList addPointsToUpperHead: {(nodeHeight + distance) @ 0}.
-	contourList addPointsToLowerHead: {(nodeHeight + distance) @ 0 .  0 @ (nodeWidth negated - distance). }.
+	contourList addPointsToLowerHead: {(nodeHeight + distance) @ (nodeWidth negated - distance)}.
 	^ contourList
 ]
 
@@ -47,6 +47,26 @@ GtGradNodeContourLists >> addToUpperHead: aPoint [
 			next: upperHead.
 	upperHead := aNodeContourLine.
 	upperTail ifNil: [ upperTail := upperHead ]
+]
+
+{ #category : #accessing }
+GtGradNodeContourLists >> asTrace [
+	| upper lower l |
+	upper := OrderedCollection new.
+	lower := OrderedCollection new.
+	l := upperHead.
+	[l notNil] whileTrue: [upper add: l position. l := l next].
+	l := lowerHead.
+	[l notNil] whileTrue: [lower add: l position. l := l next].
+	^{ #upper -> upper . #lower -> lower }
+]
+
+{ #category : #accessing }
+GtGradNodeContourLists >> gtTraceOn: aView [
+	<gtView>
+	^ aView list
+		title: 'Trace';
+		items: [ self asTrace ]
 ]
 
 { #category : #accessing }
@@ -97,20 +117,16 @@ GtGradNodeContourLists >> mergeWith: aChildContour [
 	lower isNotNil
 		ifTrue: [ connectingLine := parentUpperTail
 					connectingLine: lower
-					x1: 0
-					y1: 0
-					x2: x
-					y2: y.
+					x: x negated
+					y: y negated.
 			parentUpperTail := connectingLine next isNotNil
 					ifTrue: [ childUpperTail ]
 					ifFalse: [ connectingLine ].
 			parentLowerTail := childLowerTail ]
 		ifFalse: [ connectingLine := childLowerTail
 					connectingLine: upper
-					x1: x
-					y1: y
-					x2: 0
-					y2: 0.
+					x: x
+					y: y.
 			connectingLine next isNil ifTrue: [ parentLowerTail := connectingLine ] ].
 	aNodeContourLine := aChildContour lowerHead.
 	lowerHead := aNodeContourLine.

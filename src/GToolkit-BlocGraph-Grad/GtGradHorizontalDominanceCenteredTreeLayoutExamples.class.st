@@ -45,12 +45,12 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> complicatedExampleToCheck
 
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
-	"self
+	self
 		assert: (aParentNode children layoutBounds
 				anySatisfy: [ :rect1 | 
 					aParentNode children layoutBounds
 						anySatisfy: [ :rect2 | rect1 ~= rect2 and: [ rect1 intersects: rect2 ] ] ])
-				not."
+				not.
 
 	^ aParentNode
 ]
@@ -148,12 +148,12 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> simpleExampleToCheckOverl
 
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
-	"self
+	self
 		assert: (aParentNode children layoutBounds
 				anySatisfy: [ :rect1 | 
 					aParentNode children layoutBounds
 						anySatisfy: [ :rect2 | rect1 ~= rect2 and: [ rect1 intersects: rect2 ] ] ])
-				not."
+				not.
 
 	^ aParentNode
 ]
