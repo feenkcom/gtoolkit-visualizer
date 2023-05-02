@@ -15,7 +15,7 @@ GtGradNodeContourLists class >> newWithHeight: nodeHeight width: nodeWidth dista
 	| contourList |
 	contourList := self new.
 	contourList addPointsToUpperHead: {(nodeHeight + distance) @ 0}.
-	contourList addPointsToLowerHead: {(nodeHeight + distance) @ 0 .  0 @ (nodeWidth negated - distance). }.
+	contourList addPointsToLowerHead: {(nodeHeight + distance) @ (nodeWidth negated - distance)}.
 	^ contourList
 ]
 
@@ -50,6 +50,26 @@ GtGradNodeContourLists >> addToUpperHead: aPoint [
 ]
 
 { #category : #accessing }
+GtGradNodeContourLists >> asTrace [
+	| upper lower l |
+	upper := OrderedCollection new.
+	lower := OrderedCollection new.
+	l := upperHead.
+	[l notNil] whileTrue: [upper add: l position. l := l next].
+	l := lowerHead.
+	[l notNil] whileTrue: [lower add: l position. l := l next].
+	^{ #upper -> upper . #lower -> lower }
+]
+
+{ #category : #accessing }
+GtGradNodeContourLists >> gtTraceOn: aView [
+	<gtView>
+	^ aView list
+		title: 'Trace';
+		items: [ self asTrace ]
+]
+
+{ #category : #accessing }
 GtGradNodeContourLists >> lowerHead [
 	^lowerHead
 
@@ -63,7 +83,7 @@ GtGradNodeContourLists >> lowerTail [
 
 { #category : #'private - layout' }
 GtGradNodeContourLists >> mergeWith: aChildContour [
-	| total upper childUpperTail parentLowerTail y parentUpperTail childLowerTail lower x offset lowerX upperX lowerY upperY connectingLine aNodeContourLine |
+	| total upper childUpperTail parentLowerTail y parentUpperTail childLowerTail lower x offset lowerX upperX lowerY upperY connectingLink aNodeContourLine |
 	x := 0.
 	y := 0.
 	total := 0.
@@ -95,23 +115,20 @@ GtGradNodeContourLists >> mergeWith: aChildContour [
 					y := y - upperY.
 					upper := upper next ] ].
 	lower isNotNil
-		ifTrue: [ connectingLine := parentUpperTail
-					connectingLine: lower
-					x1: 0
-					y1: 0
-					x2: x
-					y2: y.
-			parentUpperTail := connectingLine next isNotNil
+		ifTrue: [ connectingLink := parentUpperTail
+					connectingLink: lower
+					x: x negated
+					y: y negated.
+			parentUpperTail := connectingLink next isNotNil
 					ifTrue: [ childUpperTail ]
-					ifFalse: [ connectingLine ].
+					ifFalse: [ connectingLink ].
 			parentLowerTail := childLowerTail ]
-		ifFalse: [ connectingLine := childLowerTail
-					connectingLine: upper
-					x1: x
-					y1: y
-					x2: 0
-					y2: 0.
-			connectingLine next isNil ifTrue: [ parentLowerTail := connectingLine ] ].
+		ifFalse: [ upper isNotNil
+				ifTrue: [ connectingLink := childLowerTail
+							connectingLink: upper
+							x: x
+							y: y.
+					connectingLink next isNil ifTrue: [ parentLowerTail := connectingLink ] ] ].
 	aNodeContourLine := aChildContour lowerHead.
 	lowerHead := aNodeContourLine.
 

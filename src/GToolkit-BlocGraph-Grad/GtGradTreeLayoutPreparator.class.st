@@ -7,17 +7,15 @@ Class {
 { #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> attachParent: aTreeNode breadth: aChildrenBreadth [
 	| x y offset nodeContour |
-	x := self nodeDistance + self levelDistance.	
+	x := self nodeDistance + self levelDistance.
 	y := ((self layout nodeBreadth: aTreeNode) - aChildrenBreadth) / 2.0
 			+ self nodeDistance.
 	offset := (x + (self layout nodeLength: aTreeNode)) @ y.
 
 	aTreeNode nodes first offset: offset.
 	nodeContour := aTreeNode contour.
-	nodeContour
-		addPointsToUpperHead: {aTreeNode height @ 0. x @ y}.
-	nodeContour
-		addPointsToLowerHead: {aTreeNode height @ 0. x @ y negated}
+	nodeContour addPointsToUpperHead: {x @ y}.
+	nodeContour addPointsToLowerHead: {x @ y negated}
 ]
 
 { #category : #'private - layout' }

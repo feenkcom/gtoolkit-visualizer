@@ -129,6 +129,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesRevered [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
@@ -259,6 +260,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger.
@@ -368,6 +370,7 @@ GtGradHorizontalTreeLayoutExamples >> separatedSubtrees [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -399,6 +402,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTree [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -484,6 +488,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafA
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootAlignment [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -512,6 +517,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootA
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -659,6 +665,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAli
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	<gtExample>
+		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.

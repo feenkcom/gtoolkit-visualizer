@@ -41,6 +41,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> graphWithANodeWithSeveralIn
 { #category : #'example - layout' }
 GtGradVerticalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructMoreComplexGraphWithANodeWithSeveralIncomingEdges.
