@@ -32,7 +32,7 @@ GtGradNodeContourListLink >> calculateOffsetTo: contourLink x: x y: y [
 ]
 
 { #category : #calculating }
-GtGradNodeContourListLink >> connectingLink: otherLink x: x y: y [
+GtGradNodeContourListLink >> connectingLine: otherLink x: x y: y [
 	| newX newY otherX otherY retLink nextLink |
 	otherX := otherLink position x.
 	otherY := otherLink position y.

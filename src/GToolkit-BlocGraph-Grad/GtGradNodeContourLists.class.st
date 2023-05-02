@@ -83,7 +83,7 @@ GtGradNodeContourLists >> lowerTail [
 
 { #category : #'private - layout' }
 GtGradNodeContourLists >> mergeWith: aChildContour [
-	| total upper childUpperTail parentLowerTail y parentUpperTail childLowerTail lower x offset lowerX upperX lowerY upperY connectingLink aNodeContourLine |
+	| total upper childUpperTail parentLowerTail y parentUpperTail childLowerTail lower x offset lowerX upperX lowerY upperY connectingLine aNodeContourLine |
 	x := 0.
 	y := 0.
 	total := 0.
@@ -115,20 +115,19 @@ GtGradNodeContourLists >> mergeWith: aChildContour [
 					y := y - upperY.
 					upper := upper next ] ].
 	lower isNotNil
-		ifTrue: [ connectingLink := parentUpperTail
-					connectingLink: lower
+		ifTrue: [ connectingLine := parentUpperTail
+					connectingLine: lower
 					x: x negated
 					y: y negated.
-			parentUpperTail := connectingLink next isNotNil
+			parentUpperTail := connectingLine next isNotNil
 					ifTrue: [ childUpperTail ]
-					ifFalse: [ connectingLink ].
+					ifFalse: [ connectingLine ].
 			parentLowerTail := childLowerTail ]
-		ifFalse: [ upper isNotNil
-				ifTrue: [ connectingLink := childLowerTail
-							connectingLink: upper
-							x: x
-							y: y.
-					connectingLink next isNil ifTrue: [ parentLowerTail := connectingLink ] ] ].
+		ifFalse: [ connectingLine := childLowerTail
+					connectingLine: upper
+					x: x
+					y: y.
+			connectingLine next isNil ifTrue: [ parentLowerTail := connectingLine ] ].
 	aNodeContourLine := aChildContour lowerHead.
 	lowerHead := aNodeContourLine.
 
