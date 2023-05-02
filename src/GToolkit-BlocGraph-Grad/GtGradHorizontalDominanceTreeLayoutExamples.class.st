@@ -7,7 +7,6 @@ Class {
 { #category : #'example - layout' }
 GtGradHorizontalDominanceTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
