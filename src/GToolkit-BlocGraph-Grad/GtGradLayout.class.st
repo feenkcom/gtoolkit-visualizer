@@ -19,7 +19,6 @@ GtGradLayout >> forest: anObject [
 
 { #category : #measure }
 GtGradLayout >> measure: aParentLayoutNode [
-	aParentLayoutNode layout: self.
 	self preMeasureChildrenNodes: aParentLayoutNode.
 	aParentLayoutNode children do: [ :each | each position: 0@0 ].
 	self forest: (self measureChildrenPositions: aParentLayoutNode).

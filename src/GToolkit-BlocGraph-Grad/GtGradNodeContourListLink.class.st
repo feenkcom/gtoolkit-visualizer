@@ -45,6 +45,20 @@ GtGradNodeContourListLink >> connectingLine: otherLink x: x y: y [
 	^ retLink
 ]
 
+{ #category : #calculating }
+GtGradNodeContourListLink >> connectingLink: otherLink x: x y: y [
+	| newX newY otherX otherY retLink |
+	otherX := otherLink position x.
+	otherY := otherLink position y.
+	newX := otherX - x.
+	newY := otherX = 0 ifTrue: [ otherY ] ifFalse: [ newX * otherY / otherX ].
+
+	retLink := self class new position: newX @ newY.
+	retLink next: otherLink next.
+
+	^ retLink
+]
+
 { #category : #initializing }
 GtGradNodeContourListLink >> initialize [
 	super initialize.
