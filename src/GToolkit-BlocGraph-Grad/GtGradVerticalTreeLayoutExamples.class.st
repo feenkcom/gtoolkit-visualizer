@@ -14,6 +14,7 @@ Class {
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructBinaryTreeWith15Nodes.
@@ -45,6 +46,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith15Nodes [
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructBinaryTreeWith15Nodes.
@@ -475,6 +477,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeReversed [
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -502,6 +505,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterA
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -610,6 +614,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -642,6 +647,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAli
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -674,6 +680,7 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlign
 { #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
