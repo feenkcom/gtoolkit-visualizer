@@ -70,6 +70,34 @@ GtGradTreeNode >> addChildNodesToLeaves [
 				ifFalse: [ queue addAll: theCurrentNode nodes ] ]
 ]
 
+{ #category : #'gt-extension' }
+GtGradTreeNode >> asTraceView [
+	| elem verts minY newVerts |
+	verts := self gtTraceCoordsFrom: 0 @ 0 into: OrderedCollection new.
+	minY := (verts collect: #y) min.
+	elem := BlElement new
+			constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent ].
+	newVerts := self
+			gtTraceCoordsFrom: 10 @ (10 + minY abs)
+			into: OrderedCollection new.
+	elem
+		addChild: (BlPolygonElement new
+				vertices: newVerts;
+				bePolyline;
+				border: (BlBorder paint: Color blue width: 1)).
+	newVerts
+		do: [ :each | 
+			elem
+				addChild: (BlElement new
+						geometry: BlEllipseGeometry new;
+						size: 6 @ 6;
+						background: Color red;
+						relocate: each - (3 @ 3)) ].
+	^ elem
+]
+
 { #category : #accessing }
 GtGradTreeNode >> contour [
 	^ contour
@@ -132,6 +160,36 @@ GtGradTreeNode >> gtNodesFor: aView [
 		items: [ { self } ];
 		children: [ :aNode | aNode nodes ];
 		expandAll
+]
+
+{ #category : #'gt-extension' }
+GtGradTreeNode >> gtOffsetTraceFor: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Layout Trace';
+		priority: 3;
+		stencil: [ self asTraceView ]
+]
+
+{ #category : #'gt-extension' }
+GtGradTreeNode >> gtOffsetTraceListFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Trace List';
+		priority: 4;
+		items: [ self gtTraceCoordsFrom: 0@0 into: OrderedCollection new]
+]
+
+{ #category : #'gt-extension' }
+GtGradTreeNode >> gtTraceCoordsFrom: aPoint into: aCollection [
+	| newPoint |
+	newPoint := offset + aPoint.
+	aCollection add: newPoint.
+	self nodes
+		do: [ :node | 
+			node gtTraceCoordsFrom: newPoint into: aCollection.
+			newPoint := newPoint + node offset ].
+	^ aCollection
 ]
 
 { #category : #'api - testing' }
@@ -302,6 +360,7 @@ GtGradTreeNode >> printOn: aStream [
 		nextPutAll: self depth asString;
 		nextPut: $];
 		space;
+		print: self offset;
 		nextPut: $(;
 		print: self element;
 		nextPut: $)
