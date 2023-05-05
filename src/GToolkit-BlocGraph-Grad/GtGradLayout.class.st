@@ -1,14 +1,27 @@
 Class {
 	#name : #GtGradLayout,
 	#superclass : #BlFitChildrenLayout,
+	#instVars : [
+		'forest'
+	],
 	#category : #'GToolkit-BlocGraph-Grad-Layouts'
 }
+
+{ #category : #accessing }
+GtGradLayout >> forest [
+	^ forest
+]
+
+{ #category : #accessing }
+GtGradLayout >> forest: anObject [
+	forest := anObject
+]
 
 { #category : #measure }
 GtGradLayout >> measure: aParentLayoutNode [
 	self preMeasureChildrenNodes: aParentLayoutNode.
 	aParentLayoutNode children do: [ :each | each position: 0@0 ].
-	self measureChildrenPositions: aParentLayoutNode.
+	self forest: (self measureChildrenPositions: aParentLayoutNode).
 	super measure: aParentLayoutNode
 ]
 

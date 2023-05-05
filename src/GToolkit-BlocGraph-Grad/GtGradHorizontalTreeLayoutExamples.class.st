@@ -21,6 +21,7 @@ Class {
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructBinaryTreeWith15Nodes.
@@ -52,6 +53,7 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructBinaryTreeWith15Nodes.
@@ -434,6 +436,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -461,6 +464,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCente
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -569,6 +573,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -601,6 +606,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterA
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -633,6 +639,7 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAli
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.

@@ -14,8 +14,8 @@ Class {
 GtGradNodeContourLists class >> newWithHeight: nodeHeight width: nodeWidth distance: distance [
 	| contourList |
 	contourList := self new.
-	contourList addPointsToUpperHead: {(nodeHeight + distance) @ 0}.
-	contourList addPointsToLowerHead: {(nodeHeight + distance) @ (nodeWidth negated - distance)}.
+	contourList addPointsToUpperHead: {distance @ 0}.
+	contourList addPointsToLowerHead: {distance @ (nodeHeight negated - distance)}.
 	^ contourList
 ]
 
@@ -62,11 +62,68 @@ GtGradNodeContourLists >> asTrace [
 ]
 
 { #category : #accessing }
+GtGradNodeContourLists >> asTraceElement [
+	| upper point lower elem minY |
+	upper := self asTrace first value.
+	lower := self asTrace second value.
+	point := 0 @ 0.
+	upper addFirst: point.
+	upper := upper collect: [ :each | point := point + each ].
+	point := 0 @ 0.
+	lower addFirst: point.
+	lower := lower collect: [ :each | point := point + each ].
+	minY := (upper collect: #y) min abs.
+	upper := upper collect: [ :each | (10 + (each x * 5)) @ (10 + each y + minY) ].
+	lower := lower collect: [ :each | (10 + (each x * 5)) @ (10 + each y + minY) ].
+	elem := BlElement new
+			constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent ].
+
+	elem
+		addChild: (BlPolygonElement new
+				bePolyline;
+				vertices: upper;
+				border: (BlBorder paint: Color blue width: 1)).
+	elem
+		addChild: (BlPolygonElement new
+				bePolyline;
+				vertices: lower;
+				border: (BlBorder paint: Color red width: 1)).
+	upper
+		do: [ :each | 
+			elem
+				addChild: (BlElement new
+						geometry: BlEllipseGeometry new;
+						size: 6 @ 6;
+						background: Color blue;
+						relocate: each - (3 @ 3)) ].
+	lower
+		do: [ :each | 
+			elem
+				addChild: (BlElement new
+						geometry: BlEllipseGeometry new;
+						size: 6 @ 6;
+						background: Color red;
+						relocate: each - (3 @ 3)) ].
+	^ elem
+]
+
+{ #category : #accessing }
 GtGradNodeContourLists >> gtTraceOn: aView [
 	<gtView>
 	^ aView list
-		title: 'Trace';
+		title: 'Lists';
 		items: [ self asTrace ]
+]
+
+{ #category : #accessing }
+GtGradNodeContourLists >> gtTracePolyOn: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Trace';
+		priority: 1;
+		stencil: [ self asTraceElement ]
 ]
 
 { #category : #accessing }
@@ -123,13 +180,12 @@ GtGradNodeContourLists >> mergeWith: aChildContour [
 					ifTrue: [ childUpperTail ]
 					ifFalse: [ connectingLink ].
 			parentLowerTail := childLowerTail ]
-		ifFalse: [ upper isNotNil
-				ifTrue: [ connectingLink := childLowerTail
-							connectingLink: upper
-							x: x
-							y: y.
-					connectingLink next isNil ifTrue: [ parentLowerTail := connectingLink ] ] ].
-	aNodeContourLine := aChildContour lowerHead.
+		ifFalse: [ connectingLink := childLowerTail
+					connectingLink: upper
+					x: x
+					y: y.
+			connectingLink next isNil ifTrue: [ parentLowerTail := connectingLink ] ].
+	aNodeContourLine := connectingLink.
 	lowerHead := aNodeContourLine.
 
 	^ total

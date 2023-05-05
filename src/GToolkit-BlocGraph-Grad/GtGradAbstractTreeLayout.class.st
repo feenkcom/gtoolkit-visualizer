@@ -99,7 +99,8 @@ GtGradAbstractTreeLayout >> measureChildrenPositions: aParentLayoutNode [
 	aTreeForest accept: (GtGradTreeLayoutPreparator on: self). 
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
 	
-	aParentGraphNode children normalizePositions
+	aParentGraphNode children normalizePositions.
+	^aTreeForest
 ]
 
 { #category : #'api - geometry' }
