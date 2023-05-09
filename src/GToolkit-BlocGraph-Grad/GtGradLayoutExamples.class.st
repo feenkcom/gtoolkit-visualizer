@@ -21,7 +21,6 @@ GtGradLayoutExamples >> bigNodesN: num [
 
 { #category : #'examples - instance creation' }
 GtGradLayoutExamples >> container [
-	<gtExample>
 
 	^ BlElement new
 		constraintsDo: [ :c |
@@ -52,7 +51,6 @@ GtGradLayoutExamples >> defaultView [
 
 { #category : #'examples - instance creation' }
 GtGradLayoutExamples >> editor [
-	<gtExample>
 	| anEditorModel anEditorElement |
 
 	anEditorModel := BrTextEditorModel new.
@@ -69,15 +67,11 @@ GtGradLayoutExamples >> editor [
 
 { #category : #'examples - instance creation' }
 GtGradLayoutExamples >> line [
-	<gtExample>
-
 	^ BlLineElement new border: (BlBorder builder dashed paint: Color red; width: 2; build)
 ]
 
 { #category : #'examples - layout' }
 GtGradLayoutExamples >> simpleNodes10 [
-	<gtExample>
-
 	^ 10 timesCollect: [
 		| anEditor |
 		anEditor := self rectangle.

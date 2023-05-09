@@ -47,6 +47,9 @@ GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 	| theChildrenBreadth |
+"
+aTreeNode element incomingEdges size = 0 ifTrue: [self halt].
+"
 
 	theChildrenBreadth := self mergeWithChildrenContours: aTreeNode.
 
@@ -58,8 +61,5 @@ GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitLeafNode: aTreeNode [
 	aTreeNode
-		contour: (GtGradNodeContourLists
-				newWithHeight: aTreeNode height
-				width: aTreeNode width
-				distance: 2 * self nodeDistance)
+		contour: (GtGradNodeContourLists newWithHeight: self levelDistance + self nodeDistance)
 ]

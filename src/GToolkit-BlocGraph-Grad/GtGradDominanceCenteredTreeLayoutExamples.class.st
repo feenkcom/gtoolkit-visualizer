@@ -24,8 +24,6 @@ Class {
 
 { #category : #'example - instance creation' }
 GtGradDominanceCenteredTreeLayoutExamples >> constructMoreComplexGraphWithANodeWithSeveralIncomingEdges [
-	<gtExample>
-	
 	^ self
 		createGraph: 11
 		pairs: {
@@ -36,8 +34,6 @@ GtGradDominanceCenteredTreeLayoutExamples >> constructMoreComplexGraphWithANodeW
 
 { #category : #'example - instance creation' }
 GtGradDominanceCenteredTreeLayoutExamples >> constructTreeWithEdgesWhoseSourcesAreOnDifferentLevels [
-	<gtExample>
-
 	^ self
 		createGraph: 6
 		pairs: {

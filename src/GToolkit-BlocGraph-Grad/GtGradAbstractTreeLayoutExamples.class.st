@@ -13,8 +13,6 @@ GtGradAbstractTreeLayoutExamples >> compactSubtrees [
 
 { #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdges [
-	<gtExample>
-
 	^ self
 		createGraph: 6
 		pairs: {
@@ -24,8 +22,6 @@ GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEd
 
 { #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEdgesScaled [
-	<gtExample>
-
 	^ self
 		createGraph: 6
 		pairs: {
@@ -36,8 +32,6 @@ GtGradAbstractTreeLayoutExamples >> constructGraphWithANodeWithSeveralIncomingEd
 
 { #category : #'example - instance creation' }
 GtGradAbstractTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel [
-	<gtExample>
-
 	^ self
 		createGraph: 7
 		pairs: {
