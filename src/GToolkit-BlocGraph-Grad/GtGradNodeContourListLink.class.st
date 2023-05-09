@@ -17,18 +17,7 @@ GtGradNodeContourListLink >> calculateOffsetTo: contourLink x: x y: y [
 	contour2x := contourLink position x.
 	contour2y := contourLink position y.
 
-	(contour2x <= x or: [ x + contour1x <= 0 ]) ifTrue: [ ^ 0 ].
-	contour2x * contour1y - (contour1x * contour2y) > 0
-		ifTrue: [ x < 0 ifTrue: [ offset := x * contour1y / contour1x - y ].
-			x > 0 ifTrue: [ offset := x * contour2y / contour2x - y ].
-			x = 0 ifTrue: [ offset := 0 - y ] ]
-		ifFalse: [ offset := contour2x < (x + contour1x)
-					ifTrue: [ contour2y - (y + ((contour2x - x) * contour1y / contour1x)) ]
-					ifFalse: [ contour2x > (x + contour1x)
-							ifTrue: [ (contour1x + x) * contour2y / contour2x - (y + contour1y) ]
-							ifFalse: [ contour2y - (y + contour1y) ] ] ].
-	offset > 0 ifTrue: [ ^ offset ].
-	^ 0
+	^ contour2y - contour1y
 ]
 
 { #category : #calculating }
@@ -47,14 +36,16 @@ GtGradNodeContourListLink >> connectingLine: otherLink x: x y: y [
 
 { #category : #calculating }
 GtGradNodeContourListLink >> connectingLink: otherLink x: x y: y [
-	| newX newY otherX otherY retLink |
+	| newX newY otherX otherY retLink nextLink |
 	otherX := otherLink position x.
 	otherY := otherLink position y.
-	newX := otherX - x.
-	newY := otherX = 0 ifTrue: [ otherY ] ifFalse: [ newX * otherY / otherX ].
+	newX := x.
+	newY := otherX = x ifTrue: [ otherY ] ifFalse: [ newX * otherY / otherX ].
 
 	retLink := self class new position: newX @ newY.
-	retLink next: otherLink next.
+	nextLink := self class new position: otherX @ y.
+	retLink next: nextLink.
+	nextLink next: otherLink next.
 
 	^ retLink
 ]
