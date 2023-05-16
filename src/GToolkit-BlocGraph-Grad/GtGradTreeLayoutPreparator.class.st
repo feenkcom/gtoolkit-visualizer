@@ -26,25 +26,34 @@ GtGradTreeLayoutPreparator >> attachParent: aTreeNode toContour: childrenContour
 ]
 
 { #category : #'private - layout' }
+GtGradTreeLayoutPreparator >> computeRelativeOffsetsForChildrenOf: aTreeNode contourOffsets: offsets [
+	"Computes the sibling delta offsets based on the contour offsets and initial children offsets"
+	offsets size
+		to: 2
+		by: -1
+		do: [ :i | 
+			offsets
+				at: i
+				put: (offsets at: i) - (offsets at: i - 1) - (aTreeNode nodes at: i - 1) offset ]
+]
+
+{ #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 	| aFirstChildNode aNodeContour offsets |
 	aFirstChildNode := aTreeNode nodes first.
 	aNodeContour := aFirstChildNode contour.
 	offsets := OrderedCollection new.
-	offsets add: aFirstChildNode offset.
+	offsets add: 0 @ 0.
 	aTreeNode nodes
 		allButFirstDo: [ :aChildNode | 
 			aNodeContour := aNodeContour
 					mergeContour: aChildNode contour
 					offsetCollection: offsets ].
-	offsets size
-		to: 2
-		by: -1
-		do: [ :i | offsets at: i put: (offsets at: i) - (offsets at: i - 1)].
+	self computeRelativeOffsetsForChildrenOf: aTreeNode contourOffsets: offsets.
 
 	aTreeNode nodes allButFirst
 		with: offsets allButFirst
-		do: [ :child :off | child offset: child offset + off  ].
+		do: [ :child :off | child offset: off + child offset ].
 
 	^ aNodeContour
 ]
@@ -52,10 +61,6 @@ GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 	| childrenContour |
-"
-aTreeNode element incomingEdges size = 0 ifTrue: [self halt].
-"
-"	self halt."
 	childrenContour := self mergeWithChildrenContours: aTreeNode.
 	self attachParent: aTreeNode toContour: childrenContour
 ]
