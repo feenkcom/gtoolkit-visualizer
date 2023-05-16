@@ -7,8 +7,8 @@ Class {
 { #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> attachParent: aTreeNode toContour: childrenContour [
 	| height width newY |
-	height := aTreeNode height + (self nodeDistance * 2).
-	width := aTreeNode width.
+	height := (self layout nodeBreadth: aTreeNode) + (self nodeDistance * 2).
+	width := self layout nodeLength: aTreeNode.
 	newY := childrenContour middleOfFront - (height / 2).
 	aTreeNode offset: 0 @ newY.
 	childrenContour
@@ -68,5 +68,7 @@ GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitLeafNode: aTreeNode [
 	aTreeNode
-		contour: (GtGradNodeContour height: aTreeNode height+(2 * self nodeDistance) width: aTreeNode width)
+		contour: (GtGradNodeContour
+				height: (self layout nodeBreadth: aTreeNode) + (2 * self nodeDistance)
+				width: (self layout nodeLength: aTreeNode))
 ]

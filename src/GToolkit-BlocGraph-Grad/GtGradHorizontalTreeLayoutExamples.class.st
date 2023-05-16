@@ -161,21 +161,21 @@ GtGradHorizontalTreeLayoutExamples >> compactSubtrees2 [
 					1 -> 3.
 					1 -> 4.
 					4 -> 5.
-					4 -> 6.}.
+					4 -> 6}.
 
 	aTreeLayout := self treeLayout.
 	aTreeLayout separateSubtrees: false.
 	aTreeLayout measure: aParentNode.
 
-	"self
+	self
 		assert: aParentNode children layoutBounds
-		equals: {0.0 @ 44.0 corner: 50.0 @ 64.0.
-				61.0 @ 22.0 corner: 111.0 @ 42.0.
-				61.0 @ 44.0 corner: 111.0 @ 64.0.
-				61.0 @ 66.0 corner: 111.0 @ 86.0.
+		equals: {61.0 @ 22.0 corner: 111.0 @ 42.0.
 				122.0 @ 0.0 corner: 172.0 @ 20.0.
 				122.0 @ 22.0 corner: 172.0 @ 42.0.
-				122.0 @ 44.0 corner: 172.0 @ 64.0}."
+				122.0 @ 44.0 corner: 172.0 @ 64.0.
+				183.0 @ 33.0 corner: 233.0 @ 53.0.
+				183.0 @ 55.0 corner: 233.0 @ 75.0.
+				0.0 @ 22.0 corner: 50.0 @ 42.0}.
 
 	^ aParentNode
 ]
@@ -190,7 +190,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	"self assert: aParentNode children layoutBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@11.0) corner: (50.0@31.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(183.0@22.0) corner: (233.0@42.0).
@@ -203,7 +203,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraph [
 		(61.0@105.0) corner: (111.0@125.0).
 		(122.0@105.0) corner: (172.0@125.0).
 		(183.0@105.0) corner: (233.0@125.0)
-	}."
+	}.
 	
 	^ aParentNode
 ]
@@ -219,7 +219,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 	aTreeLayout treesDistance: 150.
 	aTreeLayout measure: aParentNode.
 
-	"self assert: aParentNode children layoutBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@11.0) corner: (50.0@31.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(183.0@22.0) corner: (233.0@42.0).
@@ -232,7 +232,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphBiggerDistance [
 		(61.0@225.0) corner: (111.0@245.0).
 		(122.0@225.0) corner: (172.0@245.0).
 		(183.0@225.0) corner: (233.0@245.0)
-	}."
+	}.
 
 	^ aParentNode
 ]
@@ -247,7 +247,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 	aTreeLayout := self treeLayout.
 	aTreeLayout measure: aParentNode.
 
-	"self assert: aParentNode children layoutBounds equals: {
+	self assert: aParentNode children layoutBounds equals: {
 		(0.0@0.0) corner: (50.0@50.0).
 		(61.0@15.0) corner: (111.0@35.0).
 		(183.0@26.0) corner: (233.0@46.0).
@@ -260,7 +260,7 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithRootsOfDifferentSize 
 		(91.0@148.0) corner: (141.0@168.0).
 		(152.0@148.0) corner: (202.0@168.0).
 		(213.0@148.0) corner: (263.0@168.0)
-	}."
+	}.
 
 	^ aParentNode
 ]
@@ -298,16 +298,16 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	aTreeLayout separateSubtrees: false.
 	aTreeLayout measure: aParentNode.
 
-	"self assert: aParentNode children layoutBounds equals: {
-		(0.0@175.125) corner: (50.0@195.125).
+	self assert: aParentNode children layoutBounds equals: {
+		(0.0@165.0) corner: (50.0@185.0).
 		(61.0@88.0) corner: (111.0@108.0).
-		(61.0@262.25) corner: (111.0@282.25).
+		(61.0@242.0) corner: (111.0@262.0).
 		(122.0@22.0) corner: (172.0@42.0).
 		(122.0@88.0) corner: (172.0@108.0).
 		(122.0@154.0) corner: (172.0@174.0).
-		(122.0@225.5) corner: (172.0@245.5).
-		(122.0@277.0) corner: (172.0@297.0).
-		(122.0@299.0) corner: (172.0@319.0).
+		(122.0@220.0) corner: (172.0@240.0).
+		(122.0@242.0) corner: (172.0@262.0).
+		(122.0@264.0) corner: (172.0@284.0).
 		(183.0@0.0) corner: (233.0@20.0).
 		(183.0@22.0) corner: (233.0@42.0).
 		(183.0@44.0) corner: (233.0@64.0).
@@ -319,10 +319,10 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 		(183.0@176.0) corner: (233.0@196.0).
 		(183.0@198.0) corner: (233.0@218.0).
 		(183.0@220.0) corner: (233.0@240.0).
-		(183.0@253.0) corner: (233.0@273.0).
-		(244.0@242.0) corner: (294.0@262.0).
-		(244.0@264.0) corner: (294.0@284.0)
-	}."
+		(183.0@242.0) corner: (233.0@262.0).
+		(244.0@231.0) corner: (294.0@251.0).
+		(244.0@253.0) corner: (294.0@273.0)
+	}.
 
 	^ aParentNode
 ]

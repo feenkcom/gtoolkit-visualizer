@@ -16,10 +16,10 @@ GtGradVerticalDominanceTreeLayoutExamples >> compactSubtrees [
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(108.72727272727272@0.0) corner: (158.72727272727272@20.0).
+		(104.0@0.0) corner: (154.0@20.0).
 		(52.0@31.0) corner: (102.0@51.0).
-		(113.45454545454544@31.0) corner: (163.45454545454544@51.0).
-		(165.45454545454544@31.0) corner: (215.45454545454544@51.0).
+		(104.0@31.0) corner: (154.0@51.0).
+		(156.0@31.0) corner: (206.0@51.0).
 		(0.0@62.0) corner: (50.0@82.0).
 		(52.0@62.0) corner: (102.0@82.0).
 		(104.0@62.0) corner: (154.0@82.0)
@@ -43,7 +43,6 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith8Nodes.
@@ -68,7 +67,6 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith9Nodes.
@@ -94,7 +92,6 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructGraphWithANodeWithSeveralIncomingEdges.
@@ -117,7 +114,6 @@ GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEd
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> separatedSubtrees [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
@@ -142,7 +138,6 @@ GtGradVerticalDominanceTreeLayoutExamples >> separatedSubtrees [
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructDominanceTreeWith5Nodes.
