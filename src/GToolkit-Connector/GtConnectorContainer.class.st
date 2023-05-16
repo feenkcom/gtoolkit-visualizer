@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'entity'
 	],
-	#category : 'GToolkit-Connector-Core'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #'api - accessing' }
@@ -40,7 +40,6 @@ GtConnectorContainer >> initialize [
 
 	self layout: BlFrameLayout new.
 	self matchParent.
-	self addAptitude: BrLayoutResizerAptitude inherit.
 ]
 
 { #category : #'private - hooks' }
