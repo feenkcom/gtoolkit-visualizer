@@ -218,7 +218,7 @@ GtGradTreeNode >> initialize [
 	parent := nil.
 	"by default we are not attached to any element"
 	element := nil.
-	contour := GtGradNodeContourLists new.
+	contour := GtGradNodeContour new.
 	offset := 0@0.
 ]
 

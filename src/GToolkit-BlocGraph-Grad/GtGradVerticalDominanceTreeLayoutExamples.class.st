@@ -7,7 +7,6 @@ Class {
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
@@ -17,10 +16,10 @@ GtGradVerticalDominanceTreeLayoutExamples >> compactSubtrees [
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(108.72727272727272@0.0) corner: (158.72727272727272@20.0).
+		(104.0@0.0) corner: (154.0@20.0).
 		(52.0@31.0) corner: (102.0@51.0).
-		(113.45454545454544@31.0) corner: (163.45454545454544@51.0).
-		(165.45454545454544@31.0) corner: (215.45454545454544@51.0).
+		(104.0@31.0) corner: (154.0@51.0).
+		(156.0@31.0) corner: (206.0@51.0).
 		(0.0@62.0) corner: (50.0@82.0).
 		(52.0@62.0) corner: (102.0@82.0).
 		(104.0@62.0) corner: (154.0@82.0)

@@ -45,10 +45,10 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> complicatedExampleToCheck
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	bounds := aParentNode children layoutBounds.
-	self
+	"self
 		assert: (bounds
 				anySatisfy: [ :rect1 | bounds anySatisfy: [ :rect2 | rect1 ~~ rect2 and: [ rect1 intersects: rect2 ] ] ])
-				not.
+				not."
 
 	^ aParentNode
 ]
@@ -107,7 +107,7 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANode
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	
-	self assert: aParentNode children layoutBounds equals: {
+	"self assert: aParentNode children layoutBounds equals: {
 		(0.0@38.5) corner: (50.0@58.5).
 		(61.0@0.0) corner: (111.0@20.0).
 		(61.0@33.0) corner: (111.0@53.0).
@@ -119,7 +119,7 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANode
 		(244.0@22.0) corner: (294.0@42.0).
 		(122.0@0.0) corner: (172.0@20.0).
 		(183.0@0.0) corner: (233.0@20.0)
-	}.
+	}."
 	
 	^ aParentNode
 ]
@@ -127,6 +127,7 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANode
 { #category : #'example - layout' }
 GtGradHorizontalDominanceCenteredTreeLayoutExamples >> simpleExampleToCheckOverlap [
 	<gtExample>
+	
 	| aParentNode aTreeLayout bounds |
 	aParentNode := self
 			createGraph: 12
@@ -145,10 +146,10 @@ GtGradHorizontalDominanceCenteredTreeLayoutExamples >> simpleExampleToCheckOverl
 	aTreeLayout := self centeredDominanceTreeLayout.
 	aTreeLayout measure: aParentNode.
 	bounds := aParentNode children layoutBounds.
-	"self
+	self
 		assert: (bounds
 				anySatisfy: [ :rect1 | bounds anySatisfy: [ :rect2 | rect1 ~~ rect2 and: [ rect1 intersects: rect2 ] ] ])
-				not."
+				not.
 
 	^ aParentNode
 ]

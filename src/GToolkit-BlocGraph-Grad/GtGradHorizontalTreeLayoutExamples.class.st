@@ -21,7 +21,6 @@ Class {
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructBinaryTreeWith15Nodes.
@@ -53,7 +52,6 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15Nodes [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructBinaryTreeWith15Nodes.
@@ -131,7 +129,6 @@ GtGradHorizontalTreeLayoutExamples >> binaryTreeWith7NodesRevered [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
@@ -141,14 +138,44 @@ GtGradHorizontalTreeLayoutExamples >> compactSubtrees [
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(0.0@46.0) corner: (50.0@66.0).
+		(0.0@44.0) corner: (50.0@64.0).
 		(61.0@22.0) corner: (111.0@42.0).
-		(61.0@48.0) corner: (111.0@68.0).
-		(61.0@70.0) corner: (111.0@90.0).
+		(61.0@44.0) corner: (111.0@64.0).
+		(61.0@66.0) corner: (111.0@86.0).
 		(122.0@0.0) corner: (172.0@20.0).
 		(122.0@22.0) corner: (172.0@42.0).
 		(122.0@44.0) corner: (172.0@64.0)
 	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
+GtGradHorizontalTreeLayoutExamples >> compactSubtrees2 [
+	<gtExample>
+	| aParentNode aTreeLayout |
+	aParentNode := self
+			createGraph: 7
+			pairs: {7 -> 1.
+					1 -> 2.
+					1 -> 3.
+					1 -> 4.
+					4 -> 5.
+					4 -> 6}.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout separateSubtrees: false.
+	aTreeLayout measure: aParentNode.
+
+	self
+		assert: aParentNode children layoutBounds
+		equals: {61.0 @ 22.0 corner: 111.0 @ 42.0.
+				122.0 @ 0.0 corner: 172.0 @ 20.0.
+				122.0 @ 22.0 corner: 172.0 @ 42.0.
+				122.0 @ 44.0 corner: 172.0 @ 64.0.
+				183.0 @ 33.0 corner: 233.0 @ 53.0.
+				183.0 @ 55.0 corner: 233.0 @ 75.0.
+				0.0 @ 22.0 corner: 50.0 @ 42.0}.
 
 	^ aParentNode
 ]
@@ -268,19 +295,19 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger.
 
 	aTreeLayout := self treeLayout.
-	aTreeLayout separateSubtrees: true.
+	aTreeLayout separateSubtrees: false.
 	aTreeLayout measure: aParentNode.
 
 	self assert: aParentNode children layoutBounds equals: {
-		(0.0@175.125) corner: (50.0@195.125).
+		(0.0@165.0) corner: (50.0@185.0).
 		(61.0@88.0) corner: (111.0@108.0).
-		(61.0@262.25) corner: (111.0@282.25).
+		(61.0@242.0) corner: (111.0@262.0).
 		(122.0@22.0) corner: (172.0@42.0).
 		(122.0@88.0) corner: (172.0@108.0).
 		(122.0@154.0) corner: (172.0@174.0).
-		(122.0@225.5) corner: (172.0@245.5).
-		(122.0@277.0) corner: (172.0@297.0).
-		(122.0@299.0) corner: (172.0@319.0).
+		(122.0@220.0) corner: (172.0@240.0).
+		(122.0@242.0) corner: (172.0@262.0).
+		(122.0@264.0) corner: (172.0@284.0).
 		(183.0@0.0) corner: (233.0@20.0).
 		(183.0@22.0) corner: (233.0@42.0).
 		(183.0@44.0) corner: (233.0@64.0).
@@ -292,9 +319,9 @@ GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 		(183.0@176.0) corner: (233.0@196.0).
 		(183.0@198.0) corner: (233.0@218.0).
 		(183.0@220.0) corner: (233.0@240.0).
-		(183.0@253.0) corner: (233.0@273.0).
-		(244.0@242.0) corner: (294.0@262.0).
-		(244.0@264.0) corner: (294.0@284.0)
+		(183.0@242.0) corner: (233.0@262.0).
+		(244.0@231.0) corner: (294.0@251.0).
+		(244.0@253.0) corner: (294.0@273.0)
 	}.
 
 	^ aParentNode
@@ -372,7 +399,6 @@ GtGradHorizontalTreeLayoutExamples >> separatedSubtrees [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -381,13 +407,13 @@ GtGradHorizontalTreeLayoutExamples >> simpleTree [
 	aTreeLayout measure: aParentNode.
 
 	self assert: aParentNode children layoutBounds equals: {
-		(0.0@84.0) corner: (50.0@104.0).
+		(0.0@82.5) corner: (50.0@102.5).
 		(61.0@33.0) corner: (111.0@53.0).
-		(61.0@135.0) corner: (111.0@155.0).
+		(61.0@132.0) corner: (111.0@152.0).
 		(122.0@11.0) corner: (172.0@31.0).
 		(122.0@55.0) corner: (172.0@75.0).
 		(122.0@121.0) corner: (172.0@141.0).
-		(122.0@149.0) corner: (172.0@169.0).
+		(122.0@143.0) corner: (172.0@163.0).
 		(183.0@0.0) corner: (233.0@20.0).
 		(183.0@22.0) corner: (233.0@42.0).
 		(183.0@44.0) corner: (233.0@64.0).
@@ -404,7 +430,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTree [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -413,13 +438,13 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 	aTreeLayout measure: aParentNode.
 
 	self assert: aParentNode children layoutBounds equals: {
-		(183.0@84.0) corner: (233.0@104.0).
+		(183.0@82.5) corner: (233.0@102.5).
 		(122.0@33.0) corner: (172.0@53.0).
-		(122.0@135.0) corner: (172.0@155.0).
+		(122.0@132.0) corner: (172.0@152.0).
 		(61.0@11.0) corner: (111.0@31.0).
 		(61.0@55.0) corner: (111.0@75.0).
 		(61.0@121.0) corner: (111.0@141.0).
-		(61.0@149.0) corner: (111.0@169.0).
+		(61.0@143.0) corner: (111.0@163.0).
 		(0.0@0.0) corner: (50.0@20.0).
 		(0.0@22.0) corner: (50.0@42.0).
 		(0.0@44.0) corner: (50.0@64.0).
@@ -436,7 +461,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeReversed [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -464,7 +488,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCente
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -492,7 +515,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafA
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootAlignment [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWith10NodesOfIncreasingSize.
@@ -503,13 +525,13 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootA
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(0.0@243.6209677419355) corner: (10.0@253.6209677419355).
+		(0.0@247.25) corner: (10.0@257.25).
 		(41.0@147.5) corner: (61.0@167.5).
-		(41.0@319.741935483871) corner: (71.0@349.741935483871).
+		(41.0@327.0) corner: (71.0@357.0).
 		(102.0@66.0) corner: (142.0@106.0).
 		(102.0@199.0) corner: (152.0@249.0).
-		(102.0@268.741935483871) corner: (162.0@328.741935483871).
-		(102.0@330.741935483871) corner: (172.0@400.741935483871).
+		(102.0@276.0) corner: (162.0@336.0).
+		(102.0@338.0) corner: (172.0@408.0).
 		(203.0@0.0) corner: (283.0@80.0).
 		(203.0@82.0) corner: (293.0@172.0).
 		(203.0@174.0) corner: (303.0@274.0)
@@ -521,7 +543,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootA
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -530,13 +551,13 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithBiggerDistances [
 	aTreeLayout measure: aParentNode.
 
 	self assert: aParentNode children layoutBounds equals: {
-		(0.0@325.7142857142857) corner: (50.0@345.7142857142857).
+		(0.0@300.0) corner: (50.0@320.0).
 		(120.0@120.0) corner: (170.0@140.0).
-		(120.0@531.4285714285714) corner: (170.0@551.4285714285714).
+		(120.0@480.0) corner: (170.0@500.0).
 		(240.0@40.0) corner: (290.0@60.0).
 		(240.0@200.0) corner: (290.0@220.0).
 		(240.0@440.0) corner: (290.0@460.0).
-		(240.0@622.8571428571429) corner: (290.0@642.8571428571429).
+		(240.0@520.0) corner: (290.0@540.0).
 		(360.0@0.0) corner: (410.0@20.0).
 		(360.0@80.0) corner: (410.0@100.0).
 		(360.0@160.0) corner: (410.0@180.0).
@@ -573,7 +594,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfDifferentSizes [
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAlignment [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -606,7 +626,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterA
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlignment [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -639,7 +658,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAli
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
@@ -672,7 +690,6 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAli
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructSimpleTree.
@@ -681,13 +698,13 @@ GtGradHorizontalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	aTreeLayout measure: aParentNode.
 
 	self assert: aParentNode children layoutBounds equals: {
-		(0.0@85.25) corner: (50.0@105.25).
+		(0.0@82.5) corner: (50.0@102.5).
 		(56.0@33.0) corner: (106.0@53.0).
-		(56.0@137.5) corner: (106.0@157.5).
+		(56.0@132.0) corner: (106.0@152.0).
 		(112.0@11.0) corner: (162.0@31.0).
 		(112.0@55.0) corner: (162.0@75.0).
 		(112.0@121.0) corner: (162.0@141.0).
-		(112.0@154.0) corner: (162.0@174.0).
+		(112.0@143.0) corner: (162.0@163.0).
 		(168.0@0.0) corner: (218.0@20.0).
 		(168.0@22.0) corner: (218.0@42.0).
 		(168.0@44.0) corner: (218.0@64.0).
