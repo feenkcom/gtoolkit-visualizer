@@ -5,61 +5,63 @@ Class {
 }
 
 { #category : #'private - layout' }
-GtGradTreeLayoutPreparator >> attachParent: aTreeNode breadth: aChildrenBreadth [
-	| x y offset nodeContour |
-	x := self nodeDistance + self levelDistance.
-	y := ((self layout nodeBreadth: aTreeNode) - aChildrenBreadth) / 2.0
-			+ self nodeDistance.
-	offset := (x + (self layout nodeLength: aTreeNode)) @ y.
+GtGradTreeLayoutPreparator >> attachParent: aTreeNode toContour: childrenContour [
+	| height width newY |
+	height := aTreeNode height + (self nodeDistance * 2).
+	width := aTreeNode width.
+	newY := childrenContour middleOfFront - (height / 2).
+	aTreeNode offset: 0 @ newY.
+	childrenContour
+		translateBy: (width + self nodeDistance + self levelDistance) @ 0.
+	aTreeNode nodes first
+		offset: aTreeNode nodes first offset
+				+ ((width + self nodeDistance + self levelDistance) @ newY negated).
 
-	aTreeNode nodes first offset: offset.
-	nodeContour := aTreeNode contour.
-	nodeContour addPointsToUpperHead: {x @ y}.
-	nodeContour addPointsToLowerHead: {x @ y negated}
+	childrenContour upperPoints addFirst: width @ newY.
+	childrenContour upperPoints addFirst: 0 @ newY.
+	childrenContour lowerPoints addFirst: width @ (newY + height).
+	childrenContour lowerPoints addFirst: 0 @ (newY + height).
+	newY < 0 ifTrue: [ childrenContour translateBy: 0 @ newY abs ].
+	aTreeNode contour: childrenContour
 ]
 
 { #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
-	| aTotalBreadth aChildBreadth aFirstChildNode aNodeContour |
-
+	| aFirstChildNode aNodeContour offsets |
 	aFirstChildNode := aTreeNode nodes first.
-
 	aNodeContour := aFirstChildNode contour.
-	aTreeNode contour: aNodeContour.
-
-	aChildBreadth := (self layout nodeBreadth: aFirstChildNode)
-			+ (2 * self nodeDistance).
-
-	aTotalBreadth := aChildBreadth.
-
+	offsets := OrderedCollection new.
+	offsets add: aFirstChildNode offset.
 	aTreeNode nodes
 		allButFirstDo: [ :aChildNode | 
-			| aDeltaDistance |
-			aDeltaDistance := aNodeContour mergeWith: aChildNode contour.
-			aChildNode offset: 0 @ (aChildBreadth + aDeltaDistance).
-			aChildBreadth := (self layout nodeBreadth: aChildNode)
-					+ (2 * self nodeDistance).
-			aTotalBreadth := aTotalBreadth + aChildBreadth + aDeltaDistance ].
+			aNodeContour := aNodeContour
+					mergeContour: aChildNode contour
+					offsetCollection: offsets ].
+	offsets size
+		to: 2
+		by: -1
+		do: [ :i | offsets at: i put: (offsets at: i) - (offsets at: i - 1)].
 
-	^ aTotalBreadth
+	aTreeNode nodes allButFirst
+		with: offsets allButFirst
+		do: [ :child :off | child offset: child offset + off  ].
+
+	^ aNodeContour
 ]
 
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
-	| theChildrenBreadth |
+	| childrenContour |
 "
 aTreeNode element incomingEdges size = 0 ifTrue: [self halt].
 "
-
-	theChildrenBreadth := self mergeWithChildrenContours: aTreeNode.
-
-	self
-		attachParent: aTreeNode
-		breadth: theChildrenBreadth
+"	self halt."
+	childrenContour := self mergeWithChildrenContours: aTreeNode.
+	self attachParent: aTreeNode toContour: childrenContour
 ]
 
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitLeafNode: aTreeNode [
 	aTreeNode
-		contour: (GtGradNodeContourLists newWithHeight: self levelDistance + self nodeDistance)
+		contour: (GtGradNodeContour height: aTreeNode height+(2 * self nodeDistance) width: aTreeNode width)
 ]

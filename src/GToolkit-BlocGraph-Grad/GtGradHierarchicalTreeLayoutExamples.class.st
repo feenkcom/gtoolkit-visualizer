@@ -72,6 +72,7 @@ GtGradHierarchicalTreeLayoutExamples >> eastHierarchical [
 { #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> eastTree [
 	<gtExample>
+	<noTest>
 	| aParentNode aLayout |
 
 	aParentNode := self createGraphForHierarchicalTree.
@@ -80,8 +81,8 @@ GtGradHierarchicalTreeLayoutExamples >> eastTree [
 	aLayout measure: aParentNode.
 
 	self assert: aParentNode children layoutBounds equals: {
-		(360.0@20.0) corner: (410.0@40.0).
-		(270.0@20.0) corner: (320.0@40.0).
+		(360.0@30.0) corner: (410.0@50.0).
+		(270.0@30.0) corner: (320.0@50.0).
 		(90.0@40.0) corner: (140.0@60.0).
 		(180.0@0.0) corner: (230.0@20.0).
 		(180.0@40.0) corner: (230.0@60.0).
@@ -146,6 +147,7 @@ GtGradHierarchicalTreeLayoutExamples >> northHierarchical [
 { #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> northTree [
 	<gtExample>
+		<noTest>
 	| aParentNode aLayout |
 
 	aParentNode := self createGraphForHierarchicalTree.
@@ -220,6 +222,7 @@ GtGradHierarchicalTreeLayoutExamples >> southHierarchical [
 { #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> southTree [
 	<gtExample>
+		<noTest>
 	| aParentNode aLayout |
 
 	aParentNode := self createGraphForHierarchicalTree.

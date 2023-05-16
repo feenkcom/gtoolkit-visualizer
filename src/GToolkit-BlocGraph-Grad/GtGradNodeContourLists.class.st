@@ -11,11 +11,15 @@ Class {
 }
 
 { #category : #visiting }
-GtGradNodeContourLists class >> newWithHeight: nodeHeight [
+GtGradNodeContourLists class >> height: nodeHeight width: nodeWidth [
 	| contourList |
 	contourList := self new.
-	contourList addPointsToUpperHead: {nodeHeight @ 0}.
-	contourList addPointsToLowerHead: {nodeHeight @ 0}.
+	contourList
+		addPointsToUpperHead: {0 @ 0.
+				nodeWidth @ 0}.
+	contourList
+		addPointsToLowerHead: {0 @ nodeHeight.
+				nodeWidth @ 0}.
 	^ contourList
 ]
 
@@ -67,14 +71,12 @@ GtGradNodeContourLists >> asTraceElement [
 	upper := self asTrace first value.
 	lower := self asTrace second value.
 	point := 0 @ 0.
-	upper addFirst: point.
 	upper := upper collect: [ :each | point := point + each ].
 	point := 0 @ 0.
-	lower addFirst: point.
 	lower := lower collect: [ :each | point := point + each ].
 	minY := ((upper collect: #y) min min: (lower collect: #y) min) abs.
-	upper := upper collect: [ :each | (10 + (each x * 5)) @ (10 + each y + minY) ].
-	lower := lower collect: [ :each | (10 + (each x * 5)) @ (10 + each y + minY) ].
+	upper := upper collect: [ :each | each x @ (each y + minY) ].
+	lower := lower collect: [ :each | each x @ (each y + minY) ].
 
 	elem := BlElement new
 			constraintsDo: [ :c | 
@@ -141,10 +143,10 @@ GtGradNodeContourLists >> lowerTail [
 
 { #category : #'private - layout' }
 GtGradNodeContourLists >> mergeWith: aChildContour [
-	| total upper childUpperTail parentLowerTail y parentUpperTail childLowerTail lower x offset lowerX upperX lowerY upperY connectingLink |
+	| upper childUpperTail parentLowerTail y parentUpperTail childLowerTail lower x offset lowerX upperX lowerY upperY |
 	x := 0.
 	y := 0.
-	total := 0.
+	offset := 0.
 
 	parentUpperTail := self upperTail.
 	parentLowerTail := self lowerTail.
@@ -155,46 +157,15 @@ GtGradNodeContourLists >> mergeWith: aChildContour [
 	lower := aChildContour upperHead.
 
 	[ lower isNotNil and: [ upper isNotNil ] ]
-		whileTrue: [ offset := lower
-					calculateOffsetTo: upper
-					x: x
-					y: y.
-			y := y + offset.
-			total := total + offset.
-			lowerX := lower position x.
-			upperX := upper position x.
+		whileTrue: [ lowerX := lower position x.
 			lowerY := lower position y.
+			upperX := upper position x.
 			upperY := upper position y.
-			lowerX = upperX
-				ifTrue: [ x := x + lowerX.
-					y := y + (lowerY max: upperY).
-					lower := lower next.
-					upper := upper next ]
-				ifFalse: [ lowerX < upperX
-						ifTrue: [ x := x + lowerX.
-							y := y + lowerY.
-							lower := lower next ]
-						ifFalse: [ x := x + upperX.
-							y := y + upperY.
-							upper := upper next ] ] ].
-	(lower isNil and: [ upper isNil ]) ifTrue: [ ^ total ].
-	lower isNotNil
-		ifTrue: [ connectingLink := parentUpperTail
-					connectingLink: lower
-					x: x 
-					y: y negated.
-			parentUpperTail := connectingLink next isNotNil
-					ifTrue: [ childUpperTail ]
-					ifFalse: [ connectingLink ].
-			parentLowerTail := childLowerTail ]
-		ifFalse: [ connectingLink := childLowerTail
-					connectingLink: upper
-					x: x
-					y: y.
-			connectingLink next isNil ifTrue: [ parentLowerTail := connectingLink ] ].
-	lowerHead := connectingLink.
+			offset := offset max: upperY - lowerY.
+			lowerX <= upperX ifTrue: [ lower := lower next ].
+			lowerX >= upperX ifTrue: [ upper := upper next ] ].
 
-	^ total
+	^ offset
 ]
 
 { #category : #accessing }

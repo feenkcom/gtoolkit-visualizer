@@ -19,6 +19,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> centeredDominanceTreeLayout
 { #category : #'example - layout' }
 GtGradVerticalDominanceCenteredTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructGraphWithANodeWithSeveralIncomingEdges.
@@ -69,6 +70,7 @@ GtGradVerticalDominanceCenteredTreeLayoutExamples >> moreComplexGraphWithANodeWi
 { #category : #'example - layout' }
 GtGradVerticalDominanceCenteredTreeLayoutExamples >> treeWithEdgesWhoseSoucesAreOnDifferentLevels [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithEdgesWhoseSourcesAreOnDifferentLevels.

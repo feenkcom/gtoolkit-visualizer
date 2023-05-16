@@ -9,29 +9,16 @@ Class {
 }
 
 { #category : #'private - layout' }
-GtGradNodeContourListLink >> calculateOffsetTo: contourLink x: x y: y [
+GtGradNodeContourListLink >> calculateOffsetTo: upperLink x: x y: y [
+	"self is the lower link"
 	| contour1y offset contour2y contour1x contour2x |
 	offset := 0.
 	contour1x := position x.
 	contour1y := position y.
-	contour2x := contourLink position x.
-	contour2y := contourLink position y.
+	contour2x := upperLink position x.
+	contour2y := upperLink position y.
 
-	^ contour2y - contour1y
-]
-
-{ #category : #calculating }
-GtGradNodeContourListLink >> connectingLine: otherLink x: x y: y [
-	| newX newY otherX otherY retLink |
-	otherX := otherLink position x.
-	otherY := otherLink position y.
-	newX := otherX - x.
-	newY := otherX = 0 ifTrue: [ otherY ] ifFalse: [ newX * otherY / otherX ].
-
-	retLink := self class new position: newX @ newY.
-	retLink next: otherLink next.
-
-	^ retLink
+	^contour2y - contour1y
 ]
 
 { #category : #calculating }
@@ -40,7 +27,8 @@ GtGradNodeContourListLink >> connectingLink: otherLink x: x y: y [
 	otherX := otherLink position x.
 	otherY := otherLink position y.
 	newX := x.
-	newY := otherX = x ifTrue: [ otherY ] ifFalse: [ newX * otherY / otherX ].
+	newY := otherY.
+	"newY := otherX = x ifTrue: [ otherY ] ifFalse: [ newX * otherY / otherX ]."
 
 	retLink := self class new position: newX @ newY.
 	nextLink := self class new position: otherX @ y.

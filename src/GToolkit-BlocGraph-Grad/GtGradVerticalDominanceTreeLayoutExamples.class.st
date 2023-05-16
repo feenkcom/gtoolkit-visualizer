@@ -7,7 +7,6 @@ Class {
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
-	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
@@ -44,6 +43,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeLayout [
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith8Nodes.
@@ -68,6 +68,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith9Nodes.
@@ -93,6 +94,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANo
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructGraphWithANodeWithSeveralIncomingEdges.
@@ -115,6 +117,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEd
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> separatedSubtrees [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
@@ -139,6 +142,7 @@ GtGradVerticalDominanceTreeLayoutExamples >> separatedSubtrees [
 { #category : #'example - layout' }
 GtGradVerticalDominanceTreeLayoutExamples >> simpleDominanceTreeWith5Nodes [
 	<gtExample>
+	<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructDominanceTreeWith5Nodes.

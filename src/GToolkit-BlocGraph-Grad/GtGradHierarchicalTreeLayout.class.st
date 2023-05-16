@@ -108,7 +108,7 @@ GtGradHierarchicalTreeLayout >> levelDistance: aNum [
 
 { #category : #measure }
 GtGradHierarchicalTreeLayout >> measureChildrenPositions: aParentLayoutNode [
-	| aParentGraphNode aLayout|
+	| aParentGraphNode|
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
 	layout := self constructLayoutAlgorithm: aParentGraphNode children.
 	layout measure: aParentGraphNode
