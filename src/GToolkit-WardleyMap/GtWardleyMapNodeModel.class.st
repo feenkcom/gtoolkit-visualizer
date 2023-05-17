@@ -118,7 +118,7 @@ GtWardleyMapNodeModel >> gtInnerNodesFor: aView [
 	self innerNodes ifEmpty: [ ^ aView empty ].
 	
 	^ aView columnedList
-		title: 'Inner Nodes';
+		title: 'Inner nodes';
 		priority: 5;
 		items: [ self innerNodes ifNil: [ #() ] ];
 		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;

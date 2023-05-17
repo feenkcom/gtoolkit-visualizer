@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'worst'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #converting }
@@ -143,7 +143,7 @@ GtGraphTreemapSquarifyWorstPreview >> gtPreviewFor: aView [
 	self length ifNil: [ ^ aView empty ].
 	self breadth ifNil: [ ^ aView empty ].
 	^ aView explicit
-		title: 'Vertical Preview';
+		title: 'Vertical preview';
 		priority: 2;
 		stencil: [ self asElementWithNodes asScalableElement
 			margin: (BlInsets all: 10) ]
@@ -155,7 +155,7 @@ GtGraphTreemapSquarifyWorstPreview >> gtReversedPreviewFor: aView [
 	self length ifNil: [ ^ aView empty ].
 	self breadth ifNil: [ ^ aView empty ].
 	^ aView explicit
-		title: 'Horizontal Preview';
+		title: 'Horizontal preview';
 		priority: 3;
 		stencil: [ self asReversedElementWithNodes asScalableElement
 			margin: (BlInsets all: 10) ]
@@ -168,7 +168,7 @@ GtGraphTreemapSquarifyWorstPreview >> gtWorstValueFor: aView [
 	self nodes ifEmpty: [ ^ aView empty ].
 	^ (self value gtPreviewFor: aView)
 		priority: 1;
-		title: 'Worst Aspect Ratio'
+		title: 'Worst aspect ratio'
 ]
 
 { #category : #accessing }

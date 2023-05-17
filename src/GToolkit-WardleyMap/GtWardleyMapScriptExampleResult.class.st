@@ -17,7 +17,7 @@ GtWardleyMapScriptExampleResult >> gtOriginalAndResultingScriptDiffFor: aView [
 	self resultingScript ifNil: [ ^ aView empty ].
 	
 	^ aView explicit
-		title: 'Scripts Diff';
+		title: 'Scripts diff';
 		priority: 22;
 		stencil: [ GtDiffElementWithLabelStencil new
 				fromLabelText: 'Original script:';
@@ -36,7 +36,7 @@ GtWardleyMapScriptExampleResult >> gtOriginalWardleyScriptFor: aView [
 	self originalScript ifNil: [ ^ aView empty ].
 	
 	^ (aView textEditor)
-		title: 'Original Script';
+		title: 'Original script';
 		priority: 2;
 		aptitude: [ BrGlamorousCodeEditorAptitude ];
 		styler: [ GtWardleyMapParser gtStyler ];
@@ -51,7 +51,7 @@ GtWardleyMapScriptExampleResult >> gtOriginalWarldeyMapLiveFor: aView [
 	self originalWardleyMap ifNil: [ ^ aView empty ].
 	
 	^ aView explicit
-		title: 'Original Map';
+		title: 'Original map';
 		priority: 1;
 		stencil: [ GtWardleyMapElement new
 				wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: self originalWardleyMap);
@@ -65,7 +65,7 @@ GtWardleyMapScriptExampleResult >> gtOrignalAndResultingNodeDiffFor: aView [
 	self resultingWardleyMap ifNil: [ ^ aView empty ].
 	
 	^ aView columnedList
-		title: 'Node Diff';
+		title: 'Node diff';
 		priority: 20;
 		items: [ self originalWardleyMap nodes ];
 		column: 'Index'
@@ -119,7 +119,7 @@ GtWardleyMapScriptExampleResult >> gtResultingWardleyScriptFor: aView [
 	self resultingScript ifNil: [ ^ aView empty ].
 	
 	^ (aView textEditor)
-		title: 'Resulting Script';
+		title: 'Resulting script';
 		priority: 12;
 		aptitude: [ BrGlamorousCodeEditorAptitude ];
 		styler: [ GtWardleyMapParser gtStyler ];
@@ -134,7 +134,7 @@ GtWardleyMapScriptExampleResult >> gtResultingWarldeyMapLiveFor: aView [
 	self resultingWardleyMap ifNil: [ ^ aView empty ].
 	
 	^ aView explicit
-		title: 'Resulting Map';
+		title: 'Resulting map';
 		priority: 10;
 		stencil: [ GtWardleyMapElement new
 				wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: self resultingWardleyMap);

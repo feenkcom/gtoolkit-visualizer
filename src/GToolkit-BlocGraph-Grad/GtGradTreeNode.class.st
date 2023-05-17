@@ -166,7 +166,7 @@ GtGradTreeNode >> gtNodesFor: aView [
 GtGradTreeNode >> gtOffsetTraceFor: aView [
 	<gtView>
 	^ aView explicit
-		title: 'Layout Trace';
+		title: 'Layout trace';
 		priority: 3;
 		stencil: [ self asTraceView ]
 ]
@@ -175,7 +175,7 @@ GtGradTreeNode >> gtOffsetTraceFor: aView [
 GtGradTreeNode >> gtOffsetTraceListFor: aView [
 	<gtView>
 	^ aView list
-		title: 'Trace List';
+		title: 'Trace list';
 		priority: 4;
 		items: [ self gtTraceCoordsFrom: 0@0 into: OrderedCollection new]
 ]

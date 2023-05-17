@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphTreemapSquarifyAbstractStep,
 	#superclass : #Object,
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #enumerating }
@@ -71,7 +71,7 @@ GtGraphTreemapSquarifyAbstractStep >> gtPreviewFor: aView [
 GtGraphTreemapSquarifyAbstractStep >> gtWorstValueFor: aView [
 	<gtView>
 	^ (self worstValue gtPreviewFor: aView)
-		title: 'Worst Aspect Ratio';
+		title: 'Worst aspect ratio';
 		priority: 5
 ]
 

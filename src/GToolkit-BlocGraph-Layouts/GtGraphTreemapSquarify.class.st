@@ -117,7 +117,7 @@ GtGraphTreemapSquarify >> gtAllStepsFor: aView [
 	<gtView>
 	firstStep ifNil: [ ^ aView empty ].
 	^ (firstStep gtAllStepsFor: aView)
-		title: 'Steps List'
+		title: 'Steps list'
 ]
 
 { #category : #'gt-extension' }
@@ -145,7 +145,7 @@ GtGraphTreemapSquarify >> gtAllStepsPreviewFor: aView [
 	<gtView>
 	self nodes ifNil: [ ^ aView empty ].
 	^ aView explicit
-		title: 'Steps Figure';
+		title: 'Steps figure';
 		priority: 1.5;
 		stencil: [ self asAllStepsPreview asScalableElement
 			margin: (BlInsets all: 10) ]
