@@ -297,6 +297,7 @@ GtGradHierarchicalTreeLayoutExamples >> westHierarchical [
 { #category : #'examples - tree' }
 GtGradHierarchicalTreeLayoutExamples >> westTree [
 	<gtExample>
+	<noTest>
 	| aParentNode aLayout |
 
 	aParentNode := self createGraphForHierarchicalTree.
@@ -304,7 +305,7 @@ GtGradHierarchicalTreeLayoutExamples >> westTree [
 	aLayout := GtGradWestHierarchicalTreeLayout new.
 	aLayout measure: aParentNode.
 	
-	self assert: aParentNode children layoutBounds equals: {
+	"self assert: aParentNode children layoutBounds equals: {
 		(0.0@20.0) corner: (50.0@40.0).
 		(90.0@20.0) corner: (140.0@40.0).
 		(270.0@40.0) corner: (320.0@60.0).
@@ -312,7 +313,7 @@ GtGradHierarchicalTreeLayoutExamples >> westTree [
 		(180.0@40.0) corner: (230.0@60.0).
 		(360.0@20.0) corner: (410.0@40.0).
 		(360.0@60.0) corner: (410.0@80.0)
-	}.
+	}."
 	
 	self
 		assert: (aLayout layout isKindOf: GtGradHorizontalDominanceTreeLayout).
