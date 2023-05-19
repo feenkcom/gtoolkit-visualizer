@@ -1,34 +1,8 @@
 Class {
 	#name : #GtMondrianLayoutExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Mondrian-Examples'
+	#category : #'GToolkit-Mondrian-Examples'
 }
-
-{ #category : #tree }
-GtMondrianLayoutExamples >> centeredDominanceHorizontalTree [
-	<gtExample>
-	| mondrian |
-	mondrian := GtMondrian new.
-	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 11).
-	mondrian edges connect: { 1->2 . 1->3 . 1->4 . 1->5 .
-									 2->6 . 3->6 . 4->6 . 5->6 .
-									 6->7 . 6->8 . 2->10 . 10-> 11 .
-									 11->9 . 7->9 . 8->9} from: #key to: #value.
-	mondrian layout custom: (GtGradHorizontalDominanceCenteredTreeLayout new).
-	^ mondrian
-]
-
-{ #category : #tree }
-GtMondrianLayoutExamples >> centeredDominanceSimpleHorizontalTree [
-	<gtExample>
-	| mondrian |
-	mondrian := GtMondrian new.
-	mondrian nodes shape: [ :x | BlElement new size: 50@50; background: (Color black)]; with: (1 to: 5).
-	mondrian edges connect: { 1->2 . 1->3 . 1->4 . 2->5 .
-									 2->5 . 3->5 . 4->5} from: #key to: #value.
-	mondrian layout custom: (GtGradHorizontalDominanceCenteredTreeLayout new).
-	^ mondrian
-]
 
 { #category : #tree }
 GtMondrianLayoutExamples >> centeredDominanceSimpleVerticalTree [
