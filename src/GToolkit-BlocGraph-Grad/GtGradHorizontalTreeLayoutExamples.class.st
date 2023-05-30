@@ -289,7 +289,6 @@ GtGradHorizontalTreeLayoutExamples >> disconnectedGraphWithTreeContainingOneNode
 { #category : #'examples - layout' }
 GtGradHorizontalTreeLayoutExamples >> distinctSubtreesBiggerTree [
 	<gtExample>
-		<noTest>
 	| aParentNode aTreeLayout |
 
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevelBigger.
