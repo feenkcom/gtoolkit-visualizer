@@ -19,7 +19,7 @@ BaselineOfGToolkitVisualizerPhlow >> baseline: spec [
 				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1023/src' ].
 		spec
 			baseline: 'GToolkitVisualizer' with: [
-				spec repository: 'github://feenkcom/gtoolkit-visualizer:v0.8.1194/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-visualizer:v0.8.1195/src' ].
 
 		spec package: 'GToolkit-Mondrian-Phlow' with: [
 			spec requires: #('GToolkitPhlow' 'GToolkitVisualizer') ].
