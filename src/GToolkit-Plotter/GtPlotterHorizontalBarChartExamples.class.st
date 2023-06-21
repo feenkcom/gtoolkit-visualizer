@@ -4,7 +4,7 @@ I exemplify {{gtClass:GtPlotterHorizontalBarChart}}.
 Class {
 	#name : #GtPlotterHorizontalBarChartExamples,
 	#superclass : #GtPlotterBuilderExamples,
-	#category : 'GToolkit-Plotter-Example - Builders'
+	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
 { #category : #'example - dependencies' }
@@ -69,7 +69,7 @@ GtPlotterHorizontalBarChartExamples >> browserDataChart [
 	aBarWidthScale := GtPlotterDurationScale new domainFrom: 0 minutes to: (aMaxDuration / 1 year) ceiling years.
 
 	barChart := GtPlotterHorizontalBarChart new.
-	barChart barElement: [ BlElement new geometry: BlStadium new ].
+	barChart barElement: [ BlElement new geometry: BlStadiumGeometry new ].
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #duration ].
 	barChart amountOfTicks: 4.

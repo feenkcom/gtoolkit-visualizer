@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterScaleBasedElementExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Examples'
+	#category : #'GToolkit-Plotter-Examples'
 }
 
 { #category : #accessing }
@@ -73,7 +73,7 @@ GtPlotterScaleBasedElementExamples >> horizontalSingleBar [
 			aNumber := aGtScaleContext originalValue.
 			
 			anElement
-				geometry: BlStadium new;
+				geometry: BlStadiumGeometry new;
 				background: (aNumber < 0.5
 					ifTrue: [ Color red alpha: aNumber * 2 ]
 					ifFalse: [ Color blue alpha: (aNumber - 0.5)  * 2 ]) ];
@@ -114,7 +114,7 @@ GtPlotterScaleBasedElementExamples >> listOfHorizontalBars [
 				height: (aHeightScale map: eachCollectionOfItems size);
 				valueStyle: [ :anElement :aGtScaleContext |
 					anElement
-						geometry: BlStadium new;
+						geometry: BlStadiumGeometry new;
 						background: (Color gray alpha: 0.2) ];
 				values: eachCollectionOfItems ].
 
@@ -186,7 +186,7 @@ GtPlotterScaleBasedElementExamples >> singleBar [
 			aNumber := aGtScaleContext originalValue.
 			
 			anElement
-				geometry: BlStadium new;
+				geometry: BlStadiumGeometry new;
 				background: (aNumber < 0.5
 					ifTrue: [ Color red alpha: aNumber * 2 ]
 					ifFalse: [ Color blue alpha: (aNumber - 0.5)  * 2 ]) ];
