@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'neighbourhood'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #'private - elements' }
@@ -49,7 +49,7 @@ GtGraphCircleNeighbourhoodElement >> embellishNeighbourCircle: aCircleElement [
 	aCircleElement addChild: aCenterLabelElement.
 	aCircleElement relocate: aCircle origin.
 	(aCircleElement childNamed: #circle)
-		background: (self theme default primaryBorderColor alpha: 0.1).
+		background: (self theme default primaryBorderColor).
 	(aCircleElement childNamed: #center)
 		background: self theme default primaryBorderColor
 ]

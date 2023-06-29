@@ -212,7 +212,7 @@ GtGraphQuadTree >> gtMapFor: aView [
 				layout: BlFitLayout new;
 				addChildren: (self allNodes collect: [ :each |
 					BlElement new
-						background: (each isLeaf ifTrue: [ BrGlamorousColors primaryBorderColor alpha: 0.8 ] ifFalse: [ Color gray alpha: 0.1 ]);
+						background: (each isLeaf ifTrue: [ BrGlamorousColors primaryBorderColor ] ifFalse: [ Color gray alpha: 0.1 ]);
 						border: (BlBorder paint: Color white width: 0.5);
 						relocate: each origin;
 						size: each extent

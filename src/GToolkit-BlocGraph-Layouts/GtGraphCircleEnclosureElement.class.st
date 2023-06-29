@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'enclosure'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #'private - elements' }
@@ -27,7 +27,7 @@ GtGraphCircleEnclosureElement >> embellishEnclosureCircle: aCircleElement [
 	| anActualCircle |
 	anActualCircle := aCircleElement childNamed: #circle.
 	anActualCircle
-		background: (self theme default primaryBorderColor alpha: 0.3);
+		background: (self theme default primaryBorderColor);
 		border:
 			(anActualCircle border
 				copyWithPaint: self theme default primaryBorderColor).
