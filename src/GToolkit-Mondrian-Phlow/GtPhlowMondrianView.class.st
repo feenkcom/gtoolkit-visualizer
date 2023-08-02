@@ -14,7 +14,6 @@ Class {
 { #category : #accessing }
 GtPhlowMondrianView >> asElementDo: aBlock [
 	| wrapper |
-	
 	self 
 		performBlock: [ paintingStencilBuilder value: mondrianInstance ] 
 		onExceptionErrorElement: [ :anErrorElement | ^ aBlock value: anErrorElement ].
@@ -28,7 +27,13 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 				ifFound: [ :element |
 					| transformedObject |
 					transformedObject := transformation cull: element graph model.
-					mondrianElement phlow spawnObject: transformedObject ] ) ].
+					mondrianElement phlow spawnObject: transformedObject ] ) ];
+		zoomStep: 1;
+		when: BlMouseWheelEvent
+		do: [: event |
+			event isScrollUp ifTrue: [ mondrianElement zoomIn ].
+			event isScrollDown ifTrue: [ mondrianElement zoomOut ]].
+
 	wrapper addChild: mondrianElement.
 	self beViewElement: wrapper.
 	^ aBlock value: wrapper
