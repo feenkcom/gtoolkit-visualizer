@@ -14,24 +14,24 @@ Class {
 { #category : #accessing }
 GtPhlowMondrianView >> asElementDo: aBlock [
 	| wrapper |
-
-	self 
-		performBlock: [ paintingStencilBuilder value: mondrianInstance ] 
+	self
+		performBlock: [ paintingStencilBuilder value: mondrianInstance ]
 		onExceptionErrorElement: [ :anErrorElement | ^ aBlock value: anErrorElement ].
 	wrapper := BrFrame new matchParent.
 	mondrianElement := mondrianInstance asPannableElement.
 	mondrianElement
 		when: BlClickEvent
-		do: [ :event | 
-			(event target withAllParents 
-				detect: [:element | element graph isNode or: [ element graph isEdge]]
-				ifFound: [ :element |
-					| transformedObject |
-					transformedObject := transformation cull: element graph model.
-					mondrianElement phlow spawnObject: transformedObject ] ) ];
+			do: [ :event | 
+				event target withAllParents
+					detect: [ :element | element graph isNode or: [ element graph isEdge ] ]
+					ifFound: [ :element | 
+						| transformedObject |
+						transformedObject := transformation cull: element graph model.
+						mondrianElement phlow spawnObject: transformedObject ] ];
 		when: BlMouseWheelEvent
-		do: [: event |
-			mondrianElement zoomLevel: mondrianElement zoomLevel + event vector y sign].
+			do: [ :event | 
+				event isPrimarilyVertical
+					ifTrue: [ mondrianElement zoomLevel: mondrianElement zoomLevel + (event vector y / 10) ] ].
 	wrapper addChild: mondrianElement.
 	self beViewElement: wrapper.
 	^ aBlock value: wrapper
