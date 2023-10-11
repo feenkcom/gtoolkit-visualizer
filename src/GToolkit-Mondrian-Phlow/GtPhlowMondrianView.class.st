@@ -25,8 +25,11 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 				event target withAllParents
 					detect: [ :element | element graph isNode or: [ element graph isEdge ] ]
 					ifFound: [ :element | 
-						| transformedObject |
-						transformedObject := transformation cull: element graph model.
+						| transformedObject graphModel |
+						graphModel := element graph isEdge 
+							ifFalse: [ element graph model ]
+							ifTrue: [ element graph model model ].
+						transformedObject := transformation cull: graphModel.
 						mondrianElement phlow spawnObject: transformedObject ] ];
 		when: BlMouseWheelEvent
 			do: [ :event | 
