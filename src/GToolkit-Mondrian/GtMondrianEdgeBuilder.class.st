@@ -196,6 +196,7 @@ GtMondrianEdgeBuilder >> edgeElementFor: anObject from: fromElement to: toElemen
 	
 	anEdgeModel := GtGraphEdgeWithElement new
 		element: edgeElement;
+		model: anObject;
 		from: fromElement to: toElement.
 	
 	edgeElement graph model: anEdgeModel.

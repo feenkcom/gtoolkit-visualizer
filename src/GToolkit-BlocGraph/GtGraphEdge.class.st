@@ -8,7 +8,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'from',
-		'to'
+		'to',
+		'model'
 	],
 	#category : #'GToolkit-BlocGraph-Core'
 }
@@ -50,6 +51,20 @@ GtGraphEdge >> fromElement [
 { #category : #comparing }
 GtGraphEdge >> hash [
 	^ from hash bitXor: to hash
+]
+
+{ #category : #accessing }
+GtGraphEdge >> model [
+	"Return a model that represents the edge"
+
+	^ model
+]
+
+{ #category : #accessing }
+GtGraphEdge >> model: anObject [
+	"Set a model that represents the edge"
+
+	model := anObject
 ]
 
 { #category : #private }
