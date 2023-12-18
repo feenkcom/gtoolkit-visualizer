@@ -39,7 +39,6 @@ GtMondrianPatternMapExamples >> explicitPositions [
 { #category : #example }
 GtMondrianPatternMapExamples >> gtBook [
 	<gtExample>
-	<noTest>
 	^ LeDatabasesRegistry uniqueInstance defaultLogicalDatabase databases
 		detect: [ :db | db databaseName = 'Glamorous Toolkit Book' ]
 ]
