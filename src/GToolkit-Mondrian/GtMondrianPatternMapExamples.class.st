@@ -15,32 +15,26 @@ GtMondrianPatternMapExamples >> explicitPositions [
 	
 	(self root children collect: #position) storeString"
 
-	^ (Array new: 17)
-		at: 1 put: 239.63483556111657 @ 308.2354939778646;
-		at: 2 put: 398.08333333333337 @ 304.83333333333337;
-		at: 3 put: 436.7093404134115 @ 353.83333333333337;
-		at: 4 put: 218.87634023030603 @ 411.83333333333337;
-		at: 5 put: 429.87533696492517 @ 411.4311726888021;
-		at: 6 put: 200.35933812459314 @ 473.4311726888021;
-		at: 7 put: 399.63134129842126 @ 479.4311726888021;
-		at: 8 put: 139.36634190877282 @ 533.0290120442709;
-		at: 9 put: 269.9023450215658 @ 536.0290120442709;
-		at: 10 put: 346.9688351949056 @ 321.0439366412734;
-		at: 11 put: 346.9688351949056 @ 336.09846445777083;
-		at: 12 put: 292.784548124367 @ 337.83333333333337;
-		at: 13 put: 480.8788125382617 @ 383.4311726888021;
-		at: 14 put: 262.15413555454586 @ 441.4311726888021;
-		at: 15 put: 326.88055778969 @ 441.4311726888021;
-		at: 16 put: 199.23005168336604 @ 503.02901204427087;
-		at: 17 put: 271.47170886348164 @ 503.02901204427087;
+	^ (Array new: 18)
+		at: 1 put: 183.9584903717041 @ 245.31882731119794;
+		at: 2 put: 372.0 @ 243.91666666666669;
+		at: 3 put: 399.2699890136719 @ 297.9166666666667;
+		at: 4 put: 163.60298538208008 @ 351.9166666666667;
+		at: 5 put: 392.554988861084 @ 354.51450602213544;
+		at: 6 put: 187.3509864807129 @ 421.51450602213544;
+		at: 7 put: 353.4189872741699 @ 420.51450602213544;
+		at: 8 put: 139.4889907836914 @ 483.1123453776042;
+		at: 9 put: 241.65098571777344 @ 483.1123453776042;
+		at: 10 put: 296.35248756408686 @ 259.24401874840106;
+		at: 11 put: 296.35248756408686 @ 274.480607193991;
+		at: 12 put: 240.40558921191473 @ 274.91666666666663;
+		at: 13 put: 446.214462664401 @ 327.5145060221354;
+		at: 14 put: 242.26062520195012 @ 381.51450602213544;
+		at: 15 put: 277.1290380863739 @ 381.51450602213544;
+		at: 16 put: 320.310977935791 @ 367.70853786158517;
+		at: 17 put: 198.32045400645478 @ 451.1123453776042;
+		at: 18 put: 258.9006121692213 @ 451.1123453776042;
 		yourself
-]
-
-{ #category : #example }
-GtMondrianPatternMapExamples >> gtBook [
-	<gtExample>
-	^ LeDatabasesRegistry uniqueInstance defaultLogicalDatabase databases
-		detect: [ :db | db databaseName = 'Glamorous Toolkit Book' ]
 ]
 
 { #category : #example }
@@ -69,7 +63,8 @@ GtMondrianPatternMapExamples >> patternConnections [
 		'Project diary' -> {'Example object'}.
 		'Contextual playground'
 			-> {'Viewable entity'.
-					'Custom action'}.
+					'Custom action'.
+					'Example object'}.
 		'Viewable entity'
 			-> {'Simple view'.
 					'Collection wrapper'}}
@@ -100,8 +95,8 @@ GtMondrianPatternMapExamples >> patternMapEdges [
 	<gtExample>
 	^ (self patternConnections
 		collect: [ :each | 
-			(self gtBook pageNamed: each key)
-				-> (each value collect: [ :name | self gtBook pageNamed: name ]) ])
+			(LeDatabase gtBook pageNamed: each key)
+				-> (each value collect: [ :name | LeDatabase gtBook pageNamed: name ]) ])
 		asDictionary
 ]
 
@@ -123,5 +118,5 @@ GtMondrianPatternMapExamples >> patternPages [
 	"NB: fragile -- the pattern names could change."
 
 	<gtExample>
-	^ self pageTitles collect: [ :title | self gtBook pageNamed: title ]
+	^ self pageTitles collect: [ :title | LeDatabase gtBook pageNamed: title ]
 ]
