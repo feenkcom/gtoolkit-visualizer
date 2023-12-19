@@ -90,8 +90,6 @@ GtMondrianDomainExamples >> classHierarchyFor: classes [
 				padding: (BlInsets all: 5) ];
 		with: classes.
 	m edges
-		fromCenterBottom;
-		toCenterTop;
 		stencil: [ :c | 
 			BlLineElement new
 				border: (BlBorder paint: Color gray);
