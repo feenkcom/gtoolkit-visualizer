@@ -1,6 +1,8 @@
 "
 Pattern map with clickable pattern names that open the Lepiter pages.
 NB: fragile if the pattern names change. In that case please update pageTitles and patternConnections (and probably explicitPositions).
+
+Superseded by {{gtClass:name=LepiterMondrianPageMap}} and {{gtClass:name=LepiterMondrianPageMapExamples}}. 
 "
 Class {
 	#name : #GtMondrianPatternMapExamples,
@@ -40,7 +42,8 @@ GtMondrianPatternMapExamples >> explicitPositions [
 { #category : #example }
 GtMondrianPatternMapExamples >> pageTitles [
 	<gtExample>
-	^ {'Moldable object'.
+	^ {
+		'Moldable object'.
 		'Viewable data wrapper'.
 		'Project diary'.
 		'Contextual playground'.
@@ -118,5 +121,5 @@ GtMondrianPatternMapExamples >> patternPages [
 	"NB: fragile -- the pattern names could change."
 
 	<gtExample>
-	^ self pageTitles collect: [ :title | LeDatabase gtBook pageNamed: title ]
+	^ self pageTitles collect: [ :title | LeDatabase gtBook pageNamed: title  ]
 ]
