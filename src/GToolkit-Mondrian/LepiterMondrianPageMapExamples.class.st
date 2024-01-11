@@ -10,28 +10,28 @@ LepiterMondrianPageMapExamples >> patternMap [
 
 	<gtExample>
 	^ LepiterMondrianPageMap new
-		pageTitles: {'Moldable object'.
-				'Viewable data wrapper'.
-				'Project diary'.
-				'Contextual playground'.
-				'Example object'.
-				'Custom view'.
-				'Custom action'.
-				'Simple view'.
-				'Collection wrapper'};
+		pageTitles: {'Moldable Object'.
+				'Moldable Data Wrapper'.
+				'Project Diary'.
+				'Contextual Playground'.
+				'Example Object'.
+				'Custom View'.
+				'Custom Action'.
+				'Simple View'.
+				'Moldable Collection Wrapper'};
 		database: LeDatabase gtBook;
-		connections: {'Moldable object'
-					-> {'Viewable data wrapper'.
-							'Project diary'.
-							'Contextual playground'}.
-				'Project diary' -> {'Example object'}.
-				'Contextual playground'
-					-> {'Custom view'.
-							'Custom action'.
-							'Example object'}.
-				'Custom view'
-					-> {'Simple view'.
-							'Collection wrapper'}}
+		connections: {'Moldable Object'
+					-> {'Moldable Data Wrapper'.
+							'Project Diary'.
+							'Contextual Playground'}.
+				'Project Diary' -> {'Example Object'}.
+				'Contextual Playground'
+					-> {'Custom View'.
+							'Custom Action'.
+							'Example Object'}.
+				'Custom View'
+					-> {'Simple View'.
+							'Moldable Collection Wrapper'}}
 ]
 
 { #category : #accessing }

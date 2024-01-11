@@ -1,8 +1,10 @@
 "
+OBSOLETE — Superseded by {{gtClass:name=LepiterMondrianPageMap}} and {{gtClass:name=LepiterMondrianPageMapExamples}}. 
+
 Pattern map with clickable pattern names that open the Lepiter pages.
 NB: fragile if the pattern names change. In that case please update pageTitles and patternConnections (and probably explicitPositions).
 
-Superseded by {{gtClass:name=LepiterMondrianPageMap}} and {{gtClass:name=LepiterMondrianPageMapExamples}}. 
+
 "
 Class {
 	#name : #GtMondrianPatternMapExamples,
