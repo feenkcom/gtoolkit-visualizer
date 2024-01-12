@@ -1,6 +1,10 @@
 "
+OBSOLETE — Superseded by {{gtClass:name=LepiterMondrianPageMap}} and {{gtClass:name=LepiterMondrianPageMapExamples}}. 
+
 Pattern map with clickable pattern names that open the Lepiter pages.
 NB: fragile if the pattern names change. In that case please update pageTitles and patternConnections (and probably explicitPositions).
+
+
 "
 Class {
 	#name : #GtMondrianPatternMapExamples,
@@ -40,7 +44,8 @@ GtMondrianPatternMapExamples >> explicitPositions [
 { #category : #example }
 GtMondrianPatternMapExamples >> pageTitles [
 	<gtExample>
-	^ {'Moldable object'.
+	^ {
+		'Moldable object'.
 		'Viewable data wrapper'.
 		'Project diary'.
 		'Contextual playground'.
@@ -56,7 +61,7 @@ GtMondrianPatternMapExamples >> patternConnections [
 	"Just the raw connections by page title."
 
 	<gtExample>
-	^ {'Moldable object'
+	^ {'Moldable Object'
 			-> {'Viewable data wrapper'.
 					'Project diary'.
 					'Contextual playground'}.
@@ -73,6 +78,7 @@ GtMondrianPatternMapExamples >> patternConnections [
 { #category : #example }
 GtMondrianPatternMapExamples >> patternMap [
 	<gtExample>
+	<noTest>
 	| m |
 	m := GtMondrian new.
 	m nodes
@@ -93,6 +99,7 @@ GtMondrianPatternMapExamples >> patternMap [
 { #category : #example }
 GtMondrianPatternMapExamples >> patternMapEdges [
 	<gtExample>
+	<noTest>
 	^ (self patternConnections
 		collect: [ :each | 
 			(LeDatabase gtBook pageNamed: each key)
@@ -105,6 +112,7 @@ GtMondrianPatternMapExamples >> patternMapWithExplicitPositions [
 	"Redraw the pattern map with the explicitly saved positions."
 
 	<gtExample>
+	<noTest>
 	| m |
 	m := self patternMap.
 	m layout custom: BlBasicLayout new.
@@ -116,7 +124,8 @@ GtMondrianPatternMapExamples >> patternMapWithExplicitPositions [
 { #category : #example }
 GtMondrianPatternMapExamples >> patternPages [
 	"NB: fragile -- the pattern names could change."
-
+	
 	<gtExample>
-	^ self pageTitles collect: [ :title | LeDatabase gtBook pageNamed: title ]
+	<noTest>
+	^ self pageTitles collect: [ :title | LeDatabase gtBook pageNamed: title  ]
 ]
