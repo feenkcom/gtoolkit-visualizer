@@ -5,6 +5,90 @@ Class {
 }
 
 { #category : #accessing }
+LePageMondrianMapExamples >> euroPlopPatternMap [
+	"The extended pattern map from the MD Patterns paper submission to EuroPLoP 2024. Note that not all patterns have pages in the book yet."
+
+	<gtExample>
+	^ LePageMondrianMap new
+		pageTitles: {'Explainable System'.
+				'Moldable Tool'.
+				'Contextual Playground'.
+				'Custom View'.
+				'Custom Search'.
+				'Custom Action'.
+				'Moldable Object'.
+				'Example Object'.
+				'Moldable Data Wrapper'.
+				'Moldable Collection Wrapper'.
+				'Project Diary'.
+				'Tooling Buildup'.
+				'Blind Spot'.
+				'Simple View'.
+				'Throwaway Analysis Tool'};
+		database: LeDatabase gtBook;
+		connections: {'Explainable System'
+					-> {'Moldable Tool'.
+							'Tooling Buildup'.
+							'Blind Spot'.
+							'Project Diary'}.
+				'Moldable Tool' -> {'Moldable Object'}.
+				'Tooling Buildup' -> {'Moldable Object'}.
+				'Blind Spot' -> {'Moldable Object'}.
+				'Project Diary'
+					-> {'Moldable Object'.
+							'Example Object'}.
+				'Moldable Object'
+					-> {'Example Object'.
+							'Contextual Playground'.
+							'Moldable Data Wrapper'}.
+				'Example Object' -> {'Moldable Object'}.
+				'Moldable Data Wrapper' -> {'Moldable Object'}.
+				'Contextual Playground'
+					-> {'Custom View'.
+							'Custom Search'.
+							'Custom Action'}.
+				'Custom View' -> {'Simple View'}.
+				'Custom Search' -> {'Moldable Collection Wrapper'}.
+				'Throwaway Analysis Tool' -> {'Contextual Playground'}};
+		explicitPositions: {147.85599899291992 @ 263.068827311198.
+				84.12199783325195 @ 343.66666666666674.
+				127.85199737548828 @ 479.86234537760424.
+				29.573993682861328 @ 530.460184733073.
+				168.36199569702148 @ 530.460184733073.
+				277.11799240112305 @ 530.460184733073.
+				173.14398956298828 @ 429.2645060221355.
+				418.25 @ 426.86234537760424.
+				286.8819808959961 @ 479.86234537760424.
+				125.70598983764648 @ 581.0580240885417.
+				419.8499946594238 @ 342.66666666666674.
+				202.36598587036133 @ 344.66666666666674.
+				327.1059913635254 @ 345.66666666666674.
+				31.827991485595703 @ 581.0580240885417.
+				-22.63500213623047 @ 388.068827311198.
+				149.09086528422657 @ 292.6666666666668.
+				222.9257735812187 @ 292.6666666666668.
+				242.13502293421251 @ 292.6666666666668.
+				261.9298342429868 @ 292.6666666666668.
+				150.84133005286404 @ 373.2645060221355.
+				114.58270707475687 @ 509.460184733073.
+				210.86330494321152 @ 509.460184733073.
+				242.23835308666088 @ 509.460184733073.
+				76.63999176025392 @ 560.0580240885417.
+				221.73999404907227 @ 560.0580240885417.
+				287.343994140625 @ 442.2072496711477.
+				213.3505649137046 @ 458.86234537760424.
+				269.9676235166164 @ 458.86234537760424.
+				287.343994140625 @ 442.2072496711477.
+				269.9676235166164 @ 458.86234537760424.
+				270.6981733773149 @ 372.2645060221355.
+				468.12425342262134 @ 372.2645060221355.
+				235.14070452086227 @ 374.2645060221355.
+				254.27232316020465 @ 375.2645060221355.
+				85.91478656383653 @ 417.66666666666674};
+		yourself
+]
+
+{ #category : #accessing }
 LePageMondrianMapExamples >> patternMap [
 	"A map of patterns with default layout."
 
