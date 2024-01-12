@@ -2,7 +2,7 @@
 I am a mondrian map of Lepiter pages, possibly with explicit positions.
 Clicking on a node will open that page.
 
-See {{gtClass:name=LepiterMondrianPageMapExamples}}.
+See {{gtClass:name=LePageMondrianMapExamples}}.
 
 Note that missing pages resolve to a String, not a page.
 They show as pink instead of blue when hovering over them.
