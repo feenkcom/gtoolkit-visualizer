@@ -1,15 +1,15 @@
 Class {
-	#name : #LepiterMondrianPageMapExamples,
+	#name : #LePageMondrianMapExamples,
 	#superclass : #Object,
 	#category : #'GToolkit-Mondrian-Examples'
 }
 
 { #category : #accessing }
-LepiterMondrianPageMapExamples >> patternMap [
+LePageMondrianMapExamples >> patternMap [
 	"A map of patterns with default layout."
 
 	<gtExample>
-	^ LepiterMondrianPageMap new
+	^ LePageMondrianMap new
 		pageTitles: {'Moldable Object'.
 				'Moldable Data Wrapper'.
 				'Project Diary'.
@@ -35,7 +35,7 @@ LepiterMondrianPageMapExamples >> patternMap [
 ]
 
 { #category : #accessing }
-LepiterMondrianPageMapExamples >> patternMapwithExplicitPositions [
+LePageMondrianMapExamples >> patternMapwithExplicitPositions [
 	"A map of patterns with explicit layout.
 	The positions are obtained by manually laying out the pageMap and then evaluating:
 		(self root children collect: #position)"
@@ -63,11 +63,11 @@ LepiterMondrianPageMapExamples >> patternMapwithExplicitPositions [
 ]
 
 { #category : #accessing }
-LepiterMondrianPageMapExamples >> simpleMap [
+LePageMondrianMapExamples >> simpleMap [
 	"A simple map with default layout."
 
 	<gtExample>
-	^ LepiterMondrianPageMap new
+	^ LePageMondrianMap new
 		pageTitles: {'Glamorous Toolkit'.
 				'About this book'.
 				'Get started'};
@@ -75,4 +75,19 @@ LepiterMondrianPageMapExamples >> simpleMap [
 		connections: {'Glamorous Toolkit'
 					-> {'About this book'.
 							'Get started'}}
+]
+
+{ #category : #accessing }
+LePageMondrianMapExamples >> simpleMapWithMissingPages [
+	"A map where some pages are missing -- hover shows them as pink, and clicking goes to nil."
+
+	<gtExample>
+	^ LePageMondrianMap new
+		pageTitles: {'Glamorous Toolkit'.
+				'A Missing Page'.
+				'Another Missing Page'};
+		database: LeDatabase gtBook;
+		connections: {'Glamorous Toolkit'
+					-> {'A Missing Page'.
+							'Another Missing Page'}}
 ]
