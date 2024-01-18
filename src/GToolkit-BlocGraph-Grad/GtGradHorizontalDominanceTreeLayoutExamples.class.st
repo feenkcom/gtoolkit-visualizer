@@ -119,6 +119,31 @@ GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToA
 ]
 
 { #category : #'example - layout' }
+GtGradHorizontalDominanceTreeLayoutExamples >> dominanceTreeWithMultiplePathsToANodesWith9NodesAndACycle [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructDominanceTreeWithMultiplePathsToANodesWith9NodesAndACycle.
+
+	aTreeLayout := self dominanceTreeLayout.
+	aTreeLayout measure: aParentNode.
+	
+	self assert: aParentNode children layoutBounds equals: {
+		(0.0@27.5) corner: (50.0@47.5).
+		(61.0@11.0) corner: (111.0@31.0).
+		(61.0@44.0) corner: (111.0@64.0).
+		(122.0@0.0) corner: (172.0@20.0).
+		(122.0@44.0) corner: (172.0@64.0).
+		(183.0@44.0) corner: (233.0@64.0).
+		(244.0@44.0) corner: (294.0@64.0).
+		(305.0@44.0) corner: (355.0@64.0).
+		(122.0@22.0) corner: (172.0@42.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'example - layout' }
 GtGradHorizontalDominanceTreeLayoutExamples >> graphWithANodeWithSeveralIncomingEdges [
 	<gtExample>
 	| aParentNode aTreeLayout |

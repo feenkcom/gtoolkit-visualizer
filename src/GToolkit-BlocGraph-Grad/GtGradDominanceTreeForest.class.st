@@ -15,10 +15,10 @@ GtGradDominanceTreeForest class >> dfs: theCurrentNode visited: aVisitedDictiona
 				ifTrue: [ | oldDepth |
 					aTreeNode := aVisitedDictionary at: aNodeElement.
 					oldDepth := aTreeNode parent depth.
-					currentDepth > oldDepth
+					((theCurrentNode allParents includes: aTreeNode) not
+						and: [ currentDepth > oldDepth ])
 						ifTrue: [ aTreeNode parent remove: aTreeNode.
-							theCurrentNode add: aTreeNode.
-							self dfs: aTreeNode visited: aVisitedDictionary ] ]
+							theCurrentNode add: aTreeNode ] ]
 				ifFalse: [ aTreeNode := GtGradTreeNode on: aNodeElement.
 					theCurrentNode add: aTreeNode.
 					aVisitedDictionary at: aNodeElement put: aTreeNode.

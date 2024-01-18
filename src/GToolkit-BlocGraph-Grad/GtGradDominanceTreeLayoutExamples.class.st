@@ -65,6 +65,18 @@ GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToAN
 ]
 
 { #category : #'example - instance creation' }
+GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith9NodesAndACycle [
+	<gtExample>
+	
+	^  self
+		createGraph: 9
+		pairs: {
+			(1->2). (1->3).
+			(2->4). (2->7). (2->9).
+			(3->5). (5->6). (6->7). (7->8). (7->2). (9->8) }
+]
+
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructForest: theNodes [
 	^ GtGradDominanceTreeForest from: theNodes separateSubtrees: false
 ]
