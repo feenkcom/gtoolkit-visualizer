@@ -1,6 +1,8 @@
 Class {
 	#name : #GtConnector,
 	#superclass : #BlElement,
+	#traits : 'TGtPhlowToolDetailAdjustable',
+	#classTraits : 'TGtPhlowToolDetailAdjustable classTrait',
 	#instVars : [
 		'stencil',
 		'referencedEntitiesBlock',
