@@ -70,6 +70,17 @@ GtGradTreeNode >> addChildNodesToLeaves [
 				ifFalse: [ queue addAll: theCurrentNode nodes ] ]
 ]
 
+{ #category : #accessing }
+GtGradTreeNode >> allParents [
+	| result n |
+	result := OrderedCollection new.
+	n := self.
+	[ n hasParent ]
+		whileTrue: [ result add: n parent.
+			n := n parent ].
+	^result
+]
+
 { #category : #'gt-extension' }
 GtGradTreeNode >> asTraceView [
 	| elem verts minY newVerts |
