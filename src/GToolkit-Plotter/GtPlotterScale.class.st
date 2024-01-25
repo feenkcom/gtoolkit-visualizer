@@ -11,7 +11,7 @@ Class {
 		'domain',
 		'tickFormat'
 	],
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #'api - polymorphism' }
@@ -42,10 +42,12 @@ GtPlotterScale >> formattedTick: anObject [
 GtPlotterScale >> gtTicksFor: aView [
 	<gtView>
 	
-	^ aView list
+	^ aView columnedList
 		title: 'Ticks';
 		priority: 5;
-		items: [ self ticks asArray ]
+		items: [ self ticks asArray];
+		column: 'Domain' text: #yourself;
+		column: 'Range' text: [ :value | self map: value].
 ]
 
 { #category : #initialization }

@@ -4,6 +4,7 @@ A set of visualization engines that are part of the [Glamorous Toolkit](https://
 - Connector, an engine that offers a visual way to explore examples.
 - Diagrammer, an engine for constructing diagrams.
 - Explainer, an engine for creating explanatory links between text and visual scenes.
+- Plotter, an engine to create charts
 
 ## How to load
 
