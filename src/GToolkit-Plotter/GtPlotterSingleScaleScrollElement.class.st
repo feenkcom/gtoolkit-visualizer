@@ -6,7 +6,7 @@ Class {
 		'values',
 		'stencil'
 	],
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
@@ -29,6 +29,12 @@ GtPlotterSingleScaleScrollElement >> initializeList [
 	list items: values.
 	
 	self addChild: list
+]
+
+{ #category : #accessing }
+GtPlotterSingleScaleScrollElement >> list [
+	<return: #BrSimpleList>
+	^ list
 ]
 
 { #category : #generated }
