@@ -8,11 +8,11 @@ Class {
 GtPlotterVerticalBarStencilBuilder >> buildDefault [
 	<return: #BrStencil or: #BlElement>
 
-	^ GtPlotterHorizontalValueBarsElement new
+	^ GtPlotterVerticalValueBarsElement new
 		constraintsDo: [ :c | c horizontal fitContent ];
 		scale: self bar heightScale;
 		scaleData: self bar heightData;
-		"margin: (BlInsets left: self bar gap / 2.0 right: self bar gap / 2.0);"
+		margin: (BlInsets left: self bar gap / 2.0 right: self bar gap / 2.0);
 		valueElement: self bar stencil;
 		valueStyle: [ :anElement | anElement background: self group color ];
 		valueLayout: [ :anElement :aGtPlotterScaleContext |
@@ -22,7 +22,9 @@ GtPlotterVerticalBarStencilBuilder >> buildDefault [
 				
 				c vertical matchParent. 
 				
-				c frame vertical weight: (aGtPlotterScaleContext mappedValue max: 0) ];
+				c frame vertical 
+					weight: (aGtPlotterScaleContext mappedValue max: 0);
+					alignBottom ];
 				yourself ];
 		values: { self value }
 ]

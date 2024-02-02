@@ -133,6 +133,7 @@ GtPlotterVerticalBarChart >> create [
 
 	aContainer addChild: (GtPlotterVerticalTickLabelsElement new
 		clipChildren: false;
+		inverse;
 		scale: barHeightScale;
 		padding: (BlInsets bottom: self barLabelHeight + self gridlineOffset);
 		constraintsDo: [ :c | c horizontal fitContent ];
@@ -167,18 +168,20 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 	aContainer := BrVerticalPane new
 		vMatchParent;
 		hFitContent.
+	
+	aContainer addChild: (self createGroupBarsFor: aGtPlotterDataEntity).
 
 	aColumnLabelElement := BrLabel new
 		padding: (BlInsets top: 5);
 		vExact: self barLabelHeight;
 		hMatchParent;
 		text: aColumnLabel;
-		alignBottomCenter;
+		alignTopCenter;
 		aptitude: (self barLabelLookStencil create).
 	
 	aContainer addChild: aColumnLabelElement.
 
-	"shouldGroup ifTrue: [
+	shouldGroup ifTrue: [
 		aContainer
 			margin: (BlInsets 
 				top: self groupSpacing / 2.0 
@@ -186,10 +189,7 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 			addChild: (self createVerticalSeparator 
 				margin: (BlInsets 
 					left: self gridlineOffset / 2.0 
-					right: self gridlineOffset / 2.0)) ]."
-	
-	aContainer addChild: (self createGroupBarsFor: aGtPlotterDataEntity).
-	
+					right: self gridlineOffset / 2.0)) ].
 
 	^ aContainer
 ]
@@ -208,7 +208,7 @@ GtPlotterVerticalBarChart >> createBottomBarsFor: aGtPlotterDataEntity [
 
 	isStacking
 		ifTrue: [ aContainer layout: BlFrameLayout new ]
-		ifFalse: [ aContainer layout: BlLinearLayout horizontal alignTopCenter ].
+		ifFalse: [ aContainer layout: BlLinearLayout horizontal alignBottomCenter ].
 
 	aContainer addChildren: (aGtPlotterDataEntity groupsCollect: [ :eachGroup |
 		(barGroupStencil
