@@ -29,7 +29,7 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 			BrLabel new
 				text: (aGtPlotterContext originalValue second);
 				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ])) ].
-	barChart barLabelHeight: 20.
+	barChart barLabelHeight: 100.
 	barChart barHeightScale: aBarScale.
 	barChart barHeightData: [ :eachValue | eachValue last ].
 	barChart amountOfTicks: 10.
