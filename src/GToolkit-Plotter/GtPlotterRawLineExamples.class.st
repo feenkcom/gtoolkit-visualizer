@@ -7,7 +7,7 @@ I exemplify a line chart.
 Class {
 	#name : #GtPlotterRawLineExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Example - Charts'
+	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'example - axis' }
@@ -54,15 +54,13 @@ GtPlotterRawLineExamples >> axisXLine [
 { #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisXName [
 	<gtExample>
-
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new 
-			glamorousRegularFont;
-			foreground: Color darkGray;
-			fontSize: 16);
-		text: 'Date';
-		constraintsDo: [ :c |
-			c linear horizontal alignRight ]
+	^(BrLabel new)
+		aptitude: ((BrGlamorousLabelAptitude new)
+					glamorousRegularFont;
+					foreground: Color darkGray;
+					fontSize: 16);
+		text: self axisXkey;
+		constraintsDo: [:c | c linear horizontal alignRight]
 ]
 
 { #category : #'example - axis' }
@@ -108,6 +106,11 @@ GtPlotterRawLineExamples >> axisXTicks [
 			width: 2;
 			background: (Color gray alpha: 0.8) ];
 		ticks: 10
+]
+
+{ #category : #'example - axis' }
+GtPlotterRawLineExamples >> axisXkey [
+	^'Date'
 ]
 
 { #category : #'example - axis' }
@@ -161,23 +164,21 @@ GtPlotterRawLineExamples >> axisYLine [
 { #category : #'example - axis' }
 GtPlotterRawLineExamples >> axisYName [
 	<gtExample>
-
-	^ BrFrame new
+	^(BrFrame new)
 		fitContent;
 		background: BlBackground transparent;
-		constraintsDo: [ :c | 
-			c linear vertical alignTop ];
-		addChild: (BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new 
-				glamorousRegularFont;
-				foreground: Color darkGray;
-				fontSize: 16);
-			text: 'Number of Commits';
-			constraintsDo: [ :c |
-				c linear vertical alignCenter.
-				c accountTransformation ];
-			transformDo: [ :t | 
-				t rotateBy: 270 ])
+		constraintsDo: [:c | c linear vertical alignTop];
+		addChild: ((BrLabel new)
+					aptitude: ((BrGlamorousLabelAptitude new)
+								glamorousRegularFont;
+								foreground: Color darkGray;
+								fontSize: 16);
+					text: self axisYkey;
+					constraintsDo: 
+							[:c |
+							c linear vertical alignCenter.
+							c accountTransformation];
+					transformDo: [:t | t rotateBy: 270])
 ]
 
 { #category : #'example - axis' }
@@ -190,6 +191,11 @@ GtPlotterRawLineExamples >> axisYTicks [
 			height: 2;
 			background: (Color gray alpha: 0.8) ];
 		ticks: 7
+]
+
+{ #category : #'example - axis' }
+GtPlotterRawLineExamples >> axisYkey [
+	^'Number of Commits'
 ]
 
 { #category : #'example - data' }
