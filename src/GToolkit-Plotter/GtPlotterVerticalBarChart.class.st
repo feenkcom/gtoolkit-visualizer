@@ -16,7 +16,8 @@ Class {
 		'barStencil',
 		'barWidthScale',
 		'barWidthDataBlock',
-		'barGap'
+		'barGap',
+		'ticksAngle'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
@@ -161,25 +162,26 @@ GtPlotterVerticalBarChart >> create [
 
 { #category : #accessing }
 GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: shouldGroup [
-	| aColumnLabel aContainer aColumnLabelElement |
-
-	aColumnLabel := aGtPlotterDataEntity label.
-	
+	|  aContainer tangle |
 	aContainer := BrVerticalPane new
 		vMatchParent;
 		hFitContent.
-	
-	aContainer addChild: (self createGroupBarsFor: aGtPlotterDataEntity).
-
-	aColumnLabelElement := BrLabel new
-		padding: (BlInsets top: 5);
-		vExact: self barLabelHeight;
-		hMatchParent;
-		text: aColumnLabel;
-		alignTopCenter;
-		aptitude: (self barLabelLookStencil create).
-	
-	aContainer addChild: aColumnLabelElement.
+	tangle := self ticksAngle.
+	tangle isZero ifFalse: [
+		aContainer 
+			clipChildren: false;
+			hExact: 40.
+		
+		tangle = -90 ifTrue: [
+			aContainer alignBottomCenter
+		] ifFalse: [
+			
+			aContainer alignBottomRight.
+		]
+	].
+	aContainer 
+		addChild: (self createGroupBarsFor: aGtPlotterDataEntity);
+		addChild: (self createColumnLabelElement: aGtPlotterDataEntity label).
 
 	shouldGroup ifTrue: [
 		aContainer
@@ -226,6 +228,34 @@ GtPlotterVerticalBarChart >> createBottomBarsFor: aGtPlotterDataEntity [
 ]
 
 { #category : #accessing }
+GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
+	| aColumnLabelElement label |
+	
+	aColumnLabelElement := BrFrame new
+		hFitContent;
+		vExact: self barLabelHeight.
+	label := self ticksAngle isZero ifTrue: [
+		aColumnLabelElement hExact: self barGap + self barWidthScale constant.
+		BlShrinkingTextElement new
+			text: aColumnLabel asRopedText;
+			constraintsDo: [:c | 
+				c vertical fitContent.
+				c horizontal matchParent ].
+	] ifFalse: [
+		BrLabel new
+			text: aColumnLabel;
+			padding: (BlInsets all: 5);
+			alignTopCenter;
+			aptitude: (self barLabelLookStencil create);
+			transformDo: [:t | t rotateBy: self ticksAngle];
+			constraintsDo:[:c | c accountTransformation ].
+	].
+	
+	aColumnLabelElement addChild: label.
+	^ aColumnLabelElement
+]
+
+{ #category : #accessing }
 GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	|  isStacking theBars aContainer |
 	
@@ -250,15 +280,26 @@ GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
+{ #category : #ticks }
+GtPlotterVerticalBarChart >> diagonalTicks [
+	self ticksAngle: -45.
+]
+
 { #category : #accessing }
 GtPlotterVerticalBarChart >> gridlineOffset [
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : #ticks }
+GtPlotterVerticalBarChart >> horizontalTicks [
+	self ticksAngle: 0
+]
+
+{ #category : #initalization }
 GtPlotterVerticalBarChart >> initialize [
 	super initialize.
-	self 
+	self
+		horizontalTicks;
 		tickLabelFormat: [ :aTickObject | aTickObject printString ];
 		tickLabelLook: [ 
 			BrGlamorousLabelAptitude new glamorousRegularFontAndSize 
@@ -309,6 +350,22 @@ GtPlotterVerticalBarChart >> tickLabelLook [
 { #category : #accessing }
 GtPlotterVerticalBarChart >> tickLabelLook: aStencil [
 	tickLabelLookStencil := aStencil asStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> ticksAngle [
+	<return: #Number>
+	^ ticksAngle
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> ticksAngle: aNumber [
+	ticksAngle := aNumber
+]
+
+{ #category : #ticks }
+GtPlotterVerticalBarChart >> verticalTicks [
+	self ticksAngle: -90
 ]
 
 { #category : #accessing }

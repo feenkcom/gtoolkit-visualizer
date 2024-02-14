@@ -5,6 +5,20 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterVerticalBarChartExamples >> brickDependenciesSizeBarChartDiagonalTicks [
+	<gtExample>
+	^ self brickDependenciesSizesBarChart
+		diagonalTicks
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> brickDependenciesSizeBarChartVerticalTicks [
+	<gtExample>
+	^ self brickDependenciesSizesBarChart
+		verticalTicks
+]
+
+{ #category : #accessing }
 GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	<gtExample>
 	| projects packages theData maxLines aBarScale barChart |
@@ -21,11 +35,11 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	maxLines := theData inject: 0 intoValues: [ :anAmount :eachValue | 
 		anAmount max: eachValue last ].
 	aBarScale := GtPlotterLinearScale new domainFrom: 0 to: maxLines.
-
+	
 	barChart := GtPlotterVerticalBarChart new.
 	barChart barElement: [ :aGtPlotterContext | 
 		BlElement new
-			aptitude: ((BrGlamorousWithTooltipAptitude2 content: [
+			aptitude: ((BrGlamorousWithTooltipAptitude content: [
 			BrLabel new
 				text: (aGtPlotterContext originalValue second);
 				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ])) ].
@@ -34,5 +48,6 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	barChart barHeightData: [ :eachValue | eachValue last ].
 	barChart amountOfTicks: 10.
 	barChart with: theData.
+	barChart horizontalTicks.
 	^ barChart
 ]
