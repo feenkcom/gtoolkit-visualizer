@@ -77,6 +77,13 @@ GtMondrian >> nodes [
 ]
 
 { #category : #accessing }
+GtMondrian >> positions [
+	"Get the positions of my nodes — useful for explicit layouts."
+
+	^ self root children collect: #position
+]
+
+{ #category : #accessing }
 GtMondrian >> root [
 	^ self topStep root
 ]
