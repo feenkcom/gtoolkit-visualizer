@@ -307,6 +307,9 @@ GtPlotterVerticalBarChart >> initialize [
 		tickLabelColor: Color gray;
 		barLabelHeight: 100.
 	barLabelLookStencil := [ BrGlamorousLabelAptitude new glamorousRegularFontAndSize ] asStencil.
+	amountOfTicks := 10.
+	
+	barElementStencil := [ :aGtPlotterSingleScaleContext | BlElement new ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 	barGroupStencil := GtPlotterVerticalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterVerticalBarStencilBuilder new.
 	barWidthScale := GtPlotterConstantScale new constant: 30.
