@@ -234,18 +234,25 @@ GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
 	aColumnLabelElement := BrFrame new
 		hFitContent;
 		vExact: self barLabelHeight.
-	label := self ticksAngle isZero ifTrue: [
-		aColumnLabelElement hExact: self barGap + self barWidthScale constant.
-		BlShrinkingTextElement new
-			text: aColumnLabel asRopedText;
+	label := BrLabel new
+		text: aColumnLabel;
+		padding: (BlInsets top: 5);
+		alignTopCenter;
+		yourself.
+	
+	self ticksAngle isZero ifTrue: [
+		| size |
+		size := self barGap + self barWidthScale constant.
+		aColumnLabelElement hExact: size.
+		aColumnLabelElement layout: BlLinearLayout new alignTopCenter.
+		label
+			aptitude: BrGlamorousShrinkingLabelAptitude;
 			constraintsDo: [:c | 
 				c vertical fitContent.
-				c horizontal matchParent ].
+				c horizontal fitContentLimited.
+			].
 	] ifFalse: [
-		BrLabel new
-			text: aColumnLabel;
-			padding: (BlInsets all: 5);
-			alignTopCenter;
+		label
 			aptitude: (self barLabelLookStencil create);
 			transformDo: [:t | t rotateBy: self ticksAngle];
 			constraintsDo:[:c | c accountTransformation ].
