@@ -8,7 +8,7 @@ Class {
 		'labelLayout',
 		'inversed'
 	],
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
@@ -63,7 +63,9 @@ GtPlotterTickLabelsElement >> initializeElements [
 			scale: scale;
 			originalValue: eachTickValue;
 			scaledValue: aScaledValue;
-			mappedValue: (scale map: aScaledValue);
+			mappedValue: (aScaledValue 
+				ifNil: [ 0 ]
+				ifNotNil: [ scale map: aScaledValue ]);
 			index: anIndex - 1.
 		
 		eachElement := (labelElement scaleContext: aScaleContext) asElement.

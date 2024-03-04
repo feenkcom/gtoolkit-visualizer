@@ -55,7 +55,10 @@ GtPlotterTicksElement >> initializeElements [
 		aScaleContext
 			scale: scale;
 			originalValue: eachTickValue;
-			mappedValue: (scale map: (scale valuedTick: eachTickValue));
+			mappedValue: (eachTickValue 
+				ifNil: [0]
+				ifNotNil: [
+					(scale map: (scale valuedTick: eachTickValue)) ]);
 			index: anIndex - 1.
 		
 		eachElement := (tickElement scaleContext: aScaleContext) asElement.
