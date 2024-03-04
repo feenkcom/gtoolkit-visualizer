@@ -44,24 +44,14 @@ GtMondrian >> gtLiveFor: aView [
 { #category : #initialize }
 GtMondrian >> initialize [
 	stack := Stack new.
-	"stack push: (GtMondrianStep new 
-		root: ((BlElement new
-			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
-			beInSingleCompositionLayer;
-			constraintsDo: [ :c |
-				c horizontal fitContent.
-				c vertical fitContent.
-				c padding: (BlInsets all: 50) ];
-			background: Color white;
-			zIndex: 1)))
-	"stack push: (GtMondrianStep new 
+	stack push: (GtMondrianStep new 
 		root: ((BlCanvassableElement new
 			enableAutoScale;
 			in: [ :aRootElement | aRootElement phlow bePopupContainer ];
 			constraintsDo: [ :c |
 				c horizontal matchParent.
 				c vertical matchParent.
-				c padding: (BlInsets all: 50) ];
+				c padding: (BlInsets all: 10) ];
 			background: Color white;
 			zIndex: 1)))
 ]
@@ -84,6 +74,13 @@ GtMondrian >> nodeAt: anObject put: aNode [
 { #category : #scripting }
 GtMondrian >> nodes [
 	^ GtMondrianNodeBuilder new mondrian: self
+]
+
+{ #category : #accessing }
+GtMondrian >> positions [
+	"Get the positions of my nodes — useful for explicit layouts."
+
+	^ self root children collect: #position
 ]
 
 { #category : #accessing }

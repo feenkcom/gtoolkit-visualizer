@@ -27,7 +27,7 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	packages := projects collect: [:project | 
 		{project . project gtRPackages sumNumbers: #linesOfCode}].
 	theData := GtPlotterDataGroup new values: packages.
-	theData := theData sorted: [ :a :b | (a last) > (b last) ].
+	theData := theData sorted: [ :a :b | a last > b last ].
 	theData := theData
 		labelled: [ :each | each first gtDisplayString gtRemovePrefix: 'BaselineOf' ].
 	theData := theData colored: [ :each | Color blue alpha: 0.5 ].
@@ -45,6 +45,7 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ])) ].
 	barChart barLabelHeight: 100.
 	barChart barHeightScale: aBarScale.
+	barChart barWidthScale constant: 50.
 	barChart barHeightData: [ :eachValue | eachValue last ].
 	barChart amountOfTicks: 10.
 	barChart with: theData.
