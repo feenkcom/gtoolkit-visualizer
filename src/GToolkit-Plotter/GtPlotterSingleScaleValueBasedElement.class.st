@@ -7,7 +7,7 @@ Class {
 		'valueElement',
 		'valueLayout'
 	],
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
@@ -61,7 +61,9 @@ GtPlotterSingleScaleValueBasedElement >> initializeElements [
 			scale: scale;
 			originalValue: eachValue;
 			scaledValue: aScaledValue;
-			mappedValue: (scale map: aScaledValue);
+			mappedValue: (aScaledValue 
+				ifNil: [0]
+				ifNotNil: [ scale map: aScaledValue ]);
 			index: eachIndex.
 
 		eachElement := (valueElement scaleContext: aScaleContext) asElement.
