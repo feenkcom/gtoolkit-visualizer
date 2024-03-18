@@ -34,7 +34,6 @@ GtSequenceDiagramMessageNodeElement >> initialize [
 	self vExact: GtSequenceDiagramUtility verticalLineSegmetHeight.
 	self background: GtSequenceDiagramUtility verticalLineDefaultBackgroundColor.
 
-	self alignCenter.
 	self constraintsDo: [ :c | c grid horizontal alignCenter ]
 ]
 
