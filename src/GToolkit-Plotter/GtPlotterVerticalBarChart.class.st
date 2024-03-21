@@ -17,7 +17,8 @@ Class {
 		'barWidthScale',
 		'barWidthDataBlock',
 		'barGap',
-		'ticksAngle'
+		'ticksAngle',
+		'hasScalableContents'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
@@ -146,14 +147,8 @@ GtPlotterVerticalBarChart >> create [
 				text: (aGtPlotterScaleContext scale 
 					formattedTick: aGtPlotterScaleContext originalValue) ];
 		labels: self amountOfTicks).
-
-	theBars := GtPlotterSingleScaleScrollElement new.
-	theBars stencil: [ :eachGroup | 
-		self 
-			createBarColumnFor: eachGroup
-			grouping: data isLogicalGroup ].
-	theBars values: data.
-	theBars list beHorizontal.
+	
+	theBars := self createBars.
 	
 	aContainer addChild: theBars.
 
@@ -194,6 +189,37 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 					right: self gridlineOffset / 2.0)) ].
 
 	^ aContainer
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> createBars [
+	| theBars |
+	self hasScalableContents ifTrue: [
+		theBars := BrFrame new .
+		theBars matchParent.
+		theBars layout: (BlGridLayout horizontal 
+			cellSpacing: self barGap;
+			columnCount: data size).
+		
+		data do: [:eachGroup |
+			| barElement |
+			barElement := self 
+				createBarColumnFor: eachGroup 
+				grouping: data isLogicalGroup.
+			barElement constraintsDo: [:c |
+				c horizontal matchParent.
+			].
+			theBars addChild: barElement ].
+		^ theBars.
+	].
+	theBars := GtPlotterSingleScaleScrollElement new.
+	theBars stencil: [ :eachGroup | 
+		self
+			createBarColumnFor: eachGroup
+			grouping: data isLogicalGroup ].
+	theBars values: data.
+	theBars list beHorizontal.
+	^ theBars
 ]
 
 { #category : #accessing }
@@ -243,7 +269,10 @@ GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
 	self ticksAngle isZero ifTrue: [
 		| size |
 		size := self barGap + self barWidthScale constant.
-		aColumnLabelElement hExact: size.
+		"aColumnLabelElement hExact: size."
+		aColumnLabelElement constraintsDo: [:c |
+			c horizontal fitContentLimited
+		].
 		aColumnLabelElement layout: BlLinearLayout new alignTopCenter.
 		label
 			aptitude: BrGlamorousShrinkingLabelAptitude;
@@ -297,6 +326,11 @@ GtPlotterVerticalBarChart >> gridlineOffset [
 	^ 0
 ]
 
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> hasScalableContents [
+	^ hasScalableContents
+]
+
 { #category : #ticks }
 GtPlotterVerticalBarChart >> horizontalTicks [
 	self ticksAngle: 0
@@ -307,6 +341,7 @@ GtPlotterVerticalBarChart >> initialize [
 	super initialize.
 	self
 		horizontalTicks;
+		scrollableContents;
 		tickLabelFormat: [ :aTickObject | aTickObject printString ];
 		tickLabelLook: [ 
 			BrGlamorousLabelAptitude new glamorousRegularFontAndSize 
@@ -325,6 +360,16 @@ GtPlotterVerticalBarChart >> initialize [
 	barWidthDataBlock := [ :eachDataItem | eachDataItem ].
 	
 	
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> scalableContents [
+	hasScalableContents := true
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> scrollableContents [
+	hasScalableContents := false
 ]
 
 { #category : #accessing }
