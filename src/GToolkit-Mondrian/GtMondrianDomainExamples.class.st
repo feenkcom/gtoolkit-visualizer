@@ -398,7 +398,7 @@ GtMondrianDomainExamples >> packageDependencies [
 								width: dep third size;
 								build)) ];
 		connect: dependencies from: #first to: #second.
-	view layout circle radius: 300.
+	view layout horizontalDominanceTree.
 	^ view
 ]
 
