@@ -1,3 +1,6 @@
+"
+Based on `GtPlotterHorizontalBarChart`
+"
 Class {
 	#name : #GtPlotterVerticalBarChart,
 	#superclass : #GtPlotterBuilder,
@@ -165,14 +168,11 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 	tangle isZero ifFalse: [
 		aContainer 
 			clipChildren: false;
-			hExact: 40.
+			hExact: self barWidthScale constant.
 		
-		tangle = -90 ifTrue: [
-			aContainer alignBottomCenter
-		] ifFalse: [
-			
-			aContainer alignBottomRight.
-		]
+		tangle = -90 
+			ifTrue: [ aContainer alignBottomCenter ]
+			ifFalse: [ aContainer alignBottomRight ]
 	].
 	aContainer 
 		addChild: (self createGroupBarsFor: aGtPlotterDataEntity);
@@ -195,11 +195,9 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 GtPlotterVerticalBarChart >> createBars [
 	| theBars |
 	self hasScalableContents ifTrue: [
-		theBars := BrFrame new .
+		theBars := BrHorizontalPane new.
 		theBars matchParent.
-		theBars layout: (BlGridLayout horizontal 
-			cellSpacing: self barGap;
-			columnCount: data size).
+		theBars cellSpacing: self barGap.
 		
 		data do: [:eachGroup |
 			| barElement |
@@ -258,23 +256,22 @@ GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
 	| aColumnLabelElement label |
 	
 	aColumnLabelElement := BrFrame new
+		padding: (BlInsets top: self tickLabelGap);
 		hFitContent;
 		vExact: self barLabelHeight.
 	label := BrLabel new
 		text: aColumnLabel;
-		padding: (BlInsets top: 5);
 		alignTopCenter;
 		yourself.
 	
 	self ticksAngle isZero ifTrue: [
-		| size |
-		size := self barGap + self barWidthScale constant.
-		"aColumnLabelElement hExact: size."
-		aColumnLabelElement constraintsDo: [:c |
-			c horizontal fitContentLimited
-		].
-		aColumnLabelElement layout: BlLinearLayout new alignTopCenter.
+		aColumnLabelElement
+			hMatchParent;
+			layout: BlLinearLayout new alignTopCenter.
+		self hasScalableContents
+			ifFalse: [ aColumnLabelElement hExact: self barWidthScale constant + self barGap].
 		label
+			
 			aptitude: BrGlamorousShrinkingLabelAptitude;
 			constraintsDo: [:c | 
 				c vertical fitContent.
@@ -316,9 +313,14 @@ GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
+{ #category : #default }
+GtPlotterVerticalBarChart >> defaultDiagonalNumber [
+	^ -45
+]
+
 { #category : #ticks }
 GtPlotterVerticalBarChart >> diagonalTicks [
-	self ticksAngle: -45.
+	self ticksAngle: self defaultDiagonalNumber.
 ]
 
 { #category : #accessing }
@@ -393,6 +395,11 @@ GtPlotterVerticalBarChart >> tickLabelFormat [
 { #category : #accessing }
 GtPlotterVerticalBarChart >> tickLabelFormat: aBlock [
 	tickLabelFormat := aBlock
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> tickLabelGap [
+	^ 5
 ]
 
 { #category : #accessing }
