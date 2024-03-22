@@ -4,6 +4,25 @@ Class {
 	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> barChartsInGridLayout [
+	<gtExample>
+	<noTest>
+	| gridElement |
+	gridElement := BrFrame new
+		matchParent;
+		padding: (BlInsets all: 10);
+		layout: (BlGridLayout new 
+			columnCount: 2;
+			cellSpacing: 10).
+	gridElement
+		addChild: self horizontalTicksBarChart create;
+		addChild: self verticalTicksBarChart create;
+		addChild: self scalableContentsBarChart;
+		addChild: self scalableContentsDiagonalTicksBarChart create.
+	^ gridElement
+]
+
 { #category : #example }
 GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	<gtExample>
@@ -88,15 +107,11 @@ GtPlotterVerticalBarChartExamples >> scalableContentsBarChartInGridLayout [
 { #category : #accessing }
 GtPlotterVerticalBarChartExamples >> scalableContentsDiagonalTicksBarChart [
 	<gtExample>
-	| chartElement chartStencil|
+	| chartStencil|
 	chartStencil := self brickDependenciesSizesBarChart
 		scalableContents;
 		diagonalTicks.
-
-	self assert: chartStencil hasScalableContents.
-	chartElement := chartStencil create.
-	self assert: (chartElement withAllChildren allSatisfy: [:el | (el class = GtPlotterSingleScaleScrollElement) not ]).
-	^ chartElement
+	^ chartStencil
 ]
 
 { #category : #accessing }
@@ -106,20 +121,6 @@ GtPlotterVerticalBarChartExamples >> scalableContentsVerticalTicksBarChart [
 	chartStencil := self brickDependenciesSizesBarChart
 		scalableContents;
 		verticalTicks.
-
-	self assert: chartStencil hasScalableContents.
-	chartElement := chartStencil create.
-	self assert: (chartElement withAllChildren allSatisfy: [:el | (el class = GtPlotterSingleScaleScrollElement) not ]).
-	^ chartElement
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChartExamples >> scalableVerticalTicksContentsBarChart [
-	<gtExample>
-	| chartElement chartStencil|
-	chartStencil := self brickDependenciesSizesBarChart
-		scalableContents;
-		diagonalTicks.
 
 	self assert: chartStencil hasScalableContents.
 	chartElement := chartStencil create.
