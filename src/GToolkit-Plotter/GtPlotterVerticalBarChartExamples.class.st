@@ -4,21 +4,7 @@ Class {
 	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
-{ #category : #accessing }
-GtPlotterVerticalBarChartExamples >> brickDependenciesSizeBarChartDiagonalTicks [
-	<gtExample>
-	^ self brickDependenciesSizesBarChart
-		diagonalTicks
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChartExamples >> brickDependenciesSizeBarChartVerticalTicks [
-	<gtExample>
-	^ self brickDependenciesSizesBarChart
-		verticalTicks
-]
-
-{ #category : #accessing }
+{ #category : #example }
 GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	<gtExample>
 	| projects packages theData maxLines aBarScale barChart |
@@ -47,8 +33,109 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	barChart barHeightScale: aBarScale.
 	barChart barWidthScale constant: 50.
 	barChart barHeightData: [ :eachValue | eachValue last ].
-	barChart amountOfTicks: 10.
+	barChart amountOfTicks: 10. 
 	barChart with: theData.
-	barChart horizontalTicks.
+	self assert: barChart ticksAngle equals: 0.
+	self assert: barChart barGap > 0.
 	^ barChart
+]
+
+{ #category : #example }
+GtPlotterVerticalBarChartExamples >> diagonalTicksBarChart [
+	<gtExample>
+	| chartStencil |
+	chartStencil := self brickDependenciesSizesBarChart
+		diagonalTicks.
+	self assert: chartStencil ticksAngle equals: chartStencil defaultDiagonalNumber.
+	^ chartStencil
+]
+
+{ #category : #example }
+GtPlotterVerticalBarChartExamples >> horizontalTicksBarChart [
+	<gtExample>
+	| chartStencil |
+	chartStencil := self brickDependenciesSizesBarChart.
+	self assert: chartStencil ticksAngle equals: 0.
+	^ chartStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> scalableContentsBarChart [
+	<gtExample>
+	| chartElement chartStencil|
+	chartStencil := self brickDependenciesSizesBarChart
+		scalableContents.
+
+	self assert: chartStencil hasScalableContents.
+	chartElement := chartStencil create.
+	self assert: (chartElement withAllChildren allSatisfy: [:el | (el class = GtPlotterSingleScaleScrollElement) not ]).
+	^ chartElement
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> scalableContentsBarChartInGridLayout [
+	<gtExample>
+	<noTest>
+	| gridElement |
+	gridElement := BrFrame new.
+	gridElement matchParent.
+	gridElement padding: (BlInsets all: 10).
+	gridElement layout: (BlGridLayout new columnCount: 2).
+	5 timesRepeat: [gridElement addChild: self scalableContentsBarChart ].
+	^ gridElement
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> scalableContentsDiagonalTicksBarChart [
+	<gtExample>
+	| chartElement chartStencil|
+	chartStencil := self brickDependenciesSizesBarChart
+		scalableContents;
+		diagonalTicks.
+
+	self assert: chartStencil hasScalableContents.
+	chartElement := chartStencil create.
+	self assert: (chartElement withAllChildren allSatisfy: [:el | (el class = GtPlotterSingleScaleScrollElement) not ]).
+	^ chartElement
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> scalableContentsVerticalTicksBarChart [
+	<gtExample>
+	| chartElement chartStencil|
+	chartStencil := self brickDependenciesSizesBarChart
+		scalableContents;
+		verticalTicks.
+
+	self assert: chartStencil hasScalableContents.
+	chartElement := chartStencil create.
+	self assert: (chartElement withAllChildren allSatisfy: [:el | (el class = GtPlotterSingleScaleScrollElement) not ]).
+	^ chartElement
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> scalableVerticalTicksContentsBarChart [
+	<gtExample>
+	| chartElement chartStencil|
+	chartStencil := self brickDependenciesSizesBarChart
+		scalableContents;
+		diagonalTicks.
+
+	self assert: chartStencil hasScalableContents.
+	chartElement := chartStencil create.
+	self assert: (chartElement withAllChildren allSatisfy: [:el | (el class = GtPlotterSingleScaleScrollElement) not ]).
+	^ chartElement
+]
+
+{ #category : #example }
+GtPlotterVerticalBarChartExamples >> scrollableContentsBarChart [
+	<gtExample>
+	^ self brickDependenciesSizesBarChart
+]
+
+{ #category : #example }
+GtPlotterVerticalBarChartExamples >> verticalTicksBarChart [
+	<gtExample>
+	^ self brickDependenciesSizesBarChart
+		verticalTicks
 ]

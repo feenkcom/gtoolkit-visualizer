@@ -171,6 +171,28 @@ GtMondrianLayoutExamples >> simpleTreeForceDirectedExample [
 	^ mondrian
 ]
 
+{ #category : #accessing }
+GtMondrianLayoutExamples >> sugiyamaTreeLayout [
+	<gtExample>
+	| mondrian|
+	mondrian := GtMondrian new.
+	mondrian nodes 
+		shape: [:cls |
+			BlElement new
+				zIndex: 10;
+				background: (Color black alpha: 0.4);
+				size: (cls linesOfCode sqrt + 1) asPoint.
+		];
+		with: ArrayedCollection withAllSubclasses.
+	mondrian edges
+		fromCenterBottom;
+		toCenterTop;
+		connectFrom: #superclass.
+	mondrian layout sugiyama.
+	^ mondrian
+
+]
+
 { #category : #tree }
 GtMondrianLayoutExamples >> verticalDominanceTree [
 	<gtExample>

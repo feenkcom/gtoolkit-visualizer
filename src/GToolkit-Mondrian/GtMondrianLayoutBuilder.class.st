@@ -73,6 +73,11 @@ GtMondrianLayoutBuilder >> rectanglePack [
 	^ self custom: GtGraphRectanglePackLayout new
 ]
 
+{ #category : #accessing }
+GtMondrianLayoutBuilder >> sugiyama [
+	^ self custom: GtGradSugiyamaTreeLayout new
+]
+
 { #category : #scripting }
 GtMondrianLayoutBuilder >> tree [
 	^ self custom: GtGradVerticalTreeLayout new
