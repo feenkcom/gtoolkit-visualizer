@@ -59,6 +59,34 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	^ barChart
 ]
 
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> coloredBarChart [
+	<gtExample>
+	| scale data chart maxLines |
+	data := GtPlotterDataGroup new
+			values: ((60 to: 100) collectWithIndex: [ :value :i | i -> value ]).
+	data := data
+			colored: [ :each | each key > 5 ifTrue: [ Color black ] ifFalse: [ Color veryLightGray ] ].
+
+	maxLines := 100.
+	scale := GtPlotterLinearScale new domainFrom: 0 to: maxLines.
+
+	chart := GtPlotterVerticalBarChart new.
+	chart
+		barElement: [ :aGtPlotterContext | 
+			BlElement new
+				aptitude: (BrGlamorousWithTooltipAptitude
+						content: [ BrLabel new
+								text: aGtPlotterContext originalValue value;
+								aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ]) ].
+	chart barHeightScale: scale.
+	chart barWidthScale constant: 10.
+	chart barHeightData: [ :eachValue | eachValue value ].
+	chart amountOfTicks: 10.
+	chart with: data.
+	^ chart
+]
+
 { #category : #example }
 GtPlotterVerticalBarChartExamples >> diagonalTicksBarChart [
 	<gtExample>
@@ -102,6 +130,15 @@ GtPlotterVerticalBarChartExamples >> scalableContentsBarChartInGridLayout [
 	gridElement layout: (BlGridLayout new columnCount: 2).
 	5 timesRepeat: [gridElement addChild: self scalableContentsBarChart ].
 	^ gridElement
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> scalableContentsColoredBarChart [
+	<gtExample>
+	<noTest>
+	"is not ready yet"
+	^ self coloredBarChart
+		scalableContents
 ]
 
 { #category : #accessing }
