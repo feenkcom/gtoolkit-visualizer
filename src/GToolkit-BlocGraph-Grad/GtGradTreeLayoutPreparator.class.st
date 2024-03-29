@@ -21,7 +21,9 @@ GtGradTreeLayoutPreparator >> attachParent: aTreeNode toContour: childrenContour
 	childrenContour upperPoints addFirst: 0 @ newY.
 	childrenContour lowerPoints addFirst: width @ (newY + height).
 	childrenContour lowerPoints addFirst: 0 @ (newY + height).
-	newY < 0 ifTrue: [ childrenContour translateBy: 0 @ newY abs ].
+	newY < 0
+		ifTrue: [ aTreeNode offset: 0 @ 0.
+			childrenContour translateBy: 0 @ newY abs ].
 	aTreeNode contour: childrenContour
 ]
 
