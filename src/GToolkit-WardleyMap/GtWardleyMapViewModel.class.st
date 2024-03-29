@@ -99,26 +99,39 @@ GtWardleyMapViewModel >> gtLiveFor: aView [
 { #category : #initialization }
 GtWardleyMapViewModel >> initialize [
 	super initialize.
-	
+
 	nodeViewModels := OrderedCollection new.
 	edgeViewModels := OrderedCollection new.
-	
-	predefinedColors := { 
-		Color black.
-		Color veryVeryDarkGray.
-		Color veryDarkGray.
-		Color darkGray.
-		Color gray.
-		Color lightGray.
-		Color veryLightGray.
-		Color veryVeryLightGray.
-		Color red muchDarker.
-		Color red darker.
-		Color red.
-		Color red lighter.
-		Color red muchLighter.
-	}.
-	
+
+	predefinedColors := {Color black.
+			Color veryVeryDarkGray.
+			Color veryDarkGray.
+			Color darkGray.
+			Color gray.
+			Color lightGray.
+			Color veryLightGray.
+			Color veryVeryLightGray.
+			Color red muchDarker.
+			Color red darker.
+			Color red.
+			Color red lighter.
+			Color red muchLighter.
+			Color orange muchDarker.
+			Color orange darker.
+			Color orange.
+			Color orange lighter.
+			Color orange muchLighter.
+			Color blue muchDarker.
+			Color blue darker.
+			Color blue.
+			Color blue lighter.
+			Color blue muchLighter.
+			Color green muchDarker.
+			Color green twiceDarker.
+			Color green darker.
+			Color green lighter.
+			Color green muchLighter}.
+
 	defaultColor := GtWardleyMapConstants nodeColor
 ]
 
