@@ -190,6 +190,33 @@ GtGradTreeLayoutExamples >> constructGraphWithCycles [
 ]
 
 { #category : #'examples - instance creation' }
+GtGradTreeLayoutExamples >> constructMultilevelTreeWithNodesOfDifferentSizes [
+	<gtExample>
+	| aParentNode theNodes |
+
+	aParentNode := self
+		createGraph: 4
+		pairs: { (1->2). (1->3). (3->4) }.
+	
+	theNodes := aParentNode children.
+
+	(theNodes at: 2) measurement: (BlLayoutNodeComputedMeasurement new extent: 40@40).
+	(theNodes at: 3) measurement: (BlLayoutNodeComputedMeasurement new extent: 100@100).
+	(theNodes at: 4) measurement: (BlLayoutNodeComputedMeasurement new extent: 70@70).
+	
+	self assert: (theNodes at: 1) nodesAlongOutgoingEdges size equals: 2.
+	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
+	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 0.
+	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
+	self assert: (theNodes at: 3) nodesAlongOutgoingEdges size equals: 1.
+	self assert: (theNodes at: 3) nodesAlongIncomingEdges size equals: 1.
+	self assert: (theNodes at: 4) nodesAlongOutgoingEdges size equals: 0.
+	self assert: (theNodes at: 4) nodesAlongIncomingEdges size equals: 1.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - instance creation' }
 GtGradTreeLayoutExamples >> constructSimpleTree [
 	<gtExample>
 	
@@ -246,10 +273,10 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesOfDifferentSizes [
 	self assert: (theNodes at: 1) nodesAlongIncomingEdges size equals: 0.
 	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 0.
 	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
-	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 0.
-	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
-	self assert: (theNodes at: 2) nodesAlongOutgoingEdges size equals: 0.
-	self assert: (theNodes at: 2) nodesAlongIncomingEdges size equals: 1.
+	self assert: (theNodes at: 3) nodesAlongOutgoingEdges size equals: 0.
+	self assert: (theNodes at: 3) nodesAlongIncomingEdges size equals: 1.
+	self assert: (theNodes at: 4) nodesAlongOutgoingEdges size equals: 0.
+	self assert: (theNodes at: 4) nodesAlongIncomingEdges size equals: 1.
 
 	^ aParentNode
 ]

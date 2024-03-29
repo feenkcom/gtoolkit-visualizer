@@ -384,6 +384,26 @@ GtGradVerticalTreeLayoutExamples >> graphWithCycles [
 ]
 
 { #category : #'examples - layout' }
+GtGradVerticalTreeLayoutExamples >> multilevelTreeWithNodesOfDifferentSizes [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructMultilevelTreeWithNodesOfDifferentSizes.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout measure: aParentNode.
+
+	self assert: aParentNode children layoutBounds equals: {
+		(46.0@0.0) corner: (96.0@20.0).
+		(0.0@31.0) corner: (40.0@71.0).
+		(42.0@31.0) corner: (142.0@131.0).
+		(57.0@142.0) corner: (127.0@212.0)
+	}.
+
+	^ aParentNode
+]
+
+{ #category : #'examples - layout' }
 GtGradVerticalTreeLayoutExamples >> separatedSubtrees [
 	<gtExample>
 	| aParentNode aTreeLayout |
