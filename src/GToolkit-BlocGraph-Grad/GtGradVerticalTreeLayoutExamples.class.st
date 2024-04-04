@@ -749,6 +749,38 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithSmallerDistances [
 	^ aParentNode
 ]
 
+{ #category : #'examples - layout' }
+GtGradVerticalTreeLayoutExamples >> simpleTreeWithTinySiblingAndRootAlignment [
+	<gtExample>
+	| aParentNode aTreeLayout |
+
+	aParentNode := self constructTreeWithTinySibling.
+
+	aTreeLayout := self treeLayout.
+	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
+	aTreeLayout measure: aParentNode.
+	
+	"self assert: aParentNode children layoutBounds equals: {
+		(499.5@0.0) corner: (509.5@10.0).
+		(175.5@21.0) corner: (195.5@41.0).
+		(803.5@21.0) corner: (833.5@51.0).
+		(66.0@62.0) corner: (106.0@102.0).
+		(255.0@62.0) corner: (305.0@112.0).
+		(631.0@62.0) corner: (691.0@122.0).
+		(936.0@62.0) corner: (1006.0@132.0).
+		(0.0@143.0) corner: (80.0@223.0).
+		(82.0@143.0) corner: (172.0@233.0).
+		(174.0@143.0) corner: (274.0@243.0).
+		(276.0@143.0) corner: (386.0@253.0).
+		(388.0@143.0) corner: (508.0@263.0).
+		(510.0@143.0) corner: (640.0@273.0).
+		(642.0@143.0) corner: (782.0@283.0).
+		(784.0@143.0) corner: (934.0@293.0)
+	}."
+
+	^ aParentNode
+]
+
 { #category : #'examples - instance creation' }
 GtGradVerticalTreeLayoutExamples >> treeLayout [
 	<gtExample>
