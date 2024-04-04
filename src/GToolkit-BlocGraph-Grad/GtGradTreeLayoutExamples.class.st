@@ -311,6 +311,19 @@ GtGradTreeLayoutExamples >> constructTreeWithNodesWithAndWithoutChildrenOnTheSam
 			(21->22). (21->23) }
 ]
 
+{ #category : #'examples - instance creation' }
+GtGradTreeLayoutExamples >> constructTreeWithTinySibling [
+	<gtExample>
+	| aParentNode sizes|
+	
+	aParentNode := self constructSimpleTree.
+	sizes := #(2 5 2 5 5 2 2 5 5 5 5 2 2 2 2).
+	aParentNode children doWithIndex: [ :eachChildNode :index |
+		eachChildNode measurement: (BlLayoutNodeComputedMeasurement new extent: 10 asPoint * (sizes at: index)) ].
+
+	^ aParentNode
+]
+
 { #category : #'examples - layout' }
 GtGradTreeLayoutExamples >> disconnectedGraph [
 	^ self subclassResponsibility
