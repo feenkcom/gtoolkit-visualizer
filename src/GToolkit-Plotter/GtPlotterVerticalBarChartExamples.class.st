@@ -135,7 +135,6 @@ GtPlotterVerticalBarChartExamples >> scalableContentsBarChartInGridLayout [
 { #category : #accessing }
 GtPlotterVerticalBarChartExamples >> scalableContentsColoredBarChart [
 	<gtExample>
-	<noTest>
 	"is not ready yet"
 	^ self coloredBarChart
 		scalableContents
