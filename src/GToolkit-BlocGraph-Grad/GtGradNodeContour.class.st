@@ -71,12 +71,32 @@ GtGradNodeContour >> computeOffsetTo: aGtGradNodeContour [
 ]
 
 { #category : #accessing }
+GtGradNodeContour >> gtLowerPointViewOn: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Lower Points';
+		priority: 2;
+		column: 'points' text: [ :item | item ];
+		items: [ lowerPoints ]
+]
+
+{ #category : #accessing }
 GtGradNodeContour >> gtTracePolyOn: aView [
 	<gtView>
 	^ aView explicit
 		title: 'Trace';
 		priority: 1;
 		stencil: [ self asTraceElement ]
+]
+
+{ #category : #accessing }
+GtGradNodeContour >> gtUpperPointViewOn: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Upper Points';
+		priority: 3;
+		column: 'points' text: [ :item | item ];
+		items: [ upperPoints ]
 ]
 
 { #category : #'as yet unclassified' }
