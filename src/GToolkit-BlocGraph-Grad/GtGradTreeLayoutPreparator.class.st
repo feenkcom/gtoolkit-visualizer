@@ -1,14 +1,29 @@
 Class {
 	#name : #GtGradTreeLayoutPreparator,
 	#superclass : #GtGradTreeLayouter,
+	#instVars : [
+		'root'
+	],
 	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
+{ #category : #measure }
+GtGradTreeLayoutPreparator class >> on: aLayout root: aTreeNode [
+	^ (super on: aLayout)
+		root: aTreeNode;
+		yourself
+]
+
 { #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> attachParent: aTreeNode toContour: childrenContour [
-	| height width newY |
-	height := (self layout nodeBreadth: aTreeNode) + (self nodeDistance * 2).
-	width := self layout nodeLength: aTreeNode.
+	| height width newY alignmentCorrection |
+	alignmentCorrection := self layout nodesAlignment
+			calculateCorrectionFor: aTreeNode
+			aRootNode: root
+			layout: layout.
+	height := (self layout nodeBreadth: aTreeNode) + (self nodeDistance * 2)
+			+ alignmentCorrection y.
+	width := (self layout nodeLength: aTreeNode) + alignmentCorrection x.
 	newY := childrenContour middleOfFront - (height / 2).
 	aTreeNode offset: 0 @ newY.
 	childrenContour
@@ -60,6 +75,11 @@ GtGradTreeLayoutPreparator >> mergeWithChildrenContours: aTreeNode [
 	^ aNodeContour
 ]
 
+{ #category : #accessing }
+GtGradTreeLayoutPreparator >> root: aTreeNode [
+	root := aTreeNode
+]
+
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 	| childrenContour |
@@ -69,8 +89,15 @@ GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitLeafNode: aTreeNode [
+	| alignmentCorrection |
+	alignmentCorrection := layout nodesAlignment
+			calculateCorrectionFor: aTreeNode
+			aRootNode: root
+			layout: layout.
 	aTreeNode
 		contour: (GtGradNodeContour
 				height: (self layout nodeBreadth: aTreeNode) + (2 * self nodeDistance)
-				width: (self layout nodeLength: aTreeNode))
+						+ (self layout correctionBreadth: alignmentCorrection)
+				width: (self layout nodeLength: aTreeNode)
+						+ (self layout correctionLength: alignmentCorrection))
 ]

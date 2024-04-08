@@ -92,15 +92,17 @@ GtGradAbstractTreeLayout >> levelDistance: aNumber [
 { #category : #measure }
 GtGradAbstractTreeLayout >> measureChildrenPositions: aParentLayoutNode [
 	| aTreeForest aParentGraphNode |
-
 	aParentGraphNode := aParentLayoutNode withGraphNodes withGraphEdges.
 
 	aTreeForest := self formForestFrom: aParentGraphNode children.
-	aTreeForest accept: (GtGradTreeLayoutPreparator on: self). 
+	aTreeForest trees
+		do: [ :root | root accept: (GtGradTreeMaxWidthCalculator on: self root: root) ].
+	aTreeForest trees
+		do: [ :root | root accept: (GtGradTreeLayoutPreparator on: self root: root) ].
 	aTreeForest accept: (GtGradTreeLayoutCalculator on: self).
-	
+
 	aParentGraphNode children normalizePositions.
-	^aTreeForest
+	^ aTreeForest
 ]
 
 { #category : #'api - geometry' }

@@ -35,6 +35,16 @@ GtGradAbstractVerticalTreeLayout >> childOffsetLength: aNodesChild [
 	^ 0
 ]
 
+{ #category : #accessing }
+GtGradAbstractVerticalTreeLayout >> correctionBreadth: aCorrection [
+	^aCorrection x
+]
+
+{ #category : #accessing }
+GtGradAbstractVerticalTreeLayout >> correctionLength: aCorrection [
+	^aCorrection y
+]
+
 { #category : #'api - geometry' }
 GtGradAbstractVerticalTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 
