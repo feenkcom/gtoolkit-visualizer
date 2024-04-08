@@ -9,7 +9,7 @@ Class {
 		'maxX',
 		'color'
 	],
-	#category : 'GToolkit-Plotter-! Plotter - Stencils'
+	#category : #'GToolkit-Plotter-! Plotter - Stencils'
 }
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ GtHorizontalSparklineStencil >> create [
 
 	theData := GtPlotterDataGroup new values: values.
 	
-	color ifNotNil: [ :aColorBlock | theData := theData colored: aColorBlock ].
+	color ifNotNil: [ :aColorBlock | theData := theData background: aColorBlock ].
 	
 	aMinX := minX ifNil: [ theData inject: Float infinity intoValues: [ :eachMin :eachValue | eachMin min: eachValue value ] ].
 	aMaxX := maxX ifNil: [ theData inject: Float negativeInfinity intoValues: [ :eachMax :eachValue | eachMax max: eachValue value ] ].

@@ -19,7 +19,7 @@ GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 	theData := theData sorted: [ :a :b | (a last) > (b last) ].
 	theData := theData
 		labelled: [ :each | each first gtDisplayString gtRemovePrefix: 'BaselineOf' ].
-	theData := theData colored: [ :each | Color blue alpha: 0.5 ].
+	theData := theData background: [ :each | Color blue alpha: 0.5 ].
 
 	maxLines := theData inject: 0 intoValues: [ :anAmount :eachValue | 
 		anAmount max: eachValue last ].
@@ -122,7 +122,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZoneAndColored
 			aColor := theColors
 				at: eachZone
 				ifAbsent: [ Color veryVeryLightGray ].
-			(eachGroup colored: aColor) labelled: eachZone ].
+			(eachGroup background: aColor) labelled: eachZone ].
 
 	^ self websiteVisitsChartFromData: theData
 ]
@@ -134,7 +134,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 		
 	theData := GtPlotterDataGroup new values: self sequoias.
 	theData := theData labelled: [ :each | each at: #species ].
-	theData := theData colored: [ :each | (each at: #extinct)
+	theData := theData background: [ :each | (each at: #extinct)
 		ifTrue: [ Color r: 216 g: 55 b: 62 range: 255 ]
 		ifFalse: [ Color r: 66 g: 188 b: 238 range: 255 ] ].
 
@@ -165,7 +165,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenus [
 		sorted: [ :a :b | a < b ]
 		labelled: [ :eachGenus | eachGenus ].
 
-	theData := theData colored: [ :each | (each at: #extinct)
+	theData := theData background: [ :each | (each at: #extinct)
 		ifTrue: [ Color r: 216 g: 55 b: 62 range: 255 ]
 		ifFalse: [ Color r: 66 g: 188 b: 238 range: 255 ] ].
 
