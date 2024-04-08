@@ -35,6 +35,16 @@ GtGradAbstractHorizontalTreeLayout >> childOffsetLength: aNodesChild [
 	^ aNodesChild offset y
 ]
 
+{ #category : #accessing }
+GtGradAbstractHorizontalTreeLayout >> correctionBreadth: aCorrection [
+	^aCorrection y
+]
+
+{ #category : #accessing }
+GtGradAbstractHorizontalTreeLayout >> correctionLength: aCorrection [
+	^aCorrection x
+]
+
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
 	^ ((aRootNode maxWidthAt: aTreeNode) - aTreeNode element width)@0
