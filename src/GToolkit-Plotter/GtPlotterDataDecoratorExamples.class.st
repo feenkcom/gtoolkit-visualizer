@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDataDecoratorExamples,
 	#superclass : #GtPlotterDataExamples,
-	#category : 'GToolkit-Plotter-Example - Data'
+	#category : #'GToolkit-Plotter-Example - Data'
 }
 
 { #category : #'examples - decorations' }
@@ -16,7 +16,7 @@ GtPlotterDataDecoratorExamples >> colorDangerDifferently [
 	} asDictionary.
 
 	aGroup := self browserDataGroupSortedByDanger
-		colored: [ :eachValue | theColors at: (eachValue at: #danger) ].
+		background: [ :eachValue | theColors at: (eachValue at: #danger) ].
 	
 	self assert: aGroup isLogicalGroup not.
 	self assert: aGroup isComposite.
@@ -44,7 +44,7 @@ GtPlotterDataDecoratorExamples >> colorInBlockOnAllData [
 	<gtExample>
 	| aGroup |
 
-	aGroup := self browserDataGroup colored: [ :eachValue | Color blue ].
+	aGroup := self browserDataGroup background: [ :eachValue | Color blue ].
 	
 	self assert: aGroup isLogicalGroup not.
 	self assert: aGroup isDecorator.
@@ -62,7 +62,7 @@ GtPlotterDataDecoratorExamples >> singleColorOnAllData [
 	<gtExample>
 	| aGroup |
 
-	aGroup := self browserDataGroup colored: Color blue.
+	aGroup := self browserDataGroup background: Color blue.
 	
 	self assert: aGroup isLogicalGroup not.
 	self assert: aGroup isDecorator.

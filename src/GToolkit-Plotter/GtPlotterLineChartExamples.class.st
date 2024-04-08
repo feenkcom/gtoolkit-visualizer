@@ -4,7 +4,7 @@ I exemplify {{gtClass:GtPlotterLineChart}}.
 Class {
 	#name : #GtPlotterLineChartExamples,
 	#superclass : #GtPlotterBuilderExamples,
-	#category : 'GToolkit-Plotter-Example - Builders'
+	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
 { #category : #'example - data' }
@@ -514,7 +514,7 @@ GtPlotterLineChartExamples >> definedLineColor [
 	| aData lineChart |
 	
 	aData := GtPlotterDataGroup new values: self commits.
-	aData := aData colored: Color blue.
+	aData := aData background: Color blue.
 	
 	lineChart := GtPlotterLineChart new
 		with: aData;
@@ -534,7 +534,7 @@ GtPlotterLineChartExamples >> plot [
 	| aData lineChart |
 	
 	aData := GtPlotterDataGroup new values: self commits.
-	aData := aData colored: Color blue.
+	aData := aData background: Color blue.
 	
 	lineChart := GtPlotterLineChart new
 		with: aData;
@@ -640,7 +640,7 @@ GtPlotterLineChartExamples >> plotEmptyData [
 	| aData lineChart |
 	
 	aData := GtPlotterDataGroup new values: #().
-	aData := aData colored: Color blue.
+	aData := aData background: Color blue.
 	
 	lineChart := GtPlotterLineChart new
 		with: aData;

@@ -35,7 +35,7 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	theData := theData sorted: [ :a :b | a last > b last ].
 	theData := theData
 		labelled: [ :each | each first gtDisplayString gtRemovePrefix: 'BaselineOf' ].
-	theData := theData colored: [ :each | Color blue alpha: 0.5 ].
+	theData := theData background: [ :each | Color blue alpha: 0.5 ].
 
 	maxLines := theData inject: 0 intoValues: [ :anAmount :eachValue | 
 		anAmount max: eachValue last ].
@@ -66,7 +66,7 @@ GtPlotterVerticalBarChartExamples >> coloredBarChart [
 	data := GtPlotterDataGroup new
 			values: ((60 to: 100) collectWithIndex: [ :value :i | i -> value ]).
 	data := data
-			colored: [ :each | each key > 5 ifTrue: [ Color black ] ifFalse: [ Color veryLightGray ] ].
+			background: [ :each | each key > 5 ifTrue: [ Color black ] ifFalse: [ Color veryLightGray ] ].
 
 	maxLines := 100.
 	scale := GtPlotterLinearScale new domainFrom: 0 to: maxLines.

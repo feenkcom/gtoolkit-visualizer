@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDataEntity,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #'api - utility' }
@@ -17,6 +17,13 @@ GtPlotterDataEntity class >> decorate: aGroup with: aDecoratorOrCollectionOfDeco
 				aNextDecorator ].
 			anArray last ]
 		ifFalse: [ aDecoratorOrCollectionOfDecorators entity: aGroup ]
+]
+
+{ #category : #'api - decorators' }
+GtPlotterDataEntity >> background: aColorBlock [
+	<return: #GtPlotterDataGroups>
+
+	^ self decorated: [ :eachValue | GtPlotterDataGroupWithColor new color: (aColorBlock gtValue: eachValue) ]
 ]
 
 { #category : #accessing }
@@ -51,11 +58,15 @@ GtPlotterDataEntity >> colorDo: aBlock [
 		ifFound: [ :aDecorator | aBlock value: aDecorator color ]
 ]
 
-{ #category : #'api - decorators' }
+{ #category : #accessing }
 GtPlotterDataEntity >> colored: aColorBlock [
-	<return: #GtPlotterDataGroups>
+	self
+		deprecated: 'Use background:'
+		transformWith: 
+			'`@receiver colored: `@args' 
+			-> '`@receiver background: `@args'.
 
-	^ self decorated: [ :eachValue | GtPlotterDataGroupWithColor new color: (aColorBlock gtValue: eachValue) ]
+	^ self background: aColorBlock
 ]
 
 { #category : #'api - decorators' }
