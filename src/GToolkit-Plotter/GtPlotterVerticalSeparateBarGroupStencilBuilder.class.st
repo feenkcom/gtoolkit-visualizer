@@ -15,7 +15,7 @@ GtPlotterVerticalSeparateBarGroupStencilBuilder >> buildDefault [
 	aContainer := BlElement new
 		constraintsDo: [ :c |
 			c vertical matchParent.
-			c horizontal fitContent ].
+			c horizontal matchParent ].
 
 	isStacking
 		ifTrue: [ aContainer layout: BlFrameLayout new ]
@@ -26,10 +26,12 @@ GtPlotterVerticalSeparateBarGroupStencilBuilder >> buildDefault [
 			group: self group;
 			value: eachValue;
 			bar: self bar) asElement
+				constraintsDo: [:c | 
+					c horizontal matchParent ];
 				when: BlClickEvent do: [ :anEvent |
 					anEvent consumed: true.
 					anEvent currentTarget phlow spawnObject: eachValue ]
 			]) flattened.
-
+	aContainer withAllChildren do: [:c | c constraintsDo: [:m | m horizontal matchParent ] ].
 	^ aContainer
 ]

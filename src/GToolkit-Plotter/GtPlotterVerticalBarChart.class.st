@@ -179,7 +179,7 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 	aContainer 
 		addChild: (self createGroupBarsFor: aGtPlotterDataEntity);
 		addChild: (self createColumnLabelElement: aGtPlotterDataEntity label).
-
+	
 	shouldGroup ifTrue: [
 		aContainer
 			margin: (BlInsets 
@@ -197,17 +197,23 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 GtPlotterVerticalBarChart >> createBars [
 	| theBars |
 	self hasScalableContents ifTrue: [
+		| totalSize |
 		theBars := BrHorizontalPane new.
 		theBars matchParent.
-		theBars cellSpacing: self barGap.
+		totalSize := 0.
+		data do: [:eachGroup | totalSize := eachGroup size ].
+		theBars cellSpacing: (totalSize = data size 
+			ifTrue: [ self barGap]
+			ifFalse: [0]).
 		
 		data do: [:eachGroup |
-			| barElement children |
+			| barElement |
 			barElement := self 
 				createBarColumnFor: eachGroup 
 				grouping: data isLogicalGroup.
 			barElement constraintsDo: [:c |
 				c horizontal matchParent.
+				c linear weight: eachGroup size / totalSize.
 			].
 			theBars addChild: barElement
 		].
@@ -235,7 +241,7 @@ GtPlotterVerticalBarChart >> createBottomBarsFor: aGtPlotterDataEntity [
 			c vertical matchParent ].
 	layout := isStacking
 		ifTrue: [ BlFrameLayout new ]
-		ifFalse: [  BlLinearLayout horizontal alignBottomCenter ].
+		ifFalse: [ BlLinearLayout horizontal alignBottomCenter ].
 	aContainer layout: layout.
 
 	aContainer addChildren: (aGtPlotterDataEntity groupsCollect: [ :eachGroup |
@@ -296,7 +302,7 @@ GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	
 	aGtPlotterDataEntity isLogicalGroup
 		ifFalse: [ ^ self createBottomBarsFor: aGtPlotterDataEntity ].
-
+	
 	isStacking := aGtPlotterDataEntity stacking.
 
 	theBars := Array streamContents: [ :aStream |
