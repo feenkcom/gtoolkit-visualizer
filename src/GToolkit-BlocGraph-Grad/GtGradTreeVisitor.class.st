@@ -9,10 +9,6 @@ GtGradTreeVisitor >> visitCompositeNode: aTreeNode [
 ]
 
 { #category : #visiting }
-GtGradTreeVisitor >> visitForest: aTreeForest [
-]
-
-{ #category : #visiting }
 GtGradTreeVisitor >> visitLeafNode: aTreeNode [
 ]
 

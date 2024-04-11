@@ -97,7 +97,7 @@ GtGradVerticalTreeLayoutExamples >> binaryTreeWith7Nodes [
 ]
 
 { #category : #'examples - layout' }
-GtGradVerticalTreeLayoutExamples >> binaryTreeWith7NodesRevered [
+GtGradVerticalTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 	<gtExample>
 	| aParentNode aTreeLayout |
 
@@ -501,13 +501,13 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeCenterA
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(245.375@0.0) corner: (255.375@10.0).
-		(143.75@26.0) corner: (163.75@46.0).
-		(327.0@21.0) corner: (357.0@51.0).
-		(56.0@77.0) corner: (96.0@117.0).
-		(191.5@72.0) corner: (241.5@122.0).
-		(276.0@67.0) corner: (336.0@127.0).
-		(338.0@62.0) corner: (408.0@132.0).
+		(234.75@0.0) corner: (244.75@10.0).
+		(147.5@26.0) corner: (167.5@46.0).
+		(302.0@21.0) corner: (332.0@51.0).
+		(66.0@77.0) corner: (106.0@117.0).
+		(199.0@72.0) corner: (249.0@122.0).
+		(251.0@67.0) corner: (311.0@127.0).
+		(313.0@62.0) corner: (383.0@132.0).
 		(0.0@153.0) corner: (80.0@233.0).
 		(82.0@148.0) corner: (172.0@238.0).
 		(174.0@143.0) corner: (274.0@243.0)
@@ -528,13 +528,13 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeLeafAli
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(243.5@0.0) corner: (253.5@10.0).
-		(140.0@31.0) corner: (160.0@51.0).
-		(327.0@21.0) corner: (357.0@51.0).
-		(51.0@92.0) corner: (91.0@132.0).
-		(189.0@82.0) corner: (239.0@132.0).
-		(276.0@72.0) corner: (336.0@132.0).
-		(338.0@62.0) corner: (408.0@132.0).
+		(234.75@0.0) corner: (244.75@10.0).
+		(147.5@31.0) corner: (167.5@51.0).
+		(302.0@21.0) corner: (332.0@51.0).
+		(66.0@92.0) corner: (106.0@132.0).
+		(199.0@82.0) corner: (249.0@132.0).
+		(251.0@72.0) corner: (311.0@132.0).
+		(313.0@62.0) corner: (383.0@132.0).
 		(0.0@163.0) corner: (80.0@243.0).
 		(82.0@153.0) corner: (172.0@243.0).
 		(174.0@143.0) corner: (274.0@243.0)
@@ -556,13 +556,13 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWith10NodesOfIncreasingSizeRootAli
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(247.25@0.0) corner: (257.25@10.0).
+		(234.75@0.0) corner: (244.75@10.0).
 		(147.5@41.0) corner: (167.5@61.0).
-		(327.0@41.0) corner: (357.0@71.0).
-		(61.0@102.0) corner: (101.0@142.0).
-		(194.0@102.0) corner: (244.0@152.0).
-		(276.0@102.0) corner: (336.0@162.0).
-		(338.0@102.0) corner: (408.0@172.0).
+		(302.0@41.0) corner: (332.0@71.0).
+		(66.0@102.0) corner: (106.0@142.0).
+		(199.0@102.0) corner: (249.0@152.0).
+		(251.0@102.0) corner: (311.0@162.0).
+		(313.0@102.0) corner: (383.0@172.0).
 		(0.0@203.0) corner: (80.0@283.0).
 		(82.0@203.0) corner: (172.0@293.0).
 		(174.0@203.0) corner: (274.0@303.0)
@@ -634,21 +634,23 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeCenterAli
 
 	self
 		assert: aParentNode children layoutBounds
-		equals: {497.0 @ 0.0 corner: 507.0 @ 10.0.
-				171.75 @ 26.0 corner: 191.75 @ 46.0.
-				802.25 @ 21.0 corner: 832.25 @ 51.0.
-				56.0 @ 77.0 corner: 96.0 @ 117.0.
-				247.5 @ 72.0 corner: 297.5 @ 122.0.
-				628.5 @ 67.0 corner: 688.5 @ 127.0.
-				936.0 @ 62.0 corner: 1006.0 @ 132.0.
-				0.0 @ 178.0 corner: 80.0 @ 258.0.
-				82.0 @ 173.0 corner: 172.0 @ 263.0.
-				174.0 @ 168.0 corner: 274.0 @ 268.0.
-				276.0 @ 163.0 corner: 386.0 @ 273.0.
-				388.0 @ 158.0 corner: 508.0 @ 278.0.
-				510.0 @ 153.0 corner: 640.0 @ 283.0.
-				642.0 @ 148.0 corner: 782.0 @ 288.0.
-				784.0 @ 143.0 corner: 934.0 @ 293.0}.
+		equals: {
+		(438.75@0.0) corner: (448.75@10.0).
+		(175.5@26.0) corner: (195.5@46.0).
+		(682.0@21.0) corner: (712.0@51.0).
+		(66.0@77.0) corner: (106.0@117.0).
+		(255.0@72.0) corner: (305.0@122.0).
+		(631.0@67.0) corner: (691.0@127.0).
+		(693.0@62.0) corner: (763.0@132.0).
+		(0.0@178.0) corner: (80.0@258.0).
+		(82.0@173.0) corner: (172.0@263.0).
+		(174.0@168.0) corner: (274.0@268.0).
+		(276.0@163.0) corner: (386.0@273.0).
+		(388.0@158.0) corner: (508.0@278.0).
+		(510.0@153.0) corner: (640.0@283.0).
+		(642.0@148.0) corner: (782.0@288.0).
+		(784.0@143.0) corner: (934.0@293.0)
+	}.
 
 	^ aParentNode
 ]
@@ -665,21 +667,23 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlign
 
 	self
 		assert: aParentNode children layoutBounds
-		equals: {494.5 @ 0.0 corner: 504.5 @ 10.0.
-				168.0 @ 31.0 corner: 188.0 @ 51.0.
-				801.0 @ 21.0 corner: 831.0 @ 51.0.
-				51.0 @ 92.0 corner: 91.0 @ 132.0.
-				245.0 @ 82.0 corner: 295.0 @ 132.0.
-				626.0 @ 72.0 corner: 686.0 @ 132.0.
-				936.0 @ 62.0 corner: 1006.0 @ 132.0.
-				0.0 @ 213.0 corner: 80.0 @ 293.0.
-				82.0 @ 203.0 corner: 172.0 @ 293.0.
-				174.0 @ 193.0 corner: 274.0 @ 293.0.
-				276.0 @ 183.0 corner: 386.0 @ 293.0.
-				388.0 @ 173.0 corner: 508.0 @ 293.0.
-				510.0 @ 163.0 corner: 640.0 @ 293.0.
-				642.0 @ 153.0 corner: 782.0 @ 293.0.
-				784.0 @ 143.0 corner: 934.0 @ 293.0}.
+		equals: {
+		(438.75@0.0) corner: (448.75@10.0).
+		(175.5@31.0) corner: (195.5@51.0).
+		(682.0@21.0) corner: (712.0@51.0).
+		(66.0@92.0) corner: (106.0@132.0).
+		(255.0@82.0) corner: (305.0@132.0).
+		(631.0@72.0) corner: (691.0@132.0).
+		(693.0@62.0) corner: (763.0@132.0).
+		(0.0@213.0) corner: (80.0@293.0).
+		(82.0@203.0) corner: (172.0@293.0).
+		(174.0@193.0) corner: (274.0@293.0).
+		(276.0@183.0) corner: (386.0@293.0).
+		(388.0@173.0) corner: (508.0@293.0).
+		(510.0@163.0) corner: (640.0@293.0).
+		(642.0@153.0) corner: (782.0@293.0).
+		(784.0@143.0) corner: (934.0@293.0)
+	}.
 
 	^ aParentNode
 ]
@@ -688,21 +692,22 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeLeafAlign
 GtGradVerticalTreeLayoutExamples >> simpleTreeWithNodesOfIncreasingSizeRootAlignment [
 	<gtExample>
 	| aParentNode aTreeLayout |
-
 	aParentNode := self constructTreeWithNodesOfIncreasingSize.
 
 	aTreeLayout := self treeLayout.
 	aTreeLayout nodesAlignment: GtGradTreeNodesRootAlignment new.
 	aTreeLayout measure: aParentNode.
-	
-	self assert: aParentNode children layoutBounds equals: {
-		(499.5@0.0) corner: (509.5@10.0).
+
+	self
+		assert: aParentNode children layoutBounds
+		equals: {
+		(438.75@0.0) corner: (448.75@10.0).
 		(175.5@21.0) corner: (195.5@41.0).
-		(803.5@21.0) corner: (833.5@51.0).
-		(61.0@62.0) corner: (101.0@102.0).
-		(250.0@62.0) corner: (300.0@112.0).
+		(682.0@21.0) corner: (712.0@51.0).
+		(66.0@62.0) corner: (106.0@102.0).
+		(255.0@62.0) corner: (305.0@112.0).
 		(631.0@62.0) corner: (691.0@122.0).
-		(936.0@62.0) corner: (1006.0@132.0).
+		(693.0@62.0) corner: (763.0@132.0).
 		(0.0@143.0) corner: (80.0@223.0).
 		(82.0@143.0) corner: (172.0@233.0).
 		(174.0@143.0) corner: (274.0@243.0).
@@ -759,13 +764,13 @@ GtGradVerticalTreeLayoutExamples >> simpleTreeWithTinySiblingAndRootAlignment [
 	aTreeLayout measure: aParentNode.
 	
 	self assert: aParentNode children layoutBounds equals: {
-		(169.5@0.0) corner: (189.5@20.0).
+		(165.0@0.0) corner: (185.0@20.0).
 		(78.0@31.0) corner: (128.0@81.0).
-		(261.0@31.0) corner: (281.0@51.0).
+		(252.0@31.0) corner: (272.0@51.0).
 		(26.0@92.0) corner: (76.0@142.0).
 		(130.0@92.0) corner: (180.0@142.0).
-		(226.0@92.0) corner: (246.0@112.0).
-		(296.0@92.0) corner: (316.0@112.0).
+		(241.0@92.0) corner: (261.0@112.0).
+		(263.0@92.0) corner: (283.0@112.0).
 		(0.0@153.0) corner: (50.0@203.0).
 		(52.0@153.0) corner: (102.0@203.0).
 		(104.0@153.0) corner: (154.0@203.0).

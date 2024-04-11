@@ -86,7 +86,7 @@ GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7Nodes [
 ]
 
 { #category : #accessing }
-GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7NodesRevered [
+GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 	<gtExample>
 	| aParentNode aTreeLayout |
 	aParentNode := self constructBinaryTreeWith7Nodes.
