@@ -28,6 +28,14 @@ Class {
 	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
+{ #category : #'private - layout' }
+GtGradAbstractTreeLayout >> calculateAlignmentCorrectionFor: aTreeNode rootNode: rootNode [
+	^ self nodesAlignment
+		calculateCorrectionFor: aTreeNode
+		aRootNode: rootNode
+		layout: self
+]
+
 { #category : #'api - geometry' }
 GtGradAbstractTreeLayout >> calculateTreePositionCorrection: delta [
 	self subclassResponsibility
@@ -54,6 +62,16 @@ GtGradAbstractTreeLayout >> childOffsetLength: aChildElement [
 	^ self subclassResponsibility
 ]
 
+{ #category : #visiting }
+GtGradAbstractTreeLayout >> correctionBreadth: alignmentCorrection [ 
+	self subclassResponsibility
+]
+
+{ #category : #visiting }
+GtGradAbstractTreeLayout >> correctionLength: alignmentCorrection [ 
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 GtGradAbstractTreeLayout >> forestClass [
 	self subclassResponsibility
@@ -62,6 +80,12 @@ GtGradAbstractTreeLayout >> forestClass [
 { #category : #initialization }
 GtGradAbstractTreeLayout >> formForestFrom: theNodes [
 	^ self forestClass from: theNodes separateSubtrees: self separateSubtrees
+]
+
+{ #category : #visiting }
+GtGradAbstractTreeLayout >> heightForNode: aTreeNode withCorrection: alignmentCorrection [
+	^ (self nodeBreadth: aTreeNode) + (2 * self nodeDistance)
+		+ (self correctionBreadth: alignmentCorrection)
 ]
 
 { #category : #initialization }
@@ -208,4 +232,10 @@ GtGradAbstractTreeLayout >> treesDistance [
 { #category : #'api - accessing' }
 GtGradAbstractTreeLayout >> treesDistance: aNumber [
 	treesDistance := aNumber
+]
+
+{ #category : #visiting }
+GtGradAbstractTreeLayout >> widthForNode: aTreeNode withCorrection: alignmentCorrection [
+	^ (self nodeLength: aTreeNode)
+		+ (self correctionLength: alignmentCorrection)
 ]

@@ -8,3 +8,8 @@ Class {
 GtGradVerticalTreeLayout >> forestClass [
 	^ GtGradDFSTreeForest
 ]
+
+{ #category : #accessing }
+GtGradVerticalTreeLayout >> transformPoints: aPointsCollection [
+	^ aPointsCollection collect: [ :each | each y @ each x ]
+]

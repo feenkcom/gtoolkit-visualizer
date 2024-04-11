@@ -8,3 +8,8 @@ Class {
 GtGradHorizontalTreeLayout >> forestClass [
 	^ GtGradDFSTreeForest
 ]
+
+{ #category : #accessing }
+GtGradHorizontalTreeLayout >> transformPoints: pointsCollection [
+	^pointsCollection
+]

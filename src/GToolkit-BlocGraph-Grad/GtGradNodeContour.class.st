@@ -18,25 +18,28 @@ GtGradNodeContour class >> height: height width: width [
 ]
 
 { #category : #accessing }
-GtGradNodeContour >> asTraceElement [
-	| elem |
+GtGradNodeContour >> asTraceElementForLayout: aLayout [
+	| elem u l |
 
 	elem := BlElement new
 			constraintsDo: [ :c | 
 				c horizontal matchParent.
 				c vertical matchParent ].
 
+				
+	u := aLayout transformPoints: upperPoints.
+	l := aLayout transformPoints: lowerPoints.
 	elem
 		addChild: (BlPolygonElement new
 				bePolyline;
-				vertices: upperPoints;
+				vertices: u;
 				border: (BlBorder paint: Color blue width: 1)).
 	elem
 		addChild: (BlPolygonElement new
 				bePolyline;
-				vertices: lowerPoints;
+				vertices: l;
 				border: (BlBorder paint: Color red width: 1)).
-	upperPoints
+	u
 		do: [ :each | 
 			elem
 				addChild: (BlElement new
@@ -44,7 +47,7 @@ GtGradNodeContour >> asTraceElement [
 						size: 6 @ 6;
 						background: (Color blue alpha: 0.5);
 						relocate: each - (3 @ 3)) ].
-	lowerPoints
+	l
 		do: [ :each | 
 			elem
 				addChild: (BlElement new
@@ -86,7 +89,7 @@ GtGradNodeContour >> gtTracePolyOn: aView [
 	^ aView explicit
 		title: 'Trace';
 		priority: 1;
-		stencil: [ self asTraceElement ]
+		stencil: [ self asTraceElementForLayout: GtGradVerticalTreeLayout new ]
 ]
 
 { #category : #accessing }

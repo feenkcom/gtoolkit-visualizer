@@ -45,10 +45,14 @@ GtGradAbstractVerticalTreeLayout >> correctionLength: aCorrection [
 	^aCorrection y
 ]
 
+{ #category : #accessing }
+GtGradAbstractVerticalTreeLayout >> maxFor: aTreeNode root: aRoot [
+	^ aRoot maxHeightAt: aTreeNode
+]
+
 { #category : #'api - geometry' }
 GtGradAbstractVerticalTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-
-	^ 0@((aRootNode maxHeightAt: aTreeNode) - aTreeNode height)
+	^ 0 @ ((aRootNode maxHeightAt: aTreeNode) - aTreeNode height)
 ]
 
 { #category : #'api - geometry' }
@@ -58,12 +62,7 @@ GtGradAbstractVerticalTreeLayout >> nodeBreadth: aTreeNode [
 
 { #category : #'api - geometry' }
 GtGradAbstractVerticalTreeLayout >> nodeCenterAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-	| parentCorrection |
-	parentCorrection := aTreeNode hasParent
-		ifFalse: [ 0 ]
-		ifTrue: [ (aRootNode maxHeightAt: aTreeNode parent) - aTreeNode parent height ].
-	^ 0@((aRootNode maxHeightAt: aTreeNode) - aTreeNode height
-				+ parentCorrection) / 2.0
+	^ 0 @ ((aRootNode maxHeightAt: aTreeNode) - aTreeNode height) / 2.0
 ]
 
 { #category : #'api - geometry' }
@@ -89,9 +88,7 @@ GtGradAbstractVerticalTreeLayout >> nodeOffsetLength: aTreeNode [
 
 { #category : #'api - geometry' }
 GtGradAbstractVerticalTreeLayout >> nodeTopAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-	^ aTreeNode hasParent
-		ifTrue: [ 0 @ ((aRootNode maxHeightAt: aTreeNode parent) - aTreeNode parent height) ]
-		ifFalse: [ 0@0 ]
+	^ 0 @ 0
 ]
 
 { #category : #'api - geometry' }

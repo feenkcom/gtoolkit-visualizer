@@ -45,9 +45,14 @@ GtGradAbstractHorizontalTreeLayout >> correctionLength: aCorrection [
 	^aCorrection x
 ]
 
+{ #category : #'private - layout' }
+GtGradAbstractHorizontalTreeLayout >> maxFor: aTreeNode root: aRoot [
+	^ aRoot maxWidthAt: aTreeNode
+]
+
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> nodeBottomAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-	^ ((aRootNode maxWidthAt: aTreeNode) - aTreeNode element width)@0
+	^ ((aRootNode maxWidthAt: aTreeNode) - aTreeNode width) @ 0
 ]
 
 { #category : #'api - geometry' }
@@ -57,12 +62,7 @@ GtGradAbstractHorizontalTreeLayout >> nodeBreadth: aTreeNode [
 
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> nodeCenterAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-	| parentCorrection |
-	parentCorrection := aTreeNode hasParent
-		ifFalse: [ 0 ]
-		ifTrue: [ (aRootNode maxWidthAt: aTreeNode parent) - aTreeNode parent width ].
-
-	^ (((aRootNode maxWidthAt: aTreeNode) - aTreeNode width + parentCorrection) / 2.0)@0
+	^ (((aRootNode maxWidthAt: aTreeNode) - aTreeNode width) / 2.0) @ 0
 ]
 
 { #category : #'api - geometry' }
@@ -89,9 +89,8 @@ GtGradAbstractHorizontalTreeLayout >> nodeOffsetLength: aTreeNode [
 
 { #category : #'api - geometry' }
 GtGradAbstractHorizontalTreeLayout >> nodeTopAlignmentCorrection: aTreeNode aRootNode: aRootNode [
-	^ aTreeNode hasParent
-		ifTrue: [ ((aRootNode maxWidthAt: aTreeNode parent) - aTreeNode parent width) @ 0 ]
-		ifFalse: [ 0@0 ]
+	^0 @ 0
+
 ]
 
 { #category : #'api - geometry' }

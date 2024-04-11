@@ -34,7 +34,6 @@ GtGradTreeForest class >> from: aCollectionOfElements separateSubtrees: aBool [
 
 { #category : #'api - visiting' }
 GtGradTreeForest >> accept: aVisitor [
-	aVisitor visitForest: self.
 	self trees do: [ :aTreeNode | aTreeNode accept: aVisitor ]
 ]
 

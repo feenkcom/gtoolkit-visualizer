@@ -17,14 +17,12 @@ GtGradTreeLayoutPreparator class >> on: aLayout root: aTreeNode [
 { #category : #'private - layout' }
 GtGradTreeLayoutPreparator >> attachParent: aTreeNode toContour: childrenContour [
 	| height width newY alignmentCorrection |
-	alignmentCorrection := self layout nodesAlignment
-			calculateCorrectionFor: aTreeNode
-			aRootNode: root
-			layout: layout.
-	height := (self layout nodeBreadth: aTreeNode) + (self nodeDistance * 2)
-			+ alignmentCorrection y.
-	width := (self layout nodeLength: aTreeNode) + alignmentCorrection x.
-	newY := childrenContour middleOfFront - (height / 2).
+	alignmentCorrection := layout
+			calculateAlignmentCorrectionFor: aTreeNode
+			rootNode: root.
+	height := layout heightForNode: aTreeNode withCorrection: alignmentCorrection.
+	width := layout maxFor: aTreeNode root: root.
+	newY := childrenContour middleOfFront - (height / 2.0).
 	aTreeNode offset: 0 @ newY.
 	childrenContour
 		translateBy: (width + self nodeDistance + self levelDistance) @ 0.
@@ -83,6 +81,7 @@ GtGradTreeLayoutPreparator >> root: aTreeNode [
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 	| childrenContour |
+
 	childrenContour := self mergeWithChildrenContours: aTreeNode.
 	self attachParent: aTreeNode toContour: childrenContour
 ]
@@ -90,14 +89,12 @@ GtGradTreeLayoutPreparator >> visitCompositeNode: aTreeNode [
 { #category : #visiting }
 GtGradTreeLayoutPreparator >> visitLeafNode: aTreeNode [
 	| alignmentCorrection |
-	alignmentCorrection := layout nodesAlignment
-			calculateCorrectionFor: aTreeNode
-			aRootNode: root
-			layout: layout.
+
+	alignmentCorrection := layout
+			calculateAlignmentCorrectionFor: aTreeNode
+			rootNode: root.
 	aTreeNode
 		contour: (GtGradNodeContour
-				height: (self layout nodeBreadth: aTreeNode) + (2 * self nodeDistance)
-						+ (self layout correctionBreadth: alignmentCorrection)
-				width: (self layout nodeLength: aTreeNode)
-						+ (self layout correctionLength: alignmentCorrection))
+				height: (layout heightForNode: aTreeNode withCorrection: alignmentCorrection)
+				width: (layout widthForNode: aTreeNode withCorrection: alignmentCorrection))
 ]

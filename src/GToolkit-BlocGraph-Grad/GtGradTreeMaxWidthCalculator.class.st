@@ -21,8 +21,7 @@ GtGradTreeMaxWidthCalculator >> root: aTreeNode [
 
 { #category : #accessing }
 GtGradTreeMaxWidthCalculator >> visitNode: aTreeNode [
-	self layout nodesAlignment
-		calculateCorrectionFor: aTreeNode
-		aRootNode: root
-		layout: layout
+	"This pass allows the actual layout to use the final width of all the nodes to compute contours"
+
+	layout calculateAlignmentCorrectionFor: aTreeNode rootNode: root
 ]

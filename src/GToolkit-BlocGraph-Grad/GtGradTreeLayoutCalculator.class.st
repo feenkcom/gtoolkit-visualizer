@@ -19,31 +19,32 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 	| nodePosition newNodePositionX newNodePositionY childrenOffsetX childrenOffsetY firstChild alignmentCorrection |
 	self separateSubtrees ifTrue: [ aTreeNode nodes isEmpty ifTrue: [ ^ self ] ].
 	nodePosition := aTreeNode element position.
+
 	alignmentCorrection := self layout nodesAlignment
 			calculateCorrectionFor: aTreeNode
 			aRootNode: aRootNode
 			layout: layout.
 	newNodePositionX := nodePosition x + aStartPoint x
-			+ (self layout nodeOffsetBreadth: aTreeNode) + alignmentCorrection x.
+			+ (layout nodeOffsetBreadth: aTreeNode) + alignmentCorrection x.
 	newNodePositionY := nodePosition y + aStartPoint y
-			+ (self layout nodeOffsetLength: aTreeNode) + alignmentCorrection y.
+			+ (layout nodeOffsetLength: aTreeNode) + alignmentCorrection y.
 	aTreeNode element position: newNodePositionX @ newNodePositionY.
 	self
 		updateNodeBounds: aTreeNode
 		bounds: bounds
 		positionX: newNodePositionX
 		positionY: newNodePositionY.
-	aTreeNode nodes isNotEmpty ifFalse: [ ^ self ].
+	aTreeNode nodes isEmpty ifTrue: [ ^ self ].
 	firstChild := aTreeNode nodes first.
 	self
 		layout: aTreeNode
 		currentNode: firstChild
-		start: newNodePositionX @ newNodePositionY
+		start: newNodePositionX @ newNodePositionY - alignmentCorrection
 		bounds: bounds.
-	childrenOffsetX := newNodePositionX
-			+ (self layout nodeOffsetBreadth: firstChild).
-	childrenOffsetY := newNodePositionY
-			+ (self layout nodeOffsetLength: firstChild).
+	childrenOffsetX := newNodePositionX + (layout nodeOffsetBreadth: firstChild)
+			- alignmentCorrection x.
+	childrenOffsetY := newNodePositionY + (layout nodeOffsetLength: firstChild)
+			- alignmentCorrection y.
 	aTreeNode nodes
 		allButFirstDo: [ :child | 
 			self
@@ -51,8 +52,8 @@ GtGradTreeLayoutCalculator >> layout: aRootNode currentNode: aTreeNode start: aS
 				currentNode: child
 				start: childrenOffsetX @ childrenOffsetY
 				bounds: bounds.
-			childrenOffsetX := childrenOffsetX + (self layout childOffsetBreadth: child).
-			childrenOffsetY := childrenOffsetY + (self layout childOffsetLength: child) ]
+			childrenOffsetX := childrenOffsetX + (layout childOffsetBreadth: child).
+			childrenOffsetY := childrenOffsetY + (layout childOffsetLength: child) ]
 ]
 
 { #category : #'private - layout' }
