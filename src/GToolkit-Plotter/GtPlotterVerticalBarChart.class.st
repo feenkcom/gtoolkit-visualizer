@@ -21,10 +21,21 @@ Class {
 		'barWidthDataBlock',
 		'barGap',
 		'ticksAngle',
-		'hasScalableContents'
+		'hasScalableContents',
+		'lines'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
+
+{ #category : #'instance creation' }
+GtPlotterVerticalBarChart class >> newFromValues: aCollectionOfObjects [
+	^ self new
+		with: (GtPlotterDataGroup new values: aCollectionOfObjects);
+		barHeightScale: (GtPlotterLinearScale new 
+			domainFrom: 0 to: aCollectionOfObjects max;
+			yourself);
+		yourself
+]
 
 { #category : #accessing }
 GtPlotterVerticalBarChart >> amountOfTicks [
@@ -124,37 +135,50 @@ GtPlotterVerticalBarChart >> barWidthScale: aGtPlotterScale [
 ]
 
 { #category : #accessing }
+GtPlotterVerticalBarChart >> bottomGap [
+	^ self barLabelHeight + self gridlineOffset
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> chartPadding [
+	^ BlInsets bottom: self bottomGap
+]
+
+{ #category : #accessing }
 GtPlotterVerticalBarChart >> create [
 	<return: #Object>
 	| aContainer theBars |
-
 	aContainer := BlElement new
-		layout: BlLinearLayout horizontal;
-		clipChildren: false;
-		padding: (BlInsets right: 20);
-		constraintsDo: [ :c |
-			c horizontal matchParent.
-			c vertical matchParent ].
+			layout: BlLinearLayout horizontal;
+			clipChildren: false;
+			padding: (BlInsets right: 20);
+			constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent ].
 
-	aContainer addChild: (GtPlotterVerticalTickLabelsElement new
-		clipChildren: false;
-		inverse;
-		scale: barHeightScale;
-		padding: (BlInsets bottom: self barLabelHeight + self gridlineOffset);
-		constraintsDo: [ :c | c horizontal fitContent ];
-		labelFormat: self tickLabelFormat;
-		labelElement: [ :aGtPlotterScaleContext |
-			BrLabel new
-				aptitude: (self tickLabelLook create 
-					foreground: self tickLabelColor);
-				text: (aGtPlotterScaleContext scale 
-					formattedTick: aGtPlotterScaleContext originalValue) ];
-		labels: self amountOfTicks).
-	
+	aContainer
+		addChild: (GtPlotterVerticalTickLabelsElement new
+				clipChildren: false;
+				inverse;
+				scale: barHeightScale;
+				padding: self chartPadding;
+				constraintsDo: [ :c | c horizontal fitContent ];
+				labelFormat: self tickLabelFormat;
+				labelElement: [ :aGtPlotterScaleContext | 
+					BrLabel new
+						aptitude: (self tickLabelLook create foreground: self tickLabelColor);
+						text: (aGtPlotterScaleContext scale
+								formattedTick: aGtPlotterScaleContext originalValue) ];
+				labels: self amountOfTicks).
+
 	theBars := self createBars.
-	
 	aContainer addChild: theBars.
 
+	aContainer addChildren: (lines collect: [ :line | 
+		line
+			barChart: self;
+			parent: theBars.
+		line create ]).
 	^ aContainer
 ]
 
@@ -204,7 +228,7 @@ GtPlotterVerticalBarChart >> createBars [
 		data do: [:eachGroup | totalSize := eachGroup size ].
 		theBars cellSpacing: (totalSize = data size 
 			ifTrue: [ self barGap]
-			ifFalse: [0]).
+			ifFalse: [ 0 ]).
 		
 		data do: [:eachGroup |
 			| barElement |
@@ -266,7 +290,7 @@ GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
 	aColumnLabelElement := BrFrame new
 		padding: (BlInsets top: self tickLabelGap);
 		hFitContent;
-		vExact: self barLabelHeight.
+		vExact: self bottomGap.
 	label := BrLabel new
 		text: aColumnLabel;
 		alignTopCenter;
@@ -325,6 +349,11 @@ GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> data [
+	^ data
+]
+
 { #category : #default }
 GtPlotterVerticalBarChart >> defaultDiagonalNumber [
 	^ -45
@@ -353,6 +382,7 @@ GtPlotterVerticalBarChart >> horizontalTicks [
 { #category : #initalization }
 GtPlotterVerticalBarChart >> initialize [
 	super initialize.
+	lines := OrderedCollection new.
 	self
 		horizontalTicks;
 		scrollableContents;
@@ -369,11 +399,22 @@ GtPlotterVerticalBarChart >> initialize [
 	barGroupStencil := GtPlotterVerticalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterVerticalBarStencilBuilder new.
 	barWidthScale := GtPlotterConstantScale new constant: 30.
-	barHeightScale := GtPlotterLinearScale new.
-	barGap := 6.
 	barWidthDataBlock := [ :eachDataItem | eachDataItem ].
 	
+	barHeightScale := GtPlotterLinearScale new.
+	barHeightDataBlock := [ :eachDataItem | eachDataItem ].
+	barGap := 6.
+	data := GtPlotterDataGroup new.
 	
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> newHorizontalLine [
+	| horizontalLine |
+	horizontalLine := GtPlotterHorizontalLine new.
+	GtPlotterBarChartLine.
+	lines add: horizontalLine.
+	^ horizontalLine
 ]
 
 { #category : #accessing }
