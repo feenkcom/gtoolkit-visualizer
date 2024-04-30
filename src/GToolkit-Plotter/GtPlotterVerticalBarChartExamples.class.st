@@ -106,14 +106,18 @@ GtPlotterVerticalBarChartExamples >> diagonalTicksBarChart [
 { #category : #accessing }
 GtPlotterVerticalBarChartExamples >> hlineInBarChart [
 	<gtExample>
-	| barChart threshold |
+	| barChart threshold border |
 	barChart := self barChartForNumbers.
 	barChart scalableContents.
 	threshold := 10.
-	barChart newHorizontalLine dataValue: threshold.
-	barChart newHorizontalLine dataValue: 6.
-	barChart newHorizontalLine dataValue: 14.
-	barChart newHorizontalLine dataValue: 20.
+	border := BlBorderBuilder new
+		paint: Color red;
+		dashed;
+		width: 2;
+		build.
+	barChart newHorizontalLine 
+		lineStencil: [ BlLineElement new border: border ];
+		dataValue: threshold.
 	^ barChart
 ]
 

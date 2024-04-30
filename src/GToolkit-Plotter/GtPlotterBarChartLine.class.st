@@ -80,7 +80,7 @@ GtPlotterBarChartLine >> lineStencil [
 
 { #category : #accessing }
 GtPlotterBarChartLine >> lineStencil: aBrStencil [
-	lineStencil := aBrStencil
+	lineStencil := aBrStencil asStencil
 ]
 
 { #category : #accessing }
