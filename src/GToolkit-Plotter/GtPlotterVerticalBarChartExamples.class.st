@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterVerticalBarChartExamples >> barChartForNumbers [
+	<gtExample>
+	^ GtPlotterVerticalBarChart newFromValues: #(8 10 15 9 12).
+]
+
+{ #category : #accessing }
 GtPlotterVerticalBarChartExamples >> barChartsInGridLayout [
 	<gtExample>
 	<noTest>
@@ -95,6 +101,24 @@ GtPlotterVerticalBarChartExamples >> diagonalTicksBarChart [
 		diagonalTicks.
 	self assert: chartStencil ticksAngle equals: chartStencil defaultDiagonalNumber.
 	^ chartStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChartExamples >> hlineInBarChart [
+	<gtExample>
+	| barChart threshold border |
+	barChart := self barChartForNumbers.
+	barChart scalableContents.
+	threshold := 10.
+	border := BlBorderBuilder new
+		paint: Color red;
+		dashed;
+		width: 2;
+		build.
+	barChart newHorizontalLine 
+		lineStencil: [ BlLineElement new border: border ];
+		dataValue: threshold.
+	^ barChart
 ]
 
 { #category : #example }
