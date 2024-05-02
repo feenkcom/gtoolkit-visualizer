@@ -5,21 +5,16 @@ Class {
 }
 
 { #category : #accessing }
-GtPlotterHorizontalLine >> fromAnchor [
-	^ (BlSideAnchor element: self parent)
-		barHeightScale: barChart barHeightScale;
-		chartPadding: barChart chartPadding;
-		xpercent: self min;
-		y: self dataValue;
-		yourself
+GtPlotterHorizontalLine >> setAxisPercent: aNumber in: aBlPercentSideAnchor [
+	aBlPercentSideAnchor xpercent: aNumber
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalLine >> toAnchor [
-	^ (BlSideAnchor element: self parent)
-		barHeightScale: barChart barHeightScale;
-		chartPadding: barChart chartPadding;
-		xpercent: self max;
-		y: self dataValue;
-		yourself
+GtPlotterHorizontalLine >> setPercent: aNumber in: aBlPercentSideAnchor [
+	aBlPercentSideAnchor ypercent: aNumber
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalLine >> valuePercent [
+	^ barChart barHeightScale map: self dataValue
 ]

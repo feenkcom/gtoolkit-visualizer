@@ -111,8 +111,9 @@ GtPlotterVerticalBarChartExamples >> hlineInBarChart [
 	barChart scalableContents.
 	threshold := 10.
 	border := BlBorderBuilder new
-		paint: Color red;
+		paint: Color blue;
 		dashed;
+		capRound;
 		width: 2;
 		build.
 	barChart newHorizontalLine 

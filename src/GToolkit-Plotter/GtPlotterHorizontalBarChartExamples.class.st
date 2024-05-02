@@ -130,7 +130,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZoneAndColored
 { #category : #'example - sequoia' }
 GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	<gtExample>
-	| theData barChart aMaxPages aBarWidthScale |
+	| theData barChart aMaxPages aBarWidthScale border threshold |
 		
 	theData := GtPlotterDataGroup new values: self sequoias.
 	theData := theData labelled: [ :each | each at: #species ].
@@ -147,7 +147,18 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
 	barChart amountOfTicks: 4.
 	barChart with: theData.
-
+	
+	threshold := 10000.
+	border := BlBorderBuilder new
+		paint: Color blue;
+		dashed;
+		capRound;
+		width: 2;
+		build.
+	barChart newVerticalLine 
+		lineStencil: [ BlLineElement new border: border ];
+		dataValue: threshold.
+		
 	^ barChart
 ]
 
