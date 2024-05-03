@@ -130,7 +130,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZoneAndColored
 { #category : #'example - sequoia' }
 GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	<gtExample>
-	| theData barChart aMaxPages aBarWidthScale |
+	| theData barChart aMaxPages aBarWidthScale border threshold |
 		
 	theData := GtPlotterDataGroup new values: self sequoias.
 	theData := theData labelled: [ :each | each at: #species ].
@@ -147,7 +147,18 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
 	barChart amountOfTicks: 4.
 	barChart with: theData.
-
+	
+	threshold := 10000.
+	border := BlBorderBuilder new
+		paint: Color blue;
+		dashed;
+		capRound;
+		width: 2;
+		build.
+	barChart newVerticalLine 
+		lineStencil: [ BlLineElement new border: border ];
+		dataValue: threshold.
+		
 	^ barChart
 ]
 
@@ -230,7 +241,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenusAndExti
 
 { #category : #'example - website visits' }
 GtPlotterHorizontalBarChartExamples >> websiteVisitsChartFromData: theData [
-	| aMaxDuration aBarWidthScale aMaxFrequency aBarHeightScale barChart |
+	| aMaxDuration aBarWidthScale aMaxFrequency aBarHeightScale barChart border threshold |
 
 	aMaxDuration := theData inject: 0 days intoValues: [ :aDuration :eachValue | aDuration max: (eachValue at: #duration) ].
 	aBarWidthScale := GtPlotterDurationScale new domainFrom: 0 minutes to: aMaxDuration.
@@ -249,6 +260,15 @@ GtPlotterHorizontalBarChartExamples >> websiteVisitsChartFromData: theData [
 		barHeightData: [ :eachValue | eachValue at: #frequency ];
 		amountOfTicks: 4;
 		with: theData.
-
+	threshold := 5 minutes.
+	border := BlBorderBuilder new
+		paint: Color blue;
+		dashed;
+		capRound;
+		width: 2;
+		build.
+	barChart newVerticalLine 
+		lineStencil: [ BlLineElement new border: border ];
+		dataValue: threshold.
 	^ barChart
 ]

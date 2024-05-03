@@ -32,7 +32,8 @@ Class {
 		'barGap',
 		'barElementStencil',
 		'barGroupStencil',
-		'groupSpacing'
+		'groupSpacing',
+		'lines'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
@@ -157,6 +158,11 @@ GtPlotterHorizontalBarChart >> barWidthScale: aGtPlotterScale [
 	barWidthScale := aGtPlotterScale
 ]
 
+{ #category : #accessing }
+GtPlotterHorizontalBarChart >> chartPadding [
+	^ BlInsets left: self barLabelWidth + self gridlineOffset
+]
+
 { #category : #'api - instantiation' }
 GtPlotterHorizontalBarChart >> create [
 	<return: #Object>
@@ -173,7 +179,7 @@ GtPlotterHorizontalBarChart >> create [
 	aContainer addChild: (GtPlotterHorizontalTickLabelsElement new
 		clipChildren: false;
 		scale: barWidthScale;
-		padding: (BlInsets left: self barLabelWidth + self gridlineOffset);
+		padding: self chartPadding;
 		constraintsDo: [ :c | c vertical fitContent ];
 		labelFormat: self tickLabelFormat;
 		labelElement: [ :aGtPlotterScaleContext |
@@ -187,6 +193,11 @@ GtPlotterHorizontalBarChart >> create [
 	theBars values: data.
 	
 	aContainer addChild: theBars.
+	aContainer addChildren: (lines collect: [ :line | 
+		line
+			barChart: self;
+			parent: theBars.
+		line create ]).
 
 	^ aContainer
 ]
@@ -304,7 +315,7 @@ GtPlotterHorizontalBarChart >> groupSpacing: aNumber [
 { #category : #initialization }
 GtPlotterHorizontalBarChart >> initialize [
 	super initialize.
-	
+	lines := OrderedCollection new.
 	axisWidth := 120.
 
 	tickLabelFormat := [ :aTickObject | aTickObject printString ].
@@ -334,6 +345,14 @@ GtPlotterHorizontalBarChart >> initialize [
 	barLabelStencil := [ :eachBarLabel | BrColumnCellLabelStencil new text: eachBarLabel ] asStencilBuilder: BrColumnCellStencilBuilder.
 
 	
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBarChart >> newVerticalLine [
+	| verticalLine |
+	verticalLine := GtPlotterVerticalLine new.
+	lines add: verticalLine.
+	^ verticalLine
 ]
 
 { #category : #'api - ticks' }

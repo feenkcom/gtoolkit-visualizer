@@ -1,33 +1,26 @@
 Class {
-	#name : #BlSideAnchor,
+	#name : #BlPercentSideAnchor,
 	#superclass : #BlAnchorRelativeToElementBounds,
 	#instVars : [
 		'xpercent',
-		'y',
-		'barHeightScale',
-		'chartPadding'
+		'chartPadding',
+		'ypercent'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar lines'
 }
 
 { #category : #accessing }
-BlSideAnchor >> barHeightScale: aGtPlotterScale [
-	barHeightScale := aGtPlotterScale
-	
-]
-
-{ #category : #accessing }
-BlSideAnchor >> chartPadding [
+BlPercentSideAnchor >> chartPadding [
 	^ chartPadding
 ]
 
 { #category : #accessing }
-BlSideAnchor >> chartPadding: anObject [
-	chartPadding := anObject
+BlPercentSideAnchor >> chartPadding: aBlInsets [
+	chartPadding := aBlInsets
 ]
 
 { #category : #accessing }
-BlSideAnchor >> positionForAnchoredElement: aGeometryElement within: aCommonParent [
+BlPercentSideAnchor >> positionForAnchoredElement: aGeometryElement within: aCommonParent [
 	"Compute and return a position of this anchor within a common parent"
 	<return: #Point>
 	| element bounds |
@@ -38,7 +31,7 @@ BlSideAnchor >> positionForAnchoredElement: aGeometryElement within: aCommonPare
 ]
 
 { #category : #accessing }
-BlSideAnchor >> positionWithinBounds: aParentBounds [
+BlPercentSideAnchor >> positionWithinBounds: aParentBounds [
 	"Compute and return a position of this anchor within provided bounds"
 	<return: #Point>
 	| xpoint ypoint bounds |
@@ -49,26 +42,26 @@ BlSideAnchor >> positionWithinBounds: aParentBounds [
 		
 	ypoint := bounds corner y
 		interpolateTo: bounds origin y
-		at: (barHeightScale map: y).
+		at: ypercent.
 	^ xpoint @ ypoint
 ]
 
 { #category : #accessing }
-BlSideAnchor >> xpercent [
+BlPercentSideAnchor >> xpercent [
 	^ xpercent
 ]
 
 { #category : #accessing }
-BlSideAnchor >> xpercent: anObject [
+BlPercentSideAnchor >> xpercent: anObject [
 	xpercent := anObject
 ]
 
 { #category : #accessing }
-BlSideAnchor >> y [
-	^ y
+BlPercentSideAnchor >> ypercent [
+	^ ypercent
 ]
 
 { #category : #accessing }
-BlSideAnchor >> y: anObject [
-	y := anObject
+BlPercentSideAnchor >> ypercent: anObject [
+	ypercent := anObject
 ]

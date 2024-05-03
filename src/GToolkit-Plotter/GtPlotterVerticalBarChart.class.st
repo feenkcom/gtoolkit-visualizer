@@ -412,7 +412,6 @@ GtPlotterVerticalBarChart >> initialize [
 GtPlotterVerticalBarChart >> newHorizontalLine [
 	| horizontalLine |
 	horizontalLine := GtPlotterHorizontalLine new.
-	GtPlotterBarChartLine.
 	lines add: horizontalLine.
 	^ horizontalLine
 ]
