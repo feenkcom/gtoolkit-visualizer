@@ -11,89 +11,23 @@ See {{gtClass:GtPlotterHorizontalBarChartExamples}}.
 "
 Class {
 	#name : #GtPlotterHorizontalBarChart,
-	#superclass : #GtPlotterBuilder,
+	#superclass : #GtPlotterBarChart,
 	#instVars : [
 		'axisWidth',
-		'barHeightScale',
-		'barWidthScale',
 		'barLabelFormat',
 		'barLabelStencil',
-		'barWidthDataBlock',
-		'barHeightDataBlock',
 		'barStencil',
-		'tickLabelFormat',
-		'tickLabelColor',
-		'barLabelWidth',
-		'amountOfTicks',
-		'tickLabelLookStencil',
 		'barLabelColor',
-		'barLabelLookStencil',
-		'data',
-		'barGap',
-		'barElementStencil',
 		'barGroupStencil',
-		'groupSpacing',
-		'lines'
+		'groupSpacing'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> amountOfTicks [
-	<return: #Number>
-
-	^ amountOfTicks
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> amountOfTicks: aNumber [
-	amountOfTicks := aNumber
-]
-
-{ #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barElement: aStencil [
-	"[ :aGtPlotterSingleScaleContext | BlElement new ]"
-	barElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
-]
-
-{ #category : #'api - layout' }
-GtPlotterHorizontalBarChart >> barGap [
-	<return: #Number>
-
-	^ barGap
-]
-
-{ #category : #'api - layout' }
-GtPlotterHorizontalBarChart >> barGap: aNumber [
-	barGap := aNumber
-]
 
 { #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barGroupStencil: aGtPlotterHorizontalBarGroupStencilBuilder [
 	"[ :aGtPlotterBar :aGtPlotterDataEntity | ]"
 	barGroupStencil := aGtPlotterHorizontalBarGroupStencilBuilder asStencilBuilder: GtPlotterHorizontalBarGroupStencilBuilder
-]
-
-{ #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barHeightData: aBlock [
-	barHeightDataBlock := aBlock
-]
-
-{ #category : #'api - scale' }
-GtPlotterHorizontalBarChart >> barHeightScale [
-	<return: #GtPlotterScale>
-
-	^ barHeightScale
-]
-
-{ #category : #'api - scale' }
-GtPlotterHorizontalBarChart >> barHeightScale: aGtPlotterScale [
-	barHeightScale := aGtPlotterScale
-]
-
-{ #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barLabelAptitudeStencil: aStencil [
-	barLabelLookStencil := aStencil asStencil
 ]
 
 { #category : #'api - bars' }
@@ -113,11 +47,6 @@ GtPlotterHorizontalBarChart >> barLabelFormat: aBlock [
 	barLabelFormat := aBlock
 ]
 
-{ #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barLabelLookStencil [
-	^ barLabelLookStencil
-]
-
 { #category : #accessing }
 GtPlotterHorizontalBarChart >> barLabelStencil: aBrColumnCellStencilBuilder [
 	barLabelStencil := aBrColumnCellStencilBuilder asStencilBuilder: BrColumnCellStencilBuilder
@@ -126,13 +55,19 @@ GtPlotterHorizontalBarChart >> barLabelStencil: aBrColumnCellStencilBuilder [
 { #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> barLabelWidth [
 	<return: #Number>
-
-	^ barLabelWidth
+	self
+		deprecated: 'Please use barLabelSpacing* methods instead.'
+		transformWith: '`@receiver barLabelWidth' -> '`@receiver barLabelSpacing'.
+	^ self barLabelSpacing
 ]
 
 { #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> barLabelWidth: aNumber [
-	barLabelWidth := aNumber
+	self
+		deprecated: 'Please use barLabelSpacing:* methods instead.'
+		transformWith: '`@receiver barLabelWidth:  `@statements1'
+			-> '`@receiver barLabelSpacing: `@statements1'.
+	self barLabelSpacing: aNumber
 ]
 
 { #category : #'api - bars' }
@@ -141,26 +76,9 @@ GtPlotterHorizontalBarChart >> barStencil: aGtPlotterHorizontalBarStencilBuilder
 	barStencil := aGtPlotterHorizontalBarStencilBuilder asStencilBuilder: GtPlotterHorizontalBarStencilBuilder
 ]
 
-{ #category : #'api - bars' }
-GtPlotterHorizontalBarChart >> barWidthData: aBlock [
-	barWidthDataBlock := aBlock
-]
-
-{ #category : #'api - scale' }
-GtPlotterHorizontalBarChart >> barWidthScale [
-	<return: #GtPlotterScale>
-
-	^ barWidthScale
-]
-
-{ #category : #'api - scale' }
-GtPlotterHorizontalBarChart >> barWidthScale: aGtPlotterScale [
-	barWidthScale := aGtPlotterScale
-]
-
 { #category : #accessing }
 GtPlotterHorizontalBarChart >> chartPadding [
-	^ BlInsets left: self barLabelWidth + self gridlineOffset
+	^ BlInsets left: self barLabelSpacing + self gridlineOffset
 ]
 
 { #category : #'api - instantiation' }
@@ -187,9 +105,10 @@ GtPlotterHorizontalBarChart >> create [
 				aptitude: (self tickLabelLook create foreground: self tickLabelColor);
 				text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) ];
 		labels: self amountOfTicks).
-
+	
 	theBars := GtPlotterSingleScaleScrollElement new.
-	theBars stencil: [ :eachGroup | self createBarRowFor: eachGroup grouping: data isLogicalGroup ].
+	theBars stencil: [ :eachGroup |
+		self createBarRowFor: eachGroup grouping: data isLogicalGroup ].
 	theBars values: data.
 	
 	aContainer addChild: theBars.
@@ -198,7 +117,6 @@ GtPlotterHorizontalBarChart >> create [
 			barChart: self;
 			parent: theBars.
 		line create ]).
-
 	^ aContainer
 ]
 
@@ -214,7 +132,7 @@ GtPlotterHorizontalBarChart >> createBarRowFor: aGtPlotterDataEntity grouping: s
 
 	aRowLabelElement := BrLabel new
 		padding: (BlInsets right: 5);
-		hExact: self barLabelWidth - (shouldGroup asBit * self gridlineOffset);
+		hExact: self barLabelSpacing - (shouldGroup asBit * self gridlineOffset);
 		vMatchParent;
 		text: aRowLabel;
 		alignCenterRight;
@@ -297,6 +215,21 @@ GtPlotterHorizontalBarChart >> createVerticalSeparator [
 		background: Color gray
 ]
 
+{ #category : #default }
+GtPlotterHorizontalBarChart >> defaultBarHeightScale [
+	^ GtPlotterConstantScale new constant: 30
+]
+
+{ #category : #default }
+GtPlotterHorizontalBarChart >> defaultBarLabelSpacing [
+	^ 120
+]
+
+{ #category : #default }
+GtPlotterHorizontalBarChart >> defaultBarWidthScale [
+	^  GtPlotterLinearScale new
+]
+
 { #category : #'api - layout' }
 GtPlotterHorizontalBarChart >> gridlineOffset [
 	^ 0
@@ -315,32 +248,10 @@ GtPlotterHorizontalBarChart >> groupSpacing: aNumber [
 { #category : #initialization }
 GtPlotterHorizontalBarChart >> initialize [
 	super initialize.
-	lines := OrderedCollection new.
 	axisWidth := 120.
-
-	tickLabelFormat := [ :aTickObject | aTickObject printString ].
-	tickLabelColor := Color gray.
-	tickLabelLookStencil := [ BrGlamorousLabelAptitude new glamorousRegularFontAndSize ] asStencil.
-
-	amountOfTicks := 10.
 	groupSpacing := 20.
-	
-	barGap := 6.
-	barLabelWidth := 120.
-	barLabelColor := Color gray.
-
-	barHeightScale := GtPlotterConstantScale new constant: 30.
-	barHeightDataBlock := [ :eachDataItem | eachDataItem ].
-	barWidthScale := GtPlotterLinearScale new.
-	barWidthDataBlock := [ :eachDataItem | eachDataItem ].
-	barLabelLookStencil := [ BrGlamorousLabelAptitude new glamorousRegularFontAndSize ] asStencil.
-
 	barGroupStencil := GtPlotterHorizontalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterHorizontalBarStencilBuilder new.
-	barElementStencil := [ :aGtPlotterSingleScaleContext | BlElement new ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
-
-	data := GtPlotterDataGroup new.
-
 	barLabelFormat := [ :eachDataItem :eachDataItemIndex | eachDataItem asString ].
 	barLabelStencil := [ :eachBarLabel | BrColumnCellLabelStencil new text: eachBarLabel ] asStencilBuilder: BrColumnCellStencilBuilder.
 
@@ -353,42 +264,6 @@ GtPlotterHorizontalBarChart >> newVerticalLine [
 	verticalLine := GtPlotterVerticalLine new.
 	lines add: verticalLine.
 	^ verticalLine
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> tickLabelColor [
-	<return: #Color>
-	
-	^ tickLabelColor
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> tickLabelColor: aColor [
-	tickLabelColor := aColor
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> tickLabelFormat [
-	<return: #BlockClosure>
-
-	^ tickLabelFormat
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> tickLabelFormat: aBlock [
-	tickLabelFormat := aBlock
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> tickLabelLook [
-	<return: #BrStencil>
-
-	^ tickLabelLookStencil
-]
-
-{ #category : #'api - ticks' }
-GtPlotterHorizontalBarChart >> tickLabelLook: aStencil [
-	tickLabelLookStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -412,11 +287,6 @@ GtPlotterHorizontalBarChart >> ticks: anAmountOfTicks [
 				-> '`@receiver amountOfTicks: `@statements1'.
 
 	self amountOfTicks: anAmountOfTicks
-]
-
-{ #category : #accessing }
-GtPlotterHorizontalBarChart >> with: aGtPlotterDataGroup [
-	data := aGtPlotterDataGroup
 ]
 
 { #category : #'api - bars' }

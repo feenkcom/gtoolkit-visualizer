@@ -3,26 +3,11 @@ Based on `GtPlotterHorizontalBarChart`
 "
 Class {
 	#name : #GtPlotterVerticalBarChart,
-	#superclass : #GtPlotterBuilder,
+	#superclass : #GtPlotterBarChart,
 	#instVars : [
-		'barElementStencil',
-		'barLabelHeight',
-		'barHeightScale',
-		'barHeightDataBlock',
-		'amountOfTicks',
-		'data',
-		'tickLabelFormat',
-		'tickLabelLookStencil',
-		'tickLabelColor',
-		'barLabelLookStencil',
 		'barGroupStencil',
 		'barStencil',
-		'barWidthScale',
-		'barWidthDataBlock',
-		'barGap',
-		'ticksAngle',
-		'hasScalableContents',
-		'lines'
+		'ticksAngle'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
@@ -38,82 +23,27 @@ GtPlotterVerticalBarChart class >> newFromValues: aCollectionOfObjects [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalBarChart >> amountOfTicks [
-	<return: #Number>
-	^ amountOfTicks
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> amountOfTicks: aNumber [
-	amountOfTicks := aNumber
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barElement: aStencil [
-	"[ :aGtPlotterSingleScaleContext | BlElement new ]"
-	barElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barGap [
-	<return: #Number>
-
-	^ barGap
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barGap: aNumber [
-	barGap := aNumber
-]
-
-{ #category : #accessing }
 GtPlotterVerticalBarChart >> barGroupStencil: aGtPlotterVerticalBarGroupStencilBuilder [
 	"[ :aGtPlotterBar :aGtPlotterDataEntity | ]"
 	barGroupStencil := aGtPlotterVerticalBarGroupStencilBuilder asStencilBuilder: GtPlotterVerticalBarGroupStencilBuilder
 ]
 
 { #category : #accessing }
-GtPlotterVerticalBarChart >> barHeightData [
-	<return: #BlockClosure>
-	^ barHeightDataBlock
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barHeightData: aBlockClosure [
-	barHeightDataBlock := aBlockClosure
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barHeightDataBlock [
-	<return: #BlockClosure>
-	^ barHeightDataBlock
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barHeightScale [
-	<return: #GtPlotterScale>
-	^ barHeightScale
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barHeightScale: aGtPlotterScale [
-	barHeightScale := aGtPlotterScale
-]
-
-{ #category : #accessing }
 GtPlotterVerticalBarChart >> barLabelHeight [
 	<return: #Number>
-	^ barLabelHeight
+	self
+		deprecated: 'Please use barLabelSpacing* methods instead.'
+		transformWith: '`@receiver barLabelHeight' -> '`@receiver barLabelSpacing'.
+	^ self barLabelSpacing
 ]
 
 { #category : #accessing }
 GtPlotterVerticalBarChart >> barLabelHeight: aNumber [
-	barLabelHeight := aNumber
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barLabelLookStencil [
-	^ barLabelLookStencil
+	self
+		deprecated: 'Please use barLabelSpacing:* methods instead.'
+		transformWith: '`@receiver barLabelHeight:  `@statements1'
+			-> '`@receiver barLabelSpacing: `@statements1'.
+	self barLabelSpacing: aNumber
 ]
 
 { #category : #accessing }
@@ -123,20 +53,8 @@ GtPlotterVerticalBarChart >> barStencil: aGtPlotterVerticalBarStencilBuilder [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalBarChart >> barWidthScale [
-	<return: #GtPlotterScale>
-
-	^ barWidthScale
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> barWidthScale: aGtPlotterScale [
-	barWidthScale := aGtPlotterScale
-]
-
-{ #category : #accessing }
 GtPlotterVerticalBarChart >> bottomGap [
-	^ self barLabelHeight + self gridlineOffset
+	^ self barLabelSpacing + self gridlineOffset
 ]
 
 { #category : #accessing }
@@ -144,7 +62,7 @@ GtPlotterVerticalBarChart >> chartPadding [
 	^ BlInsets bottom: self bottomGap
 ]
 
-{ #category : #accessing }
+{ #category : #'api - instantiation' }
 GtPlotterVerticalBarChart >> create [
 	<return: #Object>
 	| aContainer theBars |
@@ -182,7 +100,7 @@ GtPlotterVerticalBarChart >> create [
 	^ aContainer
 ]
 
-{ #category : #accessing }
+{ #category : #'private - instantiation' }
 GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: shouldGroup [
 	|  aContainer tangle |
 	aContainer := BrVerticalPane new vMatchParent.
@@ -217,7 +135,7 @@ GtPlotterVerticalBarChart >> createBarColumnFor: aGtPlotterDataEntity grouping: 
 	^ aContainer
 ]
 
-{ #category : #accessing }
+{ #category : #'private - instantiation' }
 GtPlotterVerticalBarChart >> createBars [
 	| theBars |
 	self hasScalableContents ifTrue: [
@@ -253,7 +171,7 @@ GtPlotterVerticalBarChart >> createBars [
 	^ theBars
 ]
 
-{ #category : #accessing }
+{ #category : #'private - instantiation' }
 GtPlotterVerticalBarChart >> createBottomBarsFor: aGtPlotterDataEntity [
 	"Create non composite bars"
 	|  isStacking aContainer layout |
@@ -283,7 +201,7 @@ GtPlotterVerticalBarChart >> createBottomBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
-{ #category : #accessing }
+{ #category : #'private - instantiation' }
 GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
 	| aColumnLabelElement label |
 	
@@ -320,7 +238,7 @@ GtPlotterVerticalBarChart >> createColumnLabelElement: aColumnLabel [
 	^ aColumnLabelElement
 ]
 
-{ #category : #accessing }
+{ #category : #'private - instantiation' }
 GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	| isStacking theBars aContainer |
 	
@@ -349,9 +267,20 @@ GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> data [
-	^ data
+{ #category : #default }
+GtPlotterVerticalBarChart >> defaultBarHeightScale [
+	^ GtPlotterLinearScale new
+
+]
+
+{ #category : #default }
+GtPlotterVerticalBarChart >> defaultBarLabelSpacing [
+	^ 40
+]
+
+{ #category : #default }
+GtPlotterVerticalBarChart >> defaultBarWidthScale [
+	^ GtPlotterConstantScale new constant: 30
 ]
 
 { #category : #default }
@@ -369,12 +298,7 @@ GtPlotterVerticalBarChart >> gridlineOffset [
 	^ 0
 ]
 
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> hasScalableContents [
-	^ hasScalableContents
-]
-
-{ #category : #ticks }
+{ #category : #default }
 GtPlotterVerticalBarChart >> horizontalTicks [
 	self ticksAngle: 0
 ]
@@ -382,29 +306,10 @@ GtPlotterVerticalBarChart >> horizontalTicks [
 { #category : #initalization }
 GtPlotterVerticalBarChart >> initialize [
 	super initialize.
-	lines := OrderedCollection new.
-	self
-		horizontalTicks;
-		scrollableContents;
-		tickLabelFormat: [ :aTickObject | aTickObject printString ];
-		tickLabelLook: [ 
-			BrGlamorousLabelAptitude new glamorousRegularFontAndSize 
-		] asStencil;
-		tickLabelColor: Color gray;
-		barLabelHeight: 100.
-	barLabelLookStencil := [ BrGlamorousLabelAptitude new glamorousRegularFontAndSize ] asStencil.
-	amountOfTicks := 10.
+	self horizontalTicks.
 	
-	barElementStencil := [ :aGtPlotterSingleScaleContext | BlElement new ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder.
 	barGroupStencil := GtPlotterVerticalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterVerticalBarStencilBuilder new.
-	barWidthScale := GtPlotterConstantScale new constant: 30.
-	barWidthDataBlock := [ :eachDataItem | eachDataItem ].
-	
-	barHeightScale := GtPlotterLinearScale new.
-	barHeightDataBlock := [ :eachDataItem | eachDataItem ].
-	barGap := 6.
-	data := GtPlotterDataGroup new.
 	
 ]
 
@@ -417,53 +322,8 @@ GtPlotterVerticalBarChart >> newHorizontalLine [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalBarChart >> scalableContents [
-	hasScalableContents := true
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> scrollableContents [
-	hasScalableContents := false
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> tickLabelColor [
-	<return: #Color>
-	^ tickLabelColor
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> tickLabelColor: aColor [
-	tickLabelColor := aColor
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> tickLabelFormat [
-	<return: #BlockClosure>
-
-	^ tickLabelFormat
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> tickLabelFormat: aBlock [
-	tickLabelFormat := aBlock
-]
-
-{ #category : #accessing }
 GtPlotterVerticalBarChart >> tickLabelGap [
 	^ 5
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> tickLabelLook [
-	<return: #BrStencil>
-
-	^ tickLabelLookStencil
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> tickLabelLook: aStencil [
-	tickLabelLookStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -480,9 +340,4 @@ GtPlotterVerticalBarChart >> ticksAngle: aNumber [
 { #category : #ticks }
 GtPlotterVerticalBarChart >> verticalTicks [
 	self ticksAngle: -90
-]
-
-{ #category : #accessing }
-GtPlotterVerticalBarChart >> with: aGtPlotterDataGroup [
-	data := aGtPlotterDataGroup
 ]

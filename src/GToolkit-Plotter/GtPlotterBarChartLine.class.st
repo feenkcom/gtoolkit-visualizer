@@ -115,6 +115,7 @@ GtPlotterBarChartLine >> newAnchor [
 	| anchor |
 	anchor :=  (BlPercentSideAnchor element: self parent)
 		chartPadding: barChart chartPadding;
+		transformer: [:bounds | self transform: bounds ];
 		yourself.
 	self setPercent: self valuePercent in: anchor.
 	^ anchor
@@ -149,6 +150,20 @@ GtPlotterBarChartLine >> toAnchor [
 	anchor := self newAnchor.
 	self setAxisPercent: self max in: anchor.
 	^ anchor
+]
+
+{ #category : #accessing }
+GtPlotterBarChartLine >> transform: aRectangle [
+	"used to compute the correct position for each line"
+	^ barChart hasScalableContents
+		ifTrue: [ aRectangle ]
+		ifFalse: [ self transformRectangle: aRectangle ]
+	
+]
+
+{ #category : #accessing }
+GtPlotterBarChartLine >> transformRectangle: aRectangle [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

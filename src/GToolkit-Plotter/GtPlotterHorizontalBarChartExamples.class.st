@@ -32,7 +32,7 @@ GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 			BrLabel new
 				text: (aGtPlotterContext originalValue second);
 				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ]) hideDelay: 0; showDelay: 0) ].
-	barChart barLabelWidth: 160.
+	barChart barLabelSpacing: 160.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue last ].
 	barChart amountOfTicks: 4.
@@ -142,7 +142,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: aMaxPages.
 
 	barChart := GtPlotterHorizontalBarChart new.
-	barChart barLabelWidth: 185.
+	barChart barLabelSpacing: 185.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
 	barChart amountOfTicks: 4.
@@ -155,10 +155,10 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 		capRound;
 		width: 2;
 		build.
-	barChart newVerticalLine 
+	barChart newVerticalLine
 		lineStencil: [ BlLineElement new border: border ];
 		dataValue: threshold.
-		
+	
 	^ barChart
 ]
 
@@ -189,7 +189,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenus [
 			BrLabel new
 				text: (aGtPlotterContext originalValue at: #species);
 				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 5)) ]) hideDelay: 0; showDelay: 0) ].
-	barChart barLabelWidth: 125.
+	barChart barLabelSpacing: 125.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
 	barChart amountOfTicks: 4.
@@ -228,7 +228,7 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenusAndExti
 	barChart := GtPlotterHorizontalBarChart new.
 	barChart withAdjacentBars.
 	barChart groupSpacing: 5.
-	barChart barLabelWidth: 125.
+	barChart barLabelSpacing: 125.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].
 	barChart barHeightScale: aBarHeightScale.
@@ -252,7 +252,7 @@ GtPlotterHorizontalBarChartExamples >> websiteVisitsChartFromData: theData [
 		rangeFrom: 10 to: 40.
 
 	barChart := GtPlotterHorizontalBarChart new
-		barLabelWidth: 120;
+		barLabelSpacing: 120;
 		barGap: 6;
 		barWidthScale: aBarWidthScale;
 		barWidthData: [ :eachValue | eachValue at: #duration ];

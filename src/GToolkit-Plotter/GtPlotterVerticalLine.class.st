@@ -15,6 +15,16 @@ GtPlotterVerticalLine >> setPercent: aNumber in: aBlPercentSideAnchor [
 ]
 
 { #category : #accessing }
+GtPlotterVerticalLine >> transformRectangle: aRectangle [
+	| e corner |
+	e := parent list children first computeVerticalScrollExtent.
+	corner := aRectangle corner.
+	^ Rectangle 
+		origin: aRectangle origin 
+		extent: aRectangle width @ (aRectangle height min: e)
+]
+
+{ #category : #accessing }
 GtPlotterVerticalLine >> valuePercent [
 	^ barChart barWidthScale map: self dataValue
 ]
