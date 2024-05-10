@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterHorizontalLine >> newAnchor [
+	^ super newAnchor
+		inverseY;
+		yourself
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalLine >> setAxisPercent: aNumber in: aBlPercentSideAnchor [
 	aBlPercentSideAnchor xpercent: aNumber
 ]
@@ -12,6 +19,16 @@ GtPlotterHorizontalLine >> setAxisPercent: aNumber in: aBlPercentSideAnchor [
 { #category : #accessing }
 GtPlotterHorizontalLine >> setPercent: aNumber in: aBlPercentSideAnchor [
 	aBlPercentSideAnchor ypercent: aNumber
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalLine >> transformRectangle: aRectangle [
+	| e corner |
+	e := parent list children first computeHorizontalScrollExtent.
+	corner := aRectangle corner.
+	^ Rectangle 
+		origin: aRectangle origin 
+		extent: (aRectangle width min: e) @ aRectangle height
 ]
 
 { #category : #accessing }
