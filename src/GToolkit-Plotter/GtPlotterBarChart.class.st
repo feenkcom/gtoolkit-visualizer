@@ -170,6 +170,12 @@ GtPlotterBarChart >> initialize [
 ]
 
 { #category : #accessing }
+GtPlotterBarChart >> lines [
+	<return: #OrderedCollection>
+	^ lines
+]
+
+{ #category : #accessing }
 GtPlotterBarChart >> scalableContents [
 	hasScalableContents := true
 ]
