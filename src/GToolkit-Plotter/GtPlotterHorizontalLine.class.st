@@ -23,9 +23,8 @@ GtPlotterHorizontalLine >> setPercent: aNumber in: aBlPercentSideAnchor [
 
 { #category : #accessing }
 GtPlotterHorizontalLine >> transformRectangle: aRectangle [
-	| e corner |
-	e := parent list children first computeHorizontalScrollExtent.
-	corner := aRectangle corner.
+	| e |
+	e := parent list children first computeHorizontalScrollRange.
 	^ Rectangle 
 		origin: aRectangle origin 
 		extent: (aRectangle width min: e) @ aRectangle height

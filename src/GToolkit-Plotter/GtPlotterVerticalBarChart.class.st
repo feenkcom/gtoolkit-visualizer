@@ -66,33 +66,27 @@ GtPlotterVerticalBarChart >> chartPadding [
 GtPlotterVerticalBarChart >> create [
 	<return: #Object>
 	| aContainer theBars |
-	aContainer := BlElement new
-			layout: BlLinearLayout horizontal;
-			clipChildren: false;
-			padding: (BlInsets right: 20);
-			constraintsDo: [ :c | 
-				c horizontal matchParent.
-				c vertical matchParent ].
-
-	aContainer
-		addChild: (GtPlotterVerticalTickLabelsElement new
-				clipChildren: false;
-				inverse;
-				scale: barHeightScale;
-				padding: self chartPadding;
-				constraintsDo: [ :c | c horizontal fitContent ];
-				labelFormat: self tickLabelFormat;
-				labelElement: [ :aGtPlotterScaleContext | 
-					BrLabel new
-						aptitude: (self tickLabelLook create foreground: self tickLabelColor);
-						text: (aGtPlotterScaleContext scale
-								formattedTick: aGtPlotterScaleContext originalValue) ];
-				labels: self amountOfTicks).
+	aContainer := GtPlotterBarChartElement new
+		layout: BlLinearLayout horizontal;
+		yourself.
+	aContainer tickLabelsElement: (GtPlotterVerticalTickLabelsElement new
+		clipChildren: false;
+		inverse;
+		scale: barHeightScale;
+		padding: self chartPadding;
+		constraintsDo: [ :c | c horizontal fitContent ];
+		labelFormat: self tickLabelFormat;
+		labelElement: [ :aGtPlotterScaleContext | 
+			BrLabel new
+				aptitude: (self tickLabelLook create 
+					foreground: self tickLabelColor);
+				text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) ];
+		labels: self amountOfTicks).
 
 	theBars := self createBars.
-	aContainer addChild: theBars.
-
-	aContainer addChildren: (lines collect: [ :line | 
+	aContainer barsElement: theBars.
+	
+	aContainer lines: (lines collect: [ :line | 
 		line
 			barChart: self;
 			parent: theBars.

@@ -24,6 +24,16 @@ Class {
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
+{ #category : #'instance - creation' }
+GtPlotterHorizontalBarChart class >> newFromValues: aCollectionOfObjects [
+	^ self new
+		with: (GtPlotterDataGroup new values: aCollectionOfObjects);
+		barWidthScale: (GtPlotterLinearScale new 
+			domainFrom: 0 to: aCollectionOfObjects max;
+			yourself);
+		yourself
+]
+
 { #category : #'api - bars' }
 GtPlotterHorizontalBarChart >> barGroupStencil: aGtPlotterHorizontalBarGroupStencilBuilder [
 	"[ :aGtPlotterBar :aGtPlotterDataEntity | ]"
@@ -86,15 +96,11 @@ GtPlotterHorizontalBarChart >> create [
 	<return: #Object>
 	| aContainer theBars |
 
-	aContainer := BlElement new
+	aContainer := GtPlotterBarChartElement new
 		layout: BlLinearLayout vertical;
-		clipChildren: false;
-		padding: (BlInsets right: 20);
-		constraintsDo: [ :c |
-			c horizontal matchParent.
-			c vertical matchParent ].
+		yourself.
 
-	aContainer addChild: (GtPlotterHorizontalTickLabelsElement new
+	aContainer tickLabelsElement: (GtPlotterHorizontalTickLabelsElement new
 		clipChildren: false;
 		scale: barWidthScale;
 		padding: self chartPadding;
@@ -106,13 +112,10 @@ GtPlotterHorizontalBarChart >> create [
 				text: (aGtPlotterScaleContext scale formattedTick: aGtPlotterScaleContext originalValue) ];
 		labels: self amountOfTicks).
 	
-	theBars := GtPlotterSingleScaleScrollElement new.
-	theBars stencil: [ :eachGroup |
-		self createBarRowFor: eachGroup grouping: data isLogicalGroup ].
-	theBars values: data.
+	theBars := self createBars.
 	
-	aContainer addChild: theBars.
-	aContainer addChildren: (lines collect: [ :line | 
+	aContainer barsElement: theBars.
+	aContainer lines: (lines collect: [ :line | 
 		line
 			barChart: self;
 			parent: theBars.
@@ -148,6 +151,39 @@ GtPlotterHorizontalBarChart >> createBarRowFor: aGtPlotterDataEntity grouping: s
 	aContainer addChild: (self createGroupBarsFor: aGtPlotterDataEntity).
 
 	^ aContainer
+]
+
+{ #category : #'api - instantiation' }
+GtPlotterHorizontalBarChart >> createBars [
+	| theBars |
+	self hasScalableContents ifTrue: [
+		| totalSize |
+		theBars := BrVerticalPane new.
+		theBars matchParent.
+		totalSize := 0.
+		data do: [:eachGroup | totalSize := eachGroup size ].
+		theBars cellSpacing: (totalSize = data size 
+			ifTrue: [ self barGap]
+			ifFalse: [ 0 ]).
+		
+		data do: [:eachGroup |
+			| barElement |
+			barElement := self 
+				createBarRowFor: eachGroup 
+				grouping: data isLogicalGroup.
+			barElement constraintsDo: [:c |
+				c horizontal matchParent.
+				c linear weight: eachGroup size / totalSize.
+			].
+			theBars addChild: barElement
+		].
+		^ theBars.
+	].
+	theBars := GtPlotterSingleScaleScrollElement new.
+	theBars stencil: [ :eachGroup |
+		self createBarRowFor: eachGroup grouping: data isLogicalGroup ].
+	theBars values: data.
+	^ theBars
 ]
 
 { #category : #'private - instance creation' }
