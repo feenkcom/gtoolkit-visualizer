@@ -38,7 +38,9 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self assert: aMap edges size equals: 3.
 	
 	aNodeA := aMap nodes detect: [ :each | each label = 'user' ].
+	self assert: aNodeA maturity equals: 0.66.
 	self assert: aNodeA x equals: 0.66.
+	self assert: aNodeA visibility equals: 0.95.
 	self assert: aNodeA y equals: 1 - 0.95.
 	self assert: aNodeA innerNodes size equals: 0.
 	self assert: aNodeA pipelineNode isNil.
