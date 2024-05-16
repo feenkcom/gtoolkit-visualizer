@@ -68,6 +68,54 @@ GtWardleyMapScriptExamples >> withCommentLf [
 ]
 
 { #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCr [
+	<gtExample>
+
+	| aScript |
+	aScript := '// General
+// Map is licensed under creative commons share alike.
+// https://creativecommons.org/licenses/by-sa/4.0/
+
+title Something
+evolution genesis / concept -> custom / emerging -> product / converging -> commodity/ accepted
+style wardley
+
+
+// components
+component user [0.95, 0.66]
+component GOAL [0.84, 0.57] label [-91, -5]
+pipeline GOAL
+
+component  PRACTICE [0.50, 0.67] label [-2, -17]
+pipeline  PRACTICE
+{
+component XYZ [0.80] label [20, 18]
+component ABC [0.17] label [-63, 14]
+}
+
+component ABILITY [0.15, 0.70] label [4, -12]
+pipeline ABILITY
+{
+component A [0.67] label [-31, 15]
+component B [0.75] label [15, 16]
+evolve server -> A1 0.75 label [-3559, -3364]
+}
+
+//connections
+
+user->GOAL
+GOAL-> PRACTICE
+PRACTICE->ABILITY
+
+
+evolve A 0.75 label [-3000, -3000]'.
+
+	self assertCrNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNoteCr [
 	<gtExample>
 

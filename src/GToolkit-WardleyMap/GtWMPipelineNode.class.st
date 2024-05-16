@@ -8,7 +8,9 @@ Class {
 		'maturity1',
 		'comma',
 		'maturity2',
-		'right'
+		'right',
+		'elements',
+		'evolves'
 	],
 	#category : #'GToolkit-WardleyMap-Parser'
 }
@@ -28,6 +30,11 @@ GtWMPipelineNode >> comma: aSmaCCToken [
 	comma := aSmaCCToken
 ]
 
+{ #category : #generated }
+GtWMPipelineNode >> compositeNodeVariables [
+	^ #(#elements #evolves)
+]
+
 { #category : #'api - convenience' }
 GtWMPipelineNode >> coordinate [
 	<return: #Point or: nil>
@@ -45,6 +52,37 @@ GtWMPipelineNode >> coordinate [
 	anYNumber ifNil: [ ^ nil ].
 
 	^ anXNumber @ anYNumber
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> elements [
+	^ elements
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> elements: anOrderedCollection [
+	self setParents: self elements to: nil.
+	elements := anOrderedCollection.
+	self setParents: self elements to: self
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> evolves [
+	^ evolves
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> evolves: anOrderedCollection [
+	self setParents: self evolves to: nil.
+	evolves := anOrderedCollection.
+	self setParents: self evolves to: self
+]
+
+{ #category : #'generated-initialize-release' }
+GtWMPipelineNode >> initialize [
+	super initialize.
+	elements := OrderedCollection new: 2.
+	evolves := OrderedCollection new: 2.
 ]
 
 { #category : #generated }

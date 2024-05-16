@@ -95,8 +95,6 @@ GtWardleyMapNodeModel >> basicRecomputePipelineCoordinate [
 	I am a private method."
 	
 	| aCoordinate |
-	pipelineCoordinate ifNil: [ ^ self ].
-	
 	aCoordinate := GtWardleyMapUtility 
 		normalizePipelineWidthOfNodeModel: self
 		ignoring: nil.

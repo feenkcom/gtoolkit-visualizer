@@ -23,8 +23,18 @@ TGtWardleyMapWithCoordinate >> coordinate: aNewCoordinate [
 ]
 
 { #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> maturity [
+	^ self coordinate x
+]
+
+{ #category : #'api - coordinate' }
 TGtWardleyMapWithCoordinate >> notifyCoordinateChanged [
 	self explicitRequirement
+]
+
+{ #category : #'api - coordinate' }
+TGtWardleyMapWithCoordinate >> visibility [
+	^ 1 - self coordinate y
 ]
 
 { #category : #'api - coordinate' }

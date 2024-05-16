@@ -83,6 +83,11 @@ GtWMElementNode >> label: aGtWMLabelNode [
 	self label notNil ifTrue: [ self label parent: self ]
 ]
 
+{ #category : #accessing }
+GtWMElementNode >> maturityNumber [
+	^ self coords ifNotNil: #maturityNumber
+]
+
 { #category : #generated }
 GtWMElementNode >> name [
 	^ name
@@ -111,4 +116,9 @@ GtWMElementNode >> typeToken [
 { #category : #generated }
 GtWMElementNode >> typeToken: aSmaCCToken [
 	typeToken := aSmaCCToken
+]
+
+{ #category : #accessing }
+GtWMElementNode >> visibilityNumber [
+	^ self coords ifNotNil: #visibilityNumber
 ]
