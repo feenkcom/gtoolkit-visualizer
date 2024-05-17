@@ -116,6 +116,45 @@ evolve A 0.75 label [-3000, -3000]'.
 ]
 
 { #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCrSimplified [
+	<gtExample>
+
+	| aScript |
+	aScript := 'style wardley
+
+title Something
+
+component user [0.95, 0.66] label [-10, 29]
+
+component GOAL [0.84, 0.57] label [-91, -5]
+pipeline GOAL
+
+component PRACTICE [0.50, 0.67] label [-2, -17]
+pipeline PRACTICE
+{
+component XYZ [0.80] label [20, 18]
+component ABC [0.17] label [-63, 14]
+}
+
+component ABILITY [0.18, 0.70] label [4, -12]
+pipeline ABILITY
+{
+component A [0.67] label [-31, 15]
+component B [0.75] label [15, 16]
+}
+
+
+user->GOAL
+GOAL->PRACTICE
+PRACTICE->ABILITY
+'.
+
+	self assertCrNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNoteCr [
 	<gtExample>
 
