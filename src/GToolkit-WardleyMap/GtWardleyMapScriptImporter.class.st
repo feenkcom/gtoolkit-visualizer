@@ -13,7 +13,8 @@ Class {
 		'ast',
 		'wardleyMap',
 		'sourcePipelineHeight',
-		'sourceCanvasExtent'
+		'sourceCanvasExtent',
+		'isNewPipelineSyntax'
 	],
 	#category : #'GToolkit-WardleyMap-Exporter/Importer'
 }
@@ -90,12 +91,12 @@ GtWardleyMapScriptImporter >> import [
 	ast := GtWardleyMapParser parseStream: stream.
 
 	wardleyMap := GtWardleyMapModel new.
-	
+
 	self importMap.
 	self importNodes.
 	self importPipelines.
 	self importEdges.
-	self estimateInnerNodes.
+	isNewPipelineSyntax ifFalse: [ self estimateInnerNodes ]
 ]
 
 { #category : #'private - import' }
@@ -157,6 +158,29 @@ GtWardleyMapScriptImporter >> importNodes [
 ]
 
 { #category : #'private - import' }
+GtWardleyMapScriptImporter >> importPipeline: aPipelineNode innerNodes: aPipelineAst [
+	| allInnerNodes aMinMaturity aMaxMaturity |
+	aPipelineAst elements ifEmpty: [ ^ self ].
+
+	allInnerNodes := aPipelineAst elements
+			collect: [ :anAstElement | 
+				| aName |
+				anAstElement name ifNotNil: [ :aToken | aName := aToken source ].
+				aName
+					ifNotNil: [ self
+							nodeNamed: aName
+							ifFound: [ :anElementNode | 
+								anElementNode
+									coordinate: anAstElement maturityNumber @ (aPipelineNode y) ]
+							ifNone: [ nil ] ] ]
+			thenReject: #isNil.
+
+	allInnerNodes ifEmpty: [ ^ self ].
+	isNewPipelineSyntax := true.
+	aPipelineNode innerNodes: allInnerNodes.
+]
+
+{ #category : #'private - import' }
 GtWardleyMapScriptImporter >> importPipelines [
 
 	ast allNodesOfType: GtWMPipelineNode do: [ :anAstNode | 
@@ -167,12 +191,19 @@ GtWardleyMapScriptImporter >> importPipelines [
 			self
 				nodeNamed: aPipelineName
 				ifFound: [ :aNodeModel | 
-					anAstNode coordinate ifNotNil: [ :aPoint | 
-						aNodeModel pipelineCoordinate: aPoint.
-						aNodeModel isPipelineVisible: true ] ]
+					aNodeModel isPipelineVisible: true.
+					anAstNode coordinate 
+						ifNotNil: [ :aPoint | aNodeModel pipelineCoordinate: aPoint ].
+					self importPipeline: aNodeModel innerNodes: anAstNode ]
 				ifNone: [ ]
 		].
 	]
+]
+
+{ #category : #initialization }
+GtWardleyMapScriptImporter >> initialize [
+	super initialize.
+	isNewPipelineSyntax := false
 ]
 
 { #category : #'private - import' }

@@ -14,6 +14,17 @@ GtWardleyMapParserExamples >> parseScriptWithComment [
 ]
 
 { #category : #'examples - parser' }
+GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
+
+	<gtExample>
+	
+	| aResult |
+	aResult := GtWardleyMapParser parse: self scriptWithNewSyntaxForPipeline.
+	
+	^ aResult.
+]
+
+{ #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithNote [
 	<gtExample>
 	| aResult |
@@ -37,6 +48,12 @@ GtWardleyMapParserExamples >> parseScriptWithPipeline [
 GtWardleyMapParserExamples >> scriptWithComment [
 	<gtExample>
 	^ GtWardleyMapScriptExamples new withCommentLf
+]
+
+{ #category : #'eamples - scripts' }
+GtWardleyMapParserExamples >> scriptWithNewSyntaxForPipeline [
+	<gtExample>
+	^ GtWardleyMapScriptExamples new withNewSyntaxForPipelinesCr
 ]
 
 { #category : #'eamples - scripts' }
