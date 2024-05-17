@@ -12,6 +12,37 @@ GtWardleyMapScriptExporterExamples >> convertWitCrNewLines: aScript [
 ]
 
 { #category : #accessing }
+GtWardleyMapScriptExporterExamples >> exportMapWithNewSyntaxForPipelineSimplifiedAndLfNewLines [
+	<gtExample>
+	| aMap anExporter aScript aResult aCrNewLineScript |
+	aResult := self resultWithImportedMapWithNewSyntaxForPipelineSimplified.
+	aMap := aResult resultingWardleyMap.
+
+	anExporter := GtWardleyMapScriptExporter new.
+	aScript := anExporter
+		beNewPipelineSyntax;
+		beLfNewLine;
+		wardleyMap: aMap;
+		export;
+		script.
+		
+	self assert: (aScript includes: Character cr) not.
+		
+	self assert: (aScript = aResult originalScript) not.
+	
+	aCrNewLineScript := self convertWitCrNewLines: aScript.
+	
+	self 
+		assert: aCrNewLineScript
+		equals: aResult originalScript.
+
+	^ GtWardleyMapScriptExampleResult new
+		originalWardleyMap: aMap;
+		originalScript: aResult originalScript;
+		resultingScript: aCrNewLineScript
+]
+
+{ #category : #accessing }
 GtWardleyMapScriptExporterExamples >> exportMapWithPipeline [
 	<gtExample>
 	| aMap anExporter aScript aResult |
@@ -20,6 +51,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithPipeline [
 
 	anExporter := GtWardleyMapScriptExporter new.
 	aScript := anExporter
+		beOldPipelineSyntax;
 		beCrNewLine;
 		wardleyMap: aMap;
 		export;
@@ -44,6 +76,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithPipelineAndLfNewLines [
 
 	anExporter := GtWardleyMapScriptExporter new.
 	aScript := anExporter
+		beOldPipelineSyntax;
 		beLfNewLine;
 		wardleyMap: aMap;
 		export;
@@ -74,6 +107,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithTwoPipelines [
 
 	anExporter := GtWardleyMapScriptExporter new.
 	aScript := anExporter
+		beOldPipelineSyntax;
 		beCrNewLine;
 		wardleyMap: aMap;
 		export;
@@ -98,6 +132,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithTwoPipelinesAndLfNewLines [
 
 	anExporter := GtWardleyMapScriptExporter new.
 	aScript := anExporter
+		beOldPipelineSyntax;
 		beLfNewLine;
 		wardleyMap: aMap;
 		export;
@@ -117,6 +152,18 @@ GtWardleyMapScriptExporterExamples >> exportMapWithTwoPipelinesAndLfNewLines [
 		originalWardleyMap: aMap;
 		originalScript: aResult originalScript;
 		resultingScript: aCrNewLineScript
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithNewSyntaxForPipeline [
+	<gtExample>
+	^ GtWardleyMapScriptImporterExamples new importScriptWithNewSyntaxForPipeline
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithNewSyntaxForPipelineSimplified [
+	<gtExample>
+	^ GtWardleyMapScriptImporterExamples new importScriptWithNewSyntaxForPipelineSimplified
 ]
 
 { #category : #'examples - model' }

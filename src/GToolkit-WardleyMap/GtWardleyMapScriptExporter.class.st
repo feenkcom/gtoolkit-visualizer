@@ -6,7 +6,8 @@ Class {
 		'script',
 		'stream',
 		'targetCanvasExtent',
-		'newLine'
+		'newLine',
+		'isNewPipelineSyntax'
 	],
 	#category : #'GToolkit-WardleyMap-Exporter/Importer'
 }
@@ -28,11 +29,11 @@ GtWardleyMapScriptExporter >> basicExportNode: aNode [
 	aNode isPipelineVisible ifTrue: [ 
 		stream
 			nextPutAll: 'pipeline ';
-			nextPutAll: aNode label;
-			nextPutAll: ' ['.
-		self printPipelineCoordinate: aNode.
-		stream
-			nextPutAll: ']'.
+			nextPutAll: aNode label.
+		isNewPipelineSyntax ifFalse: [
+			stream nextPutAll: ' ['.
+			self printPipelineCoordinate: aNode.
+			stream nextPutAll: ']' ].
 		self newLine. ]
 ]
 
@@ -49,6 +50,16 @@ GtWardleyMapScriptExporter >> beCrNewLine [
 { #category : #'api - initialization' }
 GtWardleyMapScriptExporter >> beLfNewLine [
 	newLine := #lf
+]
+
+{ #category : #'api - initialization' }
+GtWardleyMapScriptExporter >> beNewPipelineSyntax [
+	isNewPipelineSyntax := true
+]
+
+{ #category : #'api - initialization' }
+GtWardleyMapScriptExporter >> beOldPipelineSyntax [
+	isNewPipelineSyntax := false
 ]
 
 { #category : #'private - exporting' }
@@ -118,7 +129,38 @@ GtWardleyMapScriptExporter >> exportMap [
 ]
 
 { #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> exportNewSyntaxNode: aNode [
+	"Export using new pipeline syntax"
+	self assert: [ aNode pipelineNode isNil ].
+	
+	"First write down the pipeline (parent) node"
+	self basicExportNode: aNode.
+	
+	"then write down inner nodes"
+	aNode innerNodes ifNotEmpty: [
+		stream nextPut: ${.
+		self newLine.
+		aNode innerNodes do: [ :eachInnerNode | 
+			self basicExportNode: eachInnerNode.
+		].
+		stream nextPut: $}.
+		self newLine
+	].
+	
+	"and split the group by an empty line"
+	self newLine.
+]
+
+{ #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportNode: aNode [
+	isNewPipelineSyntax
+		ifTrue: [ self exportNewSyntaxNode: aNode ]
+		ifFalse: [ self exportOldSyntaxNode: aNode ]
+]
+
+{ #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> exportOldSyntaxNode: aNode [
+	"Export using old pipeline syntax"
 	self assert: [ aNode pipelineNode isNil ].
 	
 	"First write down inner nodes"
@@ -137,7 +179,8 @@ GtWardleyMapScriptExporter >> exportNode: aNode [
 GtWardleyMapScriptExporter >> initialize [
 	super initialize.
 	
-	newLine := #cr
+	newLine := #cr.
+	isNewPipelineSyntax := true.
 ]
 
 { #category : #'private - exporting' }
@@ -178,14 +221,15 @@ GtWardleyMapScriptExporter >> printLabelCoordinateInPixels: aNode [
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> printNodeCoordinate: aNode [
 	| aNormalizedY |
-	aNormalizedY := aNode pipelineNode 
-		ifNotNil: [ 1 - (self computeInnerNodeY: aNode) ] 
-		ifNil: [ 1 - aNode y ].
+	aNormalizedY := aNode pipelineNode
+			ifNotNil: [ 1 - (self computeInnerNodeY: aNode) ]
+			ifNil: [ 1 - aNode y ].
 
-	stream
-		nextPutAll: (self roundedNodeCoordinate: aNormalizedY);
-		nextPutAll: ', ';
-		nextPutAll: (self roundedNodeCoordinate: aNode x)
+	(isNewPipelineSyntax and: [ aNode pipelineNode isNotNil ]) ifFalse: [ 
+		stream
+			nextPutAll: (self roundedNodeCoordinate: aNormalizedY);
+			nextPutAll: ', ' ].
+	stream nextPutAll: (self roundedNodeCoordinate: aNode x)
 ]
 
 { #category : #'private - exporting' }
@@ -205,11 +249,11 @@ GtWardleyMapScriptExporter >> printPipelineCoordinate: aNode [
 GtWardleyMapScriptExporter >> roundedNodeCoordinate: aNumber [
 	"#ceiling is used because if works in our tested examples.
 	With more examples, we may find better way to calculate final value."
+
 	| aRoundedValue |
-	
 	"aRoundedValue := aNumber roundTo: 0.001."
 	aRoundedValue := (aNumber * 100) ceiling / 100.
-	
+
 	^ aRoundedValue printShowingDecimalPlaces: 2
 ]
 

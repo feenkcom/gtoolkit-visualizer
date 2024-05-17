@@ -103,7 +103,8 @@ GtWardleyMapModel >> announcer [
 
 { #category : #converting }
 GtWardleyMapModel >> asWardleyMapScript [
-	^ GtWardleyMapScriptExporter new 
+	^ GtWardleyMapScriptExporter new
+		beNewPipelineSyntax;
 		beLfNewLine;
 		wardleyMap: self;
 		export;
