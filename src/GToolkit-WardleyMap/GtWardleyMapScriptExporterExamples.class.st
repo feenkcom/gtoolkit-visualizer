@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapScriptExporterExamples >> convertWitCrNewLines: aScript [ 
+GtWardleyMapScriptExporterExamples >> convertWithCrNewLines: aScript [ 
 
 	^ (aScript copyReplaceAll: String cr, String lf with: String cr)
 		copyReplaceAll: String lf with: String cr
@@ -30,7 +30,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithNewSyntaxForPipelineSimplifie
 		
 	self assert: (aScript = aResult originalScript) not.
 	
-	aCrNewLineScript := self convertWitCrNewLines: aScript.
+	aCrNewLineScript := self convertWithCrNewLines: aScript.
 	
 	self 
 		assert: aCrNewLineScript
@@ -86,7 +86,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithPipelineAndLfNewLines [
 		
 	self assert: (aScript = aResult originalScript) not.
 	
-	aCrNewLineScript := self convertWitCrNewLines: aScript.
+	aCrNewLineScript := self convertWithCrNewLines: aScript.
 	
 	self 
 		assert: aCrNewLineScript
@@ -142,7 +142,7 @@ GtWardleyMapScriptExporterExamples >> exportMapWithTwoPipelinesAndLfNewLines [
 		
 	self assert: (aScript = aResult originalScript) not.
 	
-	aCrNewLineScript := self convertWitCrNewLines: aScript.
+	aCrNewLineScript := self convertWithCrNewLines: aScript.
 	
 	self 
 		assert: aCrNewLineScript
