@@ -325,7 +325,7 @@ GtWardleyMapModel >> noteWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
 
 { #category : #'api - nodes' }
 GtWardleyMapModel >> notes [
-	^ notes
+	^ notes ifNil: [ notes := OrderedCollection new ]
 ]
 
 { #category : #'api - edges' }
