@@ -103,6 +103,10 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 	| aWardleyMap |
 	
 	aWardleyMap := GtWardleyMapModel new.
+	(aDictionary at: #notes ifPresent: [ :theNoteDictionaries | 
+		theNoteDictionaries do: [ :eachNoteDictionary | 
+			aWardleyMap addNote: (self importWardleyMapNoteFrom: eachNoteDictionary) ] ]).
+	
 	(aDictionary at: #nodes ifPresent: [ :theNodeDictionaries |
 		theNodeDictionaries do: [ :eachNodeDictionary |
 			aWardleyMap addNode: (self importWardleyMapNodeFrom: eachNodeDictionary) ].
@@ -166,4 +170,28 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeLabelFrom: aDictionary
 	aDictionary at: #text ifPresent: [ :aText | aWardleyMapNodeLabel label: aText ].
 
 	^ aWardleyMapNodeLabel
+]
+
+{ #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importWardleyMapNoteFrom: aDictionary [
+	| aWardleyMapNote |
+
+	aWardleyMapNote := GtWardleyMapNoteModel new.
+	aDictionary
+		at: #id
+		ifPresent: [ :anId | aWardleyMapNote id: (self importIdFrom: anId) ].
+
+	aDictionary
+		at: #color
+		ifPresent: [ :aColorDictionary | 
+			aWardleyMapNote color: (self importColorFrom: aColorDictionary) ].
+
+	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNote x: anX ].
+	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNote y: anY ].
+
+	aDictionary
+		at: #label
+		ifPresent: [ :aLabel | aWardleyMapNote label: aLabel ].
+	
+	^ aWardleyMapNote
 ]
