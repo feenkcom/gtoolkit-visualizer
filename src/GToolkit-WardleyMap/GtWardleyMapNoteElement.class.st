@@ -45,5 +45,6 @@ GtWardleyMapNoteElement >> labelElementDo: aBlock [
 
 { #category : #'event handling' }
 GtWardleyMapNoteElement >> onNoteLabelTextChanged [
-	labelElement text: self wardleyMapNoteViewModel label
+	labelElement text: self wardleyMapNoteViewModel label.
+	labelElement aptitude foreground: self wardleyMapNoteViewModel color.
 ]

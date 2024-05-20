@@ -62,8 +62,10 @@ GtWardleyMapNoteModel >> id: anObject [
 GtWardleyMapNoteModel >> initialize [
 	super initialize.
 
-	label := 'note'.
-	id := nil
+	label := 'Note'.
+	id := nil.
+	coordinate := 0.5@0.5.
+	color := GtWardleyMapConstants noteColor.
 ]
 
 { #category : #accessing }

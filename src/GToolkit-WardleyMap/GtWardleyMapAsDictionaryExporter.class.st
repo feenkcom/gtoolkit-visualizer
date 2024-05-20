@@ -23,7 +23,16 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyId: aUUID [
 
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
-	^ OrderedDictionary new
+	| aDictionary |
+	aDictionary := OrderedDictionary new.
+
+	aWardleyMap notes
+		ifNotEmpty: [ :allNotes | 
+			aDictionary
+				at: #notes
+				put: (allNotes collect: [ :eachNote | eachNote accept: self ] as: Array) ].
+
+	^ aDictionary
 		at: #nodes put: (aWardleyMap nodes collect: [ :eachNode | eachNode accept: self ] as: Array);
 		at: #edges put: (aWardleyMap edges collect: [ :eachEdge | eachEdge accept: self ] as: Array);
 		yourself
@@ -76,9 +85,9 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNodeLabel: aWardleyMapNodeLab
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapNote: aWardleyMapNote [
 	^ OrderedDictionary new
 		at: #id put: (self visitWardleyId: aWardleyMapNote id);
+		at: #label put: (aWardleyMapNote label);
 		at: #color put: (self visitColor: aWardleyMapNote color);
 		at: #x put: aWardleyMapNote x;
 		at: #y put: aWardleyMapNote y;
-		at: #label put: (aWardleyMapNote labelModel accept: self);
 		yourself
 ]

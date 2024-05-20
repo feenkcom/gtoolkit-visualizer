@@ -18,6 +18,16 @@ GtWardleyMapNoteViewModel >> announcer [
 ]
 
 { #category : #'api - accessing' }
+GtWardleyMapNoteViewModel >> color [
+	^ self wardleyMapNoteModel color
+]
+
+{ #category : #'api - accessing' }
+GtWardleyMapNoteViewModel >> color: aColor [
+	^ self wardleyMapNoteModel color: aColor
+]
+
+{ #category : #'api - accessing' }
 GtWardleyMapNoteViewModel >> coordinate [
 	^ self wardleyMapNoteModel coordinate
 ]

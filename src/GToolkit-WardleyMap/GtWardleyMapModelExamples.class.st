@@ -440,7 +440,7 @@ GtWardleyMapModelExamples >> newMapWithNodes_nodeAtRight_displayPipeline [
 { #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	<gtExample>
-	| aWardleyMap aNodeA aNodeD aNodeE aNodeF aNodeG |
+	| aWardleyMap aNodeA aNodeD aNodeE aNodeF aNodeG aNoteA |
 	aWardleyMap := self newMapWithPipelines.
 
 	aNodeA := aWardleyMap nodes first.
@@ -464,11 +464,17 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	aNodeG coordinate: 0.38 @ 0.78.
 	aNodeG color: Color yellow darker.
 	aNodeG label: 'Node G'.
+	
+	aNoteA := GtWardleyMapNoteModelExamples new newNote.
+	aNoteA label: 'Note A'.
+	aNoteA color: Color lightOrange.
+	aNoteA coordinate: 0.47 @ 0.40.
 
 	aWardleyMap addNode: aNodeD.
 	aWardleyMap addNode: aNodeE.
 	aWardleyMap addNode: aNodeF.
 	aWardleyMap addNode: aNodeG.
+	aWardleyMap addNote: aNoteA.
 	
 	self assert: aNodeD coordinate equals: 0.2 @ 0.761.
 	self assert: aNodeE coordinate equals: 0.3 @ 0.762.
@@ -494,6 +500,10 @@ GtWardleyMapModelExamples >> newMapWithPipelineInnerNodes [
 	self assert: aNodeE coordinate equals: 0.3 @ aNodeA y.
 	self assert: aNodeF coordinate equals: 0.41 @ 0.76.
 	self assert: aNodeG coordinate equals: 0.38 @ 0.78.
+	
+	self assert: aNoteA label equals: 'Note A'.
+	self assert: aNoteA color equals: Color lightOrange.
+	"self assert: aNoteA coordinate equals: 0.04 @ 0.80."
 	
 	^ aWardleyMap
 ]
