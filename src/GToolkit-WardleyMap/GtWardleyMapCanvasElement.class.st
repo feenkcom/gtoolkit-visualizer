@@ -395,6 +395,20 @@ GtWardleyMapCanvasElement >> onNoteAdded: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapCanvasElement >> onNoteMoved: anAnnouncement [
+	| aMovedNoteViewModel |
+	aMovedNoteViewModel := anAnnouncement noteViewModel.
+
+	self
+		noteViewFor: aMovedNoteViewModel
+		ifFound: [ :aNoteView | 
+			GtWardleyMapUtility 
+				updateNoteElement: aNoteView 
+				noteViewModel: aMovedNoteViewModel ]
+		ifNone: [  ].
+]
+
+{ #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNoteRemoved: anAnnouncement [
 	self
 		nodeViewFor: anAnnouncement nodeViewModel
@@ -461,6 +475,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
+		when: GtWardleyMapNoteViewModelMoved send: #onNoteMoved: to: self;
 		when: GtWardleyMapNoteViewModelAdded send: #onNoteAdded: to: self;
 		when: GtWardleyMapNoteViewModelRemoved send: #onNoteRemoved: to: self
 ]

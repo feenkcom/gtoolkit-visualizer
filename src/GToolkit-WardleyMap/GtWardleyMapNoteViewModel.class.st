@@ -67,10 +67,27 @@ GtWardleyMapNoteViewModel >> noteColor [
 ]
 
 { #category : #'api - wardley map node model' }
+GtWardleyMapNoteViewModel >> onNodeMoved: anAnnouncement [
+	self announce: (GtWardleyMapNoteViewModelMoved new noteViewModel: self).
+	self wardleyMapViewModel announce: (GtWardleyMapNoteViewModelMoved new noteViewModel: self)
+]
+
+{ #category : #'api - wardley map node model' }
 GtWardleyMapNoteViewModel >> onWardleyMapNoteModelChanged [
 	"Is sent when a new wardleyMapNote model is assigned to the view model"
 
 	
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNoteViewModel >> subscribeToWardleyMapNoteModel [
+	"Is sent after a new wardleyMapNote model is assigned to the view model.
+	It is required to unsubscribe from the domain model by implementing
+	#unsubscribeFromWardleyMapNoteModel if view model subscribes to them"
+	
+	self wardleyMapNoteModel weak
+		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
+		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self
 ]
 
 { #category : #'api - wardley map node model' }
