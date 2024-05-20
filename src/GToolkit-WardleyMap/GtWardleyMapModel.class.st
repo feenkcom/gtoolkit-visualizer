@@ -362,7 +362,7 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 { #category : #'api - nodes' }
 GtWardleyMapModel >> removeNote: aGtWardleyMapNoteModel [
 
-	nodes remove: aGtWardleyMapNoteModel ifAbsent: [ ^ self ].
+	notes remove: aGtWardleyMapNoteModel ifAbsent: [ ^ self ].
 	aGtWardleyMapNoteModel removeParent.
 	self announce: (GtWardleyMapNoteModelRemoved new noteModel: aGtWardleyMapNoteModel)
 ]

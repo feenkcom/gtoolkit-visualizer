@@ -105,6 +105,13 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> createNoteEditorFor: aNoteViewModel [
+	^ GtWardleyMapNoteEditorElement new
+		wardleyMapViewModel: self wardleyMapViewModel;
+		wardleyMapNoteViewModel: aNoteViewModel
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> createNoteViewFor: aNoteViewModel [
 	^ GtWardleyMapNoteElement new
 		wardleyMapNoteViewModel: aNoteViewModel;
@@ -127,12 +134,12 @@ GtWardleyMapCanvasElement >> createNoteViewFor: aNoteViewModel [
 		zIndex: self defaultNoteElevationIndex;
 		in: [ :theElement |
 			GtWardleyMapUtility updateNoteElement: theElement noteViewModel: aNoteViewModel ];
-		yourself
-		"addAptitude: (BrGlamorousWithContextMenuAptitude
+		addAptitude: (BrGlamorousWithContextMenuAptitude
 				handle: [ BlElement new
-						size: aNoteViewModel nodeSize / 2.0;
+						size: 5.0 @ 5.0;
 						geometry: BlEllipseGeometry new ]
-				content: [ self createNodeEditorFor: aNoteViewModel ])"
+				content: [ self createNoteEditorFor: aNoteViewModel ]);
+		yourself
 ]
 
 { #category : #initialization }
@@ -411,7 +418,7 @@ GtWardleyMapCanvasElement >> onNoteMoved: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNoteRemoved: anAnnouncement [
 	self
-		nodeViewFor: anAnnouncement nodeViewModel
+		noteViewFor: anAnnouncement noteViewModel
 		ifFound: [ :aNoteElement | aNoteElement removeFromParent ]
 		ifNone: [ ]
 ]

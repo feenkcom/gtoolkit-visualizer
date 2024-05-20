@@ -14,15 +14,11 @@ TGtWithWardleyMapNoteViewModel >> hasWardleyMapNoteViewModel [
 	^ wardleyMapNoteViewModel notNil
 ]
 
-{ #category : #'event handling' }
-TGtWithWardleyMapNoteViewModel >> onNoteLabelTextChanged [
-]
-
 { #category : #'api - wardley map node view model' }
 TGtWithWardleyMapNoteViewModel >> onWardleyMapNoteViewModelChanged [
 	"Is sent when a new WardleyMapNote view model is assigned to the element"
 	
-	self onNoteLabelTextChanged
+	self explicitRequirement
 ]
 
 { #category : #'api - wardley map node view model' }

@@ -80,9 +80,14 @@ GtWardleyMapNoteModel >> label: aString [
 	label := aString
 ]
 
+{ #category : #'api - color' }
+GtWardleyMapNoteModel >> notifyColored [
+	self propagateAnnouncement: (GtWardleyMapNoteModelColored new noteModel: self)
+]
+
 { #category : #'api - coordinate' }
 GtWardleyMapNoteModel >> notifyCoordinateChanged [
-	self propagateAnnouncement: (GtWardleyMapNodeModelMoved new nodeModel: self)
+	self propagateAnnouncement: (GtWardleyMapNoteModelMoved new noteModel: self)
 ]
 
 { #category : #'api - parent' }

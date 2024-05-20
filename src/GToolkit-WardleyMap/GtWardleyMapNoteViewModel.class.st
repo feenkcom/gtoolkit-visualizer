@@ -17,6 +17,11 @@ GtWardleyMapNoteViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - note' }
+GtWardleyMapNoteViewModel >> changeColorTo: aColor [
+	self wardleyMapNoteModel color: aColor
+]
+
 { #category : #'api - accessing' }
 GtWardleyMapNoteViewModel >> color [
 	^ self wardleyMapNoteModel color
@@ -56,7 +61,7 @@ GtWardleyMapNoteViewModel >> label: aString [
 	self wardleyMapNoteModel label: aString
 ]
 
-{ #category : #'api - node' }
+{ #category : #'api - note' }
 GtWardleyMapNoteViewModel >> moveNoteTo: aNormalizedPoint [
 	self wardleyMapNoteModel coordinate: aNormalizedPoint
 ]
@@ -67,7 +72,17 @@ GtWardleyMapNoteViewModel >> noteColor [
 ]
 
 { #category : #'api - wardley map node model' }
-GtWardleyMapNoteViewModel >> onNodeMoved: anAnnouncement [
+GtWardleyMapNoteViewModel >> onNodeColored: anAnnouncement [
+	self announce: (GtWardleyMapNoteViewModelColored new noteViewModel: self)
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNoteViewModel >> onNoteColored: anAnnouncement [
+	self announce: (GtWardleyMapNoteViewModelColored new noteViewModel: self)
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNoteViewModel >> onNoteMoved: anAnnouncement [
 	self announce: (GtWardleyMapNoteViewModelMoved new noteViewModel: self).
 	self wardleyMapViewModel announce: (GtWardleyMapNoteViewModelMoved new noteViewModel: self)
 ]
@@ -79,6 +94,11 @@ GtWardleyMapNoteViewModel >> onWardleyMapNoteModelChanged [
 	
 ]
 
+{ #category : #'api - note' }
+GtWardleyMapNoteViewModel >> removeFromMap [
+	self wardleyMapViewModel removeNoteViewModel: self
+]
+
 { #category : #'api - wardley map node model' }
 GtWardleyMapNoteViewModel >> subscribeToWardleyMapNoteModel [
 	"Is sent after a new wardleyMapNote model is assigned to the view model.
@@ -86,8 +106,8 @@ GtWardleyMapNoteViewModel >> subscribeToWardleyMapNoteModel [
 	#unsubscribeFromWardleyMapNoteModel if view model subscribes to them"
 	
 	self wardleyMapNoteModel weak
-		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
-		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self
+		when: GtWardleyMapNoteModelMoved send: #onNoteMoved: to: self;
+		when: GtWardleyMapNoteModelColored send: #onNoteColored: to: self
 ]
 
 { #category : #'api - wardley map node model' }

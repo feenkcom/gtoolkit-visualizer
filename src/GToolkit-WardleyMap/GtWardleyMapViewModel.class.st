@@ -314,6 +314,11 @@ GtWardleyMapViewModel >> removeNodeViewModel: aNodeViewModel [
 	self wardleyMapModel removeNode: aNodeViewModel wardleyMapNodeModel
 ]
 
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> removeNoteViewModel: aNodeViewModel [
+	self wardleyMapModel removeNote: aNodeViewModel wardleyMapNoteModel
+]
+
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	"Is sent after a new wardleyMap model is assigned to the view model.
