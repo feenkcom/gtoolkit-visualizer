@@ -71,3 +71,14 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNodeLabel: aWardleyMapNodeLab
 		at: #text put: aWardleyMapNodeLabel label;
 		yourself
 ]
+
+{ #category : #visiting }
+GtWardleyMapAsDictionaryExporter >> visitWardleyMapNote: aWardleyMapNote [
+	^ OrderedDictionary new
+		at: #id put: (self visitWardleyId: aWardleyMapNote id);
+		at: #color put: (self visitColor: aWardleyMapNote color);
+		at: #x put: aWardleyMapNote x;
+		at: #y put: aWardleyMapNote y;
+		at: #label put: (aWardleyMapNote labelModel accept: self);
+		yourself
+]

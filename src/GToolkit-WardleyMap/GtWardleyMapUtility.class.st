@@ -157,6 +157,15 @@ GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNod
 ]
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> updateNoteElement: aNoteElement noteViewModel: aNoteViewModel [
+	"I update node element layout constraints, based on model values."
+
+	aNoteElement constraintsDo: [ :c | 
+		c frame horizontal alignCenterAt: aNoteViewModel coordinateX.
+		c frame vertical alignCenterAt: aNoteViewModel coordinateY ]
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> updatePipelineElement: aPipelineElement nodeViewModel: aNodeViewModel [
 	"I update pipeline element layout constraints, based on model values.
 	I use its node y-coordinate to place it vertically. 

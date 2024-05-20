@@ -18,3 +18,7 @@ TGtWardleyMapVisitor >> visitWardleyMapNode: aWardleyMapNode [
 { #category : #visiting }
 TGtWardleyMapVisitor >> visitWardleyMapNodeLabel: aWardleyMapNodeLabel [
 ]
+
+{ #category : #visiting }
+TGtWardleyMapVisitor >> visitWardleyMapNote: aWardleyMapNote [
+]

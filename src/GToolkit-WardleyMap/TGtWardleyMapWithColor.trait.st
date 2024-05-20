@@ -24,5 +24,5 @@ TGtWardleyMapWithColor >> color: aColor [
 
 { #category : #'api - color' }
 TGtWardleyMapWithColor >> notifyColored [
-	self explicitRequirement
+	self propagateAnnouncement: (GtWardleyMapEdgeModelColored new edgeModel: self)
 ]
