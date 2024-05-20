@@ -43,6 +43,45 @@ GtWardleyMapScriptExporterExamples >> exportMapWithNewSyntaxForPipelineSimplifie
 ]
 
 { #category : #accessing }
+GtWardleyMapScriptExporterExamples >> exportMapWithNoteLf [
+	<gtExample>
+	| aMap anExporter aScript aResult aCrNewLineScript |
+	aResult := self resultWithImportedMapWithNoteLf.
+	aMap := aResult resultingWardleyMap.
+
+	anExporter := GtWardleyMapScriptExporter new.
+	aScript := anExporter
+			beOldPipelineSyntax;
+			beLfNewLine;
+			wardleyMap: aMap;
+			export;
+			script.
+
+	self assert: (aScript includes: Character cr) not.
+
+	self assert: (aScript = aResult originalScript) not.
+
+	aCrNewLineScript := self convertWithCrNewLines: aScript.
+
+	self
+		assert: (aResult originalScript includesSubstring: 'note (+opportunity) [0.82, 0.13]').
+	self
+		assert: (aCrNewLineScript includesSubstring: 'note (+opportunity) [0.82, 0.13]').
+
+
+	true ifFalse: [
+		"Currently, there are edges that we do not support."
+		self
+			assert: aCrNewLineScript
+			equals: aResult originalScript ].
+
+	^ GtWardleyMapScriptExampleResult new
+		originalWardleyMap: aMap;
+		originalScript: aResult originalScript;
+		resultingScript: aCrNewLineScript
+]
+
+{ #category : #accessing }
 GtWardleyMapScriptExporterExamples >> exportMapWithPipeline [
 	<gtExample>
 	| aMap anExporter aScript aResult |
@@ -164,6 +203,12 @@ GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithNewSyntaxForPipel
 GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithNewSyntaxForPipelineSimplified [
 	<gtExample>
 	^ GtWardleyMapScriptImporterExamples new importScriptWithNewSyntaxForPipelineSimplified
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapScriptExporterExamples >> resultWithImportedMapWithNoteLf [
+	<gtExample>
+	^ GtWardleyMapScriptImporterExamples new importScriptWithNoteLf
 ]
 
 { #category : #'examples - model' }

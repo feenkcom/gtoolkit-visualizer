@@ -93,6 +93,10 @@ GtWardleyMapScriptExporter >> export [
 
 		self exportMap.
 		
+		self notes do: [ :eachNote | 
+			self exportNote: eachNote ].
+		self notes ifNotEmpty: [ self newLine ].
+		
 		self nodes do: [ :eachNode | 
 			eachNode pipelineNode ifNil: [
 				self exportNode: eachNode ] ].
@@ -159,6 +163,15 @@ GtWardleyMapScriptExporter >> exportNode: aNode [
 ]
 
 { #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> exportNote: aNote [
+	stream
+		nextPutAll: 'note ';
+		nextPutAll: aNote label.
+	self printCoordinate: aNote coordinate.
+	self newLine.
+]
+
+{ #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportOldSyntaxNode: aNode [
 	"Export using old pipeline syntax"
 	self assert: [ aNode pipelineNode isNil ].
@@ -191,6 +204,21 @@ GtWardleyMapScriptExporter >> newLine [
 { #category : #convenience }
 GtWardleyMapScriptExporter >> nodes [
 	^ self wardleyMap nodes
+]
+
+{ #category : #convenience }
+GtWardleyMapScriptExporter >> notes [
+	^ self wardleyMap notes
+]
+
+{ #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> printCoordinate: aCoordinate [
+	stream
+		nextPutAll: ' [';
+		nextPutAll: (self roundedNodeCoordinate: 1 - aCoordinate y);
+		nextPutAll: ', ';
+		nextPutAll: (self roundedNodeCoordinate: aCoordinate x);
+		nextPutAll: ']'
 ]
 
 { #category : #'private - exporting' }
