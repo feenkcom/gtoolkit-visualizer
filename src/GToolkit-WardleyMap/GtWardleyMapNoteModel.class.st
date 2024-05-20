@@ -68,16 +68,20 @@ GtWardleyMapNoteModel >> initialize [
 	color := GtWardleyMapConstants noteColor.
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapNoteModel >> label [
 	<return: #String>
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapNoteModel >> label: aString [
-	label := aString
+	self label = aString
+		ifTrue: [ ^ self ].
+		
+	label := aString.
+	self notifyLabelChanged
 ]
 
 { #category : #'api - color' }
@@ -88,6 +92,11 @@ GtWardleyMapNoteModel >> notifyColored [
 { #category : #'api - coordinate' }
 GtWardleyMapNoteModel >> notifyCoordinateChanged [
 	self propagateAnnouncement: (GtWardleyMapNoteModelMoved new noteModel: self)
+]
+
+{ #category : #'api - label' }
+GtWardleyMapNoteModel >> notifyLabelChanged [
+	self propagateAnnouncement: (GtWardleyMapNoteModelLabelChanged new noteModel: self)
 ]
 
 { #category : #'api - parent' }

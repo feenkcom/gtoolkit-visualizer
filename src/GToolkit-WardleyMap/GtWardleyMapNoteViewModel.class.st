@@ -72,13 +72,13 @@ GtWardleyMapNoteViewModel >> noteColor [
 ]
 
 { #category : #'api - wardley map node model' }
-GtWardleyMapNoteViewModel >> onNodeColored: anAnnouncement [
+GtWardleyMapNoteViewModel >> onNoteColored: anAnnouncement [
 	self announce: (GtWardleyMapNoteViewModelColored new noteViewModel: self)
 ]
 
 { #category : #'api - wardley map node model' }
-GtWardleyMapNoteViewModel >> onNoteColored: anAnnouncement [
-	self announce: (GtWardleyMapNoteViewModelColored new noteViewModel: self)
+GtWardleyMapNoteViewModel >> onNoteLabelChanged: anAnnouncement [
+	self announce: (GtWardleyMapNoteViewModelLabelChanged new noteViewModel: self)
 ]
 
 { #category : #'api - wardley map node model' }
@@ -107,7 +107,8 @@ GtWardleyMapNoteViewModel >> subscribeToWardleyMapNoteModel [
 	
 	self wardleyMapNoteModel weak
 		when: GtWardleyMapNoteModelMoved send: #onNoteMoved: to: self;
-		when: GtWardleyMapNoteModelColored send: #onNoteColored: to: self
+		when: GtWardleyMapNoteModelColored send: #onNoteColored: to: self;
+		when: GtWardleyMapNoteModelLabelChanged send: #onNoteLabelChanged: to: self
 ]
 
 { #category : #'api - wardley map node model' }

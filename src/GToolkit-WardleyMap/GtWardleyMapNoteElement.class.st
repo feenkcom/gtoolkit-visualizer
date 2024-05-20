@@ -49,7 +49,7 @@ GtWardleyMapNoteElement >> onNoteColored [
 ]
 
 { #category : #'as yet unclassified' }
-GtWardleyMapNoteElement >> onNoteLabelTextChanged [
+GtWardleyMapNoteElement >> onNoteLabelChanged [
 	labelElement text: self wardleyMapNoteViewModel label.
 	labelElement aptitude foreground: self wardleyMapNoteViewModel color.
 ]
@@ -58,7 +58,8 @@ GtWardleyMapNoteElement >> onNoteLabelTextChanged [
 GtWardleyMapNoteElement >> onWardleyMapNoteViewModelChanged [
 	"Is sent when a new WardleyMapNote view model is assigned to the element"
 	
-	self onNoteLabelTextChanged.
+	self onNoteLabelChanged.
+	self onNoteColored
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -68,7 +69,7 @@ GtWardleyMapNoteElement >> subscribeToWardleyMapNoteViewModel [
 	#unsubscribeFromWardleyMapNoteViewModel if elements subscribe to them"
 	
 	self wardleyMapNoteViewModel weak
-		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged to: self;
+		when: GtWardleyMapNoteViewModelLabelChanged send: #onNoteLabelChanged to: self;
 		when: GtWardleyMapNoteViewModelColored send: #onNoteColored to: self
 ]
 
