@@ -87,6 +87,31 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 		containsPoint: aNodeElement bounds inParent asRectangle center
 ]
 
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newColorLabelElement [
+	^ BrLabel new
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+		margin: (BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0);
+		text: 'Color:'
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newDeleteButtonElement [
+	^ BrButton new
+		beSmallSize;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
+		margin: (BlInsets
+				top: 10
+				left: 5
+				bottom: 5
+				right: 0);
+		label: 'Delete'
+]
+
 { #category : #'api - model' }
 GtWardleyMapUtility class >> normalizePipelineCoordinate: aPoint [ 
 	"I ensure a minimum pipeline width.
@@ -154,6 +179,15 @@ GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNod
 					alignCenterAt: aNodeViewModel coordinateY 
 					offset: (self computePipelineViewModelVerticalCenterOffset: aPipelineNodeViewModel) ].
 		 ]
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> updateNoteElement: aNoteElement noteViewModel: aNoteViewModel [
+	"I update node element layout constraints, based on model values."
+
+	aNoteElement constraintsDo: [ :c | 
+		c frame horizontal alignCenterAt: aNoteViewModel coordinateX.
+		c frame vertical alignCenterAt: aNoteViewModel coordinateY ]
 ]
 
 { #category : #'api - views' }

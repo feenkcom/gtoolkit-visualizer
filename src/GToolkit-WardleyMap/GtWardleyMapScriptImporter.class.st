@@ -96,7 +96,8 @@ GtWardleyMapScriptImporter >> import [
 	self importNodes.
 	self importPipelines.
 	self importEdges.
-	isNewPipelineSyntax ifFalse: [ self estimateInnerNodes ]
+	isNewPipelineSyntax ifFalse: [ self estimateInnerNodes ].
+	self importNotes.
 ]
 
 { #category : #'private - import' }
@@ -154,6 +155,21 @@ GtWardleyMapScriptImporter >> importNodes [
 				aNodeModel labelModel coordinate: aLabelCoordinate ] ].
 
 		wardleyMap addNode: aNodeModel.
+	]
+]
+
+{ #category : #'private - import' }
+GtWardleyMapScriptImporter >> importNotes [
+
+	ast allNodesOfType: GtWMNoteNode do: [ :anAstNode | 
+		| aNoteModel |
+		aNoteModel := GtWardleyMapNoteModel new.
+		aNoteModel color: Color black.
+		anAstNode label ifNotNil: [ :aToken | aNoteModel label: aToken source ].
+		anAstNode position ifNotNil: [ :aNode | aNode coordinate 
+			ifNotNil: [ :aPoint | aNoteModel coordinate: (aPoint x @ (1 - aPoint y)) ] ].
+
+		wardleyMap addNote: aNoteModel.
 	]
 ]
 

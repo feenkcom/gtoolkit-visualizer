@@ -47,6 +47,13 @@ GtWardleyMapConstants class >> nodeSize [
 ]
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> noteColor [
+	"I represent a default note model color"
+
+	^ Color black
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> pipelineHeight [
 	"I represent a pipeline height in pixels.
 	It is a minimum pipeline height as we may need to enlarge considering inner node sizes."

@@ -105,6 +105,44 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> createNoteEditorFor: aNoteViewModel [
+	^ GtWardleyMapNoteEditorElement new
+		wardleyMapViewModel: self wardleyMapViewModel;
+		wardleyMapNoteViewModel: aNoteViewModel
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> createNoteViewFor: aNoteViewModel [
+	^ GtWardleyMapNoteElement new
+		wardleyMapNoteViewModel: aNoteViewModel;
+		id: (self newNoteId);
+		when: BlMouseOverEvent 
+		do: [ :anEvent | 
+			anEvent consumed: true.
+			anEvent currentTarget labelElementDo: [ :aLabelElement |
+				aLabelElement aptitude foreground: (self hoverColorFrom: aNoteViewModel noteColor) ] ];
+		when: BlMouseOutEvent 
+		do: [ :anEvent | 
+			anEvent consumed: true.
+			anEvent currentTarget labelElementDo: [ :aLabelElement |
+				aLabelElement aptitude foreground: (aNoteViewModel noteColor) ] ];
+		addEventHandler: (GtWardleyMapNotePullHandler new
+				containerElement: self;
+				disallowOutOfBounds;
+				whenPulled: [ :aPulledElement :aNormalizedPosition | 
+					aNoteViewModel moveNoteTo: aNormalizedPosition ]);
+		zIndex: self defaultNoteElevationIndex;
+		in: [ :theElement |
+			GtWardleyMapUtility updateNoteElement: theElement noteViewModel: aNoteViewModel ];
+		addAptitude: (BrGlamorousWithContextMenuAptitude
+				handle: [ BlElement new
+						size: 5.0 @ 5.0;
+						geometry: BlEllipseGeometry new ]
+				content: [ self createNoteEditorFor: aNoteViewModel ]);
+		yourself
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 	^ GtWardleyMapPipelineElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
@@ -142,12 +180,22 @@ GtWardleyMapCanvasElement >> defaultNodeElevationIndex [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> defaultNoteElevationIndex [
+	^ 3
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> defaultPipelineElevationIndex [
 	^ 0
 ]
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> draggingNodeElevationIndex [
+	^ 3
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> draggingNoteElevationIndex [
 	^ 3
 ]
 
@@ -180,13 +228,13 @@ GtWardleyMapCanvasElement >> initialize [
 		c vertical matchParent ].
 
 	self layout: BlFrameLayout new.
-	(self addAptitude: (BrGlamorousWithContextMenuAptitude
+	self addAptitude: ((BrGlamorousWithContextMenuAptitude
 			handle: [ BlElement new
 					size: 5@5;
 					geometry: BlEllipseGeometry new ]
 			content: [ GtWardleyMapEditorElement new
 				canvas: self;
-				requestFocus ])).
+				requestFocus ]) preferredExtent: (120@100.0)).
 	self
 		when: BlDoubleClickEvent
 		do: [ :anEvent |
@@ -206,6 +254,11 @@ GtWardleyMapCanvasElement >> newNodeId [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> newNoteId [
+	^ #note asBlocElementId indexed: idGenerator generateUniqueId
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> newPipelineId [
 	^ #pipeline asBlocElementId indexed: idGenerator generateUniqueId
 ]
@@ -218,6 +271,14 @@ GtWardleyMapCanvasElement >> nextElementId [
 GtWardleyMapCanvasElement >> nodeViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | eachChild graph isNode and: [ eachChild wardleyMapNodeViewModel = aNodeViewModel ] ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #private }
+GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self children
+		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
 ]
@@ -331,10 +392,41 @@ GtWardleyMapCanvasElement >> onNodeRemoved: anAnnouncement [
 		ifNone: [ ]
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onNoteAdded: anAnnouncement [
+	| aNoteElement aNoteViewModel |
+	aNoteViewModel := anAnnouncement noteViewModel.
+	aNoteElement := self createNoteViewFor: aNoteViewModel.
+	
+	self addChild: aNoteElement
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onNoteMoved: anAnnouncement [
+	| aMovedNoteViewModel |
+	aMovedNoteViewModel := anAnnouncement noteViewModel.
+
+	self
+		noteViewFor: aMovedNoteViewModel
+		ifFound: [ :aNoteView | 
+			GtWardleyMapUtility 
+				updateNoteElement: aNoteView 
+				noteViewModel: aMovedNoteViewModel ]
+		ifNone: [  ].
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onNoteRemoved: anAnnouncement [
+	self
+		noteViewFor: anAnnouncement noteViewModel
+		ifFound: [ :aNoteElement | aNoteElement removeFromParent ]
+		ifNone: [ ]
+]
+
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
-	| theNodeElements theEdgeElements thePipelineElements |
+	| theNodeElements theEdgeElements thePipelineElements theNoteElements |
 
 	self removeChildren.
 	theNodeElements := self wardleyMapViewModel nodeViewModels collect: [ :eachNodeViewModel |
@@ -347,6 +439,11 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	self addChildren: thePipelineElements.
 	self addChildren: theNodeElements.
+	
+	theNoteElements := self wardleyMapViewModel noteViewModels collect: [ :eachNoteViewModel |
+		self createNoteViewFor: eachNoteViewModel ].
+		
+	self addChildren: theNoteElements.
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
@@ -384,7 +481,10 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeViewModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
-		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self
+		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
+		when: GtWardleyMapNoteViewModelMoved send: #onNoteMoved: to: self;
+		when: GtWardleyMapNoteViewModelAdded send: #onNoteAdded: to: self;
+		when: GtWardleyMapNoteViewModelRemoved send: #onNoteRemoved: to: self
 ]
 
 { #category : #'api - wardley map view model' }

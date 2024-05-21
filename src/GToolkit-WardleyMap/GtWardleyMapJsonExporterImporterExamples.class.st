@@ -55,16 +55,29 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionary [
 { #category : #export }
 GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNodesAsDictionary [
 	<gtExample>
-	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary aFirstNodePipelineDictionary aFirstNodePipelineInnerNodesArray aFourthNodeDictionary aFifthNodeDictionary aSecondNodePipelineDictionary |
+	| aWardleyMap anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary aFirstNodePipelineDictionary aFirstNodePipelineInnerNodesArray aFourthNodeDictionary aFifthNodeDictionary aSecondNodePipelineDictionary aNoteADictionary |
 
 	aWardleyMap := GtWardleyMapModelExamples new newMapWithPipelineInnerNodes.
 	anExportedDictionary := aWardleyMap accept: GtWardleyMapAsDictionaryExporter new.
 
-	self assert: anExportedDictionary size equals: 2.
+	self assert: anExportedDictionary size equals: 3.
+	self assert: (anExportedDictionary includesKey: #notes).
 	self assert: (anExportedDictionary includesKey: #nodes).
 	self assert: (anExportedDictionary includesKey: #edges).
 	
+	self assert: (anExportedDictionary at: #notes) size equals: 1.
 	self assert: (anExportedDictionary at: #nodes) size equals: 7.
+	
+	aNoteADictionary := (anExportedDictionary at: #notes) at: 1.
+	self assert: aNoteADictionary size equals: 5.
+	self assert: (aNoteADictionary at: #x) equals: 0.47.
+	self assert: (aNoteADictionary at: #y) equals: 0.4.
+	self assert: (aNoteADictionary at: #label) equals: 'Note A'.
+	self assert: (aNoteADictionary at: #color) size equals: 4.
+	self assert: ((aNoteADictionary at: #color) at: #green) equals: Color lightOrange green.
+	self assert: ((aNoteADictionary at: #color) at: #blue) equals: Color lightOrange blue.
+	self assert: ((aNoteADictionary at: #color) at: #red) equals: Color lightOrange red.
+	self assert: ((aNoteADictionary at: #color) at: #alpha) equals: Color lightOrange alpha.
 	
 	aFirstNodeDictionary := (anExportedDictionary at: #nodes) at: 1.
 	self assert: aFirstNodeDictionary size equals: 8.

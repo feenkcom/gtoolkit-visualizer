@@ -22,30 +22,15 @@ GtWardleyMapNodeEditorElement >> createColorPicker [
 
 { #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodeColorLabel [
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-		margin:
-			(BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0);
-		text: 'Node color:'
+	^ GtWardleyMapUtility newColorLabelElement text: 'Node color:'
 ]
 
 { #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin:
-			(BlInsets
-				top: 10
-				left: 5
-				bottom: 5
-				right: 0);
-		label: 'Delete';
-		action: [ self wardleyMapNodeViewModel removeFromMap.
+	^ GtWardleyMapUtility newDeleteButtonElement
+		label: 'Delete node';
+		action: [ 
+			self wardleyMapNodeViewModel removeFromMap.
 			self fireEvent: BrDropdownHideWish new ]
 ]
 

@@ -19,7 +19,8 @@ Class {
 		'nodes',
 		'edges',
 		'sections',
-		'title'
+		'title',
+		'notes'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -84,6 +85,22 @@ GtWardleyMapModel >> addNode: aGtWardleyMapNodeModel [
 	nodes add: aGtWardleyMapNodeModel.
 	aGtWardleyMapNodeModel parent: self.
 	self announce: (GtWardleyMapNodeModelAdded new nodeModel: aGtWardleyMapNodeModel)
+]
+
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> addNote: aGtWardleyMapNoteModel [
+	aGtWardleyMapNoteModel hasParent
+		ifTrue: [ GtWardleyMapParentAlreadySetError signal ].
+
+	aGtWardleyMapNoteModel hasId
+		ifFalse: [ aGtWardleyMapNoteModel id: self nextUniqueId ]
+		ifTrue: [
+			(self hasNoteWithId: aGtWardleyMapNoteModel id)
+				ifTrue: [ self error: 'Can not add a note with already used id' ]. ].
+
+	notes add: aGtWardleyMapNoteModel.
+	aGtWardleyMapNoteModel parent: self.
+	self announce: (GtWardleyMapNoteModelAdded new noteModel: aGtWardleyMapNoteModel)
 ]
 
 { #category : #'api - edges' }
@@ -162,7 +179,7 @@ GtWardleyMapModel >> gtNodesFor: aView [
 					margin: (BlInsets left: 3 right: 3);
 					constraintsDo: [ :c | 
 						c linear vertical alignCenter ] ] 
-			width: 35;
+			width: 40;
 		column: 'Name' text: #label;
 		column: 'With pipeline' text: [ :aNode | aNode isPipelineVisible 
 			ifTrue: [ 'yes' ] 
@@ -174,6 +191,28 @@ GtWardleyMapModel >> gtNodesFor: aView [
 				ifTrue: [ aSize asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
 				ifFalse: [ aSize ] ]
 		
+]
+
+{ #category : #'gt-extensions' }
+GtWardleyMapModel >> gtNotesFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Notes';
+		priority: 25;
+		items: [ self notes ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode color;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'Name' text: #label
 ]
 
 { #category : #'gt-extensions' }
@@ -220,6 +259,14 @@ GtWardleyMapModel >> hasNodeWithId: anId [
 ]
 
 { #category : #testing }
+GtWardleyMapModel >> hasNoteWithId: anId [
+	^ self
+		noteWithId: anId
+		ifFound: [ true ]
+		ifNone: [ false ]
+]
+
+{ #category : #testing }
 GtWardleyMapModel >> hasParent [
 	^ false
 ]
@@ -237,7 +284,8 @@ GtWardleyMapModel >> initialize [
 
 	nodes := OrderedCollection new.
 	edges := OrderedCollection new.
-	sections := OrderedCollection new
+	sections := OrderedCollection new.
+	notes := OrderedCollection new.
 ]
 
 { #category : #private }
@@ -265,6 +313,19 @@ GtWardleyMapModel >> nodeWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
 { #category : #'api - nodes' }
 GtWardleyMapModel >> nodes [
 	^ nodes
+]
+
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> noteWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self notes
+		detect: [ :eachNote | eachNote id = anId ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> notes [
+	^ notes ifNil: [ notes := OrderedCollection new ]
 ]
 
 { #category : #'api - edges' }
@@ -296,6 +357,14 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 	aGtWardleyMapNodeModel removeFromPipeline.
 	aGtWardleyMapNodeModel removeInnerNodes.
 	self announce: (GtWardleyMapNodeModelRemoved new nodeModel: aGtWardleyMapNodeModel)
+]
+
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> removeNote: aGtWardleyMapNoteModel [
+
+	notes remove: aGtWardleyMapNoteModel ifAbsent: [ ^ self ].
+	aGtWardleyMapNoteModel removeParent.
+	self announce: (GtWardleyMapNoteModelRemoved new noteModel: aGtWardleyMapNoteModel)
 ]
 
 { #category : #printing }

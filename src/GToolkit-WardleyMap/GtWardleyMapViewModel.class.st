@@ -8,7 +8,8 @@ Class {
 		'nodeViewModels',
 		'edgeViewModels',
 		'predefinedColors',
-		'defaultColor'
+		'defaultColor',
+		'noteViewModels'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
@@ -28,12 +29,35 @@ GtWardleyMapViewModel >> addNewEdgeFrom: aFromNodeViewModel to: aToNodeViewModel
 { #category : #'api - map' }
 GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
 	| aNewNode |
-	
+	self
+		assert: [ 0 <= aNormalizedPosition x and: [ aNormalizedPosition x <= 1.0 ] ]
+		description: [ 'Note x-position must be between 0 and 1: {1}' format: {aNormalizedPosition x} ].
+	self
+		assert: [ 0 <= aNormalizedPosition y and: [ aNormalizedPosition y <= 1.0 ] ]
+		description: [ 'Note y-position must be between 0 and 1: {1}' format: {aNormalizedPosition y} ].
+
 	aNewNode := GtWardleyMapNodeModel new
-		coordinate: aNormalizedPosition;
-		color: self defaultColor.
-		
+			coordinate: aNormalizedPosition;
+			color: self defaultColor.
+
 	self wardleyMapModel addNode: aNewNode
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> addNewNoteAt: aNormalizedPosition [
+	| aNewNote |
+	self
+		assert: [ 0 <= aNormalizedPosition x and: [ aNormalizedPosition x <= 1.0 ] ]
+		description: [ 'Note x-position must be between 0 and 1: {1}' format: {aNormalizedPosition x} ].
+	self
+		assert: [ 0 <= aNormalizedPosition y and: [ aNormalizedPosition y <= 1.0 ] ]
+		description: [ 'Note y-position must be between 0 and 1: {1}' format: {aNormalizedPosition y} ].
+
+	aNewNote := GtWardleyMapNoteModel new
+			coordinate: aNormalizedPosition;
+			color: self defaultColor.
+
+	self wardleyMapModel addNote: aNewNote
 ]
 
 { #category : #announcer }
@@ -55,6 +79,13 @@ GtWardleyMapViewModel >> createNodeViewModelFor: aNodeModel [
 	^ GtWardleyMapNodeViewModel new
 		wardleyMapViewModel: self;
 		wardleyMapNodeModel: aNodeModel
+]
+
+{ #category : #initialization }
+GtWardleyMapViewModel >> createNoteViewModelFor: aNodeModel [
+	^ GtWardleyMapNoteViewModel new
+		wardleyMapViewModel: self;
+		wardleyMapNoteModel: aNodeModel
 ]
 
 { #category : #accessing }
@@ -102,6 +133,7 @@ GtWardleyMapViewModel >> initialize [
 
 	nodeViewModels := OrderedCollection new.
 	edgeViewModels := OrderedCollection new.
+	noteViewModels := OrderedCollection new.
 
 	predefinedColors := {Color black.
 			Color veryVeryDarkGray.
@@ -148,6 +180,21 @@ GtWardleyMapViewModel >> nodeViewModels [
 	<return: #Collection of: #GtWardleyMapNodeViewModel>
 
 	^ nodeViewModels
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> noteViewModelFor: aNodeModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self noteViewModels
+		detect: [ :eachNoteViewModel | eachNoteViewModel wardleyMapNoteModel = aNodeModel ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> noteViewModels [
+	<return: #Collection of: #GtWardleyMapNoteViewModel>
+
+	^ noteViewModels
 ]
 
 { #category : #'event handling' }
@@ -229,6 +276,23 @@ GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
 		ifNone: [ ]
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onNoteAdded: aNoteAddedAnnouncement [
+	| aNoteViewModel |
+	noteViewModels add: (aNoteViewModel := self createNoteViewModelFor: aNoteAddedAnnouncement noteModel).
+	self announce: (GtWardleyMapNoteViewModelAdded new noteViewModel: aNoteViewModel)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onNoteRemoved: aNoteAddedAnnouncement [
+	self 
+		noteViewModelFor: aNoteAddedAnnouncement noteModel
+		ifFound: [ :aNoteViewModel |
+			noteViewModels remove: aNoteViewModel.
+			self announce: (GtWardleyMapNoteViewModelRemoved new noteViewModel: aNoteViewModel) ]
+		ifNone: [ ]
+]
+
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
@@ -251,7 +315,11 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 
 	edgeViewModels := self wardleyMapModel edges
 			collect: [ :eachEdgeModel | self createEdgeViewModelFor: eachEdgeModel ]
-			as: OrderedCollection
+			as: OrderedCollection.
+			
+	noteViewModels := self wardleyMapModel notes
+			collect: [ :eachNoteModel | self createNoteViewModelFor: eachNoteModel ]
+			as: OrderedCollection.
 ]
 
 { #category : #accessing }
@@ -269,6 +337,11 @@ GtWardleyMapViewModel >> removeNodeViewModel: aNodeViewModel [
 	self wardleyMapModel removeNode: aNodeViewModel wardleyMapNodeModel
 ]
 
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> removeNoteViewModel: aNodeViewModel [
+	self wardleyMapModel removeNote: aNodeViewModel wardleyMapNoteModel
+]
+
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	"Is sent after a new wardleyMap model is assigned to the view model.
@@ -282,7 +355,9 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapNodeModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
 		when: GtWardleyMapNodeModelInnerNodeRemoved send: #onInnerNodeRemoved: to: self;
 		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
-		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self
+		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self;
+		when: GtWardleyMapNoteModelAdded send: #onNoteAdded: to: self;
+		when: GtWardleyMapNoteModelRemoved send: #onNoteRemoved: to: self
 ]
 
 { #category : #'api - wardley map model' }

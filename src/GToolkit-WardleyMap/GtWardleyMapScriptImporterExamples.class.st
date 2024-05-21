@@ -200,6 +200,32 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipelineSimpli
 ]
 
 { #category : #'examples - imports' }
+GtWardleyMapScriptImporterExamples >> importScriptWithNoteLf [
+	<gtExample>
+	
+	| aScript anImporter aMap aNoteA |
+	aScript := self scriptWithNoteLf.
+	anImporter := GtWardleyMapScriptImporter new 
+		stream: aScript readStream;
+		import.
+		
+	aMap := anImporter wardleyMap.
+	
+	self assert: aMap title equals: 'map with pipeline and note'.
+	self assert: aMap nodes size equals: 4.
+	self assert: aMap edges size equals: 2.
+	self assert: aMap notes size equals: 1.
+	
+	aNoteA := aMap notes detect: [ :each | each label = '(+opportunity)' ].
+	self assert: aNoteA x equals: 0.13.
+	self assert: aNoteA y equals: 1 - 0.82.
+	
+	^ GtWardleyMapScriptExampleResult new 
+		originalScript: aScript;
+		resultingWardleyMap: anImporter wardleyMap
+]
+
+{ #category : #'examples - imports' }
 GtWardleyMapScriptImporterExamples >> importScriptWithPipeline [
 	<gtExample>
 	
@@ -349,6 +375,12 @@ GtWardleyMapScriptImporterExamples >> scriptWithNewSyntaxForPipeline [
 GtWardleyMapScriptImporterExamples >> scriptWithNewSyntaxForPipelineSimplified [
 	<gtExample>
 	^ GtWardleyMapScriptExamples new withNewSyntaxForPipelinesCrSimplified
+]
+
+{ #category : #'examples - scripts' }
+GtWardleyMapScriptImporterExamples >> scriptWithNoteLf [
+	<gtExample>
+	^ GtWardleyMapScriptExamples new withNoteLf
 ]
 
 { #category : #'examples - scripts' }
