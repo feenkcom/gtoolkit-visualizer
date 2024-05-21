@@ -228,13 +228,13 @@ GtWardleyMapCanvasElement >> initialize [
 		c vertical matchParent ].
 
 	self layout: BlFrameLayout new.
-	(self addAptitude: (BrGlamorousWithContextMenuAptitude
+	self addAptitude: ((BrGlamorousWithContextMenuAptitude
 			handle: [ BlElement new
 					size: 5@5;
 					geometry: BlEllipseGeometry new ]
 			content: [ GtWardleyMapEditorElement new
 				canvas: self;
-				requestFocus ])).
+				requestFocus ]) preferredExtent: (120@100.0)).
 	self
 		when: BlDoubleClickEvent
 		do: [ :anEvent |

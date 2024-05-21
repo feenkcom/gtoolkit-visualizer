@@ -26,43 +26,34 @@ GtWardleyMapEditorElement >> contextMenuHandlerPositionOnEvent: anEvent [
 ]
 
 { #category : #accessing }
-GtWardleyMapEditorElement >> createNodeButtonElement [
+GtWardleyMapEditorElement >> createBasicButtonElement [
 	^ BrButton new
 		beSmallSize;
 		aptitude: BrGlamorousButtonWithLabelAptitude new;
 		margin: (BlInsets
-				top: 10
-				left: 10
-				bottom: 10
-				right: 10);
+				top: 3
+				left: 3
+				bottom: 3
+				right: 3)
+]
+
+{ #category : #accessing }
+GtWardleyMapEditorElement >> createNodeButtonElement [
+	^ self createBasicButtonElement
 		label: 'Add node';
 		action: [ :aButtonElement :aButtonModel :anEvent | self onAddNodeEvent: anEvent ]
 ]
 
 { #category : #accessing }
 GtWardleyMapEditorElement >> createNoteButtonElement [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 10
-				left: 10
-				bottom: 10
-				right: 10);
+	^ self createBasicButtonElement
 		label: 'Add note';
 		action: [ :aButtonElement :aButtonModel :anEvent | self onAddNoteEvent: anEvent ]
 ]
 
 { #category : #accessing }
 GtWardleyMapEditorElement >> createSwitchSectionsButtonElement [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 10
-				left: 10
-				bottom: 10
-				right: 10);
+	^ self createBasicButtonElement
 		label: 'Switch sections';
 		action: [ canvas parent hasEvolutionAxisLayer
 				ifFalse: [ canvas parent
