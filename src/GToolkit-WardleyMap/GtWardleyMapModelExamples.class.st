@@ -66,8 +66,8 @@ GtWardleyMapModelExamples >> mapElementWithPipelinesInnerNodes [
 		'commodity'
 	}.
 	self assert: aWardleyMapElement children size equals: 2.
-	"7 nodes, 1 pipeline, 1 edge"
-	self assert: aWardleyMapElement children last children size equals: 9.
+	"7 nodes, 1 pipeline, 1 edge, 1 note"
+	self assert: aWardleyMapElement children last children size equals: 10.
 	^ aWardleyMapElement
 ]
 
