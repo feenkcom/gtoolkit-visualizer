@@ -29,12 +29,35 @@ GtWardleyMapViewModel >> addNewEdgeFrom: aFromNodeViewModel to: aToNodeViewModel
 { #category : #'api - map' }
 GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
 	| aNewNode |
-	
+	self
+		assert: [ 0 <= aNormalizedPosition x and: [ aNormalizedPosition x <= 1.0 ] ]
+		description: [ 'Note x-position must be between 0 and 1: {1}' format: {aNormalizedPosition x} ].
+	self
+		assert: [ 0 <= aNormalizedPosition y and: [ aNormalizedPosition y <= 1.0 ] ]
+		description: [ 'Note y-position must be between 0 and 1: {1}' format: {aNormalizedPosition y} ].
+
 	aNewNode := GtWardleyMapNodeModel new
-		coordinate: aNormalizedPosition;
-		color: self defaultColor.
-		
+			coordinate: aNormalizedPosition;
+			color: self defaultColor.
+
 	self wardleyMapModel addNode: aNewNode
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> addNewNoteAt: aNormalizedPosition [
+	| aNewNote |
+	self
+		assert: [ 0 <= aNormalizedPosition x and: [ aNormalizedPosition x <= 1.0 ] ]
+		description: [ 'Note x-position must be between 0 and 1: {1}' format: {aNormalizedPosition x} ].
+	self
+		assert: [ 0 <= aNormalizedPosition y and: [ aNormalizedPosition y <= 1.0 ] ]
+		description: [ 'Note y-position must be between 0 and 1: {1}' format: {aNormalizedPosition y} ].
+
+	aNewNote := GtWardleyMapNoteModel new
+			coordinate: aNormalizedPosition;
+			color: self defaultColor.
+
+	self wardleyMapModel addNote: aNewNote
 ]
 
 { #category : #announcer }
