@@ -29,7 +29,20 @@ GtWMCoordsNode >> comma: aSmaCCToken [
 { #category : #'api - convenience' }
 GtWMCoordsNode >> coordinate [
 	<return: #Point or: nil>
-	^ self maturityNumber @ self visibilityNumber
+	| anXString anYString anXNumber anYNumber |
+	anXString := self maturity ifNotNil: #source.
+	anYString := self visibility ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+	anYString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+	anYNumber := anYString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+	anYNumber ifNil: [ ^ nil ].
+
+	^ anXNumber @ anYNumber
 ]
 
 { #category : #generated }
@@ -52,12 +65,19 @@ GtWMCoordsNode >> maturity: aSmaCCToken [
 	maturity := aSmaCCToken
 ]
 
-{ #category : #generated }
+{ #category : #'api - convenience' }
 GtWMCoordsNode >> maturityNumber [
-	| aString aNumber |
-	aString := self maturity ifNotNil: #source.
-	aNumber := aString ifNotNil: #asNumber ifNil: [ 0.5 ].
-	^ aNumber ifNil: [ 0.5 ]
+	<return: #Number or: nil>
+	| anXString anXNumber |
+	anXString := self maturity ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+
+	^ anXNumber
 ]
 
 { #category : #generated }
@@ -85,10 +105,17 @@ GtWMCoordsNode >> visibility: aSmaCCToken [
 	visibility := aSmaCCToken
 ]
 
-{ #category : #generated }
+{ #category : #'api - convenience' }
 GtWMCoordsNode >> visibilityNumber [
-	| aString aNumber |
-	aString := self visibility ifNotNil: #source.
-	aNumber := aString ifNotNil: #asNumber ifNil: [ 0.5 ].
-	^ aNumber ifNil: [ 0.5 ]
+	<return: #Point or: nil>
+	| anYString anYNumber |
+	anYString := self visibility ifNotNil: #source.
+
+	anYString ifNil: [ ^ nil ].
+
+	anYNumber := anYString asNumber.
+
+	anYNumber ifNil: [ ^ nil ].
+
+	^ anYNumber
 ]
