@@ -132,13 +132,17 @@ GtWardleyMapScriptExampleResult >> gtResultingWardleyScriptFor: aView [
 GtWardleyMapScriptExampleResult >> gtResultingWarldeyMapLiveFor: aView [
 	<gtView>
 	self resultingWardleyMap ifNil: [ ^ aView empty ].
-	
+
 	^ aView explicit
 		title: 'Resulting map';
 		priority: 10;
 		stencil: [ GtWardleyMapElement new
 				wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: self resultingWardleyMap);
-				yourself ]
+				yourself ];
+		actionButtonIcon: BrGlamorousVectorIcons inspect
+			label: 'Map'
+			tooltip: 'INspect map'
+			action: [ :aButton | aButton phlow spawnObject: self resultingWardleyMap ]
 ]
 
 { #category : #accessing }

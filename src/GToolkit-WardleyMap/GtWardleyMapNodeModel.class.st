@@ -10,7 +10,8 @@ Class {
 		'pipelineCoordinate',
 		'isPipelineVisible',
 		'pipelineNode',
-		'innerNodes'
+		'innerNodes',
+		'type'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -210,6 +211,7 @@ GtWardleyMapNodeModel >> initialize [
 	isPipelineVisible := false.
 	innerNodes := #().
 	pipelineNode := nil.
+	type := GtWardleyMapNodeRegularType default
 ]
 
 { #category : #'api - pipeline' }
@@ -334,6 +336,11 @@ GtWardleyMapNodeModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeModelResized new nodeModel: self)
 ]
 
+{ #category : #'api - type' }
+GtWardleyMapNodeModel >> notifyTypeChanged [
+	self propagateAnnouncement: (GtWardleyMapNodeModelTypeChanged new nodeModel: self)
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> pipelineCoordinate [
 	"Return a pipeline left and right side positions.
@@ -451,4 +458,21 @@ GtWardleyMapNodeModel >> removeInnerNodes [
 	"Remove all my inner nodes (if any)."
 
 	self innerNodes do: [ :anInnerNode | self removeInnerNode: anInnerNode ]
+]
+
+{ #category : #'api - type' }
+GtWardleyMapNodeModel >> type [
+	<return: #TGtWardleyMapNodeType>
+	^ type
+]
+
+{ #category : #'api - type' }
+GtWardleyMapNodeModel >> type: aType [
+	self
+		assert: [ aType isNotNil ]
+		description: [ 'Node model type must be non-nil' ].
+	self type = aType ifTrue: [ ^ self ].
+	
+	type := aType.
+	self notifyTypeChanged.
 ]

@@ -37,7 +37,7 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self assert: aMap nodes size equals: 8.
 	self assert: aMap edges size equals: 3.
 	
-	aNodeA := aMap nodes detect: [ :each | each label = 'user' ].
+	aNodeA := aMap nodes detect: [ :each | each label = 'Node A' ].
 	self assert: aNodeA maturity equals: 0.66.
 	self assert: aNodeA x equals: 0.66.
 	self assert: aNodeA visibility equals: 0.95.
@@ -45,23 +45,23 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self assert: aNodeA innerNodes size equals: 0.
 	self assert: aNodeA pipelineNode isNil.
 	
-	aNodeB := aMap nodes detect: [ :each | each label = 'GOAL' ].
+	aNodeB := aMap nodes detect: [ :each | each label = 'Node B' ].
 	self assert: aNodeB x equals: 0.57.
 	self assert: aNodeB y equals: 1 - 0.84.
 	self assert: aNodeB innerNodes size equals: 0.
 	self assert: aNodeB pipelineNode isNil.
 
-	aNodeC := aMap nodes detect: [ :each | each label = 'ABC' ].
+	aNodeC := aMap nodes detect: [ :each | each label = 'Node D' ].
 	self assert: aNodeC x equals: 0.17.
 	self assert: aNodeC y equals: 1 - 0.50.
 	self assert: aNodeC innerNodes size equals: 0.
 	
-	aNodeD := aMap nodes detect: [ :each | each label = 'XYZ' ].
+	aNodeD := aMap nodes detect: [ :each | each label = 'Node E' ].
 	self assert: aNodeD x equals: 0.80.
 	self assert: aNodeD y equals: 1 - 0.50.
 	self assert: aNodeD innerNodes size equals: 0.
 	
-	aNodeE := aMap nodes detect: [ :each | each label = 'PRACTICE' ].
+	aNodeE := aMap nodes detect: [ :each | each label = 'Node C' ].
 	self assert: aNodeE x equals: 0.67.
 	self assert: aNodeE y equals: 1 - 0.50.
 	self assert: aNodeE innerNodes size equals: 2.
@@ -71,17 +71,17 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self assert: aNodeD pipelineNode equals: aNodeE.
 	self assert: aNodeE pipelineNode isNil.
 
-	aNodeF := aMap nodes detect: [ :each | each label = 'A' ].
+	aNodeF := aMap nodes detect: [ :each | each label = 'Node G' ].
 	self assert: aNodeF x equals: 0.67.
 	self assert: aNodeF y equals: 1 - 0.15.
 	self assert: aNodeF innerNodes size equals: 0.
 	
-	aNodeG := aMap nodes detect: [ :each | each label = 'B' ].
+	aNodeG := aMap nodes detect: [ :each | each label = 'Node H' ].
 	self assert: aNodeG x equals: 0.75.
 	self assert: aNodeG y equals: 1 - 0.15.
 	self assert: aNodeG innerNodes size equals: 0.
 	
-	aNodeH := aMap nodes detect: [ :each | each label = 'ABILITY' ].
+	aNodeH := aMap nodes detect: [ :each | each label = 'Node F' ].
 	self assert: aNodeH x equals: 0.70.
 	self assert: aNodeH y equals: 1 - 0.15.
 	self assert: aNodeH innerNodes size equals: 2.
@@ -122,11 +122,16 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipelineSimpli
 		
 	aMap := anImporter wardleyMap.
 	
+	true ifTrue: [ 
+		^ GtWardleyMapScriptExampleResult new 
+			originalScript: aScript;
+			resultingWardleyMap: anImporter wardleyMap ].
+	
 	self assert: aMap title equals: 'Something'.
 	self assert: aMap nodes size equals: 8.
 	self assert: aMap edges size equals: 3.
 	
-	aNodeA := aMap nodes detect: [ :each | each label = 'user' ].
+	aNodeA := aMap nodes detect: [ :each | each label = 'Node A' ].
 	self assert: aNodeA maturity equals: 0.66.
 	self assert: aNodeA x equals: 0.66.
 	self assert: aNodeA visibility equals: 0.95.
@@ -134,23 +139,23 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipelineSimpli
 	self assert: aNodeA innerNodes size equals: 0.
 	self assert: aNodeA pipelineNode isNil.
 	
-	aNodeB := aMap nodes detect: [ :each | each label = 'GOAL' ].
+	aNodeB := aMap nodes detect: [ :each | each label = 'Node B' ].
 	self assert: aNodeB x equals: 0.57.
 	self assert: aNodeB y equals: 1 - 0.84.
 	self assert: aNodeB innerNodes size equals: 0.
 	self assert: aNodeB pipelineNode isNil.
 
-	aNodeC := aMap nodes detect: [ :each | each label = 'ABC' ].
+	aNodeC := aMap nodes detect: [ :each | each label = 'Node D' ].
 	self assert: aNodeC x equals: 0.17.
 	self assert: aNodeC y equals: 1 - 0.50.
 	self assert: aNodeC innerNodes size equals: 0.
 	
-	aNodeD := aMap nodes detect: [ :each | each label = 'XYZ' ].
+	aNodeD := aMap nodes detect: [ :each | each label = 'Node E' ].
 	self assert: aNodeD x equals: 0.80.
 	self assert: aNodeD y equals: 1 - 0.50.
 	self assert: aNodeD innerNodes size equals: 0.
 	
-	aNodeE := aMap nodes detect: [ :each | each label = 'PRACTICE' ].
+	aNodeE := aMap nodes detect: [ :each | each label = 'Node C' ].
 	self assert: aNodeE x equals: 0.67.
 	self assert: aNodeE y equals: 1 - 0.50.
 	self assert: aNodeE innerNodes size equals: 2.
@@ -160,17 +165,17 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipelineSimpli
 	self assert: aNodeD pipelineNode equals: aNodeE.
 	self assert: aNodeE pipelineNode isNil.
 
-	aNodeF := aMap nodes detect: [ :each | each label = 'A' ].
+	aNodeF := aMap nodes detect: [ :each | each label = 'Node G' ].
 	self assert: aNodeF x equals: 0.67.
 	self assert: aNodeF y equals: 1 - 0.18.
 	self assert: aNodeF innerNodes size equals: 0.
 	
-	aNodeG := aMap nodes detect: [ :each | each label = 'B' ].
+	aNodeG := aMap nodes detect: [ :each | each label = 'Node H' ].
 	self assert: aNodeG x equals: 0.75.
 	self assert: aNodeG y equals: 1 - 0.18.
 	self assert: aNodeG innerNodes size equals: 0.
 	
-	aNodeH := aMap nodes detect: [ :each | each label = 'ABILITY' ].
+	aNodeH := aMap nodes detect: [ :each | each label = 'Node F' ].
 	self assert: aNodeH x equals: 0.70.
 	self assert: aNodeH y equals: 1 - 0.18.
 	self assert: aNodeH innerNodes size equals: 2.

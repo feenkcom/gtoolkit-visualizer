@@ -17,7 +17,7 @@ GtWardleyMapParser class >> ambiguousTransitions [
 
 { #category : #'generated-accessing' }
 GtWardleyMapParser class >> cacheId [
-	^'2024-05-16T17:52:15.213425-04:00'
+	^'2024-05-22T06:10:40.307849-04:00'
 ]
 
 { #category : #generated }
@@ -587,7 +587,7 @@ GtWardleyMapParser class >> transitionTable [
 #[0 3 77 0 90] 
 #[0 3 81 0 13] 
 #[0 1 98 0 22 0 91] 
-#[1 1 62 0 28 0 18 0 31 3 41 0 60 0 73 0 61 3 85 0 66 3 53 0 67 3 57 0 84] 
+#[1 0 10 0 28 0 18 0 31 3 41 0 60 0 73 0 61 3 85 0 66 3 53 0 67 3 57 0 84] 
 #[0 1 102 0 15 0 22] 
 #[0 3 89 0 15] 
 #[1 1 106 0 15 1 106 0 22 3 93 0 65] 
