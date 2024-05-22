@@ -17,15 +17,24 @@ GtWardleyMapNoteElement >> initialize [
 	self constraintsDo: [ :c | 
 		c vertical fitContent.
 		c horizontal fitContent ].
+	self background: BrGlamorousColors neutralBackgroundColor.
+	self geometry: (BlRoundedRectangleGeometry cornerRadius: 4).
 	labelElement := BrEditableLabel new
 			fitContent;
 			id: GtWardleyMapNoteLabelId;
-			aptitude: BrGlamorousRegularEditorAptitude new;
+			aptitude: (BrGlamorousRegularEditorAptitude new glamorousRegularSmallSize);
+			padding: (BlInsets all: 3);
 			when: BrEditorAcceptWish
 				do: [ :aWish | self wardleyMapNoteViewModel label: aWish text asString ];
 			text: 'Note'.
 			
 	self addChild: labelElement.
+	
+	self
+		addAptitude: (BrStyleCommonAptitude new
+				focused: [ :s | s border: (BlBorder 
+					paint: self theme editor focusedBorderColor 
+					width: 1) ]).
 	self
 		when: BlClickEvent
 		do: [ :anEvent | 
