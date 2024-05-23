@@ -476,7 +476,8 @@ GtWardleyMapModelExamples >> newMapWithNodes_nodeBAsEvolveTarget [
 	
 	aTransformer := GtWardleyMapNodeEvolveTypeTransformer new
 		sourceNode: aNodeA;
-		targetNode: aNodeB.
+		targetNode: aNodeB;
+		mapModel: aWardleyMap.
 		
 	self assert: aTransformer possibleSourceNodes asArray equals: { aNodeA }.
 	self assert: aTransformer possibleIncomingEdges asArray equals: { anEdgeAtoB }.

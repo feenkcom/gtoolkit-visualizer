@@ -6,16 +6,32 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
+{ #category : #private }
+GtWardleyMapEdgeElement >> createDefaultBorder [
+	^ BlBorder builder
+		paint: self wardleyMapEdgeViewModel lineColor;
+		width: self wardleyMapEdgeViewModel lineWidth;
+		in: [ :aBuilder | 
+			self wardleyMapEdgeViewModel isToNodeEvolveTargetType
+				ifTrue: [ aBuilder dashed ] ];
+		build
+]
+
+{ #category : #private }
+GtWardleyMapEdgeElement >> createHoveredBorder [
+	^ BlBorder builder
+		paint: GtWardleyMapConstants hoverColor;
+		width: self wardleyMapEdgeViewModel lineWidth;
+		in: [ :aBuilder | 
+			self wardleyMapEdgeViewModel isToNodeEvolveTargetType
+				ifTrue: [ aBuilder dashed ] ];
+		build
+]
+
 { #category : #initialization }
 GtWardleyMapEdgeElement >> initialize [
 	super initialize.
-	self
-		aptitude:
-			(BrStyleCommonAptitude new
-				unfocused: [ :s | s border: (BlBorder paint: Color red width: 1) ];
-				focused: [ :s | 
-					s
-						border: (BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
+	self aptitude: BrStyleCommonAptitude new.
 	self
 		when: BlClickEvent
 		do: [ :anEvent | 
@@ -24,18 +40,15 @@ GtWardleyMapEdgeElement >> initialize [
 				ifTrue: [ anEvent consumed: true.
 					anEvent currentTarget requestFocus ] ].
 	self
-		addShortcut:
-			(BlShortcutWithAction new
+		addShortcut: (BlShortcutWithAction new
 				combination: BlKeyCombination backspace;
 				action: [ self wardleyMapEdgeViewModel removeFromMap ]).
 	self
-		addShortcut:
-			(BlShortcutWithAction new
+		addShortcut: (BlShortcutWithAction new
 				combination: BlKeyCombination builder primary minus build;
 				action: [ self wardleyMapEdgeViewModel decreaseWidth ]).
 	self
-		addShortcut:
-			(BlShortcutWithAction new
+		addShortcut: (BlShortcutWithAction new
 				combination: BlKeyCombination builder primary equal build;
 				action: [ self wardleyMapEdgeViewModel increaseWidth ])
 ]
@@ -56,6 +69,11 @@ GtWardleyMapEdgeElement >> onEdgeResized: anAnnouncement [
 	self updateLineLook
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeTypeChanged: anAnnouncement [.
+	self updateLineLook
+]
+
 { #category : #'api - wardley map edge view model' }
 GtWardleyMapEdgeElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
@@ -73,7 +91,8 @@ GtWardleyMapEdgeElement >> subscribeToWardleyMapEdgeViewModel [
 	self wardleyMapEdgeViewModel weak
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
 		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self;
+		when: GtWardleyMapEdgeViewModelTypeChanged send: #onEdgeTypeChanged: to: self
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -99,17 +118,16 @@ GtWardleyMapEdgeElement >> updateLineArrow [
 { #category : #private }
 GtWardleyMapEdgeElement >> updateLineLook [
 	self aptitude
-		unfocused: [ :s | 
-			s
-				border:
-					(BlBorder
-						paint: self wardleyMapEdgeViewModel lineColor
-						width: self wardleyMapEdgeViewModel lineWidth) ];
-		focused: [ :s | 
-			s
-				border:
-					(BlBorder
-						paint: self theme editor focusedBorderColor
-						width: self wardleyMapEdgeViewModel lineWidth) ];
+		default: [ :aStyle | aStyle border: self createDefaultBorder ];
+		hovered: [ :aStyle | 
+			aStyle
+				do: [ :theElement | 
+					theElement border: self createHoveredBorder.
+					theElement toHead ifNotNil: [ :aHead | 
+						aHead background: GtWardleyMapConstants hoverColor ] ]
+				after: [ :theElement | 
+					theElement border: self createDefaultBorder.
+					theElement toHead ifNotNil: [ :aHead | 
+						aHead background: self wardleyMapEdgeViewModel lineColor ] ] ];
 		propagateStylesToWidget
 ]

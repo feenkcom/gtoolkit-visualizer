@@ -35,10 +35,6 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 		in: [ :aLineElement | aLineElement graph beEdge ];
 		id: (self newEdgeId);
 		wardleyMapEdgeViewModel: anEdgeViewModel;
-		addAptitude: (BrStyleCommonAptitude new 
-				hovered: [ :aStyle | aStyle 
-					do: [ :theElement | theElement border: (BlBorder paint: (self hoverColorFrom: anEdgeViewModel lineColor) width: 1) ]
-					after: [ :theElement | theElement border: (BlBorder paint: anEdgeViewModel lineColor width: 1) ] ]);
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
 		zIndex: -1;
