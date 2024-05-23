@@ -7,6 +7,21 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
+{ #category : #private }
+GtWardleyMapNodeEvolveOption >> anyEdgeFromNodeHasEdgeToEvolveNode: aCollectionOfEdges [
+	aCollectionOfEdges
+		do: [ :eachIncomingEdge | 
+			| otherOutgoingEdges |
+			otherOutgoingEdges := self
+					outgoingEdgeViewModelsForNodeViewModel: eachIncomingEdge fromNodeViewModel.
+			otherOutgoingEdges
+				do: [ :eachOutgoingEdge | 
+					eachOutgoingEdge == eachIncomingEdge
+						ifFalse: [ eachOutgoingEdge toNodeViewModel isEvolveTargetType ifTrue: [ ^ true ] ] ] ].
+						
+	^ false
+]
+
 { #category : #testing }
 GtWardleyMapNodeEvolveOption >> canAddEvolveNode [
 	^ nodeViewModel isEvolveTargetType not
@@ -18,13 +33,21 @@ GtWardleyMapNodeEvolveOption >> canAddEvolveNode [
 GtWardleyMapNodeEvolveOption >> canManipulateEvolveType [
 	^ nodeViewModel isPipelineVisible not
 		and: [ nodeViewModel wardleyMapViewModel isNotNil
-				and: [ self incommingEdgeViewModels size = 1
-						and: [ self outgoingEdgeViewModels size = 0 ] ] ]
+				and: [ | incomingEdges |
+					incomingEdges := self incommingEdgeViewModels.
+					incomingEdges size = 1
+						and: [ self outgoingEdgeViewModels size = 0
+								and: [ (self anyEdgeFromNodeHasEdgeToEvolveNode: incomingEdges) not ] ] ] ]
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeEvolveOption >> edgeViewModels [
+	^ nodeViewModel wardleyMapViewModel edgeViewModels
 ]
 
 { #category : #testing }
 GtWardleyMapNodeEvolveOption >> incommingEdgeViewModels [
-	^ nodeViewModel wardleyMapViewModel edgeViewModels
+	^ self edgeViewModels
 		select: [ :eachEdge | eachEdge toNodeViewModel == nodeViewModel ]
 ]
 
@@ -43,8 +66,13 @@ GtWardleyMapNodeEvolveOption >> nodeViewModel: anObject [
 	nodeViewModel := anObject
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 GtWardleyMapNodeEvolveOption >> outgoingEdgeViewModels [
-	^ nodeViewModel wardleyMapViewModel edgeViewModels
-		select: [ :eachEdge | eachEdge fromNodeViewModel == nodeViewModel ]
+	^ self outgoingEdgeViewModelsForNodeViewModel: nodeViewModel
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeEvolveOption >> outgoingEdgeViewModelsForNodeViewModel: aNodeViewModel [
+	^ self edgeViewModels
+		select: [ :eachEdge | eachEdge fromNodeViewModel == aNodeViewModel ]
 ]

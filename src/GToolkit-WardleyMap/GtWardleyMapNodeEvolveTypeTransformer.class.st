@@ -84,6 +84,14 @@ GtWardleyMapNodeEvolveTypeTransformer >> mapModel: anObject [
 ]
 
 { #category : #'api - transformation' }
+GtWardleyMapNodeEvolveTypeTransformer >> outgoingTargetNodeEdges [
+	self assertTargetNode.
+
+	^ self mapModel edges
+		select: [ :each | each fromNode == self targetNode ]
+]
+
+{ #category : #'api - transformation' }
 GtWardleyMapNodeEvolveTypeTransformer >> possibleIncomingEdges [
 	self assertTargetNode.
 
@@ -134,6 +142,12 @@ GtWardleyMapNodeEvolveTypeTransformer >> transform [
 			targetNode: self targetNode.
 
 	self possibleIncomingEdges do: [ :eachEdge | 
+		eachEdge == incomingEdge ifFalse: [ 
+			self mapModel removeEdge: eachEdge
+		]
+	].
+	
+	self outgoingTargetNodeEdges do: [ :eachEdge | 
 		eachEdge == incomingEdge ifFalse: [ 
 			self mapModel removeEdge: eachEdge
 		]

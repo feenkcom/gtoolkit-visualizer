@@ -12,6 +12,14 @@ Class {
 	#category : #'GToolkit-WardleyMap-! View models'
 }
 
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> addEvolve [
+	GtWardleyMapNodeEvolveTypeBuilder new
+		sourceNode: self wardleyMapNodeModel;
+		mapModel: self wardleyMapViewModel wardleyMapModel;
+		build
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> addInnerNodeViewModel: aNodeViewModel [
 	"Let the node model be part of my pipeline."
