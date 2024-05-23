@@ -190,6 +190,10 @@ GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
 						min: aPipelineCoordinate y.
 				aCorrectedX @ aNodeCoordinate y ]
 			ifFalse: [ aNormalizedPoint ].
+			
+	self isEvolveTargetType ifTrue: [ 
+		aCorrectedPoint := aCorrectedPoint x @ wardleyMapNodeModel coordinate y
+	].
 
 	self wardleyMapNodeModel coordinate: aCorrectedPoint
 ]
