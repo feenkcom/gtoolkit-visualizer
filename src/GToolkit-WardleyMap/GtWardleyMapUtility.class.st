@@ -88,6 +88,18 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 ]
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> newButtonElement [
+	^ BrButton new
+		beSmallSize;
+		aptitude: BrGlamorousButtonWithLabelAptitude new;
+		margin: (BlInsets
+				top: 10
+				left: 5
+				bottom: 5
+				right: 0)
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> newColorLabelElement [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
@@ -101,15 +113,7 @@ GtWardleyMapUtility class >> newColorLabelElement [
 
 { #category : #'api - views' }
 GtWardleyMapUtility class >> newDeleteButtonElement [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 10
-				left: 5
-				bottom: 5
-				right: 0);
-		label: 'Delete'
+	^ self newButtonElement label: 'Delete'
 ]
 
 { #category : #'api - model' }

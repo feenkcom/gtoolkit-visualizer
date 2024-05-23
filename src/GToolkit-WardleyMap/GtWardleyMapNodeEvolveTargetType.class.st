@@ -19,6 +19,11 @@ GtWardleyMapNodeEvolveTargetType >> = anObject [
 				and: [ self targetNode = anObject targetNode ] ]
 ]
 
+{ #category : #'api - hooks' }
+GtWardleyMapNodeEvolveTargetType >> addedToNode [
+	self targetNode y: self sourceNode y
+]
+
 { #category : #printing }
 GtWardleyMapNodeEvolveTargetType >> gtDisplayText [
 	| aText |
@@ -36,6 +41,11 @@ GtWardleyMapNodeEvolveTargetType >> gtDisplayText [
 { #category : #comparing }
 GtWardleyMapNodeEvolveTargetType >> hash [
 	^ (self class hash bitXor: self sourceNode hash) bitXor: self targetNode hash
+]
+
+{ #category : #'api - testing' }
+GtWardleyMapNodeEvolveTargetType >> isEvolveTargetType [
+	^ true
 ]
 
 { #category : #accessing }

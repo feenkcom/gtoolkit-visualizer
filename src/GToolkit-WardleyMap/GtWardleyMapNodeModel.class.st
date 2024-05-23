@@ -473,6 +473,8 @@ GtWardleyMapNodeModel >> type: aType [
 		description: [ 'Node model type must be non-nil' ].
 	self type = aType ifTrue: [ ^ self ].
 	
+	type aboutToRemoveFromNode.
 	type := aType.
+	type addedToNode.
 	self notifyTypeChanged.
 ]

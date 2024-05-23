@@ -278,7 +278,7 @@ GtWardleyMapScriptImporter >> initialize [
 { #category : #'private - import' }
 GtWardleyMapScriptImporter >> nodeNamed: aNodeName ifFound: aFoundBlock ifNone: aNoneBlock [
 	wardleyMap nodes reverseDo: [ :eachNodeModel | 
-		(eachNodeModel label = aNodeName and: [ eachNodeModel type isRegularNode ]) 
+		(eachNodeModel label = aNodeName and: [ eachNodeModel type isRegularType ]) 
 			ifTrue: [ ^ aFoundBlock value: eachNodeModel ] ].
 
 	^ aNoneBlock value

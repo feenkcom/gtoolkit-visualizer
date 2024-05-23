@@ -12,6 +12,6 @@ GtWardleyMapNodeRegularType >> gtDisplayText [
 ]
 
 { #category : #'api - testing' }
-GtWardleyMapNodeRegularType >> isRegularNode [
+GtWardleyMapNodeRegularType >> isRegularType [
 	^ true
 ]

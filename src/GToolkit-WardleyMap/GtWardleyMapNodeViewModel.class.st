@@ -78,6 +78,11 @@ GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
 	innerNodeViewModels := aNodeViewModels
 ]
 
+{ #category : #'api - type' }
+GtWardleyMapNodeViewModel >> isEvolveTargetType [
+	^ self wardleyMapNodeModel type isEvolveTargetType
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> isPipelineVisible [
 	^ self wardleyMapNodeModel isPipelineVisible
@@ -225,6 +230,12 @@ GtWardleyMapNodeViewModel >> onNodeResized: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelResized new nodeViewModel: self)
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeTypeChanged: anAnnouncement [
+	self
+		announce: (GtWardleyMapNodeViewModelTypeChanged new nodeViewModel: self)
+]
+
 { #category : #'api - wardley map node model' }
 GtWardleyMapNodeViewModel >> onWardleyMapNodeModelChanged [
 	"Is sent when a new wardleyMapNode model is assigned to the view model"
@@ -323,7 +334,8 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeModelColored send: #onNodeColored: to: self;
 		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self;
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
-		when: GtWardleyMapNodeModelPipelineResized send: #onNodePipelineResized: to: self.
+		when: GtWardleyMapNodeModelPipelineResized send: #onNodePipelineResized: to: self;
+		when: GtWardleyMapNodeModelTypeChanged send: #onNodeTypeChanged: to: self.
 	
 	self wardleyMapNodeModel labelModel weak
 		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;
