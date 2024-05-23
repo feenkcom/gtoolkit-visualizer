@@ -398,7 +398,7 @@ GtPlotterLineChart >> newContentLineElementFor: aGroup [
 		geometry: (BlNormalizedPolyline vertices: (self newContentLineVerticesFor: aGroup));
 		border: (BlBorder paint: aGroup color width: 1);
 		outskirts: BlOutskirts centered;
-		constraintsDo: [ :c | 
+		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ]
 ]
