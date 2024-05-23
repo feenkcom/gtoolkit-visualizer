@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapNodeEvolveOption,
+	#name : #GtWardleyMapNodeChangePossibility,
 	#superclass : #Object,
 	#instVars : [
 		'nodeViewModel'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #private }
-GtWardleyMapNodeEvolveOption >> anyEdgeFromNodeHasEdgeToEvolveNode: aCollectionOfEdges [
+GtWardleyMapNodeChangePossibility >> anyEdgeFromNodeHasEdgeToEvolveNode: aCollectionOfEdges [
 	aCollectionOfEdges
 		do: [ :eachIncomingEdge | 
 			| otherOutgoingEdges |
@@ -23,14 +23,14 @@ GtWardleyMapNodeEvolveOption >> anyEdgeFromNodeHasEdgeToEvolveNode: aCollectionO
 ]
 
 { #category : #testing }
-GtWardleyMapNodeEvolveOption >> canAddEvolveNode [
+GtWardleyMapNodeChangePossibility >> canAddEvolveNode [
 	^ nodeViewModel isEvolveTargetType not
 		and: [ self outgoingEdgeViewModels
 				allSatisfy: [ :eachEdge | eachEdge toNodeViewModel isEvolveTargetType not ] ]
 ]
 
 { #category : #testing }
-GtWardleyMapNodeEvolveOption >> canManipulateEvolveType [
+GtWardleyMapNodeChangePossibility >> canManipulateEvolveType [
 	^ nodeViewModel isPipelineVisible not
 		and: [ nodeViewModel wardleyMapViewModel isNotNil
 				and: [ | incomingEdges |
@@ -40,39 +40,50 @@ GtWardleyMapNodeEvolveOption >> canManipulateEvolveType [
 								and: [ (self anyEdgeFromNodeHasEdgeToEvolveNode: incomingEdges) not ] ] ] ]
 ]
 
+{ #category : #testing }
+GtWardleyMapNodeChangePossibility >> canManipulatePipelineVisibility [
+	^ nodeViewModel pipelineNodeViewModel isNil
+		and: [ nodeViewModel isEvolveTargetType not ]
+]
+
 { #category : #accessing }
-GtWardleyMapNodeEvolveOption >> edgeViewModels [
+GtWardleyMapNodeChangePossibility >> edgeViewModels [
 	^ nodeViewModel wardleyMapViewModel edgeViewModels
 ]
 
 { #category : #testing }
-GtWardleyMapNodeEvolveOption >> incommingEdgeViewModels [
+GtWardleyMapNodeChangePossibility >> incommingEdgeViewModels [
 	^ self edgeViewModels
 		select: [ :eachEdge | eachEdge toNodeViewModel == nodeViewModel ]
 ]
 
-{ #category : #accessing }
-GtWardleyMapNodeEvolveOption >> isEvolveTargetType [
+{ #category : #testing }
+GtWardleyMapNodeChangePossibility >> isEvolveTargetType [
 	^ self nodeViewModel isEvolveTargetType
 ]
 
+{ #category : #testing }
+GtWardleyMapNodeChangePossibility >> isPipelineVisible [
+	^ self nodeViewModel isPipelineVisible
+]
+
 { #category : #accessing }
-GtWardleyMapNodeEvolveOption >> nodeViewModel [
+GtWardleyMapNodeChangePossibility >> nodeViewModel [
 	^ nodeViewModel
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeEvolveOption >> nodeViewModel: anObject [
+GtWardleyMapNodeChangePossibility >> nodeViewModel: anObject [
 	nodeViewModel := anObject
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeEvolveOption >> outgoingEdgeViewModels [
+GtWardleyMapNodeChangePossibility >> outgoingEdgeViewModels [
 	^ self outgoingEdgeViewModelsForNodeViewModel: nodeViewModel
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeEvolveOption >> outgoingEdgeViewModelsForNodeViewModel: aNodeViewModel [
+GtWardleyMapNodeChangePossibility >> outgoingEdgeViewModelsForNodeViewModel: aNodeViewModel [
 	^ self edgeViewModels
 		select: [ :eachEdge | eachEdge fromNodeViewModel == aNodeViewModel ]
 ]

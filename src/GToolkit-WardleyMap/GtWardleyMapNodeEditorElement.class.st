@@ -221,18 +221,18 @@ GtWardleyMapNodeEditorElement >> onNodeSizeChanged [
 
 { #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onNodeTypeChanged [
-	| anEvolveOption |
-	anEvolveOption := GtWardleyMapNodeEvolveOption new
+	| aChangePossibility |
+	aChangePossibility := GtWardleyMapNodeChangePossibility new
 			nodeViewModel: self wardleyMapNodeViewModel.
 
-	evolveTargetElement checked: anEvolveOption isEvolveTargetType.
-	evolveTargetElement enabled: anEvolveOption canManipulateEvolveType.
-	anEvolveOption canManipulateEvolveType
+	evolveTargetElement checked: aChangePossibility isEvolveTargetType.
+	evolveTargetElement enabled: aChangePossibility canManipulateEvolveType.
+	aChangePossibility canManipulateEvolveType
 		ifTrue: [ evolveTargetElement
 				whenCheckedDo: [ :anEvent | self onEvolveTargetChecked: anEvent ];
 				whenUncheckedDo: [ :anEvent | self onEvolveTargetUnchecked: anEvent ] ].
 
-	addEvolveElement enabled: anEvolveOption canAddEvolveNode
+	addEvolveElement enabled: aChangePossibility canAddEvolveNode
 ]
 
 { #category : #'event handling' }
@@ -243,11 +243,14 @@ GtWardleyMapNodeEditorElement >> onNodeTypeChanged: anAnnouncement [
 
 { #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged [
-	pipelineVisibilityElement
-		checked: self wardleyMapNodeViewModel isPipelineVisible.
+	| aChangePossibility |
+	aChangePossibility := GtWardleyMapNodeChangePossibility new
+			nodeViewModel: self wardleyMapNodeViewModel.
 
-	(self wardleyMapNodeViewModel pipelineNodeViewModel isNil
-		and: [ self wardleyMapNodeViewModel isEvolveTargetType not ])
+	pipelineVisibilityElement
+		checked: aChangePossibility isPipelineVisible.
+
+	(aChangePossibility canManipulatePipelineVisibility)
 		ifTrue: [ pipelineVisibilityElement enabled: true ]
 		ifFalse: [ pipelineVisibilityElement enabled: false ]
 ]
