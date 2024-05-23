@@ -69,6 +69,14 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 								at: #y put: aWardleyMapNode pipelineCoordinate y;
 								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id] as: Array) ] ];
 					yourself);
+		at: #evolve put: (Dictionary new
+			at: #is_evolve_target put: aWardleyMapNode type isEvolveTargetType;
+			in: [ :theDictionary | 
+				aWardleyMapNode type isEvolveTargetType ifTrue: [
+					theDictionary 
+						at: #source_node 
+						put: (self visitWardleyId: aWardleyMapNode type sourceNode id) ] ];
+			yourself);
 		yourself
 ]
 
