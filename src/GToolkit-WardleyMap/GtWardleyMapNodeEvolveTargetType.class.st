@@ -20,8 +20,17 @@ GtWardleyMapNodeEvolveTargetType >> = anObject [
 ]
 
 { #category : #'api - hooks' }
+GtWardleyMapNodeEvolveTargetType >> aboutToRemoveFromNode [
+	self sourceNode unsubscribe: self
+]
+
+{ #category : #'api - hooks' }
 GtWardleyMapNodeEvolveTargetType >> addedToNode [
-	self targetNode y: self sourceNode y
+	self updateTargetCoordinate.
+	self sourceNode weak
+		when: GtWardleyMapNodeModelMoved
+		send: #onSourceNodeMoved
+		to: self
 ]
 
 { #category : #printing }
@@ -46,6 +55,11 @@ GtWardleyMapNodeEvolveTargetType >> hash [
 { #category : #'api - testing' }
 GtWardleyMapNodeEvolveTargetType >> isEvolveTargetType [
 	^ true
+]
+
+{ #category : #'private - hooks' }
+GtWardleyMapNodeEvolveTargetType >> onSourceNodeMoved [
+	self updateTargetCoordinate
 ]
 
 { #category : #accessing }
@@ -82,4 +96,9 @@ GtWardleyMapNodeEvolveTargetType >> targetNode: aNodeModel [
 		description: [ 'Target node must be non-nil' ].
 
 	targetNode := aNodeModel
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapNodeEvolveTargetType >> updateTargetCoordinate [
+	self targetNode y: self sourceNode y
 ]
