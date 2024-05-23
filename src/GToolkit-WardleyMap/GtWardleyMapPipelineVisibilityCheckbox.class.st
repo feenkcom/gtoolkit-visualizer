@@ -44,8 +44,8 @@ GtWardleyMapPipelineVisibilityCheckbox >> initialize [
 			text: 'visible pipeline'.
 			
 	disabledLabel := BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-			text: 'Inner nodes cannot have pipelines';
+			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray; italic);
+			text: 'Cannot have pipelines';
 			visibility: BlVisibility gone.
 
 	self addChild: checkbox.

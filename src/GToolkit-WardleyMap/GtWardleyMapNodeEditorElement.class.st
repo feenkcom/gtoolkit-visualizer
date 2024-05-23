@@ -236,13 +236,26 @@ GtWardleyMapNodeEditorElement >> onNodeTypeChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeEditorElement >> onNodeTypeChanged: anAnnouncement [
+	self onPipelineVisibilityChanged.
+	self onNodeTypeChanged.
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged [
 	pipelineVisibilityElement
 		checked: self wardleyMapNodeViewModel isPipelineVisible.
-		
-	self wardleyMapNodeViewModel pipelineNodeViewModel 
-		ifNil: [ pipelineVisibilityElement enabled: true ]
-		ifNotNil: [ pipelineVisibilityElement enabled: false ].
+
+	(self wardleyMapNodeViewModel pipelineNodeViewModel isNil
+		and: [ self wardleyMapNodeViewModel isEvolveTargetType not ])
+		ifTrue: [ pipelineVisibilityElement enabled: true ]
+		ifFalse: [ pipelineVisibilityElement enabled: false ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged: anAnnouncement [
+	self onPipelineVisibilityChanged.
+	self onNodeTypeChanged.
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -276,10 +289,10 @@ GtWardleyMapNodeEditorElement >> subscribeToWardleyMapNodeViewModel [
 			send: #onNodeSizeChanged
 			to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged
-			send: #onPipelineVisibilityChanged
+			send: #onPipelineVisibilityChanged:
 			to: self;
 		when: GtWardleyMapNodeViewModelTypeChanged
-			send: #onNodeTypeChanged
+			send: #onNodeTypeChanged:
 			to: self
 ]
 
