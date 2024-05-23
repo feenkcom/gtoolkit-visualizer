@@ -19,7 +19,7 @@ GtWardleyMapNodeEditorElement >> createAddEvolveElement [
 		label: 'Add evolve node';
 		action: [ 
 			self wardleyMapNodeViewModel addEvolve.
-			self fireEvent: BrDropdownHideWish new ]
+			self fireEvent: BrContextMenuHideWish new ]
 ]
 
 { #category : #initialization }
@@ -53,7 +53,7 @@ GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
 		label: 'Delete node';
 		action: [ 
 			self wardleyMapNodeViewModel removeFromMap.
-			self fireEvent: BrDropdownHideWish new ]
+			self fireEvent: BrContextMenuHideWish new ]
 ]
 
 { #category : #initialization }
