@@ -200,8 +200,12 @@ GtWardleyMapNodeEditorElement >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onEvolveTargetChecked: anEvent [
+	| aCoordinateY |
 	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	aCoordinateY := self wardleyMapNodeViewModel coordinateY.
 	self wardleyMapNodeViewModel convertToEvolveNode.
+	(aCoordinateY closeTo: self wardleyMapNodeViewModel coordinateY)
+		ifFalse: [ self fireEvent: BrContextMenuHideWish new ]
 ]
 
 { #category : #'event handling' }
@@ -219,15 +223,15 @@ GtWardleyMapNodeEditorElement >> onNodeSizeChanged [
 GtWardleyMapNodeEditorElement >> onNodeTypeChanged [
 	| anEvolveOption |
 	anEvolveOption := GtWardleyMapNodeEvolveOption new
-		 nodeViewModel: self wardleyMapNodeViewModel.
+			nodeViewModel: self wardleyMapNodeViewModel.
 
 	evolveTargetElement checked: anEvolveOption isEvolveTargetType.
 	evolveTargetElement enabled: anEvolveOption canManipulateEvolveType.
-	evolveTargetElement whenCheckedDo: [ :anEvent | 
-			self onEvolveTargetChecked: anEvent ];
-		whenUncheckedDo: [ :anEvent | 
-			self onEvolveTargetUnchecked: anEvent ].
-	
+	anEvolveOption canManipulateEvolveType
+		ifTrue: [ evolveTargetElement
+				whenCheckedDo: [ :anEvent | self onEvolveTargetChecked: anEvent ];
+				whenUncheckedDo: [ :anEvent | self onEvolveTargetUnchecked: anEvent ] ].
+
 	addEvolveElement enabled: anEvolveOption canAddEvolveNode
 ]
 

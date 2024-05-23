@@ -36,6 +36,19 @@ GtWardleyMapNodeViewModel >> changeColorTo: aColor [
 	self wardleyMapNodeModel color: aColor
 ]
 
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> convertToEvolveNode [
+	GtWardleyMapNodeEvolveTypeTransformer new
+		targetNode: self wardleyMapNodeModel;
+		mapModel: self wardleyMapViewModel wardleyMapModel;
+		transform
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> convertToRegularNode [
+	self wardleyMapNodeModel type: GtWardleyMapNodeRegularType default
+]
+
 { #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> coordinate [
 	^ self wardleyMapNodeModel coordinate

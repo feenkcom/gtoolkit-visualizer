@@ -16,7 +16,7 @@ GtWardleyMapNodeEvolveOption >> canAddEvolveNode [
 
 { #category : #testing }
 GtWardleyMapNodeEvolveOption >> canManipulateEvolveType [
-	^ nodeViewModel pipelineNodeViewModel isNil
+	^ nodeViewModel isPipelineVisible not
 		and: [ nodeViewModel wardleyMapViewModel isNotNil
 				and: [ self incommingEdgeViewModels size = 1
 						and: [ self outgoingEdgeViewModels size = 0 ] ] ]

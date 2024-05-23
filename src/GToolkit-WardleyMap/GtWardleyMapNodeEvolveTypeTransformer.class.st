@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'sourceNode',
 		'targetNode',
-		'incomingEdge'
+		'incomingEdge',
+		'mapModel'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers - Node Type'
 }
@@ -72,11 +73,21 @@ GtWardleyMapNodeEvolveTypeTransformer >> incomingEdge: anObject [
 	incomingEdge := anObject
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodeEvolveTypeTransformer >> mapModel [
+	^ mapModel
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeEvolveTypeTransformer >> mapModel: anObject [
+	mapModel := anObject
+]
+
 { #category : #'api - transformation' }
 GtWardleyMapNodeEvolveTypeTransformer >> possibleIncomingEdges [
 	self assertTargetNode.
 
-	^ self targetNode parent edges
+	^ self mapModel edges
 		select: [ :each | each toNode == self targetNode ]
 ]
 
@@ -122,5 +133,11 @@ GtWardleyMapNodeEvolveTypeTransformer >> transform [
 			sourceNode: self sourceNode;
 			targetNode: self targetNode.
 
-	self targetNode type: aType
+	self possibleIncomingEdges do: [ :eachEdge | 
+		eachEdge == incomingEdge ifFalse: [ 
+			self mapModel removeEdge: eachEdge
+		]
+	].
+			
+	self targetNode type: aType.
 ]
