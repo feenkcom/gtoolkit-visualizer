@@ -77,6 +77,26 @@ GtWardleyMapNodeChangePossibility >> nodeViewModel: anObject [
 	nodeViewModel := anObject
 ]
 
+{ #category : #testing }
+GtWardleyMapNodeChangePossibility >> offsettingPipelineNodeViewModel [
+	"Return a pipeline model that vertically moves given node view model."
+
+	<return: #GtWardleyMapNodeViewModel or: nil>
+	nodeViewModel pipelineNodeViewModel ifNotNil: [ :aViewModel | ^ aViewModel ].
+
+	self isEvolveTargetType
+		ifTrue: [ 
+			| aSourceModel |
+			aSourceModel := nodeViewModel wardleyMapNodeModel type sourceNode.
+			nodeViewModel wardleyMapViewModel
+				nodeViewModelFor: aSourceModel 
+				ifFound: [ :aSourceViewModel | aSourceViewModel pipelineNodeViewModel
+					ifNotNil: [ :aViewModel | ^ aViewModel ] ] 
+				ifNone: [ "ignore" ] ].
+
+	^ nil
+]
+
 { #category : #accessing }
 GtWardleyMapNodeChangePossibility >> outgoingEdgeViewModels [
 	^ self outgoingEdgeViewModelsForNodeViewModel: nodeViewModel
