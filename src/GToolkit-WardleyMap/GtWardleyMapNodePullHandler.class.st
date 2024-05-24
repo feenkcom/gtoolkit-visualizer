@@ -52,7 +52,7 @@ GtWardleyMapNodePullHandler >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition to: aNewPosition by: aDragDelta starting: anOriginalPosition [
-	| aNewRelativePosition aContainerExtent aPullDirection aNodeViewModel aNewPositionWithoutOffset |
+	| aNewRelativePosition aContainerExtent aPullDirection aNodeViewModel aChangePossibility aNewPositionWithoutOffset |
 	super
 		onPulled: aPulledElement
 		from: aPreviousPosition
@@ -61,8 +61,10 @@ GtWardleyMapNodePullHandler >> onPulled: aPulledElement from: aPreviousPosition 
 		starting: anOriginalPosition.
 
 	aNodeViewModel := aPulledElement wardleyMapNodeViewModel.
+	aChangePossibility := GtWardleyMapNodeChangePossibility new
+			nodeViewModel: aNodeViewModel.
 	
-	aNewPositionWithoutOffset := aNodeViewModel pipelineNodeViewModel 
+	aNewPositionWithoutOffset := aChangePossibility offsettingPipelineNodeViewModel 
 		ifNil: [ aNewPosition ]
 		ifNotNil: [ :aPipelineNodeViewModel | 
 			| anOffset |
