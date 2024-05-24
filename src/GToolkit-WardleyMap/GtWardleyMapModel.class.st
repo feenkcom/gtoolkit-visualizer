@@ -181,6 +181,7 @@ GtWardleyMapModel >> gtNodesFor: aView [
 						c linear vertical alignCenter ] ] 
 			width: 40;
 		column: 'Name' text: #label;
+		column: 'Type' text: #type;
 		column: 'With pipeline' text: [ :aNode | aNode isPipelineVisible 
 			ifTrue: [ 'yes' ] 
 			ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ];

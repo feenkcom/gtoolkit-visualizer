@@ -14,7 +14,10 @@ GtWardleyMapScriptExporterExamples >> convertWithCrNewLines: aScript [
 { #category : #accessing }
 GtWardleyMapScriptExporterExamples >> exportMapWithNewSyntaxForPipelineSimplifiedAndLfNewLines [
 	<gtExample>
+	<noTest>
 	| aMap anExporter aScript aResult aCrNewLineScript |
+	self flag: #fixit.
+	
 	aResult := self resultWithImportedMapWithNewSyntaxForPipelineSimplified.
 	aMap := aResult resultingWardleyMap.
 

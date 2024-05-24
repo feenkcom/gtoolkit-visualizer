@@ -80,35 +80,37 @@ title Something
 evolution genesis / concept -> custom / emerging -> product / converging -> commodity/ accepted
 style wardley
 
+note Node C pipeline comment [0.45, 0.45]
 
 // components
-component user [0.95, 0.66]
-component GOAL [0.84, 0.57] label [-91, -5]
-pipeline GOAL
+component Node A [0.95, 0.66]
+component Node B [0.84, 0.57] label [-91, -5]
+pipeline Node B
 
-component  PRACTICE [0.50, 0.67] label [-2, -17]
-pipeline  PRACTICE
+component Node C [0.50, 0.67] label [-2, -17]
+pipeline Node C
 {
-component XYZ [0.80] label [20, 18]
-component ABC [0.17] label [-63, 14]
+component Node D [0.17] label [-63, 14]
+component Node E [0.80] label [20, 18]
 }
 
-component ABILITY [0.15, 0.70] label [4, -12]
-pipeline ABILITY
+component Node F [0.15, 0.70] label [4, -12]
+pipeline Node F
 {
-component A [0.67] label [-31, 15]
-component B [0.75] label [15, 16]
-evolve server -> A1 0.75 label [-3559, -3364]
+component Node G [0.67] label [-5, 33]
+component Node H [0.75] label [-5, 33]
+evolve Node G -> something g 0.8 label [-5, 20]
 }
+
+evolve Node B 0.73 label [-5, 21]
+evolve Node C -> something c 0.9 label [-5, 21]
 
 //connections
 
-user->GOAL
-GOAL-> PRACTICE
-PRACTICE->ABILITY
-
-
-evolve A 0.75 label [-3000, -3000]'.
+Node A->Node B
+Node B->Node C
+Node C->Node F
+'.
 
 	self assertCrNewLine: aScript.
 	
@@ -124,29 +126,36 @@ GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCrSimplified [
 
 title Something
 
-component user [0.95, 0.66] label [-10, 29]
+note Node C pipeline comment [0.45, 0.45]
 
-component GOAL [0.84, 0.57] label [-91, -5]
-pipeline GOAL
+component Node A [0.95, 0.66] label [-10, 29]
 
-component PRACTICE [0.50, 0.67] label [-2, -17]
-pipeline PRACTICE
+component Node B [0.84, 0.57] label [-91, -5]
+pipeline Node B
+
+component Node C [0.50, 0.67] label [-2, -17]
+pipeline Node C
 {
-component XYZ [0.80] label [20, 18]
-component ABC [0.17] label [-63, 14]
+component Node D [0.17] label [-63, 14]
+component Node E [0.80] label [20, 18]
 }
 
-component ABILITY [0.18, 0.70] label [4, -12]
-pipeline ABILITY
+component Node F [0.18, 0.70] label [4, -12]
+pipeline Node F
 {
-component A [0.67] label [-31, 15]
-component B [0.75] label [15, 16]
+component Node G [0.67] label [-31, 15]
+component Node H [0.75] label [15, 16]
 }
 
 
-user->GOAL
-GOAL->PRACTICE
-PRACTICE->ABILITY
+evolve Node B 0.73 label [-5, 21]
+evolve Node C -> something c 0.90 label [-5, 21]
+evolve Node G -> something g 0.80 label [-5, 20]
+
+
+Node A->Node B
+Node B->Node C
+Node C->Node F
 '.
 
 	self assertCrNewLine: aScript.

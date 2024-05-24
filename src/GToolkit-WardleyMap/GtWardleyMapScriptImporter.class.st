@@ -97,6 +97,7 @@ GtWardleyMapScriptImporter >> import [
 	self importPipelines.
 	self importEdges.
 	isNewPipelineSyntax ifFalse: [ self estimateInnerNodes ].
+	self importEvolves.
 	self importNotes.
 ]
 
@@ -125,6 +126,59 @@ GtWardleyMapScriptImporter >> importEdges [
 				ifNone: [ ]
 		].
 	]
+]
+
+{ #category : #'private - import' }
+GtWardleyMapScriptImporter >> importEvolves [
+	ast
+		allNodesOfType: GtWMEvolveNode
+		do: [ :anAstNode | 
+			| aNameParts aNodeName anEvolveName anAstName |
+			anAstName := anAstNode name ifNotNil: #source.
+			anAstName
+				ifNotNil: [ aNameParts := '->' split: anAstName.
+					self
+						assert: [ #(1 2) includes: aNameParts size ]
+						description: [ 'Evolve name can be with or without one arrow (->): ' format: {anAstName} ].
+					aNodeName := aNameParts first trimRight.
+					anEvolveName := aNameParts size = 1
+							ifTrue: [ aNodeName ]
+							ifFalse: [ aNameParts second trimBoth ].
+					self
+						nodeNamed: aNodeName
+						ifFound: [ :aNodeModel | 
+							anAstNode maturityNumber
+								ifNotNil: [ :aMaturity | 
+									| anEvolveNode anEdgeModel |
+									anEvolveNode := GtWardleyMapNodeModel new.
+									anEvolveNode x: aMaturity.
+									anEvolveNode y: aNodeModel y.
+									anEvolveNode color: Color red.
+
+									anAstNode label
+										ifNotNil: [ :aNode | 
+											aNode coordinate
+												ifNotNil: [ :aPoint | 
+													| aLabelCoordinate |
+													aLabelCoordinate := GtWardleyMapUtility
+															convertWardleyScriptNodeModel: anEvolveNode
+															labelCoordiante: aPoint.
+													anEvolveNode labelModel coordinate: aLabelCoordinate ] ].
+
+									anEvolveNode label: anEvolveName.
+									anEvolveNode
+										type: (GtWardleyMapNodeEvolveTargetType new
+												sourceNode: aNodeModel;
+												targetNode: anEvolveNode).
+
+									anEdgeModel := GtWardleyMapEdgeModel new.
+									anEdgeModel fromNode: aNodeModel.
+									anEdgeModel toNode: anEvolveNode.
+									anEdgeModel color: Color red.
+
+									wardleyMap addNode: anEvolveNode.
+									wardleyMap addEdge: anEdgeModel ] ]
+						ifNone: [  ] ] ]
 ]
 
 { #category : #'private - import' }
@@ -225,8 +279,8 @@ GtWardleyMapScriptImporter >> initialize [
 { #category : #'private - import' }
 GtWardleyMapScriptImporter >> nodeNamed: aNodeName ifFound: aFoundBlock ifNone: aNoneBlock [
 	wardleyMap nodes reverseDo: [ :eachNodeModel | 
-		eachNodeModel label = aNodeName ifTrue: [ 
-			^ aFoundBlock value: eachNodeModel ] ].
+		(eachNodeModel label = aNodeName and: [ eachNodeModel type isRegularType ]) 
+			ifTrue: [ ^ aFoundBlock value: eachNodeModel ] ].
 
 	^ aNoneBlock value
 ]
