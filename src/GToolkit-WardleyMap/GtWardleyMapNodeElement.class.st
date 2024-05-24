@@ -72,9 +72,13 @@ GtWardleyMapNodeElement >> labelElementDo: aBlock [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeElement >> onHovered [
+	self styleBuilder onHovered
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeColored [
-	self background: self wardleyMapNodeViewModel nodeColor.
-	labelElement aptitude foreground: self wardleyMapNodeViewModel labelColor.
+	self styleBuilder onNodeColored
 ]
 
 { #category : #'event handling' }
@@ -101,6 +105,21 @@ GtWardleyMapNodeElement >> onNodeResized [
 	self size: self wardleyMapNodeViewModel nodeSize
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeTypeChanged [
+	self onNodeColored
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeTypeChanged: anAnnouncement [
+	self onNodeTypeChanged
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onUnhovered [
+	self styleBuilder onUnhovered
+]
+
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
@@ -111,6 +130,11 @@ GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 
 	self onNodeLabelTextChanged.
 	self onNodeLabelMoved.
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeElement >> styleBuilder [
+	^ GtWardleyMapNodeStyleBuilder forElement: self
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -124,7 +148,8 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged to: self;
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
-		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
+		when: GtWardleyMapNodeViewModelTypeChanged send: #onNodeTypeChanged: to: self
 ]
 
 { #category : #'api - wardley map node view model' }

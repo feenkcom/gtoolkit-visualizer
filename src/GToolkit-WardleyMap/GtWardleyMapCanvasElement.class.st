@@ -63,15 +63,11 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 		when: BlMouseOverEvent 
 		do: [ :anEvent | 
 			anEvent consumed: true.
-			anEvent currentTarget background: (self hoverColorFrom: aNodeViewModel nodeColor).
-			anEvent currentTarget labelElementDo: [ :aLabelElement |
-				aLabelElement aptitude foreground: (self hoverColorFrom: aNodeViewModel labelColor) ] ];
+			anEvent currentTarget onHovered ];
 		when: BlMouseOutEvent 
 		do: [ :anEvent | 
 			anEvent consumed: true.
-			anEvent currentTarget background: aNodeViewModel nodeColor.
-			anEvent currentTarget labelElementDo: [ :aLabelElement |
-				aLabelElement aptitude foreground: (aNodeViewModel labelColor) ] ];
+			anEvent currentTarget onUnhovered ];
 		labelElementDo: [ :aLabelElement | 
 			aLabelElement 
 				when: BlMouseOverEvent 
