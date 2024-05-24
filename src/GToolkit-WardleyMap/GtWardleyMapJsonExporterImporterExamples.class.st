@@ -19,7 +19,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionary [
 	self assert: (anExportedDictionary at: #nodes) size equals: 3.
 	
 	aFirstNodeDictionary := (anExportedDictionary at: #nodes) at: 1.
-	self assert: aFirstNodeDictionary size equals: 8.
+	self assert: aFirstNodeDictionary size equals: 9.
 	self assert: (aFirstNodeDictionary at: #x) equals: 0.25.
 	self assert: (aFirstNodeDictionary at: #y) equals: 0.75.
 	self assert: (aFirstNodeDictionary at: #width) equals: 12.
@@ -36,7 +36,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionary [
 	self assert: (aFirstNodePipelineDictionary at: #is_visible) equals:false.
 
 	aSecondNodeDictionary := (anExportedDictionary at: #nodes) at: 2.
-	self assert: aSecondNodeDictionary size equals: 8.
+	self assert: aSecondNodeDictionary size equals: 9.
 	self assert: (aSecondNodeDictionary at: #x) equals: 0.5.
 	self assert: (aSecondNodeDictionary at: #y) equals: 0.25.
 	self assert: (aSecondNodeDictionary at: #width) equals: 12.
@@ -80,7 +80,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNod
 	self assert: ((aNoteADictionary at: #color) at: #alpha) equals: Color lightOrange alpha.
 	
 	aFirstNodeDictionary := (anExportedDictionary at: #nodes) at: 1.
-	self assert: aFirstNodeDictionary size equals: 8.
+	self assert: aFirstNodeDictionary size equals: 9.
 	self assert: (aFirstNodeDictionary at: #x) equals: 0.25.
 	self assert: (aFirstNodeDictionary at: #y) equals: 0.75.
 	self assert: (aFirstNodeDictionary at: #width) equals: 12.
@@ -112,7 +112,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNod
 	self assert: (aFirstNodePipelineInnerNodesArray at: 2) equals: (aFifthNodeDictionary at: #id).
 		
 	aSecondNodeDictionary := (anExportedDictionary at: #nodes) at: 2.
-	self assert: aSecondNodeDictionary size equals: 8.
+	self assert: aSecondNodeDictionary size equals: 9.
 	self assert: (aSecondNodeDictionary at: #x) equals: 0.5.
 	self assert: (aSecondNodeDictionary at: #y) equals: 0.25.
 	self assert: (aSecondNodeDictionary at: #width) equals: 12.

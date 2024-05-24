@@ -34,8 +34,8 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	aMap := anImporter wardleyMap.
 	
 	self assert: aMap title equals: 'Something'.
-	self assert: aMap nodes size equals: 8.
-	self assert: aMap edges size equals: 3.
+	self assert: aMap nodes size equals: 11.
+	self assert: aMap edges size equals: 6.
 	
 	aNodeA := aMap nodes detect: [ :each | each label = 'Node A' ].
 	self assert: aNodeA maturity equals: 0.66.

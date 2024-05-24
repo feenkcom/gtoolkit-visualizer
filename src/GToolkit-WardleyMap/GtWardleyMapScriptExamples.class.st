@@ -145,11 +145,13 @@ pipeline Node F
 {
 component Node G [0.67] label [-31, 15]
 component Node H [0.75] label [15, 16]
-evolve Node G -> something g 0.8 label [-5, 20]
 }
 
+
 evolve Node B 0.73 label [-5, 21]
-evolve Node C -> something c 0.9 label [-5, 21]
+evolve Node C -> something c 0.90 label [-5, 21]
+evolve Node G -> something g 0.80 label [-5, 20]
+
 
 Node A->Node B
 Node B->Node C
