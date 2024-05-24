@@ -151,12 +151,9 @@ GtWardleyMapScriptImporter >> importEvolves [
 								ifNotNil: [ :aMaturity | 
 									| anEvolveNode anEdgeModel |
 									anEvolveNode := GtWardleyMapNodeModel new.
-									anEvolveNode
-										type: (GtWardleyMapNodeEvolveTargetType new
-												sourceNode: aNodeModel;
-												targetNode: anEvolveNode).
 									anEvolveNode x: aMaturity.
 									anEvolveNode y: aNodeModel y.
+									anEvolveNode color: Color red.
 
 									anAstNode label
 										ifNotNil: [ :aNode | 
@@ -164,16 +161,20 @@ GtWardleyMapScriptImporter >> importEvolves [
 												ifNotNil: [ :aPoint | 
 													| aLabelCoordinate |
 													aLabelCoordinate := GtWardleyMapUtility
-															convertWardleyScriptNodeModel: aNodeModel
+															convertWardleyScriptNodeModel: anEvolveNode
 															labelCoordiante: aPoint.
-													aNodeModel labelModel coordinate: aLabelCoordinate ] ].
+													anEvolveNode labelModel coordinate: aLabelCoordinate ] ].
 
 									anEvolveNode label: anEvolveName.
+									anEvolveNode
+										type: (GtWardleyMapNodeEvolveTargetType new
+												sourceNode: aNodeModel;
+												targetNode: anEvolveNode).
 
 									anEdgeModel := GtWardleyMapEdgeModel new.
 									anEdgeModel fromNode: aNodeModel.
 									anEdgeModel toNode: anEvolveNode.
-									anEdgeModel color: aNodeModel color.
+									anEdgeModel color: Color red.
 
 									wardleyMap addNode: anEvolveNode.
 									wardleyMap addEdge: anEdgeModel ] ]
