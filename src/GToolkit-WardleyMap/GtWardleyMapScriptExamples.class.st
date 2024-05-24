@@ -164,6 +164,18 @@ Node C->Node F
 ]
 
 { #category : #'examples - scripts' }
+GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesLfSimplified [
+	<gtExample>
+
+	| aScript |
+	aScript := self convertToLf: self withNewSyntaxForPipelinesCrSimplified.
+
+	self assertLfNewLine: aScript.
+	
+	^ aScript
+]
+
+{ #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNoteCr [
 	<gtExample>
 

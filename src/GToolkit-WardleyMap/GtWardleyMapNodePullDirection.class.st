@@ -123,6 +123,9 @@ GtWardleyMapNodePullDirection >> onPulledFinished [
 
 	self cleanAllPipelineHighlights.
 
+	nodeViewModel wardleyMapNodeModel type isEvolveTargetType
+		ifTrue: [ ^ self ].
+	
 	pipelineViewModel
 		ifNil: [ self mayAddInnerNodeToPipeline ]
 		ifNotNil: [ self mayChangeInnerNodePipeline ]

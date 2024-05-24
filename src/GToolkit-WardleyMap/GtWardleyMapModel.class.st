@@ -134,6 +134,30 @@ GtWardleyMapModel >> edges [
 ]
 
 { #category : #'gt-extensions' }
+GtWardleyMapModel >> gtEdgesFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Edges';
+		priority: 20;
+		items: [ self edges ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode color;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'From' text: [ :anEdge | anEdge fromNode label ];
+		column: 'To' text: [ :anEdge | anEdge toNode label ];
+		column: 'Type' text: [ :anEdge | anEdge toNode type ]
+]
+
+{ #category : #'gt-extensions' }
 GtWardleyMapModel >> gtJSONFor: aView [
 	<gtView>
 
@@ -182,16 +206,23 @@ GtWardleyMapModel >> gtNodesFor: aView [
 			width: 40;
 		column: 'Name' text: #label;
 		column: 'Type' text: #type;
-		column: 'With pipeline' text: [ :aNode | aNode isPipelineVisible 
-			ifTrue: [ 'yes' ] 
-			ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ];
-		column: 'Inner nodes' text: [ :aNode | 
-			| aSize |
-			aSize := aNode innerNodes size.
-			aSize isZero 
-				ifTrue: [ aSize asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
-				ifFalse: [ aSize ] ]
-		
+		column: 'With pipeline' 
+			text: [ :aNode | aNode isPipelineVisible 
+				ifTrue: [ 'yes' ] 
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ]
+			weight: 0.7;
+		column: 'Inner nodes' 
+			text: [ :aNode | 
+				| aSize |
+				aSize := aNode innerNodes size.
+				aSize isZero 
+					ifTrue: [ aSize asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
+					ifFalse: [ aSize ] ]
+			 weight: 0.5;
+		column: 'X' text: [ :aNode | aNode x printShowingDecimalPlaces: 3 ] weight: 0.5;
+		column: 'Y' text: [ :aNode | aNode y printShowingDecimalPlaces: 3 ] weight: 0.5;
+		column: 'Label X' text: [ :aNode | aNode labelModel x printShowingDecimalPlaces: 3 ] weight: 0.5;
+		column: 'Label Y' text: [ :aNode | aNode labelModel y printShowingDecimalPlaces: 3 ] weight: 0.5
 ]
 
 { #category : #'gt-extensions' }
