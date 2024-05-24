@@ -133,26 +133,26 @@ GtWardleyMapScriptImporter >> importEvolves [
 	ast
 		allNodesOfType: GtWMEvolveNode
 		do: [ :anAstNode | 
-			| aNameParts aNodeName anEvolveName anAstName |
+			| aNameParts aSourceNodeName anEvolveName anAstName |
 			anAstName := anAstNode name ifNotNil: #source.
 			anAstName
 				ifNotNil: [ aNameParts := '->' split: anAstName.
 					self
 						assert: [ #(1 2) includes: aNameParts size ]
 						description: [ 'Evolve name can be with or without one arrow (->): ' format: {anAstName} ].
-					aNodeName := aNameParts first trimRight.
+					aSourceNodeName := aNameParts first trimRight.
 					anEvolveName := aNameParts size = 1
-							ifTrue: [ aNodeName ]
+							ifTrue: [ aSourceNodeName ]
 							ifFalse: [ aNameParts second trimBoth ].
 					self
-						nodeNamed: aNodeName
-						ifFound: [ :aNodeModel | 
+						nodeNamed: aSourceNodeName
+						ifFound: [ :aSourceNodeModel | 
 							anAstNode maturityNumber
 								ifNotNil: [ :aMaturity | 
 									| anEvolveNode anEdgeModel |
 									anEvolveNode := GtWardleyMapNodeModel new.
 									anEvolveNode x: aMaturity.
-									anEvolveNode y: aNodeModel y.
+									anEvolveNode y: aSourceNodeModel y.
 									anEvolveNode color: Color red.
 
 									anAstNode label
@@ -168,11 +168,11 @@ GtWardleyMapScriptImporter >> importEvolves [
 									anEvolveNode label: anEvolveName.
 									anEvolveNode
 										type: (GtWardleyMapNodeEvolveTargetType new
-												sourceNode: aNodeModel;
+												sourceNode: aSourceNodeModel;
 												targetNode: anEvolveNode).
 
 									anEdgeModel := GtWardleyMapEdgeModel new.
-									anEdgeModel fromNode: aNodeModel.
+									anEdgeModel fromNode: aSourceNodeModel.
 									anEdgeModel toNode: anEvolveNode.
 									anEdgeModel color: Color red.
 
