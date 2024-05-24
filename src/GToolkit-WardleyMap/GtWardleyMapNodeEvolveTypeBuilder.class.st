@@ -31,7 +31,7 @@ GtWardleyMapNodeEvolveTypeBuilder >> buildEvolveEdge [
 GtWardleyMapNodeEvolveTypeBuilder >> buildEvolveNode [
 	evolveNode := GtWardleyMapNodeModel new.
 	evolveNode label: sourceNode label.
-	evolveNode color: sourceNode color.
+	evolveNode color: Color red.
 	evolveNode y: sourceNode y.
 	evolveNode x: (sourceNode x + 0.2 min: 1.0).
 	evolveNode type: (GtWardleyMapNodeEvolveTargetType new
