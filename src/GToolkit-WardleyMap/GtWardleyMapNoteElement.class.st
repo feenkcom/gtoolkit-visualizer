@@ -17,7 +17,7 @@ GtWardleyMapNoteElement >> initialize [
 	self constraintsDo: [ :c | 
 		c vertical fitContent.
 		c horizontal fitContent ].
-	self background: BrGlamorousColors neutralBackgroundColor.
+	self background: (BrGlamorousColors neutralBackgroundColor alpha: 0.5).
 	self geometry: (BlRoundedRectangleGeometry cornerRadius: 4).
 	labelElement := BrEditableLabel new
 			fitContent;

@@ -23,6 +23,7 @@ GtWardleyMapNodeEvolveTypeBuilder >> build [
 GtWardleyMapNodeEvolveTypeBuilder >> buildEvolveEdge [
 	evolveEdge := GtWardleyMapEdgeModel new.
 	evolveEdge color: Color red.
+	evolveEdge arrow: true.
 	evolveEdge fromNode: sourceNode.
 	evolveEdge toNode: evolveNode
 ]

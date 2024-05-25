@@ -175,7 +175,7 @@ GtWardleyMapScriptImporter >> importEvolves [
 									anEdgeModel fromNode: aSourceNodeModel.
 									anEdgeModel toNode: anEvolveNode.
 									anEdgeModel color: Color red.
-
+									anEdgeModel arrow: true.
 									wardleyMap addNode: anEvolveNode.
 									wardleyMap addEdge: anEdgeModel ] ]
 						ifNone: [  ] ] ]
