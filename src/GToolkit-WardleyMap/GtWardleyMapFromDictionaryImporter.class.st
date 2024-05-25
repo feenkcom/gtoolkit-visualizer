@@ -10,6 +10,40 @@ GtWardleyMapFromDictionaryImporter class >> importMapFromJSONString: aString [
 ]
 
 { #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> connectWardleyMapNodeEvolves: theMapNodes from: theNodeDictionaries [ 
+
+	theMapNodes withIndexDo: [ :anEvolveNode :anIndex |
+		| aNodeDictionary |
+		aNodeDictionary := theNodeDictionaries at: anIndex.
+		aNodeDictionary 
+			at: #evolve 
+			ifPresent: [ :anEvolveDictionary | 
+				anEvolveDictionary 
+					at: #is_evolve_target
+					ifPresent: [ :isEvolve | 
+						isEvolve ifTrue: [ 
+							anEvolveDictionary
+								at: #source_node
+								ifPresent: [ :aSourceNodeId | 
+									| anId | 
+									anId := self importIdFrom: aSourceNodeId.
+									theMapNodes
+										detect: [ :otherNode | 
+											otherNode id = anId ]
+										ifFound: [ :aSourceNode |
+											anEvolveNode type: (
+												GtWardleyMapNodeEvolveTargetType new
+													sourceNode: aSourceNode;
+													targetNode: anEvolveNode) ]
+										ifNone: [ nil ]
+								]
+						]
+					]
+			]
+		]
+]
+
+{ #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> connectWardleyMapNodePipelines: theMapNodes from: theNodeDictionaries [ 
 
 	theMapNodes withIndexDo: [ :eachPipelineNode :anIndex |
@@ -111,7 +145,8 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 		theNodeDictionaries do: [ :eachNodeDictionary |
 			aWardleyMap addNode: (self importWardleyMapNodeFrom: eachNodeDictionary) ].
 			
-		self connectWardleyMapNodePipelines: aWardleyMap nodes from: theNodeDictionaries ]).
+		self connectWardleyMapNodePipelines: aWardleyMap nodes from: theNodeDictionaries.
+		self connectWardleyMapNodeEvolves: aWardleyMap nodes from: theNodeDictionaries ]).
 	
 	(aDictionary at: #edges ifPresent: [ :theEdgeDictionaries |
 		theEdgeDictionaries do: [ :eachEdgeDictionary |

@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapPipelineVisibilityCheckbox,
+	#name : #GtWardleyMapEvolveTargetCheckbox,
 	#superclass : #BrHorizontalPane,
 	#instVars : [
 		'checkbox',
@@ -10,30 +10,32 @@ Class {
 }
 
 { #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> checked: aBoolean [
+GtWardleyMapEvolveTargetCheckbox >> checked: aBoolean [
 	checkbox checked: aBoolean
 ]
 
 { #category : #accessing }
-GtWardleyMapPipelineVisibilityCheckbox >> enabled: aBoolean [
+GtWardleyMapEvolveTargetCheckbox >> enabled: aBoolean [
 	checkbox enabled: aBoolean.
 
 	aBoolean
-		ifTrue: [ checkbox visibility: BlVisibility visible.
+		ifTrue: [ 
+			checkbox visibility: BlVisibility visible.
 			label visibility: BlVisibility visible.
 			disabledLabel visibility: BlVisibility gone ]
-		ifFalse: [ checkbox visibility: BlVisibility gone.
+		ifFalse: [
+			checkbox visibility: BlVisibility gone.
 			label visibility: BlVisibility gone.
 			disabledLabel visibility: BlVisibility visible ]
 ]
 
 { #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> initialize [
+GtWardleyMapEvolveTargetCheckbox >> initialize [
 	super initialize.
 
 	checkbox := BrCheckbox new
 			aptitude: BrGlamorousCheckboxAptitude
-					+ (BrGlamorousWithLabelTooltipAptitude new text: 'Toggle pipeline visibility');
+					+ (BrGlamorousWithLabelTooltipAptitude new text: 'Toggle evolve target posibility');
 			checked: false;
 			whenCheckedDo: [ :anEvent |  ];
 			whenUncheckedDo: [ :anEvent |  ];
@@ -41,11 +43,11 @@ GtWardleyMapPipelineVisibilityCheckbox >> initialize [
 
 	label := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-			text: 'visible pipeline'.
+			text: 'evolve node'.
 			
 	disabledLabel := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray; italic);
-			text: 'Cannot have pipelines';
+			text: 'Cannot become an evolve node';
 			visibility: BlVisibility gone.
 
 	self addChild: checkbox.
@@ -57,13 +59,13 @@ GtWardleyMapPipelineVisibilityCheckbox >> initialize [
 ]
 
 { #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> whenCheckedDo: aBlock [
+GtWardleyMapEvolveTargetCheckbox >> whenCheckedDo: aBlock [
 	"aBlock with one argument, receiving an event"
 	checkbox whenCheckedDo: aBlock
 ]
 
 { #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> whenUncheckedDo: aBlock [
+GtWardleyMapEvolveTargetCheckbox >> whenUncheckedDo: aBlock [
 	"aBlock with one argument, receiving an event"
 	checkbox whenUncheckedDo: aBlock
 ]

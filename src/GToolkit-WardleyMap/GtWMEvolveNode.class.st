@@ -71,6 +71,21 @@ GtWMEvolveNode >> maturity: aSmaCCToken [
 	maturity := aSmaCCToken
 ]
 
+{ #category : #accessing }
+GtWMEvolveNode >> maturityNumber [
+	<return: #Number or: nil>
+	| anXString anXNumber |
+	anXString := self maturity ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+
+	^ anXNumber
+]
+
 { #category : #generated }
 GtWMEvolveNode >> name [
 	^ name

@@ -82,6 +82,11 @@ GtWardleyMapScriptExporter >> edges [
 	^ self wardleyMap edges
 ]
 
+{ #category : #convenience }
+GtWardleyMapScriptExporter >> evolveNodes [
+	^ self nodes select: [ :each | each type isEvolveTargetType ]
+]
+
 { #category : #'api - export' }
 GtWardleyMapScriptExporter >> export [
 	wardleyMap ifNil: [ 
@@ -97,12 +102,18 @@ GtWardleyMapScriptExporter >> export [
 			self exportNote: eachNote ].
 		self notes ifNotEmpty: [ self newLine ].
 		
-		self nodes do: [ :eachNode | 
+		self regularNodes do: [ :eachNode | 
 			eachNode pipelineNode ifNil: [
 				self exportNode: eachNode ] ].
-				
 		self newLine.
-		self edges do: [ :eachEdge | self exportEdge: eachEdge ].
+		
+		self evolveNodes ifNotEmpty: [ :aCollection |
+			aCollection do: [ :eachNode | 
+				self exportEvolve: eachNode ].
+			self newLine.
+			self newLine.
+		].
+		self regularEdges do: [ :eachEdge | self exportEdge: eachEdge ].
 		
 		stream := nil ]
 ]
@@ -113,6 +124,28 @@ GtWardleyMapScriptExporter >> exportEdge: anEdge [
 		nextPutAll: anEdge fromNode label;
 		nextPutAll: '->';
 		nextPutAll: anEdge toNode label.
+	self newLine.
+]
+
+{ #category : #'private - exporting' }
+GtWardleyMapScriptExporter >> exportEvolve: anEvolveNode [
+	| aSourceNode aLabel |
+	self assert: [ anEvolveNode pipelineNode isNil ].
+	
+	aSourceNode := anEvolveNode type sourceNode.
+	aLabel := aSourceNode label = anEvolveNode label 
+		ifTrue: [ anEvolveNode label ]
+		ifFalse: [ '{1} -> {2}' format: { aSourceNode label. anEvolveNode label } ].
+	
+	stream
+		nextPutAll: 'evolve ';
+		nextPutAll: aLabel;
+		space;
+		nextPutAll: (self roundedNodeCoordinate: anEvolveNode x);
+		nextPutAll: ' label ['.
+	self printLabelCoordinateInPixels: anEvolveNode.
+	stream
+		nextPutAll: ']'.
 	self newLine.
 ]
 
@@ -271,6 +304,16 @@ GtWardleyMapScriptExporter >> printPipelineCoordinate: aNode [
 		nextPutAll: (self roundedNodeCoordinate: aLeftValue);
 		nextPutAll: ', ';
 		nextPutAll: (self roundedNodeCoordinate: aRightValue).
+]
+
+{ #category : #convenience }
+GtWardleyMapScriptExporter >> regularEdges [
+	^ self edges select: [ :each | each toNode type isRegularType ]
+]
+
+{ #category : #convenience }
+GtWardleyMapScriptExporter >> regularNodes [
+	^ self nodes select: [ :each | each type isRegularType ]
 ]
 
 { #category : #'private - exporting' }
