@@ -17,7 +17,8 @@ Class {
 		'minX',
 		'maxX',
 		'minY',
-		'maxY'
+		'maxY',
+		'dotElementStencil'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
@@ -59,10 +60,23 @@ GtPlotterScatterChart >> data [
 	^ data
 ]
 
+{ #category : #accessing }
+GtPlotterScatterChart >> dotElement [
+	^ dotElementStencil
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> dotElement: aStencil [
+	dotElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
+]
+
 { #category : #initalization }
 GtPlotterScatterChart >> initialize [
 
 	super initialize.
+	self dotElement: [:ex | BlElement new
+		geometry: BlEllipseGeometry new;
+		size: 10 asPoint  ].
 	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #yourself.
@@ -299,13 +313,17 @@ GtPlotterScatterChart >> newPointElementFor: aGroup [
 	container := BrFrame new.
 	container matchParent.
 	container layout: BlRelativePositionLayout new.
-	container addChildren: (aGroup collect: [:eachValue |
-		| positionNormalized |
+	container addChildren: (aGroup collectWithIndex: [:eachValue :index |
+		| positionNormalized element context |
 		positionNormalized := self scaledPoint: eachValue .
-		
-		BlElement new
-			size: 10 asPoint ;
-			geometry: BlEllipseGeometry new;
+		context := GtPlotterScaleContext new
+			index: index;
+			originalValue: eachValue.
+		element := (dotElementStencil scaleContext: context) asElement.
+		element
+			when: BlClickEvent do: [ :anEvent |
+				anEvent consumed: true.
+				anEvent currentTarget phlow spawnObject: eachValue ];
 			background: aGroup color;
 			constraintsDo: [:c |
 				c relativePosition percent: positionNormalized
