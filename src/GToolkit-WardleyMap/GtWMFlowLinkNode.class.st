@@ -35,5 +35,5 @@ GtWMFlowLinkNode >> flowValue: aSmaCCToken [
 
 { #category : #generated }
 GtWMFlowLinkNode >> tokenVariables [
-	^ #(#flowArrow #flowValue #start #arrow #end)
+	^ #(#flowArrow #flowValue #start #arrow #end #semicolon #comment)
 ]
