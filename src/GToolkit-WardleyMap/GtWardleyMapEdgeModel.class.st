@@ -76,24 +76,29 @@ GtWardleyMapEdgeModel >> initialize [
 	labelModel := GtWardleyMapEdgeLabelModel new parent: self.
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapEdgeModel >> isLabelVisible [
 	<return: #Boolean>
 	^ labelModel isVisible
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> isLabelVisible: aBoolean [
+	labelModel isVisible: aBoolean
+]
+
+{ #category : #'api - label' }
 GtWardleyMapEdgeModel >> label [
 	<return: #String>
 	^ labelModel label
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapEdgeModel >> label: aString [
 	^ labelModel label: aString
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapEdgeModel >> labelModel [
 	<return: #GtWardleyMapEdgeLabelModel>
 	^ labelModel

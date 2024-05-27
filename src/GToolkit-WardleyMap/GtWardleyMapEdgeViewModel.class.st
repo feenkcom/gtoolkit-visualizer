@@ -55,6 +55,11 @@ GtWardleyMapEdgeViewModel >> isLabelVisible [
 ]
 
 { #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> isLabelVisible: aBoolean [
+	self wardleyMapEdgeModel isLabelVisible: aBoolean
+]
+
+{ #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> isToNodeEvolveTargetType [
 	^ self toNodeViewModel isEvolveTargetType
 ]

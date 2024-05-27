@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'predefinedColorsElement',
 		'lineWidthEditor',
-		'arrowHeadCheckbox'
+		'arrowHeadCheckbox',
+		'visibilityCheckbox'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -37,6 +38,28 @@ GtWardleyMapEdgeEditorElement >> createLineArrowPicker [
 			action: [ self wardleyMapEdgeViewModel reverse  ] ).
 
 	^ aPicker
+]
+
+{ #category : #initialization }
+GtWardleyMapEdgeEditorElement >> createLineVisibilityCheckbox [
+	| aContainer |
+
+	aContainer := BrHorizontalPane new
+		fitContent;
+		alignCenterLeft;
+		cellSpacing: 5.
+
+	aContainer addChild: (visibilityCheckbox := BrCheckbox new
+		uncheck;
+		aptitude: BrGlamorousCheckboxAptitude;
+		whenCheckedDo: [ self wardleyMapEdgeViewModel isLabelVisible: true ];
+		whenUncheckedDo: [ self wardleyMapEdgeViewModel isLabelVisible: false ]).
+		
+	aContainer addChild: (BrLabel new
+		aptitude: BrGlamorousLabelAptitude;
+		text: 'visible edge label').
+	
+	^ aContainer
 ]
 
 { #category : #initialization }
@@ -104,6 +127,7 @@ GtWardleyMapEdgeEditorElement >> initialize [
 			text: 'Line width:'.
 		self createLineWidthPicker.
 		self createLineArrowPicker margin: (BlInsets top: 5).
+		self createLineVisibilityCheckbox margin: (BlInsets top: 5).
 		
 		BrButton new
 			beSmallSize;
@@ -119,6 +143,11 @@ GtWardleyMapEdgeEditorElement >> initialize [
 		vFitContentLimited;
 		hFitContent;
 		content: aContainer)
+]
+
+{ #category : #private }
+GtWardleyMapEdgeEditorElement >> onEdgeLabelVisiblityChanged [
+	visibilityCheckbox checked: self wardleyMapEdgeViewModel isLabelVisible
 ]
 
 { #category : #private }
@@ -158,7 +187,8 @@ GtWardleyMapEdgeEditorElement >> subscribeToWardleyMapEdgeViewModel [
 
 	self wardleyMapEdgeViewModel weak
 		when: GtWardleyMapEdgeViewModelResized send: #onLineWidthChanged to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged to: self
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged to: self;
+		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self
 ]
 
 { #category : #'api - wardley map edge view model' }
