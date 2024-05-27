@@ -25,7 +25,7 @@ GtWardleyMapScriptImporterExamples >> importScript [
 GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	<gtExample>
 	
-	| aScript anImporter aMap aNodeA aNodeB aNodeC aNodeD aNodeE aNodeF aNodeG aNodeH |
+	| aScript anImporter aMap aNodeA aNodeB aNodeC aNodeD aNodeE aNodeF aNodeG aNodeH anEdgeAB anEdgeBC anEdgeCF |
 	aScript := self scriptWithNewSyntaxForPipeline.
 	anImporter := GtWardleyMapScriptImporter new 
 		stream: aScript readStream;
@@ -104,6 +104,18 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self 
 		assert: aNodeH pipelineCoordinate y 
 		equals: aNodeG x + GtWardleyMapConstants  pipelineRelativeOffset.
+		
+	anEdgeAB := aMap edges detect: [ :each | each fromNode = aNodeA and: [ each toNode = aNodeB ] ].
+	self assert: anEdgeAB hasComment.
+	self assert: anEdgeAB comment equals: 'comment on A-B edge'.
+	
+	anEdgeBC := aMap edges detect: [ :each | each fromNode = aNodeB and: [ each toNode = aNodeC ] ].
+	self assert: anEdgeBC hasComment not.
+	self assert: anEdgeBC comment equals: nil.
+	
+	anEdgeCF := aMap edges detect: [ :each | each fromNode = aNodeC and: [ each toNode = aNodeF ] ].
+	self assert: anEdgeCF hasComment.
+	self assert: anEdgeCF comment equals: 'comment on C-F edge'.
 	
 	^ GtWardleyMapScriptExampleResult new 
 		originalScript: aScript;

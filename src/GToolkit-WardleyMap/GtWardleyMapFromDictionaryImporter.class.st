@@ -104,6 +104,11 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary [
 	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapEdge width: aWidth ].
 	aDictionary at: #arrow ifPresent: [ :anArrow | aWardleyMapEdge arrow: anArrow ].
 	
+	aDictionary
+		at: #label
+		ifPresent: [ :aLabelDictionary | 
+			aWardleyMapEdge labelModel: (self importWardleyMapEdgeLabelFrom: aLabelDictionary) ].
+		
 	^ aWardleyMapEdge
 ]
 
@@ -130,6 +135,20 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary map:
 				ifNone: [  ] ].
 	
 	^ aWardleyMapEdge
+]
+
+{ #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeLabelFrom: aDictionary [
+	| aWardleyMapEdgeLabel |
+	
+	aWardleyMapEdgeLabel := GtWardleyMapEdgeLabelModel new.
+	
+	aDictionary at: #x ifPresent: [ :anX | aWardleyMapEdgeLabel x: anX ].
+	aDictionary at: #y ifPresent: [ :anY | aWardleyMapEdgeLabel y: anY ].
+	aDictionary at: #text ifPresent: [ :aText | aWardleyMapEdgeLabel label: aText ].
+	aDictionary at: #is_visible ifPresent: [ :aBoolean | aWardleyMapEdgeLabel isVisible: aBoolean ].
+
+	^ aWardleyMapEdgeLabel
 ]
 
 { #category : #'api - importer' }

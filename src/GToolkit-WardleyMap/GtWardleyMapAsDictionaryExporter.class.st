@@ -46,6 +46,17 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdge: aWardleyMapEdge [
 		at: #color put: (self visitColor: aWardleyMapEdge color);
 		at: #width put: aWardleyMapEdge width;
 		at: #arrow put: aWardleyMapEdge arrow;
+		at: #label put: (aWardleyMapEdge labelModel accept: self);
+		yourself
+]
+
+{ #category : #visiting }
+GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdgeLabel: aWardleyMapEdgeLabel [
+	^ OrderedDictionary new
+		at: #x put: aWardleyMapEdgeLabel x;
+		at: #y put: aWardleyMapEdgeLabel y;
+		at: #is_visible put: aWardleyMapEdgeLabel isVisible;
+		at: #text put: aWardleyMapEdgeLabel label;
 		yourself
 ]
 

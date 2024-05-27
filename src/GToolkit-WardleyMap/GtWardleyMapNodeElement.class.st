@@ -32,7 +32,7 @@ GtWardleyMapNodeElement >> initialize [
 			aptitude: BrGlamorousRegularEditorAptitude new;
 			when: BrEditorAcceptWish
 				do: [ :aWish | self wardleyMapNodeViewModel label: aWish text asString ];
-			text: 'Label'.	
+			text: 'Label'.
 			
 	"we have to wrap the editable label in a pullable element to allow text selection with drag"
 	labelContainer := BrHorizontalPane new

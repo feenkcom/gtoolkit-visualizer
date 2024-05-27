@@ -109,6 +109,7 @@ GtWardleyMapScriptImporter >> importEdges [
 		anEdgeModel := GtWardleyMapEdgeModel new.
 		anAstNode start ifNotNil: [ :aToken | aStartName := aToken source ].
 		anAstNode end ifNotNil: [ :aToken | aStopName := aToken source ].
+		anAstNode comment ifNotNil: [ :aToken | anEdgeModel comment: aToken source ].
 		
 		(aStartName isNotNil and: [ aStopName isNotNil ]) ifTrue: [ 
 			self 

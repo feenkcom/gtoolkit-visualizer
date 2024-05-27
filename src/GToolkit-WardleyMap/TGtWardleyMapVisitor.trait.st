@@ -12,6 +12,10 @@ TGtWardleyMapVisitor >> visitWardleyMapEdge: aWardleyMapEdge [
 ]
 
 { #category : #visiting }
+TGtWardleyMapVisitor >> visitWardleyMapEdgeLabel: aWardleyMapEdgeLabel [
+]
+
+{ #category : #visiting }
 TGtWardleyMapVisitor >> visitWardleyMapNode: aWardleyMapNode [
 ]
 
