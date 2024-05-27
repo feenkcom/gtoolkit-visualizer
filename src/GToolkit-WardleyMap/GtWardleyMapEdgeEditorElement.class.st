@@ -165,7 +165,8 @@ GtWardleyMapEdgeEditorElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 
 	self onLineWidthChanged.
-	self onLineArrowChanged
+	self onLineArrowChanged.
+	self onEdgeLabelVisiblityChanged.
 ]
 
 { #category : #'api - wardley map view model' }
