@@ -76,6 +76,12 @@ GtWardleyMapNodeViewModel >> coordinateY [
 	^ self coordinate y
 ]
 
+{ #category : #'api - decorators' }
+GtWardleyMapNodeViewModel >> decorators [
+	<return: #Collection of: #TGtWardleyMapDecorator>
+	^ self wardleyMapNodeModel decorators
+]
+
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> decreaseNodeSize [
 	self nodeSize: ((self nodeSize - self nodeSizeStep) roundTo: 1@1)
@@ -224,6 +230,12 @@ GtWardleyMapNodeViewModel >> onNodeColored: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeDecoratorsChanged: anAnnouncement [
+	self
+		announce: (GtWardleyMapNodeViewModelDecoratorsChanged new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeLabelMoved: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelLabelMoved new nodeViewModel: self)
 ]
@@ -360,7 +372,8 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self;
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeModelPipelineResized send: #onNodePipelineResized: to: self;
-		when: GtWardleyMapNodeModelTypeChanged send: #onNodeTypeChanged: to: self.
+		when: GtWardleyMapNodeModelTypeChanged send: #onNodeTypeChanged: to: self;
+		when: GtWardleyMapNodeModelDecoratorsChanged send: #onNodeDecoratorsChanged: to: self.
 	
 	self wardleyMapNodeModel labelModel weak
 		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;

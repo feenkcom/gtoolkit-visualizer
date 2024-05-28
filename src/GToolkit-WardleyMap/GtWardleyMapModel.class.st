@@ -351,6 +351,14 @@ GtWardleyMapModel >> nodeWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
 ]
 
 { #category : #'api - nodes' }
+GtWardleyMapModel >> nodeWithName: aName ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self nodes
+		detect: [ :eachNode | eachNode label = aName ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #'api - nodes' }
 GtWardleyMapModel >> nodes [
 	^ nodes
 ]

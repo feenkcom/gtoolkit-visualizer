@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'isPipeline',
-		'element'
+		'element',
+		'isDecorator'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -11,6 +12,11 @@ Class {
 { #category : #'instance creation' }
 GtWardleyMapElementContext class >> on: anElement [
 	^ self new element: anElement
+]
+
+{ #category : #initialization }
+GtWardleyMapElementContext >> beDecorator [
+	isDecorator := true
 ]
 
 { #category : #initialization }
@@ -27,7 +33,13 @@ GtWardleyMapElementContext >> element: anElement [
 GtWardleyMapElementContext >> initialize [
 	super initialize.
 
-	isPipeline := false
+	isPipeline := false.
+	isDecorator := false.
+]
+
+{ #category : #accessing }
+GtWardleyMapElementContext >> isDecorator [
+	^ isDecorator
 ]
 
 { #category : #accessing }
