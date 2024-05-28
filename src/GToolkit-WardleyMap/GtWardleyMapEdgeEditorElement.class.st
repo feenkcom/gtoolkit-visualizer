@@ -133,7 +133,7 @@ GtWardleyMapEdgeEditorElement >> initialize [
 			beSmallSize;
 			aptitude: (BrGlamorousButtonWithLabelAptitude new);
 			margin: (BlInsets top: 10 left: 5 bottom: 5 right: 0);
-			label: 'Delete';
+			label: 'Delete line';
 			action: [
 				self wardleyMapEdgeViewModel removeFromMap.
 				self fireEvent: BrDropdownHideWish new ] }.

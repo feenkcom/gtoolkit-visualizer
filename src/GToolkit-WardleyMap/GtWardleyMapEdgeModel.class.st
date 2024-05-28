@@ -104,6 +104,11 @@ GtWardleyMapEdgeModel >> labelModel [
 	^ labelModel
 ]
 
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelModel: aGtWardleyMapNodeLabelModel [
+	labelModel := aGtWardleyMapNodeLabelModel
+]
+
 { #category : #'api - arrow' }
 GtWardleyMapEdgeModel >> notifyArrowChanged [
 	self propagateAnnouncement: (GtWardleyMapEdgeModelArrowChanged new edgeModel: self)

@@ -36,7 +36,8 @@ GtWardleyMapEdgeElement >> createHoveredBorder [
 GtWardleyMapEdgeElement >> initialize [
 	super initialize.
 	self clipChildren: false.
-	self aptitude: BrStyleCommonAptitude new.
+	self aptitude: (BrStyleCommonAptitude new
+			focused: [ :s | s border: (BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
 	labelElement := BrEditableLabel new
 			fitContent;
 			id: GtWardleyMapNodeLabelId;
@@ -75,6 +76,11 @@ GtWardleyMapEdgeElement >> initialize [
 		addShortcut: (BlShortcutWithAction new
 				combination: BlKeyCombination builder primary equal build;
 				action: [ self wardleyMapEdgeViewModel increaseWidth ])
+]
+
+{ #category : #accessing }
+GtWardleyMapEdgeElement >> labelElementDo: aBlock [
+	aBlock value: labelElement
 ]
 
 { #category : #'event handling' }
@@ -174,10 +180,14 @@ GtWardleyMapEdgeElement >> updateLineLook [
 				do: [ :theElement | 
 					theElement border: self createHoveredBorder.
 					theElement toHead ifNotNil: [ :aHead | 
-						aHead background: GtWardleyMapConstants hoverColor ] ]
+						aHead background: GtWardleyMapConstants hoverColor ].
+					theElement labelElementDo: [ :aLabel | 
+						aLabel aptitude foreground: GtWardleyMapConstants hoverColor ] ]
 				after: [ :theElement | 
 					theElement border: self createDefaultBorder.
 					theElement toHead ifNotNil: [ :aHead | 
-						aHead background: self wardleyMapEdgeViewModel lineColor ] ] ];
+						aHead background: self wardleyMapEdgeViewModel lineColor ].
+					theElement labelElementDo: [ :aLabel | 
+						aLabel aptitude foreground: self wardleyMapEdgeViewModel labelColor ] ] ];
 		propagateStylesToWidget
 ]
