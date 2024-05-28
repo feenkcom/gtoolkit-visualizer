@@ -75,11 +75,11 @@ GtWardleyMapMaximizerAction >> newButton [
 GtWardleyMapMaximizerAction >> newContainerInButton: aButton [
 	| aContainer aChild anAptitude |
 	aChild := self stencil asElement.
-	aChild id: #displayElement.
+	aChild id: GtWardleyMapMaximizerId.
 	
 	anAptitude := BrGlamorousWithMaximizerAptitude new.
 	anAptitude hideMaximizeButton.
-	anAptitude // #displayElement.
+	anAptitude / GtWardleyMapMaximizerId.
 	self preferredBackground ifNotNil: [ :aBackground | 
 		anAptitude preferredBackground: aBackground ].
 
