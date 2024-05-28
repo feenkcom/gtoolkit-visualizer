@@ -71,29 +71,13 @@ GtWardleyMapAction >> model: anObject [
 
 { #category : #'api - decoration' }
 GtWardleyMapAction >> newButton [
-	| aButton |
-	aButton := BrButton new.
-	icon ifNotNil: [ aButton icon: self icon ].
-	label ifNotNil: [ aButton label: self label ].
-	action ifNotNil: [ aButton action: self action ].
-	aButton aptitude: self newButtonAptitude.
-	aButton beTinySize.
-	aButton model: self model.
-	aButton wardley beDecorator.
-	aButton constraintsDo: [ :c |
-		c linear vertical alignCenter.
-		c linear horizontal alignCenter ].
-	^ aButton
-]
-
-{ #category : #'api - decoration' }
-GtWardleyMapAction >> newButtonAptitude [
-	aptitude ifNotNil: [ :aBlock | ^ aBlock value ].
-	icon isNil ifTrue: [ 
-		^ BrGlamorousButtonWithLabelAptitude new ].
-	label ifNil: [ 
-		^ BrGlamorousButtonWithIconAptitude new ].
-	^ BrGlamorousButtonWithIconAndLabelAptitude new
+	^ GtWardleyMapActionButtonStencil new
+		icon: self icon;
+		label: self label;
+		aptitude: self aptitude;
+		action: self action;
+		model: self model;
+		asElement
 ]
 
 { #category : #initialization }
