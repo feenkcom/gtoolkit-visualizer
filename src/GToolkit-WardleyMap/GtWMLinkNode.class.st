@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'start',
 		'arrow',
-		'end'
+		'end',
+		'semicolon',
+		'comment'
 	],
 	#category : #'GToolkit-WardleyMap-Parser'
 }
@@ -25,6 +27,16 @@ GtWMLinkNode >> arrow: aSmaCCToken [
 ]
 
 { #category : #generated }
+GtWMLinkNode >> comment [
+	^ comment
+]
+
+{ #category : #generated }
+GtWMLinkNode >> comment: aSmaCCToken [
+	comment := aSmaCCToken
+]
+
+{ #category : #generated }
 GtWMLinkNode >> end [
 	^ end
 ]
@@ -32,6 +44,16 @@ GtWMLinkNode >> end [
 { #category : #generated }
 GtWMLinkNode >> end: aSmaCCToken [
 	end := aSmaCCToken
+]
+
+{ #category : #generated }
+GtWMLinkNode >> semicolon [
+	^ semicolon
+]
+
+{ #category : #generated }
+GtWMLinkNode >> semicolon: aSmaCCToken [
+	semicolon := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -46,5 +68,5 @@ GtWMLinkNode >> start: aSmaCCToken [
 
 { #category : #generated }
 GtWMLinkNode >> tokenVariables [
-	^ #(#start #arrow #end)
+	^ #(#start #arrow #end #semicolon #comment)
 ]

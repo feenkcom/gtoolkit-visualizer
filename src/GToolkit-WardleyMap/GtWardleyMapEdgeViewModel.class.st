@@ -50,8 +50,48 @@ GtWardleyMapEdgeViewModel >> increaseWidth [
 ]
 
 { #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> isLabelVisible [
+	^ self wardleyMapEdgeModel isLabelVisible
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> isLabelVisible: aBoolean [
+	self wardleyMapEdgeModel isLabelVisible: aBoolean
+]
+
+{ #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> isToNodeEvolveTargetType [
 	^ self toNodeViewModel isEvolveTargetType
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> label [
+	^ self wardleyMapEdgeModel label
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> label: aString [
+	self wardleyMapEdgeModel label: aString
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> labelColor [
+	^ self lineColor darker
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> labelCoordinate [
+	^ self wardleyMapEdgeModel labelModel coordinate
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> labelCoordinateX [
+	^ self labelCoordinate x
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> labelCoordinateY [
+	^ self labelCoordinate y
 ]
 
 { #category : #'api - edge' }
@@ -74,6 +114,11 @@ GtWardleyMapEdgeViewModel >> lineWidthStep [
 	^ ((self lineWidth // 10 + 1) max: 1)
 ]
 
+{ #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> moveEdgeLabelTo: aNormalizedPoint [
+	self wardleyMapEdgeModel labelModel coordinate: aNormalizedPoint
+]
+
 { #category : #'event handling' }
 GtWardleyMapEdgeViewModel >> onEdgeArrowChanged: anAnnouncement [
 	self announce: (GtWardleyMapEdgeViewModelColored new edgeViewModel: self)
@@ -82,6 +127,21 @@ GtWardleyMapEdgeViewModel >> onEdgeArrowChanged: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapEdgeViewModel >> onEdgeColored: anAnnouncement [
 	self announce: (GtWardleyMapEdgeViewModelColored new edgeViewModel: self)
+]
+
+{ #category : #'api - wardley map edge model' }
+GtWardleyMapEdgeViewModel >> onEdgeLabelMoved: anAnnouncement [
+	self announce: (GtWardleyMapEdgeViewModelLabelMoved new edgeViewModel: self)
+]
+
+{ #category : #'api - wardley map edge model' }
+GtWardleyMapEdgeViewModel >> onEdgeLabelTextChanged: anAnnouncement [
+	self announce: (GtWardleyMapEdgeViewModelLabelTextChanged new edgeViewModel: self)
+]
+
+{ #category : #'api - wardley map edge model' }
+GtWardleyMapEdgeViewModel >> onEdgeLabelVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapEdgeViewModelLabelVisibilityChanged new edgeViewModel: self)
 ]
 
 { #category : #'event handling' }
@@ -143,7 +203,12 @@ GtWardleyMapEdgeViewModel >> subscribeToWardleyMapEdgeModel [
 	self wardleyMapEdgeModel weak
 		when: GtWardleyMapEdgeModelColored send: #onEdgeColored: to: self;
 		when: GtWardleyMapEdgeModelResized send: #onEdgeResized: to: self;
-		when: GtWardleyMapEdgeModelArrowChanged send: #onEdgeArrowChanged: to: self
+		when: GtWardleyMapEdgeModelArrowChanged send: #onEdgeArrowChanged: to: self.
+		
+	self wardleyMapEdgeModel weak
+		when: GtWardleyMapEdgeLabelModelMoved send: #onEdgeLabelMoved: to: self;
+		when: GtWardleyMapEdgeLabelModelTextChanged send: #onEdgeLabelTextChanged: to: self;
+		when: GtWardleyMapEdgeLabelModelVisibilityChanged send: #onEdgeLabelVisibilityChanged: to: self
 ]
 
 { #category : #accessing }

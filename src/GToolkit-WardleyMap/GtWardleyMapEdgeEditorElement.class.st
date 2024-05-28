@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'predefinedColorsElement',
 		'lineWidthEditor',
-		'arrowHeadCheckbox'
+		'arrowHeadCheckbox',
+		'visibilityCheckbox'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -37,6 +38,28 @@ GtWardleyMapEdgeEditorElement >> createLineArrowPicker [
 			action: [ self wardleyMapEdgeViewModel reverse  ] ).
 
 	^ aPicker
+]
+
+{ #category : #initialization }
+GtWardleyMapEdgeEditorElement >> createLineVisibilityCheckbox [
+	| aContainer |
+
+	aContainer := BrHorizontalPane new
+		fitContent;
+		alignCenterLeft;
+		cellSpacing: 5.
+
+	aContainer addChild: (visibilityCheckbox := BrCheckbox new
+		uncheck;
+		aptitude: BrGlamorousCheckboxAptitude;
+		whenCheckedDo: [ self wardleyMapEdgeViewModel isLabelVisible: true ];
+		whenUncheckedDo: [ self wardleyMapEdgeViewModel isLabelVisible: false ]).
+		
+	aContainer addChild: (BrLabel new
+		aptitude: BrGlamorousLabelAptitude;
+		text: 'visible edge label').
+	
+	^ aContainer
 ]
 
 { #category : #initialization }
@@ -104,12 +127,13 @@ GtWardleyMapEdgeEditorElement >> initialize [
 			text: 'Line width:'.
 		self createLineWidthPicker.
 		self createLineArrowPicker margin: (BlInsets top: 5).
+		self createLineVisibilityCheckbox margin: (BlInsets top: 5).
 		
 		BrButton new
 			beSmallSize;
 			aptitude: (BrGlamorousButtonWithLabelAptitude new);
 			margin: (BlInsets top: 10 left: 5 bottom: 5 right: 0);
-			label: 'Delete';
+			label: 'Delete line';
 			action: [
 				self wardleyMapEdgeViewModel removeFromMap.
 				self fireEvent: BrDropdownHideWish new ] }.
@@ -119,6 +143,11 @@ GtWardleyMapEdgeEditorElement >> initialize [
 		vFitContentLimited;
 		hFitContent;
 		content: aContainer)
+]
+
+{ #category : #private }
+GtWardleyMapEdgeEditorElement >> onEdgeLabelVisiblityChanged [
+	visibilityCheckbox checked: self wardleyMapEdgeViewModel isLabelVisible
 ]
 
 { #category : #private }
@@ -136,7 +165,8 @@ GtWardleyMapEdgeEditorElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 
 	self onLineWidthChanged.
-	self onLineArrowChanged
+	self onLineArrowChanged.
+	self onEdgeLabelVisiblityChanged.
 ]
 
 { #category : #'api - wardley map view model' }
@@ -158,7 +188,8 @@ GtWardleyMapEdgeEditorElement >> subscribeToWardleyMapEdgeViewModel [
 
 	self wardleyMapEdgeViewModel weak
 		when: GtWardleyMapEdgeViewModelResized send: #onLineWidthChanged to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged to: self
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged to: self;
+		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self
 ]
 
 { #category : #'api - wardley map edge view model' }

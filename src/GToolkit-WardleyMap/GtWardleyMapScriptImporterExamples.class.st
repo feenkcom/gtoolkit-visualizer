@@ -25,7 +25,7 @@ GtWardleyMapScriptImporterExamples >> importScript [
 GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	<gtExample>
 	
-	| aScript anImporter aMap aNodeA aNodeB aNodeC aNodeD aNodeE aNodeF aNodeG aNodeH |
+	| aScript anImporter aMap aNodeA aNodeB aNodeD aNodeC aNodeG aNodeH aNodeF anEdgeAB anEdgeBC anEdgeCF aNodeE |
 	aScript := self scriptWithNewSyntaxForPipeline.
 	anImporter := GtWardleyMapScriptImporter new 
 		stream: aScript readStream;
@@ -51,59 +51,72 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self assert: aNodeB innerNodes size equals: 0.
 	self assert: aNodeB pipelineNode isNil.
 
-	aNodeC := aMap nodes detect: [ :each | each label = 'Node D' ].
-	self assert: aNodeC x equals: 0.17.
-	self assert: aNodeC y equals: 1 - 0.50.
-	self assert: aNodeC innerNodes size equals: 0.
-	
-	aNodeD := aMap nodes detect: [ :each | each label = 'Node E' ].
-	self assert: aNodeD x equals: 0.80.
+	aNodeD := aMap nodes detect: [ :each | each label = 'Node D' ].
+	self assert: aNodeD x equals: 0.17.
 	self assert: aNodeD y equals: 1 - 0.50.
 	self assert: aNodeD innerNodes size equals: 0.
 	
-	aNodeE := aMap nodes detect: [ :each | each label = 'Node C' ].
-	self assert: aNodeE x equals: 0.67.
+	aNodeE := aMap nodes detect: [ :each | each label = 'Node E' ].
+	self assert: aNodeE x equals: 0.80.
 	self assert: aNodeE y equals: 1 - 0.50.
-	self assert: aNodeE innerNodes size equals: 2.
-	self assert: (aNodeE innerNodes identityIncludes: aNodeC).
-	self assert: (aNodeE innerNodes identityIncludes: aNodeD).
-	self assert: aNodeC pipelineNode equals: aNodeE.
-	self assert: aNodeD pipelineNode equals: aNodeE.
-	self assert: aNodeE pipelineNode isNil.
-
-	aNodeF := aMap nodes detect: [ :each | each label = 'Node G' ].
-	self assert: aNodeF x equals: 0.67.
-	self assert: aNodeF y equals: 1 - 0.15.
-	self assert: aNodeF innerNodes size equals: 0.
+	self assert: aNodeE innerNodes size equals: 0.
 	
-	aNodeG := aMap nodes detect: [ :each | each label = 'Node H' ].
-	self assert: aNodeG x equals: 0.75.
+	aNodeC := aMap nodes detect: [ :each | each label = 'Node C' ].
+	self assert: aNodeC x equals: 0.67.
+	self assert: aNodeC y equals: 1 - 0.50.
+	self assert: aNodeC innerNodes size equals: 2.
+	self assert: (aNodeC innerNodes identityIncludes: aNodeD).
+	self assert: (aNodeC innerNodes identityIncludes: aNodeD).
+	self assert: aNodeD pipelineNode equals: aNodeC.
+	self assert: aNodeD pipelineNode equals: aNodeC.
+	self assert: aNodeC pipelineNode isNil.
+
+	aNodeG := aMap nodes detect: [ :each | each label = 'Node G' ].
+	self assert: aNodeG x equals: 0.67.
 	self assert: aNodeG y equals: 1 - 0.15.
 	self assert: aNodeG innerNodes size equals: 0.
 	
-	aNodeH := aMap nodes detect: [ :each | each label = 'Node F' ].
-	self assert: aNodeH x equals: 0.70.
+	aNodeH := aMap nodes detect: [ :each | each label = 'Node H' ].
+	self assert: aNodeH x equals: 0.75.
 	self assert: aNodeH y equals: 1 - 0.15.
-	self assert: aNodeH innerNodes size equals: 2.
-	self assert: (aNodeH innerNodes identityIncludes: aNodeF).
-	self assert: (aNodeH innerNodes identityIncludes: aNodeG).
-	self assert: aNodeF pipelineNode equals: aNodeH.
-	self assert: aNodeG pipelineNode equals: aNodeH.
-	self assert: aNodeH pipelineNode isNil.
+	self assert: aNodeH innerNodes size equals: 0.
+	
+	aNodeF := aMap nodes detect: [ :each | each label = 'Node F' ].
+	self assert: aNodeF x equals: 0.70.
+	self assert: aNodeF y equals: 1 - 0.15.
+	self assert: aNodeF innerNodes size equals: 2.
+	self assert: (aNodeF innerNodes identityIncludes: aNodeG).
+	self assert: (aNodeF innerNodes identityIncludes: aNodeH).
+	self assert: aNodeG pipelineNode equals: aNodeF.
+	self assert: aNodeH pipelineNode equals: aNodeF.
+	self assert: aNodeF pipelineNode isNil.
 
 	self 
-		assert: aNodeE pipelineCoordinate x 
-		equals: aNodeC x - GtWardleyMapConstants  pipelineRelativeOffset.
+		assert: (aNodeC pipelineCoordinate x 
+			closeTo: aNodeD x - GtWardleyMapConstants  pipelineRelativeOffset
+			precision: 0.001).
 	self 
-		assert: aNodeE pipelineCoordinate y 
-		equals: aNodeD x + GtWardleyMapConstants  pipelineRelativeOffset.
+		assert: aNodeC pipelineCoordinate y 
+		equals: aNodeE x + GtWardleyMapConstants  pipelineRelativeOffset.
 	
 	self 
-		assert: aNodeH pipelineCoordinate x 
-		equals: aNodeF x - GtWardleyMapConstants  pipelineRelativeOffset.
+		assert: aNodeF pipelineCoordinate x 
+		equals: aNodeG x - GtWardleyMapConstants  pipelineRelativeOffset.
 	self 
-		assert: aNodeH pipelineCoordinate y 
-		equals: aNodeG x + GtWardleyMapConstants  pipelineRelativeOffset.
+		assert: aNodeF pipelineCoordinate y 
+		equals: aNodeH x + GtWardleyMapConstants  pipelineRelativeOffset.
+		
+	anEdgeAB := aMap edges detect: [ :each | each fromNode = aNodeA and: [ each toNode = aNodeB ] ].
+	self assert: anEdgeAB isLabelVisible.
+	self assert: anEdgeAB label equals: 'comment on A-B edge'.
+	
+	anEdgeBC := aMap edges detect: [ :each | each fromNode = aNodeB and: [ each toNode = aNodeC ] ].
+	self assert: anEdgeBC isLabelVisible not.
+	self assert: anEdgeBC label equals: 'Edge label'.
+	
+	anEdgeCF := aMap edges detect: [ :each | each fromNode = aNodeC and: [ each toNode = aNodeF ] ].
+	self assert: anEdgeCF isLabelVisible.
+	self assert: anEdgeCF label equals: 'comment on C-F edge'.
 	
 	^ GtWardleyMapScriptExampleResult new 
 		originalScript: aScript;

@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'announcer',
 		'fromNode',
-		'toNode'
+		'toNode',
+		'labelModel'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -71,7 +72,41 @@ GtWardleyMapEdgeModel >> initialize [
 	
 	color := Color gray.
 	width := 1.0.
-	arrow := false
+	arrow := false.
+	labelModel := GtWardleyMapEdgeLabelModel new parent: self.
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> isLabelVisible [
+	<return: #Boolean>
+	^ labelModel isVisible
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> isLabelVisible: aBoolean [
+	labelModel isVisible: aBoolean
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> label [
+	<return: #String>
+	^ labelModel label
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> label: aString [
+	^ labelModel label: aString
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelModel [
+	<return: #GtWardleyMapEdgeLabelModel>
+	^ labelModel
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelModel: aGtWardleyMapNodeLabelModel [
+	labelModel := aGtWardleyMapNodeLabelModel
 ]
 
 { #category : #'api - arrow' }

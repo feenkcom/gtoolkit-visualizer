@@ -153,8 +153,16 @@ GtWardleyMapModel >> gtEdgesFor: aView [
 						c linear vertical alignCenter ] ] 
 			width: 40;
 		column: 'From' text: [ :anEdge | anEdge fromNode label ];
-		column: 'To' text: [ :anEdge | anEdge toNode label ];
-		column: 'Type' text: [ :anEdge | anEdge toNode type ]
+		column: 'To' text: [ :anEdge | 
+			| aTypeText |
+			aTypeText := ' (' asRopedText append: (anEdge toNode type gtDisplayText); appendString: ')'.
+			aTypeText foreground: BrGlamorousColors disabledButtonTextColor.
+			anEdge toNode label asRopedText append: aTypeText ];
+		column: 'Label' text: [ :anEdge | anEdge label ];
+		column: 'Visible label' text: [ :anEdge | 
+			anEdge isLabelVisible 
+				ifTrue: [ 'yes' ] 
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ]
 ]
 
 { #category : #'gt-extensions' }

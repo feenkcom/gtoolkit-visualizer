@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapEdgeModelColored,
+	#name : #GtWardleyMapEdgeModelCommentChanged,
 	#superclass : #GtWardleyMapEdgeModelAnnouncement,
 	#category : #'GToolkit-WardleyMap-Events'
 }

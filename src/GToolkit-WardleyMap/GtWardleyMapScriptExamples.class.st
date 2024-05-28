@@ -107,9 +107,9 @@ evolve Node C -> something c 0.9 label [-5, 21]
 
 //connections
 
-Node A->Node B
+Node A->Node B;comment on A-B edge
 Node B->Node C
-Node C->Node F
+Node C->Node F;comment on C-F edge
 '.
 
 	self assertCrNewLine: aScript.
@@ -153,9 +153,9 @@ evolve Node C -> something c 0.90 label [-5, 21]
 evolve Node G -> something g 0.80 label [-5, 20]
 
 
-Node A->Node B
+Node A->Node B;comment on A-B edge
 Node B->Node C
-Node C->Node F
+Node C->Node F;comment on C-F edge
 '.
 
 	self assertCrNewLine: aScript.

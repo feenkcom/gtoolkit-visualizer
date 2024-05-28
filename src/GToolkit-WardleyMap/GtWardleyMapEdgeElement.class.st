@@ -3,6 +3,10 @@ Class {
 	#superclass : #BlLineElement,
 	#traits : 'TGtWithWardleyMapEdgeViewModel',
 	#classTraits : 'TGtWithWardleyMapEdgeViewModel classTrait',
+	#instVars : [
+		'labelElement',
+		'labelContainer'
+	],
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
@@ -31,7 +35,28 @@ GtWardleyMapEdgeElement >> createHoveredBorder [
 { #category : #initialization }
 GtWardleyMapEdgeElement >> initialize [
 	super initialize.
-	self aptitude: BrStyleCommonAptitude new.
+	self clipChildren: false.
+	self aptitude: (BrStyleCommonAptitude new
+			focused: [ :s | s border: (BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
+	labelElement := BrEditableLabel new
+			fitContent;
+			id: GtWardleyMapNodeLabelId;
+			aptitude: BrGlamorousRegularEditorAptitude new;
+			when: BrEditorAcceptWish
+				do: [ :aWish | self wardleyMapEdgeViewModel label: aWish text asString ];
+			text: 'Edge label'.
+			
+	"we have to wrap the editable label in a pullable element to allow text selection with drag"
+	labelContainer := BrHorizontalPane new
+			fitContent;
+			addEventHandler: (GtWardleyMapPullHandler new
+					containerElement: self;
+					allowOutOfBounds;
+					whenPulled: [ :aPulledElement :aNormalizedPosition | 
+						self wardleyMapEdgeViewModel moveEdgeLabelTo: aNormalizedPosition ]);
+			addChild: labelElement.
+	self addChild: labelContainer.
+	
 	self
 		when: BlClickEvent
 		do: [ :anEvent | 
@@ -53,6 +78,11 @@ GtWardleyMapEdgeElement >> initialize [
 				action: [ self wardleyMapEdgeViewModel increaseWidth ])
 ]
 
+{ #category : #accessing }
+GtWardleyMapEdgeElement >> labelElementDo: aBlock [
+	aBlock value: labelElement
+]
+
 { #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeArrowChanged: anAnnouncement [
 	self updateLineArrow
@@ -62,6 +92,25 @@ GtWardleyMapEdgeElement >> onEdgeArrowChanged: anAnnouncement [
 GtWardleyMapEdgeElement >> onEdgeColored: anAnnouncement [
 	self updateLineLook.
 	self updateLineArrow
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeLabelMoved [
+	labelContainer constraintsDo: [ :c | 
+		c frame horizontal alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateX.
+		c frame vertical alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateY ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeLabelTextChanged [
+	labelElement text: self wardleyMapEdgeViewModel label
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeLabelVisiblityChanged [
+	self wardleyMapEdgeViewModel isLabelVisible
+		ifTrue: [ labelContainer visibility: BlVisibility visible ]
+		ifFalse: [ labelContainer visibility: BlVisibility gone ]
 ]
 
 { #category : #'event handling' }
@@ -79,7 +128,11 @@ GtWardleyMapEdgeElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 	
 	self updateLineLook.
-	self updateLineArrow
+	self updateLineArrow.
+	
+	self onEdgeLabelVisiblityChanged.
+	self onEdgeLabelTextChanged.
+	self onEdgeLabelMoved
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -89,6 +142,9 @@ GtWardleyMapEdgeElement >> subscribeToWardleyMapEdgeViewModel [
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
 	
 	self wardleyMapEdgeViewModel weak
+		when: GtWardleyMapEdgeViewModelLabelMoved send: #onEdgeLabelMoved to: self;
+		when: GtWardleyMapEdgeViewModelLabelTextChanged send: #onEdgeLabelTextChanged to: self;
+		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self;
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
 		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self;
 		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self;
@@ -124,10 +180,14 @@ GtWardleyMapEdgeElement >> updateLineLook [
 				do: [ :theElement | 
 					theElement border: self createHoveredBorder.
 					theElement toHead ifNotNil: [ :aHead | 
-						aHead background: GtWardleyMapConstants hoverColor ] ]
+						aHead background: GtWardleyMapConstants hoverColor ].
+					theElement labelElementDo: [ :aLabel | 
+						aLabel aptitude foreground: GtWardleyMapConstants hoverColor ] ]
 				after: [ :theElement | 
 					theElement border: self createDefaultBorder.
 					theElement toHead ifNotNil: [ :aHead | 
-						aHead background: self wardleyMapEdgeViewModel lineColor ] ] ];
+						aHead background: self wardleyMapEdgeViewModel lineColor ].
+					theElement labelElementDo: [ :aLabel | 
+						aLabel aptitude foreground: self wardleyMapEdgeViewModel labelColor ] ] ];
 		propagateStylesToWidget
 ]
