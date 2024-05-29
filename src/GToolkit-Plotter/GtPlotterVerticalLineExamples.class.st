@@ -20,40 +20,6 @@ GtPlotterVerticalLineExamples >> barChartLineStyle [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalLineExamples >> barChartScalableContentsPercentMax [
-	<gtExample>
-	| barChart chartElement  max |
-	barChart := self barChartScalableContents.
-	max := 0.5.
-	barChart lines first
-		min: 0;
-		max: max.
-	chartElement := self createChartElement: barChart.
-	self assert: chartElement lines isNotEmpty.
-	self
-		assert: chartElement lines first height
-		equals: chartElement barsElement height * max.
-	^ chartElement
-]
-
-{ #category : #accessing }
-GtPlotterVerticalLineExamples >> barChartScalableContentsPercentMin [
-	<gtExample>
-	| barChart chartElement min |
-	barChart := self barChartScalableContents.
-	min := 0.5.
-	barChart lines first 
-		min: min;
-		max: 1.
-	chartElement := self createChartElement: barChart.
-	self assert: chartElement lines isNotEmpty.
-	self
-		assert: chartElement lines first height
-		equals: chartElement barsElement height * min.
-	^ chartElement
-]
-
-{ #category : #accessing }
 GtPlotterVerticalLineExamples >> barChartScalableContentsShouldExpandLine [
 	<gtExample>
 	| barChart chartElement |

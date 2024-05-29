@@ -8,8 +8,6 @@ Class {
 		'lineStencil',
 		'parent',
 		'dataValue',
-		'min',
-		'max',
 		'barChart'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar lines'
@@ -61,7 +59,7 @@ GtPlotterBarChartLine >> fromAnchor [
 	<return: #BlPercentSideAnchor>
 	| anchor |
 	anchor := self newAnchor.
-	self setAxisPercent: self min in: anchor.
+	self setAxisPercent: 0 in: anchor.
 	^ anchor
 		
 ]
@@ -71,9 +69,7 @@ GtPlotterBarChartLine >> initialize [
 	super initialize.
 	self 
 		lineStencil: self defaultLineStencil;
-		dataValue: 0;
-		min: 0;
-		max: 1.
+		dataValue: 0
 ]
 
 { #category : #accessing }
@@ -85,28 +81,6 @@ GtPlotterBarChartLine >> lineStencil [
 { #category : #accessing }
 GtPlotterBarChartLine >> lineStencil: aBrStencil [
 	lineStencil := aBrStencil asStencil
-]
-
-{ #category : #accessing }
-GtPlotterBarChartLine >> max [
-	<return: #Float>
-	^ max
-]
-
-{ #category : #accessing }
-GtPlotterBarChartLine >> max: aNumber [
-	max := aNumber
-]
-
-{ #category : #accessing }
-GtPlotterBarChartLine >> min [
-	<return: #Float>
-	^ min
-]
-
-{ #category : #accessing }
-GtPlotterBarChartLine >> min: aNumber [
-	min := aNumber
 ]
 
 { #category : #accessing }
@@ -134,13 +108,12 @@ GtPlotterBarChartLine >> parent: aBlElement [
 
 { #category : #accessing }
 GtPlotterBarChartLine >> setAxisPercent: aNumber in: aBlPercentSideAnchor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 GtPlotterBarChartLine >> setPercent: aNumber in: aBlPercentSideAnchor [
 	self subclassResponsibility
-	
 ]
 
 { #category : #accessing }
@@ -148,7 +121,7 @@ GtPlotterBarChartLine >> toAnchor [
 	<return: #BlPercentSideAnchor>
 	| anchor |
 	anchor := self newAnchor.
-	self setAxisPercent: self max in: anchor.
+	self setAxisPercent: 1 in: anchor.
 	^ anchor
 ]
 
