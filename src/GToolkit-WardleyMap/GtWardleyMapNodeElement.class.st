@@ -67,6 +67,11 @@ GtWardleyMapNodeElement >> initialize [
 ]
 
 { #category : #accessing }
+GtWardleyMapNodeElement >> labelContainerDo: aBlock [
+	labelContainer ifNotNil: aBlock
+]
+
+{ #category : #accessing }
 GtWardleyMapNodeElement >> labelElementDo: aBlock [
 	labelElement ifNotNil: aBlock
 ]
@@ -79,6 +84,20 @@ GtWardleyMapNodeElement >> onHovered [
 { #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeColored [
 	self styleBuilder onNodeColored
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeDecoratorsChanged [
+	self withAllChildrenBreadthFirstDo: [ :aChild | 
+		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
+	
+	self wardleyMapNodeViewModel decorators do: [ :eachDecorator | 
+		eachDecorator decorateNodeElement: self ].
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeDecoratorsChanged: anAnnouncement [
+	self onNodeDecoratorsChanged
 ]
 
 { #category : #'event handling' }
@@ -130,6 +149,7 @@ GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 
 	self onNodeLabelTextChanged.
 	self onNodeLabelMoved.
+	self onNodeDecoratorsChanged.
 ]
 
 { #category : #accessing }
@@ -149,7 +169,8 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
-		when: GtWardleyMapNodeViewModelTypeChanged send: #onNodeTypeChanged: to: self
+		when: GtWardleyMapNodeViewModelTypeChanged send: #onNodeTypeChanged: to: self;
+		when: GtWardleyMapNodeViewModelDecoratorsChanged send: #onNodeDecoratorsChanged: to: self.
 ]
 
 { #category : #'api - wardley map node view model' }
