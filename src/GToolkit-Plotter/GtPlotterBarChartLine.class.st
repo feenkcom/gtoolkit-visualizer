@@ -129,13 +129,18 @@ GtPlotterBarChartLine >> toAnchor [
 GtPlotterBarChartLine >> transform: aRectangle [
 	"used to compute the correct position for each line"
 	^ barChart hasScalableContents
-		ifTrue: [ aRectangle ]
-		ifFalse: [ self transformRectangle: aRectangle ]
+		ifTrue: [ self transformScalableRectangle: aRectangle ]
+		ifFalse: [ self transformScrollableRectangle: aRectangle ]
 	
 ]
 
 { #category : #accessing }
-GtPlotterBarChartLine >> transformRectangle: aRectangle [
+GtPlotterBarChartLine >> transformScalableRectangle: aRectangle [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtPlotterBarChartLine >> transformScrollableRectangle: aRectangle [
 	^ self subclassResponsibility
 ]
 

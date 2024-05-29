@@ -31,8 +31,7 @@ GtPlotterHorizontalLineExamples >> barChartScalableContentsShouldExpandLine [
 	chartElement := self createChartElement: barChart.
 	self assert: chartElement lines isNotEmpty.
 	self
-		assert: chartElement lines first width
-		equals: chartElement barsElement width.
+		assert: chartElement lines first width < chartElement barsElement width.
 	^ chartElement
 ]
 
@@ -52,7 +51,7 @@ GtPlotterHorizontalLineExamples >> thresholdChartScrollableContentsAddsOneLine [
 	<gtExample>
 	| barChart threshold |
 	barChart := self barChartForNumbers.
-	threshold := 10.
+	threshold := 6.
 	barChart newHorizontalLine dataValue: threshold.
 	self assert: barChart lines size equals: 1.
 	^ barChart

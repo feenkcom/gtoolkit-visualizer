@@ -28,8 +28,9 @@ BlPercentSideAnchor >> chartPadding: aBlInsets [
 { #category : #accessing }
 BlPercentSideAnchor >> initialize [
 	super initialize.
-	transformer:= [:bounds | bounds ].
-	inversedX := inversedY := false
+	transformer := [:bounds | bounds ].
+	chartPadding := BlInsets empty.
+	inversedX := inversedY := false.
 ]
 
 { #category : #accessing }

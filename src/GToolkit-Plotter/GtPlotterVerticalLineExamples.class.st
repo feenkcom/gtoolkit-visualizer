@@ -27,19 +27,18 @@ GtPlotterVerticalLineExamples >> barChartScalableContentsShouldExpandLine [
 	chartElement := self createChartElement: barChart.
 	self assert: chartElement lines isNotEmpty.
 	self
-		assert: chartElement lines first height
-		equals: chartElement barsElement height.
+		assert: chartElement lines first height < chartElement barsElement height.
 	^ chartElement
 ]
 
 { #category : #accessing }
 GtPlotterVerticalLineExamples >> barChartScrollabelContentsShouldNotPassBarsExtent [
 	<gtExample>
-	| barChart barElement width |
+	| barChart barElement height |
 	barChart := self thresholdChartScrollableContentsAddsOneLine.
 	barElement := self createChartElement: barChart.
-	width := barElement lines first height.
-	self assert: width < barElement height.
+	height := barElement lines first height.
+	self assert: height < barElement height.
 	^ barElement
 ]
 
