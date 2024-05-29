@@ -30,7 +30,7 @@ GtPlotterVerticalLine >> transformScrollableRectangle: aRectangle [
 	gap := barChart barGap/ 2+1.
 	^ Rectangle 
 		origin: aRectangle origin + (0@ gap)
-		extent: aRectangle width @ ((aRectangle height min: e) - gap * 2)
+		extent: aRectangle width @ ((aRectangle height min: e) - (gap * 2))
 ]
 
 { #category : #accessing }

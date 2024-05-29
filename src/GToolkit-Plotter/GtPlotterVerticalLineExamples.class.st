@@ -38,7 +38,7 @@ GtPlotterVerticalLineExamples >> barChartScrollabelContentsShouldNotPassBarsExte
 	barChart := self thresholdChartScrollableContentsAddsOneLine.
 	barElement := self createChartElement: barChart.
 	height := barElement lines first height.
-	self assert: height > barElement height.
+	self assert: height < barElement height.
 	^ barElement
 ]
 
