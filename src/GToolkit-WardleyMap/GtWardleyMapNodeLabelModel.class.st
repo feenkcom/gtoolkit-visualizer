@@ -59,28 +59,33 @@ GtWardleyMapNodeLabelModel >> initialize [
 	super initialize.
 	
 	label := 'Label'.
-	coordinate := 0.5 @ 2.0
+	coordinate := GtWardleyMapConstants labelCoordinate.
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapNodeLabelModel >> label [
 	<return: #String>
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : #'api - label' }
 GtWardleyMapNodeLabelModel >> label: aString [
-	self label = aString
-		ifTrue: [ ^ self ].
+	self label = aString ifTrue: [ ^ self ].
 
-	label := aString.	
-	self propagateAnnouncement: (GtWardleyMapNodeLabelModelTextChanged new nodeLabelModel: self)
+	label := aString.
+	self notifyLabelTextChanged
 ]
 
 { #category : #'api - coordinate' }
 GtWardleyMapNodeLabelModel >> notifyCoordinateChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeLabelModelMoved new nodeLabelModel: self)
+]
+
+{ #category : #'api - label' }
+GtWardleyMapNodeLabelModel >> notifyLabelTextChanged [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeLabelModelTextChanged new nodeLabelModel: self)
 ]
 
 { #category : #'api - parent' }

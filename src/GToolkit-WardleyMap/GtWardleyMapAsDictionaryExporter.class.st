@@ -61,6 +61,24 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdgeLabel: aWardleyMapEdgeLab
 ]
 
 { #category : #visiting }
+GtWardleyMapAsDictionaryExporter >> visitWardleyMapEvolve: aWardleyMapEvolve [
+	^ OrderedDictionary new
+		at: #maturity put: aWardleyMapEvolve maturity;
+		at: #color put: (self visitColor: aWardleyMapEvolve color);
+		at: #width put: aWardleyMapEvolve width;
+		at: #height put: aWardleyMapEvolve height;
+		at: #label put: (aWardleyMapEvolve labelModel accept: self);
+		yourself
+]
+
+{ #category : #visiting }
+GtWardleyMapAsDictionaryExporter >> visitWardleyMapEvolveLabel: aWardleyMapEvolveLabel [
+	^ (self visitWardleyMapNodeLabel: aWardleyMapEvolveLabel)
+		at: #is_visible put: aWardleyMapEvolveLabel isVisible;
+		yourself
+]
+
+{ #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 	^ OrderedDictionary new
 		at: #id put: (self visitWardleyId: aWardleyMapNode id);
@@ -80,14 +98,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 								at: #y put: aWardleyMapNode pipelineCoordinate y;
 								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id] as: Array) ] ];
 					yourself);
-		at: #evolve put: (Dictionary new
-			at: #is_evolve_target put: aWardleyMapNode type isEvolveTargetType;
-			in: [ :theDictionary | 
-				aWardleyMapNode type isEvolveTargetType ifTrue: [
-					theDictionary 
-						at: #source_node 
-						put: (self visitWardleyId: aWardleyMapNode type sourceNode id) ] ];
-			yourself);
+		at: #evolve put: (aWardleyMapNode evolveModel accept: self);
 		yourself
 ]
 

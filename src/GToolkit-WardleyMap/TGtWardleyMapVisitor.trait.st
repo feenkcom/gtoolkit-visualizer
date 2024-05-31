@@ -16,7 +16,20 @@ TGtWardleyMapVisitor >> visitWardleyMapEdgeLabel: aWardleyMapEdgeLabel [
 ]
 
 { #category : #visiting }
+TGtWardleyMapVisitor >> visitWardleyMapEvolve: aWardleyMapEvolve [
+]
+
+{ #category : #visiting }
+TGtWardleyMapVisitor >> visitWardleyMapEvolveLabel: aWardleyMapEvolveLabel [
+	^ self visitWardleyMapNodeLabel: aWardleyMapEvolveLabel
+]
+
+{ #category : #visiting }
 TGtWardleyMapVisitor >> visitWardleyMapNode: aWardleyMapNode [
+]
+
+{ #category : #visiting }
+TGtWardleyMapVisitor >> visitWardleyMapNodeEvolve: aWardleyMapNodeEvolve [
 ]
 
 { #category : #visiting }
