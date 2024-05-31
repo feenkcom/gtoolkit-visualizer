@@ -70,6 +70,40 @@ GtPlotterScatterChart >> dotElement: aStencil [
 	dotElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
 
+{ #category : #accessing }
+GtPlotterScatterChart >> gtDataTable: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Data table';
+		priority: 3;
+		items: [ BrSequenceableCollectionItemsProvider 
+			forCollection: (self data values) ];
+		column: 'Index'
+			text: [:eachItem :eachIndex |
+				eachIndex asRopedText foreground: Color gray ]
+			width: 45;
+		column: 'Item'
+			text: [:eachItem |
+				eachItem asRopedText foreground: Color black];
+		column:'x'
+			text: [:eachItem |
+				(valueX value: eachItem) asRopedText foreground: Color black ]
+			width: 45;
+		column:'y'
+			text: [:eachItem |
+				(valueY value: eachItem) asRopedText foreground: Color black ]
+			width: 45;
+		column:'x%'
+			text: [:eachItem |
+				(self scaledPoint: eachItem) x asFloat asRopedText foreground: Color black ]
+			width: 45;
+		column:'y%'
+			text: [:eachItem |
+				(self scaledPoint: eachItem) y asFloat asRopedText foreground: Color black ]
+			width: 45;
+		actionUpdateButton
+]
+
 { #category : #initalization }
 GtPlotterScatterChart >> initialize [
 
