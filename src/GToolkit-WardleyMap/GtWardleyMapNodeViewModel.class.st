@@ -7,7 +7,8 @@ Class {
 		'announcer',
 		'wardleyMapViewModel',
 		'innerNodeViewModels',
-		'pipelineNodeViewModel'
+		'pipelineNodeViewModel',
+		'evolveViewModel'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
@@ -87,6 +88,16 @@ GtWardleyMapNodeViewModel >> decreaseNodeSize [
 	self nodeSize: ((self nodeSize - self nodeSizeStep) roundTo: 1@1)
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodeViewModel >> evolveViewModel [
+	^ evolveViewModel
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeViewModel >> evolveViewModel: anObject [
+	evolveViewModel := anObject
+]
+
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> increaseNodeSize [
 	self nodeSize: ((self nodeSize + self nodeSizeStep) roundTo: 1@1)
@@ -108,6 +119,11 @@ GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
 { #category : #'api - type' }
 GtWardleyMapNodeViewModel >> isEvolveTargetType [
 	^ self wardleyMapNodeModel type isEvolveTargetType
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> isEvolveVisible [
+	^ self wardleyMapNodeModel isEvolveVisible
 ]
 
 { #category : #'api - pipeline' }

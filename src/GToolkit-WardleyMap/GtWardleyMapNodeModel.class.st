@@ -124,6 +124,11 @@ GtWardleyMapNodeModel >> evolveModel: anEvolveModel [
 ]
 
 { #category : #'api - evolve' }
+GtWardleyMapNodeModel >> evolvedColor [
+	^ evolveModel color
+]
+
+{ #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolvedCoordinate [
 	^ evolveModel maturity @ self y
 ]
@@ -156,6 +161,11 @@ GtWardleyMapNodeModel >> evolvedMaturity [
 { #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolvedMaturity: aNumber [
 	evolveModel maturity: aNumber
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapNodeModel >> evolvedSize [
+	^ evolveModel size
 ]
 
 { #category : #'api - pipeline' }

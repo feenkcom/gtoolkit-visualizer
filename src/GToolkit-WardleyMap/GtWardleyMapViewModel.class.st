@@ -9,7 +9,8 @@ Class {
 		'edgeViewModels',
 		'predefinedColors',
 		'defaultColor',
-		'noteViewModels'
+		'noteViewModels',
+		'evolveViewModels'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
@@ -74,6 +75,13 @@ GtWardleyMapViewModel >> createEdgeViewModelFor: anEdgeModel [
 		wardleyMapEdgeModel: anEdgeModel
 ]
 
+{ #category : #'api - wardley map model' }
+GtWardleyMapViewModel >> createEvolveViewModelFor: aNodeModel [
+	^ GtWardleyMapEvolveViewModel new
+		wardleyMapViewModel: self;
+		wardleyMapNodeModel: aNodeModel
+]
+
 { #category : #initialization }
 GtWardleyMapViewModel >> createNodeViewModelFor: aNodeModel [
 	^ GtWardleyMapNodeViewModel new
@@ -114,6 +122,13 @@ GtWardleyMapViewModel >> edgeViewModels [
 { #category : #accessing }
 GtWardleyMapViewModel >> edgeViewModels: anObject [
 	edgeViewModels := anObject
+]
+
+{ #category : #accessing }
+GtWardleyMapViewModel >> evolveViewModels [
+	<return: #Collection of: #GtWardleyMapEvolveViewModel>
+
+	^ evolveViewModels
 ]
 
 { #category : #'gt - extensions' }
@@ -313,6 +328,15 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 			innerNodeViewModels do: [ :eachInnerNodeViewModel | 
 				eachInnerNodeViewModel pipelineNodeViewModel: eachPipelineViewModel ] ].
 
+	"create evolve view models"
+	evolveViewModels := (nodeViewModels select: #isEvolveVisible)
+		collect: [ :aNodeViewModel | 
+			| anEvolveViewModel |
+			anEvolveViewModel := self createEvolveViewModelFor: aNodeViewModel wardleyMapNodeModel.
+			aNodeViewModel evolveViewModel: anEvolveViewModel.
+			anEvolveViewModel nodeViewModel: aNodeViewModel ] 
+		as: OrderedCollection.
+	
 	edgeViewModels := self wardleyMapModel edges
 			collect: [ :eachEdgeModel | self createEdgeViewModelFor: eachEdgeModel ]
 			as: OrderedCollection.

@@ -8,19 +8,6 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers - Node Type'
 }
 
-{ #category : #factory }
-GtWardleyMapNodeStyleBuilder class >> forElement: anElement [
-	| aViewModel |
-	aViewModel := anElement wardleyMapNodeViewModel.
-	aViewModel isEvolveTargetType
-		ifTrue: [ ^ GtWardleyMapNodeEvolveStyleBuilder new
-				element: anElement;
-				viewModel: aViewModel ]
-		ifFalse: [ ^ GtWardleyMapNodeRegularStyleBuilder new
-				element: anElement;
-				viewModel: aViewModel ]
-]
-
 { #category : #accessing }
 GtWardleyMapNodeStyleBuilder >> element [
 	^ element

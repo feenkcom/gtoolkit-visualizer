@@ -5,6 +5,29 @@ Class {
 }
 
 { #category : #'examples - elements' }
+GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
+	<gtExample>
+	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
+
+	aWardleyMap := self newMapWithNodes_nodeBAsEvolveTarget.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+
+	aWardleyMapElement := GtWardleyMapElement new.
+	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
+
+	aWardleyMapElement evolutionSections: {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity'
+	}.
+	self assert: aWardleyMapElement children size = 2.
+	self assert: aWardleyMapElement children last children size = 5.
+	^ aWardleyMapElement
+]
+
+{ #category : #'examples - elements' }
 GtWardleyMapModelExamples >> mapElementWithNodes [
 	<gtExample>
 	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
@@ -479,14 +502,14 @@ GtWardleyMapModelExamples >> newMapWithNodes_nodeBAsEvolveTarget [
 	aNodeA isEvolveVisible: true.
 	aNodeA evolvedMaturity: 0.8.
 	aNodeA evolvedLabel: 'Evolved Node A'.
-	aNodeA evolvedLabelCoordinate: 0.3 @ 1.0.
+	aNodeA evolvedLabelCoordinate: 0.5 @ 2.0.
 	aNodeA isEvolvedLabelVisible: true.
 	
 	self assert: aNodeA type equals: GtWardleyMapNodeRegularType default.
 	self assert: aNodeA isEvolveVisible.
 	self assert: aNodeA evolvedMaturity equals: 0.8.
 	self assert: aNodeA evolvedLabel equals: 'Evolved Node A'.
-	self assert: aNodeA evolvedLabelCoordinate equals: 0.3 @ 1.0.
+	self assert: aNodeA evolvedLabelCoordinate equals: 0.5 @ 2.0.
 	self assert: aNodeA evolvedCoordinate equals: 0.8 @ 0.75.
 	self assert: aNodeA isEvolvedLabelVisible.
 	
