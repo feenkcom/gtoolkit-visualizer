@@ -62,7 +62,7 @@ GtWardleyMapEdgeLabelModel >> initialize [
 	super initialize.
 	
 	label := 'Edge label'.
-	coordinate := 0.5 @ 0.5.
+	coordinate := GtWardleyMapConstants edgeLabelCoordinate.
 	isVisible := false.
 ]
 

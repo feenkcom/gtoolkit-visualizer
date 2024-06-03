@@ -5,6 +5,20 @@ Class {
 }
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> edgeLabelCoordinate [
+	"I represent a default edge label model coordinate"
+
+	^ 0.5 @ 0.5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> edgeWidth [
+	"I represent a default edge model width"
+
+	^ 1.0
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> evolveColor [
 	"I represent a default evolve model color"
 

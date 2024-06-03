@@ -23,7 +23,7 @@ GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
 		'commodity'
 	}.
 	self assert: aWardleyMapElement children size = 2.
-	self assert: aWardleyMapElement children last children size = 5.
+	self assert: aWardleyMapElement children last children size = 6.
 	^ aWardleyMapElement
 ]
 
@@ -105,6 +105,8 @@ GtWardleyMapModelExamples >> mapViewModelWithNodes_nodeBAsEvolveTarget [
 	self assert: aWardleyMapViewModel wardleyMapModel equals: aWardleyMap.
 	self assert: aWardleyMapViewModel nodeViewModels size equals: 3.
 	self assert: aWardleyMapViewModel edgeViewModels size equals: 1.
+	self assert: aWardleyMapViewModel evolveViewModels size equals: 1.
+	self assert: aWardleyMapViewModel evolveEdgeViewModels size equals: 1.
 
 	^ aWardleyMapViewModel
 ]

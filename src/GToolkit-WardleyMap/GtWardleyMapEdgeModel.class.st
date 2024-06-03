@@ -71,7 +71,7 @@ GtWardleyMapEdgeModel >> initialize [
 	super initialize.
 	
 	color := Color gray.
-	width := 1.0.
+	width := GtWardleyMapConstants edgeWidth.
 	arrow := false.
 	labelModel := GtWardleyMapEdgeLabelModel new parent: self.
 ]

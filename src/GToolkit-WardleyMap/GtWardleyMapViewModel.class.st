@@ -10,7 +10,8 @@ Class {
 		'predefinedColors',
 		'defaultColor',
 		'noteViewModels',
-		'evolveViewModels'
+		'evolveViewModels',
+		'evolveEdgeViewModels'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
@@ -75,6 +76,13 @@ GtWardleyMapViewModel >> createEdgeViewModelFor: anEdgeModel [
 		wardleyMapEdgeModel: anEdgeModel
 ]
 
+{ #category : #initialization }
+GtWardleyMapViewModel >> createEvolveEdgeViewModelFor: anEvolveViewModel [
+	^ GtWardleyMapEvolveEdgeViewModel new
+		wardleyMapViewModel: self;
+		evolveViewModel: anEvolveViewModel
+]
+
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> createEvolveViewModelFor: aNodeModel [
 	^ GtWardleyMapEvolveViewModel new
@@ -120,8 +128,8 @@ GtWardleyMapViewModel >> edgeViewModels [
 ]
 
 { #category : #accessing }
-GtWardleyMapViewModel >> edgeViewModels: anObject [
-	edgeViewModels := anObject
+GtWardleyMapViewModel >> evolveEdgeViewModels [
+	^ evolveEdgeViewModels
 ]
 
 { #category : #accessing }
@@ -149,6 +157,8 @@ GtWardleyMapViewModel >> initialize [
 	nodeViewModels := OrderedCollection new.
 	edgeViewModels := OrderedCollection new.
 	noteViewModels := OrderedCollection new.
+	evolveViewModels := OrderedCollection new.
+	evolveEdgeViewModels := OrderedCollection new.
 
 	predefinedColors := {Color black.
 			Color veryVeryDarkGray.
@@ -337,8 +347,14 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 			anEvolveViewModel nodeViewModel: aNodeViewModel ] 
 		as: OrderedCollection.
 	
+	"create edge view models"
 	edgeViewModels := self wardleyMapModel edges
 			collect: [ :eachEdgeModel | self createEdgeViewModelFor: eachEdgeModel ]
+			as: OrderedCollection.
+			
+	"create evolve edge view models"
+	evolveEdgeViewModels := evolveViewModels
+			collect: [ :eachEvolveViewModel | self createEvolveEdgeViewModelFor: eachEvolveViewModel ]
 			as: OrderedCollection.
 			
 	noteViewModels := self wardleyMapModel notes

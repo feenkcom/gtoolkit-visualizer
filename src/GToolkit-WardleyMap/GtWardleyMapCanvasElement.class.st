@@ -48,6 +48,37 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 				requestFocus ])
 ]
 
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> createEvolveEdgeViewFor: anEvolveEdgeViewModel [
+	| aFromNodeElement aToNodeElement |
+
+	aFromNodeElement := self
+		nodeViewFor: anEvolveEdgeViewModel fromNodeViewModel
+		ifFound: [ :anElement | anElement ]
+		ifNone: [ ^ self ].
+
+	aToNodeElement := self
+		nodeViewFor: anEvolveEdgeViewModel toNodeViewModel
+		ifFound: [ :anElement | anElement ]
+		ifNone: [ ^ self ].
+
+	^ GtWardleyMapEdgeElement new
+		in: [ :aLineElement | aLineElement graph beEdge ];
+		id: (self newEdgeId);
+		wardleyMapEdgeViewModel: anEvolveEdgeViewModel;
+		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
+		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
+		zIndex: -1;
+		addAptitude: (BrGlamorousWithContextMenuAptitude
+			handle: [ BlElement new
+					size: 5@5;
+					geometry: BlEllipseGeometry new ]
+			content: [ GtWardleyMapEdgeEditorElement new
+				wardleyMapViewModel: self wardleyMapViewModel;
+				wardleyMapEdgeViewModel: anEvolveEdgeViewModel;
+				requestFocus ])
+]
+
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [ 
 	^ GtWardleyMapEvolveElement new
@@ -459,7 +490,7 @@ GtWardleyMapCanvasElement >> onNoteRemoved: anAnnouncement [
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
-	| theNodeElements theEdgeElements thePipelineElements theNoteElements theEvolveElements |
+	| theNodeElements theEdgeElements thePipelineElements theNoteElements theEvolveElements theEvolveEdgeElements |
 
 	self removeChildren.
 	theNodeElements := self wardleyMapViewModel nodeViewModels collect: [ :eachNodeViewModel |
@@ -484,8 +515,12 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
+	self haltOnce.
+	theEvolveEdgeElements := self wardleyMapViewModel evolveEdgeViewModels collect: [ :eachEvolveEdgeViewModel |
+		self createEvolveEdgeViewFor: eachEvolveEdgeViewModel ].
 		
 	self addChildren: theEdgeElements.
+	self addChildren: theEvolveEdgeElements
 ]
 
 { #category : #private }
