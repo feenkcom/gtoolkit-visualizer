@@ -68,15 +68,7 @@ GtWardleyMapCanvasElement >> createEvolveEdgeViewFor: anEvolveEdgeViewModel [
 		wardleyMapEdgeViewModel: anEvolveEdgeViewModel;
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
-		zIndex: -1;
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: 5@5;
-					geometry: BlEllipseGeometry new ]
-			content: [ GtWardleyMapEdgeEditorElement new
-				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapEdgeViewModel: anEvolveEdgeViewModel;
-				requestFocus ])
+		zIndex: -1
 ]
 
 { #category : #'api - wardley map view model' }
