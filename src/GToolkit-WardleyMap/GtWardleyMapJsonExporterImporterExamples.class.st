@@ -151,7 +151,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBA
 	aNodeBDictionary := (anExportedDictionary at: #nodes) at: 2.
 	self assert: aNodeBDictionary size equals: 9.
 	self assert: (aNodeBDictionary at: #x) equals: 0.5.
-	self assert: (aNodeBDictionary at: #y) equals: 0.75.
+	self assert: (aNodeBDictionary at: #y) equals: 0.25.
 	self assert: (aNodeBDictionary at: #width) equals: 12.
 	self assert: (aNodeBDictionary at: #height) equals: 12.
 	self assert: (aNodeBDictionary at: #color) size equals: 4.
@@ -178,7 +178,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBA
 	^ aWardleyMap -> anExportedDictionary
 ]
 
-{ #category : #export }
+{ #category : #import }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionary [
 	<gtExample>
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
@@ -195,7 +195,31 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionary [
 	^ anImportedWardleyMap
 ]
 
-{ #category : #export }
+{ #category : #'import - legacy' }
+GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithLegacyEvolveNode [
+	<gtExample>
+	
+	| aJsonString anImportedWardleyMap aColor aNode |
+	aJsonString := self wardleyMapWithLegacyEvolveNode.
+	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter  importMapFromJSONString: aJsonString.
+	
+	self assert: anImportedWardleyMap nodes size equals: 1.
+	self assert: anImportedWardleyMap edges size equals: 0.
+	
+	aNode := anImportedWardleyMap nodes first.
+	aColor := Color r: 0.0 g: 0.8504398826979472 b: 0.0 alpha: 1.0.
+	self assert: aNode evolvedColor equals: aColor.
+	self assert: aNode isEvolveVisible.
+	self assert: aNode evolvedSize equals: 14@14.
+	self assert: aNode evolvedSize equals: 14@14.
+	self assert: aNode evolvedMaturity equals: 0.5972401245364447.
+	self assert: aNode evolvedLabel equals: 'Evolved A'.
+	self assert: aNode evolvedLabelCoordinate equals: 1.42 @ 2.25.
+	
+	^ anImportedWardleyMap
+]
+
+{ #category : #import }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithPipelineInnerNodesFromDictionary [
 	<gtExample>
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
@@ -212,7 +236,7 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithPipelineInnerNod
 	^ anImportedWardleyMap
 ]
 
-{ #category : #export }
+{ #category : #import }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithWithNodes_nodeBAsEvolveTarget [
 	<gtExample>
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
@@ -227,4 +251,82 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithWithNodes_nodeBA
 	self assert: anImportedWardleyMap equals: anExportedWardleyMap.
 
 	^ anImportedWardleyMap
+]
+
+{ #category : #'import - legacy' }
+GtWardleyMapJsonExporterImporterExamples >> wardleyMapWithLegacyEvolveNode [
+	<gtExample>
+	^ '{
+	"nodes" : [
+		{
+			"id" : "c69b8c83-64d6-0d00-bc51-baa2047e8ee3",
+			"color" : {
+				"green" : 0.0,
+				"blue" : 0.0,
+				"alpha" : 1.0,
+				"red" : 0.0
+			},
+			"x" : 0.3436040554395939,
+			"y" : 0.35485677083333333,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : 0.5,
+				"y" : 2.0,
+				"text" : "Node A"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_evolve_target" : false
+			}
+		},
+		{
+			"id" : "294ed183-64d6-0d00-bc52-ec39047e8ee3",
+			"color" : {
+				"green" : 0.8504398826979472,
+				"blue" : 0.0,
+				"alpha" : 1.0,
+				"red" : 0.0
+			},
+			"x" : 0.5972401245364447,
+			"y" : 0.35485677083333333,
+			"width" : 14,
+			"height" : 14,
+			"label" : {
+				"x" : 1.42,
+				"y" : 2.25,
+				"text" : "Evolved A"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_evolve_target" : true,
+				"source_node" : "c69b8c83-64d6-0d00-bc51-baa2047e8ee3"
+			}
+		}
+	],
+	"edges" : [
+		{
+			"from" : "c69b8c83-64d6-0d00-bc51-baa2047e8ee3",
+			"to" : "294ed183-64d6-0d00-bc52-ec39047e8ee3",
+			"color" : {
+				"green" : 0.0,
+				"blue" : 0.0,
+				"alpha" : 1.0,
+				"red" : 1.0
+			},
+			"width" : 1.0,
+			"arrow" : true,
+			"label" : {
+				"x" : 0.5,
+				"y" : 0.5,
+				"is_visible" : false,
+				"text" : "Edge label"
+			}
+		}
+	]
+}'
 ]

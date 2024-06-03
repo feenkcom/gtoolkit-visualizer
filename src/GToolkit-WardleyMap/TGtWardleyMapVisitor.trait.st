@@ -29,10 +29,6 @@ TGtWardleyMapVisitor >> visitWardleyMapNode: aWardleyMapNode [
 ]
 
 { #category : #visiting }
-TGtWardleyMapVisitor >> visitWardleyMapNodeEvolve: aWardleyMapNodeEvolve [
-]
-
-{ #category : #visiting }
 TGtWardleyMapVisitor >> visitWardleyMapNodeLabel: aWardleyMapNodeLabel [
 ]
 

@@ -98,7 +98,9 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 								at: #y put: aWardleyMapNode pipelineCoordinate y;
 								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id] as: Array) ] ];
 					yourself);
-		at: #evolve put: (aWardleyMapNode evolveModel accept: self);
+		at: #evolve put: ((aWardleyMapNode evolveModel accept: self)
+			at: #is_visible put: aWardleyMapNode isEvolveVisible;
+			yourself);
 		yourself
 ]
 
