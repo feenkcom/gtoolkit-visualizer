@@ -16,3 +16,10 @@ GtWardleyMapEvolveViewModelMoved >> evolveViewModel [
 GtWardleyMapEvolveViewModelMoved >> evolveViewModel: anObject [
 	evolveViewModel := anObject
 ]
+
+{ #category : #accessing }
+GtWardleyMapEvolveViewModelMoved >> nodeViewModel [
+	"Compatibility with node announcements"
+
+	^ self evolveViewModel
+]

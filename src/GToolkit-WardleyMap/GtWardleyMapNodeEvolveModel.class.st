@@ -100,7 +100,7 @@ GtWardleyMapNodeEvolveModel >> maturity: aMaturity [
 
 { #category : #'api - color' }
 GtWardleyMapNodeEvolveModel >> notifyColored [
-	self propagateAnnouncement: (GtWardleyMapEvolveModelColored new edgeModel: self)
+	self propagateAnnouncement: (GtWardleyMapEvolveModelColored new evolveModel: self)
 ]
 
 { #category : #'api - color' }

@@ -10,16 +10,6 @@ GtWardleyMapNodeElement >> beSquareGeometry [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onHovered [
-	self styleBuilder onHovered
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeColored [
-	self styleBuilder onNodeColored
-]
-
-{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeDecoratorsChanged [
 	self withAllChildrenBreadthFirstDo: [ :aChild | 
 		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
@@ -41,11 +31,6 @@ GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeResized [
-	self size: self wardleyMapNodeViewModel nodeSize
-]
-
-{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeTypeChanged [
 	self onNodeColored
 ]
@@ -53,11 +38,6 @@ GtWardleyMapNodeElement >> onNodeTypeChanged [
 { #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeTypeChanged: anAnnouncement [
 	self onNodeTypeChanged
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onUnhovered [
-	self styleBuilder onUnhovered
 ]
 
 { #category : #'api - wardley map node view model' }

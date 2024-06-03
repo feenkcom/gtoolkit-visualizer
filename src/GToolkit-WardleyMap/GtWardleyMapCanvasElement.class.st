@@ -548,6 +548,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 	
 	self wardleyMapViewModel weak
 		when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved: to: self;
+		when: GtWardleyMapEvolveViewModelMoved send: #onNodeMoved: to: self;
 		when: GtWardleyMapNodeViewModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;

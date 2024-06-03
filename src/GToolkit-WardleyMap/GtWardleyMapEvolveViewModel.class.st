@@ -19,6 +19,11 @@ GtWardleyMapEvolveViewModel >> announcer [
 ]
 
 { #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> changeColorTo: aColor [ 
+	self wardleyMapNodeModel evolvedColor: aColor
+]
+
+{ #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> coordinate [
 	^ self wardleyMapNodeModel evolvedCoordinate
 ]
@@ -33,8 +38,26 @@ GtWardleyMapEvolveViewModel >> coordinateY [
 	^ self coordinate y
 ]
 
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> decreaseNodeSize [
+	self nodeSize: ((self nodeSize - self nodeSizeStep) roundTo: 1@1)
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> increaseNodeSize [
+	self nodeSize: ((self nodeSize + self nodeSizeStep) roundTo: 1@1)
+]
+
 { #category : #'as yet unclassified' }
 GtWardleyMapEvolveViewModel >> isEvolveTargetType [
+	"Compatibility with the old evolve node implementation.
+	Can be later removed."
+
+	^ false
+]
+
+{ #category : #'as yet unclassified' }
+GtWardleyMapEvolveViewModel >> isPipelineVisible [
 	"Compatibility with the old evolve node implementation.
 	Can be later removed."
 
@@ -66,9 +89,14 @@ GtWardleyMapEvolveViewModel >> labelCoordinateY [
 	^ self labelCoordinate y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> moveNodeLabelTo: aNormalizedPoint [
 	self wardleyMapNodeModel evolvedLabelCoordinate: aNormalizedPoint
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> moveNodeTo: aNormalizedPoint [
+	self wardleyMapNodeModel evolvedMaturity: aNormalizedPoint x
 ]
 
 { #category : #'api - evolve' }
@@ -79,6 +107,16 @@ GtWardleyMapEvolveViewModel >> nodeColor [
 { #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> nodeSize [
 	^ self wardleyMapNodeModel evolvedSize
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> nodeSize: aPoint [
+	self wardleyMapNodeModel evolvedSize: (aPoint max: 1@1)
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> nodeSizeStep [
+	^ ((self nodeSize min // 10 + 1) max: 1) asPoint / 2.0
 ]
 
 { #category : #accessing }

@@ -72,6 +72,16 @@ GtWardleyMapNodeBasicElement >> labelElementDo: aBlock [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeBasicElement >> onHovered [
+	self styleBuilder onHovered
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeBasicElement >> onNodeColored [
+	self styleBuilder onNodeColored
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeBasicElement >> onNodeLabelMoved [
 	labelContainer constraintsDo: [ :c |
 		c frame horizontal alignCenterAt: self wardleyMapNodeViewModel labelCoordinateX.
@@ -83,9 +93,25 @@ GtWardleyMapNodeBasicElement >> onNodeLabelTextChanged [
 	labelElement text: self wardleyMapNodeViewModel label
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeBasicElement >> onNodeResized [
+	self size: self wardleyMapNodeViewModel nodeSize
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeBasicElement >> onUnhovered [
+	self styleBuilder onUnhovered
+]
+
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeBasicElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
 	
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeBasicElement >> styleBuilder [
+	<return: #GtWardleyMapNodeStyleBuilder>
+	^ self subclassResponsibility
 ]
