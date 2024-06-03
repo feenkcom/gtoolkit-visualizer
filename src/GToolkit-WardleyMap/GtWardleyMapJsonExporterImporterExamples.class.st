@@ -135,7 +135,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNod
 { #category : #export }
 GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBAsEvolveTarget [
 	<gtExample>
-	| aWardleyMap anExportedDictionary aNodeBDictionary aNodeBLabelDictionary aNodeBPipelineDictionary aNodeBEvolveDictionary aNodeADictionary |
+	| aWardleyMap anExportedDictionary aNodeBDictionary aNodeBLabelDictionary aNodeBPipelineDictionary aNodeBEvolveDictionary aNodeADictionary aNodeALabelDictionary aNodeAEvolveDictionary aNodeAEvolveLabelDictionary |
 
 	aWardleyMap := GtWardleyMapModelExamples new newMapWithNodes_nodeBAsEvolveTarget.
 	anExportedDictionary := aWardleyMap accept: GtWardleyMapAsDictionaryExporter new.
@@ -147,6 +147,37 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBA
 	self assert: (anExportedDictionary at: #nodes) size equals: 3.
 	
 	aNodeADictionary := (anExportedDictionary at: #nodes) at: 1.
+	self assert: aNodeADictionary size equals: 9.
+	self assert: (aNodeADictionary at: #x) equals: 0.25.
+	self assert: (aNodeADictionary at: #y) equals: 0.75.
+	self assert: (aNodeADictionary at: #width) equals: 12.
+	self assert: (aNodeADictionary at: #height) equals: 12.
+	self assert: (aNodeADictionary at: #color) size equals: 4.
+	self assert: ((aNodeADictionary at: #color) at: #green) equals: Color gray green.
+	self assert: ((aNodeADictionary at: #color) at: #blue) equals: Color gray blue.
+	self assert: ((aNodeADictionary at: #color) at: #red) equals: Color gray red.
+	self assert: ((aNodeADictionary at: #color) at: #alpha) equals: 1.0.
+
+	aNodeALabelDictionary := aNodeADictionary at: #label.
+	self assert: aNodeALabelDictionary size equals: 3.
+	self assert: (aNodeALabelDictionary at: #x) equals: 0.5.
+	self assert: (aNodeALabelDictionary at: #y) equals: 2.0.
+	self assert: (aNodeALabelDictionary at: #text) equals: 'Node A'.
+	
+	aNodeAEvolveDictionary := aNodeADictionary at: #evolve.
+	self assert: aNodeAEvolveDictionary size equals: 6.
+	self assert: (aNodeAEvolveDictionary at: #maturity) equals: 0.8.
+	self assert: ((aNodeAEvolveDictionary at: #color) at: #green) equals: Color red green.
+	self assert: ((aNodeAEvolveDictionary at: #color) at: #blue) equals: Color red blue.
+	self assert: ((aNodeAEvolveDictionary at: #color) at: #red) equals: Color red red.
+	self assert: ((aNodeAEvolveDictionary at: #color) at: #alpha) equals: 1.0.
+	
+	aNodeAEvolveLabelDictionary := aNodeAEvolveDictionary at: #label.
+	self assert: aNodeAEvolveLabelDictionary size equals: 4.
+	self assert: (aNodeAEvolveLabelDictionary at: #is_visible) equals: true.
+	self assert: (aNodeAEvolveLabelDictionary at: #x) equals: 0.5.
+	self assert: (aNodeAEvolveLabelDictionary at: #y) equals: 2.0.
+	self assert: (aNodeAEvolveLabelDictionary at: #text) equals: 'Evolved Node A'.
 	
 	aNodeBDictionary := (anExportedDictionary at: #nodes) at: 2.
 	self assert: aNodeBDictionary size equals: 9.
@@ -171,10 +202,9 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBA
 	self assert: (aNodeBPipelineDictionary at: #is_visible) equals: false.
 	
 	aNodeBEvolveDictionary := aNodeBDictionary at: #evolve.
-	self assert: aNodeBEvolveDictionary size equals: 2.
-	self assert: (aNodeBEvolveDictionary at: #is_evolve_target) equals: true.
-	self assert: (aNodeBEvolveDictionary at: #source_node) equals: (aNodeADictionary at: #id).
-	
+	self assert: aNodeBEvolveDictionary size equals: 1.
+	self assert: (aNodeBEvolveDictionary at: #is_visible) equals: false.
+
 	^ aWardleyMap -> anExportedDictionary
 ]
 

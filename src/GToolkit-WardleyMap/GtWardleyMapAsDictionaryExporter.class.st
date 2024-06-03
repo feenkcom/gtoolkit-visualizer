@@ -89,7 +89,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 		at: #height put: aWardleyMapNode height;
 		at: #label put: (aWardleyMapNode labelModel accept: self);
 		at: #pipeline
-			put: (Dictionary new
+			put: (OrderedDictionary new
 					at: #is_visible put: aWardleyMapNode isPipelineVisible;
 					in: [ :theDictionary | 
 						aWardleyMapNode isPipelineVisible ifTrue: [
@@ -98,8 +98,13 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 								at: #y put: aWardleyMapNode pipelineCoordinate y;
 								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id] as: Array) ] ];
 					yourself);
-		at: #evolve put: ((aWardleyMapNode evolveModel accept: self)
+		at: #evolve put: (OrderedDictionary new
 			at: #is_visible put: aWardleyMapNode isEvolveVisible;
+			in: [ :theDictionary |
+				aWardleyMapNode isEvolveVisible ifTrue: [
+					(aWardleyMapNode evolveModel accept: self) 
+						keysAndValuesDo: [ :aKey :aValue |
+							theDictionary at: aKey put: aValue ] ] ];
 			yourself);
 		yourself
 ]
