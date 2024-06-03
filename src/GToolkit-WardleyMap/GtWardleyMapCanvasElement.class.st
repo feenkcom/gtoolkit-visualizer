@@ -515,7 +515,7 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
-	self haltOnce.
+	
 	theEvolveEdgeElements := self wardleyMapViewModel evolveEdgeViewModels collect: [ :eachEvolveEdgeViewModel |
 		self createEvolveEdgeViewFor: eachEvolveEdgeViewModel ].
 		
