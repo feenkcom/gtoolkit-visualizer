@@ -15,10 +15,7 @@ Class {
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> addEvolve [
-	GtWardleyMapNodeEvolveTypeBuilder new
-		sourceNode: self wardleyMapNodeModel;
-		mapModel: self wardleyMapViewModel wardleyMapModel;
-		build
+	self wardleyMapNodeModel isEvolveVisible: true
 ]
 
 { #category : #'api - pipeline' }
@@ -47,15 +44,14 @@ GtWardleyMapNodeViewModel >> changeColorTo: aColor [
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> convertToEvolveNode [
-	GtWardleyMapNodeEvolveTypeTransformer new
-		targetNode: self wardleyMapNodeModel;
-		mapModel: self wardleyMapViewModel wardleyMapModel;
-		transform
+	self flag: #remove_it.
+	self halt.
 ]
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> convertToRegularNode [
-	self wardleyMapNodeModel type: GtWardleyMapNodeRegularType default
+	self flag: #remove_it.
+	self halt.
 ]
 
 { #category : #'api - accessing' }
@@ -118,7 +114,7 @@ GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
 
 { #category : #'api - type' }
 GtWardleyMapNodeViewModel >> isEvolveTargetType [
-	^ self wardleyMapNodeModel type isEvolveTargetType
+	^ false
 ]
 
 { #category : #'api - node' }

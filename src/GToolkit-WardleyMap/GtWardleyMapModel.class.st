@@ -153,11 +153,7 @@ GtWardleyMapModel >> gtEdgesFor: aView [
 						c linear vertical alignCenter ] ] 
 			width: 40;
 		column: 'From' text: [ :anEdge | anEdge fromNode label ];
-		column: 'To' text: [ :anEdge | 
-			| aTypeText |
-			aTypeText := ' (' asRopedText append: (anEdge toNode type gtDisplayText); appendString: ')'.
-			aTypeText foreground: BrGlamorousColors disabledButtonTextColor.
-			anEdge toNode label asRopedText append: aTypeText ];
+		column: 'To' text: [ :anEdge | anEdge toNode label ];
 		column: 'Label' text: [ :anEdge | anEdge label ];
 		column: 'Visible label' text: [ :anEdge | 
 			anEdge isLabelVisible 
@@ -213,12 +209,11 @@ GtWardleyMapModel >> gtNodesFor: aView [
 						c linear vertical alignCenter ] ] 
 			width: 40;
 		column: 'Name' text: #label;
-		column: 'Type' text: #type;
 		column: 'With pipeline' 
 			text: [ :aNode | aNode isPipelineVisible 
 				ifTrue: [ 'yes' ] 
 				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ]
-			weight: 0.7;
+			width: 85;
 		column: 'Inner nodes' 
 			text: [ :aNode | 
 				| aSize |
@@ -226,11 +221,15 @@ GtWardleyMapModel >> gtNodesFor: aView [
 				aSize isZero 
 					ifTrue: [ aSize asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
 					ifFalse: [ aSize ] ]
-			 weight: 0.5;
-		column: 'X' text: [ :aNode | aNode x printShowingDecimalPlaces: 3 ] weight: 0.5;
-		column: 'Y' text: [ :aNode | aNode y printShowingDecimalPlaces: 3 ] weight: 0.5;
-		column: 'Label X' text: [ :aNode | aNode labelModel x printShowingDecimalPlaces: 3 ] weight: 0.5;
-		column: 'Label Y' text: [ :aNode | aNode labelModel y printShowingDecimalPlaces: 3 ] weight: 0.5
+			 width: 80;
+		column: 'Evolve' text: [ :aNode | 
+			aNode isEvolveVisible
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
+				ifTrue: [ aNode evolvedLabel ] ];
+		column: 'X' text: [ :aNode | aNode x printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Y' text: [ :aNode | aNode y printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Label X' text: [ :aNode | aNode labelModel x printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Label Y' text: [ :aNode | aNode labelModel y printShowingDecimalPlaces: 3 ] width: 50
 ]
 
 { #category : #'gt-extensions' }

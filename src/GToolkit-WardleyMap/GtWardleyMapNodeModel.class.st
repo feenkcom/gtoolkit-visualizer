@@ -28,12 +28,14 @@ GtWardleyMapNodeModel >> = anObject [
 
 	^ self color = anObject color
 		and: [ self coordinate = anObject coordinate
-			and: [ self id = anObject id
-				and: [ self innerNodes = anObject innerNodes
-					and: [ self isPipelineVisible = anObject isPipelineVisible
-						and: [ self labelModel = anObject labelModel
-							and: [ self pipelineCoordinate = anObject pipelineCoordinate
-								and: [ self size = anObject size ] ] ] ] ] ] ]
+		and: [ self id = anObject id
+		and: [ self innerNodes = anObject innerNodes
+		and: [ self isPipelineVisible = anObject isPipelineVisible
+		and: [ self labelModel = anObject labelModel
+		and: [ self pipelineCoordinate = anObject pipelineCoordinate
+		and: [ self size = anObject size
+		and: [ self isEvolveVisible = anObject isEvolveVisible 
+		and: [ self evolveModel = anObject evolveModel ] ] ] ] ] ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -120,7 +122,8 @@ GtWardleyMapNodeModel >> evolveModel [
 
 { #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolveModel: anEvolveModel [
-	evolveModel := anEvolveModel
+	evolveModel := anEvolveModel.
+	anEvolveModel parent: self.
 ]
 
 { #category : #'api - evolve' }
@@ -246,12 +249,14 @@ GtWardleyMapNodeModel >> hasId [
 GtWardleyMapNodeModel >> hash [
 	^ self color hash
 		bitXor: (self coordinate hash
-			bitXor: (self id hash
-				bitXor: (self innerNodes hash
-					bitXor: (self isPipelineVisible hash
-						bitXor: (self labelModel hash
-							bitXor: (self pipelineCoordinate hash
-								bitXor: (self size hash)))))))
+		bitXor: (self id hash
+		bitXor: (self innerNodes hash
+		bitXor: (self isPipelineVisible hash
+		bitXor: (self labelModel hash
+		bitXor: (self pipelineCoordinate hash
+		bitXor: (self size hash
+		bitXor: (self isEvolveVisible hash
+		bitXor: (self evolveModel hash)))))))))
 ]
 
 { #category : #accessing }
@@ -272,7 +277,6 @@ GtWardleyMapNodeModel >> initialize [
 	labelModel parent: self.
 	
 	evolveModel := GtWardleyMapNodeEvolveModel new.
-	evolveModel label: 'Evolved'.
 	evolveModel parent: self.
 	isEvolveVisible := false.
 	
@@ -284,7 +288,6 @@ GtWardleyMapNodeModel >> initialize [
 	isPipelineVisible := false.
 	innerNodes := #().
 	pipelineNode := nil.
-	type := GtWardleyMapNodeRegularType default
 ]
 
 { #category : #'api - pipeline' }
@@ -385,7 +388,13 @@ GtWardleyMapNodeModel >> labelModel [
 
 { #category : #initialization }
 GtWardleyMapNodeModel >> labelModel: aGtWardleyMapNodeLabelModel [
-	labelModel := aGtWardleyMapNodeLabelModel
+	labelModel := aGtWardleyMapNodeLabelModel.
+	aGtWardleyMapNodeLabelModel parent: self
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> maturity [
+	^ self x
 ]
 
 { #category : #'api - color' }
@@ -440,11 +449,6 @@ GtWardleyMapNodeModel >> notifyPipelineVisibityChanged [
 { #category : #'api - size' }
 GtWardleyMapNodeModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeModelResized new nodeModel: self)
-]
-
-{ #category : #'api - type' }
-GtWardleyMapNodeModel >> notifyTypeChanged [
-	self propagateAnnouncement: (GtWardleyMapNodeModelTypeChanged new nodeModel: self)
 ]
 
 { #category : #'api - pipeline' }
@@ -566,21 +570,7 @@ GtWardleyMapNodeModel >> removeInnerNodes [
 	self innerNodes do: [ :anInnerNode | self removeInnerNode: anInnerNode ]
 ]
 
-{ #category : #'api - type' }
-GtWardleyMapNodeModel >> type [
-	<return: #TGtWardleyMapNodeType>
-	^ type
-]
-
-{ #category : #'api - type' }
-GtWardleyMapNodeModel >> type: aType [
-	self
-		assert: [ aType isNotNil ]
-		description: [ 'Node model type must be non-nil' ].
-	self type = aType ifTrue: [ ^ self ].
-	
-	type aboutToRemoveFromNode.
-	type := aType.
-	type addedToNode.
-	self notifyTypeChanged.
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> visibility [
+	^ 1 - self y
 ]

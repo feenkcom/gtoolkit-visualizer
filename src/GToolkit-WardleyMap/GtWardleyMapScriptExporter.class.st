@@ -84,7 +84,7 @@ GtWardleyMapScriptExporter >> edges [
 
 { #category : #convenience }
 GtWardleyMapScriptExporter >> evolveNodes [
-	^ self nodes select: [ :each | each type isEvolveTargetType ]
+	^ self nodes select: [ :each | each isEvolveVisible ]
 ]
 
 { #category : #'api - export' }
@@ -132,6 +132,7 @@ GtWardleyMapScriptExporter >> exportEvolve: anEvolveNode [
 	| aSourceNode aLabel |
 	self assert: [ anEvolveNode pipelineNode isNil ].
 	
+	self halt.
 	aSourceNode := anEvolveNode type sourceNode.
 	aLabel := aSourceNode label = anEvolveNode label 
 		ifTrue: [ anEvolveNode label ]
@@ -308,12 +309,12 @@ GtWardleyMapScriptExporter >> printPipelineCoordinate: aNode [
 
 { #category : #convenience }
 GtWardleyMapScriptExporter >> regularEdges [
-	^ self edges select: [ :each | each toNode type isRegularType ]
+	^ self edges
 ]
 
 { #category : #convenience }
 GtWardleyMapScriptExporter >> regularNodes [
-	^ self nodes select: [ :each | each type isRegularType ]
+	^ self nodes
 ]
 
 { #category : #'private - exporting' }

@@ -11,6 +11,20 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
+{ #category : #comparing }
+GtWardleyMapNodeEvolveModel >> = anObject [
+	self == anObject
+		ifTrue: [ ^ true ].
+
+	self class = anObject class
+		ifFalse: [ ^ false ].
+
+	^ self color = anObject color
+		and: [ self maturity = anObject maturity
+		and: [ self labelModel = anObject labelModel
+		and: [ self size = anObject size ] ] ]
+]
+
 { #category : #visiting }
 GtWardleyMapNodeEvolveModel >> accept: aWardleyMapVisitor [
 	^ aWardleyMapVisitor visitWardleyMapEvolve: self
@@ -21,6 +35,14 @@ GtWardleyMapNodeEvolveModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #comparing }
+GtWardleyMapNodeEvolveModel >> hash [
+	^ self color hash
+		bitXor: (self maturity hash 
+		bitXor: (self labelModel hash 
+		bitXor: self size hash))
 ]
 
 { #category : #initialization }
@@ -79,7 +101,8 @@ GtWardleyMapNodeEvolveModel >> labelModel [
 
 { #category : #'api - label' }
 GtWardleyMapNodeEvolveModel >> labelModel: aModel [
-	labelModel := aModel
+	labelModel := aModel.
+	aModel parent: self.
 ]
 
 { #category : #'api - maturity' }
@@ -116,4 +139,21 @@ GtWardleyMapNodeEvolveModel >> notifyParentChanged [
 { #category : #'api - size' }
 GtWardleyMapNodeEvolveModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapEvolveModelResized new evolveModel: self)
+]
+
+{ #category : #printing }
+GtWardleyMapNodeEvolveModel >> printOn: aStream [
+	"Append a sequence of characters to aStream that identify the receiver."
+
+	aStream
+		nextPutAll: 'Evolve {';
+		nextPutAll: ' label: ';
+		print: self label;
+		nextPutAll: '; maturity: ';
+		print: self maturity;
+		nextPutAll: '; size: ';
+		print: self size;
+		nextPutAll: '; color: ';
+		print: self color;
+		nextPutAll: ' }'
 ]
