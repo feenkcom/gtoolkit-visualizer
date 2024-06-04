@@ -117,6 +117,11 @@ GtWardleyMapNodeViewModel >> isEvolveTargetType [
 	^ false
 ]
 
+{ #category : #'api - type' }
+GtWardleyMapNodeViewModel >> isEvolveViewModel [
+	^ false
+]
+
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> isEvolveVisible [
 	^ self wardleyMapNodeModel isEvolveVisible

@@ -57,6 +57,11 @@ GtWardleyMapEvolveViewModel >> isEvolveTargetType [
 ]
 
 { #category : #'as yet unclassified' }
+GtWardleyMapEvolveViewModel >> isEvolveViewModel [
+	^ true
+]
+
+{ #category : #'as yet unclassified' }
 GtWardleyMapEvolveViewModel >> isPipelineVisible [
 	"Compatibility with the old evolve node implementation.
 	Can be later removed."
