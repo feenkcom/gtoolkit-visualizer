@@ -71,6 +71,13 @@ GtWardleyMapCanvasElement >> createEvolveEdgeViewFor: anEvolveEdgeViewModel [
 		zIndex: -1
 ]
 
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> createEvolveEditorFor: aNodeViewModel [
+	^ GtWardleyMapEvolveEditorElement new
+		wardleyMapViewModel: self wardleyMapViewModel;
+		wardleyMapNodeViewModel: aNodeViewModel
+]
+
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [ 
 	^ GtWardleyMapEvolveElement new
@@ -109,7 +116,7 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 				handle: [ BlElement new
 						size: anEvolveViewModel nodeSize / 2.0;
 						geometry: BlEllipseGeometry new ]
-				content: [ self createNodeEditorFor: anEvolveViewModel ])
+				content: [ self createEvolveEditorFor: anEvolveViewModel ])
 ]
 
 { #category : #initialization }
