@@ -30,16 +30,6 @@ GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 		ifFalse: [ self beEllipseGeometry ]
 ]
 
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeTypeChanged [
-	self onNodeColored
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeTypeChanged: anAnnouncement [
-	self onNodeTypeChanged
-]
-
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
@@ -72,7 +62,6 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
-		when: GtWardleyMapNodeViewModelTypeChanged send: #onNodeTypeChanged: to: self;
 		when: GtWardleyMapNodeViewModelDecoratorsChanged send: #onNodeDecoratorsChanged: to: self.
 ]
 

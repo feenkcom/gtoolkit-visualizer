@@ -24,9 +24,8 @@ GtWardleyMapNodeChangePossibility >> anyEdgeFromNodeHasEdgeToEvolveNode: aCollec
 
 { #category : #testing }
 GtWardleyMapNodeChangePossibility >> canAddEvolveNode [
-	^ nodeViewModel isEvolveTargetType not
-		and: [ self outgoingEdgeViewModels
-				allSatisfy: [ :eachEdge | eachEdge toNodeViewModel isEvolveTargetType not ] ]
+	^ nodeViewModel isEvolveViewModel not
+		and: [ nodeViewModel isEvolveVisible not ]
 ]
 
 { #category : #testing }

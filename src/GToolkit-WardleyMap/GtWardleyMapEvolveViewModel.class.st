@@ -19,6 +19,11 @@ GtWardleyMapEvolveViewModel >> announcer [
 ]
 
 { #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> canAddEvolveNode [
+	^ false
+]
+
+{ #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> changeColorTo: aColor [ 
 	self wardleyMapNodeModel evolvedColor: aColor
 ]
