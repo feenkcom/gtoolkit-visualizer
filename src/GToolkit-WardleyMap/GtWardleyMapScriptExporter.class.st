@@ -130,8 +130,6 @@ GtWardleyMapScriptExporter >> exportEdge: anEdge [
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportEvolve: aNode [
 	| aLabel |
-	self assert: [ aNode pipelineNode isNil ].
-	
 	aLabel := aNode label = aNode evolvedLabel 
 		ifTrue: [ aNode label ]
 		ifFalse: [ '{1} -> {2}' format: { aNode label. aNode evolvedLabel } ].
