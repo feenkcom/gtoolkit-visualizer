@@ -253,8 +253,8 @@ GtWardleyMapNodeViewModel >> onNodeDecoratorsChanged: anAnnouncement [
 
 { #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeEvolveVisibilityChanged: anAnnouncement [
-	self
-		announce: (GtWardleyMapNodeViewModelEvolveVisibilityChanged new nodeViewModel: self)
+	self announce: (GtWardleyMapNodeViewModelEvolveVisibilityChanged new nodeViewModel: self).
+	self wardleyMapViewModel announce: (GtWardleyMapNodeViewModelEvolveVisibilityChanged new nodeViewModel: self)
 ]
 
 { #category : #'event handling' }

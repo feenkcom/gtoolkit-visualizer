@@ -355,6 +355,33 @@ GtWardleyMapCanvasElement >> onEdgeRemoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapCanvasElement >> onEvolveAdded: anAnnouncement [
+	| aEvolveElement aEvolveViewModel anEvolveEdgeViewModel anEvolveEdgeElement |
+	aEvolveViewModel := anAnnouncement evolveViewModel.
+	anEvolveEdgeViewModel := anAnnouncement evolveEdgeViewModel.
+	aEvolveElement := self createEvolveViewFor: aEvolveViewModel.
+
+	"If the node element is added inside of a pipeline element,
+	let's add the node element also as a pipeline inner node."
+	(aEvolveViewModel isPipelineVisible not
+		and: [ aEvolveViewModel pipelineNodeViewModel isNil ]) ifTrue: [ 
+			aEvolveElement
+				when: BlElementLayoutComputedEvent
+				doOnce: [ :anEvent | 
+					self pipelineChildrenDo: [ :aPipelineElement | 
+						aEvolveViewModel pipelineNodeViewModel ifNil: [ 
+							(GtWardleyMapUtility
+								isNodeElement: aEvolveElement
+								insidePipelineElement: aPipelineElement) ifTrue: [ 
+									aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aEvolveViewModel ] ] ] ] ].
+									
+	self addChild: aEvolveElement.
+	
+	anEvolveEdgeElement := self createEvolveEdgeViewFor: anEvolveEdgeViewModel.
+	self addChild: anEvolveEdgeElement.
+]
+
+{ #category : #'event handling' }
 GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
 	| anInnerNodeViewModel aPipelineNodeViewModel |
 	anInnerNodeViewModel := anAnnouncement innerNodeViewModel.
@@ -545,6 +572,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeViewModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
+		when: GtWardleyMapEvolveViewModelAdded send: #onEvolveAdded: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
 		when: GtWardleyMapNoteViewModelMoved send: #onNoteMoved: to: self;

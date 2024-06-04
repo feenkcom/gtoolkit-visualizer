@@ -90,6 +90,15 @@ GtWardleyMapViewModel >> createEvolveViewModelFor: aNodeModel [
 		wardleyMapNodeModel: aNodeModel
 ]
 
+{ #category : #'api - wardley map model' }
+GtWardleyMapViewModel >> createEvolveViewModelForNodeViewModel: aNodeViewModel [ 
+	| anEvolveViewModel |
+	anEvolveViewModel := self createEvolveViewModelFor: aNodeViewModel wardleyMapNodeModel.
+	aNodeViewModel evolveViewModel: anEvolveViewModel.
+	anEvolveViewModel nodeViewModel: aNodeViewModel.
+	^ anEvolveViewModel
+]
+
 { #category : #initialization }
 GtWardleyMapViewModel >> createNodeViewModelFor: aNodeModel [
 	^ GtWardleyMapNodeViewModel new
@@ -140,6 +149,90 @@ GtWardleyMapViewModel >> evolveViewModels [
 ]
 
 { #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtEdgesFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Edges';
+		priority: 20;
+		items: [ self edgeViewModels ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode lineColor;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'From' text: [ :anEdge | anEdge fromNodeViewModel label ];
+		column: 'To' text: [ :anEdge | anEdge toNodeViewModel label ];
+		column: 'Label' text: [ :anEdge | anEdge label ];
+		column: 'Visible label' text: [ :anEdge | 
+			anEdge isLabelVisible 
+				ifTrue: [ 'yes' ] 
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ]
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtEvolveEdgesFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Evolve edges';
+		priority: 22;
+		items: [ self evolveEdgeViewModels ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode lineColor;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'From' text: [ :anEdge | anEdge fromNodeViewModel label ];
+		column: 'To' text: [ :anEdge | anEdge toNodeViewModel label ];
+		column: 'Label' text: [ :anEdge | anEdge label ];
+		column: 'Visible label' text: [ :anEdge | 
+			anEdge isLabelVisible 
+				ifTrue: [ 'yes' ] 
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ]
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtEvolveViewsFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Evolve nodes';
+		priority: 22;
+		items: [ self evolveViewModels ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode nodeColor;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'Name' text: #label;
+		column: 'X' text: [ :aNode | aNode coordinateX printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Y' text: [ :aNode | aNode coordinateY printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Visible label' text: [ :aNode | aNode isLabelVisible
+			ifTrue: [ 'yes' ] ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 80;
+		column: 'Label X' text: [ :aNode | aNode labelCoordinateX printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Label Y' text: [ :aNode | aNode labelCoordinateY printShowingDecimalPlaces: 3 ] width: 50
+]
+
+{ #category : #'gt - extensions' }
 GtWardleyMapViewModel >> gtLiveFor: aView [
 	<gtView>
 	^ aView explicit
@@ -148,6 +241,71 @@ GtWardleyMapViewModel >> gtLiveFor: aView [
 		stencil: [ GtWardleyMapElement new
 				wardleyMapViewModel: self;
 				yourself ]
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtNodeViewsFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Nodes';
+		priority: 20;
+		items: [ self nodeViewModels ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode nodeColor;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'Name' text: #label;
+		column: 'With pipeline' 
+			text: [ :aNode | aNode isPipelineVisible 
+				ifTrue: [ 'yes' ] 
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ]
+			width: 85;
+		column: 'Inner nodes' 
+			text: [ :aNode | 
+				| aSize |
+				aSize := aNode innerNodeViewModels size.
+				aSize isZero 
+					ifTrue: [ aSize asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
+					ifFalse: [ aSize ] ]
+			 width: 80;
+		column: 'Evolve' text: [ :aNode | 
+			aNode isEvolveVisible
+				ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ]
+				ifTrue: [ aNode evolveViewModel label ] ];
+		column: 'X' text: [ :aNode | aNode coordinateX printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Y' text: [ :aNode | aNode coordinateY printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Label X' text: [ :aNode | aNode labelCoordinateX printShowingDecimalPlaces: 3 ] width: 50;
+		column: 'Label Y' text: [ :aNode | aNode labelCoordinateY printShowingDecimalPlaces: 3 ] width: 50
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtNotesFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Notes';
+		priority: 25;
+		items: [ self noteViewModels ];
+		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
+		column: 'Color' 
+			stencil: [ :aNode |
+				BlElement new 
+					size: 8@8;
+					background: aNode color;
+					geometry: BlCircleGeometry new;
+					margin: (BlInsets left: 3 right: 3);
+					constraintsDo: [ :c | 
+						c linear vertical alignCenter ] ] 
+			width: 40;
+		column: 'Text' text: #label
 ]
 
 { #category : #initialization }
@@ -237,6 +395,29 @@ GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
 			edgeViewModels remove: anEdgeViewModel.
 			self announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel) ]
 		ifNone: [ ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolveAdded: anAnnouncement [ 
+	| aNodeModel |
+	aNodeModel := anAnnouncement nodeModel.
+	self
+		nodeViewModelFor: aNodeModel
+		ifFound: [ :aNodeViewModel | 
+			| anEvolveViewModel anEvolveEdgeViewModel |
+			anEvolveViewModel := self createEvolveViewModelForNodeViewModel: aNodeViewModel.
+			anEvolveEdgeViewModel := self createEvolveEdgeViewModelFor: anEvolveViewModel.
+			self announce: (GtWardleyMapEvolveViewModelAdded new 
+				evolveViewModel: anEvolveViewModel;
+				evolveEdgeViewModel: anEvolveEdgeViewModel) ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolveVisibilityChanged: anAnnouncement [
+	anAnnouncement nodeModel isEvolveVisible
+		ifTrue: [ self onEvolveAdded: anAnnouncement ]
+		ifFalse: [ self onEvolveRemoved: anAnnouncement ]
 ]
 
 { #category : #'event handling' }
@@ -340,11 +521,7 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 
 	"create evolve view models"
 	evolveViewModels := (nodeViewModels select: #isEvolveVisible)
-		collect: [ :aNodeViewModel | 
-			| anEvolveViewModel |
-			anEvolveViewModel := self createEvolveViewModelFor: aNodeViewModel wardleyMapNodeModel.
-			aNodeViewModel evolveViewModel: anEvolveViewModel.
-			anEvolveViewModel nodeViewModel: aNodeViewModel ] 
+		collect: [ :aNodeViewModel | self createEvolveViewModelForNodeViewModel: aNodeViewModel ] 
 		as: OrderedCollection.
 	
 	"create edge view models"
@@ -397,7 +574,8 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self;
 		when: GtWardleyMapNoteModelAdded send: #onNoteAdded: to: self;
-		when: GtWardleyMapNoteModelRemoved send: #onNoteRemoved: to: self
+		when: GtWardleyMapNoteModelRemoved send: #onNoteRemoved: to: self;
+		when: GtWardleyMapNodeModelEvolveVisibilityChanged send: #onEvolveVisibilityChanged: to: self
 ]
 
 { #category : #'api - wardley map model' }

@@ -66,6 +66,11 @@ GtWardleyMapEvolveViewModel >> isEvolveViewModel [
 	^ true
 ]
 
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> isLabelVisible [
+	^ self wardleyMapNodeModel isEvolvedLabelVisible
+]
+
 { #category : #'as yet unclassified' }
 GtWardleyMapEvolveViewModel >> isPipelineVisible [
 	"Compatibility with the old evolve node implementation.

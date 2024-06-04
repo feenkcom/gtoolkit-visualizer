@@ -251,7 +251,7 @@ GtWardleyMapModel >> gtNotesFor: aView [
 					constraintsDo: [ :c | 
 						c linear vertical alignCenter ] ] 
 			width: 40;
-		column: 'Name' text: #label
+		column: 'Text' text: #label
 ]
 
 { #category : #'gt-extensions' }
