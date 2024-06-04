@@ -50,7 +50,8 @@ GtPlotterTickLabelsElement >> initialize [
 GtPlotterTickLabelsElement >> initializeElements [
 	| theTicks aScaleContext |
 	
-	theTicks := scale ticks: labels.
+	theTicks := self ticks.
+	
 	aScaleContext := GtPlotterSingleScaleContext new.
 
 	self removeChildren: elements.
@@ -113,4 +114,9 @@ GtPlotterTickLabelsElement >> labelStyle: anObject [
 GtPlotterTickLabelsElement >> labels: anAmountOfLabels [
 	labels := anAmountOfLabels.
 	self initializeElements
+]
+
+{ #category : #accessing }
+GtPlotterTickLabelsElement >> ticks [
+	^ scale ticks: labels
 ]
