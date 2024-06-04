@@ -18,10 +18,18 @@ Class {
 		'maxX',
 		'minY',
 		'maxY',
-		'dotElementStencil'
+		'dotElementStencil',
+		'axisYTicksAndLabels',
+		'valuesX',
+		'valuesY'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
+
+{ #category : #accessing }
+GtPlotterScatterChart >> axisYTicksAndLabels: aGtPlotterVerticalTickLabelsElement [
+	axisYTicksAndLabels := aGtPlotterVerticalTickLabelsElement
+]
 
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> create [
@@ -111,6 +119,7 @@ GtPlotterScatterChart >> initialize [
 	self dotElement: [:ex | BlElement new
 		geometry: BlEllipseGeometry new;
 		size: 10 asPoint  ].
+	axisYTicksAndLabels := GtPlotterVerticalTickLabelsElement new.
 	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #yourself.
@@ -130,43 +139,80 @@ GtPlotterScatterChart >> initializeScales [
 	| aMinX aMaxX aMinY aMaxY |
 	
 	isAlreadyInitialized ifTrue: [ ^ self ].
+	valuesX := OrderedCollection new.
+	valuesY := OrderedCollection new.
 	
-	aMinX := minX ifNil: [ 
-		| aCurrentValue |
-		data valuesDo: [ :eachValue | 
-			aCurrentValue 
-				ifNil: [ aCurrentValue := valueX value: eachValue ]
-				ifNotNil: [ aCurrentValue := aCurrentValue min: (valueX value: eachValue) ] ].
-		aCurrentValue ].
-
-	aMaxX := maxX ifNil: [ 
-		| aCurrentValue |
-		data valuesDo: [ :eachValue | 
-			aCurrentValue 
-				ifNil: [ aCurrentValue := valueX value: eachValue ]
-				ifNotNil: [ aCurrentValue := aCurrentValue max: (valueX value: eachValue) ] ].
-		aCurrentValue ].
-
-		
-	aMinY := minY ifNil: [ 
-		| aCurrentValue |
-		data valuesDo: [ :eachValue | 
-			aCurrentValue 
-				ifNil: [ aCurrentValue := valueY value: eachValue ]
-				ifNotNil: [ aCurrentValue := aCurrentValue min: (valueY value: eachValue) ] ].
-		aCurrentValue ].
-
-	aMaxY := maxY ifNil: [ 
-		| aCurrentValue |
-		data valuesDo: [ :eachValue | 
-			aCurrentValue 
-				ifNil: [ aCurrentValue := valueY value: eachValue ]
-				ifNotNil: [ aCurrentValue := aCurrentValue max: (valueY value: eachValue) ] ].
-		aCurrentValue ].
+	data valuesDo: [:eachValue |
+		valuesY add: (valueY value: eachValue).
+		valuesX add: (valueX value: eachValue) ].
+	aMinX := minX ifNil: [ valuesX min ].
+	aMaxX := maxX ifNil: [ valuesX max ].
+	aMinY := minX ifNil: [ valuesY min ].
+	aMaxY := maxX ifNil: [ valuesY max ].
 
 	scaleX domainFrom: aMinX to: aMaxX.
 	scaleY domainFrom: aMinY to: aMaxY.
 	
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> labelFormatX [
+	^ labelFormatX
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> labelFormatX: anObject [
+	labelFormatX := anObject
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> labelFormatY [
+	^ labelFormatY
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> labelFormatY: anObject [
+	labelFormatY := anObject
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> maxX [
+	^ maxX
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> maxX: anObject [
+	maxX := anObject
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> maxY [
+	^ maxY
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> maxY: anObject [
+	maxY := anObject
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> minX [
+	^ minX
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> minX: anObject [
+	minX := anObject
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> minY [
+	^ minY
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> minY: anObject [
+	minY := anObject
 ]
 
 { #category : #'api - instantiation' }
@@ -261,8 +307,9 @@ GtPlotterScatterChart >> newAxisYLineElement [
 
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> newAxisYTickLabelsElement [
-	^ GtPlotterVerticalTickLabelsElement new
+	^ axisYTicksAndLabels
 		scale: self scaleY;
+		values: valuesY;
 		inverse;
 		labelFormat: labelFormatY;
 		labelStyle: [ :anElement |
