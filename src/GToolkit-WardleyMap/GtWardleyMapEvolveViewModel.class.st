@@ -67,6 +67,16 @@ GtWardleyMapEvolveViewModel >> isEvolveViewModel [
 ]
 
 { #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> isEvolvedLabelVisible [
+	^ self wardleyMapNodeModel isEvolvedLabelVisible
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> isEvolvedLabelVisible: aBoolean [ 
+	self wardleyMapNodeModel isEvolvedLabelVisible: aBoolean
+]
+
+{ #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> isLabelVisible [
 	^ self wardleyMapNodeModel isEvolvedLabelVisible
 ]
@@ -165,6 +175,11 @@ GtWardleyMapEvolveViewModel >> onEvolveLabelTextChanged: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEvolveViewModel >> onEvolveLabelVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapEvolveViewModelLabelVisibilityChanged new evolveViewModel: self)
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEvolveViewModel >> onEvolveMaturityChanged: anAnnouncement [
 	self announce: (GtWardleyMapEvolveViewModelMoved new evolveViewModel: self).
 	self wardleyMapViewModel announce: (GtWardleyMapEvolveViewModelMoved new evolveViewModel: self)
@@ -225,7 +240,8 @@ GtWardleyMapEvolveViewModel >> subscribeToWardleyMapNodeModel [
 	self wardleyMapNodeModel weak
 		when: GtWardleyMapNodeLabelModelTextChanged send: #onNodeLabelTextChanged: to: self;
 		when: GtWardleyMapEvolveLabelModelTextChanged send: #onEvolveLabelTextChanged: to: self;
-		when: GtWardleyMapEvolveLabelModelMoved send: #onEvolveLabelMoved: to: self
+		when: GtWardleyMapEvolveLabelModelMoved send: #onEvolveLabelMoved: to: self;
+		when: GtWardleyMapEvolveLabelModelVisibilityChanged send: #onEvolveLabelVisibilityChanged: to: self
 ]
 
 { #category : #'api - wardley map node model' }

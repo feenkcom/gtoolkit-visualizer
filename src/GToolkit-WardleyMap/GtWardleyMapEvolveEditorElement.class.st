@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
 		'predefinedColorsElement',
-		'nodeSizeEditor'
+		'nodeSizeEditor',
+		'labelVisibilityElement'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -28,6 +29,33 @@ GtWardleyMapEvolveEditorElement >> createColorPicker [
 		vFitContentLimited;
 		columnCount: 8;
 		cellSpacing: 5
+]
+
+{ #category : #initialization }
+GtWardleyMapEvolveEditorElement >> createEvolveLabelVisibilityCheckbox [
+	^ GtWardleyMapEvolveLabelVisibilityCheckbox new
+		checked: false;
+		whenCheckedDo: [ :anEvent | self onCheckVisibility: anEvent ];
+		whenUncheckedDo: [ :anEvent | self onUncheckVisibility: anEvent ];
+		margin:
+			(BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0)
+]
+
+{ #category : #initialization }
+GtWardleyMapEvolveEditorElement >> createEvolveLabelVisibilityLabel [
+	^ BrLabel new
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+		margin:
+			(BlInsets
+				top: 10
+				left: 5
+				bottom: 2
+				right: 0);
+		text: 'Label visibility:'
 ]
 
 { #category : #initialization }
@@ -107,7 +135,9 @@ GtWardleyMapEvolveEditorElement >> createPropertyEditorElements [
 	^ {self createNodeColorLabel.
 		predefinedColorsElement := self createColorPicker.
 		self createNodeSizeLabel.
-		self createNodeSizePicker. }
+		self createNodeSizePicker.
+		self createEvolveLabelVisibilityLabel.
+		labelVisibilityElement := self createEvolveLabelVisibilityCheckbox }
 ]
 
 { #category : #initialization }
@@ -132,8 +162,25 @@ GtWardleyMapEvolveEditorElement >> initialize [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEvolveEditorElement >> onCheckVisibility: anEvent [ 
+	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	self wardleyMapNodeViewModel isEvolvedLabelVisible: true
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEvolveEditorElement >> onEvolveLabelVisibilityChanged [
+	labelVisibilityElement checked: self wardleyMapNodeViewModel isEvolvedLabelVisible
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEvolveEditorElement >> onNodeSizeChanged [
 	nodeSizeEditor text: (self wardleyMapNodeViewModel nodeSize min asString)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEvolveEditorElement >> onUncheckVisibility: anEvent [ 
+	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	self wardleyMapNodeViewModel isEvolvedLabelVisible: false
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -141,6 +188,7 @@ GtWardleyMapEvolveEditorElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
 
 	self onNodeSizeChanged.
+	self onEvolveLabelVisibilityChanged.
 ]
 
 { #category : #'api - wardley map view model' }
@@ -163,6 +211,9 @@ GtWardleyMapEvolveEditorElement >> subscribeToWardleyMapNodeViewModel [
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelResized
 			send: #onNodeSizeChanged
+			to: self;
+		when: GtWardleyMapEvolveViewModelLabelVisibilityChanged
+			send: #onEvolveLabelVisibilityChanged
 			to: self
 ]
 
