@@ -382,6 +382,21 @@ GtWardleyMapCanvasElement >> onEvolveAdded: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapCanvasElement >> onEvolveRemoved: anAnnouncement [
+	| anEvolveViewModel anEvolveEdgeViewModel |
+	anEvolveViewModel := anAnnouncement evolveViewModel.
+	anEvolveEdgeViewModel := anAnnouncement evolveEdgeViewModel.
+	self
+		edgeViewFor: anEvolveEdgeViewModel 
+		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ] 
+		ifNone: [ nil ].
+	self
+		nodeViewFor: anEvolveViewModel 
+		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ] 
+		ifNone: [ nil ].
+]
+
+{ #category : #'event handling' }
 GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
 	| anInnerNodeViewModel aPipelineNodeViewModel |
 	anInnerNodeViewModel := anAnnouncement innerNodeViewModel.
@@ -573,6 +588,7 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeViewModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
 		when: GtWardleyMapEvolveViewModelAdded send: #onEvolveAdded: to: self;
+		when: GtWardleyMapEvolveViewModelRemoved send: #onEvolveRemoved: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
 		when: GtWardleyMapNoteViewModelMoved send: #onNoteMoved: to: self;

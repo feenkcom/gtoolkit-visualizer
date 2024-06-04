@@ -85,6 +85,11 @@ GtWardleyMapEvolveViewModel >> label [
 ]
 
 { #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> label: aString [ 
+	self wardleyMapNodeModel evolvedLabel: aString
+]
+
+{ #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> labelColor [
 	^ self nodeColor darker
 ]
@@ -198,6 +203,11 @@ GtWardleyMapEvolveViewModel >> onWardleyMapNodeViewModelChanged [
 { #category : #'api - pipeline' }
 GtWardleyMapEvolveViewModel >> pipelineNodeViewModel [
 	^ nodeViewModel pipelineNodeViewModel
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapEvolveViewModel >> removeFromMap [
+	^ self wardleyMapNodeModel isEvolveVisible: false
 ]
 
 { #category : #'api - wardley map node model' }

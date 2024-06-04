@@ -136,6 +136,14 @@ GtWardleyMapViewModel >> edgeViewModels [
 	^ edgeViewModels
 ]
 
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> evolveEdgeViewModelFor: aNodeModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self evolveEdgeViewModels
+		detect: [ :eachEvolveEdgeViewModel | eachEvolveEdgeViewModel fromNodeViewModel wardleyMapNodeModel = aNodeModel ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
 { #category : #accessing }
 GtWardleyMapViewModel >> evolveEdgeViewModels [
 	^ evolveEdgeViewModels
@@ -407,7 +415,26 @@ GtWardleyMapViewModel >> onEvolveAdded: anAnnouncement [
 			| anEvolveViewModel anEvolveEdgeViewModel |
 			anEvolveViewModel := self createEvolveViewModelForNodeViewModel: aNodeViewModel.
 			anEvolveEdgeViewModel := self createEvolveEdgeViewModelFor: anEvolveViewModel.
+			evolveViewModels add: anEvolveViewModel.
+			evolveEdgeViewModels add: anEvolveEdgeViewModel.
 			self announce: (GtWardleyMapEvolveViewModelAdded new 
+				evolveViewModel: anEvolveViewModel;
+				evolveEdgeViewModel: anEvolveEdgeViewModel) ]
+		ifNone: [  ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolveRemoved: anAnnouncement [ 
+	| aNodeModel |
+	aNodeModel := anAnnouncement nodeModel.
+	self
+		evolveEdgeViewModelFor: aNodeModel
+		ifFound: [ :anEvolveEdgeViewModel | 
+			| anEvolveViewModel |
+			anEvolveViewModel := anEvolveEdgeViewModel evolveViewModel.
+			evolveEdgeViewModels remove: anEvolveEdgeViewModel ifAbsent: [ nil ].
+			evolveViewModels remove: anEvolveViewModel ifAbsent: [ nil ].
+			self announce: (GtWardleyMapEvolveViewModelRemoved new 
 				evolveViewModel: anEvolveViewModel;
 				evolveEdgeViewModel: anEvolveEdgeViewModel) ]
 		ifNone: [  ]
