@@ -45,7 +45,7 @@ GtWardleyMapNodeHorizontalPullDirection >> mayResizePipeline [
 GtWardleyMapNodeHorizontalPullDirection >> onPulled [
 	self initializeViewModels.
 	
-	nodeViewModel wardleyMapNodeModel type isEvolveTargetType
+	nodeViewModel isEvolveViewModel
 		ifTrue: [ ^ self ].
 	
 	pipelineViewModel ifNotNil: [ self mayResizePipeline ].

@@ -152,11 +152,8 @@ GtWardleyMapScriptImporter >> importEvolves [
 						ifFound: [ :aSourceNodeModel | 
 							anAstNode maturityNumber
 								ifNotNil: [ :aMaturity | 
-									| anEvolveNode anEdgeModel |
-									anEvolveNode := GtWardleyMapNodeModel new.
-									anEvolveNode x: aMaturity.
-									anEvolveNode y: aSourceNodeModel y.
-									anEvolveNode color: Color red.
+									aSourceNodeModel evolveModel maturity: aMaturity.
+									aSourceNodeModel evolveModel color: GtWardleyMapConstants evolveColor.
 
 									anAstNode label
 										ifNotNil: [ :aNode | 
@@ -164,23 +161,11 @@ GtWardleyMapScriptImporter >> importEvolves [
 												ifNotNil: [ :aPoint | 
 													| aLabelCoordinate |
 													aLabelCoordinate := GtWardleyMapUtility
-															convertWardleyScriptNodeModel: anEvolveNode
+															convertWardleyScriptNodeModel: aSourceNodeModel evolveModel
 															labelCoordiante: aPoint.
-													anEvolveNode labelModel coordinate: aLabelCoordinate ] ].
+													aSourceNodeModel evolveModel labelModel coordinate: aLabelCoordinate ] ].
 
-									anEvolveNode label: anEvolveName.
-									anEvolveNode
-										type: (GtWardleyMapNodeEvolveTargetType new
-												sourceNode: aSourceNodeModel;
-												targetNode: anEvolveNode).
-
-									anEdgeModel := GtWardleyMapEdgeModel new.
-									anEdgeModel fromNode: aSourceNodeModel.
-									anEdgeModel toNode: anEvolveNode.
-									anEdgeModel color: Color red.
-									anEdgeModel arrow: true.
-									wardleyMap addNode: anEvolveNode.
-									wardleyMap addEdge: anEdgeModel ] ]
+									aSourceNodeModel evolveModel label: anEvolveName ] ]
 						ifNone: [  ] ] ]
 ]
 
@@ -282,7 +267,7 @@ GtWardleyMapScriptImporter >> initialize [
 { #category : #'private - import' }
 GtWardleyMapScriptImporter >> nodeNamed: aNodeName ifFound: aFoundBlock ifNone: aNoneBlock [
 	wardleyMap nodes reverseDo: [ :eachNodeModel | 
-		(eachNodeModel label = aNodeName and: [ eachNodeModel type isRegularType ]) 
+		(eachNodeModel label = aNodeName) 
 			ifTrue: [ ^ aFoundBlock value: eachNodeModel ] ].
 
 	^ aNoneBlock value

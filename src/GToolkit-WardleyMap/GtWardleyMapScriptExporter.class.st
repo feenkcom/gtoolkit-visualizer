@@ -84,7 +84,7 @@ GtWardleyMapScriptExporter >> edges [
 
 { #category : #convenience }
 GtWardleyMapScriptExporter >> evolveNodes [
-	^ self nodes select: [ :each | each type isEvolveTargetType ]
+	^ self nodes select: [ :each | each isEvolveVisible ]
 ]
 
 { #category : #'api - export' }
@@ -128,22 +128,19 @@ GtWardleyMapScriptExporter >> exportEdge: anEdge [
 ]
 
 { #category : #'private - exporting' }
-GtWardleyMapScriptExporter >> exportEvolve: anEvolveNode [
-	| aSourceNode aLabel |
-	self assert: [ anEvolveNode pipelineNode isNil ].
-	
-	aSourceNode := anEvolveNode type sourceNode.
-	aLabel := aSourceNode label = anEvolveNode label 
-		ifTrue: [ anEvolveNode label ]
-		ifFalse: [ '{1} -> {2}' format: { aSourceNode label. anEvolveNode label } ].
+GtWardleyMapScriptExporter >> exportEvolve: aNode [
+	| aLabel |
+	aLabel := aNode label = aNode evolvedLabel 
+		ifTrue: [ aNode label ]
+		ifFalse: [ '{1} -> {2}' format: { aNode label. aNode evolvedLabel } ].
 	
 	stream
 		nextPutAll: 'evolve ';
 		nextPutAll: aLabel;
 		space;
-		nextPutAll: (self roundedNodeCoordinate: anEvolveNode x);
+		nextPutAll: (self roundedNodeCoordinate: aNode evolveModel maturity);
 		nextPutAll: ' label ['.
-	self printLabelCoordinateInPixels: anEvolveNode.
+	self printLabelCoordinateInPixels: aNode evolveModel.
 	stream
 		nextPutAll: ']'.
 	self newLine.
@@ -308,12 +305,12 @@ GtWardleyMapScriptExporter >> printPipelineCoordinate: aNode [
 
 { #category : #convenience }
 GtWardleyMapScriptExporter >> regularEdges [
-	^ self edges select: [ :each | each toNode type isRegularType ]
+	^ self edges
 ]
 
 { #category : #convenience }
 GtWardleyMapScriptExporter >> regularNodes [
-	^ self nodes select: [ :each | each type isRegularType ]
+	^ self nodes
 ]
 
 { #category : #'private - exporting' }

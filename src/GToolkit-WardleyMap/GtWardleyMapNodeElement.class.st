@@ -1,89 +1,12 @@
 Class {
 	#name : #GtWardleyMapNodeElement,
-	#superclass : #BlElement,
-	#traits : 'TGtWithWardleyMapNodeViewModel',
-	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait',
-	#instVars : [
-		'labelElement',
-		'labelContainer'
-	],
+	#superclass : #GtWardleyMapNodeBasicElement,
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #initialization }
-GtWardleyMapNodeElement >> beEllipseGeometry [
-	self geometry: BlEllipseGeometry new
-]
-
-{ #category : #initialization }
 GtWardleyMapNodeElement >> beSquareGeometry [
 	self geometry: BlSquare new
-]
-
-{ #category : #initialization }
-GtWardleyMapNodeElement >> initialize [
-	super initialize.
-	self beEllipseGeometry.
-	self clipChildren: false.
-	self layout: BlFrameLayout new.
-	labelElement := BrEditableLabel new
-			fitContent;
-			id: GtWardleyMapNodeLabelId;
-			aptitude: BrGlamorousRegularEditorAptitude new;
-			when: BrEditorAcceptWish
-				do: [ :aWish | self wardleyMapNodeViewModel label: aWish text asString ];
-			text: 'Label'.
-			
-	"we have to wrap the editable label in a pullable element to allow text selection with drag"
-	labelContainer := BrHorizontalPane new
-			fitContent;
-			addEventHandler: (GtWardleyMapPullHandler new
-					containerElement: self;
-					whenPulled: [ :aPulledElement :aNormalizedPosition | 
-						self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
-			addChild: labelElement.
-	self addChild: labelContainer.
-	self
-		addAptitude: (BrStyleCommonAptitude new
-				focused: [ :s | s border: (BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
-	self
-		when: BlClickEvent
-		do: [ :anEvent | 
-			(anEvent modifiers isPrimaryModifier not and: [ anEvent target = self ])
-				ifTrue: [ anEvent consumed: true.
-					self requestFocus ] ].
-	self
-		addShortcut: (BlShortcutWithAction new
-				combination: BlKeyCombination backspace;
-				action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel removeFromMap ]).
-	self
-		addShortcut: (BlShortcutWithAction new
-				combination: BlKeyCombination builder primary minus build;
-				action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel decreaseNodeSize ]).
-	self
-		addShortcut: (BlShortcutWithAction new
-				combination: BlKeyCombination builder primary equal build;
-				action: [ :anEvent | anEvent currentTarget wardleyMapNodeViewModel increaseNodeSize ])
-]
-
-{ #category : #accessing }
-GtWardleyMapNodeElement >> labelContainerDo: aBlock [
-	labelContainer ifNotNil: aBlock
-]
-
-{ #category : #accessing }
-GtWardleyMapNodeElement >> labelElementDo: aBlock [
-	labelElement ifNotNil: aBlock
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onHovered [
-	self styleBuilder onHovered
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeColored [
-	self styleBuilder onNodeColored
 ]
 
 { #category : #'event handling' }
@@ -101,42 +24,10 @@ GtWardleyMapNodeElement >> onNodeDecoratorsChanged: anAnnouncement [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeLabelMoved [
-	labelContainer constraintsDo: [ :c |
-		c frame horizontal alignCenterAt: self wardleyMapNodeViewModel labelCoordinateX.
-		c frame vertical alignCenterAt: self wardleyMapNodeViewModel labelCoordinateY ].
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeLabelTextChanged [
-	labelElement text: self wardleyMapNodeViewModel label
-]
-
-{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 	self wardleyMapNodeViewModel isPipelineVisible
 		ifTrue: [ self beSquareGeometry ]
 		ifFalse: [ self beEllipseGeometry ]
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeResized [
-	self size: self wardleyMapNodeViewModel nodeSize
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeTypeChanged [
-	self onNodeColored
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeTypeChanged: anAnnouncement [
-	self onNodeTypeChanged
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onUnhovered [
-	self styleBuilder onUnhovered
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -154,7 +45,9 @@ GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 
 { #category : #accessing }
 GtWardleyMapNodeElement >> styleBuilder [
-	^ GtWardleyMapNodeStyleBuilder forElement: self
+	^ GtWardleyMapNodeRegularStyleBuilder new 
+		element: self;
+		viewModel: self wardleyMapNodeViewModel
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -169,7 +62,6 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
-		when: GtWardleyMapNodeViewModelTypeChanged send: #onNodeTypeChanged: to: self;
 		when: GtWardleyMapNodeViewModelDecoratorsChanged send: #onNodeDecoratorsChanged: to: self.
 ]
 

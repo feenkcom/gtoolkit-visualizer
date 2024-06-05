@@ -71,9 +71,10 @@ GtWardleyMapEdgeModel >> initialize [
 	super initialize.
 	
 	color := Color gray.
-	width := 1.0.
+	width := GtWardleyMapConstants edgeWidth.
 	arrow := false.
-	labelModel := GtWardleyMapEdgeLabelModel new parent: self.
+	labelModel := GtWardleyMapEdgeLabelModel new.
+	labelModel parent: self.
 ]
 
 { #category : #'api - label' }
@@ -106,7 +107,8 @@ GtWardleyMapEdgeModel >> labelModel [
 
 { #category : #'api - label' }
 GtWardleyMapEdgeModel >> labelModel: aGtWardleyMapNodeLabelModel [
-	labelModel := aGtWardleyMapNodeLabelModel
+	labelModel := aGtWardleyMapNodeLabelModel.
+	aGtWardleyMapNodeLabelModel parent: self.
 ]
 
 { #category : #'api - arrow' }

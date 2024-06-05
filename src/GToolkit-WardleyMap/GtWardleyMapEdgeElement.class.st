@@ -16,7 +16,7 @@ GtWardleyMapEdgeElement >> createDefaultBorder [
 		paint: self wardleyMapEdgeViewModel lineColor;
 		width: self wardleyMapEdgeViewModel lineWidth;
 		in: [ :aBuilder | 
-			self wardleyMapEdgeViewModel isToNodeEvolveTargetType
+			self wardleyMapEdgeViewModel isEvolveEdgeViewModel
 				ifTrue: [ aBuilder dashed ] ];
 		build
 ]
@@ -27,7 +27,7 @@ GtWardleyMapEdgeElement >> createHoveredBorder [
 		paint: GtWardleyMapConstants hoverColor;
 		width: self wardleyMapEdgeViewModel lineWidth;
 		in: [ :aBuilder | 
-			self wardleyMapEdgeViewModel isToNodeEvolveTargetType
+			self wardleyMapEdgeViewModel isEvolveEdgeViewModel
 				ifTrue: [ aBuilder dashed ] ];
 		build
 ]
@@ -118,11 +118,6 @@ GtWardleyMapEdgeElement >> onEdgeResized: anAnnouncement [
 	self updateLineLook
 ]
 
-{ #category : #'event handling' }
-GtWardleyMapEdgeElement >> onEdgeTypeChanged: anAnnouncement [.
-	self updateLineLook
-]
-
 { #category : #'api - wardley map edge view model' }
 GtWardleyMapEdgeElement >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
@@ -147,8 +142,7 @@ GtWardleyMapEdgeElement >> subscribeToWardleyMapEdgeViewModel [
 		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self;
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
 		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self;
-		when: GtWardleyMapEdgeViewModelTypeChanged send: #onEdgeTypeChanged: to: self
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self
 ]
 
 { #category : #'api - wardley map edge view model' }

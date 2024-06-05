@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapNodeViewModelTypeChanged,
+	#name : #GtWardleyMapNodeViewModelEvolveVisibilityChanged,
 	#superclass : #Announcement,
 	#instVars : [
 		'nodeViewModel'
@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapNodeViewModelTypeChanged >> nodeViewModel [
+GtWardleyMapNodeViewModelEvolveVisibilityChanged >> nodeViewModel [
 	^ nodeViewModel
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeViewModelTypeChanged >> nodeViewModel: anObject [
+GtWardleyMapNodeViewModelEvolveVisibilityChanged >> nodeViewModel: anObject [
 	nodeViewModel := anObject
 ]

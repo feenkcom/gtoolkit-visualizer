@@ -10,40 +10,6 @@ GtWardleyMapFromDictionaryImporter class >> importMapFromJSONString: aString [
 ]
 
 { #category : #'api - importer' }
-GtWardleyMapFromDictionaryImporter >> connectWardleyMapNodeEvolves: theMapNodes from: theNodeDictionaries [ 
-
-	theMapNodes withIndexDo: [ :anEvolveNode :anIndex |
-		| aNodeDictionary |
-		aNodeDictionary := theNodeDictionaries at: anIndex.
-		aNodeDictionary 
-			at: #evolve 
-			ifPresent: [ :anEvolveDictionary | 
-				anEvolveDictionary 
-					at: #is_evolve_target
-					ifPresent: [ :isEvolve | 
-						isEvolve ifTrue: [ 
-							anEvolveDictionary
-								at: #source_node
-								ifPresent: [ :aSourceNodeId | 
-									| anId | 
-									anId := self importIdFrom: aSourceNodeId.
-									theMapNodes
-										detect: [ :otherNode | 
-											otherNode id = anId ]
-										ifFound: [ :aSourceNode |
-											anEvolveNode type: (
-												GtWardleyMapNodeEvolveTargetType new
-													sourceNode: aSourceNode;
-													targetNode: anEvolveNode) ]
-										ifNone: [ nil ]
-								]
-						]
-					]
-			]
-		]
-]
-
-{ #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> connectWardleyMapNodePipelines: theMapNodes from: theNodeDictionaries [ 
 
 	theMapNodes withIndexDo: [ :eachPipelineNode :anIndex |
@@ -92,6 +58,48 @@ GtWardleyMapFromDictionaryImporter >> importIdFrom: aString [
 ]
 
 { #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importLegacyEvolveNodeFrom: aDictionary to: aWardleyMapNode [
+	aWardleyMapNode isEvolveVisible: true.
+
+	aDictionary
+		at: #color
+		ifPresent: [ :aColorDictionary | 
+			aWardleyMapNode evolveModel color: (self importColorFrom: aColorDictionary) ].
+
+	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNode evolveModel maturity: anX ].
+	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapNode evolveModel width: aWidth ].
+	aDictionary at: #height ifPresent: [ :aHeight | aWardleyMapNode evolveModel height: aHeight ].
+
+	aDictionary
+		at: #label
+		ifPresent: [ :aLabelDictionary | aWardleyMapNode evolveModel labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ].
+]
+
+{ #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importLegacyEvolveNodesFrom: theNodeDictionaries to: theMapNodes [ 
+	theNodeDictionaries do: [ :aNodeDictionary |
+		(self isEvolveNodeDictionary: aNodeDictionary) ifTrue: [ 
+			aNodeDictionary
+				at: #evolve 
+				ifPresent: [ :anEvolveDictionary | 
+					anEvolveDictionary
+						at: #source_node
+						ifPresent: [ :aSourceNodeId | 
+							| anId | 
+							anId := self importIdFrom: aSourceNodeId.
+							theMapNodes
+								detect: [ :otherNode | 
+									otherNode id = anId ]
+								ifFound: [ :aSourceNode | 
+									self importLegacyEvolveNodeFrom: aNodeDictionary to: aSourceNode ]
+								ifNone: [ ]
+						]
+				]
+		]
+	].
+]
+
+{ #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary [
 	| aWardleyMapEdge |
 
@@ -123,7 +131,8 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary map:
 		ifPresent: [ :aFromId |
 			aWardleyMap
 				nodeWithId: (self importIdFrom: aFromId)
-				ifFound: [ :aFromNode | aWardleyMapEdge fromNode: aFromNode ]
+				ifFound: [ :aFromNode |
+					aWardleyMapEdge fromNode: aFromNode ]
 				ifNone: [  ] ].
 
 	aDictionary
@@ -132,7 +141,11 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeFrom: aDictionary map:
 			aWardleyMap
 				nodeWithId: (self importIdFrom: aToId)
 				ifFound: [ :aToNode | aWardleyMapEdge toNode: aToNode ]
-				ifNone: [  ] ].
+				ifNone: [ 
+					"It is a legacy edge to an evolve node
+					which we do not import as a standalone node,
+					therefore do not import it."
+					^ nil ] ].
 	
 	^ aWardleyMapEdge
 ]
@@ -152,25 +165,70 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeLabelFrom: aDictionary
 ]
 
 { #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importWardleyMapEvolveFrom: aDictionary [
+	| aWardleyMapEvolve |
+	
+	aWardleyMapEvolve := GtWardleyMapNodeEvolveModel new.
+	
+	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapEvolve maturity: aMaturity ].
+	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapEvolve width: aWidth ].
+	aDictionary at: #height ifPresent: [ :aHeight | aWardleyMapEvolve height: aHeight ].
+	aDictionary
+		at: #color
+		ifPresent: [ :aColorDictionary | 
+			aWardleyMapEvolve color: (self importColorFrom: aColorDictionary) ].
+	
+	aDictionary
+		at: #label
+		ifPresent: [ :aLabelDictionary | aWardleyMapEvolve labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ].
+
+	^ aWardleyMapEvolve
+]
+
+{ #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> importWardleyMapEvolveLabelFrom: aDictionary [
+	| aWardleyMapEvolveLabel |
+	
+	aWardleyMapEvolveLabel := GtWardleyMapEvolveLabelModel new.
+	
+	self importWardleyMapNodeLabelFrom: aDictionary to: aWardleyMapEvolveLabel.
+	aDictionary at: #is_visible ifPresent: [ :aBoolean | aWardleyMapEvolveLabel isVisible: aBoolean ].
+
+	^ aWardleyMapEvolveLabel
+]
+
+{ #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 	| aWardleyMap |
-	
 	aWardleyMap := GtWardleyMapModel new.
-	(aDictionary at: #notes ifPresent: [ :theNoteDictionaries | 
-		theNoteDictionaries do: [ :eachNoteDictionary | 
-			aWardleyMap addNote: (self importWardleyMapNoteFrom: eachNoteDictionary) ] ]).
-	
-	(aDictionary at: #nodes ifPresent: [ :theNodeDictionaries |
-		theNodeDictionaries do: [ :eachNodeDictionary |
-			aWardleyMap addNode: (self importWardleyMapNodeFrom: eachNodeDictionary) ].
-			
-		self connectWardleyMapNodePipelines: aWardleyMap nodes from: theNodeDictionaries.
-		self connectWardleyMapNodeEvolves: aWardleyMap nodes from: theNodeDictionaries ]).
-	
-	(aDictionary at: #edges ifPresent: [ :theEdgeDictionaries |
-		theEdgeDictionaries do: [ :eachEdgeDictionary |
-			aWardleyMap addEdge: (self importWardleyMapEdgeFrom: eachEdgeDictionary map: aWardleyMap) ] ]).
-	
+	aDictionary
+		at: #notes
+		ifPresent: [ :theNoteDictionaries | 
+			theNoteDictionaries
+				do: [ :eachNoteDictionary | aWardleyMap addNote: (self importWardleyMapNoteFrom: eachNoteDictionary) ] ].
+
+	aDictionary
+		at: #nodes
+		ifPresent: [ :theNodeDictionaries | 
+			theNodeDictionaries
+				do: [ :eachNodeDictionary | 
+					(self importWardleyMapNodeFrom: eachNodeDictionary)
+						ifNotNil: [ :aNode | aWardleyMap addNode: aNode ] ].
+
+			self
+				connectWardleyMapNodePipelines: aWardleyMap nodes
+				from: theNodeDictionaries.
+			self importLegacyEvolveNodesFrom: theNodeDictionaries to: aWardleyMap nodes ].
+
+	aDictionary
+		at: #edges
+		ifPresent: [ :theEdgeDictionaries | 
+			theEdgeDictionaries
+				do: [ :eachEdgeDictionary | 
+					(self importWardleyMapEdgeFrom: eachEdgeDictionary map: aWardleyMap) 
+						ifNotNil: [ :anEdge |
+							aWardleyMap addEdge: anEdge ] ] ].
+
 	^ aWardleyMap
 ]
 
@@ -178,6 +236,10 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 	| aWardleyMapNode |
 
+	"A legacy form of storing evolve information.
+	We skip such nodes here and import the evolve information later."
+	(self isEvolveNodeDictionary: aDictionary) ifTrue: [ ^ nil ].
+	
 	aWardleyMapNode := GtWardleyMapNodeModel new.
 	aDictionary
 		at: #id
@@ -209,6 +271,14 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 					aPipelineDictionary 
 					at: #y 
 					ifPresent: [ :aYValue | aWardleyMapNode pipelineCoordinate: aXValue @ aYValue ] ] ].
+					
+	aDictionary
+		at: #evolve
+		ifPresent: [ :anEvolveDictionary | 
+			anEvolveDictionary 
+				at: #is_visible 
+				ifPresent: [ :aBoolean | aWardleyMapNode isEvolveVisible: aBoolean ].
+			aWardleyMapNode evolveModel: (self importWardleyMapEvolveFrom: anEvolveDictionary) ].
 
 	^ aWardleyMapNode
 ]
@@ -216,14 +286,18 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 { #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeLabelFrom: aDictionary [
 	| aWardleyMapNodeLabel |
-	
 	aWardleyMapNodeLabel := GtWardleyMapNodeLabelModel new.
 	
+	self importWardleyMapNodeLabelFrom: aDictionary to: aWardleyMapNodeLabel.
+	
+	^ aWardleyMapNodeLabel
+]
+
+{ #category : #private }
+GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeLabelFrom: aDictionary to: aWardleyMapNodeLabel [
 	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNodeLabel x: anX ].
 	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNodeLabel y: anY ].
-	aDictionary at: #text ifPresent: [ :aText | aWardleyMapNodeLabel label: aText ].
-
-	^ aWardleyMapNodeLabel
+	aDictionary at: #text ifPresent: [ :aText | aWardleyMapNodeLabel label: aText ]
 ]
 
 { #category : #'api - importer' }
@@ -248,4 +322,17 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNoteFrom: aDictionary [
 		ifPresent: [ :aLabel | aWardleyMapNote label: aLabel ].
 	
 	^ aWardleyMapNote
+]
+
+{ #category : #'api - importer' }
+GtWardleyMapFromDictionaryImporter >> isEvolveNodeDictionary: aDictionary [ 
+	aDictionary 
+		at: #evolve 
+		ifPresent: [ :anEvolveDictionary |
+			anEvolveDictionary 
+				at: #is_evolve_target 
+				ifPresent: [ :aBoolean |
+					^ aBoolean ] ].
+					
+	^ false
 ]

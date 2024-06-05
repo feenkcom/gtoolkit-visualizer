@@ -49,6 +49,77 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> createEvolveEdgeViewFor: anEvolveEdgeViewModel [
+	| aFromNodeElement aToNodeElement |
+
+	aFromNodeElement := self
+		nodeViewFor: anEvolveEdgeViewModel fromNodeViewModel
+		ifFound: [ :anElement | anElement ]
+		ifNone: [ ^ self ].
+
+	aToNodeElement := self
+		nodeViewFor: anEvolveEdgeViewModel toNodeViewModel
+		ifFound: [ :anElement | anElement ]
+		ifNone: [ ^ self ].
+
+	^ GtWardleyMapEdgeElement new
+		in: [ :aLineElement | aLineElement graph beEdge ];
+		id: (self newEdgeId);
+		wardleyMapEdgeViewModel: anEvolveEdgeViewModel;
+		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
+		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
+		zIndex: -1
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> createEvolveEditorFor: aNodeViewModel [
+	^ GtWardleyMapEvolveEditorElement new
+		wardleyMapViewModel: self wardleyMapViewModel;
+		wardleyMapNodeViewModel: aNodeViewModel
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [ 
+	^ GtWardleyMapEvolveElement new
+		wardleyMapNodeViewModel: anEvolveViewModel;
+		id: (self newNodeId);
+		when: BlMouseOverEvent 
+		do: [ :anEvent | 
+			anEvent consumed: true.
+			anEvent currentTarget onHovered ];
+		when: BlMouseOutEvent 
+		do: [ :anEvent | 
+			anEvent consumed: true.
+			anEvent currentTarget onUnhovered ];
+		labelElementDo: [ :aLabelElement | 
+			aLabelElement 
+				when: BlMouseOverEvent 
+				do: [ :anEvent | 
+					anEvent consumed: true.
+					anEvent currentTarget aptitude foreground: (self hoverColorFrom: anEvolveViewModel labelColor) ];
+				when: BlMouseOutEvent 
+				do: [ :anEvent | 
+					anEvent consumed: true.
+					anEvent currentTarget aptitude foreground: (anEvolveViewModel labelColor) ] ];
+		addEventHandler: (GtWardleyMapNodePullHandler new
+				containerElement: self;
+				disallowOutOfBounds;
+				whenPulled: [ :aPulledElement :aNormalizedPosition | 
+					anEvolveViewModel moveNodeTo: aNormalizedPosition ]);
+		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		zIndex: self defaultNodeElevationIndex;
+		constraintsDo: [ :c | 
+			c graph beNode ];
+		in: [ :theElement |
+			GtWardleyMapUtility updateNodeElement: theElement nodeViewModel: anEvolveViewModel ];
+		addAptitude: (BrGlamorousWithContextMenuAptitude
+				handle: [ BlElement new
+						size: anEvolveViewModel nodeSize / 2.0;
+						geometry: BlEllipseGeometry new ]
+				content: [ self createEvolveEditorFor: anEvolveViewModel ])
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 	^ GtWardleyMapNodeEditorElement new
 		wardleyMapViewModel: self wardleyMapViewModel;
@@ -291,6 +362,48 @@ GtWardleyMapCanvasElement >> onEdgeRemoved: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapCanvasElement >> onEvolveAdded: anAnnouncement [
+	| aEvolveElement aEvolveViewModel anEvolveEdgeViewModel anEvolveEdgeElement |
+	aEvolveViewModel := anAnnouncement evolveViewModel.
+	anEvolveEdgeViewModel := anAnnouncement evolveEdgeViewModel.
+	aEvolveElement := self createEvolveViewFor: aEvolveViewModel.
+
+	"If the node element is added inside of a pipeline element,
+	let's add the node element also as a pipeline inner node."
+	(aEvolveViewModel isPipelineVisible not
+		and: [ aEvolveViewModel pipelineNodeViewModel isNil ]) ifTrue: [ 
+			aEvolveElement
+				when: BlElementLayoutComputedEvent
+				doOnce: [ :anEvent | 
+					self pipelineChildrenDo: [ :aPipelineElement | 
+						aEvolveViewModel pipelineNodeViewModel ifNil: [ 
+							(GtWardleyMapUtility
+								isNodeElement: aEvolveElement
+								insidePipelineElement: aPipelineElement) ifTrue: [ 
+									aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aEvolveViewModel ] ] ] ] ].
+									
+	self addChild: aEvolveElement.
+	
+	anEvolveEdgeElement := self createEvolveEdgeViewFor: anEvolveEdgeViewModel.
+	self addChild: anEvolveEdgeElement.
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onEvolveRemoved: anAnnouncement [
+	| anEvolveViewModel anEvolveEdgeViewModel |
+	anEvolveViewModel := anAnnouncement evolveViewModel.
+	anEvolveEdgeViewModel := anAnnouncement evolveEdgeViewModel.
+	self
+		edgeViewFor: anEvolveEdgeViewModel 
+		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ] 
+		ifNone: [ nil ].
+	self
+		nodeViewFor: anEvolveViewModel 
+		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ] 
+		ifNone: [ nil ].
+]
+
+{ #category : #'event handling' }
 GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
 	| anInnerNodeViewModel aPipelineNodeViewModel |
 	anInnerNodeViewModel := anAnnouncement innerNodeViewModel.
@@ -418,11 +531,14 @@ GtWardleyMapCanvasElement >> onNoteRemoved: anAnnouncement [
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
-	| theNodeElements theEdgeElements thePipelineElements theNoteElements |
+	| theNodeElements theEdgeElements thePipelineElements theNoteElements theEvolveElements theEvolveEdgeElements |
 
 	self removeChildren.
 	theNodeElements := self wardleyMapViewModel nodeViewModels collect: [ :eachNodeViewModel |
 		self createNodeViewFor: eachNodeViewModel ].
+		
+	theEvolveElements := self wardleyMapViewModel evolveViewModels collect: [ :eachEvolveViewModel | 
+		self createEvolveViewFor: eachEvolveViewModel ].
 	
 	thePipelineElements := Array streamContents: [ :aStream |  
 		self wardleyMapViewModel nodeViewModels do: [ :eachNodeViewModel | 
@@ -431,6 +547,7 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	self addChildren: thePipelineElements.
 	self addChildren: theNodeElements.
+	self addChildren: theEvolveElements.
 	
 	theNoteElements := self wardleyMapViewModel noteViewModels collect: [ :eachNoteViewModel |
 		self createNoteViewFor: eachNoteViewModel ].
@@ -439,8 +556,12 @@ GtWardleyMapCanvasElement >> onWardleyMapViewModelChanged [
 	
 	theEdgeElements := self wardleyMapViewModel edgeViewModels collect: [ :eachEdgeViewModel |
 		self createEdgeViewFor: eachEdgeViewModel ].
+	
+	theEvolveEdgeElements := self wardleyMapViewModel evolveEdgeViewModels collect: [ :eachEvolveEdgeViewModel |
+		self createEvolveEdgeViewFor: eachEvolveEdgeViewModel ].
 		
 	self addChildren: theEdgeElements.
+	self addChildren: theEvolveEdgeElements
 ]
 
 { #category : #private }
@@ -468,10 +589,13 @@ GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 	
 	self wardleyMapViewModel weak
 		when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved: to: self;
+		when: GtWardleyMapEvolveViewModelMoved send: #onNodeMoved: to: self;
 		when: GtWardleyMapNodeViewModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeViewModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
+		when: GtWardleyMapEvolveViewModelAdded send: #onEvolveAdded: to: self;
+		when: GtWardleyMapEvolveViewModelRemoved send: #onEvolveRemoved: to: self;
 		when: GtWardleyMapEdgeViewModelAdded send: #onEdgeAdded: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
 		when: GtWardleyMapNoteViewModelMoved send: #onNoteMoved: to: self;

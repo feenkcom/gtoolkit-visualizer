@@ -5,6 +5,29 @@ Class {
 }
 
 { #category : #'examples - elements' }
+GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
+	<gtExample>
+	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
+
+	aWardleyMap := self newMapWithNodes_nodeBAsEvolveTarget.
+	aWardleyMapViewModel := GtWardleyMapViewModel new.
+	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
+
+	aWardleyMapElement := GtWardleyMapElement new.
+	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
+
+	aWardleyMapElement evolutionSections: {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity'
+	}.
+	self assert: aWardleyMapElement children size = 2.
+	self assert: aWardleyMapElement children last children size = 6.
+	^ aWardleyMapElement
+]
+
+{ #category : #'examples - elements' }
 GtWardleyMapModelExamples >> mapElementWithNodes [
 	<gtExample>
 	| aWardleyMap aWardleyMapViewModel aWardleyMapElement |
@@ -82,6 +105,8 @@ GtWardleyMapModelExamples >> mapViewModelWithNodes_nodeBAsEvolveTarget [
 	self assert: aWardleyMapViewModel wardleyMapModel equals: aWardleyMap.
 	self assert: aWardleyMapViewModel nodeViewModels size equals: 3.
 	self assert: aWardleyMapViewModel edgeViewModels size equals: 1.
+	self assert: aWardleyMapViewModel evolveViewModels size equals: 1.
+	self assert: aWardleyMapViewModel evolveEdgeViewModels size equals: 1.
 
 	^ aWardleyMapViewModel
 ]
@@ -457,48 +482,33 @@ GtWardleyMapModelExamples >> newMapWithNodes_nodeAtRight_displayPipeline [
 { #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithNodes_nodeBAsEvolveTarget [
 	<gtExample>
-	| aWardleyMap aNodeA aNodeB aTransformer anEdgeAtoB |
+	| aWardleyMap aNodeA aNodeB anEdgeAtoB |
 	aWardleyMap := self newMapWithNodes.
 
 	aNodeA := aWardleyMap nodes first.
 	aNodeB := aWardleyMap nodes second.
 	anEdgeAtoB := aWardleyMap edges first.
 	
-	self assert: aNodeA type equals: GtWardleyMapNodeRegularType default.
-	self assert: aNodeA type isRegularType.
 	self assert: aNodeA coordinate equals: (0.25@0.75).
 	self assert: aNodeA innerNodes size equals: 0.
 	self assert: aNodeA isPipelineVisible not.
 
-	self assert: aNodeB type equals: GtWardleyMapNodeRegularType default.
-	self assert: aNodeB type isRegularType.
 	self assert: aNodeB coordinate equals: (0.5@0.25).
 	self assert: aNodeB innerNodes size equals: 0.
 	self assert: aNodeB isPipelineVisible not.
 	
-	aTransformer := GtWardleyMapNodeEvolveTypeTransformer new
-		sourceNode: aNodeA;
-		targetNode: aNodeB;
-		mapModel: aWardleyMap.
-		
-	self assert: aTransformer possibleSourceNodes asArray equals: { aNodeA }.
-	self assert: aTransformer possibleIncomingEdges asArray equals: { anEdgeAtoB }.
+	aNodeA isEvolveVisible: true.
+	aNodeA evolvedMaturity: 0.8.
+	aNodeA evolvedLabel: 'Evolved Node A'.
+	aNodeA evolvedLabelCoordinate: 0.5 @ 2.0.
+	aNodeA isEvolvedLabelVisible: true.
 	
-	aTransformer transform.
+	self assert: aNodeA evolvedMaturity equals: 0.8.
+	self assert: aNodeA evolvedLabel equals: 'Evolved Node A'.
+	self assert: aNodeA evolvedLabelCoordinate equals: 0.5 @ 2.0.
+	self assert: aNodeA evolvedCoordinate equals: 0.8 @ 0.75.
+	self assert: aNodeA isEvolvedLabelVisible.
 	
-	self assert: aNodeA type equals: GtWardleyMapNodeRegularType default.
-	self assert: aNodeA type isRegularType.
-	self assert: aNodeA type isEvolveTargetType not.
-	self assert: aNodeA coordinate equals: (0.25@0.75).
-	self assert: aNodeA innerNodes size equals: 0.
-	self assert: aNodeA isPipelineVisible not.
-	
-	self assert: aNodeB type isRegularType not.
-	self assert: aNodeB type isEvolveTargetType.
-	self assert: aNodeB coordinate equals: (0.5@0.75).
-	self assert: aNodeB innerNodes size equals: 0.
-	self assert: aNodeB isPipelineVisible not.
-
 	^ aWardleyMap
 ]
 
