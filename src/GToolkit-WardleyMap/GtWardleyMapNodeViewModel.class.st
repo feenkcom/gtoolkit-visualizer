@@ -112,11 +112,6 @@ GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
 ]
 
 { #category : #'api - type' }
-GtWardleyMapNodeViewModel >> isEvolveTargetType [
-	^ false
-]
-
-{ #category : #'api - type' }
 GtWardleyMapNodeViewModel >> isEvolveViewModel [
 	^ false
 ]
@@ -213,10 +208,6 @@ GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
 				aCorrectedX @ aNodeCoordinate y ]
 			ifFalse: [ aNormalizedPoint ].
 			
-	self isEvolveTargetType ifTrue: [ 
-		aCorrectedPoint := aCorrectedPoint x @ wardleyMapNodeModel coordinate y
-	].
-
 	self wardleyMapNodeModel coordinate: aCorrectedPoint
 ]
 

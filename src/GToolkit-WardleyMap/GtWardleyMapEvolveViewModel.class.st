@@ -54,14 +54,6 @@ GtWardleyMapEvolveViewModel >> increaseNodeSize [
 ]
 
 { #category : #'as yet unclassified' }
-GtWardleyMapEvolveViewModel >> isEvolveTargetType [
-	"Compatibility with the old evolve node implementation.
-	Can be later removed."
-
-	^ false
-]
-
-{ #category : #'as yet unclassified' }
 GtWardleyMapEvolveViewModel >> isEvolveViewModel [
 	^ true
 ]

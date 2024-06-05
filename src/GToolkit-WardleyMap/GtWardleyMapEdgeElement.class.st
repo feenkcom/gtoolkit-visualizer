@@ -16,7 +16,7 @@ GtWardleyMapEdgeElement >> createDefaultBorder [
 		paint: self wardleyMapEdgeViewModel lineColor;
 		width: self wardleyMapEdgeViewModel lineWidth;
 		in: [ :aBuilder | 
-			self wardleyMapEdgeViewModel isToNodeEvolveTargetType
+			self wardleyMapEdgeViewModel isEvolveEdgeViewModel
 				ifTrue: [ aBuilder dashed ] ];
 		build
 ]
@@ -27,7 +27,7 @@ GtWardleyMapEdgeElement >> createHoveredBorder [
 		paint: GtWardleyMapConstants hoverColor;
 		width: self wardleyMapEdgeViewModel lineWidth;
 		in: [ :aBuilder | 
-			self wardleyMapEdgeViewModel isToNodeEvolveTargetType
+			self wardleyMapEdgeViewModel isEvolveEdgeViewModel
 				ifTrue: [ aBuilder dashed ] ];
 		build
 ]

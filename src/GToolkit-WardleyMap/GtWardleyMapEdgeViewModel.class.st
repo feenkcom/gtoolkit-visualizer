@@ -50,6 +50,11 @@ GtWardleyMapEdgeViewModel >> increaseWidth [
 ]
 
 { #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> isEvolveEdgeViewModel [
+	^ false
+]
+
+{ #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> isLabelVisible [
 	^ self wardleyMapEdgeModel isLabelVisible
 ]
@@ -57,11 +62,6 @@ GtWardleyMapEdgeViewModel >> isLabelVisible [
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> isLabelVisible: aBoolean [
 	self wardleyMapEdgeModel isLabelVisible: aBoolean
-]
-
-{ #category : #'api - edge' }
-GtWardleyMapEdgeViewModel >> isToNodeEvolveTargetType [
-	^ self toNodeViewModel isEvolveTargetType
 ]
 
 { #category : #'api - edge' }

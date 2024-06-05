@@ -37,15 +37,13 @@ GtWardleyMapEvolveEdgeViewModel >> hasLineArrow [
 ]
 
 { #category : #'api - edge' }
-GtWardleyMapEvolveEdgeViewModel >> isLabelVisible [
-	^ false
+GtWardleyMapEvolveEdgeViewModel >> isEvolveEdgeViewModel [
+	^ true
 ]
 
 { #category : #'api - edge' }
-GtWardleyMapEvolveEdgeViewModel >> isToNodeEvolveTargetType [
-	"Compatibility with the old evolve implemenation"
-
-	^ true
+GtWardleyMapEvolveEdgeViewModel >> isLabelVisible [
+	^ false
 ]
 
 { #category : #'api - edge' }
