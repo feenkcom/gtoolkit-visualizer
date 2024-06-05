@@ -6,7 +6,7 @@ I draw vertical chart tick labels.
 Class {
 	#name : #GtPlotterVerticalTickLabelsElement,
 	#superclass : #GtPlotterTickLabelsElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
@@ -21,4 +21,8 @@ GtPlotterVerticalTickLabelsElement >> defaultLabelLayout [
 				ifFalse: [ aGtPlotterScaleContext mappedValue ]) ];
 			yourself.
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
+]
+
+{ #category : #accessing }
+GtPlotterVerticalTickLabelsElement >> values: aCollectionOfValues [
 ]

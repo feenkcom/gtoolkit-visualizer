@@ -14,6 +14,17 @@ GtPlotterScatterChartExamples >> emptyPlot [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> projectionAxis [
+	<gtExample>
+	| aChart |
+	aChart := self scatterChart.
+	aChart labelFormatY: [:aValue | (aValue printShowingDecimalPlaces: 2) asRopedText foreground: Color darkGray ].
+	aChart axisYTicksAndLabels: GtPlotterProjectionVerticalTickLabelsElement new.
+	^ aChart
+	
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> scatterChart [
 	<gtExample>
 	| dataGroup aChart theData aMaxDuration aBarWidthScale |
