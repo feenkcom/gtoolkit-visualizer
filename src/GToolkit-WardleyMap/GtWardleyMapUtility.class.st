@@ -172,13 +172,9 @@ GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNod
 	accordingly to be visually placed inside of a pipeline widget."
 
 	aNodeElement constraintsDo: [ :c | 
-		| aChangePossibility |
 		c frame horizontal alignCenterAt: aNodeViewModel coordinateX.
 		
-		aChangePossibility := GtWardleyMapNodeChangePossibility new
-			nodeViewModel: aNodeViewModel.
-		
-		aChangePossibility offsettingPipelineNodeViewModel
+		aNodeViewModel pipelineNodeViewModel
 			ifNil: [ c frame vertical alignCenterAt: aNodeViewModel coordinateY ]
 			ifNotNil: [ :aPipelineNodeViewModel | 
 				"Inner nodes has the same y-coordinates as their pipeline nodes.

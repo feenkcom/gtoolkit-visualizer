@@ -189,14 +189,10 @@ GtWardleyMapNodeEditorElement >> onNodeSizeChanged [
 
 { #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged [
-	| aChangePossibility |
-	aChangePossibility := GtWardleyMapNodeChangePossibility new
-			nodeViewModel: self wardleyMapNodeViewModel.
-
 	pipelineVisibilityElement
-		checked: aChangePossibility isPipelineVisible.
+		checked: self wardleyMapNodeViewModel isPipelineVisible.
 
-	(aChangePossibility canManipulatePipelineVisibility)
+	(self wardleyMapNodeViewModel pipelineNodeViewModel isNil)
 		ifTrue: [ pipelineVisibilityElement enabled: true ]
 		ifFalse: [ pipelineVisibilityElement enabled: false ]
 ]
