@@ -72,7 +72,7 @@ GtWardleyMapFromDictionaryImporter >> importLegacyEvolveNodeFrom: aDictionary to
 
 	aDictionary
 		at: #label
-		ifPresent: [ :aLabelDictionary | aWardleyMapNode evolveModel labelModel: (self importWardleyMapNodeLabelFrom: aLabelDictionary) ].
+		ifPresent: [ :aLabelDictionary | aWardleyMapNode evolveModel labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ].
 ]
 
 { #category : #'api - importer' }

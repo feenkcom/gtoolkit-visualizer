@@ -95,7 +95,7 @@ GtWardleyMapNodeEvolveModel >> labelCoordinate: aPoint [
 
 { #category : #'api - label' }
 GtWardleyMapNodeEvolveModel >> labelModel [
-	<return: #GtWardleyMapNodeLabelModel>
+	<return: #GtWardleyMapEvolveLabelModel>
 	^ labelModel
 ]
 
