@@ -1,29 +1,18 @@
 Class {
-	#name : #GtWardleyMapNodeEditorElement,
+	#name : #GtWardleyMapEvolveEditorElement,
 	#superclass : #BrVerticalPane,
 	#traits : 'TGtWithWardleyMapNodeViewModel + TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
 		'predefinedColorsElement',
 		'nodeSizeEditor',
-		'pipelineVisibilityElement',
-		'evolveTargetElement',
-		'addEvolveElement'
+		'labelVisibilityElement'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createAddEvolveElement [
-	^ GtWardleyMapUtility newButtonElement
-		label: 'Add evolve node';
-		action: [ 
-			self wardleyMapNodeViewModel addEvolve.
-			self fireEvent: BrContextMenuHideWish new ]
-]
-
-{ #category : #initialization }
-GtWardleyMapNodeEditorElement >> createBasicLabel [
+GtWardleyMapEvolveEditorElement >> createBasicLabel [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 		margin: (BlInsets
@@ -34,7 +23,7 @@ GtWardleyMapNodeEditorElement >> createBasicLabel [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createColorPicker [
+GtWardleyMapEvolveEditorElement >> createColorPicker [
 	^ GtWardleyMapColorPickerElement new
 		hFitContent;
 		vFitContentLimited;
@@ -43,25 +32,11 @@ GtWardleyMapNodeEditorElement >> createColorPicker [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createNodeColorLabel [
-	^ GtWardleyMapUtility newColorLabelElement text: 'Node color:'
-]
-
-{ #category : #initialization }
-GtWardleyMapNodeEditorElement >> createNodeDeleteButton [
-	^ GtWardleyMapUtility newDeleteButtonElement
-		label: 'Delete node';
-		action: [ 
-			self wardleyMapNodeViewModel removeFromMap.
-			self fireEvent: BrContextMenuHideWish new ]
-]
-
-{ #category : #initialization }
-GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityCheckbox [
-	^ GtWardleyMapPipelineVisibilityCheckbox new
+GtWardleyMapEvolveEditorElement >> createEvolveLabelVisibilityCheckbox [
+	^ GtWardleyMapEvolveLabelVisibilityCheckbox new
 		checked: false;
-		whenCheckedDo: [ :anEvent |  ];
-		whenUncheckedDo: [ :anEvent |  ];
+		whenCheckedDo: [ :anEvent | self onCheckVisibility: anEvent ];
+		whenUncheckedDo: [ :anEvent | self onUncheckVisibility: anEvent ];
 		margin:
 			(BlInsets
 				top: 5
@@ -71,20 +46,34 @@ GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityCheckbox [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityLabel [
+GtWardleyMapEvolveEditorElement >> createEvolveLabelVisibilityLabel [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 		margin:
 			(BlInsets
-				top: 5
+				top: 10
 				left: 5
 				bottom: 2
 				right: 0);
-		text: 'Pipeline:'
+		text: 'Label visibility:'
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createNodeSizeLabel [
+GtWardleyMapEvolveEditorElement >> createNodeColorLabel [
+	^ GtWardleyMapUtility newColorLabelElement text: 'Node color:'
+]
+
+{ #category : #initialization }
+GtWardleyMapEvolveEditorElement >> createNodeDeleteButton [
+	^ GtWardleyMapUtility newDeleteButtonElement
+		label: 'Delete evolve';
+		action: [ 
+			self wardleyMapNodeViewModel removeFromMap.
+			self fireEvent: BrContextMenuHideWish new ]
+]
+
+{ #category : #initialization }
+GtWardleyMapEvolveEditorElement >> createNodeSizeLabel [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 		margin:
@@ -97,7 +86,7 @@ GtWardleyMapNodeEditorElement >> createNodeSizeLabel [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createNodeSizePicker [
+GtWardleyMapEvolveEditorElement >> createNodeSizePicker [
 	| aPicker |
 
 	aPicker := BrHorizontalPane new
@@ -131,7 +120,7 @@ GtWardleyMapNodeEditorElement >> createNodeSizePicker [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createPropertiesEditorContainer [
+GtWardleyMapEvolveEditorElement >> createPropertiesEditorContainer [
 	| aContainer |
 
 	aContainer := BrVerticalPane new hFitContent vFitContentLimited.
@@ -142,18 +131,17 @@ GtWardleyMapNodeEditorElement >> createPropertiesEditorContainer [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createPropertyEditorElements [
+GtWardleyMapEvolveEditorElement >> createPropertyEditorElements [
 	^ {self createNodeColorLabel.
 		predefinedColorsElement := self createColorPicker.
 		self createNodeSizeLabel.
 		self createNodeSizePicker.
-		self createNodePipelineVisibilityLabel.
-		pipelineVisibilityElement := self createNodePipelineVisibilityCheckbox.
-		addEvolveElement := self createAddEvolveElement}
+		self createEvolveLabelVisibilityLabel.
+		labelVisibilityElement := self createEvolveLabelVisibilityCheckbox }
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> initialize [
+GtWardleyMapEvolveEditorElement >> initialize [
 	| aContainer |
 	super initialize.
 
@@ -164,10 +152,6 @@ GtWardleyMapNodeEditorElement >> initialize [
 
 	aContainer := self createPropertiesEditorContainer.
 	
-	pipelineVisibilityElement
-		whenCheckedDo: [ :anEvent | self wardleyMapNodeViewModel isPipelineVisible: true ];
-		whenUncheckedDo: [ :anEvent | self wardleyMapNodeViewModel isPipelineVisible: false ].
-
 	self
 		addChild:
 			(BrScrollPane new
@@ -178,36 +162,37 @@ GtWardleyMapNodeEditorElement >> initialize [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeEditorElement >> onEvolveVisibilityChanged [
-	addEvolveElement enabled: self wardleyMapNodeViewModel canAddEvolveNode
+GtWardleyMapEvolveEditorElement >> onCheckVisibility: anEvent [ 
+	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	self wardleyMapNodeViewModel isEvolvedLabelVisible: true
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeEditorElement >> onNodeSizeChanged [
+GtWardleyMapEvolveEditorElement >> onEvolveLabelVisibilityChanged [
+	labelVisibilityElement checked: self wardleyMapNodeViewModel isEvolvedLabelVisible
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEvolveEditorElement >> onNodeSizeChanged [
 	nodeSizeEditor text: (self wardleyMapNodeViewModel nodeSize min asString)
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged [
-	pipelineVisibilityElement
-		checked: self wardleyMapNodeViewModel isPipelineVisible.
-
-	(self wardleyMapNodeViewModel pipelineNodeViewModel isNil)
-		ifTrue: [ pipelineVisibilityElement enabled: true ]
-		ifFalse: [ pipelineVisibilityElement enabled: false ]
+GtWardleyMapEvolveEditorElement >> onUncheckVisibility: anEvent [ 
+	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	self wardleyMapNodeViewModel isEvolvedLabelVisible: false
 ]
 
 { #category : #'api - wardley map node view model' }
-GtWardleyMapNodeEditorElement >> onWardleyMapNodeViewModelChanged [
+GtWardleyMapEvolveEditorElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
 
 	self onNodeSizeChanged.
-	self onPipelineVisibilityChanged.
-	self onEvolveVisibilityChanged.
+	self onEvolveLabelVisibilityChanged.
 ]
 
 { #category : #'api - wardley map view model' }
-GtWardleyMapNodeEditorElement >> onWardleyMapViewModelChanged [
+GtWardleyMapEvolveEditorElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	
 	predefinedColorsElement
@@ -218,7 +203,7 @@ GtWardleyMapNodeEditorElement >> onWardleyMapViewModelChanged [
 ]
 
 { #category : #'api - wardley map node view model' }
-GtWardleyMapNodeEditorElement >> subscribeToWardleyMapNodeViewModel [
+GtWardleyMapEvolveEditorElement >> subscribeToWardleyMapNodeViewModel [
 	"Is sent after a new WardleyMapNode view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
@@ -227,16 +212,13 @@ GtWardleyMapNodeEditorElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelResized
 			send: #onNodeSizeChanged
 			to: self;
-		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged
-			send: #onPipelineVisibilityChanged
-			to: self;
-		when: GtWardleyMapNodeViewModelEvolveVisibilityChanged
-			send: #onEvolveVisibilityChanged
+		when: GtWardleyMapEvolveViewModelLabelVisibilityChanged
+			send: #onEvolveLabelVisibilityChanged
 			to: self
 ]
 
 { #category : #'api - wardley map node view model' }
-GtWardleyMapNodeEditorElement >> unsubscribeFromWardleyMapNodeViewModel [
+GtWardleyMapEvolveEditorElement >> unsubscribeFromWardleyMapNodeViewModel [
 	"Is sent before a new WardleyMapNode view model is assigned to the element.
 	Elements that subscribe to WardleyMapNode view model in domain model are required to implement this methods"
 	

@@ -7,17 +7,21 @@ Class {
 		'announcer',
 		'wardleyMapViewModel',
 		'innerNodeViewModels',
-		'pipelineNodeViewModel'
+		'pipelineNodeViewModel',
+		'evolveViewModel'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> addEvolve [
-	GtWardleyMapNodeEvolveTypeBuilder new
-		sourceNode: self wardleyMapNodeModel;
-		mapModel: self wardleyMapViewModel wardleyMapModel;
-		build
+	self wardleyMapNodeModel isEvolveVisible ifFalse: [
+		| aMaturity | 
+		aMaturity := ((self wardleyMapNodeModel maturity + 0.2) min: 1.0).
+		self wardleyMapNodeModel evolvedMaturity: aMaturity.
+		self wardleyMapNodeModel evolvedLabel: self wardleyMapNodeModel label.
+		self wardleyMapNodeModel isEvolvedLabelVisible: false.
+		self wardleyMapNodeModel isEvolveVisible: true ]
 ]
 
 { #category : #'api - pipeline' }
@@ -39,22 +43,14 @@ GtWardleyMapNodeViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - evolve' }
+GtWardleyMapNodeViewModel >> canAddEvolveNode [
+	^ self isEvolveVisible not
+]
+
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> changeColorTo: aColor [
 	self wardleyMapNodeModel color: aColor
-]
-
-{ #category : #'api - node' }
-GtWardleyMapNodeViewModel >> convertToEvolveNode [
-	GtWardleyMapNodeEvolveTypeTransformer new
-		targetNode: self wardleyMapNodeModel;
-		mapModel: self wardleyMapViewModel wardleyMapModel;
-		transform
-]
-
-{ #category : #'api - node' }
-GtWardleyMapNodeViewModel >> convertToRegularNode [
-	self wardleyMapNodeModel type: GtWardleyMapNodeRegularType default
 ]
 
 { #category : #'api - accessing' }
@@ -87,6 +83,16 @@ GtWardleyMapNodeViewModel >> decreaseNodeSize [
 	self nodeSize: ((self nodeSize - self nodeSizeStep) roundTo: 1@1)
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodeViewModel >> evolveViewModel [
+	^ evolveViewModel
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeViewModel >> evolveViewModel: anObject [
+	evolveViewModel := anObject
+]
+
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> increaseNodeSize [
 	self nodeSize: ((self nodeSize + self nodeSizeStep) roundTo: 1@1)
@@ -106,8 +112,13 @@ GtWardleyMapNodeViewModel >> innerNodeViewModels: aNodeViewModels [
 ]
 
 { #category : #'api - type' }
-GtWardleyMapNodeViewModel >> isEvolveTargetType [
-	^ self wardleyMapNodeModel type isEvolveTargetType
+GtWardleyMapNodeViewModel >> isEvolveViewModel [
+	^ false
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> isEvolveVisible [
+	^ self wardleyMapNodeModel isEvolveVisible
 ]
 
 { #category : #'api - pipeline' }
@@ -197,10 +208,6 @@ GtWardleyMapNodeViewModel >> moveNodeTo: aNormalizedPoint [
 				aCorrectedX @ aNodeCoordinate y ]
 			ifFalse: [ aNormalizedPoint ].
 			
-	self isEvolveTargetType ifTrue: [ 
-		aCorrectedPoint := aCorrectedPoint x @ wardleyMapNodeModel coordinate y
-	].
-
 	self wardleyMapNodeModel coordinate: aCorrectedPoint
 ]
 
@@ -236,6 +243,12 @@ GtWardleyMapNodeViewModel >> onNodeDecoratorsChanged: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeEvolveVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapNodeViewModelEvolveVisibilityChanged new nodeViewModel: self).
+	self wardleyMapViewModel announce: (GtWardleyMapNodeViewModelEvolveVisibilityChanged new nodeViewModel: self)
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeLabelMoved: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelLabelMoved new nodeViewModel: self)
 ]
@@ -265,12 +278,6 @@ GtWardleyMapNodeViewModel >> onNodePipelineVisibilityChanged: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeResized: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelResized new nodeViewModel: self)
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeViewModel >> onNodeTypeChanged: anAnnouncement [
-	self
-		announce: (GtWardleyMapNodeViewModelTypeChanged new nodeViewModel: self)
 ]
 
 { #category : #'api - wardley map node model' }
@@ -372,7 +379,7 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeModelResized send: #onNodeResized: to: self;
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeModelPipelineResized send: #onNodePipelineResized: to: self;
-		when: GtWardleyMapNodeModelTypeChanged send: #onNodeTypeChanged: to: self;
+		when: GtWardleyMapNodeModelEvolveVisibilityChanged send: #onNodeEvolveVisibilityChanged: to: self;
 		when: GtWardleyMapNodeModelDecoratorsChanged send: #onNodeDecoratorsChanged: to: self.
 	
 	self wardleyMapNodeModel labelModel weak

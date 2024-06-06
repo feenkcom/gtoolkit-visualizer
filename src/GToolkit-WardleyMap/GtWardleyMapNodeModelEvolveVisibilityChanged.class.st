@@ -1,8 +1,5 @@
 Class {
-	#name : #GtWardleyMapNodeLabelChanged,
+	#name : #GtWardleyMapNodeModelEvolveVisibilityChanged,
 	#superclass : #GtWardleyMapNodeModelAnnouncement,
-	#instVars : [
-		'dueToLabelAnnouncement'
-	],
 	#category : #'GToolkit-WardleyMap-Events'
 }

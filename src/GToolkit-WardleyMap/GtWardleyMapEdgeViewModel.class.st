@@ -50,6 +50,11 @@ GtWardleyMapEdgeViewModel >> increaseWidth [
 ]
 
 { #category : #'api - edge' }
+GtWardleyMapEdgeViewModel >> isEvolveEdgeViewModel [
+	^ false
+]
+
+{ #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> isLabelVisible [
 	^ self wardleyMapEdgeModel isLabelVisible
 ]
@@ -57,11 +62,6 @@ GtWardleyMapEdgeViewModel >> isLabelVisible [
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> isLabelVisible: aBoolean [
 	self wardleyMapEdgeModel isLabelVisible: aBoolean
-]
-
-{ #category : #'api - edge' }
-GtWardleyMapEdgeViewModel >> isToNodeEvolveTargetType [
-	^ self toNodeViewModel isEvolveTargetType
 ]
 
 { #category : #'api - edge' }
@@ -150,11 +150,6 @@ GtWardleyMapEdgeViewModel >> onEdgeResized: anAnnouncement [
 ]
 
 { #category : #'api - wardley map edge model' }
-GtWardleyMapEdgeViewModel >> onTargetNodeViewModelTypeChanged: anAnnouncement [
-	self announce: (GtWardleyMapEdgeViewModelTypeChanged new edgeViewModel: self)
-]
-
-{ #category : #'api - wardley map edge model' }
 GtWardleyMapEdgeViewModel >> onWardleyMapEdgeModelChanged [
 	"Is sent when a new wardleyMapEdge model is assigned to the view model"
 	
@@ -163,12 +158,10 @@ GtWardleyMapEdgeViewModel >> onWardleyMapEdgeModelChanged [
 		ifFound: [ :aNodeViewModel | aNodeViewModel ]
 		ifNone: [ nil ].
 		
-	self unsubscribeFromTargetNode.
 	toNodeViewModel := self wardleyMapViewModel
 		nodeViewModelFor: self wardleyMapEdgeModel toNode
 		ifFound: [ :aNodeViewModel | aNodeViewModel ]
 		ifNone: [ nil ].
-	self subscribeToTargetNodeViewModel
 ]
 
 { #category : #'api - edge' }
@@ -184,14 +177,6 @@ GtWardleyMapEdgeViewModel >> removeLineArrow [
 { #category : #'api - edge' }
 GtWardleyMapEdgeViewModel >> reverse [
 	self wardleyMapEdgeModel reverse
-]
-
-{ #category : #'api - wardley map edge model' }
-GtWardleyMapEdgeViewModel >> subscribeToTargetNodeViewModel [
-	toNodeViewModel weak
-		when: GtWardleyMapNodeViewModelTypeChanged
-		send: #onTargetNodeViewModelTypeChanged:
-		to: self
 ]
 
 { #category : #'api - wardley map edge model' }
@@ -214,11 +199,6 @@ GtWardleyMapEdgeViewModel >> subscribeToWardleyMapEdgeModel [
 { #category : #accessing }
 GtWardleyMapEdgeViewModel >> toNodeViewModel [
 	^ toNodeViewModel
-]
-
-{ #category : #'api - wardley map edge model' }
-GtWardleyMapEdgeViewModel >> unsubscribeFromTargetNode [
-	toNodeViewModel ifNotNil: [ :aViewModel | aViewModel unsubscribe: self ].
 ]
 
 { #category : #'api - wardley map edge model' }

@@ -5,6 +5,34 @@ Class {
 }
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> edgeLabelCoordinate [
+	"I represent a default edge label model coordinate"
+
+	^ 0.5 @ 0.5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> edgeWidth [
+	"I represent a default edge model width"
+
+	^ 1.0
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> evolveColor [
+	"I represent a default evolve model color"
+
+	^ Color red
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> evolveMaturity [
+	"I represent a default evolve model maturity"
+
+	^ 0.5
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> externalCanvasExtent [
 	"The default extent was taken from a https://onlinewardleymaps.com website,
 	inspecting a HTML elements. It was an optimal canvas extent of a particular
@@ -26,6 +54,13 @@ GtWardleyMapConstants class >> hoverColor [
 ]
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> labelCoordinate [
+	"I represent a default label model coordinate"
+
+	^ 0.5 @ 2.0
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> minPipelineRelativeWidth [
 	"I represent kind of padding in relative coordinates (0, 1)"
 
@@ -37,6 +72,13 @@ GtWardleyMapConstants class >> nodeColor [
 	"I represent a default node model color"
 
 	^ Color black
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> nodeCoordinate [
+	"I represent a default node model coordinate"
+
+	^ 0.5 @ 0.5
 ]
 
 { #category : #'api - constants' }
