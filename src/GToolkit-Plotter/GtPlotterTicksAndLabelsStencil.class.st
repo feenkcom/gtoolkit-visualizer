@@ -8,6 +8,19 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterTicksAndLabelsStencil >> paramsOn: aStencilExecutor [
+	aStencilExecutor
+		push: self scatterChart
+]
+
+{ #category : #accessing }
+GtPlotterTicksAndLabelsStencil >> reset [
+	super reset.
+	
+	scatterChart := nil
+]
+
+{ #category : #accessing }
 GtPlotterTicksAndLabelsStencil >> scatterChart [
 	^ scatterChart
 ]
