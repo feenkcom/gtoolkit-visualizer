@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNodeViewModel,
 	#superclass : #Object,
-	#traits : 'TGtWithWardleyMapNodeModel + TGtAnnouncer',
-	#classTraits : 'TGtWithWardleyMapNodeModel classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtWithWardleyMapNodeModel + TGtAnnouncer + TGtWithWardleyMapDecoratorViewModels',
+	#classTraits : 'TGtWithWardleyMapNodeModel classTrait + TGtAnnouncer classTrait + TGtWithWardleyMapDecoratorViewModels classTrait',
 	#instVars : [
 		'announcer',
 		'wardleyMapViewModel',
@@ -74,7 +74,7 @@ GtWardleyMapNodeViewModel >> coordinateY [
 
 { #category : #'api - decorators' }
 GtWardleyMapNodeViewModel >> decorators [
-	<return: #Collection of: #TGtWardleyMapDecorator>
+	<return: #Collection of: #TGtWardleyMapDecoratorModel>
 	^ self wardleyMapNodeModel decorators
 ]
 
@@ -91,6 +91,15 @@ GtWardleyMapNodeViewModel >> evolveViewModel [
 { #category : #accessing }
 GtWardleyMapNodeViewModel >> evolveViewModel: anObject [
 	evolveViewModel := anObject
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeViewModel >> gtWardleyMapDecoratorsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Decorators';
+		items: [ self wardleyMapDecoratorViewModels copy ];
+		column: 'Name' text: #yourself
 ]
 
 { #category : #'api - node' }
@@ -231,15 +240,39 @@ GtWardleyMapNodeViewModel >> nodeSizeStep [
 	^ ((self nodeSize min // 10 + 1) max: 1) asPoint / 2.0
 ]
 
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapNodeViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapNodeDecoratorViewModelAdded new
+				nodeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel)
+]
+
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapNodeViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
+	aWardleyMapDecoratorViewModel
+		announce: (GtWardleyMapNodeDecoratorViewModelRemoved new
+				nodeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self
+		announce: (GtWardleyMapNodeDecoratorViewModelRemoved new
+				nodeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel)
+]
+
 { #category : #'event handling' }
 GtWardleyMapNodeViewModel >> onNodeColored: anAnnouncement [
 	self announce: (GtWardleyMapNodeViewModelColored new nodeViewModel: self)
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeViewModel >> onNodeDecoratorsChanged: anAnnouncement [
-	self
-		announce: (GtWardleyMapNodeViewModelDecoratorsChanged new nodeViewModel: self)
+GtWardleyMapNodeViewModel >> onNodeDecoratorAdded: anAnnouncement [
+	self onWardleyMapDecoratorModelAdded: anAnnouncement decoratorModel
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeViewModel >> onNodeDecoratorRemoved: anAnnouncement [
+	self onWardleyMapDecoratorModelRemoved: anAnnouncement decoratorModel
 ]
 
 { #category : #'event handling' }
@@ -284,7 +317,7 @@ GtWardleyMapNodeViewModel >> onNodeResized: anAnnouncement [
 GtWardleyMapNodeViewModel >> onWardleyMapNodeModelChanged [
 	"Is sent when a new wardleyMapNode model is assigned to the view model"
 	
-	
+	self wardleyMapDecoratorViewModelsFromModels: self wardleyMapNodeModel wardleyMapDecoratorModels
 ]
 
 { #category : #'api - pipeline' }
@@ -380,7 +413,8 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeModelPipelineResized send: #onNodePipelineResized: to: self;
 		when: GtWardleyMapNodeModelEvolveVisibilityChanged send: #onNodeEvolveVisibilityChanged: to: self;
-		when: GtWardleyMapNodeModelDecoratorsChanged send: #onNodeDecoratorsChanged: to: self.
+		when: GtWardleyMapNodeDecoratorModelAdded send: #onNodeDecoratorAdded: to: self;
+		when: GtWardleyMapNodeDecoratorModelRemoved send: #onNodeDecoratorRemoved: to: self.
 	
 	self wardleyMapNodeModel labelModel weak
 		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;

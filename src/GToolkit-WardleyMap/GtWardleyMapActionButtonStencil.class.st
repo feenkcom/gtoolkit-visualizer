@@ -42,6 +42,7 @@ GtWardleyMapActionButtonStencil >> create [
 	aButton beTinySize.
 	aButton model: self model.
 	aButton wardley beDecorator.
+	aButton margin: (BlInsets left: 2).
 	aButton constraintsDo: [ :c |
 		c linear vertical alignCenter.
 		c linear horizontal alignCenter ].

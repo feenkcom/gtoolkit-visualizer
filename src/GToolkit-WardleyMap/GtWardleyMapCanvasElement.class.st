@@ -37,7 +37,7 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 		wardleyMapEdgeViewModel: anEdgeViewModel;
 		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
 		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
-		zIndex: -1;
+		zIndex: GtWardleyMapConstants edgeElevationIndex;
 		addAptitude: (BrGlamorousWithContextMenuAptitude
 			handle: [ BlElement new
 					size: 5@5;
@@ -239,7 +239,7 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> defaultNodeElevationIndex [
-	^ 2
+	^ GtWardleyMapConstants nodeElevationIndex
 ]
 
 { #category : #initialization }

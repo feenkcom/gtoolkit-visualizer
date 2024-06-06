@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapMaximizerAction,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapDecorator',
-	#classTraits : 'TGtWardleyMapDecorator classTrait',
+	#traits : 'TGtWardleyMapDecoratorModel',
+	#classTraits : 'TGtWardleyMapDecoratorModel classTrait',
 	#instVars : [
 		'label',
 		'icon',
@@ -24,7 +24,7 @@ GtWardleyMapMaximizerAction >> aptitude: aBlock [
 	aptitude := aBlock
 ]
 
-{ #category : #'api - decoration' }
+{ #category : #'as yet unclassified' }
 GtWardleyMapMaximizerAction >> decorateNodeElement: aNodeElement [
 	aNodeElement labelContainerDo: [ :aContainer | 
 		aContainer addChild: self newButton ]

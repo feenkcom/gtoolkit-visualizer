@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-WardleyMap-Events'
 }
 
+{ #category : #testing }
+GtWardleyMapNodeViewModelDecoratorsChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GtWardleyMapNodeViewModelDecoratorsChanged >> nodeViewModel [
 	^ nodeViewModel

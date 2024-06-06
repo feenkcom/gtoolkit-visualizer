@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapAction,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapDecorator',
-	#classTraits : 'TGtWardleyMapDecorator classTrait',
+	#traits : 'TGtWardleyMapDecoratorModel',
+	#classTraits : 'TGtWardleyMapDecoratorModel classTrait',
 	#instVars : [
 		'label',
 		'icon',
@@ -33,10 +33,17 @@ GtWardleyMapAction >> aptitude: aBlock [
 	aptitude := aBlock
 ]
 
-{ #category : #'api - decoration' }
-GtWardleyMapAction >> decorateNodeElement: aNodeElement [
-	aNodeElement labelContainerDo: [ :aContainer | 
-		aContainer addChild: self newButton ]
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+	aNodeElement
+		labelContainerDo: [ :aContainer | 
+			| aButton |
+			aButton := self newButton.
+			aDecoratorViewModel
+				when: GtWardleyMapNodeDecoratorViewModelRemoved
+				send: #removeFromParent
+				to: aButton.
+			aContainer addChild: aButton ]
 ]
 
 { #category : #accessing }

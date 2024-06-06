@@ -316,6 +316,25 @@ GtWardleyMapViewModel >> gtNotesFor: aView [
 		column: 'Text' text: #label
 ]
 
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtWardleyMapDecorators [
+	^ self nodeViewModels
+		flatCollect: [ :each | each wardleyMapDecoratorViewModels collect: [ :aDecorator | each -> aDecorator ] ]
+		as: Array
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtWardleyMapDecoratorsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Decorators';
+		priority: 30;
+		items: [ self gtWardleyMapDecorators ];
+		column: 'Item' text: [ :anAssoc | anAssoc key ];
+		column: 'Decorator' text: [ :anAssoc | anAssoc value ];
+		send: #value
+]
+
 { #category : #initialization }
 GtWardleyMapViewModel >> initialize [
 	super initialize.
@@ -505,6 +524,7 @@ GtWardleyMapViewModel >> onNodeRemoved: aNodeAddedAnnouncement [
 		nodeViewModelFor: aNodeAddedAnnouncement nodeModel
 		ifFound: [ :aNodeViewModel |
 			nodeViewModels remove: aNodeViewModel.
+			aNodeViewModel announce: (GtWardleyMapNodeViewModelRemoved new nodeViewModel: aNodeViewModel).
 			self announce: (GtWardleyMapNodeViewModelRemoved new nodeViewModel: aNodeViewModel) ]
 		ifNone: [ ]
 ]
