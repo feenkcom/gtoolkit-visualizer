@@ -133,6 +133,12 @@ GtWardleyMapModel >> edges [
 	^ edges
 ]
 
+{ #category : #accessing }
+GtWardleyMapModel >> edges: aCollection [
+	edges copy do: [ :anEdge | self removeEdge: anEdge ].
+	aCollection do: [ :anEdge | self addEdge: anEdge ]
+]
+
 { #category : #'gt-extensions' }
 GtWardleyMapModel >> gtEdgesFor: aView [
 	<gtView>
@@ -360,6 +366,12 @@ GtWardleyMapModel >> nodeWithName: aName ifFound: aFoundBlock ifNone: aNoneBlock
 { #category : #'api - nodes' }
 GtWardleyMapModel >> nodes [
 	^ nodes
+]
+
+{ #category : #accessing }
+GtWardleyMapModel >> nodes: aCollection [
+	nodes copy do: [ :aNode | self removeNode: aNode ].
+	aCollection do: [ :aNode | self addNode: aNode ]
 ]
 
 { #category : #'api - nodes' }
