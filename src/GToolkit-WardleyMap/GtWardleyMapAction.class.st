@@ -8,7 +8,8 @@ Class {
 		'icon',
 		'action',
 		'aptitude',
-		'model'
+		'model',
+		'tooltip'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers - Actions'
 }
@@ -81,6 +82,7 @@ GtWardleyMapAction >> newButton [
 	^ GtWardleyMapActionButtonStencil new
 		icon: self icon;
 		label: self label;
+		tooltip: self tooltip;
 		aptitude: self aptitude;
 		action: self action;
 		model: self model;
@@ -90,4 +92,14 @@ GtWardleyMapAction >> newButton [
 { #category : #initialization }
 GtWardleyMapAction >> parent: aParent [
 	self model: aParent
+]
+
+{ #category : #accessing }
+GtWardleyMapAction >> tooltip [
+	^ tooltip
+]
+
+{ #category : #accessing }
+GtWardleyMapAction >> tooltip: anObject [
+	tooltip := anObject
 ]

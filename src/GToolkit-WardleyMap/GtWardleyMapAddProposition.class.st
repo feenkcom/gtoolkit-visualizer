@@ -12,30 +12,10 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapAddProposition >> decorateNodeElement: aNodeElement [
-	| aHighlightElement |
-	aHighlightElement := GtWardleyMapNodePropositionElement new
-		wardleyMapNodeViewModel: aNodeElement wardleyMapNodeViewModel;
-		adornment: self;
-		nodeElement: aNodeElement.
-		
-	BlTaskAction
-		enqueueElement: aNodeElement 
-		action: [ aNodeElement parent addChild: aHighlightElement ].
-
-	aNodeElement labelElementDo: [ :aContainer | 
-		aContainer
-			geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
-			background: (BrGlamorousColors successBackgroundColor) ].
-			
-	acceptAction decorateNodeElement: aNodeElement.
-	rejectAction decorateNodeElement: aNodeElement.
-]
-
-{ #category : #accessing }
 GtWardleyMapAddProposition >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
+		beAddProposition;
 		wardleyMapNodeViewModel: aNodeElement wardleyMapNodeViewModel;
 		wardleyMapDecoratorViewModel: aDecoratorViewModel;
 		nodeElement: aNodeElement.
@@ -54,10 +34,12 @@ GtWardleyMapAddProposition >> initialize [
 
 	acceptAction := GtWardleyMapAction new.
 	acceptAction icon: BrGlamorousVectorIcons accept.
+	acceptAction tooltip: 'Keep node'.
 	acceptAction action: [ self onAcceptAction ].
 	rejectAction := GtWardleyMapAction new.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
 	rejectAction action: [ self onRejectAction ].
+	rejectAction tooltip: 'Remove node'.
 ]
 
 { #category : #'event handling' }
@@ -77,4 +59,9 @@ GtWardleyMapAddProposition >> parent: aParent [
 	self assert: [ parent isNil ] description: [ 'Only one parent is allowed' ].
 
 	parent := aParent
+]
+
+{ #category : #initialization }
+GtWardleyMapAddProposition >> removeParent [
+	parent := nil
 ]

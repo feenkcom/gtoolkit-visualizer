@@ -4,7 +4,8 @@ Class {
 	#traits : 'TGtWithWardleyMapNodeViewModel + TGtWithWardleyMapDecoratorViewModel',
 	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait + TGtWithWardleyMapDecoratorViewModel classTrait',
 	#instVars : [
-		'nodeElement'
+		'nodeElement',
+		'highlightColor'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers - Actions'
 }
@@ -15,17 +16,24 @@ GtWardleyMapNodePropositionElement >> addLabelDecoration [
 		labelElementDo: [ :aContainer | 
 			aContainer
 				geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
-				background: BrGlamorousColors successBackgroundColor ]
+				background: highlightColor ]
 ]
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beAddProposition [
-	self background: BrGlamorousColors successBackgroundColor
+	highlightColor := BrGlamorousColors successBackgroundColor.
+	self background: highlightColor
 ]
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beEllipseGeometry [
 	self geometry: BlEllipseGeometry new
+]
+
+{ #category : #initialization }
+GtWardleyMapNodePropositionElement >> beRemoveProposition [
+	highlightColor := BrGlamorousColors errorBackgroundColor.
+	self background: highlightColor
 ]
 
 { #category : #initialization }

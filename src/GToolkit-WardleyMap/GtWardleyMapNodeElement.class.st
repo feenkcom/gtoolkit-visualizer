@@ -15,13 +15,6 @@ GtWardleyMapNodeElement >> onNodeDecoratorAdded: anAnnouncement [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeDecoratorRemoved: anAnnouncement [
-	"do nothing"
-
-	
-]
-
-{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodeDecoratorsChanged [
 	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
 		aChild wardley isDecorator 
@@ -71,8 +64,7 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
-		when: GtWardleyMapNodeDecoratorViewModelAdded send: #onNodeDecoratorAdded: to: self;
-		when: GtWardleyMapNodeDecoratorViewModelRemoved send: #onNodeDecoratorRemoved: to: self.
+		when: GtWardleyMapNodeDecoratorViewModelAdded send: #onNodeDecoratorAdded: to: self.
 ]
 
 { #category : #'api - wardley map node view model' }

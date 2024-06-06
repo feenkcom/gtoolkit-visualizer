@@ -24,8 +24,8 @@ GtWardleyMapMaximizerAction >> aptitude: aBlock [
 	aptitude := aBlock
 ]
 
-{ #category : #'as yet unclassified' }
-GtWardleyMapMaximizerAction >> decorateNodeElement: aNodeElement [
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapMaximizerAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 	aNodeElement labelContainerDo: [ :aContainer | 
 		aContainer addChild: self newButton ]
 ]
