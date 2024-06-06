@@ -6,10 +6,16 @@ Class {
 		'labelElement',
 		'labelStyle',
 		'labelLayout',
-		'inversed'
+		'inversed',
+		'tickValues'
 	],
 	#category : #'GToolkit-Plotter-Core - Elements'
 }
+
+{ #category : #accessing }
+GtPlotterTickLabelsElement >> computedTicks [
+	^ tickValues ifNil: [ scale ticks: labels ]
+]
 
 { #category : #initialization }
 GtPlotterTickLabelsElement >> defaultLabelElement [
@@ -50,8 +56,7 @@ GtPlotterTickLabelsElement >> initialize [
 GtPlotterTickLabelsElement >> initializeElements [
 	| theTicks aScaleContext |
 	
-	theTicks := self ticks.
-	
+	theTicks := self computedTicks.
 	aScaleContext := GtPlotterSingleScaleContext new.
 
 	self removeChildren: elements.
@@ -117,6 +122,12 @@ GtPlotterTickLabelsElement >> labels: anAmountOfLabels [
 ]
 
 { #category : #accessing }
-GtPlotterTickLabelsElement >> ticks [
-	^ scale ticks: labels
+GtPlotterTickLabelsElement >> tickValues [
+	^ tickValues
+]
+
+{ #category : #accessing }
+GtPlotterTickLabelsElement >> tickValues: aCollectionOfValues [
+	tickValues := aCollectionOfValues.
+	self initializeElements
 ]
