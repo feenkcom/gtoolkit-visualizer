@@ -73,3 +73,21 @@ GtWardleyMapDecoratorExamples >> mapWithProposedModifications [
 	
 	^ aMap
 ]
+
+{ #category : #accessing }
+GtWardleyMapDecoratorExamples >> mapwithProposedRename [
+	<gtExample>
+	| aMap aNodeA aRenameA |
+	aMap := self mapWithNodes.
+	aNodeA := aMap
+			nodeWithName: 'Node A'
+			ifFound: [ :theNode | theNode ]
+			ifNone: [ nil ].
+
+	aRenameA := GtWardleyMapRenameProposition new
+			options: {'A Node'.
+					'Node 1'.
+					'Node #1'}.
+	aNodeA addWardleyMapDecoratorModel: aRenameA.
+	^ aMap
+]

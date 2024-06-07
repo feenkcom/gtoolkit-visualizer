@@ -41,6 +41,12 @@ GtWardleyMapNodePropositionElement >> beSquareGeometry [
 	self geometry: BlSquare new
 ]
 
+{ #category : #accessing }
+GtWardleyMapNodePropositionElement >> highlightColor: aColor [
+	highlightColor := aColor.
+	self background: highlightColor
+]
+
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> initialize [
 	super initialize.
