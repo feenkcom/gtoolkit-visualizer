@@ -2,7 +2,8 @@ Class {
 	#name : #GtWardleyMapDropdownAction,
 	#superclass : #GtWardleyMapAction,
 	#instVars : [
-		'content'
+		'content',
+		'preferredExtent'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
@@ -20,35 +21,40 @@ GtWardleyMapDropdownAction >> content: anObject [
 { #category : #accessing }
 GtWardleyMapDropdownAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 	aNodeElement
-		labelContainerDo: [ :aContainer | 
-			| aButton |
+		labelContainerDo: [ :aLabelContainer | 
+			| anActionContainer aButton |
+			anActionContainer := GtWardleyMapUtility ensureRightDecoratorContainerFor: aLabelContainer.
 			aButton := self newButton.
-			aDecoratorViewModel
+			aDecoratorViewModel weak
 				when: GtWardleyMapNodeDecoratorViewModelRemoved
 				send: #removeFromParent
 				to: aButton.
-			aDecoratorViewModel
+			aDecoratorViewModel weak
 				when: GtWardleyMapNodeLabelModelTextChanged
 				send: #removeFromParent
 				to: aButton.
-			aContainer addChild: aButton ]
+			anActionContainer addChild: aButton ]
 ]
 
 { #category : #accessing }
 GtWardleyMapDropdownAction >> newButton [
-	| aButton |
-	^ aButton := BrButton new beTinySize
-			margin: (BlInsets left: 2);
-			constraintsDo: [ :c | 
-				c linear vertical alignCenter.
-				c linear horizontal alignCenter ];
-			icon: self icon;
-			label: self tooltip;
-			aptitude: BrGlamorousButtonWithIconAptitude - BrGlamorousButtonWithLabelTooltipAptitude
-					+ (BrGlamorousWithDropdownAptitude
-							handle: [ BrButton new
-									aptitude: BrGlamorousButtonWithIconAptitude - BrGlamorousButtonWithLabelTooltipAptitude
-											- BrGlamorousButtonExteriorAptitude;
-									icon: self icon ]
-							content: [ self content value: aButton ])
+	| anAptitude |
+	anAptitude := BrGlamorousWithDropdownAptitude
+			handle: [ super newButton
+					in: [ :theHandle | 
+						theHandle aptitude - BrGlamorousButtonExteriorAptitude ];
+					margin: BlInsets empty ]
+			content: self content.
+	preferredExtent ifNotNil: [ anAptitude preferredExtent: preferredExtent ].
+	^ super newButton addAptitude: anAptitude
+]
+
+{ #category : #accessing }
+GtWardleyMapDropdownAction >> preferredExtent [
+	^ preferredExtent
+]
+
+{ #category : #accessing }
+GtWardleyMapDropdownAction >> preferredExtent: anObject [
+	preferredExtent := anObject
 ]

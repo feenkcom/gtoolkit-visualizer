@@ -52,7 +52,7 @@ GtWardleyMapDecoratorExamples >> mapWithNodes [
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorExamples >> mapWithProposedModifications [
 	<gtExample>
-	| aMap aNodeA aNodeB aNodeC anAddA aRemoveC anEdgeAB anAddAB anRemoveAC anEdgeAC |
+	| aMap aNodeA aNodeB aNodeC anAddA aRemoveC anEdgeAB anAddAB anRemoveAC anEdgeAC aRenameB |
 	aMap := self mapWithNodes.
 	aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :theNode | theNode] ifNone: [ nil ].
 	aNodeB := aMap nodeWithName: 'Node B' ifFound: [ :theNode | theNode] ifNone: [ nil ].
@@ -70,6 +70,10 @@ GtWardleyMapDecoratorExamples >> mapWithProposedModifications [
 	
 	anRemoveAC := GtWardleyMapRemoveProposition new.
 	anEdgeAC addWardleyMapDecoratorModel: anRemoveAC.
+	
+	aRenameB := GtWardleyMapRenameProposition new
+			options: {'Node X'. 'Node Y'. 'Node Z'}.
+	aNodeB addWardleyMapDecoratorModel: aRenameB.
 	
 	^ aMap
 ]

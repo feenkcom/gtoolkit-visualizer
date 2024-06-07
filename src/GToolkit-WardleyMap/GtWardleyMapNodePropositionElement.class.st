@@ -21,8 +21,12 @@ GtWardleyMapNodePropositionElement >> addLabelDecoration [
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beAddProposition [
-	highlightColor := BrGlamorousColors successBackgroundColor.
-	self background: highlightColor
+	self highlightColor:  BrGlamorousColors successBackgroundColor.
+]
+
+{ #category : #initialization }
+GtWardleyMapNodePropositionElement >> beChangeProposition [
+	self highlightColor: BrGlamorousColors failureBackgroundColor.
 ]
 
 { #category : #initialization }
@@ -32,8 +36,7 @@ GtWardleyMapNodePropositionElement >> beEllipseGeometry [
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beRemoveProposition [
-	highlightColor := BrGlamorousColors errorBackgroundColor.
-	self background: highlightColor
+	self highlightColor: BrGlamorousColors errorBackgroundColor
 ]
 
 { #category : #initialization }
