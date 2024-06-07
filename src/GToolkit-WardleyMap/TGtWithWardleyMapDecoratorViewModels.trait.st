@@ -3,7 +3,7 @@ Trait {
 	#instVars : [
 		'wardleyMapDecoratorViewModels'
 	],
-	#category : #'GToolkit-WardleyMap-! Models'
+	#category : #'GToolkit-WardleyMap-! View models'
 }
 
 { #category : #'api - wardley map decorator view models' }

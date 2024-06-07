@@ -8,7 +8,7 @@ Class {
 		'rejectAction',
 		'parent'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
 { #category : #'api - wardley map decorator model' }

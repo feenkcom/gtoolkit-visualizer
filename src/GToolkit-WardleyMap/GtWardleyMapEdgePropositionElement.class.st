@@ -7,7 +7,7 @@ Class {
 		'edgeElement',
 		'highlightColor'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #initialization }

@@ -7,7 +7,7 @@ Class {
 		'nodeElement',
 		'highlightColor'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #'private - updating' }

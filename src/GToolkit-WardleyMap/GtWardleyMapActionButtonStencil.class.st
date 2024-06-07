@@ -9,7 +9,7 @@ Class {
 		'model',
 		'tooltip'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }

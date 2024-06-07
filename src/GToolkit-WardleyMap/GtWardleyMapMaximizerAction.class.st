@@ -11,7 +11,7 @@ Class {
 		'model',
 		'preferredBackground'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
 { #category : #accessing }

@@ -79,6 +79,28 @@ GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoor
 ]
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> ensureRightDecoratorContainerFor: anElement [
+	| aQuery aContainer |
+	aQuery := anElement query / GtWardleyRightDecoratorId.
+	aQuery isEmpty ifFalse: [ ^ aQuery result anyOne ].
+
+	anElement clipChildren: false.
+	aContainer := GtWardleyMapDecoratorContainerElement new
+			id: GtWardleyRightDecoratorId;
+			hFitContent;
+			vFitContent.
+	aContainer wardley beDecorator.
+	
+	aContainer constraintsDo: [ :c |
+		c ignoreByLayout.
+		c ignored horizontal alignLeftAt: 1.0.
+		c ignored vertical alignCenter ].
+
+	anElement addChild: aContainer.
+	^ aContainer
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: aPipelineElement [
 	"^ aPipelineElement bounds inParent asRectangle
 		containsRect: aNodeElement bounds inParent asRectangle"

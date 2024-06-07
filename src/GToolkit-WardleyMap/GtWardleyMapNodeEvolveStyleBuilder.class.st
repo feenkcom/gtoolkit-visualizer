@@ -1,7 +1,7 @@
 Class {
 	#name : #GtWardleyMapNodeEvolveStyleBuilder,
 	#superclass : #GtWardleyMapNodeStyleBuilder,
-	#category : #'GToolkit-WardleyMap-Helpers - Node Type'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #'api - hooks' }

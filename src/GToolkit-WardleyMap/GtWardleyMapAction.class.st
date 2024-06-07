@@ -11,7 +11,7 @@ Class {
 		'model',
 		'tooltip'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
 { #category : #accessing }
@@ -37,14 +37,15 @@ GtWardleyMapAction >> aptitude: aBlock [
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 	aNodeElement
-		labelContainerDo: [ :aContainer | 
-			| aButton |
+		labelContainerDo: [ :aLabelContainer | 
+			| anActionContainer aButton |
+			anActionContainer := GtWardleyMapUtility ensureRightDecoratorContainerFor: aLabelContainer.
 			aButton := self newButton.
-			aDecoratorViewModel
+			aDecoratorViewModel weak
 				when: GtWardleyMapNodeDecoratorViewModelRemoved
 				send: #removeFromParent
 				to: aButton.
-			aContainer addChild: aButton ]
+			anActionContainer addChild: aButton. ]
 ]
 
 { #category : #accessing }

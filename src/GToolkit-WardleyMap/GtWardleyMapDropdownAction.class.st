@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'content'
 	],
-	#category : #'GToolkit-WardleyMap-Examples - Wardley Map'
+	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
 { #category : #accessing }
