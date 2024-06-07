@@ -1,5 +1,5 @@
 "
-I exemplify {{gtClass:TGtWardleyMapDecorator}}. 
+I exemplify {{gtClass:TGtWardleyMapDecoratorModel}}. 
 "
 Class {
 	#name : #GtWardleyMapDecoratorExamples,
