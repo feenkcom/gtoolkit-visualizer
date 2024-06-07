@@ -19,9 +19,8 @@ GtPlotterScatterChartExamples >> projectionAxis [
 	| aChart |
 	aChart := self scatterChart.
 	aChart labelFormatY: [:aValue | (aValue printShowingDecimalPlaces: 2) asRopedText foreground: Color darkGray ].
-	aChart axisYTicksAndLabels: GtPlotterProjectionVerticalTickLabelsElement new.
+	aChart withProjectionAxis.
 	^ aChart
-	
 ]
 
 { #category : #accessing }

@@ -6,10 +6,16 @@ Class {
 		'tickElement',
 		'tickStyle',
 		'tickLayout',
-		'inversed'
+		'inversed',
+		'tickValues'
 	],
 	#category : #'GToolkit-Plotter-Core - Elements'
 }
+
+{ #category : #accessing }
+GtPlotterTicksElement >> computedTicks [
+	^ tickValues ifNil: [ scale ticks: ticks ]
+]
 
 { #category : #initialization }
 GtPlotterTicksElement >> defaultTickElement [
@@ -45,7 +51,7 @@ GtPlotterTicksElement >> initialize [
 { #category : #'private - initialization' }
 GtPlotterTicksElement >> initializeElements [
 	| theTicks aScaleContext |
-	theTicks := scale ticks: ticks.
+	theTicks := self computedTicks.
 	aScaleContext := GtPlotterSingleScaleContext new.
 
 	self removeChildren: elements.
@@ -108,6 +114,17 @@ GtPlotterTicksElement >> tickStyle [
 { #category : #'api - ticks' }
 GtPlotterTicksElement >> tickStyle: anObject [
 	tickStyle := anObject asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher.
+	self initializeElements
+]
+
+{ #category : #accessing }
+GtPlotterTicksElement >> tickValues [
+	^ tickValues
+]
+
+{ #category : #accessing }
+GtPlotterTicksElement >> tickValues: aCollectionOfNumbers [
+	tickValues := aCollectionOfNumbers.
 	self initializeElements
 ]
 

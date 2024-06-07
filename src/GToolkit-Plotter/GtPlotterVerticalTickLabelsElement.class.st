@@ -22,7 +22,3 @@ GtPlotterVerticalTickLabelsElement >> defaultLabelLayout [
 			yourself.
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
 ]
-
-{ #category : #accessing }
-GtPlotterVerticalTickLabelsElement >> values: aCollectionOfValues [
-]

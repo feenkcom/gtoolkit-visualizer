@@ -2,7 +2,8 @@ Class {
 	#name : #GtWardleyMapEditorElement,
 	#superclass : #BrVerticalPane,
 	#instVars : [
-		'canvas'
+		'canvas',
+		'container'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -66,7 +67,6 @@ GtWardleyMapEditorElement >> createSwitchSectionsButtonElement [
 
 { #category : #accessing }
 GtWardleyMapEditorElement >> initialize [
-	| aContainer |
 	super initialize.
 
 	self
@@ -74,19 +74,19 @@ GtWardleyMapEditorElement >> initialize [
 		vFitContentLimited;
 		padding: (BlInsets all: 3).
 
-	aContainer := BrVerticalPane new hFitContent vFitContentLimited.
+	container := BrVerticalPane new hFitContent vFitContentLimited.
 
-	aContainer addChildren: {
-		self createNoteButtonElement.
-		self createNodeButtonElement.
-		self createSwitchSectionsButtonElement}.
+	container
+		addChildren: {self createNoteButtonElement.
+				self createNodeButtonElement.
+				self createSwitchSectionsButtonElement}.
 
 	self
 		addChild: (BrScrollPane new
 				aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
 				vFitContentLimited;
 				hFitContent;
-				content: aContainer)
+				content: container)
 ]
 
 { #category : #accessing }

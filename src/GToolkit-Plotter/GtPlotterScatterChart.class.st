@@ -19,16 +19,22 @@ Class {
 		'minY',
 		'maxY',
 		'dotElementStencil',
-		'axisYTicksAndLabels',
 		'valuesX',
-		'valuesY'
+		'valuesY',
+		'axisXStencil',
+		'axisYStencil'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterScatterChart >> axisYTicksAndLabels: aGtPlotterVerticalTickLabelsElement [
-	axisYTicksAndLabels := aGtPlotterVerticalTickLabelsElement
+GtPlotterScatterChart >> axisXStencil: aGtPlotterHorizontalTicksAndLabelStencil [
+	axisXStencil := aGtPlotterHorizontalTicksAndLabelStencil asStencilBuilder: GtPlotterHorizontalTicksAndLabelsStencil
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> axisYStencil: aGtPlotterVerticalTicksAndLabelsStencil [
+	axisYStencil := aGtPlotterVerticalTicksAndLabelsStencil asStencilBuilder: GtPlotterVerticalTicksAndLabelsStencil
 ]
 
 { #category : #'api - instantiation' }
@@ -119,7 +125,7 @@ GtPlotterScatterChart >> initialize [
 	self dotElement: [:ex | BlElement new
 		geometry: BlEllipseGeometry new;
 		size: 10 asPoint  ].
-	axisYTicksAndLabels := GtPlotterVerticalTickLabelsElement new.
+	self withTicksAndLabelsAxis.
 	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #yourself.
@@ -217,19 +223,9 @@ GtPlotterScatterChart >> minY: anObject [
 
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> newAxisXElement [
-	| aContainer |
-	aContainer := BrVerticalPane new
-		vFitContent;
-		hMatchParent;
-		clipChildren: false;
-		addChildren: { 
-			self newAxisXTicksElement height: 10.
-			self newAxisXTickLabelsElement. }.
-		
-	titleX ifNotNil: [ 
-		aContainer addChild: self newAxisXTitleElement ].
-	
-	^ aContainer
+	^ axisXStencil
+		scatterChart: self;
+		create
 ]
 
 { #category : #'api - instantiation' }
@@ -243,56 +239,10 @@ GtPlotterScatterChart >> newAxisXLineElement [
 ]
 
 { #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisXTickLabelsElement [
-	^ GtPlotterHorizontalTickLabelsElement new
-		scale: self scaleX;
-		labelFormat: labelFormatX;
-		constraintsDo: [ :c | c vertical fitContent ];
-		clipChildren: false;
-		labels: ticksX
-]
-
-{ #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisXTicksElement [
-	
-	^ GtPlotterHorizontalTicksElement new
-		scale: self scaleX;
-		tickStyle: [ :anElement | anElement
-			width: 2;
-			background: (Color gray alpha: 0.8) ];
-		ticks: ticksX
-]
-
-{ #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisXTitleElement [
-
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new 
-			glamorousRegularFont;
-			foreground: Color darkGray;
-			fontSize: 16);
-		text: titleX asRopedText;
-		constraintsDo: [ :c |
-			c linear horizontal alignRight ]
-]
-
-{ #category : #'api - instantiation' }
 GtPlotterScatterChart >> newAxisYElement [
-	| aContainer |
-	aContainer := BrHorizontalPane new
-		hFitContent;
-		vMatchParent;
-		clipChildren: false.
-		
-	titleY ifNotNil: [ 
-		aContainer addChild: self newAxisYTitleElement ].
-	
-	aContainer
-		addChildren: { 
-			self newAxisYTickLabelsElement.
-			self newAxisYTicksElement width: 10. }.
-			
-	^ aContainer
+	^ axisYStencil
+		scatterChart: self;
+		create
 ]
 
 { #category : #'api - instantiation' }
@@ -303,57 +253,6 @@ GtPlotterScatterChart >> newAxisYLineElement [
 		constraintsDo: [ :c | 
 			c vertical matchParent.
 			c frame horizontal alignLeft ]
-]
-
-{ #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisYTickLabelsElement [
-	^ axisYTicksAndLabels
-		scale: self scaleY;
-		values: valuesY;
-		inverse;
-		labelFormat: labelFormatY;
-		labelStyle: [ :anElement |
-			(anElement background: Color white)
-				constraintsDo: [ :c |
-					c frame horizontal alignRight.
-					c horizontal fitContent.
-					c vertical fitContent ] ];
-		constraintsDo: [ :c | 
-			c horizontal fitContent.
-			c padding: (BlInsets left: 10 right: 10) ];
-		clipChildren: false;
-		labels: ticksY
-]
-
-{ #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisYTicksElement [
-	^ GtPlotterVerticalTicksElement new
-		scale: self scaleY;
-		tickStyle: [ :anElement | anElement
-			height: 2;
-			background: (Color gray alpha: 0.8) ];
-		ticks: ticksY
-]
-
-{ #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisYTitleElement [
-
-	^ BrFrame new
-		fitContent;
-		background: BlBackground transparent;
-		constraintsDo: [ :c | 
-			c linear vertical alignTop ];
-		addChild: (BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new 
-				glamorousRegularFont;
-				foreground: Color darkGray;
-				fontSize: 16);
-			text: titleY asRopedText;
-			constraintsDo: [ :c |
-				c linear vertical alignCenter.
-				c accountTransformation ];
-			transformDo: [ :t | 
-				t rotateBy: 270 ])
 ]
 
 { #category : #'api - instantiation' }
@@ -442,9 +341,19 @@ GtPlotterScatterChart >> scaledPoint: eachValue [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChart >> ticksX [
+	^ ticksX
+]
+
+{ #category : #accessing }
 GtPlotterScatterChart >> ticksX: aNumber [
 	"Define number of axis ticks"
 	ticksX := aNumber
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> ticksY [
+	^ ticksY
 ]
 
 { #category : #accessing }
@@ -454,8 +363,18 @@ GtPlotterScatterChart >> ticksY: aNumber [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChart >> titleX [
+	^ titleX
+]
+
+{ #category : #accessing }
 GtPlotterScatterChart >> titleX: aString [
 	titleX := aString
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> titleY [
+	^ titleY
 ]
 
 { #category : #accessing }
@@ -484,6 +403,38 @@ GtPlotterScatterChart >> valueY: anObject [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChart >> valuesX [
+	^ valuesX
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> valuesX: anObject [
+	valuesX := anObject
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> valuesY [
+	^ valuesY
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> valuesY: anObject [
+	valuesY := anObject
+]
+
+{ #category : #accessing }
 GtPlotterScatterChart >> with: aGtPlotterDataGroup [
 	data := aGtPlotterDataGroup
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> withProjectionAxis [
+	self axisYStencil: GtPlotterVerticalProjectionTicksAndLabelsStencil new.
+	self axisXStencil: GtPlotterHorizontalProjectionTicksAndLabelsStencil new.
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> withTicksAndLabelsAxis [
+	self axisYStencil: GtPlotterVerticalTicksAndLabelsStencil new.
+	self axisXStencil: GtPlotterHorizontalTicksAndLabelsStencil new.
 ]

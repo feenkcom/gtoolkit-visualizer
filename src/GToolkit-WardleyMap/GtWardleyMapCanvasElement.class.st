@@ -291,19 +291,27 @@ GtWardleyMapCanvasElement >> initialize [
 		c vertical matchParent ].
 
 	self layout: BlFrameLayout new.
-	self addAptitude: ((BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: 5@5;
-					geometry: BlEllipseGeometry new ]
-			content: [ GtWardleyMapEditorElement new
-				canvas: self;
-				requestFocus ]) preferredExtent: (120@100.0)).
+
+	self installContextMenu.
+
 	self
 		when: BlDoubleClickEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
 			(self width isZero or: [ self height isZero ])
 				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
+]
+
+{ #category : #accessing }
+GtWardleyMapCanvasElement >> installContextMenu [
+	self
+		addAptitude: ((BrGlamorousWithContextMenuAptitude
+				handle: [ BlElement new
+						size: 5 @ 5;
+						geometry: BlEllipseGeometry new ]
+				content: [ GtWardleyMapEditorElement new
+						canvas: self;
+						requestFocus ]) preferredExtent: 120 @ 100.0)
 ]
 
 { #category : #initialization }
