@@ -20,9 +20,12 @@ GtWardleyMapDecoratorContainerElement >> initialize [
 
 { #category : #'hooks - children' }
 GtWardleyMapDecoratorContainerElement >> onChildRemoved: anElement [
-	super onChildRemoved: anElement.
+	super onChildRemoved: anElement.	
 	
 	"Ensure that I am removed if there are not other decorators left."
 	self childrenCount isZero ifFalse: [ ^ self ].
-	self removeFromParent
+
+	BlTaskAction
+		enqueueElement: self
+		action: [ self childrenCount isZero ifTrue: [ self removeFromParent ] ]
 ]
