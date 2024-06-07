@@ -1,14 +1,15 @@
 Class {
 	#name : #GtWardleyMapAction,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapDecorator',
-	#classTraits : 'TGtWardleyMapDecorator classTrait',
+	#traits : 'TGtWardleyMapDecoratorModel',
+	#classTraits : 'TGtWardleyMapDecoratorModel classTrait',
 	#instVars : [
 		'label',
 		'icon',
 		'action',
 		'aptitude',
-		'model'
+		'model',
+		'tooltip'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers - Actions'
 }
@@ -33,10 +34,17 @@ GtWardleyMapAction >> aptitude: aBlock [
 	aptitude := aBlock
 ]
 
-{ #category : #'api - decoration' }
-GtWardleyMapAction >> decorateNodeElement: aNodeElement [
-	aNodeElement labelContainerDo: [ :aContainer | 
-		aContainer addChild: self newButton ]
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+	aNodeElement
+		labelContainerDo: [ :aContainer | 
+			| aButton |
+			aButton := self newButton.
+			aDecoratorViewModel
+				when: GtWardleyMapNodeDecoratorViewModelRemoved
+				send: #removeFromParent
+				to: aButton.
+			aContainer addChild: aButton ]
 ]
 
 { #category : #accessing }
@@ -74,6 +82,7 @@ GtWardleyMapAction >> newButton [
 	^ GtWardleyMapActionButtonStencil new
 		icon: self icon;
 		label: self label;
+		tooltip: self tooltip;
 		aptitude: self aptitude;
 		action: self action;
 		model: self model;
@@ -83,4 +92,14 @@ GtWardleyMapAction >> newButton [
 { #category : #initialization }
 GtWardleyMapAction >> parent: aParent [
 	self model: aParent
+]
+
+{ #category : #accessing }
+GtWardleyMapAction >> tooltip [
+	^ tooltip
+]
+
+{ #category : #accessing }
+GtWardleyMapAction >> tooltip: anObject [
+	tooltip := anObject
 ]

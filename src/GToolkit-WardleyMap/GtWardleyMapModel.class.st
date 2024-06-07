@@ -129,6 +129,14 @@ GtWardleyMapModel >> asWardleyMapScript [
 ]
 
 { #category : #'api - edges' }
+GtWardleyMapModel >> edgeFromNode: aFromNode toNode: aToNode ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self edges
+		detect: [ :anEdge | anEdge fromNode == aFromNode and: [ anEdge toNode == aToNode ] ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #'api - edges' }
 GtWardleyMapModel >> edges [
 	^ edges
 ]
@@ -258,6 +266,29 @@ GtWardleyMapModel >> gtNotesFor: aView [
 						c linear vertical alignCenter ] ] 
 			width: 40;
 		column: 'Text' text: #label
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapModel >> gtWardleyMapDecorators [
+	^ Array streamContents: [ :aStream | 
+	 	self nodes do: [ :each | 
+	 		each wardleyMapDecoratorModels do: [ :aDecorator | 
+	 			aStream nextPut: each -> aDecorator ] ].
+	 	self edges do: [ :each | 
+	 		each wardleyMapDecoratorModels do: [ :aDecorator | 
+	 			aStream nextPut: each -> aDecorator ] ] ]
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapModel >> gtWardleyMapDecoratorsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Decorators';
+		priority: 30;
+		items: [ self gtWardleyMapDecorators ];
+		column: 'Item' text: [ :anAssoc | anAssoc key ];
+		column: 'Decorator' text: [ :anAssoc | anAssoc value ];
+		send: #value
 ]
 
 { #category : #'gt-extensions' }

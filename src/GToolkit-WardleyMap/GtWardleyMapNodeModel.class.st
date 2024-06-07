@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtWardleyMapWithDecorators',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtWardleyMapWithDecorators classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtWithWardleyMapDecoratorModels',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtWithWardleyMapDecoratorModels classTrait',
 	#instVars : [
 		'announcer',
 		'labelModel',
@@ -536,6 +536,11 @@ GtWardleyMapNodeModel >> printOn: aStream [
 		nextPutAll: '; id: ';
 		print: id;
 		nextPutAll: ' }'
+]
+
+{ #category : #'api - node' }
+GtWardleyMapNodeModel >> removeFromMap [
+	parent ifNotNil: [ :aParent | parent removeNode: self ]
 ]
 
 { #category : #'api - pipeline' }

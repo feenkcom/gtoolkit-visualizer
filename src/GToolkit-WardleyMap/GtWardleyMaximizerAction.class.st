@@ -1,7 +1,7 @@
 Class {
 	#name : #GtWardleyMaximizerAction,
 	#superclass : #Object,
-	#traits : 'TGtWardleyMapDecorator',
-	#classTraits : 'TGtWardleyMapDecorator classTrait',
+	#traits : 'TGtWardleyMapDecoratorModel',
+	#classTraits : 'TGtWardleyMapDecoratorModel classTrait',
 	#category : #'GToolkit-WardleyMap-Helpers - Actions'
 }

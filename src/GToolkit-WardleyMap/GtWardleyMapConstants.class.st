@@ -5,10 +5,38 @@ Class {
 }
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> edgeElevationIndex [
+	"I represent a default edge z-index"
+
+	^ -1
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> edgeLabelCoordinate [
 	"I represent a default edge label model coordinate"
 
 	^ 0.5 @ 0.5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> edgePropositionElevationIndex [
+	"I represent a proposition edge z-index"
+
+	^ -5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> edgePropositionExtraWidth [
+	"I represent an extra edge proposition width"
+
+	^ 3.0
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> edgePropositionWidth [
+	"I represent a default edge proposition width"
+
+	^ self edgeWidth + self edgePropositionExtraWidth
 ]
 
 { #category : #'api - constants' }
@@ -79,6 +107,34 @@ GtWardleyMapConstants class >> nodeCoordinate [
 	"I represent a default node model coordinate"
 
 	^ 0.5 @ 0.5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> nodeElevationIndex [
+	"I represent a default node z-index"
+
+	^ 2
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> nodePropositionElevationIndex [
+	"I represent a proposition node z-index"
+
+	^ -5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> nodePropositionExtraSize [
+	"I represent a default node proposition extra size"
+
+	^ 5 @ 5
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> nodePropositionSize [
+	"I represent a default node proposition size"
+
+	^ self nodeSize + self nodePropositionExtraSize
 ]
 
 { #category : #'api - constants' }
