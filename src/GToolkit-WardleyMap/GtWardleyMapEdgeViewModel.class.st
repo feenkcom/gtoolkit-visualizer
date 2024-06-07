@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapEdgeViewModel,
 	#superclass : #Object,
-	#traits : 'TGtWithWardleyMapEdgeModel + TGtAnnouncer',
-	#classTraits : 'TGtWithWardleyMapEdgeModel classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtWithWardleyMapEdgeModel + TGtAnnouncer + TGtWithWardleyMapDecoratorViewModels',
+	#classTraits : 'TGtWithWardleyMapEdgeModel classTrait + TGtAnnouncer classTrait + TGtWithWardleyMapDecoratorViewModels classTrait',
 	#instVars : [
 		'announcer',
 		'wardleyMapViewModel',
@@ -119,6 +119,26 @@ GtWardleyMapEdgeViewModel >> moveEdgeLabelTo: aNormalizedPoint [
 	self wardleyMapEdgeModel labelModel coordinate: aNormalizedPoint
 ]
 
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapEdgeViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapEdgeDecoratorViewModelAdded new
+				edgeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel)
+]
+
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapEdgeViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
+	aWardleyMapDecoratorViewModel
+		announce: (GtWardleyMapEdgeDecoratorViewModelRemoved new
+				edgeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self
+		announce: (GtWardleyMapEdgeDecoratorViewModelRemoved new
+				edgeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel)
+]
+
 { #category : #'event handling' }
 GtWardleyMapEdgeViewModel >> onEdgeArrowChanged: anAnnouncement [
 	self announce: (GtWardleyMapEdgeViewModelColored new edgeViewModel: self)
@@ -127,6 +147,16 @@ GtWardleyMapEdgeViewModel >> onEdgeArrowChanged: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapEdgeViewModel >> onEdgeColored: anAnnouncement [
 	self announce: (GtWardleyMapEdgeViewModelColored new edgeViewModel: self)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeViewModel >> onEdgeDecoratorAdded: anAnnouncement [
+	self onWardleyMapDecoratorModelAdded: anAnnouncement decoratorModel
+]
+
+{ #category : #'api - wardley map edge model' }
+GtWardleyMapEdgeViewModel >> onEdgeDecoratorRemoved: anAnnouncement [
+	self onWardleyMapDecoratorModelRemoved: anAnnouncement decoratorModel
 ]
 
 { #category : #'api - wardley map edge model' }
@@ -162,6 +192,8 @@ GtWardleyMapEdgeViewModel >> onWardleyMapEdgeModelChanged [
 		nodeViewModelFor: self wardleyMapEdgeModel toNode
 		ifFound: [ :aNodeViewModel | aNodeViewModel ]
 		ifNone: [ nil ].
+		
+	self wardleyMapDecoratorViewModelsFromModels: self wardleyMapEdgeModel wardleyMapDecoratorModels
 ]
 
 { #category : #'api - edge' }
@@ -188,7 +220,9 @@ GtWardleyMapEdgeViewModel >> subscribeToWardleyMapEdgeModel [
 	self wardleyMapEdgeModel weak
 		when: GtWardleyMapEdgeModelColored send: #onEdgeColored: to: self;
 		when: GtWardleyMapEdgeModelResized send: #onEdgeResized: to: self;
-		when: GtWardleyMapEdgeModelArrowChanged send: #onEdgeArrowChanged: to: self.
+		when: GtWardleyMapEdgeModelArrowChanged send: #onEdgeArrowChanged: to: self;
+		when: GtWardleyMapEdgeDecoratorModelAdded send: #onEdgeDecoratorAdded: to: self;
+		when: GtWardleyMapEdgeDecoratorModelRemoved send: #onEdgeDecoratorRemoved: to: self.
 		
 	self wardleyMapEdgeModel weak
 		when: GtWardleyMapEdgeLabelModelMoved send: #onEdgeLabelMoved: to: self;

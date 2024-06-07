@@ -416,7 +416,7 @@ GtWardleyMapNodeViewModel >> subscribeToWardleyMapNodeModel [
 		when: GtWardleyMapNodeDecoratorModelAdded send: #onNodeDecoratorAdded: to: self;
 		when: GtWardleyMapNodeDecoratorModelRemoved send: #onNodeDecoratorRemoved: to: self.
 	
-	self wardleyMapNodeModel labelModel weak
+	self wardleyMapNodeModel weak
 		when: GtWardleyMapNodeLabelModelMoved send: #onNodeLabelMoved: to: self;
 		when: GtWardleyMapNodeLabelModelTextChanged send: #onNodeLabelTextChanged: to: self
 ]
@@ -427,7 +427,6 @@ GtWardleyMapNodeViewModel >> unsubscribeFromWardleyMapNodeModel [
 	View models that subscribe to wardleyMapNode model are required to implement this methods"
 
 	self wardleyMapNodeModel unsubscribe: self.
-	self wardleyMapNodeModel labelModel unsubscribe: self
 ]
 
 { #category : #'api - accessing' }

@@ -11,6 +11,36 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers - Actions'
 }
 
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAddProposition >> decorateEdgeElement: anEdgeElement decoratorViewModel: aDecoratorViewModel [
+	BlTaskAction enqueueElement: anEdgeElement action: [
+		| anEdgeViewModel aMapElement aFromNodeElement aToNodeElement aPropositionElement |
+		anEdgeViewModel := anEdgeElement wardleyMapEdgeViewModel.
+		aMapElement := anEdgeElement parent.
+		aFromNodeElement := aMapElement
+				nodeViewFor: anEdgeViewModel fromNodeViewModel
+				ifFound: [ :anElement | anElement ]
+				ifNone: [ nil ].
+	
+		aToNodeElement := aMapElement
+				nodeViewFor: anEdgeViewModel toNodeViewModel
+				ifFound: [ :anElement | anElement ]
+				ifNone: [ nil ].
+	
+		aPropositionElement := GtWardleyMapEdgePropositionElement new
+			beAddProposition;
+			wardleyMapEdgeViewModel: anEdgeViewModel;
+			wardleyMapDecoratorViewModel: aDecoratorViewModel;
+			fromAnchor: (BlNearestPositionEllipseAnchor
+					referenceElement: aFromNodeElement
+					relatedTo: aToNodeElement);
+			toAnchor: (BlNearestPositionEllipseAnchor
+					referenceElement: aToNodeElement
+					relatedTo: aFromNodeElement).
+					
+		aMapElement addChild: aPropositionElement ]
+]
+
 { #category : #accessing }
 GtWardleyMapAddProposition >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 	| aHighlightElement |

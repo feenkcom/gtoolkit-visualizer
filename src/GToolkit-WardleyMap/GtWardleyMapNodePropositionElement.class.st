@@ -46,13 +46,9 @@ GtWardleyMapNodePropositionElement >> initialize [
 	super initialize.
 	self beEllipseGeometry.
 	self beAddProposition.
-	self clipChildren: false.
-	self layout: BlFrameLayout new.
-	self constraintsDo: [ :c | 
-		c horizontal fitContent. 
-		c vertical fitContent ].
-	self padding: (BlInsets all: 3).
-	self zIndex: GtWardleyMapConstants nodePropositionElevationIndex
+	self size: GtWardleyMapConstants nodePropositionSize.
+	self zIndex: GtWardleyMapConstants nodePropositionElevationIndex.
+	self wardley beDecorator.
 ]
 
 { #category : #'api - node element' }

@@ -16,6 +16,13 @@ GtWardleyMapDecoratorViewModel >> announcer [
 ]
 
 { #category : #'api - wardley map decorator view model' }
+GtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
+	self wardleyMapDecoratorModel
+		decorateEdgeElement: anEdgeElement
+		decoratorViewModel: self
+]
+
+{ #category : #'api - wardley map decorator view model' }
 GtWardleyMapDecoratorViewModel >> decorateNodeElement: aNodeElement [
 	self wardleyMapDecoratorModel
 		decorateNodeElement: aNodeElement

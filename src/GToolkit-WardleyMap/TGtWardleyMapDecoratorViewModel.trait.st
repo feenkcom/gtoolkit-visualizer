@@ -9,6 +9,10 @@ TGtWardleyMapDecoratorViewModel >> announce: anAnnouncement [
 ]
 
 { #category : #'api - wardley map decorator view model' }
+TGtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
+]
+
+{ #category : #'api - wardley map decorator view model' }
 TGtWardleyMapDecoratorViewModel >> decorateNodeElement: aNodeElement [
 ]
 

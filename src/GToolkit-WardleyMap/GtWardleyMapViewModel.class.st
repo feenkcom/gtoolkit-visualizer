@@ -318,9 +318,13 @@ GtWardleyMapViewModel >> gtNotesFor: aView [
 
 { #category : #'gt - extensions' }
 GtWardleyMapViewModel >> gtWardleyMapDecorators [
-	^ self nodeViewModels
-		flatCollect: [ :each | each wardleyMapDecoratorViewModels collect: [ :aDecorator | each -> aDecorator ] ]
-		as: Array
+	^ Array streamContents: [ :aStream | 
+	 	self nodeViewModels do: [ :each | 
+	 		each wardleyMapDecoratorViewModels do: [ :aDecorator | 
+	 			aStream nextPut: each -> aDecorator ] ].
+	 	self edgeViewModels do: [ :each | 
+	 		each wardleyMapDecoratorViewModels do: [ :aDecorator | 
+	 			aStream nextPut: each -> aDecorator ] ] ]
 ]
 
 { #category : #'gt - extensions' }

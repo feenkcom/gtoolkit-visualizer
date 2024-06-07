@@ -119,6 +119,11 @@ GtWardleyMapEvolveEdgeViewModel >> unsubscribeFromWardleyMapNodeViewModel [
 ]
 
 { #category : #accessing }
+GtWardleyMapEvolveEdgeViewModel >> wardleyMapDecoratorViewModels [
+	^ #()
+]
+
+{ #category : #accessing }
 GtWardleyMapEvolveEdgeViewModel >> wardleyMapViewModel [
 	^ wardleyMapViewModel
 ]
