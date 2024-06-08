@@ -3,5 +3,5 @@ Class {
 	#superclass : #Object,
 	#traits : 'TGtWardleyMapDecoratorModel',
 	#classTraits : 'TGtWardleyMapDecoratorModel classTrait',
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }

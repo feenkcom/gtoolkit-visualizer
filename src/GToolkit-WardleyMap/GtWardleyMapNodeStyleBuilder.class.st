@@ -5,7 +5,7 @@ Class {
 		'element',
 		'viewModel'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Node Type'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }

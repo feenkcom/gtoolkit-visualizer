@@ -1,6 +1,6 @@
 Trait {
 	#name : #TGtWardleyMapDecoratorViewModel,
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! View models'
 }
 
 { #category : #accessing }

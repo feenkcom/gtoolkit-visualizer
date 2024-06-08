@@ -7,7 +7,7 @@ Class {
 		'nodeElement',
 		'highlightColor'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #'private - updating' }
@@ -21,8 +21,12 @@ GtWardleyMapNodePropositionElement >> addLabelDecoration [
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beAddProposition [
-	highlightColor := BrGlamorousColors successBackgroundColor.
-	self background: highlightColor
+	self highlightColor:  BrGlamorousColors successBackgroundColor.
+]
+
+{ #category : #initialization }
+GtWardleyMapNodePropositionElement >> beChangeProposition [
+	self highlightColor: BrGlamorousColors failureBackgroundColor.
 ]
 
 { #category : #initialization }
@@ -32,13 +36,18 @@ GtWardleyMapNodePropositionElement >> beEllipseGeometry [
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beRemoveProposition [
-	highlightColor := BrGlamorousColors errorBackgroundColor.
-	self background: highlightColor
+	self highlightColor: BrGlamorousColors errorBackgroundColor
 ]
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beSquareGeometry [
 	self geometry: BlSquare new
+]
+
+{ #category : #accessing }
+GtWardleyMapNodePropositionElement >> highlightColor: aColor [
+	highlightColor := aColor.
+	self background: highlightColor
 ]
 
 { #category : #initialization }
