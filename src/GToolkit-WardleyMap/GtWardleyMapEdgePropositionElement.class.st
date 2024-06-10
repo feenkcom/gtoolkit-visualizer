@@ -7,7 +7,7 @@ Class {
 		'edgeElement',
 		'highlightColor'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #initialization }
@@ -58,6 +58,11 @@ GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeRemoved [
+	self removeFromParent
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEdgePropositionElement >> onEdgeResized [
 	self
 		border: (BlBorder
@@ -88,6 +93,7 @@ GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapEdgeViewModel [
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
 	
 	self wardleyMapEdgeViewModel weak
+		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved to: self;
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized to: self;
 		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged to: self.
 ]

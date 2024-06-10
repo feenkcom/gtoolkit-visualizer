@@ -1,10 +1,10 @@
 Class {
-	#name : #GtWardleyMapMaximizerId,
+	#name : #GtWardleyRightDecoratorId,
 	#superclass : #BlElementUniqueId,
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #converting }
-GtWardleyMapMaximizerId >> asSymbol [
-	^ #'wardley--element-to-maximize'
+GtWardleyRightDecoratorId >> asSymbol [
+	^ #'wardley--right-decorator'
 ]

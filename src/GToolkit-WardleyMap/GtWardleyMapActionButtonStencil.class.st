@@ -9,7 +9,7 @@ Class {
 		'model',
 		'tooltip'
 	],
-	#category : #'GToolkit-WardleyMap-Helpers - Actions'
+	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #accessing }
@@ -40,6 +40,7 @@ GtWardleyMapActionButtonStencil >> create [
 	tooltip ifNotNil: [ aButton label: self tooltip ].
 	label ifNotNil: [ aButton label: self label ].
 	action ifNotNil: [ aButton action: self action ].
+	aButton margin: (BlInsets left: 2).
 	aButton aptitude: self newButtonAptitude.
 	aButton beTinySize.
 	aButton model: self model.

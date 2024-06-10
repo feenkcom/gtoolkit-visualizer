@@ -424,6 +424,7 @@ GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
 		edgeViewModelFor: anAnnouncement edgeModel
 		ifFound: [ :anEdgeViewModel |
 			edgeViewModels remove: anEdgeViewModel.
+			anEdgeViewModel announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel).
 			self announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel) ]
 		ifNone: [ ]
 ]
