@@ -23,17 +23,6 @@ GtWardleyMapNodeEditorElement >> createAddEvolveElement [
 ]
 
 { #category : #initialization }
-GtWardleyMapNodeEditorElement >> createBasicLabel [
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-		margin: (BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
-]
-
-{ #category : #initialization }
 GtWardleyMapNodeEditorElement >> createColorPicker [
 	^ GtWardleyMapColorPickerElement new
 		hFitContent;
@@ -72,28 +61,12 @@ GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityCheckbox [
 
 { #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodePipelineVisibilityLabel [
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-		margin:
-			(BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0);
-		text: 'Pipeline:'
+	^ GtWardleyMapUtility newContextMenuLabel text: 'Pipeline:'
 ]
 
 { #category : #initialization }
 GtWardleyMapNodeEditorElement >> createNodeSizeLabel [
-	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-		margin:
-			(BlInsets
-				top: 10
-				left: 5
-				bottom: 2
-				right: 0);
-		text: 'Node size:'
+	^ GtWardleyMapUtility newContextMenuLabel text: 'Node size:'
 ]
 
 { #category : #initialization }

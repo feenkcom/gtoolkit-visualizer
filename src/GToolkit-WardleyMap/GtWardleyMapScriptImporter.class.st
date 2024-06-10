@@ -175,7 +175,8 @@ GtWardleyMapScriptImporter >> importMap [
 		| aName |
 		aName := anAstNode name ifNotNil: #source.
 		aName ifNotNil: [ 
-			wardleyMap title: aName ] ]
+			wardleyMap title: aName.
+			wardleyMap isTitleVisible: true ] ]
 ]
 
 { #category : #'private - import' }

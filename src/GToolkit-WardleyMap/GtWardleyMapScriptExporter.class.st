@@ -152,14 +152,14 @@ GtWardleyMapScriptExporter >> exportMap [
 	self newLine.
 	self newLine.
 
-	wardleyMap title ifNotNil: [ :aTitle |
-		stream 
-			nextPutAll: 'title ';
-			nextPutAll: aTitle.
+	wardleyMap isTitleVisible ifTrue: [
+		wardleyMap title ifNotNil: [ :aTitle |
+			stream 
+				nextPutAll: 'title ';
+				nextPutAll: aTitle.
 			
 		self newLine.
-		self newLine.
-	]
+		self newLine. ] ]
 ]
 
 { #category : #'private - exporting' }
