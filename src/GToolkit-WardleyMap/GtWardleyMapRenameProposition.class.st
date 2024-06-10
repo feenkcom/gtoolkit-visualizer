@@ -52,7 +52,7 @@ GtWardleyMapRenameProposition >> initialize [
 	acceptAction icon: BrGlamorousVectorIcons accept.
 	acceptAction tooltip: 'Accept rename'.
 	acceptAction action: [ self onProposalFinished ].
-	
+
 	rejectAction := GtWardleyMapAction new.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
 	rejectAction tooltip: 'Keep original name'.
@@ -61,9 +61,7 @@ GtWardleyMapRenameProposition >> initialize [
 
 { #category : #initialization }
 GtWardleyMapRenameProposition >> newListItemElement [
-	^ BrLabel new
-		hMatchParent;
-		vFitContent;
+	^ BrLabel new fitContent
 		aptitude: BrGlamorousLabelAptitude + BrGlamorousListItemAptitude;
 		when: BlClickEvent
 			do: [ :anEvent | 
@@ -79,35 +77,51 @@ GtWardleyMapRenameProposition >> newProposalList [
 			hFitContentLimited;
 			vFitContentLimited.
 
-	originalLabel ifNotNil: [ :aName | 
-		| aTitle1 aTitle2 |
-		aTitle1 := BrLabel new
-			margin: (BlInsets top: 0 right: 3 bottom: 3 left: 3);
-			text: 'Original name:';
-			aptitude: (BrGlamorousLabelAptitude new
-					foreground: BrGlamorousColors disabledButtonTextColor).
-		aTitle2 := self newListItemElement
-			margin: (BlInsets top: 0 right: 3 bottom: 3 left: 3);
-			text: aName asString.
-		aContainer addChildren: { aTitle1. aTitle2 }
-	].
-			
+	originalLabel
+		ifNotNil: [ :aName | 
+			| aTitle1 aTitle2 |
+			aTitle1 := BrLabel new
+					margin: (BlInsets
+							top: 0
+							right: 3
+							bottom: 3
+							left: 3);
+					text: 'Original name:';
+					aptitude: (BrGlamorousLabelAptitude new
+							foreground: BrGlamorousColors disabledButtonTextColor).
+			aTitle2 := self newListItemElement
+					margin: (BlInsets
+							top: 0
+							right: 3
+							bottom: 3
+							left: 3);
+					text: aName asString.
+			aContainer
+				addChildren: {aTitle1.
+						aTitle2} ].
+
 	aTitle := BrLabel new
-			margin: (BlInsets top: 0 right: 3 bottom: 3 left: 3);
+			margin: (BlInsets
+					top: 0
+					right: 3
+					bottom: 3
+					left: 3);
 			text: 'Proposed names:';
 			aptitude: (BrGlamorousLabelAptitude new
 					foreground: BrGlamorousColors disabledButtonTextColor).
 
 	aList := BrSimpleList new
 			margin: (BlInsets left: 3 right: 3);
-			matchParent;
+			hFitContent;
 			vFitContentLimited;
 			items: self options;
 			itemStencil: [ self newListItemElement ];
 			itemDataBinder: [ :anItemElement :anItem | anItemElement text: anItem ].
 
 
-	aContainer addChildren: {aTitle. aList}.
+	aContainer
+		addChildren: {aTitle.
+				aList}.
 	^ aContainer
 ]
 
