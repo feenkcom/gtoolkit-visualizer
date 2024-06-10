@@ -13,7 +13,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes [
 	aScripter := self
 			scripterWithModel: [ GtWardleyMapModelExamples new newMapWithPipelineInnerNodes ]
 			element: [ :aModel | 
-				GtWardleyMapElement new
+				GtWardleyMapCanvasElement new
 					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aModel) ].	"Ensure an extent to compute exact node positions, dragging, etc."
 	aScripter
 		doStep: [ :s | 

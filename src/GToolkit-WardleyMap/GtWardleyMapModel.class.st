@@ -20,7 +20,8 @@ Class {
 		'edges',
 		'sections',
 		'title',
-		'notes'
+		'notes',
+		'isTitleVisible'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -33,7 +34,10 @@ GtWardleyMapModel >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ nodes = anObject nodes and: [ edges = anObject edges ]
+	^ title = anObject title 
+		and: [ isTitleVisible = anObject isTitleVisible 
+		and: [ nodes = anObject nodes 
+		and: [ edges = anObject edges ] ] ]
 ]
 
 { #category : #visiting }
@@ -351,7 +355,10 @@ GtWardleyMapModel >> hasParent [
 GtWardleyMapModel >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ nodes hash bitXor: edges hash
+	^ ((title hash 
+		bitXor: isTitleVisible hash) 
+		bitXor: nodes hash)
+		bitXor: edges hash
 ]
 
 { #category : #initialization }
@@ -362,6 +369,23 @@ GtWardleyMapModel >> initialize [
 	edges := OrderedCollection new.
 	sections := OrderedCollection new.
 	notes := OrderedCollection new.
+	title := GtWardleyMapUtility defaultMapTitle.
+	isTitleVisible := false.
+]
+
+{ #category : #'api - title' }
+GtWardleyMapModel >> isTitleVisible [
+	<return: #Boolean>
+	^ isTitleVisible ifNil: [ isTitleVisible := false ]
+]
+
+{ #category : #'api - title' }
+GtWardleyMapModel >> isTitleVisible: aBoolean [
+	self isTitleVisible = aBoolean
+		ifTrue: [ ^ self ].
+		
+	isTitleVisible := aBoolean.
+	self notifyTitleVisibilityChanged
 ]
 
 { #category : #private }
@@ -426,6 +450,16 @@ GtWardleyMapModel >> notes [
 	^ notes ifNil: [ notes := OrderedCollection new ]
 ]
 
+{ #category : #'api - title' }
+GtWardleyMapModel >> notifyTitleChanged [
+	self announce: GtWardleyMapTitleChanged new
+]
+
+{ #category : #'api - title' }
+GtWardleyMapModel >> notifyTitleVisibilityChanged [
+	self announce: GtWardleyMapTitleVisibilityChanged new
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> removeEdge: aGtWardleyMapEdgeModel [
 	self
@@ -475,12 +509,16 @@ GtWardleyMapModel >> storeOn: aStream [
 		nextPutAll: '))'
 ]
 
-{ #category : #accessing }
+{ #category : #'api - title' }
 GtWardleyMapModel >> title [
 	^ title
 ]
 
-{ #category : #accessing }
-GtWardleyMapModel >> title: anObject [
-	title := anObject
+{ #category : #'api - title' }
+GtWardleyMapModel >> title: aString [
+	self title = aString
+		ifTrue: [ ^ self ].
+
+	title := aString.
+	self notifyTitleChanged.
 ]

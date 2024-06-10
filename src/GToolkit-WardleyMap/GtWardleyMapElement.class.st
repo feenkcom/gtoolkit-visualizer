@@ -7,11 +7,13 @@ See [](https://en.wikipedia.org/wiki/Wardley_map) to learn more.
 "
 Class {
 	#name : #GtWardleyMapElement,
-	#superclass : #BrFrame,
-	#traits : 'TGtWithWardleyMapViewModel',
-	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
+	#superclass : #BlElement,
+	#traits : 'TGtWithWardleyMapViewModel + TBrLayoutResizable',
+	#classTraits : 'TGtWithWardleyMapViewModel classTrait + TBrLayoutResizable classTrait',
 	#instVars : [
-		'canvasElement'
+		'canvasElement',
+		'canvasContainer',
+		'titleElement'
 	],
 	#category : #'GToolkit-WardleyMap-! Views'
 }
@@ -36,14 +38,41 @@ GtWardleyMapElement class >> withoutSections [
 	^ aWardleyMapElement
 ]
 
+{ #category : #accessing }
+GtWardleyMapElement >> canvasElement [
+	^ canvasElement
+]
+
+{ #category : #initialization }
+GtWardleyMapElement >> createCanvasContainer [
+	^ BrFrame new matchParent
+]
+
 { #category : #initialization }
 GtWardleyMapElement >> createCanvasElement [
 	^ GtWardleyMapCanvasElement new
 ]
 
+{ #category : #initialization }
+GtWardleyMapElement >> createTitleElement [
+	^ BrEditableLabel new
+		hFitContentLimited;
+		vFitContent;
+		aptitude: BrGlamorousRegularEditorAptitude new;
+		visibility: BlVisibility hidden;
+		constraintsDo: [ :c | c linear horizontal alignCenter ];
+		when: BrEditorAcceptWish do: [ :aWish | self onAcceptNewTitleWish: aWish ];
+		text: 'Title'
+]
+
+{ #category : #initialization }
+GtWardleyMapElement >> defaultLayout [
+	^ BlLinearLayout vertical
+]
+
 { #category : #accessing }
 GtWardleyMapElement >> evolutionSections: aCollectionOfSections [	
-	self addChildFirst: (GtWardleyMapEvolutionAxisLayer new sections: aCollectionOfSections)
+	canvasContainer addChildFirst: (GtWardleyMapEvolutionAxisLayer new sections: aCollectionOfSections)
 ]
 
 { #category : #accessing }
@@ -54,14 +83,58 @@ GtWardleyMapElement >> hasEvolutionAxisLayer [
 { #category : #initialization }
 GtWardleyMapElement >> initialize [
 	super initialize.
-	
-	self matchParent.
-	self addChild: (canvasElement := self createCanvasElement)
+
+	titleElement := self createTitleElement.
+	canvasContainer := self createCanvasContainer.
+	canvasContainer addChild: (canvasElement := self createCanvasElement).
+
+	self addChildren: { titleElement. canvasContainer }.
+
+	self matchParent
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onAcceptNewTitleWish: aWish [ 
+	self hasWardleyMapViewModel ifFalse: [ ^ self ].
+	self wardleyMapViewModel title: aWish text asString
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onTitleChanged [
+	titleElement text: self wardleyMapViewModel title
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onTitleVisibilityChanged [
+	self wardleyMapViewModel isTitleVisible
+		ifTrue: [ titleElement visibility: BlVisibility visible ]
+		ifFalse: [ titleElement visibility: BlVisibility hidden ]
 ]
 
 { #category : #'api - wardley map view model' }
 GtWardleyMapElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	
-	canvasElement wardleyMapViewModel: self wardleyMapViewModel
+	self onTitleChanged.
+	self onTitleVisibilityChanged.
+	canvasElement wardleyMapViewModel: self wardleyMapViewModel.
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapElement >> subscribeToWardleyMapViewModel [
+	"Is sent after a new WardleyMap view model is assigned to the element.
+	It is required to unsubscribe from the view model or domain model by implementing
+	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
+	
+	self wardleyMapViewModel weak
+		when: GtWardleyMapViewModelTitleChanged send: #onTitleChanged to: self;
+		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged to: self
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapElement >> unsubscribeFromWardleyMapViewModel [
+	"Is sent before a new WardleyMap view model is assigned to the element.
+	Elements that subscribe to WardleyMap view model in domain model are required to implement this methods"
+	
+	self wardleyMapViewModel unsubscribe: self
 ]

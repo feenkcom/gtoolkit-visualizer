@@ -201,6 +201,16 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEvolveLabelFrom: aDictiona
 GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 	| aWardleyMap |
 	aWardleyMap := GtWardleyMapModel new.
+	
+	aDictionary
+		at: #title
+		ifPresent: [ :theTitleDictionary |
+			theTitleDictionary
+				at: #text
+				ifPresent: [ :aText | aWardleyMap title: aText asString ];
+				at: #is_visible
+				ifPresent: [ :aBoolean | aWardleyMap isTitleVisible: aBoolean ] ].
+	
 	aDictionary
 		at: #notes
 		ifPresent: [ :theNoteDictionaries | 

@@ -51,6 +51,16 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
 	| aDictionary |
 	aDictionary := OrderedDictionary new.
 
+	(aWardleyMap title = GtWardleyMapUtility defaultMapTitle 
+		and: [ aWardleyMap isTitleVisible not ]) 
+			ifFalse: [
+				aDictionary 
+					at: #title
+					put: (OrderedDictionary new
+						at: #text put: aWardleyMap title;
+						at: #is_visible put: aWardleyMap isTitleVisible;
+						yourself) ].
+	
 	aWardleyMap notes
 		ifNotEmpty: [ :allNotes | 
 			aDictionary

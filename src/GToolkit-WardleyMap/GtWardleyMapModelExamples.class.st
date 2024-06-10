@@ -23,7 +23,7 @@ GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
 		'commodity'
 	}.
 	self assert: aWardleyMapElement children size = 2.
-	self assert: aWardleyMapElement children last children size = 6.
+	self assert: aWardleyMapElement canvasElement children size = 6.
 	^ aWardleyMapElement
 ]
 
@@ -46,7 +46,7 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 		'commodity'
 	}.
 	self assert: aWardleyMapElement children size = 2.
-	self assert: aWardleyMapElement children last children size = 4.
+	self assert: aWardleyMapElement canvasElement children size = 4.
 	^ aWardleyMapElement
 ]
 
@@ -68,7 +68,7 @@ GtWardleyMapModelExamples >> mapElementWithPipelines [
 	}.
 	self assert: aWardleyMapElement children size equals: 2.
 	"3 nodes, 1 pipeline, 1 edge"
-	self assert: aWardleyMapElement children last children size equals: 5.
+	self assert: aWardleyMapElement canvasElement children size equals: 5.
 	^ aWardleyMapElement
 ]
 
@@ -90,7 +90,7 @@ GtWardleyMapModelExamples >> mapElementWithPipelinesInnerNodes [
 	}.
 	self assert: aWardleyMapElement children size equals: 2.
 	"7 nodes, 1 pipeline, 1 edge, 1 note"
-	self assert: aWardleyMapElement children last children size equals: 10.
+	self assert: aWardleyMapElement canvasElement children size equals: 10.
 	^ aWardleyMapElement
 ]
 
@@ -402,6 +402,20 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 	
 	self assert: aWardleyMap nodes size equals: 3.
 	self assert: aWardleyMap edges size equals: 1.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithNodesAndTitle [
+	<gtExample>
+	| aWardleyMap |
+	aWardleyMap := self newMapWithNodes.
+	aWardleyMap title: 'Wardley Map with nodes'.
+	aWardleyMap isTitleVisible: true.
+	
+	self assert: aWardleyMap title equals: 'Wardley Map with nodes'.
+	self assert: aWardleyMap isTitleVisible.
 
 	^ aWardleyMap
 ]
