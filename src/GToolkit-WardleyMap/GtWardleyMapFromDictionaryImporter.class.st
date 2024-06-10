@@ -250,8 +250,13 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 		ifPresent: [ :aColorDictionary | 
 			aWardleyMapNode color: (self importColorFrom: aColorDictionary) ].
 
+	"Node position can be stored using either maturity and visibility values,
+	or x and y values. In this case, maturity == x and visibility == 1 - y."
+	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapNode x: aMaturity ].
+	aDictionary at: #visibility ifPresent: [ :aVisibility | aWardleyMapNode y: 1 - aVisibility ].
 	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNode x: anX ].
 	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNode y: anY ].
+	
 	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapNode width: aWidth ].
 	aDictionary at: #height ifPresent: [ :aHeight | aWardleyMapNode height: aHeight ].
 
@@ -266,11 +271,17 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 				at: #is_visible 
 				ifPresent: [ :aValue | aWardleyMapNode isPipelineVisible: aValue ].
 			aPipelineDictionary 
+				at: #min_maturity
+				ifPresent: [ :aMinValue | 
+					aPipelineDictionary 
+						at: #max_maturity
+						ifPresent: [ :aMaxValue | aWardleyMapNode pipelineCoordinate: aMinValue @ aMaxValue ] ].
+			aPipelineDictionary 
 				at: #x 
 				ifPresent: [ :aXValue | 
 					aPipelineDictionary 
-					at: #y 
-					ifPresent: [ :aYValue | aWardleyMapNode pipelineCoordinate: aXValue @ aYValue ] ] ].
+						at: #y 
+						ifPresent: [ :aYValue | aWardleyMapNode pipelineCoordinate: aXValue @ aYValue ] ] ].
 					
 	aDictionary
 		at: #evolve
@@ -314,6 +325,10 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNoteFrom: aDictionary [
 		ifPresent: [ :aColorDictionary | 
 			aWardleyMapNote color: (self importColorFrom: aColorDictionary) ].
 
+	"Note position can be stored using either maturity and visibility values,
+	or x and y values. In this case, maturity == x and visibility == 1 - y."
+	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapNote x: aMaturity ].
+	aDictionary at: #visibility ifPresent: [ :aVisibility | aWardleyMapNote y: 1 - aVisibility ].
 	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNote x: anX ].
 	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNote y: anY ].
 
