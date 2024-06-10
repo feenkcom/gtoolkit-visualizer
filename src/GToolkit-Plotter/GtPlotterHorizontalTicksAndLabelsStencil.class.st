@@ -5,12 +5,24 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterHorizontalTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
+	aContainer addChild: (BlElement new
+		height: 2;
+		background: (Color veryVeryLightGray);
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c frame vertical alignBottom ])
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsStencil >> create [
 	| aContainer |
 	aContainer := BrVerticalPane new
 		vFitContent;
 		hMatchParent;
-		clipChildren: false;
+		clipChildren: false.
+	self addAxisXLineElementOn: aContainer.
+	aContainer
 		addChildren: { 
 			self newAxisXTicksElement height: 10.
 			self newAxisXTickLabelsElement. }.

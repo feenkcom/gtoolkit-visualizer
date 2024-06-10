@@ -35,7 +35,7 @@ GtPlotterScatterChartExamples >> scatterChart [
 		intoValues: [ :aDuration :eachValue | 
 			aDuration max: (eachValue at: #duration) ].
 
-	aBarWidthScale := GtPlotterDurationScale new 
+	aBarWidthScale := GtPlotterDurationScale new
 		domainFrom: 0 minutes to: aMaxDuration.
 	aChart := GtPlotterScatterChart new
 		with: dataGroup;

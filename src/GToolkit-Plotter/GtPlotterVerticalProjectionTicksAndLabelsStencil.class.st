@@ -5,6 +5,10 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterVerticalProjectionTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
+]
+
+{ #category : #accessing }
 GtPlotterVerticalProjectionTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 	^ super newAxisYTickLabelsElement
 		tickValues: scatterChart valuesY asSortedCollection traceCr;

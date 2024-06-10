@@ -229,16 +229,6 @@ GtPlotterScatterChart >> newAxisXElement [
 ]
 
 { #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisXLineElement [
-	^ BlElement new
-		height: 2;
-		background: (Color veryVeryLightGray);
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c frame vertical alignBottom ]
-]
-
-{ #category : #'api - instantiation' }
 GtPlotterScatterChart >> newAxisYElement [
 	^ axisYStencil
 		scatterChart: self;
@@ -246,23 +236,10 @@ GtPlotterScatterChart >> newAxisYElement [
 ]
 
 { #category : #'api - instantiation' }
-GtPlotterScatterChart >> newAxisYLineElement [
-	^ BlElement new
-		width: 2;
-		background: (Color veryVeryLightGray);
-		constraintsDo: [ :c | 
-			c vertical matchParent.
-			c frame horizontal alignLeft ]
-]
-
-{ #category : #'api - instantiation' }
 GtPlotterScatterChart >> newContentElement [
 	| aContainer |
 	aContainer := BrFrame new
-		matchParent;
-		addChildren: {
-			self newAxisYLineElement.
-			self newAxisXLineElement. }.
+		matchParent.
 	
 	data groupsCollect: [ :aGroup |
 		aContainer addChild: (self newPointElementFor: aGroup) ].

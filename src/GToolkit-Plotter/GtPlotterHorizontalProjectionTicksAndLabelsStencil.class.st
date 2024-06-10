@@ -5,9 +5,21 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterHorizontalProjectionTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalProjectionTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 	^ super newAxisXTickLabelsElement
-		tickValues: scatterChart valuesX;
+		labelStyle: [:label | 
+			label constraintsDo: [ :c |
+				c accountTransformation
+			].
+			label transformDo: [ :t |
+				t rotateBy: -45
+			]
+		];
+		tickValues: scatterChart valuesX asSortedCollection;
 		yourself
 ]
 
