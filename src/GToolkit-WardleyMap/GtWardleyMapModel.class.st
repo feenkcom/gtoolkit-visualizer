@@ -399,13 +399,13 @@ GtWardleyMapModel >> nodes [
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : #'api - nodes' }
 GtWardleyMapModel >> nodes: aCollection [
 	nodes copy do: [ :aNode | self removeNode: aNode ].
 	aCollection do: [ :aNode | self addNode: aNode ]
 ]
 
-{ #category : #'api - nodes' }
+{ #category : #'api - notes' }
 GtWardleyMapModel >> noteWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self notes
 		detect: [ :eachNote | eachNote id = anId ]
@@ -413,7 +413,15 @@ GtWardleyMapModel >> noteWithId: anId ifFound: aFoundBlock ifNone: aNoneBlock [
 		ifNone: aNoneBlock
 ]
 
-{ #category : #'api - nodes' }
+{ #category : #'api - notes' }
+GtWardleyMapModel >> noteWithText: aString ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self notes
+		detect: [ :eachNote | eachNote label = aString ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
+{ #category : #'api - notes' }
 GtWardleyMapModel >> notes [
 	^ notes ifNil: [ notes := OrderedCollection new ]
 ]
