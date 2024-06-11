@@ -27,6 +27,30 @@ GtWardleyMapDecoratorExamples >> mapViewModelWithProposedModifications [
 	^ aMapViewModel
 ]
 
+{ #category : #'examples -  decorators' }
+GtWardleyMapDecoratorExamples >> mapWithLepiterPageLink [
+	<gtExample>
+	| aMap aNodeB aPageLink aPage |
+	aMap := GtWardleyMapModelExamples new newMapWithNodes.
+
+	aNodeB := aMap
+			nodeWithName: 'Node B'
+			ifFound: [ :theNode | theNode ]
+			ifNone: [ nil ].
+
+	aPage := LeDatabasesRegistry defaultLogicalDatabase
+			pageNamed: 'GT in 7'' videos'.
+
+	aPageLink := GtWardleyMapAction new
+			icon: LeIcons lepiterPage;
+			label: aPage title;
+			tooltip: 'Navigate to the page';
+			action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aPage) ].
+	aNodeB addWardleyMapDecoratorModel: aPageLink.
+
+	^ aMap
+]
+
 { #category : #examples }
 GtWardleyMapDecoratorExamples >> mapWithNodes [
 	<gtExample>
