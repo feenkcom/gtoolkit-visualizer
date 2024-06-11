@@ -40,12 +40,10 @@ GtWardleyMapLinkButtonStencil >> create [
 	tooltip ifNotNil: [ aButton label: self tooltip ].
 	label ifNotNil: [ aButton label: self label ].
 	action ifNotNil: [ aButton action: self action ].
-	aButton margin: (BlInsets left: 2).
 	aButton aptitude: self newButtonAptitude.
 	aButton beTinySize.
 	aButton model: self model.
 	aButton wardley beDecorator.
-	aButton margin: (BlInsets left: 2).
 	aButton constraintsDo: [ :c |
 		c linear vertical alignCenter.
 		c linear horizontal alignCenter ].
@@ -93,7 +91,8 @@ GtWardleyMapLinkButtonStencil >> newButtonAptitude [
 				- BrGlamorousButtonExteriorAptitude
 				+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ] ].
 	label ifNil: [ 
-		^ BrGlamorousButtonWithIconAptitude new ].
+		^ BrGlamorousButtonWithIconAptitude new 
+			- BrGlamorousButtonExteriorAptitude].
 	tooltip ifNotNil: [  
 		^ BrGlamorousButtonWithIconAndLabelAptitude new underline
 			- BrGlamorousButtonExteriorAptitude

@@ -116,7 +116,7 @@ GtWardleyMapAction >> page: aLePage [
 GtWardleyMapAction >> pageNamed: aLePageName [
 	self
 		icon: LeIcons lepiterPage;
-		label: (self buttonLabelFromString: aLePageName);
+		"label: (self buttonLabelFromString: aLePageName);"
 		tooltip: ('Navigate to the page named {1}' format: { aLePageName });
 		action: [ :aButton | 
 			LeDatabasesRegistry defaultLogicalDatabase
