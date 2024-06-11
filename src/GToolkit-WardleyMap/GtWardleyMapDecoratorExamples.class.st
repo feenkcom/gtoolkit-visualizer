@@ -30,23 +30,20 @@ GtWardleyMapDecoratorExamples >> mapViewModelWithProposedModifications [
 { #category : #'examples -  decorators' }
 GtWardleyMapDecoratorExamples >> mapWithLepiterPageLink [
 	<gtExample>
-	| aMap aNodeB aPageLink aPage |
+	| aMap aPageNameA aNodeA aLinkA aNodeB aLinkB aPageB |
 	aMap := GtWardleyMapModelExamples new newMapWithNodes.
 
-	aNodeB := aMap
-			nodeWithName: 'Node B'
-			ifFound: [ :theNode | theNode ]
-			ifNone: [ nil ].
+	aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	aNodeB := aMap nodeWithName: 'Node B' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	
+	aPageNameA := 'Analyzing feature toggles from a Python project: the Open edX case study'.
+	aLinkA := GtWardleyMapAction new pageNamed: aPageNameA.
+	aNodeA addWardleyMapDecoratorModel: aLinkA.
 
-	aPage := LeDatabasesRegistry defaultLogicalDatabase
+	aPageB := LeDatabasesRegistry defaultLogicalDatabase
 			pageNamed: 'GT in 7'' videos'.
-
-	aPageLink := GtWardleyMapAction new
-			icon: LeIcons lepiterPage;
-			label: aPage title;
-			tooltip: 'Navigate to the page';
-			action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aPage) ].
-	aNodeB addWardleyMapDecoratorModel: aPageLink.
+	aLinkB := GtWardleyMapAction new page: aPageB.
+	aNodeB addWardleyMapDecoratorModel: aLinkB.
 
 	^ aMap
 ]

@@ -86,9 +86,15 @@ GtWardleyMapActionButtonStencil >> model: anObject [
 GtWardleyMapActionButtonStencil >> newButtonAptitude [
 	aptitude ifNotNil: [ :aBlock | ^ aBlock value ].
 	icon ifNil: [ 
-		^ BrGlamorousButtonWithLabelAptitude new ].
+		tooltip
+			ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new ]
+			ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new 
+				+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ] ].
 	label ifNil: [ 
 		^ BrGlamorousButtonWithIconAptitude new ].
+	tooltip ifNotNil: [  
+		^ BrGlamorousButtonWithIconAndLabelAptitude new 
+			+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ].
 	^ BrGlamorousButtonWithIconAndLabelAptitude new
 ]
 
