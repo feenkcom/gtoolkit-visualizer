@@ -86,7 +86,7 @@ GtWardleyMapAction >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'api - decoration' }
+{ #category : #private }
 GtWardleyMapAction >> newButton [
 	^ GtWardleyMapActionButtonStencil new
 		icon: self icon;
@@ -96,6 +96,11 @@ GtWardleyMapAction >> newButton [
 		action: self action;
 		model: self model;
 		asElement
+]
+
+{ #category : #'api - decoration' }
+GtWardleyMapAction >> noIcon [
+	self icon: nil
 ]
 
 { #category : #'api - convenience' }
