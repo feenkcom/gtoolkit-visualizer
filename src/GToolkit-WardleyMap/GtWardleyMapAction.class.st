@@ -14,17 +14,17 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> action [
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> action: anObject [
 	action := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> aptitude [
 	^ aptitude
 ]
@@ -48,32 +48,32 @@ GtWardleyMapAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDec
 			anActionContainer addChild: aButton. ]
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> icon: anObject [
 	icon := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> label: anObject [
 	label := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> model: anObject [
 	model := anObject
 ]
@@ -90,17 +90,39 @@ GtWardleyMapAction >> newButton [
 		asElement
 ]
 
+{ #category : #'api - convenience' }
+GtWardleyMapAction >> page: aLePage [
+	self
+		icon: LeIcons lepiterPage;
+		label: aLePage title;
+		tooltip: 'Navigate to the page';
+		action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aLePage) ]
+]
+
+{ #category : #'api - convenience' }
+GtWardleyMapAction >> pageNamed: aLePageName [
+	self
+		icon: LeIcons lepiterPage;
+		label: aLePageName title;
+		tooltip: 'Navigate to the page';
+		action: [ :aButton | 
+			| aPage |
+			aPage := LeDatabasesRegistry defaultLogicalDatabase
+			pageNamed: aLePageName.
+			aButton phlow spawnTool: (LePagePhlowTool page: aPage) ]
+]
+
 { #category : #initialization }
 GtWardleyMapAction >> parent: aParent [
 	self model: aParent
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> tooltip [
 	^ tooltip
 ]
 
-{ #category : #accessing }
+{ #category : #'api - decoration' }
 GtWardleyMapAction >> tooltip: anObject [
 	tooltip := anObject
 ]
