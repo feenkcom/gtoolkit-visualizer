@@ -107,7 +107,6 @@ GtWardleyMapAction >> noIcon [
 GtWardleyMapAction >> page: aLePage [
 	self
 		icon: LeIcons lepiterPage;
-		label: (self buttonLabelFromString: aLePage title);
 		tooltip: ('Navigate to the page named {1}' format: { aLePage title });
 		action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aLePage) ]
 ]
