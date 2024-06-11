@@ -34,6 +34,14 @@ GtWardleyMapAction >> aptitude: aBlock [
 	aptitude := aBlock
 ]
 
+{ #category : #private }
+GtWardleyMapAction >> buttonLabelFromString: aString [
+	aString size <= GtWardleyMapConstants maxButtonLabelCharacters 
+		ifTrue: [ ^ aString ].
+		
+	^ (aString copyFrom: 1 to: GtWardleyMapConstants maxButtonLabelCharacters - 3), '...'
+]
+
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 	aNodeElement
@@ -78,7 +86,7 @@ GtWardleyMapAction >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'api - decoration' }
+{ #category : #private }
 GtWardleyMapAction >> newButton [
 	^ GtWardleyMapActionButtonStencil new
 		icon: self icon;
@@ -90,12 +98,16 @@ GtWardleyMapAction >> newButton [
 		asElement
 ]
 
+{ #category : #'api - decoration' }
+GtWardleyMapAction >> noIcon [
+	self icon: nil
+]
+
 { #category : #'api - convenience' }
 GtWardleyMapAction >> page: aLePage [
 	self
 		icon: LeIcons lepiterPage;
-		label: aLePage title;
-		tooltip: 'Navigate to the page';
+		tooltip: ('Navigate to the page named {1}' format: { aLePage title });
 		action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aLePage) ]
 ]
 
@@ -103,13 +115,18 @@ GtWardleyMapAction >> page: aLePage [
 GtWardleyMapAction >> pageNamed: aLePageName [
 	self
 		icon: LeIcons lepiterPage;
-		label: aLePageName title;
-		tooltip: 'Navigate to the page';
+		"label: (self buttonLabelFromString: aLePageName);"
+		tooltip: ('Navigate to the page named {1}' format: { aLePageName });
 		action: [ :aButton | 
-			| aPage |
-			aPage := LeDatabasesRegistry defaultLogicalDatabase
-			pageNamed: aLePageName.
-			aButton phlow spawnTool: (LePagePhlowTool page: aPage) ]
+			LeDatabasesRegistry defaultLogicalDatabase
+				pageNamed: aLePageName
+				ifPresent: [ :aPage | 
+					aButton phlow spawnTool: (LePagePhlowTool page: aPage) ]
+				ifAbsent: [ 
+					| aNotification |
+					aNotification := GtNotificationMessage new 
+						message: ('Page not found: {1}' format: { aLePageName }).
+					aButton showNotification: aNotification ] ]
 ]
 
 { #category : #initialization }

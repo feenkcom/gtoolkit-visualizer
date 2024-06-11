@@ -28,25 +28,53 @@ GtWardleyMapDecoratorExamples >> mapViewModelWithProposedModifications [
 ]
 
 { #category : #'examples -  decorators' }
-GtWardleyMapDecoratorExamples >> mapWithLepiterPageLink [
+GtWardleyMapDecoratorExamples >> mapWithLepiterPageAction [
 	<gtExample>
-	| aMap aNodeB aPageLink aPage |
+	| aMap aPageNameA aNodeA aLinkA aNodeB aLinkB aPageB aPageNameC aLinkC aNodeC |
 	aMap := GtWardleyMapModelExamples new newMapWithNodes.
 
-	aNodeB := aMap
-			nodeWithName: 'Node B'
-			ifFound: [ :theNode | theNode ]
-			ifNone: [ nil ].
+	aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	aNodeB := aMap nodeWithName: 'Node B' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	aNodeC := aMap nodeWithName: 'Node C' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	
+	aPageNameA := 'Analyzing feature toggles from a Python project: the Open edX case study'.
+	aLinkA := GtWardleyMapAction new pageNamed: aPageNameA.
+	aNodeA addWardleyMapDecoratorModel: aLinkA.
 
-	aPage := LeDatabasesRegistry defaultLogicalDatabase
+	aPageB := LeDatabasesRegistry defaultLogicalDatabase
 			pageNamed: 'GT in 7'' videos'.
+	aLinkB := GtWardleyMapAction new page: aPageB.
+	aNodeB addWardleyMapDecoratorModel: aLinkB.
 
-	aPageLink := GtWardleyMapAction new
-			icon: LeIcons lepiterPage;
-			label: aPage title;
-			tooltip: 'Navigate to the page';
-			action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aPage) ].
-	aNodeB addWardleyMapDecoratorModel: aPageLink.
+	aPageNameC := 'Analyzing feature toggles from a Python project: missing page'.
+	aLinkC := GtWardleyMapAction new pageNamed: aPageNameC.
+	aNodeC addWardleyMapDecoratorModel: aLinkC.
+
+	^ aMap
+]
+
+{ #category : #'examples -  decorators' }
+GtWardleyMapDecoratorExamples >> mapWithLepiterPageLink [
+	<gtExample>
+	| aMap aPageNameA aNodeA aLinkA aNodeB aLinkB aPageB aPageNameC aLinkC aNodeC |
+	aMap := GtWardleyMapModelExamples new newMapWithNodes.
+
+	aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	aNodeB := aMap nodeWithName: 'Node B' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	aNodeC := aMap nodeWithName: 'Node C' ifFound: [ :theNode | theNode ] ifNone: [ nil ].
+	
+	aPageNameA := 'Analyzing feature toggles from a Python project: the Open edX case study'.
+	aLinkA := GtWardleyMapLink new pageNamed: aPageNameA.
+	aNodeA addWardleyMapDecoratorModel: aLinkA.
+
+	aPageB := LeDatabasesRegistry defaultLogicalDatabase
+			pageNamed: 'GT in 7'' videos'.
+	aLinkB := GtWardleyMapLink new page: aPageB.
+	aNodeB addWardleyMapDecoratorModel: aLinkB.
+
+	aPageNameC := 'Analyzing feature toggles from a Python project: missing page'.
+	aLinkC := GtWardleyMapLink new pageNamed: aPageNameC.
+	aNodeC addWardleyMapDecoratorModel: aLinkC.
 
 	^ aMap
 ]

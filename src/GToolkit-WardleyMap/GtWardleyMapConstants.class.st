@@ -89,6 +89,11 @@ GtWardleyMapConstants class >> labelCoordinate [
 ]
 
 { #category : #'api - constants' }
+GtWardleyMapConstants class >> maxButtonLabelCharacters [
+	^ 20
+]
+
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> minPipelineRelativeWidth [
 	"I represent kind of padding in relative coordinates (0, 1)"
 
