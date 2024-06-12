@@ -8,7 +8,7 @@ Class {
 		'weight',
 		'shouldHideOverlapping'
 	],
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #accessing }
@@ -58,25 +58,29 @@ GtPlotterSingleScaleProportionalElement >> onLayout: aBounds context: aBlElement
 	aLeftHalfOfElements with: aRightHalfOfElements do: [ :aLeftElement :aRightElement |
 		| isLeftVisible isRightVisible |
 		
-		isLeftVisible := aFirstVisibleLabel == aLeftElement or: [ 
-			(aFirstVisibleLabel bounds inParent bounds
-				intersects: aLeftElement bounds inParent bounds) not ].
+		isLeftVisible := aFirstVisibleLabel == aLeftElement or: [
+			(self onLayout: aFirstVisibleLabel intersects: aLeftElement) not ].
 		
 		isLeftVisible
 			ifTrue: [ aFirstVisibleLabel := aLeftElement ]
 			ifFalse: [ aLeftElement visibility: BlVisibility hidden ].
 
 		isRightVisible := aLastVisibleLabel == aRightElement or: [
-			(aLastVisibleLabel bounds inParent bounds
-				intersects: aRightElement bounds inParent bounds) not ].
+			(self onLayout: aLastVisibleLabel intersects: aRightElement) not ].
 
 		isRightVisible
 			ifTrue: [ aLastVisibleLabel := aRightElement ]
 			ifFalse: [ aRightElement visibility: BlVisibility hidden ].
 
-		(aLeftElement == aRightElement or: [ (aLeftElement bounds inParent bounds
-			intersects: aRightElement bounds inParent bounds) not ])
+		(aLeftElement == aRightElement or: [ 
+			(self onLayout: aLeftElement intersects: aRightElement) not ])
 				ifFalse: [ aRightElement visibility: BlVisibility hidden ] ].
+]
+
+{ #category : #accessing }
+GtPlotterSingleScaleProportionalElement >> onLayout: anElement intersects: anotherElement [
+	^ anElement bounds inParent bounds
+				intersects: anotherElement bounds inParent bounds
 ]
 
 { #category : #accessing }

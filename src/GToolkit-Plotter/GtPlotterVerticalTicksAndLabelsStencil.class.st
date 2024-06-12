@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
+	aContainer addChild: (BlElement new
+		width: 2;
+		background: (Color veryVeryLightGray);
+		constraintsDo: [ :c | 
+			c vertical matchParent.
+			c frame horizontal alignLeft ])
+]
+
+{ #category : #accessing }
 GtPlotterVerticalTicksAndLabelsStencil >> create [
 	| aContainer |
 	aContainer := BrHorizontalPane new
@@ -18,6 +28,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> create [
 		addChildren: { 
 			self newAxisYTickLabelsElement.
 			self newAxisYTicksElement width: 10. }.
+	self addAxisYElementOn: aContainer.
 	^ aContainer
 ]
 

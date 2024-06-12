@@ -6,8 +6,21 @@ I draw horizontal chart tick labels.
 Class {
 	#name : #GtPlotterHorizontalTickLabelsElement,
 	#superclass : #GtPlotterTickLabelsElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#instVars : [
+		'isLayoutOnDiagonal'
+	],
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
+
+{ #category : #accessing }
+GtPlotterHorizontalTickLabelsElement >> boundsFor: anElement [
+	| aBounds boundsInParent|
+	isLayoutOnDiagonal
+		ifFalse: [ ^ anElement bounds inParent bounds ].
+	aBounds := anElement bounds.
+	boundsInParent := aBounds inParent bounds.
+	^ boundsInParent topRight - (aBounds height @ 0) corner: boundsInParent corner 
+]
 
 { #category : #initialization }
 GtPlotterHorizontalTickLabelsElement >> defaultLabelLayout [
@@ -19,4 +32,23 @@ GtPlotterHorizontalTickLabelsElement >> defaultLabelLayout [
 			c frame horizontal alignCenterAt: aGtPlotterScaleContext mappedValue ];
 			yourself.
 	] asStencilBuilder: GtPlotterScaleBasedStencilEmbellisher
+]
+
+{ #category : #initalization }
+GtPlotterHorizontalTickLabelsElement >> initialize [
+	super initialize.
+	isLayoutOnDiagonal := false.
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalTickLabelsElement >> layoutOnDiagonal [
+	isLayoutOnDiagonal := true
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalTickLabelsElement >> onLayout: anElementA intersects: anElementB [
+	| boundsA boundsB|
+	boundsA := self boundsFor: anElementA.
+	boundsB := self boundsFor: anElementB.
+	^ boundsA intersects: boundsB
 ]

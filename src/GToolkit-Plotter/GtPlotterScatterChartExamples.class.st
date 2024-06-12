@@ -14,6 +14,15 @@ GtPlotterScatterChartExamples >> emptyPlot [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> horizontalProjectionAxis [
+	<gtExample>
+	| aChart |
+	aChart := self projectionAxis.
+	aChart axisXStencil: GtPlotterHorizontalProjectionTicksAndLabelsStencil new.
+	^ aChart
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> projectionAxis [
 	<gtExample>
 	| aChart |
@@ -35,7 +44,7 @@ GtPlotterScatterChartExamples >> scatterChart [
 		intoValues: [ :aDuration :eachValue | 
 			aDuration max: (eachValue at: #duration) ].
 
-	aBarWidthScale := GtPlotterDurationScale new 
+	aBarWidthScale := GtPlotterDurationScale new
 		domainFrom: 0 minutes to: aMaxDuration.
 	aChart := GtPlotterScatterChart new
 		with: dataGroup;
@@ -106,4 +115,13 @@ GtPlotterScatterChartExamples >> scatterDifferentGeometry [
 			ifTrue: [ color := Color green alpha: 0.4. ].
 		color ]).
 	 ^ aChart
+]
+
+{ #category : #accessing }
+GtPlotterScatterChartExamples >> verticalProjectionAxis [
+	<gtExample>
+	| aChart |
+	aChart := self projectionAxis.
+	aChart axisXStencil: GtPlotterHorizontalProjectionTicksAndVerticalLabelsStencil new.
+	^ aChart
 ]

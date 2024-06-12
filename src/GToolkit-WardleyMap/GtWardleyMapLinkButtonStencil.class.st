@@ -85,20 +85,15 @@ GtWardleyMapLinkButtonStencil >> newButtonAptitude [
 	aptitude ifNotNil: [ :aBlock | ^ aBlock value ].
 	icon ifNil: [ 
 		tooltip
-			ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new underline
-				- BrGlamorousButtonExteriorAptitude ]
-			ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new underline 
-				- BrGlamorousButtonExteriorAptitude
+			ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new underline ]
+			ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new underline
 				+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ] ].
 	label ifNil: [ 
-		^ BrGlamorousButtonWithIconAptitude new 
-			- BrGlamorousButtonExteriorAptitude].
+		^ BrGlamorousButtonWithIconAptitude new].
 	tooltip ifNotNil: [  
 		^ BrGlamorousButtonWithIconAndLabelAptitude new underline
-			- BrGlamorousButtonExteriorAptitude
 			+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ].
 	^ BrGlamorousButtonWithIconAndLabelAptitude new underline
-		- BrGlamorousButtonExteriorAptitude
 ]
 
 { #category : #accessing }

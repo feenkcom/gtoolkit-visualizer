@@ -5,9 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterHorizontalProjectionTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalProjectionTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 	^ super newAxisXTickLabelsElement
-		tickValues: scatterChart valuesX;
+		tickValues: scatterChart valuesX asSortedCollection;
 		yourself
 ]
 
