@@ -151,6 +151,7 @@ GtPlotterScatterChart >> initializeScales [
 	data valuesDo: [:eachValue |
 		valuesY add: (valueY value: eachValue).
 		valuesX add: (valueX value: eachValue) ].
+	valuesX ifEmpty: [ ^ self ].
 	aMinX := minX ifNil: [ valuesX min ].
 	aMaxX := maxX ifNil: [ valuesX max ].
 	aMinY := minX ifNil: [ valuesY min ].
