@@ -23,6 +23,8 @@ GtWardleyMapNodeBasicElement >> initialize [
 	super initialize.
 	self clipChildren: false.
 	self layout: BlFrameLayout new.
+	
+	"we style this node in order to keep some styling, e.g., hover, not affecting some children."
 	nodeElement := BrFrame new matchParent.
 	self addChild: nodeElement as: #node.
 	
