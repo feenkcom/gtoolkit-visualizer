@@ -11,14 +11,6 @@ GtPlotterHorizontalProjectionTicksAndLabelsStencil >> addAxisXLineElementOn: aCo
 { #category : #accessing }
 GtPlotterHorizontalProjectionTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 	^ super newAxisXTickLabelsElement
-		labelStyle: [:label | 
-			label constraintsDo: [ :c |
-				c accountTransformation
-			].
-			label transformDo: [ :t |
-				t rotateBy: -45
-			]
-		];
 		tickValues: scatterChart valuesX asSortedCollection;
 		yourself
 ]

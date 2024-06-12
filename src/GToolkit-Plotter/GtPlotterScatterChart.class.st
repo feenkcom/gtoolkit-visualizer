@@ -407,7 +407,7 @@ GtPlotterScatterChart >> with: aGtPlotterDataGroup [
 { #category : #accessing }
 GtPlotterScatterChart >> withProjectionAxis [
 	self axisYStencil: GtPlotterVerticalProjectionTicksAndLabelsStencil new.
-	self axisXStencil: GtPlotterHorizontalProjectionTicksAndLabelsStencil new.
+	self axisXStencil: GtPlotterHorizontalProjectionTicksAndDiagonalLabelsStencil new.
 ]
 
 { #category : #accessing }

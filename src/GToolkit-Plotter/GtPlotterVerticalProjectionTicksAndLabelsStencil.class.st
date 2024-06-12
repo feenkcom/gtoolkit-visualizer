@@ -11,7 +11,7 @@ GtPlotterVerticalProjectionTicksAndLabelsStencil >> addAxisYElementOn: aContaine
 { #category : #accessing }
 GtPlotterVerticalProjectionTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 	^ super newAxisYTickLabelsElement
-		tickValues: scatterChart valuesY asSortedCollection traceCr;
+		tickValues: scatterChart valuesY asSortedCollection;
 		yourself
 ]
 
