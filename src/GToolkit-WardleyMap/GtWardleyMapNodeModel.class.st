@@ -107,6 +107,14 @@ GtWardleyMapNodeModel >> basicRecomputePipelineCoordinate [
 	self pipelineCoordinate: aCoordinate.
 ]
 
+{ #category : #'api - decorators' }
+GtWardleyMapNodeModel >> detectDecorator: aDetectBlock ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self wardleyMapDecoratorModels
+		detect: aDetectBlock
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> ensurePipelineCoordinate [
 	pipelineCoordinate ifNotNil: [ ^ self ].

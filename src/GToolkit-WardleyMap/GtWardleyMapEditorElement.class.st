@@ -1,9 +1,12 @@
 Class {
 	#name : #GtWardleyMapEditorElement,
 	#superclass : #BrVerticalPane,
+	#traits : 'TGtWithWardleyMapViewModel',
+	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
 		'canvas',
-		'container'
+		'container',
+		'titleVisibilityCheckbox'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -26,61 +29,92 @@ GtWardleyMapEditorElement >> contextMenuHandlerPositionOnEvent: anEvent [
 	^ anEvent position
 ]
 
-{ #category : #accessing }
-GtWardleyMapEditorElement >> createBasicButtonElement [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 3
-				left: 3
-				bottom: 3
-				right: 3)
+{ #category : #initialization }
+GtWardleyMapEditorElement >> createAddItemsLabel [
+	^ GtWardleyMapUtility newContextMenuLabel text: 'Add item'
 ]
 
 { #category : #accessing }
+GtWardleyMapEditorElement >> createBasicButtonElement [
+	^ GtWardleyMapUtility newButtonElement
+		margin: (BlInsets
+				top: 0
+				left: 5
+				bottom: 3
+				right: 0)
+]
+
+{ #category : #initialization }
+GtWardleyMapEditorElement >> createConfigureMapLabel [
+	^ GtWardleyMapUtility newContextMenuLabel text: 'Map visibility'
+]
+
+{ #category : #initialization }
 GtWardleyMapEditorElement >> createNodeButtonElement [
 	^ self createBasicButtonElement
 		label: 'Add node';
 		action: [ :aButtonElement :aButtonModel :anEvent | self onAddNodeEvent: anEvent ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GtWardleyMapEditorElement >> createNoteButtonElement [
 	^ self createBasicButtonElement
 		label: 'Add note';
 		action: [ :aButtonElement :aButtonModel :anEvent | self onAddNoteEvent: anEvent ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
+GtWardleyMapEditorElement >> createPropertiesEditorContainer [
+	container := BrVerticalPane new
+			hFitContent;
+			vFitContentLimited.
+
+	container addChildren: self createPropertyEditorElements.
+
+	^ container
+]
+
+{ #category : #initialization }
+GtWardleyMapEditorElement >> createPropertyEditorElements [
+	^ {self createAddItemsLabel.
+		self createNoteButtonElement.
+		self createNodeButtonElement.
+		self createConfigureMapLabel.
+		titleVisibilityCheckbox := self createTitleVisibilityCheckbox.
+		self createSwitchSectionsButtonElement}
+]
+
+{ #category : #initialization }
 GtWardleyMapEditorElement >> createSwitchSectionsButtonElement [
 	^ self createBasicButtonElement
 		label: 'Switch sections';
-		action: [ canvas parent hasEvolutionAxisLayer
-				ifFalse: [ canvas parent
+		action: [ canvas parent parent hasEvolutionAxisLayer
+				ifFalse: [ canvas parent parent
 						evolutionSections: {'genesis'.
 								'custom built'.
 								'product (+rental)'.
 								'commodity'} ]
-				ifTrue: [ canvas parent removeChildAt: 1 ] ]
+				ifTrue: [ canvas parent parent removeChildAt: 1 ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
+GtWardleyMapEditorElement >> createTitleVisibilityCheckbox [
+	^ GtWardleyMapUtility newContextMenuCheckbox
+		enabledLabel: 'visible title';
+		disabledLabel: 'cannot change title visibility';
+		tooltipLabel: 'Toggle map title visibility';
+		whenCheckedDo: [ :anEvent | self onTitleVisibilityChecked: anEvent ];
+		whenUncheckedDo: [ :anEvent | self onTitleVisibilityUnchecked: anEvent ]
+]
+
+{ #category : #initialization }
 GtWardleyMapEditorElement >> initialize [
 	super initialize.
-
 	self
 		hFitContent;
 		vFitContentLimited;
 		padding: (BlInsets all: 3).
-
-	container := BrVerticalPane new hFitContent vFitContentLimited.
-
-	container
-		addChildren: {self createNoteButtonElement.
-				self createNodeButtonElement.
-				self createSwitchSectionsButtonElement}.
-
+	self createPropertiesEditorContainer.
 	self
 		addChild: (BrScrollPane new
 				aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
@@ -114,4 +148,48 @@ GtWardleyMapEditorElement >> onAddNoteEvent: anEvent [
 	aNormalizedPosition := self normalizedItemPositionOnEvent: anEvent.
 	canvas wardleyMapViewModel addNewNoteAt: aNormalizedPosition.
 	self fireEvent: BrContextMenuHideWish new
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEditorElement >> onTitleVisibilityChanged [
+	titleVisibilityCheckbox checked: self wardleyMapViewModel isTitleVisible
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEditorElement >> onTitleVisibilityChecked: anEvent [ 
+	self hasWardleyMapViewModel ifFalse: [ ^ self ].
+	
+	self wardleyMapViewModel isTitleVisible: true
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEditorElement >> onTitleVisibilityUnchecked: anEvent [ 
+	self hasWardleyMapViewModel ifFalse: [ ^ self ].
+	
+	self wardleyMapViewModel isTitleVisible: false
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapEditorElement >> onWardleyMapViewModelChanged [
+	"Is sent when a new WardleyMap view model is assigned to the element"
+	
+	self onTitleVisibilityChanged
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapEditorElement >> subscribeToWardleyMapViewModel [
+	"Is sent after a new WardleyMap view model is assigned to the element.
+	It is required to unsubscribe from the view model or domain model by implementing
+	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
+	
+	self wardleyMapViewModel weak
+		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged to: self
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapEditorElement >> unsubscribeFromWardleyMapViewModel [
+	"Is sent before a new WardleyMap view model is assigned to the element.
+	Elements that subscribe to WardleyMap view model in domain model are required to implement this methods"
+	
+	self wardleyMapViewModel unsubscribe: self
 ]

@@ -382,6 +382,17 @@ GtWardleyMapViewModel >> initialize [
 ]
 
 { #category : #'api - map' }
+GtWardleyMapViewModel >> isTitleVisible [
+	<return: #Boolean>
+	^ self wardleyMapModel isTitleVisible
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> isTitleVisible: aBoolean [
+	self wardleyMapModel isTitleVisible: aBoolean
+]
+
+{ #category : #'api - map' }
 GtWardleyMapViewModel >> nodeViewModelFor: aNodeModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self nodeViewModels
 		detect: [ :eachNodeViewModel | eachNodeViewModel wardleyMapNodeModel = aNodeModel ]
@@ -551,6 +562,16 @@ GtWardleyMapViewModel >> onNoteRemoved: aNoteAddedAnnouncement [
 		ifNone: [ ]
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onTitleChanged: anAnnouncement [
+	self announce: (GtWardleyMapViewModelTitleChanged new )
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onTitleVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapViewModelTitleVisibilityChanged new )
+]
+
 { #category : #'api - wardley map model' }
 GtWardleyMapViewModel >> onWardleyMapModelChanged [
 	"Is sent when a new wardleyMap model is assigned to the view model"
@@ -618,6 +639,8 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	#unsubscribeFromWardleyMapModel if view model subscribes to them"
 	
 	self wardleyMapModel weak
+		when: GtWardleyMapTitleChanged send: #onTitleChanged: to: self;
+		when: GtWardleyMapTitleVisibilityChanged send: #onTitleVisibilityChanged: to: self;
 		when: GtWardleyMapNodeModelAdded send: #onNodeAdded: to: self;
 		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
@@ -628,6 +651,17 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapNoteModelAdded send: #onNoteAdded: to: self;
 		when: GtWardleyMapNoteModelRemoved send: #onNoteRemoved: to: self;
 		when: GtWardleyMapNodeModelEvolveVisibilityChanged send: #onEvolveVisibilityChanged: to: self
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> title [
+	<return: #String>
+	^ self wardleyMapModel title
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> title: aString [
+	self wardleyMapModel title: aString
 ]
 
 { #category : #'api - wardley map model' }

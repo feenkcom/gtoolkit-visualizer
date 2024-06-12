@@ -36,6 +36,11 @@ GtWardleyMapNodeViewModel >> addInnerNodeViewModel: aNodeViewModel [
 	self wardleyMapNodeModel addInnerNode: aNodeViewModel wardleyMapNodeModel.
 ]
 
+{ #category : #'as yet unclassified' }
+GtWardleyMapNodeViewModel >> addWardleyMapDecoratorModel: aWardleyMapDecoratorModel [ 
+	self wardleyMapNodeModel addWardleyMapDecoratorModel: aWardleyMapDecoratorModel 
+]
+
 { #category : #announcer }
 GtWardleyMapNodeViewModel >> announcer [
 	<return: #Announcer>
@@ -81,6 +86,14 @@ GtWardleyMapNodeViewModel >> decorators [
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> decreaseNodeSize [
 	self nodeSize: ((self nodeSize - self nodeSizeStep) roundTo: 1@1)
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapNodeViewModel >> detectDecorator: aDetectBlock ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self wardleyMapNodeModel
+		detectDecorator: aDetectBlock
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
 ]
 
 { #category : #accessing }
@@ -393,6 +406,12 @@ GtWardleyMapNodeViewModel >> removeFromMap [
 { #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> removeInnerNodeViewModel: anInnerNodeViewModel [
 	self wardleyMapNodeModel removeInnerNode: anInnerNodeViewModel wardleyMapNodeModel
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapNodeViewModel >> removeWardleyMapDecoratorModel: aWardleyMapDecoratorModel [
+	self wardleyMapNodeModel
+		removeWardleyMapDecoratorModel: aWardleyMapDecoratorModel
 ]
 
 { #category : #'api - pipeline' }

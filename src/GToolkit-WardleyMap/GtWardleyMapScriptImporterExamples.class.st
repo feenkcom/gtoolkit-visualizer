@@ -256,6 +256,7 @@ GtWardleyMapScriptImporterExamples >> importScriptWithPipeline [
 	aMap := anImporter wardleyMap.
 	
 	self assert: aMap title equals: 'map with pipeline'.
+	self assert: aMap isTitleVisible.
 	self assert: aMap nodes size equals: 6.
 	self assert: aMap edges size equals: 1.
 	

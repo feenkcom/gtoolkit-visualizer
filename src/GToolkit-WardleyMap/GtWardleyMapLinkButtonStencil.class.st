@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapActionButtonStencil,
+	#name : #GtWardleyMapLinkButtonStencil,
 	#superclass : #BrStencil,
 	#instVars : [
 		'icon',
@@ -13,39 +13,37 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> action [
+GtWardleyMapLinkButtonStencil >> action [
 	^ action
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> action: anObject [
+GtWardleyMapLinkButtonStencil >> action: anObject [
 	action := anObject
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> aptitude [
+GtWardleyMapLinkButtonStencil >> aptitude [
 	^ aptitude
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> aptitude: anObject [
+GtWardleyMapLinkButtonStencil >> aptitude: anObject [
 	aptitude := anObject
 ]
 
 { #category : #building }
-GtWardleyMapActionButtonStencil >> create [
+GtWardleyMapLinkButtonStencil >> create [
 	| aButton |
 	aButton := BrButton new.
 	icon ifNotNil: [ aButton icon: self icon ].
 	tooltip ifNotNil: [ aButton label: self tooltip ].
 	label ifNotNil: [ aButton label: self label ].
 	action ifNotNil: [ aButton action: self action ].
-	aButton margin: (BlInsets left: 2).
 	aButton aptitude: self newButtonAptitude.
 	aButton beTinySize.
 	aButton model: self model.
 	aButton wardley beDecorator.
-	aButton margin: (BlInsets left: 2).
 	aButton constraintsDo: [ :c |
 		c linear vertical alignCenter.
 		c linear horizontal alignCenter ].
@@ -53,57 +51,62 @@ GtWardleyMapActionButtonStencil >> create [
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> icon [
+GtWardleyMapLinkButtonStencil >> icon [
 	^ icon
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> icon: anObject [
+GtWardleyMapLinkButtonStencil >> icon: anObject [
 	icon := anObject
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> label [
+GtWardleyMapLinkButtonStencil >> label [
 	^ label
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> label: anObject [
+GtWardleyMapLinkButtonStencil >> label: anObject [
 	label := anObject
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> model [
+GtWardleyMapLinkButtonStencil >> model [
 	^ model
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> model: anObject [
+GtWardleyMapLinkButtonStencil >> model: anObject [
 	model := anObject
 ]
 
 { #category : #private }
-GtWardleyMapActionButtonStencil >> newButtonAptitude [
+GtWardleyMapLinkButtonStencil >> newButtonAptitude [
 	aptitude ifNotNil: [ :aBlock | ^ aBlock value ].
 	icon ifNil: [ 
 		tooltip
-			ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new ]
-			ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new 
+			ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new underline
+				- BrGlamorousButtonExteriorAptitude ]
+			ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new underline 
+				- BrGlamorousButtonExteriorAptitude
 				+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ] ].
 	label ifNil: [ 
-		^ BrGlamorousButtonWithIconAptitude new ].
+		^ BrGlamorousButtonWithIconAptitude new 
+			- BrGlamorousButtonExteriorAptitude].
 	tooltip ifNotNil: [  
-		^ BrGlamorousButtonWithIconAndLabelAptitude new 
+		^ BrGlamorousButtonWithIconAndLabelAptitude new underline
+			- BrGlamorousButtonExteriorAptitude
 			+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ].
-	^ BrGlamorousButtonWithIconAndLabelAptitude new
+	^ BrGlamorousButtonWithIconAndLabelAptitude new underline
+		- BrGlamorousButtonExteriorAptitude
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> tooltip [
+GtWardleyMapLinkButtonStencil >> tooltip [
 	^ tooltip
 ]
 
 { #category : #accessing }
-GtWardleyMapActionButtonStencil >> tooltip: anObject [
+GtWardleyMapLinkButtonStencil >> tooltip: anObject [
 	tooltip := anObject
 ]

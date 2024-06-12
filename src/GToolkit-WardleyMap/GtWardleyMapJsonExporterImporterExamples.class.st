@@ -183,6 +183,27 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithPipelineInnerNod
 ]
 
 { #category : #export }
+GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithTitleAsDictionary [
+	<gtExample>
+	| aWardleyMap anExportedDictionary aTitleDictionary |
+	aWardleyMap := GtWardleyMapModelExamples new newMapWithNodesAndTitle.
+	anExportedDictionary := aWardleyMap
+			accept: GtWardleyMapAsDictionaryExporter new.
+
+	self assert: anExportedDictionary size equals: 3.
+	self assert: (anExportedDictionary includesKey: #title).
+	self assert: (anExportedDictionary includesKey: #nodes).
+	self assert: (anExportedDictionary includesKey: #edges).
+
+	aTitleDictionary := anExportedDictionary at: #title.
+	self assert: aTitleDictionary size equals: 2.
+	self assert: (aTitleDictionary at: #text) equals: 'Wardley Map with nodes'.
+	self assert: (aTitleDictionary at: #is_visible) equals: true.
+
+	^ aWardleyMap -> anExportedDictionary
+]
+
+{ #category : #export }
 GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBAsEvolveTarget [
 	<gtExample>
 	| aWardleyMap anExportedDictionary aNodeBDictionary aNodeBLabelDictionary aNodeBPipelineDictionary aNodeBEvolveDictionary aNodeADictionary aNodeALabelDictionary aNodeAEvolveDictionary aNodeAEvolveLabelDictionary |
@@ -398,6 +419,23 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithPipelineInnerNod
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
 	
 	self exportWardleyMapWithPipelineInnerNodesAsDictionary in: [ :anAssociation |
+		anExportedWardleyMap := anAssociation key.
+		anExportedDictionary := anAssociation value ].
+
+	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter new importWardleyMapFrom: anExportedDictionary.
+	
+	"make sure that export => import produces the same map"
+	self assert: anImportedWardleyMap equals: anExportedWardleyMap.
+
+	^ anImportedWardleyMap
+]
+
+{ #category : #import }
+GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithTitleAsDictionary [
+	<gtExample>
+	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
+	
+	self exportWardleyMapWithTitleAsDictionary in: [ :anAssociation |
 		anExportedWardleyMap := anAssociation key.
 		anExportedDictionary := anAssociation value ].
 

@@ -59,7 +59,7 @@ GtWardleyMapUtility class >> computePipelineViewModelVerticalTopOffset: aPipelin
 	^ self computePipelineModelVerticalTopOffset: aPipelineNodeViewModel wardleyMapNodeModel
 ]
 
-{ #category : #'api - import and export' }
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoordiante: aTopLeftPoint [ 
 	"Conversion is just an estimate. 
 	It is not possible to get two visually identical outputs, 
@@ -76,6 +76,11 @@ GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoor
 	aCenterY := aTopLeftPoint y - aCharHalfHeight.
 	
 	^ ((aCenterX @ aCenterY) / aNodeSize) asFloatPoint
+]
+
+{ #category : #initialization }
+GtWardleyMapUtility class >> defaultMapTitle [
+	^ 'Wardley Map'
 ]
 
 { #category : #'api - views' }
@@ -121,16 +126,34 @@ GtWardleyMapUtility class >> newButtonElement [
 				right: 0)
 ]
 
-{ #category : #'api - views' }
+{ #category : #'api - widgets' }
 GtWardleyMapUtility class >> newColorLabelElement [
+	^ self newContextMenuLabel text: 'Color:'
+]
+
+{ #category : #'api - widgets' }
+GtWardleyMapUtility class >> newContextMenuCheckbox [
+	^ GtWardleyMapCheckbox new
+		checked: false;
+		whenCheckedDo: [ :anEvent | ];
+		whenUncheckedDo: [ :anEvent | ];
+		margin:
+			(BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0)
+]
+
+{ #category : #'api - widgets' }
+GtWardleyMapUtility class >> newContextMenuLabel [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 		margin: (BlInsets
 				top: 5
 				left: 5
 				bottom: 2
-				right: 0);
-		text: 'Color:'
+				right: 0)
 ]
 
 { #category : #'api - views' }
