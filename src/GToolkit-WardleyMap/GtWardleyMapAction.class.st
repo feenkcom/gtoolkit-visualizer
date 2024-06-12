@@ -72,6 +72,8 @@ GtWardleyMapAction >> isLinkToAnyLepiterPage [
 		ifNotNil: [ :aLinkedPage | ^ true ].
 	self lepiterPageNameOption
 		ifNotNil: [ :aLinkedPageName | ^ true ].
+	self lepiterPageUidOption
+		ifNotNil: [ :aLinkedPageUid | ^ true ].
 	^ false
 ]
 
@@ -81,6 +83,8 @@ GtWardleyMapAction >> isLinkToLepiterPage: aLePage [
 		ifNotNil: [ :aLinkedPage | aLePage = aLinkedPage ifTrue: [ ^ true ] ].
 	self lepiterPageNameOption
 		ifNotNil: [ :aLinkedPageName | aLePage title asString = aLinkedPageName ifTrue: [ ^ true ] ].
+	self lepiterPageUidOption
+		ifNotNil: [ :aLinkedPageUid | aLePage uid = aLinkedPageUid ifTrue: [ ^ true ] ].
 	^ false
 ]
 
@@ -121,6 +125,19 @@ GtWardleyMapAction >> lepiterPageOption [
 { #category : #'api - lepiter' }
 GtWardleyMapAction >> lepiterPageOption: aLePage [
 	self optionAt: #lepiterPage put: aLePage
+]
+
+{ #category : #'api - lepiter' }
+GtWardleyMapAction >> lepiterPageUidOption [
+	<return: #UUID>
+	^ self optionAt: #lepiterPageUid ifAbsent: [ nil ]
+]
+
+{ #category : #'api - lepiter' }
+GtWardleyMapAction >> lepiterPageUidOption: aLePageUid [
+	self
+		optionAt: #lepiterPageUid
+		put: (aLePageUid isString ifTrue: [ UUID fromString36: aLePageUid ] ifFalse: [ aLePageUid ])
 ]
 
 { #category : #'api - decoration' }
@@ -176,6 +193,24 @@ GtWardleyMapAction >> pageNamed: aLePageName [
 						message: ('Page not found: {1}' format: { aLePageName }).
 					aButton showNotification: aNotification ] ];
 		lepiterPageNameOption: aLePageName
+]
+
+{ #category : #'api - lepiter' }
+GtWardleyMapAction >> pageUid: aLePageUid [
+	self
+		icon: LeIcons lepiterPage;
+		tooltip: ('Navigate to a page');
+		action: [ :aButton | 
+			LeDatabasesRegistry defaultLogicalDatabase
+				pageWithID: aLePageUid
+				ifPresent: [ :aPage | 
+					aButton phlow spawnTool: (LePagePhlowTool page: aPage) ]
+				ifAbsent: [ 
+					| aNotification |
+					aNotification := GtNotificationMessage new 
+						message: ('Page not found: {1}' format: { aLePageUid }).
+					aButton showNotification: aNotification ] ];
+		lepiterPageUidOption: aLePageUid
 ]
 
 { #category : #initialization }
