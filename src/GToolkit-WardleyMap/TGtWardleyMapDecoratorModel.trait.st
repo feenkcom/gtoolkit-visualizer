@@ -17,21 +17,6 @@ TGtWardleyMapDecoratorModel >> decorateEdgeElement: aEdgeElement decoratorViewMo
 TGtWardleyMapDecoratorModel >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 ]
 
-{ #category : #'api - lepiter' }
-TGtWardleyMapDecoratorModel >> isLinkToAnyLepiterPage [
-	^ false
-]
-
-{ #category : #'api - lepiter' }
-TGtWardleyMapDecoratorModel >> isLinkToLepiterPage: aLePage [
-	^ false
-]
-
-{ #category : #'api - lepiter' }
-TGtWardleyMapDecoratorModel >> isLinkToLepiterPageNamed: aLePageName [
-	^ false
-]
-
 { #category : #initialization }
 TGtWardleyMapDecoratorModel >> parent: aParent [
 	
