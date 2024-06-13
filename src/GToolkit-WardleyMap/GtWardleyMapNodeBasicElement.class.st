@@ -43,7 +43,7 @@ GtWardleyMapNodeBasicElement >> initialize [
 					containerElement: self;
 					whenPulled: [ :aPulledElement :aNormalizedPosition | 
 						self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
-			addChild: labelElement as: #label.
+			addChild: labelElement.
 	self addChild: labelContainer as: #labelContainer.
 	
 	self beEllipseGeometry.
