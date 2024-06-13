@@ -5,22 +5,29 @@ Class {
 	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait',
 	#instVars : [
 		'labelElement',
-		'labelContainer'
+		'labelContainer',
+		'nodeElement'
 	],
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
 { #category : #initialization }
 GtWardleyMapNodeBasicElement >> beEllipseGeometry [
-	self geometry: BlEllipseGeometry new
+	self geometry: BlEllipseGeometry new.
+	self nodeElementDo: [ :anElement | 
+		anElement geometry: BlEllipseGeometry new ]
 ]
 
 { #category : #initialization }
 GtWardleyMapNodeBasicElement >> initialize [
 	super initialize.
-	self beEllipseGeometry.
 	self clipChildren: false.
 	self layout: BlFrameLayout new.
+	
+	"we style this node in order to keep some styling, e.g., hover, not affecting some children."
+	nodeElement := BrFrame new matchParent.
+	self addChild: nodeElement as: #node.
+	
 	labelElement := BrEditableLabel new
 			fitContent;
 			id: GtWardleyMapNodeLabelId;
@@ -37,8 +44,9 @@ GtWardleyMapNodeBasicElement >> initialize [
 					whenPulled: [ :aPulledElement :aNormalizedPosition | 
 						self wardleyMapNodeViewModel moveNodeLabelTo: aNormalizedPosition ]);
 			addChild: labelElement.
-	self addChild: labelContainer.
+	self addChild: labelContainer as: #labelContainer.
 	
+	self beEllipseGeometry.
 	self aptitude: (BrStyleCommonAptitude new
 			focused: [ :s | s border: (BlBorder paint: self theme editor focusedBorderColor width: 1) ]).
 	self
@@ -69,6 +77,11 @@ GtWardleyMapNodeBasicElement >> labelContainerDo: aBlock [
 { #category : #accessing }
 GtWardleyMapNodeBasicElement >> labelElementDo: aBlock [
 	labelElement ifNotNil: aBlock
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeBasicElement >> nodeElementDo: aBlock [
+	nodeElement ifNotNil: [ :anElement | aBlock cull: anElement cull: self ]
 ]
 
 { #category : #'event handling' }

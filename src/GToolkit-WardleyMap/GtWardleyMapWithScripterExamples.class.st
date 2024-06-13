@@ -116,7 +116,8 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_mouseOverLabelA [
 						label: 'Node A is highlighted';
 						value: [ :aNodeElement | aNodeElement background ]
 							equals: [ Color gray asBlBackground ];
-						id: (#node asBlocElementId indexed: 0) ].
+						id: (#node asBlocElementId indexed: 0);
+						/ #node ].
 
 			aStep
 				assertStep: [ :s | 
@@ -156,7 +157,8 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_mouseOverNodeA [
 						label: 'Node A is highlighted';
 						value: [ :aNodeElement | aNodeElement background ]
 							equals: [ GtWardleyMapConstants hoverColor asBlBackground ];
-						id: (#node asBlocElementId indexed: 0) ].
+						id: (#node asBlocElementId indexed: 0);
+						/ #node ].
 
 			aStep
 				assertStep: [ :s | 

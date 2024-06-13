@@ -66,33 +66,6 @@ GtWardleyMapAction >> icon: anObject [
 	icon := anObject
 ]
 
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> isLinkToAnyLepiterPage [
-	self lepiterPageOption
-		ifNotNil: [ :aLinkedPage | ^ true ].
-	self lepiterPageNameOption
-		ifNotNil: [ :aLinkedPageName | ^ true ].
-	^ false
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> isLinkToLepiterPage: aLePage [
-	self lepiterPageOption
-		ifNotNil: [ :aLinkedPage | aLePage = aLinkedPage ifTrue: [ ^ true ] ].
-	self lepiterPageNameOption
-		ifNotNil: [ :aLinkedPageName | aLePage title asString = aLinkedPageName ifTrue: [ ^ true ] ].
-	^ false
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> isLinkToLepiterPageNamed: aLePageName [
-	self lepiterPageOption
-		ifNotNil: [ :aLinkedPage | aLePageName = aLinkedPage title asString ifTrue: [ ^ true ] ].
-	self lepiterPageNameOption
-		ifNotNil: [ :aLinkedPageName | aLePageName = aLinkedPageName ifTrue: [ ^ true ] ].
-	^ false
-]
-
 { #category : #'api - decoration' }
 GtWardleyMapAction >> label [
 	^ label
@@ -101,26 +74,6 @@ GtWardleyMapAction >> label [
 { #category : #'api - decoration' }
 GtWardleyMapAction >> label: anObject [
 	label := anObject
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> lepiterPageNameOption [
-	^ self optionAt: #lepiterPageName ifAbsent: [ nil ]
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> lepiterPageNameOption: aLePageName [
-	self optionAt: #lepiterPageName put: aLePageName
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> lepiterPageOption [
-	^ self optionAt: #lepiterPage ifAbsent: [ nil ]
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> lepiterPageOption: aLePage [
-	self optionAt: #lepiterPage put: aLePage
 ]
 
 { #category : #'api - decoration' }
@@ -148,34 +101,6 @@ GtWardleyMapAction >> newButton [
 { #category : #'api - decoration' }
 GtWardleyMapAction >> noIcon [
 	self icon: nil
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> page: aLePage [
-	self
-		icon: LeIcons lepiterPage;
-		tooltip: ('Navigate to the page named {1}' format: { aLePage title });
-		action: [ :aButton | aButton phlow spawnTool: (LePagePhlowTool page: aLePage) ];
-		lepiterPageOption: aLePage
-]
-
-{ #category : #'api - lepiter' }
-GtWardleyMapAction >> pageNamed: aLePageName [
-	self
-		icon: LeIcons lepiterPage;
-		"label: (self buttonLabelFromString: aLePageName);"
-		tooltip: ('Navigate to the page named {1}' format: { aLePageName });
-		action: [ :aButton | 
-			LeDatabasesRegistry defaultLogicalDatabase
-				pageNamed: aLePageName
-				ifPresent: [ :aPage | 
-					aButton phlow spawnTool: (LePagePhlowTool page: aPage) ]
-				ifAbsent: [ 
-					| aNotification |
-					aNotification := GtNotificationMessage new 
-						message: ('Page not found: {1}' format: { aLePageName }).
-					aButton showNotification: aNotification ] ];
-		lepiterPageNameOption: aLePageName
 ]
 
 { #category : #initialization }
