@@ -147,6 +147,21 @@ GtWardleyMapEdgeModel >> notifyWidthChanged [
 	self propagateAnnouncement: (GtWardleyMapEdgeModelResized new edgeModel: self)
 ]
 
+{ #category : #printing }
+GtWardleyMapEdgeModel >> printOn: aStream [
+	aStream
+		nextPutAll: 'Edge {';
+		nextPutAll: ' from: ';
+		print: (self fromNode ifNotNil: #label);
+		nextPutAll: '; to: ';
+		print: (self toNode ifNotNil: #label);
+		nextPutAll: '; width: ';
+		print: self width;
+		nextPutAll: '; arrow: ';
+		print: self arrow;
+		nextPutAll: ' }'
+]
+
 { #category : #'api - arrow' }
 GtWardleyMapEdgeModel >> reverse [
 	| temp |

@@ -131,14 +131,16 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 	^ GtWardleyMapNodeElement new
 		wardleyMapNodeViewModel: aNodeViewModel;
 		id: (self newNodeId);
-		when: BlMouseOverEvent 
-		do: [ :anEvent | 
-			anEvent consumed: true.
-			anEvent currentTarget onHovered ];
-		when: BlMouseOutEvent 
-		do: [ :anEvent | 
-			anEvent consumed: true.
-			anEvent currentTarget onUnhovered ];
+		nodeElementDo: [ :anElement :aParentElement |
+			anElement
+				when: BlMouseOverEvent 
+				do: [ :anEvent | 
+					anEvent consumed: true.
+					aParentElement onHovered ];
+				when: BlMouseOutEvent 
+				do: [ :anEvent | 
+					anEvent consumed: true.
+					aParentElement onUnhovered ] ];
 		labelElementDo: [ :aLabelElement | 
 			aLabelElement 
 				when: BlMouseOverEvent 

@@ -6,16 +6,18 @@ Class {
 
 { #category : #'api - hooks' }
 GtWardleyMapNodeRegularStyleBuilder >> onHovered [
-	element border: BlBorder empty.
-	element background: GtWardleyMapConstants hoverColor.
+	element nodeElementDo: [ :anElement | 
+		anElement border: BlBorder empty.
+		anElement background: GtWardleyMapConstants hoverColor ].
 	element labelElementDo: [ :aLabel | 
 		aLabel aptitude foreground: GtWardleyMapConstants hoverColor ]
 ]
 
 { #category : #'api - hooks' }
 GtWardleyMapNodeRegularStyleBuilder >> onNodeColored [
-	element border: BlBorder empty.
-	element background: viewModel nodeColor.
+	element nodeElementDo: [ :anElement | 
+		anElement  border: BlBorder empty.
+		anElement background: viewModel nodeColor ].
 	element labelElementDo: [ :aLabel | 
 		aLabel aptitude foreground: viewModel labelColor ]
 ]
