@@ -1,6 +1,9 @@
 Class {
 	#name : #GtPlotterVerticalTicksAndLabelsStencil,
 	#superclass : #GtPlotterTicksAndLabelsStencil,
+	#instVars : [
+		'eventHandler'
+	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
@@ -33,6 +36,12 @@ GtPlotterVerticalTicksAndLabelsStencil >> create [
 ]
 
 { #category : #accessing }
+GtPlotterVerticalTicksAndLabelsStencil >> initialize [
+	super initialize.
+	eventHandler := GtPlotterScatterFocusYHandler new
+]
+
+{ #category : #accessing }
 GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 	^ GtPlotterVerticalTickLabelsElement new
 		scale: scatterChart scaleY;
@@ -53,11 +62,18 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
+	eventHandler scatterChart: scatterChart.
 	^ GtPlotterVerticalTicksElement new
 		scale: scatterChart scaleY;
-		tickStyle: [ :anElement | anElement
-			height: 2;
-			background: (Color gray alpha: 0.8) ];
+		tickElement: [ :aGtPlotterContext |
+			BlElement new
+				in: [:e | e userData 
+					at: #originalValue
+					put: aGtPlotterContext originalValue ];
+				addEventHandler: eventHandler;
+				height: 2;
+				background: (Color gray alpha: 0.8);
+				yourself ];
 		ticks: scatterChart ticksY
 ]
 

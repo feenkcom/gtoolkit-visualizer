@@ -22,7 +22,8 @@ Class {
 		'valuesX',
 		'valuesY',
 		'axisXStencil',
-		'axisYStencil'
+		'axisYStencil',
+		'dots'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
@@ -43,7 +44,7 @@ GtPlotterScatterChart >> create [
 	| aContainer |
 
 	self initializeScales.
-
+	dots := OrderedCollection new.
 	aContainer := BrHorizontalGrid new
 		cellSpacing: 0;
 		columnCount: 2;
@@ -82,6 +83,11 @@ GtPlotterScatterChart >> dotElement [
 { #category : #accessing }
 GtPlotterScatterChart >> dotElement: aStencil [
 	dotElementStencil := aStencil asStencilBuilder: GtPlotterScaleBasedStencilBuilder
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> dots [
+	^ dots
 ]
 
 { #category : #accessing }
@@ -243,7 +249,7 @@ GtPlotterScatterChart >> newContentElement [
 		matchParent.
 	
 	data groupsCollect: [ :aGroup |
-		aContainer addChild: (self newPointElementFor: aGroup) ].
+		aContainer addChild: (self newPointsElementFor: aGroup) ].
 
 	^ aContainer
 ]
@@ -267,17 +273,20 @@ GtPlotterScatterChart >> newNoDataElement [
 
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> newPointElementFor: aGroup [
-	| container |
+	| container dotElements |
 	container := BrFrame new.
 	container matchParent.
 	container layout: BlRelativePositionLayout new.
-	container addChildren: (aGroup collectWithIndex: [:eachValue :index |
+	dotElements := aGroup collectWithIndex: [:eachValue :index |
 		| positionNormalized element context |
 		positionNormalized := self scaledPoint: eachValue .
 		context := GtPlotterScaleContext new
 			index: index;
 			originalValue: eachValue.
 		element := (dotElementStencil scaleContext: context) asElement.
+		element userData 
+			at: #originalY put: (valueY value: eachValue);
+			at: #originalX put: (valueX value: eachValue).
 		element
 			when: BlClickEvent do: [ :anEvent |
 				anEvent consumed: true.
@@ -288,7 +297,48 @@ GtPlotterScatterChart >> newPointElementFor: aGroup [
 			];
 			yourself
 		
-	]).
+	].
+	dots addAll: dotElements.
+	container addChildren: dotElements.
+	^ container
+
+]
+
+{ #category : #'api - instantiation' }
+GtPlotterScatterChart >> newPointElementFor: eachValue index: index [
+	| positionNormalized element context |
+	positionNormalized := self scaledPoint: eachValue .
+	context := GtPlotterScaleContext new
+		index: index;
+			originalValue: eachValue.
+	element := (dotElementStencil scaleContext: context) asElement.
+	element userData 
+		at: #originalY put: (valueY value: eachValue);
+		at: #originalX put: (valueX value: eachValue).
+	element 
+		when: BlClickEvent do: [ :anEvent |
+			anEvent consumed: true.
+			anEvent currentTarget phlow spawnObject: eachValue ];
+		constraintsDo: [:c |
+			c relativePosition percent: positionNormalized
+		].
+	^ element
+
+]
+
+{ #category : #'api - instantiation' }
+GtPlotterScatterChart >> newPointsElementFor: aGroup [
+	| container dotElements |
+	container := BrFrame new.
+	container matchParent.
+	container layout: BlRelativePositionLayout new.
+	dotElements := aGroup collectWithIndex: [:eachValue :index |
+		(self newPointElementFor: eachValue index: index)
+			background: aGroup color;
+			yourself
+	].
+	dots addAll: dotElements.
+	container addChildren: dotElements.
 	^ container
 
 ]

@@ -1,6 +1,9 @@
 Class {
 	#name : #GtPlotterHorizontalTicksAndLabelsStencil,
 	#superclass : #GtPlotterTicksAndLabelsStencil,
+	#instVars : [
+		'eventHandler'
+	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
@@ -34,6 +37,12 @@ GtPlotterHorizontalTicksAndLabelsStencil >> create [
 ]
 
 { #category : #accessing }
+GtPlotterHorizontalTicksAndLabelsStencil >> initialize [
+	super initialize.
+	eventHandler := GtPlotterScatterFocusXHandler new
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 	^ GtPlotterHorizontalTickLabelsElement new
 		scale: scatterChart scaleX;
@@ -45,12 +54,18 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
-	
+	eventHandler scatterChart: scatterChart.
 	^ GtPlotterHorizontalTicksElement new
 		scale: scatterChart scaleX;
-		tickStyle: [ :anElement | anElement
-			width: 2;
-			background: (Color gray alpha: 0.8) ];
+		tickElement: [ :aGtPlotterContext |
+			BlElement new
+				in: [:e | e userData 
+					at: #originalValue
+					put: aGtPlotterContext originalValue ];
+				addEventHandler: eventHandler;
+				width: 2;
+				background: (Color gray alpha: 0.8);
+				yourself ];
 		ticks: scatterChart ticksX
 ]
 
