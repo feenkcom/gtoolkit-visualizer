@@ -18,6 +18,25 @@ GtPlotterHorizontalTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
 ]
 
 { #category : #accessing }
+GtPlotterHorizontalTicksAndLabelsStencil >> buildDefault [
+	| aContainer |
+	aContainer := BrVerticalPane new
+		vFitContent;
+		hMatchParent;
+		clipChildren: false.
+	self addAxisXLineElementOn: aContainer.
+	aContainer
+		addChildren: { 
+			self newAxisXTicksElement height: 10.
+			self newAxisXTickLabelsElement. }.
+		
+	scatterChart titleX ifNotNil: [ 
+		aContainer addChild: self newAxisXTitleElement ].
+	
+	^ aContainer
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsStencil >> create [
 	| aContainer |
 	aContainer := BrVerticalPane new
@@ -80,4 +99,10 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTitleElement [
 		text: scatterChart titleX asRopedText;
 		constraintsDo: [ :c |
 			c linear horizontal alignRight ]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalTicksAndLabelsStencil >> reset [
+	super reset.
+	eventHandler := nil
 ]
