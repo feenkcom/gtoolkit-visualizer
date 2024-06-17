@@ -59,6 +59,19 @@ GtWardleyMapUtility class >> computePipelineViewModelVerticalTopOffset: aPipelin
 	^ self computePipelineModelVerticalTopOffset: aPipelineNodeViewModel wardleyMapNodeModel
 ]
 
+{ #category : #'api - context menu' }
+GtWardleyMapUtility class >> contextMenuHandlerPositionOnEvent: anEvent [
+	anEvent target
+		allParentsDo: [ :aParent | 
+			(aParent isKindOf: BrAnchoredElement)
+				ifTrue: [ aParent
+						childWithId: #handle
+						ifFound: [ :aHandle | ^ aHandle bounds inSpace position ]
+						ifNone: [ ^ anEvent position ] ] ].
+
+	^ anEvent position
+]
+
 { #category : #'api - views' }
 GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoordiante: aTopLeftPoint [ 
 	"Conversion is just an estimate. 
@@ -207,6 +220,15 @@ GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel i
 					ifTrue: [ aMaxInnerNodeModel := eachNodeModel ] ] ].
 	
 	^ (aMinInnerNodeModel x - aConstant max: 0) @ (aMaxInnerNodeModel x + aConstant min: 1).
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapUtility class >> normalizedItemPositionOnEvent: anEvent canvas: aCanvas [
+	| aGlobalPosition |
+	(aCanvas width isZero or: [ aCanvas height isZero ]) ifTrue: [ ^ nil ].
+
+	aGlobalPosition := self contextMenuHandlerPositionOnEvent: anEvent.
+	^ (aCanvas globalPointToLocal: aGlobalPosition) / aCanvas extent
 ]
 
 { #category : #'api - views' }

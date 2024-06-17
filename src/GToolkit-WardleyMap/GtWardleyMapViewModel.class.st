@@ -69,6 +69,12 @@ GtWardleyMapViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - context menu' }
+GtWardleyMapViewModel >> contextMenuItems [
+	<return: #Collection of: #TGtWardleyMapContextMenuItem>
+	^ self wardleyMapModel contextMenuItems
+]
+
 { #category : #initialization }
 GtWardleyMapViewModel >> createEdgeViewModelFor: anEdgeModel [
 	^ GtWardleyMapEdgeViewModel new
@@ -154,6 +160,15 @@ GtWardleyMapViewModel >> evolveViewModels [
 	<return: #Collection of: #GtWardleyMapEvolveViewModel>
 
 	^ evolveViewModels
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtContextMenuItemsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Context menu';
+		object: [ self wardleyMapModel ];
+		view: #gtContextMenuItemsFor:
 ]
 
 { #category : #'gt - extensions' }

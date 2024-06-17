@@ -12,8 +12,8 @@ Each model entity that uses {{gtClass:TGtWardleyMapVisitable}} is able to be vis
 Class {
 	#name : #GtWardleyMapModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions + TGtWithWardleyContextMenuItems',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait + TGtWithWardleyContextMenuItems classTrait',
 	#instVars : [
 		'announcer',
 		'nodes',
@@ -386,6 +386,108 @@ GtWardleyMapModel >> isTitleVisible: aBoolean [
 		
 	isTitleVisible := aBoolean.
 	self notifyTitleVisibilityChanged
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemAddItemLabel [
+	<wardleyContextMenuItem: 1>
+	^ GtWardleyMapLabelMenuItem new text: 'Add item:'
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemAddNodeButton [
+	<wardleyContextMenuItem: 3>
+	^ GtWardleyMapNodeButtonWithLabelMenuItem new
+		label: 'Add node';
+		action: [ :aContextMenuItem :aBrButton :aBrButtonModel :anEvent | 
+			| aNormalizedPosition |
+			anEvent consumed: true.
+			aNormalizedPosition := GtWardleyMapUtility
+					normalizedItemPositionOnEvent: anEvent
+					canvas: aContextMenuItem canvasElement.
+			aNormalizedPosition ifNotNil: [ 
+				aContextMenuItem wardleyMapViewModel 
+					addNewNodeAt: aNormalizedPosition ].
+			aContextMenuItem editorElement fireEvent: BrContextMenuHideWish new ]
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemAddNoteButton [
+	<wardleyContextMenuItem: 2>
+	^ GtWardleyMapNodeButtonWithLabelMenuItem new
+		label: 'Add note';
+		action: [ :aContextMenuItem :aBrButton :aBrButtonModel :anEvent | 
+			| aNormalizedPosition |
+			anEvent consumed: true.
+			aNormalizedPosition := GtWardleyMapUtility
+					normalizedItemPositionOnEvent: anEvent
+					canvas: aContextMenuItem canvasElement.
+			aNormalizedPosition ifNotNil: [ 
+				aContextMenuItem wardleyMapViewModel 
+					addNewNoteAt: aNormalizedPosition ].
+			aContextMenuItem editorElement fireEvent: BrContextMenuHideWish new ]
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemCreateTopicSection [
+	<wardleyContextMenuItem: 20>
+	^ GtWardleyMapStencilMenuItem new
+		condition: [ :aContextMenuItem | aContextMenuItem isLlmConnected ];
+		block: [ :aContextMenuItem | 
+			| editor |
+			BrVerticalPane new
+				fitContent;
+				margin: (BlInsets top: 10);
+				addChild: (BrLabel new
+						aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+						text: 'Create nodes on topic:');
+				addChild: (BrHorizontalPane new fitContent
+						margin: (BlInsets top: 3);
+						addChild: (editor := BrEditor new
+									margin: (BlInsets right: 5);
+									hExact: 150;
+									vFitContent;
+									geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
+									aptitude: BrGlamorousRegularEditorAptitude new
+											+ (BrStyleCommonAptitude new
+													default: [ :aStyle | 
+														aStyle
+															border: (BlBorder paint: BrGlamorousColors disabledButtonBorderColor width: 1) ]));
+						addChild: (BrButton new
+								aptitude: BrGlamorousButtonWithIconAptitude;
+								icon: BrGlamorousVectorIcons accept;
+								label: 'Set topic';
+								action: [ aContextMenuItem llmCreator
+										announce: (GtLlmSendActionToChat action: 'Create a set of nodes' arguments: {editor text}).
+									aContextMenuItem editorElement fireEvent: BrContextMenuHideWish new ])) ]
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemMapVisibilityLabel [
+	<wardleyContextMenuItem: 4>
+	^ GtWardleyMapLabelMenuItem new text: 'Map visibility:'
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemSectionsVisibilityButton [
+	<wardleyContextMenuItem: 6>
+	^ GtWardleyMapNodeButtonWithLabelMenuItem new
+		label: 'Switch sections';
+		condition: [ :aContextMenuItem | 
+			aContextMenuItem canvasWithSectionsElement isNotNil ];
+		action: [ :aContextMenuItem :aBrButton :aBrButtonModel :anEvent | 
+			| aCanvasParent |
+			aCanvasParent := aContextMenuItem canvasWithSectionsElement.
+			aCanvasParent hasEvolutionAxisLayer
+				ifFalse: [ aCanvasParent evolutionSections: {
+					'genesis'. 'custom built'. 'product (+rental)'. 'commodity' } ]
+				ifTrue: [ aCanvasParent removeChildAt: 1 ] ]
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapModel >> menuItemTitleVisibilityPicker [
+	<wardleyContextMenuItem: 5>
+	^ GtWardleyMapTitleVisiblityMenuItem new
 ]
 
 { #category : #private }
