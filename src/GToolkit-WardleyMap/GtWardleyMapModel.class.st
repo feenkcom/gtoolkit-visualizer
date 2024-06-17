@@ -12,8 +12,8 @@ Each model entity that uses {{gtClass:TGtWardleyMapVisitable}} is able to be vis
 Class {
 	#name : #GtWardleyMapModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait',
 	#instVars : [
 		'announcer',
 		'nodes',

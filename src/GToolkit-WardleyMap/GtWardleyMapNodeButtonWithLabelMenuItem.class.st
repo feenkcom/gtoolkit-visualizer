@@ -34,8 +34,8 @@ GtWardleyMapNodeButtonWithLabelMenuItem >> condition [
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeButtonWithLabelMenuItem >> condition: anObject [
-	condition := anObject
+GtWardleyMapNodeButtonWithLabelMenuItem >> condition: aBlock [
+	condition := aBlock
 ]
 
 { #category : #converting }
@@ -49,7 +49,17 @@ GtWardleyMapNodeButtonWithLabelMenuItem >> createElementUsingContext: aContextMe
 			self action cull: aContextMenuItem cull: aButtonElement cull: aButtonModel cull: anEvent ])
 ]
 
-{ #category : #accessing }
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeButtonWithLabelMenuItem >> gtItemName [
+	^ self label
+		ifNil: [ 'Button' ]
+		ifNotNil: [ :aText | 
+			'Button: ' asRopedText
+				foreground: BrGlamorousColors disabledButtonTextColor;
+				append: ('{1}' format: {aText}) asRopedText ]
+]
+
+{ #category : #'as yet unclassified' }
 GtWardleyMapNodeButtonWithLabelMenuItem >> label [
 	^ label ifNil: [ 'Action' ]
 ]

@@ -12,3 +12,8 @@ GtWardleyMapNodeSizePickerMenuItem >> createElementUsingContext: aContextMenuIte
 	^ GtWardleyMapNodeSizePickerElement new
 		wardleyMapNodeViewModel: aContextMenuItem wardleyMapNodeViewModel
 ]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeSizePickerMenuItem >> gtItemName [
+	^ 'Size picker'
+]

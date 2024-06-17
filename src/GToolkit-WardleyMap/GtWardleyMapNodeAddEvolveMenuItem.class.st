@@ -12,3 +12,8 @@ GtWardleyMapNodeAddEvolveMenuItem >> createElementUsingContext: aContextMenuItem
 	^ GtWardleyMapNodeAddEvolveButton new
 		wardleyMapNodeViewModel: aContextMenuItem wardleyMapNodeViewModel
 ]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeAddEvolveMenuItem >> gtItemName [
+	^ 'Add evolve node'
+]

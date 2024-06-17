@@ -12,3 +12,8 @@ GtWardleyMapNodePipelineVisiblityMenuItem >> createElementUsingContext: aContext
 	^ GtWardleyMapPipelineVisibilityCheckbox new
 		wardleyMapNodeViewModel: aContextMenuItem wardleyMapNodeViewModel
 ]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodePipelineVisiblityMenuItem >> gtItemName [
+	^ 'Pipeline visibility checker'
+]

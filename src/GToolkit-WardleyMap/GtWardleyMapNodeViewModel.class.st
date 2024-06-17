@@ -58,17 +58,10 @@ GtWardleyMapNodeViewModel >> changeColorTo: aColor [
 	self wardleyMapNodeModel color: aColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'api - context menu' }
 GtWardleyMapNodeViewModel >> contextMenuItems [
-	| allPragmas |
-	allPragmas := Pragma
-		allNamed: #wardleyContextMenuItem:
-		from: self class
-		to: GtWardleyMapNodeViewModel
-		sortedByArgument: 1.
-		
-	^ allPragmas collect: [ :eachPragma | 
-		self perform: eachPragma methodSelector ]
+	<return: #Collection of: #TGtWardleyMapContextMenuItem>
+	^ self wardleyMapNodeModel contextMenuItems
 ]
 
 { #category : #'api - accessing' }
@@ -117,6 +110,15 @@ GtWardleyMapNodeViewModel >> evolveViewModel [
 { #category : #accessing }
 GtWardleyMapNodeViewModel >> evolveViewModel: anObject [
 	evolveViewModel := anObject
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeViewModel >> gtContextMenuItemsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Context menu';
+		object: [ self wardleyMapNodeModel ];
+		view: #gtContextMenuItemsFor:
 ]
 
 { #category : #'gt - extensions' }
@@ -194,62 +196,6 @@ GtWardleyMapNodeViewModel >> labelCoordinateX [
 { #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> labelCoordinateY [
 	^ self labelCoordinate y
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodeAddEvolveButton [
-	<wardleyContextMenuItem: 7>
-	
-	^ GtWardleyMapNodeAddEvolveMenuItem new
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodeColorLabel [
-	<wardleyContextMenuItem: 1>
-	
-	^ GtWardleyMapLabelMenuItem new text: 'Node color:'.
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodeColorPicker [
-	<wardleyContextMenuItem: 2>
-	
-	^ GtWardleyMapColorPickerMenuItem new
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodeDeleteButton [
-	<wardleyContextMenuItem: 100>
-	
-	^ GtWardleyMapNodeDeleteMenuItem new
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodePipelineLabel [
-	<wardleyContextMenuItem: 5>
-	
-	^ GtWardleyMapLabelMenuItem new text: 'Pipeline:'.
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodePipelineVisibilityPicker [
-	<wardleyContextMenuItem: 6>
-	
-	^ GtWardleyMapNodePipelineVisiblityMenuItem new
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodeSizeLabel [
-	<wardleyContextMenuItem: 3>
-	
-	^ GtWardleyMapLabelMenuItem new text: 'Node size:'.
-]
-
-{ #category : #'api - context menu' }
-GtWardleyMapNodeViewModel >> menuItemNodeSizePicker [
-	<wardleyContextMenuItem: 4>
-	
-	^ GtWardleyMapNodeSizePickerMenuItem new
 ]
 
 { #category : #'api - node' }

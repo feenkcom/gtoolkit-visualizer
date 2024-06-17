@@ -89,6 +89,11 @@ GtWardleyMapNoteModel >> maturity [
 	^ self x
 ]
 
+{ #category : #'api - coordinate' }
+GtWardleyMapNoteModel >> maturity: aNumber [
+	self x: aNumber
+]
+
 { #category : #'api - color' }
 GtWardleyMapNoteModel >> notifyColored [
 	self propagateAnnouncement: (GtWardleyMapNoteModelColored new noteModel: self)

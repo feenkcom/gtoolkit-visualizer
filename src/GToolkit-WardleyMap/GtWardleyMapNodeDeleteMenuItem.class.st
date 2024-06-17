@@ -15,3 +15,8 @@ GtWardleyMapNodeDeleteMenuItem >> createElementUsingContext: aContextMenuItem [
 			aContextMenuItem wardleyMapNodeViewModel removeFromMap.
 			aButton fireEvent: BrContextMenuHideWish new ]
 ]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeDeleteMenuItem >> gtItemName [
+	^ 'Delete node button'
+]

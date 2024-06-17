@@ -19,3 +19,8 @@ GtWardleyMapColorPickerMenuItem >> createElementUsingContext: aContextMenuItem [
 			aContextMenuItem wardleyMapNodeViewModel changeColorTo: aColor.
 			aContextMenuItem wardleyMapViewModel defaultColor: aColor ]
 ]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapColorPickerMenuItem >> gtItemName [
+	^ 'Color picker'
+]
