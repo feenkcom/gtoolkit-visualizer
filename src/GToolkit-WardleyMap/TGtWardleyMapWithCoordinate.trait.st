@@ -44,5 +44,9 @@ TGtWardleyMapWithCoordinate >> y [
 
 { #category : #'api - coordinate' }
 TGtWardleyMapWithCoordinate >> y: aNumber [
+	"Note: y-value is NOT Wardley script visibility value.
+	We reuse the coordinate code in couple of cases, and only some of them
+	have relation with the Wardley visibility value (visibility == 1 - y)."
+
 	self coordinate: (self coordinate x @ aNumber)
 ]

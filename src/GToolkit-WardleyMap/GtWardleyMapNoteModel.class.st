@@ -126,3 +126,8 @@ GtWardleyMapNoteModel >> printOn: aStream [
 GtWardleyMapNoteModel >> visibility [
 	^ 1 - self y
 ]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNoteModel >> visibility: aNumber [
+	self y: 1 - aNumber
+]

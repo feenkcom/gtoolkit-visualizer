@@ -587,3 +587,8 @@ GtWardleyMapNodeModel >> removeInnerNodes [
 GtWardleyMapNodeModel >> visibility [
 	^ 1 - self y
 ]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> visibility: aNumber [
+	self y: 1 - aNumber
+]
