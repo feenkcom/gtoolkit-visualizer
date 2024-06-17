@@ -1,9 +1,6 @@
 Class {
 	#name : #GtPlotterVerticalTicksAndLabelsStencil,
 	#superclass : #GtPlotterTicksAndLabelsStencil,
-	#instVars : [
-		'eventHandler'
-	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
@@ -19,24 +16,6 @@ GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
 
 { #category : #accessing }
 GtPlotterVerticalTicksAndLabelsStencil >> buildDefault [
-	| aContainer |
-	aContainer := BrHorizontalPane new
-		hFitContent;
-		vMatchParent;
-		clipChildren: false.
-	scatterChart titleY ifNotNil: [ 
-		aContainer addChild: self newAxisYTitleElement ].
-	
-	aContainer
-		addChildren: { 
-			self newAxisYTickLabelsElement.
-			self newAxisYTicksElement width: 10. }.
-	self addAxisYElementOn: aContainer.
-	^ aContainer
-]
-
-{ #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> create [
 	| aContainer |
 	aContainer := BrHorizontalPane new
 		hFitContent;
@@ -114,10 +93,4 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTitleElement [
 				c accountTransformation ];
 			transformDo: [ :t | 
 				t rotateBy: 270 ])
-]
-
-{ #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> reset [
-	super reset.
-	eventHandler := nil.
 ]

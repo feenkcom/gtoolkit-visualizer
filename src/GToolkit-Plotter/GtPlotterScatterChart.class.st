@@ -232,14 +232,14 @@ GtPlotterScatterChart >> minY: anObject [
 GtPlotterScatterChart >> newAxisXElement [
 	^ axisXStencil
 		scatterChart: self;
-		create
+		build
 ]
 
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> newAxisYElement [
 	^ axisYStencil
 		scatterChart: self;
-		create
+		build
 ]
 
 { #category : #'api - instantiation' }
