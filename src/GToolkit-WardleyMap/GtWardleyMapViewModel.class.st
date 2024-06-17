@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapViewModel,
 	#superclass : #Object,
-	#traits : 'TGtWithWardleyMapModel + TGtAnnouncer',
-	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtWithWardleyMapModel + TGtAnnouncer + TGtOptions',
+	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait + TGtOptions classTrait',
 	#instVars : [
 		'announcer',
 		'nodeViewModels',

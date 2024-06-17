@@ -89,6 +89,11 @@ GtWardleyMapNoteModel >> maturity [
 	^ self x
 ]
 
+{ #category : #'api - coordinate' }
+GtWardleyMapNoteModel >> maturity: aNumber [
+	self x: aNumber
+]
+
 { #category : #'api - color' }
 GtWardleyMapNoteModel >> notifyColored [
 	self propagateAnnouncement: (GtWardleyMapNoteModelColored new noteModel: self)
@@ -125,4 +130,9 @@ GtWardleyMapNoteModel >> printOn: aStream [
 { #category : #'api - coordinate' }
 GtWardleyMapNoteModel >> visibility [
 	^ 1 - self y
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNoteModel >> visibility: aNumber [
+	self y: 1 - aNumber
 ]

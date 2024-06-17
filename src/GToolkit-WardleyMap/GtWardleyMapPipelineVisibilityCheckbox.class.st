@@ -1,69 +1,70 @@
 Class {
 	#name : #GtWardleyMapPipelineVisibilityCheckbox,
-	#superclass : #BrHorizontalPane,
-	#instVars : [
-		'checkbox',
-		'label',
-		'disabledLabel'
-	],
+	#superclass : #GtWardleyMapCheckbox,
+	#traits : 'TGtWithWardleyMapNodeViewModel',
+	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait',
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
-
-{ #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> checked: aBoolean [
-	checkbox checked: aBoolean
-]
-
-{ #category : #accessing }
-GtWardleyMapPipelineVisibilityCheckbox >> enabled: aBoolean [
-	checkbox enabled: aBoolean.
-
-	aBoolean
-		ifTrue: [ checkbox visibility: BlVisibility visible.
-			label visibility: BlVisibility visible.
-			disabledLabel visibility: BlVisibility gone ]
-		ifFalse: [ checkbox visibility: BlVisibility gone.
-			label visibility: BlVisibility gone.
-			disabledLabel visibility: BlVisibility visible ]
-]
 
 { #category : #initialization }
 GtWardleyMapPipelineVisibilityCheckbox >> initialize [
 	super initialize.
 
-	checkbox := BrCheckbox new
-			aptitude: BrGlamorousCheckboxAptitude
-					+ (BrGlamorousWithLabelTooltipAptitude new text: 'Toggle pipeline visibility');
-			checked: false;
-			whenCheckedDo: [ :anEvent |  ];
-			whenUncheckedDo: [ :anEvent |  ];
-			margin: (BlInsets right: 3).
-
-	label := BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-			text: 'visible pipeline'.
-			
-	disabledLabel := BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray; italic);
-			text: 'Cannot have pipelines';
-			visibility: BlVisibility gone.
-
-	self addChild: checkbox.
-	self addChild: label.
-	self addChild: disabledLabel.
-
-	self fitContent.
-	self alignCenterLeft
+	self
+		enabled: true;
+		checked: false;
+		enabledLabel: 'visible pipeline';
+		disabledLabel: 'Cannot have pipelines';
+		whenCheckedDo: [ :anEvent | self onCheckedDo: anEvent ];
+		whenUncheckedDo: [ :anEvent | self onUncheckedDo: anEvent  ];
+		margin: (BlInsets
+				top: 5
+				left: 5
+				bottom: 2
+				right: 0)
 ]
 
-{ #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> whenCheckedDo: aBlock [
-	"aBlock with one argument, receiving an event"
-	checkbox whenCheckedDo: aBlock
+{ #category : #'event handling' }
+GtWardleyMapPipelineVisibilityCheckbox >> onCheckedDo: anEvent [
+	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	self wardleyMapNodeViewModel isPipelineVisible: true
 ]
 
-{ #category : #initialization }
-GtWardleyMapPipelineVisibilityCheckbox >> whenUncheckedDo: aBlock [
-	"aBlock with one argument, receiving an event"
-	checkbox whenUncheckedDo: aBlock
+{ #category : #'event handling' }
+GtWardleyMapPipelineVisibilityCheckbox >> onPipelineVisibilityChanged [
+	self enabled: self wardleyMapNodeViewModel pipelineNodeViewModel isNil.
+	self checked: self wardleyMapNodeViewModel isPipelineVisible
+]
+
+{ #category : #'event handling' }
+GtWardleyMapPipelineVisibilityCheckbox >> onUncheckedDo: anEvent [
+	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
+	self wardleyMapNodeViewModel isPipelineVisible: false
+]
+
+{ #category : #'api - wardley map node view model' }
+GtWardleyMapPipelineVisibilityCheckbox >> onWardleyMapNodeViewModelChanged [
+	"Is sent when a new WardleyMapNode view model is assigned to the element"
+
+	self onPipelineVisibilityChanged
+]
+
+{ #category : #'api - wardley map node view model' }
+GtWardleyMapPipelineVisibilityCheckbox >> subscribeToWardleyMapNodeViewModel [
+	"Is sent after a new WardleyMapNode view model is assigned to the element.
+	It is required to unsubscribe from the view model or domain model by implementing
+	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
+
+	self wardleyMapNodeViewModel weak
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged
+		send: #onPipelineVisibilityChanged
+		to: self
+]
+
+{ #category : #'api - wardley map node view model' }
+GtWardleyMapPipelineVisibilityCheckbox >> unsubscribeFromWardleyMapNodeViewModel [
+	"Is sent before a new WardleyMapNode view model is assigned to the element.
+	Elements that subscribe to WardleyMapNode view model in domain model are required to implement this methods"
+
+	self wardleyMapNodeViewModel unsubscribe: self
 ]

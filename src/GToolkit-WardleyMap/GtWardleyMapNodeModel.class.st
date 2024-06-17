@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNodeModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtWithWardleyMapDecoratorModels',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtWithWardleyMapDecoratorModels classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithParent + TGtWardleyMapWithCoordinate + TGtWardleyMapWithColor + TGtWardleyMapWithSize + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtWithWardleyMapDecoratorModels + TGtWithWardleyContextMenuItems',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapWithSize classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtWithWardleyMapDecoratorModels classTrait + TGtWithWardleyContextMenuItems classTrait',
 	#instVars : [
 		'announcer',
 		'labelModel',
@@ -405,6 +405,65 @@ GtWardleyMapNodeModel >> maturity [
 	^ self x
 ]
 
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> maturity: aNumber [
+	self x: aNumber
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeAddEvolveButton [
+	<wardleyContextMenuItem: 7>
+	^ GtWardleyMapNodeAddEvolveMenuItem new
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeColorLabel [
+	<wardleyContextMenuItem: 1>
+	^ GtWardleyMapLabelMenuItem new text: 'Node color:'
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeColorPicker [
+	<wardleyContextMenuItem: 2>
+	^ GtWardleyMapColorPickerMenuItem new
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeDangerZoneLabel [
+	<wardleyContextMenuItem: 500>
+	^ GtWardleyMapLabelMenuItem new text: 'Danger zone:'
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeDeleteButton [
+	<wardleyContextMenuItem: 550>
+	^ GtWardleyMapNodeDeleteMenuItem new
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodePipelineLabel [
+	<wardleyContextMenuItem: 5>
+	^ GtWardleyMapLabelMenuItem new text: 'Pipeline:'
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodePipelineVisibilityPicker [
+	<wardleyContextMenuItem: 6>
+	^ GtWardleyMapNodePipelineVisiblityMenuItem new
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeSizeLabel [
+	<wardleyContextMenuItem: 3>
+	^ GtWardleyMapLabelMenuItem new text: 'Node size:'
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapNodeModel >> menuItemNodeSizePicker [
+	<wardleyContextMenuItem: 4>
+	^ GtWardleyMapNodeSizePickerMenuItem new
+]
+
 { #category : #'api - color' }
 GtWardleyMapNodeModel >> notifyColored [
 	self propagateAnnouncement: (GtWardleyMapNodeModelColored new nodeModel: self)
@@ -586,4 +645,9 @@ GtWardleyMapNodeModel >> removeInnerNodes [
 { #category : #'api - coordinate' }
 GtWardleyMapNodeModel >> visibility [
 	^ 1 - self y
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> visibility: aNumber [
+	self y: 1 - aNumber
 ]
