@@ -123,7 +123,13 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 	^ GtWardleyMapNodeEditorElement new
 		wardleyMapViewModel: self wardleyMapViewModel;
-		wardleyMapNodeViewModel: aNodeViewModel
+		wardleyMapNodeViewModel: aNodeViewModel;
+		when: GtPhlowObjectToSpawn
+			do: [ :anEvent | 
+				self fireEvent: (GtPhlowObjectToSpawn new
+							previousSpawnEvent: anEvent;
+							tool: anEvent tool;
+							sourceElement: anEvent target) ]
 ]
 
 { #category : #initialization }
