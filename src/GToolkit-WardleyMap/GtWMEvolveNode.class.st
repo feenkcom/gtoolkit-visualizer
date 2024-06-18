@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'evolveToken',
 		'name',
-		'maturity',
+		'evolution',
 		'decorators',
 		'label'
 	],
@@ -31,6 +31,31 @@ GtWMEvolveNode >> decorators: anOrderedCollection [
 	self setParents: self decorators to: nil.
 	decorators := anOrderedCollection.
 	self setParents: self decorators to: self
+]
+
+{ #category : #generated }
+GtWMEvolveNode >> evolution [
+	^ evolution
+]
+
+{ #category : #generated }
+GtWMEvolveNode >> evolution: aSmaCCToken [
+	evolution := aSmaCCToken
+]
+
+{ #category : #accessing }
+GtWMEvolveNode >> evolutionNumber [
+	<return: #Number or: nil>
+	| anXString anXNumber |
+	anXString := self evolution ifNotNil: #source.
+
+	anXString ifNil: [ ^ nil ].
+
+	anXNumber := anXString asNumber.
+
+	anXNumber ifNil: [ ^ nil ].
+
+	^ anXNumber
 ]
 
 { #category : #generated }
@@ -62,31 +87,6 @@ GtWMEvolveNode >> label: aGtWMLabelNode [
 ]
 
 { #category : #generated }
-GtWMEvolveNode >> maturity [
-	^ maturity
-]
-
-{ #category : #generated }
-GtWMEvolveNode >> maturity: aSmaCCToken [
-	maturity := aSmaCCToken
-]
-
-{ #category : #accessing }
-GtWMEvolveNode >> maturityNumber [
-	<return: #Number or: nil>
-	| anXString anXNumber |
-	anXString := self maturity ifNotNil: #source.
-
-	anXString ifNil: [ ^ nil ].
-
-	anXNumber := anXString asNumber.
-
-	anXNumber ifNil: [ ^ nil ].
-
-	^ anXNumber
-]
-
-{ #category : #generated }
 GtWMEvolveNode >> name [
 	^ name
 ]
@@ -103,5 +103,5 @@ GtWMEvolveNode >> nodeVariables [
 
 { #category : #generated }
 GtWMEvolveNode >> tokenVariables [
-	^ #(#evolveToken #name #maturity)
+	^ #(#evolveToken #name #evolution)
 ]
