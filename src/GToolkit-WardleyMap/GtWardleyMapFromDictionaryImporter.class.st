@@ -63,16 +63,23 @@ GtWardleyMapFromDictionaryImporter >> importLegacyEvolveNodeFrom: aDictionary to
 
 	aDictionary
 		at: #color
-		ifPresent: [ :aColorDictionary | 
-			aWardleyMapNode evolveModel color: (self importColorFrom: aColorDictionary) ].
+		ifPresent: [ :aColorDictionary | aWardleyMapNode evolveModel color: (self importColorFrom: aColorDictionary) ].
 
-	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNode evolveModel maturity: anX ].
-	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapNode evolveModel width: aWidth ].
-	aDictionary at: #height ifPresent: [ :aHeight | aWardleyMapNode evolveModel height: aHeight ].
+	aDictionary
+		at: #x
+		ifPresent: [ :anX | aWardleyMapNode evolveModel evolution: anX ].
+	aDictionary
+		at: #width
+		ifPresent: [ :aWidth | aWardleyMapNode evolveModel width: aWidth ].
+	aDictionary
+		at: #height
+		ifPresent: [ :aHeight | aWardleyMapNode evolveModel height: aHeight ].
 
 	aDictionary
 		at: #label
-		ifPresent: [ :aLabelDictionary | aWardleyMapNode evolveModel labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ].
+		ifPresent: [ :aLabelDictionary | 
+			aWardleyMapNode evolveModel
+				labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ]
 ]
 
 { #category : #'api - importer' }
@@ -167,20 +174,24 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEdgeLabelFrom: aDictionary
 { #category : #'api - importer' }
 GtWardleyMapFromDictionaryImporter >> importWardleyMapEvolveFrom: aDictionary [
 	| aWardleyMapEvolve |
-	
 	aWardleyMapEvolve := GtWardleyMapNodeEvolveModel new.
-	
-	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapEvolve maturity: aMaturity ].
+
+	aDictionary
+		at: #maturity
+		ifPresent: [ :aMaturity | aWardleyMapEvolve evolution: aMaturity ].
 	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapEvolve width: aWidth ].
-	aDictionary at: #height ifPresent: [ :aHeight | aWardleyMapEvolve height: aHeight ].
+	aDictionary
+		at: #height
+		ifPresent: [ :aHeight | aWardleyMapEvolve height: aHeight ].
 	aDictionary
 		at: #color
-		ifPresent: [ :aColorDictionary | 
-			aWardleyMapEvolve color: (self importColorFrom: aColorDictionary) ].
-	
+		ifPresent: [ :aColorDictionary | aWardleyMapEvolve color: (self importColorFrom: aColorDictionary) ].
+
 	aDictionary
 		at: #label
-		ifPresent: [ :aLabelDictionary | aWardleyMapEvolve labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ].
+		ifPresent: [ :aLabelDictionary | 
+			aWardleyMapEvolve
+				labelModel: (self importWardleyMapEvolveLabelFrom: aLabelDictionary) ].
 
 	^ aWardleyMapEvolve
 ]

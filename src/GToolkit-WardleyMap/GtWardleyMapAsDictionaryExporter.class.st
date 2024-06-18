@@ -98,7 +98,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdgeLabel: aWardleyMapEdgeLab
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapEvolve: aWardleyMapEvolve [
 	^ OrderedDictionary new
-		at: #maturity put: aWardleyMapEvolve maturity;
+		at: #maturity put: aWardleyMapEvolve evolution;
 		at: #color put: (self visitColor: aWardleyMapEvolve color);
 		at: #width put: aWardleyMapEvolve width;
 		at: #height put: aWardleyMapEvolve height;
@@ -119,13 +119,11 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 		at: #id put: (self visitWardleyId: aWardleyMapNode id);
 		at: #color put: (self visitColor: aWardleyMapNode color);
 		in: [ :theDictionary | 
-			isMaturityAndVisibilityExport 
-				ifTrue: [
-					theDictionary
-						at: #maturity put: aWardleyMapNode maturity;
+			isMaturityAndVisibilityExport
+				ifTrue: [ theDictionary
+						at: #maturity put: aWardleyMapNode evolution;
 						at: #visibility put: aWardleyMapNode visibility ]
-				ifFalse: [
-					theDictionary
+				ifFalse: [ theDictionary
 						at: #x put: aWardleyMapNode x;
 						at: #y put: aWardleyMapNode y ] ];
 		at: #width put: aWardleyMapNode width;
@@ -135,27 +133,28 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapNode: aWardleyMapNode [
 			put: (OrderedDictionary new
 					at: #is_visible put: aWardleyMapNode isPipelineVisible;
 					in: [ :theDictionary | 
-						aWardleyMapNode isPipelineVisible ifTrue: [
-							isMaturityAndVisibilityExport 
-								ifTrue: [
-									theDictionary
-										at: #min_maturity put: aWardleyMapNode pipelineCoordinate x;
-										at: #max_maturity put: aWardleyMapNode pipelineCoordinate y ]
-								ifFalse: [
-									theDictionary
-										at: #x put: aWardleyMapNode pipelineCoordinate x;
-										at: #y put: aWardleyMapNode pipelineCoordinate y ].
-							theDictionary
-								at: #inner_nodes put: (aWardleyMapNode innerNodes collect: [ :each | self visitWardleyId: each id] as: Array) ] ];
+						aWardleyMapNode isPipelineVisible
+							ifTrue: [ isMaturityAndVisibilityExport
+									ifTrue: [ theDictionary
+											at: #min_maturity put: aWardleyMapNode pipelineCoordinate x;
+											at: #max_maturity put: aWardleyMapNode pipelineCoordinate y ]
+									ifFalse: [ theDictionary
+											at: #x put: aWardleyMapNode pipelineCoordinate x;
+											at: #y put: aWardleyMapNode pipelineCoordinate y ].
+								theDictionary
+									at: #inner_nodes
+									put: (aWardleyMapNode innerNodes
+											collect: [ :each | self visitWardleyId: each id ]
+											as: Array) ] ];
 					yourself);
-		at: #evolve put: (OrderedDictionary new
-			at: #is_visible put: aWardleyMapNode isEvolveVisible;
-			in: [ :theDictionary |
-				aWardleyMapNode isEvolveVisible ifTrue: [
-					(aWardleyMapNode evolveModel accept: self) 
-						keysAndValuesDo: [ :aKey :aValue |
-							theDictionary at: aKey put: aValue ] ] ];
-			yourself);
+		at: #evolve
+			put: (OrderedDictionary new
+					at: #is_visible put: aWardleyMapNode isEvolveVisible;
+					in: [ :theDictionary | 
+						aWardleyMapNode isEvolveVisible
+							ifTrue: [ (aWardleyMapNode evolveModel accept: self)
+									keysAndValuesDo: [ :aKey :aValue | theDictionary at: aKey put: aValue ] ] ];
+					yourself);
 		yourself
 ]
 

@@ -316,100 +316,138 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionaryWithMa
 { #category : #'import - legacy' }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithLegacyEvolveNode [
 	<gtExample>
-	
 	| aJsonString anImportedWardleyMap aColor aNode |
 	aJsonString := self wardleyMapWithLegacyEvolveNode.
-	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter  importMapFromJSONString: aJsonString.
-	
+	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter
+			importMapFromJSONString: aJsonString.
+
 	self assert: anImportedWardleyMap nodes size equals: 1.
 	self assert: anImportedWardleyMap edges size equals: 0.
-	
+
 	aNode := anImportedWardleyMap nodes first.
-	aColor := Color r: 0.0 g: 0.8504398826979472 b: 0.0 alpha: 1.0.
+	aColor := Color
+			r: 0.0
+			g: 0.8504398826979472
+			b: 0.0
+			alpha: 1.0.
 	self assert: aNode evolvedColor equals: aColor.
 	self assert: aNode isEvolveVisible.
-	self assert: aNode evolvedSize equals: 14@14.
-	self assert: aNode evolvedSize equals: 14@14.
-	self assert: aNode evolvedMaturity equals: 0.5972401245364447.
+	self assert: aNode evolvedSize equals: 14 @ 14.
+	self assert: aNode evolvedSize equals: 14 @ 14.
+	self assert: aNode evolvedEvolution equals: 0.5972401245364447.
 	self assert: aNode evolvedLabel equals: 'Evolved A'.
 	self assert: aNode evolvedLabelCoordinate equals: 1.42 @ 2.25.
-	
+
 	^ anImportedWardleyMap
 ]
 
 { #category : #'import - legacy' }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithOptionalNodeMaturityAndVisibility [
 	<gtExample>
-	
 	| aJsonString anImportedWardleyMap aColor aNodeA aNodeF aNoteA |
 	aJsonString := self wardleyMapWithOptionalNodeMaturityAndVisibility.
-	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter  importMapFromJSONString: aJsonString.
-	
+	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter
+			importMapFromJSONString: aJsonString.
+
 	self assert: anImportedWardleyMap nodes size equals: 7.
 	self assert: anImportedWardleyMap edges size equals: 1.
 	self assert: anImportedWardleyMap notes size equals: 1.
-	
-	aNoteA := anImportedWardleyMap noteWithText: 'Note A' ifFound: [ :e | e] ifNone: [ nil ].
+
+	aNoteA := anImportedWardleyMap
+			noteWithText: 'Note A'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
 	self assert: aNoteA x equals: 0.47.
 	self assert: aNoteA y equals: 0.4.
-	
-	aNodeA := anImportedWardleyMap nodeWithName: 'Node A' ifFound: [ :e | e] ifNone: [ nil ].
-	aColor := Color r: 0.5004887585532747 g: 0.5004887585532747 b: 0.5004887585532747 alpha: 1.0.
+
+	aNodeA := anImportedWardleyMap
+			nodeWithName: 'Node A'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	aColor := Color
+			r: 0.5004887585532747
+			g: 0.5004887585532747
+			b: 0.5004887585532747
+			alpha: 1.0.
 	self assert: aNodeA color equals: aColor.
 	self assert: aNodeA isEvolveVisible not.
 	self assert: aNodeA isPipelineVisible.
 	self assert: aNodeA innerNodes size equals: 2.
 	self assert: aNodeA x equals: 0.25.
 	self assert: aNodeA y equals: 0.75.
-	self assert: aNodeA pipelineCoordinate equals: (0.19 @ 0.31).
-	
-	aNodeF := anImportedWardleyMap nodeWithName: 'Node F' ifFound: [ :e | e] ifNone: [ nil ].
-	aColor := Color r: 1.0 g: 0.0 b: 0.0 alpha: 1.0.
+	self assert: aNodeA pipelineCoordinate equals: 0.19 @ 0.31.
+
+	aNodeF := anImportedWardleyMap
+			nodeWithName: 'Node F'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	aColor := Color
+			r: 1.0
+			g: 0.0
+			b: 0.0
+			alpha: 1.0.
 	self assert: aNodeF isEvolveVisible.
 	self assert: aNodeA evolvedColor equals: aColor.
-	self assert: aNodeF evolvedSize equals: 12@12.
-	self assert: aNodeF evolvedMaturity equals: 0.61.
+	self assert: aNodeF evolvedSize equals: 12 @ 12.
+	self assert: aNodeF evolvedEvolution equals: 0.61.
 	self assert: aNodeF evolvedLabel equals: 'Evolved F'.
 	self assert: aNodeF evolvedLabelCoordinate equals: 0.5 @ 2.0.
-	
+
 	^ anImportedWardleyMap
 ]
 
 { #category : #'import - legacy' }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithOptionalNodeXY [
 	<gtExample>
-	
 	| aJsonString anImportedWardleyMap aColor aNodeA aNodeF aNoteA |
 	aJsonString := self wardleyMapWithOptionalNodeXY.
-	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter  importMapFromJSONString: aJsonString.
-	
+	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter
+			importMapFromJSONString: aJsonString.
+
 	self assert: anImportedWardleyMap nodes size equals: 7.
 	self assert: anImportedWardleyMap edges size equals: 1.
 	self assert: anImportedWardleyMap notes size equals: 1.
-	
-	aNoteA := anImportedWardleyMap noteWithText: 'Note A' ifFound: [ :e | e] ifNone: [ nil ].
+
+	aNoteA := anImportedWardleyMap
+			noteWithText: 'Note A'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
 	self assert: aNoteA x equals: 0.47.
 	self assert: aNoteA y equals: 0.4.
-	
-	aNodeA := anImportedWardleyMap nodeWithName: 'Node A' ifFound: [ :e | e] ifNone: [ nil ].
-	aColor := Color r: 0.5004887585532747 g: 0.5004887585532747 b: 0.5004887585532747 alpha: 1.0.
+
+	aNodeA := anImportedWardleyMap
+			nodeWithName: 'Node A'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	aColor := Color
+			r: 0.5004887585532747
+			g: 0.5004887585532747
+			b: 0.5004887585532747
+			alpha: 1.0.
 	self assert: aNodeA color equals: aColor.
 	self assert: aNodeA isEvolveVisible not.
 	self assert: aNodeA isPipelineVisible.
 	self assert: aNodeA innerNodes size equals: 2.
 	self assert: aNodeA x equals: 0.25.
 	self assert: aNodeA y equals: 0.75.
-	self assert: aNodeA pipelineCoordinate equals: (0.19 @ 0.31).
-	
-	aNodeF := anImportedWardleyMap nodeWithName: 'Node F' ifFound: [ :e | e] ifNone: [ nil ].
-	aColor := Color r: 1.0 g: 0.0 b: 0.0 alpha: 1.0.
+	self assert: aNodeA pipelineCoordinate equals: 0.19 @ 0.31.
+
+	aNodeF := anImportedWardleyMap
+			nodeWithName: 'Node F'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	aColor := Color
+			r: 1.0
+			g: 0.0
+			b: 0.0
+			alpha: 1.0.
 	self assert: aNodeF isEvolveVisible.
 	self assert: aNodeA evolvedColor equals: aColor.
-	self assert: aNodeF evolvedSize equals: 12@12.
-	self assert: aNodeF evolvedMaturity equals: 0.61.
+	self assert: aNodeF evolvedSize equals: 12 @ 12.
+	self assert: aNodeF evolvedEvolution equals: 0.61.
 	self assert: aNodeF evolvedLabel equals: 'Evolved F'.
 	self assert: aNodeF evolvedLabelCoordinate equals: 0.5 @ 2.0.
-	
+
 	^ anImportedWardleyMap
 ]
 
