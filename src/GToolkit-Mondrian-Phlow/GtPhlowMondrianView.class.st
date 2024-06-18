@@ -34,7 +34,12 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 		when: BlMouseWheelEvent
 			do: [ :event | 
 				event isPrimarilyVertical
-					ifTrue: [ mondrianElement zoomLevel: mondrianElement zoomLevel + (event vector y / 10) ] ].
+					ifTrue: [ 
+					| eventYvector newZoomLevel scalingFactor | 
+					eventYvector := event vector y.
+					scalingFactor := (1/2).
+					newZoomLevel := (eventYvector positive ifTrue: [ mondrianElement zoomLevel * scalingFactor reciprocal ] ifFalse: [mondrianElement zoomLevel * scalingFactor]) round: 2.
+					mondrianElement zoomLevel: newZoomLevel ] ].
 	wrapper addChild: mondrianElement.
 	self beViewElement: wrapper.
 	^ aBlock value: wrapper
