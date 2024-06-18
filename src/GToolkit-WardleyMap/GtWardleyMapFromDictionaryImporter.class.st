@@ -176,9 +176,15 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapEvolveFrom: aDictionary [
 	| aWardleyMapEvolve |
 	aWardleyMapEvolve := GtWardleyMapNodeEvolveModel new.
 
+	"The maturity is not recommended. Use evolution instead (evolution == x). 
+	See https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743"
 	aDictionary
 		at: #maturity
 		ifPresent: [ :aMaturity | aWardleyMapEvolve evolution: aMaturity ].
+	aDictionary
+		at: #evolution
+		ifPresent: [ :anEvolution | aWardleyMapEvolve evolution: anEvolution ].
+
 	aDictionary at: #width ifPresent: [ :aWidth | aWardleyMapEvolve width: aWidth ].
 	aDictionary
 		at: #height
@@ -272,9 +278,12 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 			aWardleyMapNode color: (self importColorFrom: aColorDictionary) ].
 
 	"Node position can be stored using either maturity and visibility values,
-	or x and y values. In this case, maturity == x and visibility == 1 - y."
-	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapNode x: aMaturity ].
-	aDictionary at: #visibility ifPresent: [ :aVisibility | aWardleyMapNode y: 1 - aVisibility ].
+	or x and y values. In this case, maturity == x and visibility == 1 - y.
+	The maturity is not recommended. Use evolution instead (evolution == x). 
+	See https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743"
+	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapNode evolution: aMaturity ].
+	aDictionary at: #evolution ifPresent: [ :anEvolution | aWardleyMapNode evolution: anEvolution ].
+	aDictionary at: #visibility ifPresent: [ :aVisibility | aWardleyMapNode visibility: aVisibility ].
 	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNode x: anX ].
 	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNode y: anY ].
 	
@@ -291,12 +300,27 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNodeFrom: aDictionary [
 			aPipelineDictionary 
 				at: #is_visible 
 				ifPresent: [ :aValue | aWardleyMapNode isPipelineVisible: aValue ].
+				
+			"The pipeline coordinates depends on inner node evolution positions.
+			In other words, while those values are read, the pipeline coordinates
+			are recomputed when inner nodes are added."
+			
+			"The maturity is not recommended. Use evolution instead (evolution == x). 
+			See https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743"
 			aPipelineDictionary 
 				at: #min_maturity
 				ifPresent: [ :aMinValue | 
 					aPipelineDictionary 
 						at: #max_maturity
 						ifPresent: [ :aMaxValue | aWardleyMapNode pipelineCoordinate: aMinValue @ aMaxValue ] ].
+			
+			aPipelineDictionary 
+				at: #min_evolution
+				ifPresent: [ :aMinValue | 
+					aPipelineDictionary 
+						at: #max_evolution
+						ifPresent: [ :aMaxValue | aWardleyMapNode pipelineCoordinate: aMinValue @ aMaxValue ] ].
+						
 			aPipelineDictionary 
 				at: #x 
 				ifPresent: [ :aXValue | 
@@ -347,9 +371,12 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapNoteFrom: aDictionary [
 			aWardleyMapNote color: (self importColorFrom: aColorDictionary) ].
 
 	"Note position can be stored using either maturity and visibility values,
-	or x and y values. In this case, maturity == x and visibility == 1 - y."
-	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapNote x: aMaturity ].
-	aDictionary at: #visibility ifPresent: [ :aVisibility | aWardleyMapNote y: 1 - aVisibility ].
+	or x and y values. In this case, maturity == x and visibility == 1 - y.
+	The maturity is not recommended. Use evolution instead (evolution == x). 
+	See https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743"
+	aDictionary at: #maturity ifPresent: [ :aMaturity | aWardleyMapNote evolution: aMaturity ].
+	aDictionary at: #evolution ifPresent: [ :anEvolution | aWardleyMapNote evolution: anEvolution ].
+	aDictionary at: #visibility ifPresent: [ :aVisibility | aWardleyMapNote visibility: aVisibility ].
 	aDictionary at: #x ifPresent: [ :anX | aWardleyMapNote x: anX ].
 	aDictionary at: #y ifPresent: [ :anY | aWardleyMapNote y: anY ].
 

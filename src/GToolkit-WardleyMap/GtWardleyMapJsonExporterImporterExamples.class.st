@@ -53,13 +53,13 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionary [
 ]
 
 { #category : #export }
-GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionaryWithMaturityAndVisibility [
+GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionaryWithEvolutionAndVisibility [
 	<gtExample>
 	| aWardleyMap anExporter anExportedDictionary aFirstNodeDictionary aFirstNodeLabelDictionary aSecondNodeDictionary anEdgeDictionary aFirstNodePipelineDictionary |
 
 	aWardleyMap := GtWardleyMapModelExamples new newMapWithNodes.
 	anExporter := GtWardleyMapAsDictionaryExporter new 
-		beMaturityAndVisibilityExport.
+		beEvolutionAndVisibilityExport.
 	anExportedDictionary := aWardleyMap accept: anExporter.
 
 	self assert: anExportedDictionary size equals: 2.
@@ -70,7 +70,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionaryWithMatu
 	
 	aFirstNodeDictionary := (anExportedDictionary at: #nodes) at: 1.
 	self assert: aFirstNodeDictionary size equals: 9.
-	self assert: (aFirstNodeDictionary at: #maturity) equals: 0.25.
+	self assert: (aFirstNodeDictionary at: #evolution) equals: 0.25.
 	self assert: (aFirstNodeDictionary at: #visibility) equals: 1 - 0.75.
 	self assert: (aFirstNodeDictionary at: #width) equals: 12.
 	self assert: (aFirstNodeDictionary at: #height) equals: 12.
@@ -87,7 +87,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapAsDictionaryWithMatu
 
 	aSecondNodeDictionary := (anExportedDictionary at: #nodes) at: 2.
 	self assert: aSecondNodeDictionary size equals: 9.
-	self assert: (aSecondNodeDictionary at: #maturity) equals: 0.5.
+	self assert: (aSecondNodeDictionary at: #evolution) equals: 0.5.
 	self assert: (aSecondNodeDictionary at: #visibility) equals: 1 - 0.25.
 	self assert: (aSecondNodeDictionary at: #width) equals: 12.
 	self assert: (aSecondNodeDictionary at: #height) equals: 12.
@@ -297,11 +297,11 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionary [
 ]
 
 { #category : #import }
-GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionaryWithMaturityAndVisibility [
+GtWardleyMapJsonExporterImporterExamples >> importWardleyMapFromDictionaryWithEvolutionAndVisibility [
 	<gtExample>
 	| anExportedWardleyMap anExportedDictionary anImportedWardleyMap |
 	
-	self exportWardleyMapAsDictionaryWithMaturityAndVisibility in: [ :anAssociation |
+	self exportWardleyMapAsDictionaryWithEvolutionAndVisibility in: [ :anAssociation |
 		anExportedWardleyMap := anAssociation key.
 		anExportedDictionary := anAssociation value ].
 
@@ -342,7 +342,65 @@ GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithLegacyEvolveNode
 ]
 
 { #category : #'import - legacy' }
+GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithOptionalNodeEvolutionAndVisibility [
+	<gtExample>
+	| aJsonString anImportedWardleyMap aColor aNodeA aNodeF aNoteA |
+	aJsonString := self wardleyMapWithOptionalNodeEvolutionAndVisibility.
+	anImportedWardleyMap := GtWardleyMapFromDictionaryImporter
+			importMapFromJSONString: aJsonString.
+
+	self assert: anImportedWardleyMap nodes size equals: 7.
+	self assert: anImportedWardleyMap edges size equals: 1.
+	self assert: anImportedWardleyMap notes size equals: 1.
+
+	aNoteA := anImportedWardleyMap
+			noteWithText: 'Note A'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	self assert: aNoteA x equals: 0.47.
+	self assert: aNoteA y equals: 0.4.
+
+	aNodeA := anImportedWardleyMap
+			nodeWithName: 'Node A'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	aColor := Color
+			r: 0.5004887585532747
+			g: 0.5004887585532747
+			b: 0.5004887585532747
+			alpha: 1.0.
+	self assert: aNodeA color equals: aColor.
+	self assert: aNodeA isEvolveVisible not.
+	self assert: aNodeA isPipelineVisible.
+	self assert: aNodeA innerNodes size equals: 2.
+	self assert: aNodeA x equals: 0.25.
+	self assert: aNodeA y equals: 0.75.
+	self assert: aNodeA pipelineCoordinate equals: 0.19 @ 0.31.
+
+	aNodeF := anImportedWardleyMap
+			nodeWithName: 'Node F'
+			ifFound: [ :e | e ]
+			ifNone: [ nil ].
+	aColor := Color
+			r: 1.0
+			g: 0.0
+			b: 0.0
+			alpha: 1.0.
+	self assert: aNodeF isEvolveVisible.
+	self assert: aNodeA evolvedColor equals: aColor.
+	self assert: aNodeF evolvedSize equals: 12 @ 12.
+	self assert: aNodeF evolvedEvolution equals: 0.61.
+	self assert: aNodeF evolvedLabel equals: 'Evolved F'.
+	self assert: aNodeF evolvedLabelCoordinate equals: 0.5 @ 2.0.
+
+	^ anImportedWardleyMap
+]
+
+{ #category : #'import - legacy' }
 GtWardleyMapJsonExporterImporterExamples >> importWardleyMapWithOptionalNodeMaturityAndVisibility [
+	"The maturity is not recommended and therefore obsolete. Use evolution instead.
+	Read more on https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743"
+	
 	<gtExample>
 	| aJsonString anImportedWardleyMap aColor aNodeA aNodeF aNoteA |
 	aJsonString := self wardleyMapWithOptionalNodeMaturityAndVisibility.
@@ -581,7 +639,242 @@ GtWardleyMapJsonExporterImporterExamples >> wardleyMapWithLegacyEvolveNode [
 ]
 
 { #category : #'import - legacy' }
+GtWardleyMapJsonExporterImporterExamples >> wardleyMapWithOptionalNodeEvolutionAndVisibility [
+	<gtExample>
+	^ '{
+	"notes" : [
+		{
+			"id" : "8e448aa3-ead6-0d00-9f73-be2d0f547d46",
+			"label" : "Note A",
+			"color" : {
+				"green" : 0.7996089931573802,
+				"blue" : 0.3998044965786901,
+				"alpha" : 1.0,
+				"red" : 1.0
+			},
+			"evolution" : 0.47,
+			"visibility" : 0.6
+		}
+	],
+	"nodes" : [
+		{
+			"id" : "00438aa3-ead6-0d00-9f6c-9afa0f547d46",
+			"color" : {
+				"green" : 0.5004887585532747,
+				"blue" : 0.5004887585532747,
+				"alpha" : 1.0,
+				"red" : 0.5004887585532747
+			},
+			"evolution" : 0.25,
+			"visibility" : 0.25,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : -1.5,
+				"y" : -1.5,
+				"text" : "Node A"
+			},
+			"pipeline" : {
+				"is_visible" : true,
+				"min_evolution" : 0.19,
+				"max_evolution" : 0.31,
+				"inner_nodes" : [
+					"85448aa3-ead6-0d00-9f6f-f32e0f547d46",
+					"87448aa3-ead6-0d00-9f70-615f0f547d46"
+				]
+			},
+			"evolve" : {
+				"is_visible" : false
+			}
+		},
+		{
+			"id" : "4e438aa3-ead6-0d00-9f6d-94ee0f547d46",
+			"color" : {
+				"green" : 0.0,
+				"blue" : 0.0,
+				"alpha" : 0.2,
+				"red" : 0.0
+			},
+			"evolution" : 0.5,
+			"visibility" : 0.75,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : -1.5,
+				"y" : -1.5,
+				"text" : "Node B"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_visible" : false
+			}
+		},
+		{
+			"id" : "83438aa3-ead6-0d00-9f6e-a1840f547d46",
+			"color" : {
+				"green" : 0.0,
+				"blue" : 0.0,
+				"alpha" : 1.0,
+				"red" : 0.9198435972629521
+			},
+			"evolution" : 0.75,
+			"visibility" : 0.5,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : 0.5,
+				"y" : 2.0,
+				"text" : "Node C"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_visible" : false
+			}
+		},
+		{
+			"id" : "85448aa3-ead6-0d00-9f6f-f32e0f547d46",
+			"color" : {
+				"green" : 0.0,
+				"blue" : 1.0,
+				"alpha" : 1.0,
+				"red" : 0.0
+			},
+			"evolution" : 0.2,
+			"visibility" : 0.25,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : 0.5,
+				"y" : 2.0,
+				"text" : "Node D"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_visible" : false
+			}
+		},
+		{
+			"id" : "87448aa3-ead6-0d00-9f70-615f0f547d46",
+			"color" : {
+				"green" : 0.0,
+				"blue" : 1.0,
+				"alpha" : 1.0,
+				"red" : 0.0
+			},
+			"evolution" : 0.3,
+			"visibility" : 0.25,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : 0.5,
+				"y" : 2.0,
+				"text" : "Node E"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_visible" : false
+			}
+		},
+		{
+			"id" : "89448aa3-ead6-0d00-9f71-e0db0f547d46",
+			"color" : {
+				"green" : 0.9198435972629521,
+				"blue" : 0.0,
+				"alpha" : 1.0,
+				"red" : 0.9198435972629521
+			},
+			"evolution" : 0.41,
+			"visibility" : 0.24,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : 0.5,
+				"y" : 2.0,
+				"text" : "Node F"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_visible" : true,
+				"evolution" : 0.61,
+				"color" : {
+					"green" : 0.0,
+					"blue" : 0.0,
+					"alpha" : 1.0,
+					"red" : 1.0
+				},
+				"width" : 12,
+				"height" : 12,
+				"label" : {
+					"x" : 0.5,
+					"y" : 2.0,
+					"text" : "Evolved F",
+					"is_visible" : false
+				}
+			}
+		},
+		{
+			"id" : "8b448aa3-ead6-0d00-9f72-8a830f547d46",
+			"color" : {
+				"green" : 0.9198435972629521,
+				"blue" : 0.0,
+				"alpha" : 1.0,
+				"red" : 0.9198435972629521
+			},
+			"evolution" : 0.38,
+			"visibility" : 0.21999999999999997,
+			"width" : 12,
+			"height" : 12,
+			"label" : {
+				"x" : 0.5,
+				"y" : 2.0,
+				"text" : "Node G"
+			},
+			"pipeline" : {
+				"is_visible" : false
+			},
+			"evolve" : {
+				"is_visible" : false
+			}
+		}
+	],
+	"edges" : [
+		{
+			"from" : "00438aa3-ead6-0d00-9f6c-9afa0f547d46",
+			"to" : "4e438aa3-ead6-0d00-9f6d-94ee0f547d46",
+			"color" : {
+				"green" : 0.5004887585532747,
+				"blue" : 0.5004887585532747,
+				"alpha" : 1.0,
+				"red" : 0.5004887585532747
+			},
+			"width" : 2,
+			"arrow" : true,
+			"label" : {
+				"x" : 0.5,
+				"y" : 0.5,
+				"is_visible" : true,
+				"text" : "Edge A->B"
+			}
+		}
+	]
+}'
+]
+
+{ #category : #'import - legacy' }
 GtWardleyMapJsonExporterImporterExamples >> wardleyMapWithOptionalNodeMaturityAndVisibility [
+	"The maturity is not recommended and therefore obsolete. Use evolution instead.
+	Read more on https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743"
+
 	<gtExample>
 	^ '{
 	"notes" : [
