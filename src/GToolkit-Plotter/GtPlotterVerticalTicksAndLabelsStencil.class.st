@@ -15,7 +15,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> create [
+GtPlotterVerticalTicksAndLabelsStencil >> buildDefault [
 	| aContainer |
 	aContainer := BrHorizontalPane new
 		hFitContent;
@@ -30,6 +30,12 @@ GtPlotterVerticalTicksAndLabelsStencil >> create [
 			self newAxisYTicksElement width: 10. }.
 	self addAxisYElementOn: aContainer.
 	^ aContainer
+]
+
+{ #category : #accessing }
+GtPlotterVerticalTicksAndLabelsStencil >> initialize [
+	super initialize.
+	eventHandler := GtPlotterScatterFocusYHandler new
 ]
 
 { #category : #accessing }
@@ -53,11 +59,18 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
+	eventHandler scatterChart: scatterChart.
 	^ GtPlotterVerticalTicksElement new
 		scale: scatterChart scaleY;
-		tickStyle: [ :anElement | anElement
-			height: 2;
-			background: (Color gray alpha: 0.8) ];
+		tickElement: [ :aGtPlotterContext |
+			BlElement new
+				in: [:e | e userData 
+					at: #originalValue
+					put: aGtPlotterContext originalValue ];
+				addEventHandler: eventHandler;
+				height: 2;
+				background: (Color gray alpha: 0.8);
+				yourself ];
 		ticks: scatterChart ticksY
 ]
 

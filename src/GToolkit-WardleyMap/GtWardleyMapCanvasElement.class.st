@@ -17,6 +17,68 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> addEdgeViewModel: anEdgeViewModel [
+	self addChild: (self createEdgeViewFor: anEdgeViewModel)
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> addEvolveEdgeViewModel: anEvolveEdgeViewModel [
+	| aEvolveViewModel anEvolveEdgeElement aEvolveElement |
+	aEvolveViewModel := anEvolveEdgeViewModel evolveViewModel.
+	aEvolveElement := self createEvolveViewFor: aEvolveViewModel.	"If the node element is added inside of a pipeline element,
+	let's add the node element also as a pipeline inner node."
+	(aEvolveViewModel isPipelineVisible not
+		and: [ aEvolveViewModel pipelineNodeViewModel isNil ])
+		ifTrue: [ aEvolveElement
+				when: BlElementLayoutComputedEvent
+				doOnce: [ :anEvent | 
+					self
+						pipelineChildrenDo: [ :aPipelineElement | 
+							aEvolveViewModel pipelineNodeViewModel
+								ifNil: [ (GtWardleyMapUtility
+										isNodeElement: aEvolveElement
+										insidePipelineElement: aPipelineElement)
+										ifTrue: [ aPipelineElement wardleyMapNodeViewModel
+												addInnerNodeViewModel: aEvolveViewModel ] ] ] ] ].
+
+	self addChild: aEvolveElement.
+
+	anEvolveEdgeElement := self createEvolveEdgeViewFor: anEvolveEdgeViewModel.
+	self addChild: anEvolveEdgeElement
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> addNewNodeViewModel: aNodeViewModel [
+	| aNodeElement |
+	aNodeElement := self createNodeViewFor: aNodeViewModel.	
+	
+	"If the node element is added inside of a pipeline element,
+	let's add the node element also as a pipeline inner node."
+	(aNodeViewModel isPipelineVisible not
+		and: [ aNodeViewModel pipelineNodeViewModel isNil ])
+		ifTrue: [ aNodeElement
+				when: BlElementLayoutComputedEvent
+				doOnce: [ :anEvent | 
+					self
+						pipelineChildrenDo: [ :aPipelineElement | 
+							aNodeViewModel pipelineNodeViewModel
+								ifNil: [ (GtWardleyMapUtility
+										isNodeElement: aNodeElement
+										insidePipelineElement: aPipelineElement)
+										ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aNodeViewModel ] ] ] ] ].
+
+	self addChild: aNodeElement
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> addNoteViewModel: aNoteViewModel [
+	| aNoteElement |
+	aNoteElement := self createNoteViewFor: aNoteViewModel.
+
+	self addChild: aNoteElement
+]
+
 { #category : #initialization }
 GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 	| aFromNodeElement aToNodeElement |
@@ -123,7 +185,13 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 	^ GtWardleyMapNodeEditorElement new
 		wardleyMapViewModel: self wardleyMapViewModel;
-		wardleyMapNodeViewModel: aNodeViewModel
+		wardleyMapNodeViewModel: aNodeViewModel;
+		when: GtPhlowObjectToSpawn
+			do: [ :anEvent | 
+				self fireEvent: (GtPhlowObjectToSpawn new
+							previousSpawnEvent: anEvent;
+							tool: anEvent tool;
+							sourceElement: anEvent target) ]
 ]
 
 { #category : #initialization }
@@ -312,8 +380,8 @@ GtWardleyMapCanvasElement >> installContextMenu [
 						size: 5 @ 5;
 						geometry: BlEllipseGeometry new ]
 				content: [ GtWardleyMapEditorElement new
-						wardleyMapViewModel: self wardleyMapViewModel;
 						canvas: self;
+						wardleyMapViewModel: self wardleyMapViewModel;
 						requestFocus ]) preferredExtent: 120 @ 100.0)
 ]
 
@@ -359,184 +427,86 @@ GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock if
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onEdgeAdded: anAnnouncement [
-
-	self addChild: (self createEdgeViewFor: anAnnouncement edgeViewModel)
+	BlTaskAction
+		enqueueElement: self
+		action: [ self addEdgeViewModel: anAnnouncement edgeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onEdgeRemoved: anAnnouncement [
-
-	self
-		edgeViewFor: anAnnouncement edgeViewModel
-		ifFound: [ :aNodeElement | aNodeElement removeFromParent ]
-		ifNone: [ ]
+	BlTaskAction
+		enqueueElement: self
+		action: [ self removeEdgeViewModel: anAnnouncement edgeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onEvolveAdded: anAnnouncement [
-	| aEvolveElement aEvolveViewModel anEvolveEdgeViewModel anEvolveEdgeElement |
-	aEvolveViewModel := anAnnouncement evolveViewModel.
-	anEvolveEdgeViewModel := anAnnouncement evolveEdgeViewModel.
-	aEvolveElement := self createEvolveViewFor: aEvolveViewModel.
-
-	"If the node element is added inside of a pipeline element,
-	let's add the node element also as a pipeline inner node."
-	(aEvolveViewModel isPipelineVisible not
-		and: [ aEvolveViewModel pipelineNodeViewModel isNil ]) ifTrue: [ 
-			aEvolveElement
-				when: BlElementLayoutComputedEvent
-				doOnce: [ :anEvent | 
-					self pipelineChildrenDo: [ :aPipelineElement | 
-						aEvolveViewModel pipelineNodeViewModel ifNil: [ 
-							(GtWardleyMapUtility
-								isNodeElement: aEvolveElement
-								insidePipelineElement: aPipelineElement) ifTrue: [ 
-									aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aEvolveViewModel ] ] ] ] ].
-									
-	self addChild: aEvolveElement.
-	
-	anEvolveEdgeElement := self createEvolveEdgeViewFor: anEvolveEdgeViewModel.
-	self addChild: anEvolveEdgeElement.
+	BlTaskAction
+		enqueueElement: self
+		action: [ self addEvolveEdgeViewModel: anAnnouncement evolveEdgeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onEvolveRemoved: anAnnouncement [
-	| anEvolveViewModel anEvolveEdgeViewModel |
-	anEvolveViewModel := anAnnouncement evolveViewModel.
-	anEvolveEdgeViewModel := anAnnouncement evolveEdgeViewModel.
-	self
-		edgeViewFor: anEvolveEdgeViewModel 
-		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ] 
-		ifNone: [ nil ].
-	self
-		nodeViewFor: anEvolveViewModel 
-		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ] 
-		ifNone: [ nil ].
+	BlTaskAction
+		enqueueElement: self
+		action: [ self removeEvolveEdgeViewModel: anAnnouncement evolveEdgeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onInnerNodeAdded: anAnnouncement [
-	| anInnerNodeViewModel aPipelineNodeViewModel |
-	anInnerNodeViewModel := anAnnouncement innerNodeViewModel.
-	aPipelineNodeViewModel := anAnnouncement pipelineViewModel.
-
-	self
-		nodeViewFor: anInnerNodeViewModel
-		ifFound: [ :aNodeView | 
-			GtWardleyMapUtility
-				updateNodeElement: aNodeView
-				nodeViewModel: anInnerNodeViewModel ]
-		ifNone: [  ].
-
-	self
-		pipelineViewFor: aPipelineNodeViewModel
-		ifFound: [ :aPipelineView | 
-			GtWardleyMapUtility
-				updatePipelineElement: aPipelineView
-				nodeViewModel: aPipelineNodeViewModel ]
-		ifNone: [  ]
+	BlTaskAction
+		enqueueElement: self
+		action: [ self updateInnerNodeViewModel: anAnnouncement innerNodeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeAdded: anAnnouncement [
-	| aNodeElement aNodeViewModel |
-	aNodeViewModel := anAnnouncement nodeViewModel.
-	aNodeElement := self createNodeViewFor: aNodeViewModel.
-
-	"If the node element is added inside of a pipeline element,
-	let's add the node element also as a pipeline inner node."
-	(aNodeViewModel isPipelineVisible not
-		and: [ aNodeViewModel pipelineNodeViewModel isNil ]) ifTrue: [ 
-			aNodeElement
-				when: BlElementLayoutComputedEvent
-				doOnce: [ :anEvent | 
-					self pipelineChildrenDo: [ :aPipelineElement | 
-						aNodeViewModel pipelineNodeViewModel ifNil: [ 
-							(GtWardleyMapUtility
-								isNodeElement: aNodeElement
-								insidePipelineElement: aPipelineElement) ifTrue: [ 
-									aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aNodeViewModel ] ] ] ] ].
-									
-	self addChild: aNodeElement
+	BlTaskAction
+		enqueueElement: self
+		action: [ self addNewNodeViewModel: anAnnouncement nodeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeMoved: anAnnouncement [
-	| aMovedNodeViewModel |
-	aMovedNodeViewModel := anAnnouncement nodeViewModel.
-
-	self
-		nodeViewFor: aMovedNodeViewModel
-		ifFound: [ :aNodeView | 
-			GtWardleyMapUtility 
-				updateNodeElement: aNodeView 
-				nodeViewModel: aMovedNodeViewModel ]
-		ifNone: [  ].
-
-	aMovedNodeViewModel isPipelineVisible ifTrue: [
-		self
-			pipelineViewFor: aMovedNodeViewModel
-			ifFound: [ :aPipelineView | 
-				GtWardleyMapUtility
-					updatePipelineElement: aPipelineView
-					nodeViewModel: aMovedNodeViewModel ]
-			ifNone: [  ] ]
+	BlTaskAction
+		enqueueElement: self
+		action: [ self updateNodeViewModel: anAnnouncement nodeViewModel ]
 ]
 
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> onNodePipelineVisibilityChanged: anAnnouncement [
-	| aChangedNodeViewModel |
-	aChangedNodeViewModel := anAnnouncement nodeViewModel.
-
-	self
-		pipelineViewFor: aChangedNodeViewModel
-		ifFound: [ :aPipelineView | 
-			aChangedNodeViewModel isPipelineVisible
-				ifTrue: [ GtWardleyMapUtility
-						updatePipelineElement: aPipelineView
-						nodeViewModel: aChangedNodeViewModel ]
-				ifFalse: [ aPipelineView removeFromParent ] ]
-		ifNone: [ aChangedNodeViewModel isPipelineVisible
-				ifTrue: [ self addChildFirst: (self createPipelineViewFor: aChangedNodeViewModel) ] ]
+	BlTaskAction
+		enqueueElement: self
+		action: [ self updateNodeViewModelPipeline: anAnnouncement nodeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNodeRemoved: anAnnouncement [
-	self
-		nodeViewFor: anAnnouncement nodeViewModel
-		ifFound: [ :aNodeElement | aNodeElement removeFromParent ]
-		ifNone: [ ]
+	BlTaskAction
+		enqueueElement: self
+		action: [ self removeNodeViewModel: anAnnouncement nodeViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNoteAdded: anAnnouncement [
-	| aNoteElement aNoteViewModel |
-	aNoteViewModel := anAnnouncement noteViewModel.
-	aNoteElement := self createNoteViewFor: aNoteViewModel.
-	
-	self addChild: aNoteElement
+	BlTaskAction
+		enqueueElement: self
+		action: [ self addNoteViewModel: anAnnouncement noteViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNoteMoved: anAnnouncement [
-	| aMovedNoteViewModel |
-	aMovedNoteViewModel := anAnnouncement noteViewModel.
-
-	self
-		noteViewFor: aMovedNoteViewModel
-		ifFound: [ :aNoteView | 
-			GtWardleyMapUtility 
-				updateNoteElement: aNoteView 
-				noteViewModel: aMovedNoteViewModel ]
-		ifNone: [  ].
+	BlTaskAction
+		enqueueElement: self
+		action: [ self updateNoteViewModel: anAnnouncement noteViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapCanvasElement >> onNoteRemoved: anAnnouncement [
-	self
-		noteViewFor: anAnnouncement noteViewModel
-		ifFound: [ :aNoteElement | aNoteElement removeFromParent ]
-		ifNone: [ ]
+	BlTaskAction
+		enqueueElement: self
+		action: [ self removeNoteViewModel: anAnnouncement noteViewModel ]
 ]
 
 { #category : #'api - wardley map view model' }
@@ -592,6 +562,44 @@ GtWardleyMapCanvasElement >> pipelineViewFor: aNodeViewModel ifFound: aFoundBloc
 		ifNone: aNoneBlock
 ]
 
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> removeEdgeViewModel: anEdgeViewModel [
+	self
+		edgeViewFor: anEdgeViewModel
+		ifFound: [ :anEdgeElement | anEdgeElement removeFromParent ]
+		ifNone: [  ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> removeEvolveEdgeViewModel: anEvolveEdgeViewModel [
+	| anEvolveViewModel |
+	anEvolveViewModel := anEvolveEdgeViewModel evolveViewModel.
+	self
+		edgeViewFor: anEvolveEdgeViewModel
+		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ]
+		ifNone: [ nil ].
+	self
+		nodeViewFor: anEvolveViewModel
+		ifFound: [ :anEvolveElement | anEvolveElement removeFromParent ]
+		ifNone: [ nil ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> removeNodeViewModel: aNodeViewModel [
+	self
+		nodeViewFor: aNodeViewModel
+		ifFound: [ :aNodeElement | aNodeElement removeFromParent ]
+		ifNone: [  ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> removeNoteViewModel: aNoteViewModel [
+	self
+		noteViewFor: aNoteViewModel
+		ifFound: [ :aNoteElement | aNoteElement removeFromParent ]
+		ifNone: [  ]
+]
+
 { #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> subscribeToWardleyMapViewModel [
 	"Is sent after a new WardleyMap view model is assigned to the element.
@@ -620,4 +628,71 @@ GtWardleyMapCanvasElement >> unsubscribeFromWardleyMapViewModel [
 	Elements that subscribe to WardleyMap view model in domain model are required to implement this methods"
 	
 	self wardleyMapViewModel unsubscribe: self
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> updateInnerNodeViewModel: anInnerNodeViewModel [
+	| aPipelineNodeViewModel |
+	aPipelineNodeViewModel := anInnerNodeViewModel pipelineNodeViewModel.
+
+	self
+		nodeViewFor: anInnerNodeViewModel
+		ifFound: [ :aNodeView | 
+			GtWardleyMapUtility
+				updateNodeElement: aNodeView
+				nodeViewModel: anInnerNodeViewModel ]
+		ifNone: [  ].
+
+	self
+		pipelineViewFor: aPipelineNodeViewModel
+		ifFound: [ :aPipelineView | 
+			GtWardleyMapUtility
+				updatePipelineElement: aPipelineView
+				nodeViewModel: aPipelineNodeViewModel ]
+		ifNone: [  ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> updateNodeViewModel: aMovedNodeViewModel [
+	self
+		nodeViewFor: aMovedNodeViewModel
+		ifFound: [ :aNodeView | 
+			GtWardleyMapUtility
+				updateNodeElement: aNodeView
+				nodeViewModel: aMovedNodeViewModel ]
+		ifNone: [  ].
+
+	aMovedNodeViewModel isPipelineVisible
+		ifTrue: [ self
+				pipelineViewFor: aMovedNodeViewModel
+				ifFound: [ :aPipelineView | 
+					GtWardleyMapUtility
+						updatePipelineElement: aPipelineView
+						nodeViewModel: aMovedNodeViewModel ]
+				ifNone: [  ] ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> updateNodeViewModelPipeline: aChangedNodeViewModel [
+	self
+		pipelineViewFor: aChangedNodeViewModel
+		ifFound: [ :aPipelineView | 
+			aChangedNodeViewModel isPipelineVisible
+				ifTrue: [ GtWardleyMapUtility
+						updatePipelineElement: aPipelineView
+						nodeViewModel: aChangedNodeViewModel ]
+				ifFalse: [ aPipelineView removeFromParent ] ]
+		ifNone: [ aChangedNodeViewModel isPipelineVisible
+				ifTrue: [ self addChildFirst: (self createPipelineViewFor: aChangedNodeViewModel) ] ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapCanvasElement >> updateNoteViewModel: aMovedNoteViewModel [
+	self
+		noteViewFor: aMovedNoteViewModel
+		ifFound: [ :aNoteView | 
+			GtWardleyMapUtility
+				updateNoteElement: aNoteView
+				noteViewModel: aMovedNoteViewModel ]
+		ifNone: [  ]
 ]

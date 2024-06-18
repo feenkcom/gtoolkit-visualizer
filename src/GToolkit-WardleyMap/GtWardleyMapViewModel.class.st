@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapViewModel,
 	#superclass : #Object,
-	#traits : 'TGtWithWardleyMapModel + TGtAnnouncer',
-	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtWithWardleyMapModel + TGtAnnouncer + TGtOptions',
+	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait + TGtOptions classTrait',
 	#instVars : [
 		'announcer',
 		'nodeViewModels',
@@ -67,6 +67,12 @@ GtWardleyMapViewModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapViewModel >> contextMenuItems [
+	<return: #Collection of: #TGtWardleyMapContextMenuItem>
+	^ self wardleyMapModel contextMenuItems
 ]
 
 { #category : #initialization }
@@ -154,6 +160,15 @@ GtWardleyMapViewModel >> evolveViewModels [
 	<return: #Collection of: #GtWardleyMapEvolveViewModel>
 
 	^ evolveViewModels
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtContextMenuItemsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Context menu';
+		object: [ self wardleyMapModel ];
+		view: #gtContextMenuItemsFor:
 ]
 
 { #category : #'gt - extensions' }

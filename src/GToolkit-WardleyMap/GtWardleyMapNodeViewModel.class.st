@@ -58,6 +58,12 @@ GtWardleyMapNodeViewModel >> changeColorTo: aColor [
 	self wardleyMapNodeModel color: aColor
 ]
 
+{ #category : #'api - context menu' }
+GtWardleyMapNodeViewModel >> contextMenuItems [
+	<return: #Collection of: #TGtWardleyMapContextMenuItem>
+	^ self wardleyMapNodeModel contextMenuItems
+]
+
 { #category : #'api - accessing' }
 GtWardleyMapNodeViewModel >> coordinate [
 	^ self wardleyMapNodeModel coordinate
@@ -104,6 +110,15 @@ GtWardleyMapNodeViewModel >> evolveViewModel [
 { #category : #accessing }
 GtWardleyMapNodeViewModel >> evolveViewModel: anObject [
 	evolveViewModel := anObject
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapNodeViewModel >> gtContextMenuItemsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Context menu';
+		object: [ self wardleyMapNodeModel ];
+		view: #gtContextMenuItemsFor:
 ]
 
 { #category : #'gt - extensions' }

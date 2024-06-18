@@ -65,7 +65,7 @@ GtWardleyMapEvolveEditorElement >> createNodeColorLabel [
 
 { #category : #initialization }
 GtWardleyMapEvolveEditorElement >> createNodeDeleteButton [
-	^ GtWardleyMapUtility newDeleteButtonElement
+	^ GtWardleyMapUtility newMenuItemDeleteButton
 		label: 'Delete evolve';
 		action: [ 
 			self wardleyMapNodeViewModel removeFromMap.

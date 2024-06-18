@@ -105,10 +105,20 @@ GtWardleyMapElement >> onTitleChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapElement >> onTitleChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onTitleChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapElement >> onTitleVisibilityChanged [
 	self wardleyMapViewModel isTitleVisible
 		ifTrue: [ titleElement visibility: BlVisibility visible ]
 		ifFalse: [ titleElement visibility: BlVisibility hidden ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onTitleVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onTitleVisibilityChanged ]
 ]
 
 { #category : #'api - wardley map view model' }
@@ -127,8 +137,8 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
 	
 	self wardleyMapViewModel weak
-		when: GtWardleyMapViewModelTitleChanged send: #onTitleChanged to: self;
-		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged to: self
+		when: GtWardleyMapViewModelTitleChanged send: #onTitleChanged: to: self;
+		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged: to: self
 ]
 
 { #category : #'api - wardley map view model' }

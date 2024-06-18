@@ -25,7 +25,7 @@ GtWardleyMapNoteEditorElement >> createNodeColorLabel [
 
 { #category : #initialization }
 GtWardleyMapNoteEditorElement >> createNodeDeleteButton [
-	^ GtWardleyMapUtility newDeleteButtonElement
+	^ GtWardleyMapUtility newMenuItemDeleteButton
 		label: 'Delete note';
 		action: [ 
 			self wardleyMapNoteViewModel removeFromMap.
