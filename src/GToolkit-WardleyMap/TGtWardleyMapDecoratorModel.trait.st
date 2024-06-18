@@ -30,3 +30,7 @@ TGtWardleyMapDecoratorModel >> parent: aParent [
 TGtWardleyMapDecoratorModel >> removeParent [
 	
 ]
+
+{ #category : #'api - wardley map decorator model' }
+TGtWardleyMapDecoratorModel >> undecorateMapElement: aMapElement decoratorViewModel: aDecoratorViewModel [
+]
