@@ -23,13 +23,22 @@ TGtWardleyMapContextMenuItem >> definingMethod: anObject [
 ]
 
 { #category : #'gt - extensions' }
+TGtWardleyMapContextMenuItem >> gtCreateElementUsingContextMethodFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Element creation';
+		object: [ (self class >> #createElementUsingContext:) asRingDefinition ];
+		view: #gtSourceFor:
+]
+
+{ #category : #'gt - extensions' }
 TGtWardleyMapContextMenuItem >> gtDefiningMethodFor: aView [
 	<gtView>
 	self definingMethod ifNil: [ ^ aView empty ].
 
 	^ aView forward
 		title: 'Defining method';
-		object: [ self definingMethod ];
+		object: [ self definingMethod asRingDefinition ];
 		view: #gtSourceFor:
 ]
 

@@ -552,6 +552,13 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 
 	"before removing a node we should remove all connected edges"	
 	self allEdgesConnecting: aGtWardleyMapNodeModel do: [ :eachEdge | self removeEdge: eachEdge ].
+	
+	"remove its pipeline"
+	aGtWardleyMapNodeModel isPipelineVisible: false.
+	
+	"remove its evolve"
+	aGtWardleyMapNodeModel isEvolveVisible: false.
+	
 	nodes remove: aGtWardleyMapNodeModel ifAbsent: [ ^ self ].
 	aGtWardleyMapNodeModel removeParent.
 	aGtWardleyMapNodeModel removeFromPipeline.

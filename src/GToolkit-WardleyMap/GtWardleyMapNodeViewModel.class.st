@@ -15,13 +15,13 @@ Class {
 
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> addEvolve [
-	self wardleyMapNodeModel isEvolveVisible ifFalse: [
-		| aMaturity | 
-		aMaturity := ((self wardleyMapNodeModel maturity + 0.2) min: 1.0).
-		self wardleyMapNodeModel evolvedMaturity: aMaturity.
-		self wardleyMapNodeModel evolvedLabel: self wardleyMapNodeModel label.
-		self wardleyMapNodeModel isEvolvedLabelVisible: false.
-		self wardleyMapNodeModel isEvolveVisible: true ]
+	self wardleyMapNodeModel isEvolveVisible
+		ifFalse: [ | aMaturity |
+			aMaturity := self wardleyMapNodeModel evolution + 0.2 min: 1.0.
+			self wardleyMapNodeModel evolvedEvolution: aMaturity.
+			self wardleyMapNodeModel evolvedLabel: self wardleyMapNodeModel label.
+			self wardleyMapNodeModel isEvolvedLabelVisible: false.
+			self wardleyMapNodeModel isEvolveVisible: true ]
 ]
 
 { #category : #'api - pipeline' }
