@@ -4,10 +4,21 @@ Class {
 	#traits : 'TGtWithWardleyMapNodeViewModel + TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapNodeViewModel classTrait + TGtWithWardleyMapViewModel classTrait',
 	#instVars : [
-		'container'
+		'container',
+		'canvasElement'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
+
+{ #category : #accessing }
+GtWardleyMapNodeEditorElement >> canvasElement [
+	^ canvasElement
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeEditorElement >> canvasElement: anObject [
+	canvasElement := anObject
+]
 
 { #category : #'private - updating' }
 GtWardleyMapNodeEditorElement >> contextMenuItems [

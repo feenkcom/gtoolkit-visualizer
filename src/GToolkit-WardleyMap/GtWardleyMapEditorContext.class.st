@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 GtWardleyMapEditorContext >> canvasElement [
-	^ self editorElement canvas
+	^ self editorElement canvasElement
 ]
 
 { #category : #accessing }
