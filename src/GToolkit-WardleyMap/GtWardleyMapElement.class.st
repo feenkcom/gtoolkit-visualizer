@@ -99,6 +99,32 @@ GtWardleyMapElement >> onAcceptNewTitleWish: aWish [
 	self wardleyMapViewModel title: aWish text asString
 ]
 
+{ #category : #accessing }
+GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
+	anAnnouncement decoratorViewModel decorateMapElement: self
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapElement >> onMapDecoratorRemoved: anAnnouncement [
+	anAnnouncement decoratorViewModel undecorateMapElement: self
+]
+
+{ #category : #accessing }
+GtWardleyMapElement >> onMapDecoratorsChanged [
+	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
+		aChild wardley isDecorator 
+			ifTrue: [ aChild removeFromParent. false ]
+			ifFalse: [ true ] ].
+	
+	self wardleyMapViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+		eachDecoratorViewModel decorateMapElement: self ].
+]
+
+{ #category : #'api - wardley map view model' }
+GtWardleyMapElement >> onSpawnRequest: anAnnouncement [
+	self phlow spawnObject: anAnnouncement object
+]
+
 { #category : #'event handling' }
 GtWardleyMapElement >> onTitleChanged [
 	titleElement text: self wardleyMapViewModel title
@@ -124,10 +150,11 @@ GtWardleyMapElement >> onTitleVisibilityChanged: anAnnouncement [
 { #category : #'api - wardley map view model' }
 GtWardleyMapElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
-	
+
 	self onTitleChanged.
 	self onTitleVisibilityChanged.
 	canvasElement wardleyMapViewModel: self wardleyMapViewModel.
+	self onMapDecoratorsChanged
 ]
 
 { #category : #'api - wardley map view model' }
@@ -135,10 +162,23 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 	"Is sent after a new WardleyMap view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
-	
+
 	self wardleyMapViewModel weak
-		when: GtWardleyMapViewModelTitleChanged send: #onTitleChanged: to: self;
-		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged: to: self
+		when: GtWardleyMapViewModelTitleChanged
+			send: #onTitleChanged:
+			to: self;
+		when: GtWardleyMapViewModelTitleVisibilityChanged
+			send: #onTitleVisibilityChanged:
+			to: self;
+		when: GtWardleyMapSpawnRequest
+			send: #onSpawnRequest:
+			to: self;
+		when: GtWardleyMapDecoratorViewModelAdded
+			send: #onMapDecoratorAdded:
+			to: self;
+		when: GtWardleyMapDecoratorViewModelRemoved
+			send: #onMapDecoratorRemoved:
+			to: self
 ]
 
 { #category : #'api - wardley map view model' }

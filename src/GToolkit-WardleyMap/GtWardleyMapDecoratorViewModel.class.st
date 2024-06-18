@@ -23,6 +23,13 @@ GtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
 ]
 
 { #category : #'api - wardley map decorator view model' }
+GtWardleyMapDecoratorViewModel >> decorateMapElement: anEdgeElement [
+	self wardleyMapDecoratorModel
+		decorateMapElement: anEdgeElement
+		decoratorViewModel: self
+]
+
+{ #category : #'api - wardley map decorator view model' }
 GtWardleyMapDecoratorViewModel >> decorateNodeElement: aNodeElement [
 	self wardleyMapDecoratorModel
 		decorateNodeElement: aNodeElement
@@ -34,4 +41,11 @@ GtWardleyMapDecoratorViewModel >> onWardleyMapDecoratorModelChanged [
 	"Is sent when a new wardleyMapDecorator model is assigned to the view model"
 
 	
+]
+
+{ #category : #'api - wardley map decorator view model' }
+GtWardleyMapDecoratorViewModel >> undecorateMapElement: anEdgeElement [
+	self wardleyMapDecoratorModel
+		undecorateMapElement: anEdgeElement
+		decoratorViewModel: self
 ]

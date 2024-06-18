@@ -5,9 +5,9 @@ Class {
 		'pipelineToken',
 		'name',
 		'left',
-		'maturity1',
+		'evolution1',
 		'comma',
-		'maturity2',
+		'evolution2',
 		'right',
 		'elements',
 		'evolves'
@@ -39,8 +39,8 @@ GtWMPipelineNode >> compositeNodeVariables [
 GtWMPipelineNode >> coordinate [
 	<return: #Point or: nil>
 	| anXString anYString anXNumber anYNumber |
-	anXString := self maturity1 ifNotNil: #source.
-	anYString := self maturity2 ifNotNil: #source.
+	anXString := self evolution1 ifNotNil: #source.
+	anYString := self evolution2 ifNotNil: #source.
 
 	anXString ifNil: [ ^ nil ].
 	anYString ifNil: [ ^ nil ].
@@ -64,6 +64,26 @@ GtWMPipelineNode >> elements: anOrderedCollection [
 	self setParents: self elements to: nil.
 	elements := anOrderedCollection.
 	self setParents: self elements to: self
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> evolution1 [
+	^ evolution1
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> evolution1: aSmaCCToken [
+	evolution1 := aSmaCCToken
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> evolution2 [
+	^ evolution2
+]
+
+{ #category : #generated }
+GtWMPipelineNode >> evolution2: aSmaCCToken [
+	evolution2 := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -93,26 +113,6 @@ GtWMPipelineNode >> left [
 { #category : #generated }
 GtWMPipelineNode >> left: aSmaCCToken [
 	left := aSmaCCToken
-]
-
-{ #category : #generated }
-GtWMPipelineNode >> maturity1 [
-	^ maturity1
-]
-
-{ #category : #generated }
-GtWMPipelineNode >> maturity1: aSmaCCToken [
-	maturity1 := aSmaCCToken
-]
-
-{ #category : #generated }
-GtWMPipelineNode >> maturity2 [
-	^ maturity2
-]
-
-{ #category : #generated }
-GtWMPipelineNode >> maturity2: aSmaCCToken [
-	maturity2 := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -147,5 +147,5 @@ GtWMPipelineNode >> right: aSmaCCToken [
 
 { #category : #generated }
 GtWMPipelineNode >> tokenVariables [
-	^ #(#pipelineToken #name #left #maturity1 #comma #maturity2 #right)
+	^ #(#pipelineToken #name #left #evolution1 #comma #evolution2 #right)
 ]

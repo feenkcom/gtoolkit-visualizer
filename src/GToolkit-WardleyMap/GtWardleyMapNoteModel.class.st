@@ -35,6 +35,16 @@ GtWardleyMapNoteModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #'api - coordinate' }
+GtWardleyMapNoteModel >> evolution [
+	^ self x
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNoteModel >> evolution: aNumber [
+	self x: aNumber
+]
+
 { #category : #testing }
 GtWardleyMapNoteModel >> hasId [
 	^ id notNil
@@ -86,12 +96,20 @@ GtWardleyMapNoteModel >> label: aString [
 
 { #category : #'api - coordinate' }
 GtWardleyMapNoteModel >> maturity [
-	^ self x
+	self
+		deprecated: 'Use #evolution instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver maturity' -> '`@receiver evolution'.
+	
+	^ self evolution
 ]
 
 { #category : #'api - coordinate' }
 GtWardleyMapNoteModel >> maturity: aNumber [
-	self x: aNumber
+	self
+		deprecated: 'Please use evolution: instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver maturity: `@statements1' -> '`@receiver evolution: `@statements1'.
+	
+	self evolution: aNumber
 ]
 
 { #category : #'api - color' }

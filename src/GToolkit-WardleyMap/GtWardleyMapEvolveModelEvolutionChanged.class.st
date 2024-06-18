@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapEvolveModelMaturityChanged,
+	#name : #GtWardleyMapEvolveModelEvolutionChanged,
 	#superclass : #GtWardleyMapEvolveModelAnnouncement,
 	#category : #'GToolkit-WardleyMap-Events'
 }

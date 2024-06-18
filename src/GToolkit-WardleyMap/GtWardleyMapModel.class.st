@@ -12,8 +12,8 @@ Each model entity that uses {{gtClass:TGtWardleyMapVisitable}} is able to be vis
 Class {
 	#name : #GtWardleyMapModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions + TGtWithWardleyContextMenuItems',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait + TGtWithWardleyContextMenuItems classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions + TGtWithWardleyContextMenuItems + TGtWithWardleyMapDecoratorModels',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait + TGtWithWardleyContextMenuItems classTrait + TGtWithWardleyMapDecoratorModels classTrait',
 	#instVars : [
 		'announcer',
 		'nodes',
@@ -528,6 +528,27 @@ GtWardleyMapModel >> notifyTitleVisibilityChanged [
 	self announce: GtWardleyMapTitleVisibilityChanged new
 ]
 
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelAdded new
+				nodeModel: self;
+				decoratorModel: aWardleyMapDecoratorModel)
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapNodeDecoratorModelRemoved new
+				nodeModel: self;
+				decoratorModel: aWardleyMapDecoratorViewModel)
+]
+
+{ #category : #accessing }
+GtWardleyMapModel >> propagateAnnouncement: anAnnouncement [
+	self announce: anAnnouncement
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> removeEdge: aGtWardleyMapEdgeModel [
 	self
@@ -552,6 +573,13 @@ GtWardleyMapModel >> removeNode: aGtWardleyMapNodeModel [
 
 	"before removing a node we should remove all connected edges"	
 	self allEdgesConnecting: aGtWardleyMapNodeModel do: [ :eachEdge | self removeEdge: eachEdge ].
+	
+	"remove its pipeline"
+	aGtWardleyMapNodeModel isPipelineVisible: false.
+	
+	"remove its evolve"
+	aGtWardleyMapNodeModel isEvolveVisible: false.
+	
 	nodes remove: aGtWardleyMapNodeModel ifAbsent: [ ^ self ].
 	aGtWardleyMapNodeModel removeParent.
 	aGtWardleyMapNodeModel removeFromPipeline.

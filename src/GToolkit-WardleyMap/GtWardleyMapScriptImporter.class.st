@@ -150,9 +150,9 @@ GtWardleyMapScriptImporter >> importEvolves [
 					self
 						nodeNamed: aSourceNodeName
 						ifFound: [ :aSourceNodeModel | 
-							anAstNode maturityNumber
+							anAstNode evolutionNumber
 								ifNotNil: [ :aMaturity | 
-									aSourceNodeModel evolveModel maturity: aMaturity.
+									aSourceNodeModel evolveModel evolution: aMaturity.
 									aSourceNodeModel evolveModel color: GtWardleyMapConstants evolveColor.
 
 									anAstNode label
@@ -163,7 +163,8 @@ GtWardleyMapScriptImporter >> importEvolves [
 													aLabelCoordinate := GtWardleyMapUtility
 															convertWardleyScriptNodeModel: aSourceNodeModel evolveModel
 															labelCoordiante: aPoint.
-													aSourceNodeModel evolveModel labelModel coordinate: aLabelCoordinate ] ].
+													aSourceNodeModel evolveModel labelModel
+														coordinate: aLabelCoordinate ] ].
 
 									aSourceNodeModel evolveModel label: anEvolveName ] ]
 						ifNone: [  ] ] ]
@@ -230,7 +231,7 @@ GtWardleyMapScriptImporter >> importPipeline: aPipelineNode innerNodes: aPipelin
 							nodeNamed: aName
 							ifFound: [ :anElementNode | 
 								anElementNode
-									coordinate: anAstElement maturityNumber @ (aPipelineNode y) ]
+									coordinate: anAstElement evolutionNumber @ (aPipelineNode y) ]
 							ifNone: [ nil ] ] ]
 			thenReject: #isNil.
 

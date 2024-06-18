@@ -3,10 +3,10 @@ Class {
 	#superclass : #GtWMProgramNode,
 	#instVars : [
 		'left',
+		'evolution',
+		'right',
 		'visibility',
-		'comma',
-		'maturity',
-		'right'
+		'comma'
 	],
 	#category : #'GToolkit-WardleyMap-Parser'
 }
@@ -30,7 +30,7 @@ GtWMCoordsNode >> comma: aSmaCCToken [
 GtWMCoordsNode >> coordinate [
 	<return: #Point or: nil>
 	| anXString anYString anXNumber anYNumber |
-	anXString := self maturity ifNotNil: #source.
+	anXString := self evolution ifNotNil: #source.
 	anYString := self visibility ifNotNil: #source.
 
 	anXString ifNil: [ ^ nil ].
@@ -46,30 +46,20 @@ GtWMCoordsNode >> coordinate [
 ]
 
 { #category : #generated }
-GtWMCoordsNode >> left [
-	^ left
+GtWMCoordsNode >> evolution [
+	^ evolution
 ]
 
 { #category : #generated }
-GtWMCoordsNode >> left: aSmaCCToken [
-	left := aSmaCCToken
-]
-
-{ #category : #generated }
-GtWMCoordsNode >> maturity [
-	^ maturity
-]
-
-{ #category : #generated }
-GtWMCoordsNode >> maturity: aSmaCCToken [
-	maturity := aSmaCCToken
+GtWMCoordsNode >> evolution: aSmaCCToken [
+	evolution := aSmaCCToken
 ]
 
 { #category : #'api - convenience' }
-GtWMCoordsNode >> maturityNumber [
+GtWMCoordsNode >> evolutionNumber [
 	<return: #Number or: nil>
 	| anXString anXNumber |
-	anXString := self maturity ifNotNil: #source.
+	anXString := self evolution ifNotNil: #source.
 
 	anXString ifNil: [ ^ nil ].
 
@@ -78,6 +68,16 @@ GtWMCoordsNode >> maturityNumber [
 	anXNumber ifNil: [ ^ nil ].
 
 	^ anXNumber
+]
+
+{ #category : #generated }
+GtWMCoordsNode >> left [
+	^ left
+]
+
+{ #category : #generated }
+GtWMCoordsNode >> left: aSmaCCToken [
+	left := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -92,7 +92,7 @@ GtWMCoordsNode >> right: aSmaCCToken [
 
 { #category : #generated }
 GtWMCoordsNode >> tokenVariables [
-	^ #(#left #maturity #right #visibility #comma)
+	^ #(#left #evolution #right #visibility #comma)
 ]
 
 { #category : #generated }
