@@ -43,7 +43,7 @@ GtWardleyMapNodeButtonWithLabelMenuItem >> createElementUsingContext: aContextMe
 	<return: #BlElement or: nil>
 	(self condition cull: aContextMenuItem) ifFalse: [ ^ nil ].
 	
-	^ GtWardleyMapUtility newButtonElement
+	^ GtWardleyMapUtility newMenuItemButtonWithLabel
 		label: self label;
 		action: ([ :aButtonElement :aButtonModel :anEvent | 
 			self action cull: aContextMenuItem cull: aButtonElement cull: aButtonModel cull: anEvent ])

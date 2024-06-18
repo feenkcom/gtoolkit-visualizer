@@ -145,14 +145,6 @@ GtWardleyMapUtility class >> menuItemMarginInsets [
 		right: 3
 ]
 
-{ #category : #'api - views' }
-GtWardleyMapUtility class >> newButtonElement [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: GtWardleyMapUtility menuItemMarginInsets
-]
-
 { #category : #'api - widgets' }
 GtWardleyMapUtility class >> newColorLabelElement [
 	^ self newContextMenuLabel text: 'Color:'
@@ -175,8 +167,28 @@ GtWardleyMapUtility class >> newContextMenuLabel [
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> newDeleteButtonElement [
-	^ self newButtonElement label: 'Delete'
+GtWardleyMapUtility class >> newMenuItemButton [
+	^ BrButton new
+		fitContent;
+		beSmallSize;
+		margin: GtWardleyMapUtility menuItemMarginInsets
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newMenuItemButtonWithIcon [
+	^ self newMenuItemButton
+		aptitude: BrGlamorousButtonWithIconAptitude new
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newMenuItemButtonWithLabel [
+	^ self newMenuItemButton
+		aptitude: BrGlamorousButtonWithLabelAptitude new
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newMenuItemDeleteButton [
+	^ self newMenuItemButtonWithLabel label: 'Delete'
 ]
 
 { #category : #'api - model' }

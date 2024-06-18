@@ -9,7 +9,7 @@ Class {
 { #category : #converting }
 GtWardleyMapNodeDeleteMenuItem >> createElementUsingContext: aContextMenuItem [
 	<return: #BlElement or: nil>
-	^ GtWardleyMapUtility newDeleteButtonElement
+	^ GtWardleyMapUtility newMenuItemDeleteButton
 		label: 'Delete node';
 		action: [ :aButton |
 			aContextMenuItem wardleyMapNodeViewModel removeFromMap.

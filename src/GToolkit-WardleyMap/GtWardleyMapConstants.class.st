@@ -93,6 +93,11 @@ GtWardleyMapConstants class >> maxButtonLabelCharacters [
 	^ 20
 ]
 
+{ #category : #initialization }
+GtWardleyMapConstants class >> menuItemEditorWidth [
+	^ 190
+]
+
 { #category : #'api - constants' }
 GtWardleyMapConstants class >> minPipelineRelativeWidth [
 	"I represent kind of padding in relative coordinates (0, 1)"

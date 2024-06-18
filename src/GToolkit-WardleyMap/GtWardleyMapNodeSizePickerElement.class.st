@@ -11,7 +11,7 @@ Class {
 
 { #category : #initialization }
 GtWardleyMapNodeSizePickerElement >> createDecreaseButton [
-	^ GtWardleyMapUtility newButtonElement
+	^ GtWardleyMapUtility newMenuItemButtonWithLabel
 		margin: (BlInsets right: 5);
 		label: '-';
 		action: [ self decreaseNodeSize ]
@@ -19,7 +19,7 @@ GtWardleyMapNodeSizePickerElement >> createDecreaseButton [
 
 { #category : #initialization }
 GtWardleyMapNodeSizePickerElement >> createIncreaseButton [
-	^ GtWardleyMapUtility newButtonElement
+	^ GtWardleyMapUtility newMenuItemButtonWithLabel
 		margin: BlInsets empty;
 		label: '+';
 		action: [ self increaseNodeSize ]
