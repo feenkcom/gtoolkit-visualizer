@@ -12,8 +12,8 @@ Each model entity that uses {{gtClass:TGtWardleyMapVisitable}} is able to be vis
 Class {
 	#name : #GtWardleyMapModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions + TGtWithWardleyContextMenuItems',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait + TGtWithWardleyContextMenuItems classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapExportable + TGtWardleyMapVisitable + TGtOptions + TGtWithWardleyContextMenuItems + TGtWithWardleyMapDecoratorModels',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapVisitable classTrait + TGtOptions classTrait + TGtWithWardleyContextMenuItems classTrait + TGtWithWardleyMapDecoratorModels classTrait',
 	#instVars : [
 		'announcer',
 		'nodes',
@@ -526,6 +526,27 @@ GtWardleyMapModel >> notifyTitleChanged [
 { #category : #'api - title' }
 GtWardleyMapModel >> notifyTitleVisibilityChanged [
 	self announce: GtWardleyMapTitleVisibilityChanged new
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelAdded new
+				nodeModel: self;
+				decoratorModel: aWardleyMapDecoratorModel)
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapNodeDecoratorModelRemoved new
+				nodeModel: self;
+				decoratorModel: aWardleyMapDecoratorViewModel)
+]
+
+{ #category : #accessing }
+GtWardleyMapModel >> propagateAnnouncement: anAnnouncement [
+	self announce: anAnnouncement
 ]
 
 { #category : #'api - edges' }
