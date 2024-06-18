@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TGtWardleyMapContextMenuItem classTrait',
 	#instVars : [
 		'condition',
-		'block'
+		'block',
+		'name'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers - Context Menu'
 }
@@ -46,5 +47,15 @@ GtWardleyMapStencilMenuItem >> createElementUsingContext: aContextMenuItem [
 
 { #category : #'gt - extensions' }
 GtWardleyMapStencilMenuItem >> gtItemName [
-	^ 'Element stencil'
+	^ self name ifNil: [ 'Element stencil' ]
+]
+
+{ #category : #accessing }
+GtWardleyMapStencilMenuItem >> name [
+	^ name
+]
+
+{ #category : #accessing }
+GtWardleyMapStencilMenuItem >> name: anObject [
+	name := anObject
 ]
