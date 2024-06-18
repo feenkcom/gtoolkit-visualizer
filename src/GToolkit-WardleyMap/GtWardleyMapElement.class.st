@@ -99,6 +99,11 @@ GtWardleyMapElement >> onAcceptNewTitleWish: aWish [
 	self wardleyMapViewModel title: aWish text asString
 ]
 
+{ #category : #'api - wardley map view model' }
+GtWardleyMapElement >> onSpawnRequest: anAnnouncement [
+	self phlow spawnObject: anAnnouncement object
+]
+
 { #category : #'event handling' }
 GtWardleyMapElement >> onTitleChanged [
 	titleElement text: self wardleyMapViewModel title
@@ -135,10 +140,17 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 	"Is sent after a new WardleyMap view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
-	
+
 	self wardleyMapViewModel weak
-		when: GtWardleyMapViewModelTitleChanged send: #onTitleChanged: to: self;
-		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged: to: self
+		when: GtWardleyMapViewModelTitleChanged
+			send: #onTitleChanged:
+			to: self;
+		when: GtWardleyMapViewModelTitleVisibilityChanged
+			send: #onTitleVisibilityChanged:
+			to: self;
+		when: GtWardleyMapSpawnRequest
+			send: #onSpawnRequest:
+			to: self
 ]
 
 { #category : #'api - wardley map view model' }
