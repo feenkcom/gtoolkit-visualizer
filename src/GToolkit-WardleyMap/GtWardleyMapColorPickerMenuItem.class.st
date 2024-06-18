@@ -13,7 +13,7 @@ GtWardleyMapColorPickerMenuItem >> createElementUsingContext: aContextMenuItem [
 		hFitContent;
 		vFitContentLimited;
 		columnCount: 8;
-		cellSpacing: 5;
+		cellSpacing: 3;
 		colors: aContextMenuItem wardleyMapViewModel predefinedColors;
 		whenColorPickedDo: [ :aColor |
 			aContextMenuItem wardleyMapNodeViewModel changeColorTo: aColor.

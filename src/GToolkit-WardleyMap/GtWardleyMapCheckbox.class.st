@@ -63,6 +63,7 @@ GtWardleyMapCheckbox >> initialize [
 	self addChild: enabledLabel.
 	self addChild: disabledLabel.
 
+	self margin: GtWardleyMapUtility menuItemMarginInsets.
 	self fitContent.
 	self alignCenterLeft
 ]

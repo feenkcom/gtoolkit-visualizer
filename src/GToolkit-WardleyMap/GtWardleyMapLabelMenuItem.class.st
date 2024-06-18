@@ -24,8 +24,9 @@ GtWardleyMapLabelMenuItem >> condition: aBlock [
 GtWardleyMapLabelMenuItem >> createElementUsingContext: aContextMenuItem [
 	<return: #BlElement or: nil>
 	(self condition cull: aContextMenuItem) ifFalse: [ ^ nil ].
-	
-	^ GtWardleyMapUtility newColorLabelElement text: (self text ifNil: [ '' ])
+
+	^ GtWardleyMapUtility newContextMenuLabel 
+		text: (self text ifNil: [ '' ])
 ]
 
 { #category : #'gt - extensions' }

@@ -17,12 +17,7 @@ GtWardleyMapTitleVisibilityCheckbox >> initialize [
 		disabledLabel: 'Cannot change title visibility';
 		tooltipLabel: 'Toggle map title visibility';
 		whenCheckedDo: [ :anEvent | self onCheckedDo: anEvent ];
-		whenUncheckedDo: [ :anEvent | self onUncheckedDo: anEvent  ];
-		margin: (BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
+		whenUncheckedDo: [ :anEvent | self onUncheckedDo: anEvent  ]
 ]
 
 { #category : #'event handling' }

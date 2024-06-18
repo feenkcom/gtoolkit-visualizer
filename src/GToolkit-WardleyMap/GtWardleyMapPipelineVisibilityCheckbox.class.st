@@ -16,12 +16,7 @@ GtWardleyMapPipelineVisibilityCheckbox >> initialize [
 		enabledLabel: 'visible pipeline';
 		disabledLabel: 'Cannot have pipelines';
 		whenCheckedDo: [ :anEvent | self onCheckedDo: anEvent ];
-		whenUncheckedDo: [ :anEvent | self onUncheckedDo: anEvent  ];
-		margin: (BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
+		whenUncheckedDo: [ :anEvent | self onUncheckedDo: anEvent  ]
 ]
 
 { #category : #'event handling' }

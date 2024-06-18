@@ -128,15 +128,29 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 ]
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> menuItemLabelMarginInsets [
+	^ self menuItemMarginInsets + (BlInsets
+		top: 5
+		left: 0
+		bottom: 0
+		right: 0)
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> menuItemMarginInsets [
+	^ BlInsets
+		top: 0
+		left: 3
+		bottom: 3
+		right: 3
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> newButtonElement [
 	^ BrButton new
 		beSmallSize;
 		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 10
-				left: 5
-				bottom: 5
-				right: 0)
+		margin: GtWardleyMapUtility menuItemMarginInsets
 ]
 
 { #category : #'api - widgets' }
@@ -148,25 +162,16 @@ GtWardleyMapUtility class >> newColorLabelElement [
 GtWardleyMapUtility class >> newContextMenuCheckbox [
 	^ GtWardleyMapCheckbox new
 		checked: false;
-		whenCheckedDo: [ :anEvent | ];
-		whenUncheckedDo: [ :anEvent | ];
-		margin:
-			(BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
+		whenCheckedDo: [ :anEvent |  ];
+		whenUncheckedDo: [ :anEvent |  ];
+		margin: GtWardleyMapUtility menuItemMarginInsets
 ]
 
 { #category : #'api - widgets' }
 GtWardleyMapUtility class >> newContextMenuLabel [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-		margin: (BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
+		margin: GtWardleyMapUtility menuItemLabelMarginInsets
 ]
 
 { #category : #'api - views' }

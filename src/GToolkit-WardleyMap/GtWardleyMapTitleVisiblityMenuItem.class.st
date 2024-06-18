@@ -15,5 +15,5 @@ GtWardleyMapTitleVisiblityMenuItem >> createElementUsingContext: aContextMenuIte
 
 { #category : #'gt - extensions' }
 GtWardleyMapTitleVisiblityMenuItem >> gtItemName [
-	^ 'Pipeline visibility checker'
+	^ 'Title visibility checker'
 ]
