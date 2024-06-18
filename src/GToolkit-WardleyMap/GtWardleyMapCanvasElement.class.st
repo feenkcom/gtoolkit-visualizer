@@ -185,7 +185,6 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 	^ GtWardleyMapNodeEditorElement new
 		wardleyMapViewModel: self wardleyMapViewModel;
-		canvasElement: self;
 		wardleyMapNodeViewModel: aNodeViewModel;
 		when: GtPhlowObjectToSpawn
 			do: [ :anEvent | 
