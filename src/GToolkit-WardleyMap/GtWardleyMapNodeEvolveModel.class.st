@@ -42,11 +42,11 @@ GtWardleyMapNodeEvolveModel >> evolution [
 ]
 
 { #category : #'api - maturity' }
-GtWardleyMapNodeEvolveModel >> evolution: aMaturity [
-	self evolution = aMaturity
+GtWardleyMapNodeEvolveModel >> evolution: aNumber [
+	self evolution = aNumber
 		ifTrue: [ ^ self ].
 
-	evolution := aMaturity.
+	evolution := aNumber.
 	self notifyEvolutionChanged
 ]
 
