@@ -157,6 +157,12 @@ GtWardleyMapEvolveViewModel >> onEvolveColored: anAnnouncement [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEvolveViewModel >> onEvolveEvolutionChanged: anAnnouncement [
+	self announce: (GtWardleyMapEvolveViewModelMoved new evolveViewModel: self).
+	self wardleyMapViewModel announce: (GtWardleyMapEvolveViewModelMoved new evolveViewModel: self)
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEvolveViewModel >> onEvolveLabelMoved: anAnnouncement [
 	self announce: (GtWardleyMapEvolveViewModelLabelMoved new evolveViewModel: self)
 ]
@@ -169,12 +175,6 @@ GtWardleyMapEvolveViewModel >> onEvolveLabelTextChanged: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapEvolveViewModel >> onEvolveLabelVisibilityChanged: anAnnouncement [
 	self announce: (GtWardleyMapEvolveViewModelLabelVisibilityChanged new evolveViewModel: self)
-]
-
-{ #category : #'event handling' }
-GtWardleyMapEvolveViewModel >> onEvolveMaturityChanged: anAnnouncement [
-	self announce: (GtWardleyMapEvolveViewModelMoved new evolveViewModel: self).
-	self wardleyMapViewModel announce: (GtWardleyMapEvolveViewModelMoved new evolveViewModel: self)
 ]
 
 { #category : #'event handling' }
@@ -225,7 +225,7 @@ GtWardleyMapEvolveViewModel >> subscribeToWardleyMapNodeModel [
 	
 	self wardleyMapNodeModel weak
 		when: GtWardleyMapNodeModelMoved send: #onNodeMoved: to: self;
-		when: GtWardleyMapEvolveModelMaturityChanged send: #onEvolveMaturityChanged: to: self;
+		when: GtWardleyMapEvolveModelEvolutionChanged send: #onEvolveEvolutionChanged: to: self;
 		when: GtWardleyMapEvolveModelColored send: #onEvolveColored: to: self;
 		when: GtWardleyMapEvolveModelResized send: #onEvolveResized: to: self.
 	

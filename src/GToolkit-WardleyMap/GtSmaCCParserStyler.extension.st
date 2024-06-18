@@ -54,7 +54,7 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 						
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMPipelineNode
-					variableNames: #(left maturity1 comma maturity2 right)
+					variableNames: #(left evolution1 comma evolution2 right)
 					styleBlock: [ :styler | styler foreground: Color blue darker ])
 						continueOnMatch: false.
 						

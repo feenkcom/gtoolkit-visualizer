@@ -25,7 +25,7 @@ TGtWithWardleyContextMenuItems >> contextMenuItems [
 
 	^ allPragmas collect: [ :eachPragma | 
 		(self perform: eachPragma methodSelector)
-			definingMethod: eachPragma method asRingDefinition ]
+			definingMethod: eachPragma method ]
 ]
 
 { #category : #'gt - extensions' }

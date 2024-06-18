@@ -502,27 +502,27 @@ GtWardleyMapModelExamples >> newMapWithNodes_nodeBAsEvolveTarget [
 	aNodeA := aWardleyMap nodes first.
 	aNodeB := aWardleyMap nodes second.
 	anEdgeAtoB := aWardleyMap edges first.
-	
-	self assert: aNodeA coordinate equals: (0.25@0.75).
+
+	self assert: aNodeA coordinate equals: 0.25 @ 0.75.
 	self assert: aNodeA innerNodes size equals: 0.
 	self assert: aNodeA isPipelineVisible not.
 
-	self assert: aNodeB coordinate equals: (0.5@0.25).
+	self assert: aNodeB coordinate equals: 0.5 @ 0.25.
 	self assert: aNodeB innerNodes size equals: 0.
 	self assert: aNodeB isPipelineVisible not.
-	
+
 	aNodeA isEvolveVisible: true.
-	aNodeA evolvedMaturity: 0.8.
+	aNodeA evolvedEvolution: 0.8.
 	aNodeA evolvedLabel: 'Evolved Node A'.
 	aNodeA evolvedLabelCoordinate: 0.5 @ 2.0.
 	aNodeA isEvolvedLabelVisible: true.
-	
-	self assert: aNodeA evolvedMaturity equals: 0.8.
+
+	self assert: aNodeA evolvedEvolution equals: 0.8.
 	self assert: aNodeA evolvedLabel equals: 'Evolved Node A'.
 	self assert: aNodeA evolvedLabelCoordinate equals: 0.5 @ 2.0.
 	self assert: aNodeA evolvedCoordinate equals: 0.8 @ 0.75.
 	self assert: aNodeA isEvolvedLabelVisible.
-	
+
 	^ aWardleyMap
 ]
 

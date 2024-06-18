@@ -70,19 +70,11 @@ GtWardleyMapEditorElement >> onWardleyMapViewModelChanged [
 
 { #category : #'private - updating' }
 GtWardleyMapEditorElement >> updateElement [
-	| aContext anIndex |
-	container removeChildren.
-	
-	anIndex := 1.
-	aContext := GtWardleyMapEditorContext new
-		editorElement: self. 
-	
-	self contextMenuItems do: [ :eachItem | 
-		| anElement |
-		anElement := eachItem createElementUsingContext: aContext.
-		anElement ifNotNil: [ 
-			container 
-				addChild: anElement 
-				as: (GtWardleyMapContextMenuItemId indexed: anIndex).
-			anIndex := anIndex + 1 ] ]
+	| aContext |
+	aContext := GtWardleyMapEditorContext new editorElement: self.
+
+	GtWardleyMapUtility
+		updateMenuContainer: container
+		menuItems: self contextMenuItems
+		usingContext: aContext
 ]

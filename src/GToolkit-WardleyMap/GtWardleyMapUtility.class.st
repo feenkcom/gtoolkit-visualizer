@@ -249,6 +249,20 @@ GtWardleyMapUtility class >> normalizedItemPositionOnEvent: anEvent canvas: aCan
 ]
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> updateMenuContainer: aContainerElement menuItems: aCollectionOfMenuItems usingContext: anEditorContext [
+	aContainerElement removeChildren.
+
+	aCollectionOfMenuItems
+		do: [ :eachItem | 
+			| anElement |
+			anElement := eachItem createElementUsingContext: anEditorContext.
+			anElement ifNotNil: [ 
+				aContainerElement
+					addChild: anElement
+					as: (GtWardleyMapContextMenuItemId definingMethod: eachItem definingMethod) ] ]
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> updateNodeElement: aNodeElement nodeViewModel: aNodeViewModel [
 	"I update node element layout constraints, based on model values.
 	If it is an inner node, we know that the y-cordinate is same as 
