@@ -22,6 +22,14 @@ GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
 	^ aWardleyMapElement
 ]
 
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> evolutionSections [
+	^ {'genesis / concept'.
+		'custom / emerging'.
+		'product / converging'.
+		'commodity / accepted'}
+]
+
 { #category : #'examples - elements' }
 GtWardleyMapModelExamples >> mapElementWithNodes [
 	<gtExample>
@@ -351,10 +359,7 @@ GtWardleyMapModelExamples >> newMapWithEvolutionSections [
 	<gtExample>
 	| aWardleyMap anEvolutionSections |
 	aWardleyMap := self newMapWithNodesAndTitle.
-	anEvolutionSections := {'genesis / concept'.
-			'custom / emerging'.
-			'product / converging'.
-			'commodity / accepted'}.
+	anEvolutionSections := self evolutionSections.
 	aWardleyMap evolutionSections: anEvolutionSections.
 	aWardleyMap isEvolutionAxisVisible: true.
 

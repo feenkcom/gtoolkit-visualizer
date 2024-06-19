@@ -60,6 +60,16 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMap: aWardleyMap [
 						at: #text put: aWardleyMap title;
 						at: #is_visible put: aWardleyMap isTitleVisible;
 						yourself) ].
+						
+	(aWardleyMap evolutionSections = GtWardleyMapConstants defaultEvolutionSections
+		and: [ aWardleyMap isEvolutionAxisVisible ]) 
+			ifFalse: [
+				aDictionary
+					at: #evolution_axis
+					put: (OrderedDictionary new
+						at: #is_visible put: aWardleyMap isEvolutionAxisVisible;
+						at: #sections put: aWardleyMap evolutionSections;
+						yourself) ].
 	
 	aWardleyMap notes
 		ifNotEmpty: [ :allNotes | 
