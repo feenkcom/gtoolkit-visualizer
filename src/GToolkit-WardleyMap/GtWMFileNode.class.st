@@ -158,6 +158,15 @@ GtWMFileNode >> gtLiveFor: aView [
 		view: #gtLiveFor:
 ]
 
+{ #category : #'gt - extensions' }
+GtWMFileNode >> gtMapFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Map';
+		object: [ GtWardleyMapScriptImporter forString: self source ];
+		view: #gtLiveFor:
+]
+
 { #category : #'generated-initialize-release' }
 GtWMFileNode >> initialize [
 	super initialize.
