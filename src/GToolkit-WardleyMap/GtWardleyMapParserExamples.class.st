@@ -14,14 +14,33 @@ GtWardleyMapParserExamples >> parseScriptWithComment [
 ]
 
 { #category : #'examples - parser' }
-GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
-
+GtWardleyMapParserExamples >> parseScriptWithEvolution [
 	<gtExample>
-	
+	<noTest>
+	| aScript aResult |
+	aScript := 'evolution genesis / concept -> custom / emerging -> product / converging -> commodity/ accepted'.
+	aResult := GtWardleyMapParser parse: aScript.
+
+	self assert: aResult evolutions size equals: 1.
+	self assert: aResult links size equals: 0.
+
+	^ aResult
+]
+
+{ #category : #'examples - parser' }
+GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
+	<gtExample>
+	<noTest>
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithNewSyntaxForPipeline.
-	
-	^ aResult.
+
+	self assert: aResult evolutions size equals: 1.
+	self assert: aResult evolves size equals: 2.
+	self assert: aResult elements size equals: 4.
+	self assert: aResult links size equals: 3.
+	self assert: aResult note size equals: 1.
+
+	^ aResult
 ]
 
 { #category : #'examples - parser' }
