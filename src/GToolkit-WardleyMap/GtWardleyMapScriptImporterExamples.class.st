@@ -24,7 +24,7 @@ GtWardleyMapScriptImporterExamples >> importScript [
 { #category : #'examples - imports' }
 GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	<gtExample>
-	| aScript anImporter aMap aNodeA aNodeB aNodeD aNodeC aNodeG aNodeH aNodeF anEdgeAB anEdgeBC anEdgeCF aNodeE |
+	| aScript anImporter aMap aNodeA aNodeB aNodeD aNodeC aNodeG aNodeH aNodeF anEdgeAB anEdgeBC anEdgeCF aNodeE anEvolutionSections |
 	aScript := self scriptWithNewSyntaxForPipeline.
 	anImporter := GtWardleyMapScriptImporter new
 			stream: aScript readStream;
@@ -35,6 +35,11 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 	self assert: aMap title equals: 'Something'.
 	self assert: aMap nodes size equals: 8.
 	self assert: aMap edges size equals: 3.
+	
+	anEvolutionSections := { 'genesis / concept'. 'custom / emerging'. 'product / converging'. 'commodity / accepted' }.
+	self assert: anEvolutionSections ~= GtWardleyMapConstants defaultEvolutionSections.
+	self assert: aMap evolutionSections equals: anEvolutionSections.
+	self assert: aMap isEvolutionAxisVisible.
 
 	aNodeA := aMap nodes detect: [ :each | each label = 'Node A' ].
 	self assert: aNodeA evolution equals: 0.66.

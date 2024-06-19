@@ -77,7 +77,7 @@ GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCr [
 // https://creativecommons.org/licenses/by-sa/4.0/
 
 title Something
-evolution genesis / concept -> custom / emerging -> product / converging -> commodity/ accepted
+evolution genesis / concept -> custom / emerging -> product / converging -> commodity / accepted
 style wardley
 
 note Node C pipeline comment [0.45, 0.45]

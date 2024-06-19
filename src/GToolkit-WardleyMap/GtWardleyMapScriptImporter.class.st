@@ -178,7 +178,12 @@ GtWardleyMapScriptImporter >> importMap [
 		aName := anAstNode name ifNotNil: #source.
 		aName ifNotNil: [ 
 			wardleyMap title: aName.
-			wardleyMap isTitleVisible: true ] ]
+			wardleyMap isTitleVisible: true ] ].
+			
+	ast allNodesOfType: GtWMEvolutionNode do: [ :anAstNode | 
+		wardleyMap evolutionSections: anAstNode sections.
+		wardleyMap isEvolutionAxisVisible: true.
+	]
 ]
 
 { #category : #'private - import' }

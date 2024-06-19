@@ -168,7 +168,8 @@ GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	self assert: aResult evolutions first line1 source equals: 'genesis / concept'.
 	self assert: aResult evolutions first line2 source equals: 'custom / emerging'.
 	self assert: aResult evolutions first line3 source equals: 'product / converging'.
-	self assert: aResult evolutions first line4 source equals: 'commodity/ accepted'.
+	self assert: aResult evolutions first line4 source equals: 'commodity / accepted'.
+	self assert: aResult evolutions first sections equals: { 'genesis / concept'. 'custom / emerging'. 'product / converging'. 'commodity / accepted' }.
 	
 	self assert: aResult notes size equals: 1.
 	self assert: aResult notes first label source equals: 'Node C pipeline comment'.
