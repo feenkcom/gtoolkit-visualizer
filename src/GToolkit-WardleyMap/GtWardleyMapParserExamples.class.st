@@ -7,7 +7,6 @@ Class {
 { #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithComment [
 	<gtExample>
-	<noTest>
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithComment.
 	
@@ -56,6 +55,99 @@ GtWardleyMapParserExamples >> parseScriptWithEvolution [
 	self assert: aResult evolutions first line4 source equals: 'commodity/ accepted'.
 	
 	self assert: aResult links size equals: 0.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink1 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'Node A->Node B'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink2 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'Node A -> Node B '.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink3 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'Node A -> Node B // the rest of the line is comment'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink4 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'Node A -> Node B ; link explanation '.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+	self assert: aResult links first comment source equals: 'link explanation'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink5 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'Node A -> Node B ; link explanation // the rest of the line is comment'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+	self assert: aResult links first comment source equals: 'link explanation'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink6 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'Node A->Node B;link explanation'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+	self assert: aResult links first comment source equals: 'link explanation'.
 
 	^ aResult
 ]
