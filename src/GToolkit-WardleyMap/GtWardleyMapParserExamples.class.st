@@ -7,21 +7,148 @@ Class {
 { #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithComment [
 	<gtExample>
+	<noTest>
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithComment.
+	
+	self assert: aResult styles size equals: 1.
+	self assert: aResult styles first style source equals: 'wardley'.
+	
+	self assert: aResult titles size equals: 1.
+	self assert: aResult titles first name source equals: 'map with pipeline and note'.
+	
+	self assert: aResult notes size equals: 1.
+	self assert: aResult notes first label source equals: '(+opportunity)'.
+	self assert: aResult notes first position visibility source equals: '0.82'.
+	self assert: aResult notes first position evolution source equals: '0.13'.
+	
+	self assert: aResult elements size equals: 4.
+	self assert: aResult elements first name source equals: 'node b'.
+	self assert: aResult elements first coords visibility source equals: '0.85'.
+	self assert: aResult elements first coords evolution source equals: '0.21'.
+	self assert: aResult elements first label x source equals: '-76'.
+	self assert: aResult elements first label y source equals: '-2'.
+	
+	self assert: aResult pipelines size equals: 1.
+	self assert: aResult pipelines first name source equals: 'node a'.
+	self assert: aResult pipelines first evolution1 source equals: '0.2'.
+	self assert: aResult pipelines first evolution2 source equals: '0.82'.
+	
+	self assert: aResult links size equals: 2.
+	self assert: aResult links first start source equals: 'node d'.
+	self assert: aResult links first arrow source equals: '+<>'.
+	self assert: aResult links first end source equals: 'node a'.
+	
+	^ aResult
+]
+
+{ #category : #'examples - parser' }
+GtWardleyMapParserExamples >> parseScriptWithEvolution [
+	<gtExample>
+	<noTest>
+	| aScript aResult |
+	aScript := 'evolution genesis / concept -> custom / emerging -> product / converging -> commodity/ accepted'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult evolutions size equals: 1.
+	self assert: aResult evolutions first line1 equals: 'genesis / concept'.
+	self assert: aResult evolutions first line2 equals: 'custom / emerging'.
+	self assert: aResult evolutions first line3 equals: 'product / converging'.
+	self assert: aResult evolutions first line4 equals: 'commodity/ accepted'.
+	
+	self assert: aResult links size equals: 0.
 
 	^ aResult
 ]
 
 { #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
-
 	<gtExample>
-	
+	<noTest>
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithNewSyntaxForPipeline.
+
+	self assert: aResult styles size equals: 1.
+	self assert: aResult styles first style source equals: 'wardley'.
+
+	self assert: aResult titles size equals: 1.
+	self assert: aResult titles first name source equals: 'Something'.
+
+	self assert: aResult evolutions size equals: 1.
+	self assert: aResult evolutions first line1 equals: 'genesis / concept'.
+	self assert: aResult evolutions first line2 equals: 'custom / emerging'.
+	self assert: aResult evolutions first line3 equals: 'product / converging'.
+	self assert: aResult evolutions first line4 equals: 'commodity/ accepted'.
 	
-	^ aResult.
+	self assert: aResult notes size equals: 1.
+	self assert: aResult notes first label source equals: 'Node C pipeline comment'.
+	self assert: aResult notes first position visibility source equals: '0.45'.
+	self assert: aResult notes first position evolution source equals: '0.45'.
+	
+	self assert: aResult elements size equals: 4.
+	self assert: aResult elements first name source equals: 'Node A'.
+	self assert: aResult elements first coords visibility source equals: '0.95'.
+	self assert: aResult elements first coords evolution source equals: '0.66'.
+	
+	self assert: aResult elements second name source equals: 'Node B'.
+	self assert: aResult elements second coords visibility source equals: '0.84'.
+	self assert: aResult elements second coords evolution source equals: '0.57'.
+	self assert: aResult elements second label x source equals: '-91'.
+	self assert: aResult elements second label y source equals: '-5'.
+	
+	self assert: aResult pipelines size equals: 3.
+	self assert: aResult pipelines first name source equals: 'Node B'.
+	
+	self assert: aResult pipelines second name source equals: 'Node C'.
+	self assert: aResult pipelines second elements size equals: 2.
+	self assert: aResult pipelines second elements first name source equals: 'Node D'.
+	self assert: aResult pipelines second elements first evolution source equals: '0.17'.
+	self assert: aResult pipelines second elements first label x source equals: '-63'.
+	self assert: aResult pipelines second elements first label y source equals: '14'.
+	
+	self assert: aResult pipelines second elements second name source equals: 'Node E'.
+	self assert: aResult pipelines second elements second evolution source equals: '0.80'.
+	self assert: aResult pipelines second elements second label x source equals: '20'.
+	self assert: aResult pipelines second elements second label y source equals: '18'.
+
+	self assert: aResult pipelines third name source equals: 'Node F'.
+	self assert: aResult pipelines second elements size equals: 2.
+	self assert: aResult pipelines second evolves size equals: 1.
+	self flag: 'Ideally the evolve name would be "Node G" and "something g" would be an "evolvedName", "newName", or so.'.
+	self assert: aResult pipelines second evolves first name source equals: 'Node G -> something g'.
+	self assert: aResult pipelines second evolves first evolution source equals: '0.8'.
+	self assert: aResult pipelines second evolves first label x source equals: '-5'.
+	self assert: aResult pipelines second evolves first label y source equals: '20'.
+	
+	self assert: aResult evolves size equals: 2.
+	self assert: aResult evolves first name source equals: 'Node B'.
+	self assert: aResult evolves first evolution source equals: '0.73'.
+	self assert: aResult evolves first label x source equals: '-5'.
+	self assert: aResult evolves first label y source equals: '21'.
+	
+	self flag: 'Ideally the evolve name would be "Node C" and "something c" would be an "evolvedName", "newName", or so.'.
+	self assert: aResult evolves second name source equals: 'Node C -> something c'.
+	self assert: aResult evolves second evolution source equals: '0.9'.
+	self assert: aResult evolves second label x source equals: '-5'.
+	self assert: aResult evolves second label y source equals: '21'.
+	
+	self assert: aResult links size equals: 3.
+	self assert: aResult links first start source equals: 'Node A'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'Node B'.
+	self assert: aResult links first comment source equals: 'comment on A-B edge'.
+	
+	self assert: aResult links second start source equals: 'Node B'.
+	self assert: aResult links second arrow source equals: '->'.
+	self assert: aResult links second end source equals: 'Node C'.
+	self assert: aResult links first comment equals: nil.
+	
+	self assert: aResult links third start source equals: 'Node C'.
+	self assert: aResult links third arrow source equals: '->'.
+	self assert: aResult links third end source equals: 'Node F'.
+	self assert: aResult links third comment source equals: 'comment on C-F edge'.
+	
+	^ aResult
 ]
 
 { #category : #'examples - parser' }
@@ -29,19 +156,70 @@ GtWardleyMapParserExamples >> parseScriptWithNote [
 	<gtExample>
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithNote.
-
+	
+	self assert: aResult styles size equals: 1.
+	self assert: aResult styles first style source equals: 'wardley'.
+	
+	self assert: aResult titles size equals: 1.
+	self assert: aResult titles first name source equals: 'map with pipeline and note'.
+	
+	self assert: aResult notes size equals: 1.
+	self assert: aResult notes first label source equals: '(+opportunity)'.
+	self assert: aResult notes first position visibility source equals: '0.82'.
+	self assert: aResult notes first position evolution source equals: '0.13'.
+	
+	self assert: aResult elements size equals: 4.
+	self assert: aResult elements first name source equals: 'node b'.
+	self assert: aResult elements first coords visibility source equals: '0.85'.
+	self assert: aResult elements first coords evolution source equals: '0.21'.
+	
+	self assert: aResult pipelines size equals: 1.
+	self assert: aResult pipelines first name source equals: 'node a'.
+	self assert: aResult pipelines first evolution1 source equals: '0.2'.
+	self assert: aResult pipelines first evolution2 source equals: '0.82'.
+	
+	self assert: aResult links size equals: 2.
+	self assert: aResult links first start source equals: 'node d'.
+	self assert: aResult links first arrow source equals: '+<>'.
+	self assert: aResult links first end source equals: 'node a'.
+	
+	self assert: aResult links second start source equals: 'node b'.
+	self assert: aResult links second arrow source equals: '->'.
+	self assert: aResult links second end source equals: 'node d'.
+	
 	^ aResult
 ]
 
 { #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithPipeline [
-
 	<gtExample>
-	
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithPipeline.
-	
-	^ aResult.
+
+	self assert: aResult styles size equals: 1.
+	self assert: aResult styles first style source equals: 'wardley'.
+
+	self assert: aResult titles size equals: 1.
+	self assert: aResult titles first name source equals: 'map with pipeline'.
+
+	self assert: aResult elements size equals: 6.
+	self assert: aResult elements first name source equals: 'node f'.
+	self assert: aResult elements first coords visibility source equals: '0.96'.
+	self assert: aResult elements first coords evolution source equals: '0.57'.
+	self assert: aResult elements first label x source equals: '-36'.
+	self assert: aResult elements first label y source equals: '-9'.
+
+	self assert: aResult pipelines size equals: 1.
+	self assert: aResult pipelines first name source equals: 'node a'.
+	self assert: aResult pipelines first evolution1 source equals: '0.37'.
+	self assert: aResult pipelines first evolution2 source equals: '0.72'.
+
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: 'node f'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'node a'.
+
+	^ aResult
 ]
 
 { #category : #'eamples - scripts' }

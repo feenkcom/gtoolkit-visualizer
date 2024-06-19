@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapViewModel,
 	#superclass : #Object,
-	#traits : 'TGtWithWardleyMapModel + TGtAnnouncer + TGtOptions',
-	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait + TGtOptions classTrait',
+	#traits : 'TGtWithWardleyMapModel + TGtAnnouncer + TGtOptions + TGtWithWardleyMapDecoratorViewModels',
+	#classTraits : 'TGtWithWardleyMapModel classTrait + TGtAnnouncer classTrait + TGtOptions classTrait + TGtWithWardleyMapDecoratorViewModels classTrait',
 	#instVars : [
 		'announcer',
 		'nodeViewModels',
@@ -67,6 +67,12 @@ GtWardleyMapViewModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapViewModel >> contextMenuItems [
+	<return: #Collection of: #TGtWardleyMapContextMenuItem>
+	^ self wardleyMapModel contextMenuItems
 ]
 
 { #category : #initialization }
@@ -137,6 +143,17 @@ GtWardleyMapViewModel >> edgeViewModels [
 ]
 
 { #category : #'api - map' }
+GtWardleyMapViewModel >> evolutionSections [
+	<return: #Array of: #String>
+	^ self wardleyMapModel evolutionSections
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> evolutionSections: aCollectionOfStrings [
+	self wardleyMapModel evolutionSections: aCollectionOfStrings
+]
+
+{ #category : #'api - map' }
 GtWardleyMapViewModel >> evolveEdgeViewModelFor: aNodeModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self evolveEdgeViewModels
 		detect: [ :eachEvolveEdgeViewModel | eachEvolveEdgeViewModel fromNodeViewModel wardleyMapNodeModel = aNodeModel ]
@@ -154,6 +171,15 @@ GtWardleyMapViewModel >> evolveViewModels [
 	<return: #Collection of: #GtWardleyMapEvolveViewModel>
 
 	^ evolveViewModels
+]
+
+{ #category : #'gt - extensions' }
+GtWardleyMapViewModel >> gtContextMenuItemsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Context menu';
+		object: [ self wardleyMapModel ];
+		view: #gtContextMenuItemsFor:
 ]
 
 { #category : #'gt - extensions' }
@@ -382,6 +408,17 @@ GtWardleyMapViewModel >> initialize [
 ]
 
 { #category : #'api - map' }
+GtWardleyMapViewModel >> isEvolutionAxisVisible [
+	<return: #Boolean>
+	^ self wardleyMapModel isEvolutionAxisVisible
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> isEvolutionAxisVisible: aBoolean [
+	self wardleyMapModel isEvolutionAxisVisible: aBoolean
+]
+
+{ #category : #'api - map' }
 GtWardleyMapViewModel >> isTitleVisible [
 	<return: #Boolean>
 	^ self wardleyMapModel isTitleVisible
@@ -390,6 +427,14 @@ GtWardleyMapViewModel >> isTitleVisible [
 { #category : #'api - map' }
 GtWardleyMapViewModel >> isTitleVisible: aBoolean [
 	self wardleyMapModel isTitleVisible: aBoolean
+]
+
+{ #category : #'api - wardley map model' }
+GtWardleyMapViewModel >> mapDecoratorViewModelFor: aWardleyMapDecoratorModel ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self wardleyMapDecoratorViewModels
+		detect: [ :each | each wardleyMapDecoratorModel == aWardleyMapDecoratorModel ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
 ]
 
 { #category : #'api - map' }
@@ -422,6 +467,32 @@ GtWardleyMapViewModel >> noteViewModels [
 	^ noteViewModels
 ]
 
+{ #category : #accessing }
+GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapDecoratorViewModelAdded new
+				mapViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel)
+]
+
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapDecoratorViewModelRemoved new
+				mapViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel)
+]
+
+{ #category : #'api - wardley map model' }
+GtWardleyMapViewModel >> onDecoratorAdded: anAnnouncement [
+	self onWardleyMapDecoratorModelAdded: anAnnouncement decoratorModel
+]
+
+{ #category : #'api - wardley map model' }
+GtWardleyMapViewModel >> onDecoratorRemoved: anAnnouncement [
+	self onWardleyMapDecoratorModelRemoved: anAnnouncement decoratorModel
+]
+
 { #category : #'event handling' }
 GtWardleyMapViewModel >> onEdgeAdded: anAnnouncement [
 	| anEdgeViewModel |
@@ -438,6 +509,16 @@ GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
 			anEdgeViewModel announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel).
 			self announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel) ]
 		ifNone: [ ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolutionAxisVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapViewModelEvolutionAxisVisibilityChanged new )
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolutionSectionsChanged: anAnnouncement [
+	self announce: (GtWardleyMapViewModelEvolutionSectionsChanged new )
 ]
 
 { #category : #'event handling' }
@@ -637,20 +718,56 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	"Is sent after a new wardleyMap model is assigned to the view model.
 	It is required to unsubscribe from the domain model by implementing
 	#unsubscribeFromWardleyMapModel if view model subscribes to them"
-	
+
 	self wardleyMapModel weak
-		when: GtWardleyMapTitleChanged send: #onTitleChanged: to: self;
-		when: GtWardleyMapTitleVisibilityChanged send: #onTitleVisibilityChanged: to: self;
-		when: GtWardleyMapNodeModelAdded send: #onNodeAdded: to: self;
-		when: GtWardleyMapNodeModelRemoved send: #onNodeRemoved: to: self;
-		when: GtWardleyMapNodeModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
-		when: GtWardleyMapNodeModelInnerNodeAdded send: #onInnerNodeAdded: to: self;
-		when: GtWardleyMapNodeModelInnerNodeRemoved send: #onInnerNodeRemoved: to: self;
-		when: GtWardleyMapEdgeModelAdded send: #onEdgeAdded: to: self;
-		when: GtWardleyMapEdgeModelRemoved send: #onEdgeRemoved: to: self;
-		when: GtWardleyMapNoteModelAdded send: #onNoteAdded: to: self;
-		when: GtWardleyMapNoteModelRemoved send: #onNoteRemoved: to: self;
-		when: GtWardleyMapNodeModelEvolveVisibilityChanged send: #onEvolveVisibilityChanged: to: self
+		when: GtWardleyMapEvolutionSectionsChanged
+			send: #onEvolutionSectionsChanged:
+			to: self;
+		when: GtWardleyMapEvolutionAxisVisibilityChanged
+			send: #onEvolutionAxisVisibilityChanged:
+			to: self;
+		when: GtWardleyMapTitleChanged
+			send: #onTitleChanged:
+			to: self;
+		when: GtWardleyMapTitleVisibilityChanged
+			send: #onTitleVisibilityChanged:
+			to: self;
+		when: GtWardleyMapNodeModelAdded
+			send: #onNodeAdded:
+			to: self;
+		when: GtWardleyMapNodeModelRemoved
+			send: #onNodeRemoved:
+			to: self;
+		when: GtWardleyMapNodeModelPipelineVisibilityChanged
+			send: #onNodePipelineVisibilityChanged:
+			to: self;
+		when: GtWardleyMapNodeModelInnerNodeAdded
+			send: #onInnerNodeAdded:
+			to: self;
+		when: GtWardleyMapNodeModelInnerNodeRemoved
+			send: #onInnerNodeRemoved:
+			to: self;
+		when: GtWardleyMapEdgeModelAdded
+			send: #onEdgeAdded:
+			to: self;
+		when: GtWardleyMapEdgeModelRemoved
+			send: #onEdgeRemoved:
+			to: self;
+		when: GtWardleyMapNoteModelAdded
+			send: #onNoteAdded:
+			to: self;
+		when: GtWardleyMapNoteModelRemoved
+			send: #onNoteRemoved:
+			to: self;
+		when: GtWardleyMapNodeModelEvolveVisibilityChanged
+			send: #onEvolveVisibilityChanged:
+			to: self;
+		when: GtWardleyMapNodeDecoratorModelAdded
+			send: #onDecoratorAdded:
+			to: self;
+		when: GtWardleyMapNodeDecoratorModelRemoved
+			send: #onDecoratorRemoved:
+			to: self
 ]
 
 { #category : #'api - map' }

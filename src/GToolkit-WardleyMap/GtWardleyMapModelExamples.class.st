@@ -12,19 +12,22 @@ GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
 	aWardleyMap := self newMapWithNodes_nodeBAsEvolveTarget.
 	aWardleyMapViewModel := GtWardleyMapViewModel new.
 	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
-
+	aWardleyMapViewModel isEvolutionAxisVisible: true.
+	
 	aWardleyMapElement := GtWardleyMapElement new.
 	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
 
-	aWardleyMapElement evolutionSections: {
-		'genesis'.
-		'custom built'.
-		'product (+rental)'.
-		'commodity'
-	}.
 	self assert: aWardleyMapElement children size = 2.
 	self assert: aWardleyMapElement canvasElement children size = 6.
 	^ aWardleyMapElement
+]
+
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> evolutionSections [
+	^ {'genesis / concept'.
+		'custom / emerging'.
+		'product / converging'.
+		'commodity / accepted'}
 ]
 
 { #category : #'examples - elements' }
@@ -35,16 +38,11 @@ GtWardleyMapModelExamples >> mapElementWithNodes [
 	aWardleyMap := self newMapWithNodes.
 	aWardleyMapViewModel := GtWardleyMapViewModel new.
 	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
-
+	aWardleyMapViewModel isEvolutionAxisVisible: true.
+	
 	aWardleyMapElement := GtWardleyMapElement new.
 	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
 
-	aWardleyMapElement evolutionSections: {
-		'genesis'.
-		'custom built'.
-		'product (+rental)'.
-		'commodity'
-	}.
 	self assert: aWardleyMapElement children size = 2.
 	self assert: aWardleyMapElement canvasElement children size = 4.
 	^ aWardleyMapElement
@@ -56,16 +54,11 @@ GtWardleyMapModelExamples >> mapElementWithPipelines [
 	| aWardleyMapViewModel aWardleyMapElement |
 
 	aWardleyMapViewModel := self mapViewModelWithPipelines.
-
+	aWardleyMapViewModel isEvolutionAxisVisible: true.
+	
 	aWardleyMapElement := GtWardleyMapElement new.
 	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
 
-	aWardleyMapElement evolutionSections: {
-		'genesis'.
-		'custom built'.
-		'product (+rental)'.
-		'commodity'
-	}.
 	self assert: aWardleyMapElement children size equals: 2.
 	"3 nodes, 1 pipeline, 1 edge"
 	self assert: aWardleyMapElement canvasElement children size equals: 5.
@@ -78,16 +71,12 @@ GtWardleyMapModelExamples >> mapElementWithPipelinesInnerNodes [
 	| aWardleyMapViewModel aWardleyMapElement |
 
 	aWardleyMapViewModel := self mapViewModelWithPipelineInnerNodes.
-
+	aWardleyMapViewModel isEvolutionAxisVisible: true.
+	
 	aWardleyMapElement := GtWardleyMapElement new.
 	aWardleyMapElement wardleyMapViewModel: aWardleyMapViewModel.
 
-	aWardleyMapElement evolutionSections: {
-		'genesis'.
-		'custom built'.
-		'product (+rental)'.
-		'commodity'
-	}.
+	
 	self assert: aWardleyMapElement children size equals: 2.
 	"7 nodes, 1 pipeline, 1 edge, 1 note"
 	self assert: aWardleyMapElement canvasElement children size equals: 10.
@@ -366,6 +355,21 @@ GtWardleyMapModelExamples >> newMap [
 ]
 
 { #category : #'examples - model' }
+GtWardleyMapModelExamples >> newMapWithEvolutionSections [
+	<gtExample>
+	| aWardleyMap anEvolutionSections |
+	aWardleyMap := self newMapWithNodesAndTitle.
+	anEvolutionSections := self evolutionSections.
+	aWardleyMap evolutionSections: anEvolutionSections.
+	aWardleyMap isEvolutionAxisVisible: true.
+
+	self assert: aWardleyMap evolutionSections equals: anEvolutionSections.
+	self assert: aWardleyMap isEvolutionAxisVisible.
+
+	^ aWardleyMap
+]
+
+{ #category : #'examples - model' }
 GtWardleyMapModelExamples >> newMapWithNodes [
 	<gtExample>
 	| aWardleyMap aNodeA aNodeB aNodeC anEdgeAtoB |
@@ -502,27 +506,27 @@ GtWardleyMapModelExamples >> newMapWithNodes_nodeBAsEvolveTarget [
 	aNodeA := aWardleyMap nodes first.
 	aNodeB := aWardleyMap nodes second.
 	anEdgeAtoB := aWardleyMap edges first.
-	
-	self assert: aNodeA coordinate equals: (0.25@0.75).
+
+	self assert: aNodeA coordinate equals: 0.25 @ 0.75.
 	self assert: aNodeA innerNodes size equals: 0.
 	self assert: aNodeA isPipelineVisible not.
 
-	self assert: aNodeB coordinate equals: (0.5@0.25).
+	self assert: aNodeB coordinate equals: 0.5 @ 0.25.
 	self assert: aNodeB innerNodes size equals: 0.
 	self assert: aNodeB isPipelineVisible not.
-	
+
 	aNodeA isEvolveVisible: true.
-	aNodeA evolvedMaturity: 0.8.
+	aNodeA evolvedEvolution: 0.8.
 	aNodeA evolvedLabel: 'Evolved Node A'.
 	aNodeA evolvedLabelCoordinate: 0.5 @ 2.0.
 	aNodeA isEvolvedLabelVisible: true.
-	
-	self assert: aNodeA evolvedMaturity equals: 0.8.
+
+	self assert: aNodeA evolvedEvolution equals: 0.8.
 	self assert: aNodeA evolvedLabel equals: 'Evolved Node A'.
 	self assert: aNodeA evolvedLabelCoordinate equals: 0.5 @ 2.0.
 	self assert: aNodeA evolvedCoordinate equals: 0.8 @ 0.75.
 	self assert: aNodeA isEvolvedLabelVisible.
-	
+
 	^ aWardleyMap
 ]
 

@@ -14,13 +14,76 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes [
 			scripterWithModel: [ GtWardleyMapModelExamples new newMapWithPipelineInnerNodes ]
 			element: [ :aModel | 
 				GtWardleyMapCanvasElement new
-					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aModel) ].	"Ensure an extent to compute exact node positions, dragging, etc."
+					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aModel) ].	
+					
+	"Ensure an extent to compute exact node positions, dragging, etc."
 	aScripter
 		doStep: [ :s | 
 			s
 				label: 'Ensure 800 @ 600 space extent';
 				block: [ :aSpace | aSpace extent: 800 @ 600 ];
 				onSpace ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes.
+
+	aScripter
+		substeps: 'Add Node A evolve'
+		do: [ :aStep | 
+			| aNodeElementsCount aPipelineElementCount anEvolveElementCount anEdgeCount |
+			aStep do 
+				label: 'Count canvas elements';
+				block: [ :aCanvas |
+					aNodeElementsCount := (aCanvas query / GtWardleyMapNodeElement) all size.
+					aPipelineElementCount := (aCanvas query / GtWardleyMapPipelineElement) all size.
+					anEvolveElementCount := (aCanvas query / GtWardleyMapEvolveElement) all size.
+					anEdgeCount := (aCanvas query / GtWardleyMapEdgeElement) all size.  ];
+				play.
+		
+			aStep secondaryClick
+				label: 'Open context menu';
+				id: (#node asBlocElementId indexed: 0);
+				play.
+
+			aStep click
+				label: 'Click on add evolve';
+				onSpaceRoot;
+				// BrAnchoredElement;
+				// (GtWardleyMapContextMenuItemId
+						definingMethod: GtWardleyMapNodeModel>>#menuItemNodeAddEvolveButton);
+				play.
+				
+			aStep assert 
+				label: 'Assert node elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapNodeElement) all size ]
+					equals: aNodeElementsCount;
+				play.
+				
+			aStep assert 
+				label: 'Assert pipeline elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapPipelineElement) all size ]
+					equals: aPipelineElementCount;
+				play.
+				
+			aStep assert 
+				label: 'Assert evolve elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapEvolveElement) all size ]
+					equals: anEvolveElementCount + 1;
+				play.
+				
+			aStep assert 
+				label: 'Assert edge elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapEdgeElement) all size ]
+					equals: anEdgeCount + 1;
+				play
+		].
+
 
 	^ aScripter
 ]
@@ -89,6 +152,67 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_assertInitialWidgetPo
 						value: [ :aNodeElement | aNodeElement bounds inSpace asRectangle ]
 							equals: [ 152.0 @ 456.0 corner: 248.0 @ 476.0 ];
 						id: (#pipeline asBlocElementId indexed: 7) ] ].
+
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_deleteNodeWithPipelineAndEvolve [
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes_addEvolve.
+
+	aScripter
+		substeps: 'Delete Node A'
+		do: [ :aStep | 
+			| aNodeElementsCount aPipelineElementCount anEvolveElementCount anEdgeCount |
+			aStep do 
+				label: 'Count canvas elements';
+				block: [ :aCanvas |
+					aNodeElementsCount := (aCanvas query / GtWardleyMapNodeElement) all size.
+					aPipelineElementCount := (aCanvas query / GtWardleyMapPipelineElement) all size.
+					anEvolveElementCount := (aCanvas query / GtWardleyMapEvolveElement) all size.
+					anEdgeCount := (aCanvas query / GtWardleyMapEdgeElement) all size.  ];
+				play.
+		
+			aStep secondaryClick
+				label: 'Open context menu';
+				id: (#node asBlocElementId indexed: 0);
+				play.
+
+			aStep click
+				label: 'Click on delete node';
+				onSpaceRoot;
+				// BrAnchoredElement;
+				// (GtWardleyMapContextMenuItemId
+						definingMethod: GtWardleyMapNodeModel >> #menuItemNodeDeleteButton);
+				play.
+				
+			aStep assert 
+				label: 'Assert node elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapNodeElement) all size ]
+					equals: aNodeElementsCount - 1;
+				play.
+				
+			aStep assert 
+				label: 'Assert pipeline elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapPipelineElement) all size ]
+					equals: aPipelineElementCount - 1;
+				play.
+				
+			aStep assert 
+				label: 'Assert evolve elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapEvolveElement) all size ]
+					equals: anEvolveElementCount - 1;
+				play.
+				
+			aStep assert 
+				label: 'Assert edge elements count';
+				value: [ :aCanvas | (aCanvas query / GtWardleyMapEdgeElement) all size ]
+					equals: anEdgeCount - 2;
+				play
+		].
 
 
 	^ aScripter

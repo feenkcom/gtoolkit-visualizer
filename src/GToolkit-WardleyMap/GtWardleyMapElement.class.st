@@ -13,7 +13,8 @@ Class {
 	#instVars : [
 		'canvasElement',
 		'canvasContainer',
-		'titleElement'
+		'titleElement',
+		'evolutionAxisElement'
 	],
 	#category : #'GToolkit-WardleyMap-! Views'
 }
@@ -22,8 +23,7 @@ Class {
 GtWardleyMapElement class >> withDefaultSections [
 	| aWardleyMapElement |
 	aWardleyMapElement := self withoutSections.
-	aWardleyMapElement
-		evolutionSections: {'genesis' . 'custom built' . 'product (+rental)' . 'commodity'}.
+	aWardleyMapElement wardleyMapViewModel isEvolutionAxisVisible: true.
 	^ aWardleyMapElement
 ]
 
@@ -31,6 +31,7 @@ GtWardleyMapElement class >> withDefaultSections [
 GtWardleyMapElement class >> withoutSections [
 	| aWardleyMapElement aWardleyMap aWardleyMapViewModel |
 	aWardleyMap := GtWardleyMapModel new.
+	aWardleyMap isEvolutionAxisVisible: false.
 	aWardleyMapViewModel := GtWardleyMapViewModel new.
 	aWardleyMapViewModel wardleyMapModel: aWardleyMap.
 	aWardleyMapElement := self new.
@@ -54,6 +55,11 @@ GtWardleyMapElement >> createCanvasElement [
 ]
 
 { #category : #initialization }
+GtWardleyMapElement >> createEvolutionAxisElement [
+	^ GtWardleyMapEvolutionAxisLayer new visibility: BlVisibility gone
+]
+
+{ #category : #initialization }
 GtWardleyMapElement >> createTitleElement [
 	^ BrEditableLabel new
 		hFitContentLimited;
@@ -71,8 +77,17 @@ GtWardleyMapElement >> defaultLayout [
 ]
 
 { #category : #accessing }
-GtWardleyMapElement >> evolutionSections: aCollectionOfSections [	
-	canvasContainer addChildFirst: (GtWardleyMapEvolutionAxisLayer new sections: aCollectionOfSections)
+GtWardleyMapElement >> evolutionSections: aCollectionOfSections [
+	self deprecated: 'Map model support evolution sections. Use rather those methods.'.
+
+	self hasWardleyMapViewModel ifTrue: [ 
+			self wardleyMapViewModel evolutionSections: aCollectionOfSections.
+			self wardleyMapViewModel isEvolutionAxisVisible: true.
+			^ self ].
+
+	evolutionAxisElement
+		sections: aCollectionOfSections;
+		visibility: BlVisibility visible
 ]
 
 { #category : #accessing }
@@ -85,8 +100,11 @@ GtWardleyMapElement >> initialize [
 	super initialize.
 
 	titleElement := self createTitleElement.
+	evolutionAxisElement := self createEvolutionAxisElement.
+	canvasElement := self createCanvasElement.
 	canvasContainer := self createCanvasContainer.
-	canvasContainer addChild: (canvasElement := self createCanvasElement).
+	canvasContainer addChild: evolutionAxisElement.
+	canvasContainer addChild: canvasElement.
 
 	self addChildren: { titleElement. canvasContainer }.
 
@@ -100,8 +118,57 @@ GtWardleyMapElement >> onAcceptNewTitleWish: aWish [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapElement >> onEvolutionAxisVisibilityChanged: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self onEvolutionSectionsChanged ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onEvolutionSectionsChanged [
+	self wardleyMapViewModel isEvolutionAxisVisible
+		ifTrue: [ self updateEvolutionSectionsElement ]
+		ifFalse: [ self removeEvolutionSectionsElement ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onEvolutionSectionsChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEvolutionSectionsChanged ]
+]
+
+{ #category : #accessing }
+GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ anAnnouncement decoratorViewModel decorateMapElement: self ]
+]
+
+{ #category : #accessing }
+GtWardleyMapElement >> onMapDecoratorsChanged [
+	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
+		aChild wardley isDecorator 
+			ifTrue: [ aChild removeFromParent. false ]
+			ifFalse: [ true ] ].
+	
+	self wardleyMapViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+		eachDecoratorViewModel decorateMapElement: self ].
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onSpawnRequest: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self phlow spawnObject: anAnnouncement object ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapElement >> onTitleChanged [
 	titleElement text: self wardleyMapViewModel title
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onTitleChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onTitleChanged ]
 ]
 
 { #category : #'event handling' }
@@ -111,13 +178,25 @@ GtWardleyMapElement >> onTitleVisibilityChanged [
 		ifFalse: [ titleElement visibility: BlVisibility hidden ]
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapElement >> onTitleVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onTitleVisibilityChanged ]
+]
+
 { #category : #'api - wardley map view model' }
 GtWardleyMapElement >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
-	
+
 	self onTitleChanged.
 	self onTitleVisibilityChanged.
+	self onEvolutionSectionsChanged.
 	canvasElement wardleyMapViewModel: self wardleyMapViewModel.
+	self onMapDecoratorsChanged
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> removeEvolutionSectionsElement [
+	evolutionAxisElement visibility: BlVisibility gone
 ]
 
 { #category : #'api - wardley map view model' }
@@ -125,10 +204,26 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 	"Is sent after a new WardleyMap view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
-	
+
 	self wardleyMapViewModel weak
-		when: GtWardleyMapViewModelTitleChanged send: #onTitleChanged to: self;
-		when: GtWardleyMapViewModelTitleVisibilityChanged send: #onTitleVisibilityChanged to: self
+		when: GtWardleyMapViewModelEvolutionSectionsChanged
+			send: #onEvolutionSectionsChanged:
+			to: self;
+		when: GtWardleyMapViewModelEvolutionAxisVisibilityChanged
+			send: #onEvolutionAxisVisibilityChanged:
+			to: self;
+		when: GtWardleyMapViewModelTitleChanged
+			send: #onTitleChanged:
+			to: self;
+		when: GtWardleyMapViewModelTitleVisibilityChanged
+			send: #onTitleVisibilityChanged:
+			to: self;
+		when: GtWardleyMapSpawnRequest
+			send: #onSpawnRequest:
+			to: self;
+		when: GtWardleyMapDecoratorViewModelAdded
+			send: #onMapDecoratorAdded:
+			to: self
 ]
 
 { #category : #'api - wardley map view model' }
@@ -137,4 +232,11 @@ GtWardleyMapElement >> unsubscribeFromWardleyMapViewModel [
 	Elements that subscribe to WardleyMap view model in domain model are required to implement this methods"
 	
 	self wardleyMapViewModel unsubscribe: self
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> updateEvolutionSectionsElement [
+	evolutionAxisElement 
+		sections: self wardleyMapViewModel evolutionSections;
+		visibility: BlVisibility visible
 ]

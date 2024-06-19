@@ -14,11 +14,7 @@ GtWardleyMapNodeAddEvolveButton >> initialize [
 		fitContent;
 		beSmallSize;
 		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 10
-				left: 5
-				bottom: 5
-				right: 0);
+		margin: GtWardleyMapUtility menuItemMarginInsets;
 		label: 'Add evolve node';
 		action: [ self onButtonClick ]
 ]

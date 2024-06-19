@@ -55,6 +55,11 @@ GtWMElementNode >> decorators: anOrderedCollection [
 	self setParents: self decorators to: self
 ]
 
+{ #category : #accessing }
+GtWMElementNode >> evolutionNumber [
+	^ self coords ifNotNil: #evolutionNumber
+]
+
 { #category : #generated }
 GtWMElementNode >> inertiaToken [
 	^ inertiaToken
@@ -81,11 +86,6 @@ GtWMElementNode >> label: aGtWMLabelNode [
 	self label notNil ifTrue: [ self label parent: nil ].
 	label := aGtWMLabelNode.
 	self label notNil ifTrue: [ self label parent: self ]
-]
-
-{ #category : #accessing }
-GtWMElementNode >> maturityNumber [
-	^ self coords ifNotNil: #maturityNumber
 ]
 
 { #category : #generated }

@@ -3,6 +3,16 @@ Trait {
 	#category : #'GToolkit-WardleyMap-Helpers - Context Menu'
 }
 
+{ #category : #'gt - extensions' }
+TGtWithWardleyContextMenuItems classSide >> gtContextMenuItemsFor: aView [
+	<gtView>
+	<gtClassView>
+	^ aView forward
+		title: 'Context menu';
+		object: [ self new ];
+		view: #gtContextMenuItemsFor:
+]
+
 { #category : #'api - context menu' }
 TGtWithWardleyContextMenuItems >> contextMenuItems [
 	<return: #Collection of: #TGtWardleyMapContextMenuItem>
@@ -15,7 +25,7 @@ TGtWithWardleyContextMenuItems >> contextMenuItems [
 
 	^ allPragmas collect: [ :eachPragma | 
 		(self perform: eachPragma methodSelector)
-			definingMethod: eachPragma method asRingDefinition ]
+			definingMethod: eachPragma method ]
 ]
 
 { #category : #'gt - extensions' }

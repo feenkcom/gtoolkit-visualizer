@@ -59,6 +59,19 @@ GtWardleyMapUtility class >> computePipelineViewModelVerticalTopOffset: aPipelin
 	^ self computePipelineModelVerticalTopOffset: aPipelineNodeViewModel wardleyMapNodeModel
 ]
 
+{ #category : #'api - context menu' }
+GtWardleyMapUtility class >> contextMenuHandlerPositionOnEvent: anEvent [
+	anEvent target
+		allParentsDo: [ :aParent | 
+			(aParent isKindOf: BrAnchoredElement)
+				ifTrue: [ aParent
+						childWithId: #handle
+						ifFound: [ :aHandle | ^ aHandle bounds inSpace position ]
+						ifNone: [ ^ anEvent position ] ] ].
+
+	^ anEvent position
+]
+
 { #category : #'api - views' }
 GtWardleyMapUtility class >> convertWardleyScriptNodeModel: aNodeModel labelCoordiante: aTopLeftPoint [ 
 	"Conversion is just an estimate. 
@@ -115,15 +128,21 @@ GtWardleyMapUtility class >> isNodeElement: aNodeElement insidePipelineElement: 
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> newButtonElement [
-	^ BrButton new
-		beSmallSize;
-		aptitude: BrGlamorousButtonWithLabelAptitude new;
-		margin: (BlInsets
-				top: 10
-				left: 5
-				bottom: 5
-				right: 0)
+GtWardleyMapUtility class >> menuItemLabelMarginInsets [
+	^ self menuItemMarginInsets + (BlInsets
+		top: 5
+		left: 0
+		bottom: 0
+		right: 0)
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> menuItemMarginInsets [
+	^ BlInsets
+		top: 0
+		left: 3
+		bottom: 3
+		right: 3
 ]
 
 { #category : #'api - widgets' }
@@ -135,30 +154,41 @@ GtWardleyMapUtility class >> newColorLabelElement [
 GtWardleyMapUtility class >> newContextMenuCheckbox [
 	^ GtWardleyMapCheckbox new
 		checked: false;
-		whenCheckedDo: [ :anEvent | ];
-		whenUncheckedDo: [ :anEvent | ];
-		margin:
-			(BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
+		whenCheckedDo: [ :anEvent |  ];
+		whenUncheckedDo: [ :anEvent |  ];
+		margin: GtWardleyMapUtility menuItemMarginInsets
 ]
 
 { #category : #'api - widgets' }
 GtWardleyMapUtility class >> newContextMenuLabel [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
-		margin: (BlInsets
-				top: 5
-				left: 5
-				bottom: 2
-				right: 0)
+		margin: GtWardleyMapUtility menuItemLabelMarginInsets
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> newDeleteButtonElement [
-	^ self newButtonElement label: 'Delete'
+GtWardleyMapUtility class >> newMenuItemButton [
+	^ BrButton new
+		fitContent;
+		beSmallSize;
+		margin: GtWardleyMapUtility menuItemMarginInsets
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newMenuItemButtonWithIcon [
+	^ self newMenuItemButton
+		aptitude: BrGlamorousButtonWithIconAptitude new
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newMenuItemButtonWithLabel [
+	^ self newMenuItemButton
+		aptitude: BrGlamorousButtonWithLabelAptitude new
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> newMenuItemDeleteButton [
+	^ self newMenuItemButtonWithLabel label: 'Delete'
 ]
 
 { #category : #'api - model' }
@@ -207,6 +237,29 @@ GtWardleyMapUtility class >> normalizePipelineWidthOfNodeModel: aPipelineModel i
 					ifTrue: [ aMaxInnerNodeModel := eachNodeModel ] ] ].
 	
 	^ (aMinInnerNodeModel x - aConstant max: 0) @ (aMaxInnerNodeModel x + aConstant min: 1).
+]
+
+{ #category : #'api - context menu' }
+GtWardleyMapUtility class >> normalizedItemPositionOnEvent: anEvent canvas: aCanvas [
+	| aGlobalPosition |
+	(aCanvas width isZero or: [ aCanvas height isZero ]) ifTrue: [ ^ nil ].
+
+	aGlobalPosition := self contextMenuHandlerPositionOnEvent: anEvent.
+	^ (aCanvas globalPointToLocal: aGlobalPosition) / aCanvas extent
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> updateMenuContainer: aContainerElement menuItems: aCollectionOfMenuItems usingContext: anEditorContext [
+	aContainerElement removeChildren.
+
+	aCollectionOfMenuItems
+		do: [ :eachItem | 
+			| anElement |
+			anElement := eachItem createElementUsingContext: anEditorContext.
+			anElement ifNotNil: [ 
+				aContainerElement
+					addChild: anElement
+					as: (GtWardleyMapContextMenuItemId definingMethod: eachItem definingMethod) ] ]
 ]
 
 { #category : #'api - views' }

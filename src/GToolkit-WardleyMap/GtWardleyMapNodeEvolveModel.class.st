@@ -6,23 +6,20 @@ Class {
 	#instVars : [
 		'announcer',
 		'labelModel',
-		'maturity'
+		'evolution'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
 
 { #category : #comparing }
 GtWardleyMapNodeEvolveModel >> = anObject [
-	self == anObject
-		ifTrue: [ ^ true ].
+	self == anObject ifTrue: [ ^ true ].
 
-	self class = anObject class
-		ifFalse: [ ^ false ].
+	self class = anObject class ifFalse: [ ^ false ].
 
 	^ self color = anObject color
-		and: [ self maturity = anObject maturity
-		and: [ self labelModel = anObject labelModel
-		and: [ self size = anObject size ] ] ]
+		and: [ self evolution = anObject evolution
+				and: [ self labelModel = anObject labelModel and: [ self size = anObject size ] ] ]
 ]
 
 { #category : #visiting }
@@ -35,6 +32,22 @@ GtWardleyMapNodeEvolveModel >> announcer [
 	<return: #Announcer>
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #'api - maturity' }
+GtWardleyMapNodeEvolveModel >> evolution [
+	<return: #Number>
+
+	^ evolution
+]
+
+{ #category : #'api - maturity' }
+GtWardleyMapNodeEvolveModel >> evolution: aNumber [
+	self evolution = aNumber
+		ifTrue: [ ^ self ].
+
+	evolution := aNumber.
+	self notifyEvolutionChanged
 ]
 
 { #category : #comparing }
@@ -53,7 +66,7 @@ GtWardleyMapNodeEvolveModel >> initialize [
 	labelModel parent: self.
 	
 	color := GtWardleyMapConstants evolveColor.
-	maturity := GtWardleyMapConstants evolveMaturity.
+	evolution := GtWardleyMapConstants evolveMaturity.
 	size := GtWardleyMapConstants nodeSize.
 ]
 
@@ -107,18 +120,20 @@ GtWardleyMapNodeEvolveModel >> labelModel: aModel [
 
 { #category : #'api - maturity' }
 GtWardleyMapNodeEvolveModel >> maturity [
-	<return: #Number>
-
-	^ maturity
+	self
+		deprecated: 'Use #evolution instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver maturity' -> '`@receiver evolution'.
+	
+	^ self evolution
 ]
 
 { #category : #'api - maturity' }
-GtWardleyMapNodeEvolveModel >> maturity: aMaturity [
-	self maturity = aMaturity
-		ifTrue: [ ^ self ].
-
-	maturity := aMaturity.
-	self notifyMaturityChanged
+GtWardleyMapNodeEvolveModel >> maturity: aNumber [
+	self
+		deprecated: 'Please use evolution: instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver maturity: `@statements1' -> '`@receiver evolution: `@statements1'.
+	
+	self evolution: aNumber
 ]
 
 { #category : #'api - color' }
@@ -127,8 +142,8 @@ GtWardleyMapNodeEvolveModel >> notifyColored [
 ]
 
 { #category : #'api - color' }
-GtWardleyMapNodeEvolveModel >> notifyMaturityChanged [
-	self propagateAnnouncement: (GtWardleyMapEvolveModelMaturityChanged new evolveModel: self)
+GtWardleyMapNodeEvolveModel >> notifyEvolutionChanged [
+	self propagateAnnouncement: (GtWardleyMapEvolveModelEvolutionChanged new evolveModel: self)
 ]
 
 { #category : #'api - parent' }
@@ -150,7 +165,7 @@ GtWardleyMapNodeEvolveModel >> printOn: aStream [
 		nextPutAll: ' label: ';
 		print: self label;
 		nextPutAll: '; maturity: ';
-		print: self maturity;
+		print: self evolution;
 		nextPutAll: '; size: ';
 		print: self size;
 		nextPutAll: '; color: ';

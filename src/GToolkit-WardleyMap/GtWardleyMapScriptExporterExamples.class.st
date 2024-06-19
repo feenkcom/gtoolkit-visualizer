@@ -33,11 +33,9 @@ GtWardleyMapScriptExporterExamples >> exportMapWithNewSyntaxForPipelineSimplifie
 	
 	aCrNewLineScript := self convertWithCrNewLines: aScript.
 	
-	self flag: #fixit.
-	true ifFalse: [
-		self 
-			assert: aCrNewLineScript
-			equals: aResult originalScript ].
+	self 
+		assert: aCrNewLineScript
+		equals: aResult originalScript.
 
 	^ GtWardleyMapScriptExampleResult new
 		originalWardleyMap: aMap;

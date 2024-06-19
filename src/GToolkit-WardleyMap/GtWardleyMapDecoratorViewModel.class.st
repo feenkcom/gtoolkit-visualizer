@@ -23,6 +23,13 @@ GtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
 ]
 
 { #category : #'api - wardley map decorator view model' }
+GtWardleyMapDecoratorViewModel >> decorateMapElement: anEdgeElement [
+	self wardleyMapDecoratorModel
+		decorateMapElement: anEdgeElement
+		decoratorViewModel: self
+]
+
+{ #category : #'api - wardley map decorator view model' }
 GtWardleyMapDecoratorViewModel >> decorateNodeElement: aNodeElement [
 	self wardleyMapDecoratorModel
 		decorateNodeElement: aNodeElement

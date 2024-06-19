@@ -42,11 +42,16 @@ GtWardleyMapNodeButtonWithLabelMenuItem >> condition: aBlock [
 GtWardleyMapNodeButtonWithLabelMenuItem >> createElementUsingContext: aContextMenuItem [
 	<return: #BlElement or: nil>
 	(self condition cull: aContextMenuItem) ifFalse: [ ^ nil ].
-	
-	^ GtWardleyMapUtility newButtonElement
+
+	^ GtWardleyMapUtility newMenuItemButtonWithLabel
+		addAptitude: (GtPhlowBrowseDefinitionAptitude new definition: [ self definingMethod ]);
 		label: self label;
-		action: ([ :aButtonElement :aButtonModel :anEvent | 
-			self action cull: aContextMenuItem cull: aButtonElement cull: aButtonModel cull: anEvent ])
+		action: [ :aButtonElement :aButtonModel :anEvent | 
+			self action
+				cull: aContextMenuItem
+				cull: aButtonElement
+				cull: aButtonModel
+				cull: anEvent ]
 ]
 
 { #category : #'gt - extensions' }

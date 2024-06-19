@@ -14,6 +14,10 @@ TGtWardleyMapDecoratorModel >> decorateEdgeElement: aEdgeElement decoratorViewMo
 ]
 
 { #category : #'api - wardley map decorator model' }
+TGtWardleyMapDecoratorModel >> decorateMapElement: aMapElement decoratorViewModel: aDecoratorViewModel [
+]
+
+{ #category : #'api - wardley map decorator model' }
 TGtWardleyMapDecoratorModel >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
 ]
 
@@ -25,4 +29,8 @@ TGtWardleyMapDecoratorModel >> parent: aParent [
 { #category : #initialization }
 TGtWardleyMapDecoratorModel >> removeParent [
 	
+]
+
+{ #category : #'api - wardley map decorator model' }
+TGtWardleyMapDecoratorModel >> undecorateMapElement: aMapElement decoratorViewModel: aDecoratorViewModel [
 ]

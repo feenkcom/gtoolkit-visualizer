@@ -122,6 +122,16 @@ GtWardleyMapNodeModel >> ensurePipelineCoordinate [
 	pipelineCoordinate := GtWardleyMapUtility normalizePipelineCoordinate: self coordinate x @ self coordinate x
 ]
 
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> evolution [
+	^ self x
+]
+
+{ #category : #'api - coordinate' }
+GtWardleyMapNodeModel >> evolution: aNumber [
+	self x: aNumber
+]
+
 { #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolveModel [
 	<return: #GtWardleyMapNodeEvolveModel>
@@ -146,7 +156,17 @@ GtWardleyMapNodeModel >> evolvedColor: aColor [
 
 { #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolvedCoordinate [
-	^ evolveModel maturity @ self y
+	^ evolveModel evolution @ self y
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapNodeModel >> evolvedEvolution [
+	^ evolveModel evolution
+]
+
+{ #category : #'api - evolve' }
+GtWardleyMapNodeModel >> evolvedEvolution: aNumber [
+	evolveModel evolution: aNumber
 ]
 
 { #category : #'api - evolve' }
@@ -171,12 +191,20 @@ GtWardleyMapNodeModel >> evolvedLabelCoordinate: aPoint [
 
 { #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolvedMaturity [
-	^ evolveModel maturity
+	self
+		deprecated: 'Use #evolvedEvolution instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver evolvedMaturity' -> '`@receiver evolvedEvolution'.
+
+	^ self evolvedEvolution
 ]
 
 { #category : #'api - evolve' }
 GtWardleyMapNodeModel >> evolvedMaturity: aNumber [
-	evolveModel maturity: aNumber
+	self
+		deprecated: 'Please use evolvedEvolution: instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver evolvedMaturity: `@statements1' -> '`@receiver evolvedEvolution: `@statements1'.
+	
+	self evolvedEvolution: aNumber
 ]
 
 { #category : #'api - evolve' }
@@ -402,12 +430,20 @@ GtWardleyMapNodeModel >> labelModel: aGtWardleyMapNodeLabelModel [
 
 { #category : #'api - coordinate' }
 GtWardleyMapNodeModel >> maturity [
-	^ self x
+	self
+		deprecated: 'Use #evolution instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver maturity' -> '`@receiver evolution'.
+	
+	^ self evolution
 ]
 
 { #category : #'api - coordinate' }
 GtWardleyMapNodeModel >> maturity: aNumber [
-	self x: aNumber
+	self
+		deprecated: 'Please use evolution: instead. Check https://swardley.medium.com/map-evolution-not-maturity-bae6ea1a2743'
+		transformWith: '`@receiver maturity: `@statements1' -> '`@receiver evolution: `@statements1'.
+	
+	self evolution: aNumber
 ]
 
 { #category : #'api - context menu' }

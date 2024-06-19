@@ -4,6 +4,16 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
+{ #category : #initialization }
+GtWardleyMapConstants class >> defaultEvolutionSections [
+	^ {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity' 
+		}
+]
+
 { #category : #'api - constants' }
 GtWardleyMapConstants class >> edgeElevationIndex [
 	"I represent a default edge z-index"
@@ -91,6 +101,11 @@ GtWardleyMapConstants class >> labelCoordinate [
 { #category : #'api - constants' }
 GtWardleyMapConstants class >> maxButtonLabelCharacters [
 	^ 20
+]
+
+{ #category : #initialization }
+GtWardleyMapConstants class >> menuItemEditorWidth [
+	^ 190
 ]
 
 { #category : #'api - constants' }

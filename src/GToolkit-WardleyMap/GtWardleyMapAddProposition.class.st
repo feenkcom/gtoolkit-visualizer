@@ -13,6 +13,9 @@ Class {
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAddProposition >> decorateEdgeElement: anEdgeElement decoratorViewModel: aDecoratorViewModel [
+	"The parent (map canvas) might not be available yet at the moment of decoration creation.
+	For that reason the add-child action is postponed."
+	
 	BlTaskAction enqueueElement: anEdgeElement action: [
 		| anEdgeViewModel aMapElement aFromNodeElement aToNodeElement aPropositionElement |
 		anEdgeViewModel := anEdgeElement wardleyMapEdgeViewModel.
@@ -50,6 +53,8 @@ GtWardleyMapAddProposition >> decorateNodeElement: aNodeElement decoratorViewMod
 		wardleyMapDecoratorViewModel: aDecoratorViewModel;
 		nodeElement: aNodeElement.
 		
+	"The parent (map canvas) might not be available yet at the moment of decoration creation.
+	For that reason the add-child action is postponed."
 	BlTaskAction
 		enqueueElement: aNodeElement 
 		action: [ aNodeElement parent addChild: aHighlightElement ].
