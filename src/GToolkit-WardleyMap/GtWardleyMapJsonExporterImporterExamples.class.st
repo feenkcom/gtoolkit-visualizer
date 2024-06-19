@@ -237,7 +237,7 @@ GtWardleyMapJsonExporterImporterExamples >> exportWardleyMapWithWithNodes_nodeBA
 	
 	aNodeAEvolveDictionary := aNodeADictionary at: #evolve.
 	self assert: aNodeAEvolveDictionary size equals: 6.
-	self assert: (aNodeAEvolveDictionary at: #maturity) equals: 0.8.
+	self assert: (aNodeAEvolveDictionary at: #evolution) equals: 0.8.
 	self assert: ((aNodeAEvolveDictionary at: #color) at: #green) equals: Color red green.
 	self assert: ((aNodeAEvolveDictionary at: #color) at: #blue) equals: Color red blue.
 	self assert: ((aNodeAEvolveDictionary at: #color) at: #red) equals: Color red red.
