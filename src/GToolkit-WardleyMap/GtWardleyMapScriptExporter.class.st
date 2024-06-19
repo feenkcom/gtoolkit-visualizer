@@ -166,8 +166,18 @@ GtWardleyMapScriptExporter >> exportMap [
 				nextPutAll: 'title ';
 				nextPutAll: aTitle.
 			
-		self newLine.
-		self newLine. ] ]
+		self newLine. ] ].
+		
+	wardleyMap isEvolutionAxisVisible ifTrue: [ 
+		stream nextPutAll: 'evolution '.
+		wardleyMap evolutionSections 
+			do: [ :aSectionName | stream nextPutAll: aSectionName ] 
+			separatedBy: [ stream nextPutAll: ' -> ' ].
+		self newLine
+	].
+	
+	(wardleyMap isTitleVisible or: [ wardleyMap isEvolutionAxisVisible ])
+		ifTrue: [ self newLine ]
 ]
 
 { #category : #'private - exporting' }

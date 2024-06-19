@@ -125,6 +125,7 @@ GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCrSimplified [
 	aScript := 'style wardley
 
 title Something
+evolution genesis / concept -> custom / emerging -> product / converging -> commodity / accepted
 
 note Node C pipeline comment [0.45, 0.45]
 
@@ -222,6 +223,7 @@ GtWardleyMapScriptExamples >> withPipelineCr [
 	aScript := 'style wardley
 
 title map with pipeline
+evolution genesis -> custom built -> product (+rental) -> commodity
 
 component node f [0.96, 0.57] label [-36, -9]
 
@@ -259,6 +261,8 @@ GtWardleyMapScriptExamples >> withTwoPipelinesCr [
 
 	| aScript |
 	aScript := 'style wardley
+
+evolution genesis -> custom built -> product (+rental) -> commodity
 
 component node b [0.85, 0.21] label [-76, -2]
 component node c [0.85, 0.81] label [40, -2]

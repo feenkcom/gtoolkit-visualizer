@@ -133,13 +133,17 @@ GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipeline [
 { #category : #'examples - imports' }
 GtWardleyMapScriptImporterExamples >> importScriptWithNewSyntaxForPipelineSimplified [
 	<gtExample>
-	| aScript anImporter aMap aNodeA aNodeB aNodeD aNodeE aNodeC aNodeG aNodeH aNodeF anEdgeAB anEdgeCF anEdgeBC |
+	| aScript anImporter aMap aNodeA aNodeB aNodeD aNodeE aNodeC aNodeG aNodeH aNodeF anEdgeAB anEdgeCF anEdgeBC aSections |
 	aScript := self scriptWithNewSyntaxForPipelineSimplified.
 	anImporter := GtWardleyMapScriptImporter new
 			stream: aScript readStream;
 			import.
 
 	aMap := anImporter wardleyMap.
+	
+	aSections := { 'genesis / concept'. 'custom / emerging'. 'product / converging'. 'commodity / accepted' }.
+	self assert: aMap evolutionSections equals: aSections.
+	self assert: aMap isEvolutionAxisVisible.
 
 	self assert: aMap title equals: 'Something'.
 	self assert: aMap nodes size equals: 8.
