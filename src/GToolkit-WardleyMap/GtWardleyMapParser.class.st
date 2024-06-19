@@ -9,15 +9,15 @@ GtWardleyMapParser class >> ambiguousTransitions [
 ^#(
 #[ 0 6 0 153] 
 #[ 0 6 1 17] 
-#[ 0 6 0 118] 
-#[ 0 6 0 134] 
-#[ 0 6 0 162]
+#[ 0 6 0 122] 
+#[ 0 6 0 138] 
+#[ 0 6 0 166]
 	).
 ]
 
 { #category : #'generated-accessing' }
 GtWardleyMapParser class >> cacheId [
-	^'2024-06-18T13:29:04.223772-04:00'
+	^'2024-06-19T09:52:28.691807-04:00'
 ]
 
 { #category : #generated }
@@ -140,6 +140,7 @@ Eols
 	;
 Line
 	: Title 'title'
+	| Evolution 'evolution'
 	| Anchor 'anchor'
 	| Element 'element'
 	| Evolve 'evolve'
@@ -150,7 +151,6 @@ Line
 	| Note 'note'
 	| Pipeline 'pipeline'
 	| PresentationYAxis 'yAxis'
-	| Evolution 'evolution'
 	| Method 'method'
 	| Submap 'submap'
 	| Url 'url'
@@ -272,17 +272,17 @@ GtWardleyMapParser class >> reduceTable [
 	#(64 0 #reduceActionForSwitchToNameWithoutNumber1: 2874369 true) 
 	#(49 1 #reduceActionFormap1: 1213441 false) 
 	#(52 0 #reduceActionFor_Eols_Line__1: 1266689 false) 
-	#(55 1 #reduceActionForLine11: 1318923 false) 
-	#(55 1 #reduceActionForLine7: 1318919 false) 
-	#(55 1 #reduceActionForLine8: 1318920 false) 
-	#(55 1 #reduceActionForLine5: 1318917 false) 
-	#(55 1 #reduceActionForLine2: 1318914 false) 
-	#(55 1 #reduceActionForLine4: 1318916 false) 
-	#(55 1 #reduceActionForLine10: 1318922 false) 
-	#(55 1 #reduceActionForLine3: 1318915 false) 
-	#(55 1 #reduceActionForLine6: 1318918 false) 
-	#(55 1 #reduceActionForLine9: 1318921 false) 
 	#(55 1 #reduceActionForLine12: 1318924 false) 
+	#(55 1 #reduceActionForLine8: 1318920 false) 
+	#(55 1 #reduceActionForLine9: 1318921 false) 
+	#(55 1 #reduceActionForLine6: 1318918 false) 
+	#(55 1 #reduceActionForLine3: 1318915 false) 
+	#(55 1 #reduceActionForLine5: 1318917 false) 
+	#(55 1 #reduceActionForLine11: 1318923 false) 
+	#(55 1 #reduceActionForLine4: 1318916 false) 
+	#(55 1 #reduceActionForLine7: 1318919 false) 
+	#(55 1 #reduceActionForLine10: 1318922 false) 
+	#(55 1 #reduceActionForLine2: 1318914 false) 
 	#(55 1 #reduceActionForLine13: 1318925 false) 
 	#(55 1 #reduceActionForLine14: 1318926 false) 
 	#(55 1 #reduceActionForLine17: 1318929 false) 
@@ -290,6 +290,7 @@ GtWardleyMapParser class >> reduceTable [
 	#(55 1 #reduceActionForLine15: 1318927 false) 
 	#(55 1 #reduceActionForLine16: 1318928 false) 
 	#(55 1 #reduceActionForLine1: 1318913 false) 
+	#(87 0 #reduceActionForSwitchToName1: 5030913 false) 
 	#(60 0 #reduceActionForSwitchToWithoutSemicolon1: 2423809 true) 
 	#(57 2 #reduceActionForPresentationAnnotation1: 1878017 false) 
 	#(83 0 #reduceActionForSwitchToUrl1: 4694017 true) 
@@ -328,7 +329,6 @@ GtWardleyMapParser class >> reduceTable [
 	#(59 4 #reduceActionForLink5: 2048003 false) 
 	#(59 4 #reduceActionForLink5: 2048001 false) 
 	#(59 4 #reduceActionForLink5: 2048007 false) 
-	#(87 0 #reduceActionForSwitchToName1: 5030913 false) 
 	#(62 4 #reduceActionForCoords1: 2585601 false) 
 	#(71 3 #reduceActionForExtendableComponent2: 3466242 false) 
 	#(73 1 #reduceActionForDecorators1: 3708929 false) 
@@ -434,24 +434,24 @@ GtWardleyMapParser class >> transitionTable [
 #[0 0 98 0 22 0 94] 
 #[0 0 245 0 22 0 54] 
 #[1 0 249 0 26 0 253 0 27 1 1 0 36 1 5 0 42] 
-#[1 0 10 0 6 0 102 0 7 0 102 0 8 0 102 0 9 0 102 0 11 1 9 0 60 1 13 0 87] 
+#[1 0 102 0 6 0 106 0 7 0 106 0 8 0 106 0 9 0 106 0 11 1 9 0 60 1 13 0 87] 
 #[1 0 11 0 12 1 21 0 62 0 149 0 91] 
-#[0 0 106 0 22 0 94] 
+#[0 0 110 0 22 0 94] 
 #[0 1 25 0 12] 
 #[0 1 29 0 18] 
 #[0 1 33 0 18] 
 #[0 1 37 0 18] 
 #[0 1 41 0 18] 
 #[0 1 45 0 18] 
-#[1 0 110 0 4 1 49 0 83] 
+#[1 0 114 0 4 1 49 0 83] 
 #[0 1 53 0 18] 
 #[0 1 57 0 18] 
-#[0 0 114 0 94] 
+#[0 0 118 0 94] 
 #[1 0 26 0 22 1 61 0 52 0 26 0 94] 
-#[1 0 15 0 22 1 65 0 51 1 69 0 53 0 129 0 91 0 118 0 94] 
+#[1 0 15 0 22 1 65 0 51 1 69 0 53 0 129 0 91 0 122 0 94] 
 #[1 0 6 0 19 1 73 0 91] 
 #[0 1 77 0 93] 
-#[1 0 122 0 15 0 122 0 22 1 81 0 71 1 85 0 93 0 122 0 94] 
+#[1 0 126 0 15 0 126 0 22 1 81 0 71 1 85 0 93 0 126 0 94] 
 #[1 1 89 0 71 1 85 0 93] 
 #[0 1 93 0 93] 
 #[1 1 97 0 71 1 85 0 93] 
@@ -460,8 +460,8 @@ GtWardleyMapParser class >> transitionTable [
 #[0 1 109 0 93] 
 #[0 1 113 0 93] 
 #[0 1 117 0 93] 
-#[0 0 126 0 15 0 22 0 23 0 24 0 25 0 26 0 27 0 28 0 29 0 30 0 31 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 0 43 0 44 0 45 0 93 0 94] 
-#[1 0 130 0 15 1 121 0 22 0 130 0 23 0 130 0 24 0 130 0 25 0 130 0 26 0 130 0 27 0 130 0 28 0 130 0 29 0 130 0 30 0 130 0 31 0 130 0 34 0 130 0 35 0 130 0 36 0 130 0 37 0 130 0 38 0 130 0 39 0 130 0 40 0 130 0 41 0 130 0 42 0 130 0 43 0 130 0 44 0 130 0 45 0 130 0 93 0 130 0 94] 
+#[0 0 130 0 15 0 22 0 23 0 24 0 25 0 26 0 27 0 28 0 29 0 30 0 31 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 0 43 0 44 0 45 0 93 0 94] 
+#[1 0 134 0 15 1 121 0 22 0 134 0 23 0 134 0 24 0 134 0 25 0 134 0 26 0 134 0 27 0 134 0 28 0 134 0 29 0 134 0 30 0 134 0 31 0 134 0 34 0 134 0 35 0 134 0 36 0 134 0 37 0 134 0 38 0 134 0 39 0 134 0 40 0 134 0 41 0 134 0 42 0 134 0 43 0 134 0 44 0 134 0 45 0 134 0 93 0 134 0 94] 
 #[1 0 6 0 16 1 125 0 91] 
 #[1 0 6 0 16 1 129 0 91] 
 #[1 0 6 0 16 1 133 0 91] 
@@ -479,22 +479,22 @@ GtWardleyMapParser class >> transitionTable [
 #[0 1 193 0 4] 
 #[0 1 197 0 18] 
 #[0 1 201 0 18] 
-#[1 0 19 0 22 1 65 0 51 1 69 0 53 0 129 0 91 0 134 0 94] 
-#[0 0 138 0 22 0 94] 
+#[1 0 19 0 22 1 65 0 51 1 69 0 53 0 129 0 91 0 138 0 94] 
+#[0 0 142 0 22 0 94] 
 #[1 0 10 0 23 0 9 0 24 0 13 0 25 0 14 0 26 0 14 0 27 0 10 0 28 0 10 0 29 0 10 0 30 0 18 0 31 0 10 0 34 0 10 0 35 0 14 0 36 0 17 0 37 0 10 0 38 0 21 0 39 0 10 0 40 0 25 0 41 0 14 0 42 0 29 0 43 0 10 0 44 0 10 0 45 1 205 0 55 0 49 0 56 0 53 0 57 0 57 0 58 0 61 0 59 0 65 0 61 0 69 0 63 0 73 0 64 0 77 0 65 0 81 0 70 0 85 0 76 0 89 0 79 0 93 0 80 0 97 0 81 0 101 0 82 0 105 0 84 0 109 0 85 0 113 0 86 0 117 0 87 0 121 0 88 0 125 0 90 0 133 0 92 0 137 0 93] 
 #[0 1 209 0 19] 
 #[1 0 6 0 12 1 213 0 62 0 149 0 91] 
-#[0 0 142 0 15 0 22 0 94] 
-#[1 0 6 0 12 0 146 0 15 0 146 0 22 1 217 0 62 0 149 0 91 0 146 0 94] 
-#[0 0 150 0 22 0 94] 
-#[1 1 221 0 11 0 154 0 22 0 154 0 94] 
-#[0 0 158 0 22 0 94] 
+#[0 0 146 0 15 0 22 0 94] 
+#[1 0 6 0 12 0 150 0 15 0 150 0 22 1 217 0 62 0 149 0 91 0 150 0 94] 
+#[0 0 154 0 22 0 94] 
+#[1 1 221 0 11 0 158 0 22 0 158 0 94] 
+#[0 0 162 0 22 0 94] 
 #[0 1 225 0 93] 
-#[1 0 6 0 12 0 23 0 22 1 229 0 91 0 162 0 94] 
-#[0 0 166 0 22 0 94] 
-#[1 0 110 0 12 1 233 0 83] 
+#[1 0 6 0 12 0 23 0 22 1 229 0 91 0 166 0 94] 
+#[0 0 170 0 22 0 94] 
+#[1 0 114 0 12 1 233 0 83] 
 #[0 1 237 0 11] 
-#[0 0 170 0 15 0 22 0 23 0 24 0 25 0 26 0 27 0 28 0 29 0 30 0 31 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 0 43 0 44 0 45 0 93 0 94] 
+#[0 0 174 0 15 0 22 0 23 0 24 0 25 0 26 0 27 0 28 0 29 0 30 0 31 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 0 43 0 44 0 45 0 93 0 94] 
 #[0 1 241 0 16] 
 #[0 1 245 0 16] 
 #[0 1 249 0 16] 
@@ -504,41 +504,41 @@ GtWardleyMapParser class >> transitionTable [
 #[0 2 9 0 46] 
 #[0 2 13 0 46] 
 #[0 2 17 0 93] 
-#[1 0 174 0 10 0 174 0 13 2 21 0 78] 
-#[0 0 178 0 22 0 94] 
+#[1 0 178 0 10 0 178 0 13 2 21 0 78] 
+#[0 0 182 0 22 0 94] 
 #[1 2 25 0 10 2 29 0 13] 
 #[0 2 33 0 18] 
-#[0 0 182 0 22 0 94] 
 #[0 0 186 0 22 0 94] 
 #[0 0 190 0 22 0 94] 
 #[0 0 194 0 22 0 94] 
-#[0 2 37 0 44] 
 #[0 0 198 0 22 0 94] 
+#[0 2 37 0 44] 
 #[0 0 202 0 22 0 94] 
 #[0 0 206 0 22 0 94] 
-#[0 2 41 0 18] 
 #[0 0 210 0 22 0 94] 
-#[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 32 0 214 0 33 2 45 0 73 2 49 0 74 0 214 0 94] 
+#[0 2 41 0 18] 
+#[0 0 214 0 22 0 94] 
+#[1 0 218 0 4 0 218 0 15 0 218 0 22 0 218 0 32 0 218 0 33 2 45 0 73 2 49 0 74 0 218 0 94] 
 #[0 2 53 0 93] 
-#[1 0 6 0 12 0 218 0 22 2 57 0 62 0 149 0 91 0 218 0 94] 
+#[1 0 6 0 12 0 222 0 22 2 57 0 62 0 149 0 91 0 222 0 94] 
 #[1 2 61 0 12 2 65 0 22] 
 #[0 2 69 0 12] 
 #[0 2 73 0 93] 
-#[0 0 222 0 22 0 94] 
 #[0 0 226 0 22 0 94] 
 #[0 0 230 0 22 0 94] 
 #[0 0 234 0 22 0 94] 
-#[1 0 238 0 22 2 77 0 47 0 238 0 94] 
-#[1 0 242 0 22 2 81 0 47 0 242 0 94] 
-#[1 0 246 0 22 2 85 0 47 0 246 0 94] 
-#[1 0 250 0 22 2 89 0 47 0 250 0 94] 
+#[0 0 238 0 22 0 94] 
+#[1 0 242 0 22 2 77 0 47 0 242 0 94] 
+#[1 0 246 0 22 2 81 0 47 0 246 0 94] 
+#[1 0 250 0 22 2 85 0 47 0 250 0 94] 
+#[1 0 254 0 22 2 89 0 47 0 254 0 94] 
 #[1 2 93 0 1 2 97 0 2 2 101 0 3] 
-#[1 2 105 0 10 0 254 0 13 2 109 0 77 2 113 0 87] 
+#[1 2 105 0 10 0 10 0 13 2 109 0 77 2 113 0 87] 
 #[0 2 117 0 18] 
 #[0 1 2 0 4 0 10 0 13 0 15 0 18 0 22 0 32 0 33 0 93 0 94] 
 #[0 2 121 0 10] 
 #[1 0 6 0 5 2 125 0 91] 
-#[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 33 2 129 0 73 2 49 0 74 0 214 0 94] 
+#[1 0 218 0 4 0 218 0 15 0 218 0 22 0 218 0 33 2 129 0 73 2 49 0 74 0 218 0 94] 
 #[1 1 6 0 15 1 6 0 22 2 133 0 32 2 137 0 33 2 141 0 72 1 6 0 94] 
 #[1 2 145 0 4 1 10 0 15 1 10 0 22 1 10 0 32 1 10 0 33 2 149 0 75 1 10 0 94] 
 #[1 2 153 0 11 1 14 0 22 1 14 0 94] 
@@ -561,9 +561,9 @@ GtWardleyMapParser class >> transitionTable [
 #[0 2 213 0 18] 
 #[0 2 217 0 5] 
 #[1 1 26 0 15 1 26 0 22 2 137 0 33 2 221 0 72 1 26 0 94] 
-#[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 33 2 225 0 73 2 49 0 74 0 214 0 94] 
+#[1 0 218 0 4 0 218 0 15 0 218 0 22 0 218 0 33 2 225 0 73 2 49 0 74 0 218 0 94] 
 #[0 2 229 0 12] 
-#[1 0 214 0 4 0 214 0 15 0 214 0 22 2 233 0 73 2 49 0 74 0 214 0 94] 
+#[1 0 218 0 4 0 218 0 15 0 218 0 22 2 233 0 73 2 49 0 74 0 218 0 94] 
 #[1 2 237 0 26 2 241 0 27 2 245 0 29 2 249 0 34 2 253 0 36] 
 #[0 1 30 0 4 0 15 0 22 0 32 0 33 0 94] 
 #[0 3 1 0 93] 
@@ -583,7 +583,7 @@ GtWardleyMapParser class >> transitionTable [
 #[0 1 50 0 4 0 10 0 13 0 15 0 18 0 22 0 32 0 33 0 93 0 94] 
 #[0 3 41 0 10] 
 #[0 1 54 0 22 0 94] 
-#[1 0 214 0 4 0 214 0 15 0 214 0 22 3 45 0 73 2 49 0 74 0 214 0 94] 
+#[1 0 218 0 4 0 218 0 15 0 218 0 22 3 45 0 73 2 49 0 74 0 218 0 94] 
 #[1 1 58 0 15 1 58 0 22 2 137 0 33 3 49 0 72 1 58 0 94] 
 #[0 3 53 0 18] 
 #[0 1 62 0 15 0 22 0 94] 
@@ -594,7 +594,7 @@ GtWardleyMapParser class >> transitionTable [
 #[0 3 73 0 5] 
 #[1 3 77 0 11 1 66 0 22 1 66 0 94] 
 #[0 3 81 0 18] 
-#[1 3 85 0 15 0 6 0 22 0 10 0 28 0 18 0 31 3 89 0 53 3 93 0 63 0 73 0 64 3 97 0 66 3 101 0 69 3 105 0 70 3 109 0 87 0 129 0 91] 
+#[1 3 85 0 15 0 6 0 22 0 102 0 28 0 18 0 31 3 89 0 53 3 93 0 63 0 73 0 64 3 97 0 66 3 101 0 69 3 105 0 70 3 109 0 87 0 129 0 91] 
 #[0 3 113 0 13] 
 #[0 1 70 0 22 0 94] 
 #[0 1 74 0 22 0 94] 
@@ -604,7 +604,7 @@ GtWardleyMapParser class >> transitionTable [
 #[0 1 90 0 22 0 94] 
 #[0 3 117 0 18] 
 #[0 1 94 0 15 0 22 0 94] 
-#[1 0 214 0 4 0 214 0 15 0 214 0 22 3 121 0 73 2 49 0 74 0 214 0 94] 
+#[1 0 218 0 4 0 218 0 15 0 218 0 22 3 121 0 73 2 49 0 74 0 218 0 94] 
 #[0 3 125 0 10] 
 #[0 1 98 0 4 0 15 0 22 0 32 0 33 0 94] 
 #[0 1 102 0 4 0 15 0 22 0 32 0 33 0 94] 
@@ -1481,17 +1481,17 @@ GtWardleyMapParser >> reduceActionFormap1: nodes [
 	| result |
 	result := GtWMFileNode new.
 	result addNodes: ((nodes at: 1) at: 1) to: result titles.
-	result addNodes: ((nodes at: 1) at: 2) to: result anchors.
-	result addNodes: ((nodes at: 1) at: 3) to: result elements.
-	result addNodes: ((nodes at: 1) at: 4) to: result evolves.
-	result addNodes: ((nodes at: 1) at: 5) to: result links.
-	result addNodes: ((nodes at: 1) at: 6) to: result annotations.
-	result addNodes: ((nodes at: 1) at: 7) to: result presentationAnnotations.
-	result addNodes: ((nodes at: 1) at: 8) to: result styles.
-	result addNodes: ((nodes at: 1) at: 9) to: result notes.
-	result addNodes: ((nodes at: 1) at: 10) to: result pipelines.
-	result addNodes: ((nodes at: 1) at: 11) to: result yAxises.
-	result addNodes: ((nodes at: 1) at: 12) to: result evolutions.
+	result addNodes: ((nodes at: 1) at: 2) to: result evolutions.
+	result addNodes: ((nodes at: 1) at: 3) to: result anchors.
+	result addNodes: ((nodes at: 1) at: 4) to: result elements.
+	result addNodes: ((nodes at: 1) at: 5) to: result evolves.
+	result addNodes: ((nodes at: 1) at: 6) to: result links.
+	result addNodes: ((nodes at: 1) at: 7) to: result annotations.
+	result addNodes: ((nodes at: 1) at: 8) to: result presentationAnnotations.
+	result addNodes: ((nodes at: 1) at: 9) to: result styles.
+	result addNodes: ((nodes at: 1) at: 10) to: result notes.
+	result addNodes: ((nodes at: 1) at: 11) to: result pipelines.
+	result addNodes: ((nodes at: 1) at: 12) to: result yAxises.
 	result addNodes: ((nodes at: 1) at: 13) to: result methods.
 	result addNodes: ((nodes at: 1) at: 14) to: result submaps.
 	result addNodes: ((nodes at: 1) at: 15) to: result urls.

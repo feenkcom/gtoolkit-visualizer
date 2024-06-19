@@ -96,7 +96,7 @@ GtWMFileNode >> attitudes: anOrderedCollection [
 
 { #category : #generated }
 GtWMFileNode >> compositeNodeVariables [
-	^ #(#titles #anchors #elements #evolves #links #annotations #presentationAnnotations #styles #notes #pipelines #yAxises #evolutions #methods #submaps #urls #attitudes #markets #ecosystems)
+	^ #(#titles #evolutions #anchors #elements #evolves #links #annotations #presentationAnnotations #styles #notes #pipelines #yAxises #methods #submaps #urls #attitudes #markets #ecosystems)
 ]
 
 { #category : #generated }
@@ -171,6 +171,7 @@ GtWMFileNode >> gtMapFor: aView [
 GtWMFileNode >> initialize [
 	super initialize.
 	titles := OrderedCollection new: 2.
+	evolutions := OrderedCollection new: 2.
 	anchors := OrderedCollection new: 2.
 	elements := OrderedCollection new: 2.
 	evolves := OrderedCollection new: 2.
@@ -181,7 +182,6 @@ GtWMFileNode >> initialize [
 	notes := OrderedCollection new: 2.
 	pipelines := OrderedCollection new: 2.
 	yAxises := OrderedCollection new: 2.
-	evolutions := OrderedCollection new: 2.
 	methods := OrderedCollection new: 2.
 	submaps := OrderedCollection new: 2.
 	urls := OrderedCollection new: 2.

@@ -45,16 +45,15 @@ GtWardleyMapParserExamples >> parseScriptWithComment [
 { #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithEvolution [
 	<gtExample>
-	<noTest>
 	| aScript aResult |
 	aScript := 'evolution genesis / concept -> custom / emerging -> product / converging -> commodity/ accepted'.
 	aResult := GtWardleyMapParser parse: aScript.
 	
 	self assert: aResult evolutions size equals: 1.
-	self assert: aResult evolutions first line1 equals: 'genesis / concept'.
-	self assert: aResult evolutions first line2 equals: 'custom / emerging'.
-	self assert: aResult evolutions first line3 equals: 'product / converging'.
-	self assert: aResult evolutions first line4 equals: 'commodity/ accepted'.
+	self assert: aResult evolutions first line1 source equals: 'genesis / concept'.
+	self assert: aResult evolutions first line2 source equals: 'custom / emerging'.
+	self assert: aResult evolutions first line3 source equals: 'product / converging'.
+	self assert: aResult evolutions first line4 source equals: 'commodity/ accepted'.
 	
 	self assert: aResult links size equals: 0.
 
@@ -64,7 +63,6 @@ GtWardleyMapParserExamples >> parseScriptWithEvolution [
 { #category : #'examples - parser' }
 GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	<gtExample>
-	<noTest>
 	| aResult |
 	aResult := GtWardleyMapParser parse: self scriptWithNewSyntaxForPipeline.
 
@@ -75,10 +73,10 @@ GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	self assert: aResult titles first name source equals: 'Something'.
 
 	self assert: aResult evolutions size equals: 1.
-	self assert: aResult evolutions first line1 equals: 'genesis / concept'.
-	self assert: aResult evolutions first line2 equals: 'custom / emerging'.
-	self assert: aResult evolutions first line3 equals: 'product / converging'.
-	self assert: aResult evolutions first line4 equals: 'commodity/ accepted'.
+	self assert: aResult evolutions first line1 source equals: 'genesis / concept'.
+	self assert: aResult evolutions first line2 source equals: 'custom / emerging'.
+	self assert: aResult evolutions first line3 source equals: 'product / converging'.
+	self assert: aResult evolutions first line4 source equals: 'commodity/ accepted'.
 	
 	self assert: aResult notes size equals: 1.
 	self assert: aResult notes first label source equals: 'Node C pipeline comment'.
@@ -102,23 +100,25 @@ GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	self assert: aResult pipelines second name source equals: 'Node C'.
 	self assert: aResult pipelines second elements size equals: 2.
 	self assert: aResult pipelines second elements first name source equals: 'Node D'.
-	self assert: aResult pipelines second elements first evolution source equals: '0.17'.
+	self assert: aResult pipelines second elements first coords evolution source equals: '0.17'.
+	self assert: aResult pipelines second elements first coords visibility equals: nil.
 	self assert: aResult pipelines second elements first label x source equals: '-63'.
 	self assert: aResult pipelines second elements first label y source equals: '14'.
 	
 	self assert: aResult pipelines second elements second name source equals: 'Node E'.
-	self assert: aResult pipelines second elements second evolution source equals: '0.80'.
+	self assert: aResult pipelines second elements second coords evolution source equals: '0.80'.
+	self assert: aResult pipelines second elements second coords visibility equals: nil.
 	self assert: aResult pipelines second elements second label x source equals: '20'.
 	self assert: aResult pipelines second elements second label y source equals: '18'.
 
 	self assert: aResult pipelines third name source equals: 'Node F'.
-	self assert: aResult pipelines second elements size equals: 2.
-	self assert: aResult pipelines second evolves size equals: 1.
+	self assert: aResult pipelines third elements size equals: 2.
+	self assert: aResult pipelines third evolves size equals: 1.
 	self flag: 'Ideally the evolve name would be "Node G" and "something g" would be an "evolvedName", "newName", or so.'.
-	self assert: aResult pipelines second evolves first name source equals: 'Node G -> something g'.
-	self assert: aResult pipelines second evolves first evolution source equals: '0.8'.
-	self assert: aResult pipelines second evolves first label x source equals: '-5'.
-	self assert: aResult pipelines second evolves first label y source equals: '20'.
+	self assert: aResult pipelines third evolves first name source equals: 'Node G -> something g'.
+	self assert: aResult pipelines third evolves first evolution source equals: '0.8'.
+	self assert: aResult pipelines third evolves first label x source equals: '-5'.
+	self assert: aResult pipelines third evolves first label y source equals: '20'.
 	
 	self assert: aResult evolves size equals: 2.
 	self assert: aResult evolves first name source equals: 'Node B'.
@@ -141,7 +141,7 @@ GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	self assert: aResult links second start source equals: 'Node B'.
 	self assert: aResult links second arrow source equals: '->'.
 	self assert: aResult links second end source equals: 'Node C'.
-	self assert: aResult links first comment equals: nil.
+	self assert: aResult links second comment equals: nil.
 	
 	self assert: aResult links third start source equals: 'Node C'.
 	self assert: aResult links third arrow source equals: '->'.
