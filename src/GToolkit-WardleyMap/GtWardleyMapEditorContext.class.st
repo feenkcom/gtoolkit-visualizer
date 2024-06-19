@@ -13,14 +13,6 @@ GtWardleyMapEditorContext >> canvasElement [
 ]
 
 { #category : #accessing }
-GtWardleyMapEditorContext >> canvasWithSectionsElement [
-	self canvasElement allParentsDo: [ :aParent | 
-		(aParent isKindOf: GtWardleyMapElement) 
-			ifTrue: [ ^ aParent ] ].
-	^ nil
-]
-
-{ #category : #accessing }
 GtWardleyMapEditorContext >> editorElement [
 	^ editorElement
 ]

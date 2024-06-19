@@ -143,6 +143,17 @@ GtWardleyMapViewModel >> edgeViewModels [
 ]
 
 { #category : #'api - map' }
+GtWardleyMapViewModel >> evolutionSections [
+	<return: #Array of: #String>
+	^ self wardleyMapModel evolutionSections
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> evolutionSections: aCollectionOfStrings [
+	self wardleyMapModel evolutionSections: aCollectionOfStrings
+]
+
+{ #category : #'api - map' }
 GtWardleyMapViewModel >> evolveEdgeViewModelFor: aNodeModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self evolveEdgeViewModels
 		detect: [ :eachEvolveEdgeViewModel | eachEvolveEdgeViewModel fromNodeViewModel wardleyMapNodeModel = aNodeModel ]
@@ -397,6 +408,17 @@ GtWardleyMapViewModel >> initialize [
 ]
 
 { #category : #'api - map' }
+GtWardleyMapViewModel >> isEvolutionAxisVisible [
+	<return: #Boolean>
+	^ self wardleyMapModel isEvolutionAxisVisible
+]
+
+{ #category : #'api - map' }
+GtWardleyMapViewModel >> isEvolutionAxisVisible: aBoolean [
+	self wardleyMapModel isEvolutionAxisVisible: aBoolean
+]
+
+{ #category : #'api - map' }
 GtWardleyMapViewModel >> isTitleVisible [
 	<return: #Boolean>
 	^ self wardleyMapModel isTitleVisible
@@ -487,6 +509,16 @@ GtWardleyMapViewModel >> onEdgeRemoved: anAnnouncement [
 			anEdgeViewModel announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel).
 			self announce: (GtWardleyMapEdgeViewModelRemoved new edgeViewModel: anEdgeViewModel) ]
 		ifNone: [ ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolutionAxisVisibilityChanged: anAnnouncement [
+	self announce: (GtWardleyMapViewModelEvolutionAxisVisibilityChanged new )
+]
+
+{ #category : #'event handling' }
+GtWardleyMapViewModel >> onEvolutionSectionsChanged: anAnnouncement [
+	self announce: (GtWardleyMapViewModelEvolutionSectionsChanged new )
 ]
 
 { #category : #'event handling' }
@@ -688,6 +720,12 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 	#unsubscribeFromWardleyMapModel if view model subscribes to them"
 
 	self wardleyMapModel weak
+		when: GtWardleyMapEvolutionSectionsChanged
+			send: #onEvolutionSectionsChanged:
+			to: self;
+		when: GtWardleyMapEvolutionAxisVisibilityChanged
+			send: #onEvolutionAxisVisibilityChanged:
+			to: self;
 		when: GtWardleyMapTitleChanged
 			send: #onTitleChanged:
 			to: self;
