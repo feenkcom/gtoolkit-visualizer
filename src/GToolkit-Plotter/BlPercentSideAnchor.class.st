@@ -30,6 +30,7 @@ BlPercentSideAnchor >> initialize [
 	super initialize.
 	transformer := [:bounds | bounds ].
 	chartPadding := BlInsets empty.
+	xpercent := ypercent := 0.
 	inversedX := inversedY := false.
 ]
 

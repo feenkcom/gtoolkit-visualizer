@@ -8,6 +8,7 @@ Class {
 GtPlotterHorizontalProjectionTicksAndDiagonalLabelsStencil >> newAxisXTickLabelsElement [
 	| axis |
 	axis := super newAxisXTickLabelsElement.
+	scatterChart xEventHandler layoutOnDiagonal.
 	axis
 		labelStyle: [:label |
 			label constraintsDo: [ :c |

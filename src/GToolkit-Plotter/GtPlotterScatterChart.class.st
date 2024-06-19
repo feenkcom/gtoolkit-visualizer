@@ -23,7 +23,12 @@ Class {
 		'valuesY',
 		'axisXStencil',
 		'axisYStencil',
-		'dots'
+		'dots',
+		'yEventHandler',
+		'xEventHandler',
+		'pointEventHandler',
+		'yAxisElement',
+		'xAxisElement'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
@@ -59,10 +64,10 @@ GtPlotterScatterChart >> create [
 		ifFalse: [
 			aContainer
 				addChildren: { 
-					self newAxisYElement.
+					yAxisElement := self newAxisYElement.
 					self newContentElement.
 					self newCornerElement.
-					self newAxisXElement.
+					xAxisElement := self newAxisXElement.
 				 } ].
 	
 	self styleChartElement: aContainer.
@@ -88,6 +93,21 @@ GtPlotterScatterChart >> dotElement: aStencil [
 { #category : #accessing }
 GtPlotterScatterChart >> dots [
 	^ dots
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> gtChartContent: aView [
+	<gtView>
+	self data  ifEmpty: [^ aView empty ].
+	
+	^ aView composite
+		title: 'Content';
+		priority: 4;
+		collectorDo: [ :aCollector | 
+			aCollector
+				pragmaName: #gtChartView;
+				fromObject: self ]
+		
 ]
 
 { #category : #accessing }
@@ -120,18 +140,75 @@ GtPlotterScatterChart >> gtDataTable: aView [
 		column:'y%'
 			text: [:eachItem |
 				(self scaledPoint: eachItem) y asFloat asRopedText foreground: Color black ]
-			width: 45;
-		actionUpdateButton
+			width: 45
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> gtEventHandlers [
+	| pane |
+	pane := BrHorizontalPane new.
+	pane background: (Color gray alpha: 0.3).
+	pane cellSpacing: 1.
+	pane matchParent.
+	pane 
+		addChild: xEventHandler asElement;
+		addChild: yEventHandler asElement;
+		addChild: pointEventHandler asElement.
+	^ pane
+		
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> gtEvents: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Event Handlers';
+		priority: 5;
+		stencil: [ self gtEventHandlers]
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> gtPointContent: aView [
+	<gtChartView>
+	^ aView explicit
+		title: 'Point Elements';
+		priority: 3;
+		stencil: [ self newContentElement
+			padding: (BlInsets all: 50) ]
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> gtXAxis: aView [
+	<gtChartView>
+	^ aView explicit
+		title: 'X Axis';
+		priority: 1;
+		stencil: [ self newAxisXElement
+			padding: (BlInsets all: 50) ]
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> gtYAxis: aView [
+	<gtChartView>
+	^ aView explicit
+		title: 'Y Axis';
+		priority: 2;
+		stencil: [ self newAxisYElement
+			padding: (BlInsets all: 50) ]
 ]
 
 { #category : #initalization }
 GtPlotterScatterChart >> initialize [
 
 	super initialize.
-	self dotElement: [:ex | BlElement new
-		geometry: BlEllipseGeometry new;
-		size: 10 asPoint  ].
-	self withTicksAndLabelsAxis.
+	self 
+		dotElement: [:aGtPlotterScaleContext | BlElement new
+			geometry: BlEllipseGeometry new;
+			size: 10 asPoint  ];
+		withTicksAndLabelsAxis;
+		xEventHandler: GtPlotterScatterFocusXHandler new;
+		yEventHandler: GtPlotterScatterFocusYHandler new;
+		pointEventHandler: GtPlotterScatterFocusPointHandler new.
 	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #yourself.
@@ -142,7 +219,7 @@ GtPlotterScatterChart >> initialize [
 	valueY := #value.
 	ticksY := 10.
 	labelFormatY := [ :aValue | 
-		(aValue printShowingDecimalPlaces: 0) asRopedText foreground: Color darkGray ].	
+		(aValue printShowingDecimalPlaces: 0) asRopedText foreground: Color darkGray ].
 	
 ]
 
@@ -272,47 +349,15 @@ GtPlotterScatterChart >> newNoDataElement [
 ]
 
 { #category : #'api - instantiation' }
-GtPlotterScatterChart >> newPointElementFor: aGroup [
-	| container dotElements |
-	container := BrFrame new.
-	container matchParent.
-	container layout: BlRelativePositionLayout new.
-	dotElements := aGroup collectWithIndex: [:eachValue :index |
-		| positionNormalized element context |
-		positionNormalized := self scaledPoint: eachValue .
-		context := GtPlotterScaleContext new
-			index: index;
-			originalValue: eachValue.
-		element := (dotElementStencil scaleContext: context) asElement.
-		element userData 
-			at: #originalY put: (valueY value: eachValue);
-			at: #originalX put: (valueX value: eachValue).
-		element
-			when: BlClickEvent do: [ :anEvent |
-				anEvent consumed: true.
-				anEvent currentTarget phlow spawnObject: eachValue ];
-			background: aGroup color;
-			constraintsDo: [:c |
-				c relativePosition percent: positionNormalized
-			];
-			yourself
-		
-	].
-	dots addAll: dotElements.
-	container addChildren: dotElements.
-	^ container
-
-]
-
-{ #category : #'api - instantiation' }
 GtPlotterScatterChart >> newPointElementFor: eachValue index: index [
 	| positionNormalized element context |
 	positionNormalized := self scaledPoint: eachValue .
 	context := GtPlotterScaleContext new
 		index: index;
-			originalValue: eachValue.
+		originalValue: eachValue.
 	element := (dotElementStencil scaleContext: context) asElement.
-	element userData 
+	element addEventHandler: pointEventHandler.
+	element userData
 		at: #originalY put: (valueY value: eachValue);
 		at: #originalX put: (valueX value: eachValue).
 	element 
@@ -341,6 +386,17 @@ GtPlotterScatterChart >> newPointsElementFor: aGroup [
 	container addChildren: dotElements.
 	^ container
 
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> pointEventHandler [
+	^ pointEventHandler
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> pointEventHandler: aGtPlotterScatterFocusPointHandler [
+	pointEventHandler := aGtPlotterScatterFocusPointHandler.
+	pointEventHandler scatterChart: self.
 ]
 
 { #category : #accessing }
@@ -465,4 +521,36 @@ GtPlotterScatterChart >> withProjectionAxis [
 GtPlotterScatterChart >> withTicksAndLabelsAxis [
 	self axisYStencil: GtPlotterVerticalTicksAndLabelsStencil new.
 	self axisXStencil: GtPlotterHorizontalTicksAndLabelsStencil new.
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> xEventHandler [
+	^ xEventHandler
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> xEventHandler: aGtPlotterScatterFocusXHandler [
+	xEventHandler := aGtPlotterScatterFocusXHandler.
+	xEventHandler scatterChart: self.
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> xTicks [
+	^ xAxisElement children first children
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> yEventHandler [
+	^ yEventHandler
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> yEventHandler: aGtPlotterScatterFocusYHandler [
+	yEventHandler := aGtPlotterScatterFocusYHandler.
+	yEventHandler scatterChart: self.
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> yTicks [
+	^ yAxisElement children last children
 ]

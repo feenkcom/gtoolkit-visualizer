@@ -44,8 +44,19 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 		scale: scatterChart scaleY;
 		inverse;
 		labelFormat: scatterChart labelFormatY;
+		labelElement: [:aGtPlotterScaleContext |
+			BlTextElement new
+				in: [:e | e userData 
+					at: #originalValue
+					put: aGtPlotterScaleContext originalValue ];
+				
+				text: (aGtPlotterScaleContext scale 
+					formattedTick: aGtPlotterScaleContext originalValue) asRopedText
+		];
 		labelStyle: [ :anElement |
-			(anElement background: Color white)
+			anElement 
+				background: Color white;
+				addEventHandler: scatterChart yEventHandler;
 				constraintsDo: [ :c |
 					c frame horizontal alignRight.
 					c horizontal fitContent.
@@ -59,7 +70,6 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
-	eventHandler scatterChart: scatterChart.
 	^ GtPlotterVerticalTicksElement new
 		scale: scatterChart scaleY;
 		tickElement: [ :aGtPlotterContext |
@@ -67,7 +77,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
 				in: [:e | e userData 
 					at: #originalValue
 					put: aGtPlotterContext originalValue ];
-				addEventHandler: eventHandler;
+				addEventHandler: scatterChart yEventHandler;
 				height: 2;
 				background: (Color gray alpha: 0.8);
 				yourself ];
