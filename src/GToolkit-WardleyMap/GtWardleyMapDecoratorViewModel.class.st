@@ -42,10 +42,3 @@ GtWardleyMapDecoratorViewModel >> onWardleyMapDecoratorModelChanged [
 
 	
 ]
-
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> undecorateMapElement: anEdgeElement [
-	self wardleyMapDecoratorModel
-		undecorateMapElement: anEdgeElement
-		decoratorViewModel: self
-]

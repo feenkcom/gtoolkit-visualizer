@@ -124,26 +124,34 @@ GtWardleyMapScriptExporter >> exportEdge: anEdge [
 		nextPutAll: anEdge fromNode label;
 		nextPutAll: '->';
 		nextPutAll: anEdge toNode label.
+		
+	anEdge isLabelVisible ifTrue: [ 
+		stream
+			nextPut: $; ;
+			nextPutAll: anEdge label
+	].
+		
 	self newLine.
 ]
 
 { #category : #'private - exporting' }
 GtWardleyMapScriptExporter >> exportEvolve: aNode [
 	| aLabel |
-	aLabel := aNode label = aNode evolvedLabel 
-		ifTrue: [ aNode label ]
-		ifFalse: [ '{1} -> {2}' format: { aNode label. aNode evolvedLabel } ].
-	
+	aLabel := aNode label = aNode evolvedLabel
+			ifTrue: [ aNode label ]
+			ifFalse: [ '{1} -> {2}'
+					format: {aNode label.
+							aNode evolvedLabel} ].
+
 	stream
 		nextPutAll: 'evolve ';
 		nextPutAll: aLabel;
 		space;
-		nextPutAll: (self roundedNodeCoordinate: aNode evolveModel maturity);
+		nextPutAll: (self roundedNodeCoordinate: aNode evolveModel evolution);
 		nextPutAll: ' label ['.
 	self printLabelCoordinateInPixels: aNode evolveModel.
-	stream
-		nextPutAll: ']'.
-	self newLine.
+	stream nextPutAll: ']'.
+	self newLine
 ]
 
 { #category : #'api - export' }

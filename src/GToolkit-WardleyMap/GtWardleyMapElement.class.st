@@ -143,13 +143,6 @@ GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
 		action: [ anAnnouncement decoratorViewModel decorateMapElement: self ]
 ]
 
-{ #category : #'event handling' }
-GtWardleyMapElement >> onMapDecoratorRemoved: anAnnouncement [
-	BlTaskAction
-		enqueueElement: self
-		action: [ anAnnouncement decoratorViewModel undecorateMapElement: self ]
-]
-
 { #category : #accessing }
 GtWardleyMapElement >> onMapDecoratorsChanged [
 	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
@@ -230,9 +223,6 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 			to: self;
 		when: GtWardleyMapDecoratorViewModelAdded
 			send: #onMapDecoratorAdded:
-			to: self;
-		when: GtWardleyMapDecoratorViewModelRemoved
-			send: #onMapDecoratorRemoved:
 			to: self
 ]
 

@@ -151,9 +151,13 @@ GtWardleyMapScriptImporter >> importEvolves [
 						nodeNamed: aSourceNodeName
 						ifFound: [ :aSourceNodeModel | 
 							anAstNode evolutionNumber
-								ifNotNil: [ :aMaturity | 
-									aSourceNodeModel evolveModel evolution: aMaturity.
-									aSourceNodeModel evolveModel color: GtWardleyMapConstants evolveColor.
+								ifNotNil: [ :anEvolution | 
+									aSourceNodeModel evolvedEvolution: anEvolution.
+									aSourceNodeModel isEvolveVisible: true.
+									aSourceNodeModel evolvedColor: GtWardleyMapConstants evolveColor.
+									aSourceNodeModel evolvedLabel: anEvolveName.
+									aSourceNodeName = anEvolveName ifFalse: [
+										aSourceNodeModel isEvolvedLabelVisible: true ].
 
 									anAstNode label
 										ifNotNil: [ :aNode | 
@@ -163,10 +167,7 @@ GtWardleyMapScriptImporter >> importEvolves [
 													aLabelCoordinate := GtWardleyMapUtility
 															convertWardleyScriptNodeModel: aSourceNodeModel evolveModel
 															labelCoordiante: aPoint.
-													aSourceNodeModel evolveModel labelModel
-														coordinate: aLabelCoordinate ] ].
-
-									aSourceNodeModel evolveModel label: anEvolveName ] ]
+													aSourceNodeModel evolvedLabelCoordinate: aLabelCoordinate ] ] ] ]
 						ifNone: [  ] ] ]
 ]
 

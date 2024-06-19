@@ -108,7 +108,7 @@ GtWardleyMapAsDictionaryExporter >> visitWardleyMapEdgeLabel: aWardleyMapEdgeLab
 { #category : #visiting }
 GtWardleyMapAsDictionaryExporter >> visitWardleyMapEvolve: aWardleyMapEvolve [
 	^ OrderedDictionary new
-		at: #maturity put: aWardleyMapEvolve evolution;
+		at: #evolution put: aWardleyMapEvolve evolution;
 		at: #color put: (self visitColor: aWardleyMapEvolve color);
 		at: #width put: aWardleyMapEvolve width;
 		at: #height put: aWardleyMapEvolve height;

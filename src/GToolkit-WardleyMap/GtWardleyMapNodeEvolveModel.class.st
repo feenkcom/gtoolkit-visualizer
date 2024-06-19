@@ -165,7 +165,7 @@ GtWardleyMapNodeEvolveModel >> printOn: aStream [
 		nextPutAll: ' label: ';
 		print: self label;
 		nextPutAll: '; maturity: ';
-		print: self maturity;
+		print: self evolution;
 		nextPutAll: '; size: ';
 		print: self size;
 		nextPutAll: '; color: ';
