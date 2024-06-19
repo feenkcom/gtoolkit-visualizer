@@ -21,7 +21,9 @@ Class {
 		'sections',
 		'title',
 		'notes',
-		'isTitleVisible'
+		'isTitleVisible',
+		'evolutionSections',
+		'isEvolutionAxisVisible'
 	],
 	#category : #'GToolkit-WardleyMap-! Models'
 }
@@ -37,7 +39,9 @@ GtWardleyMapModel >> = anObject [
 	^ title = anObject title 
 		and: [ isTitleVisible = anObject isTitleVisible 
 		and: [ nodes = anObject nodes 
-		and: [ edges = anObject edges ] ] ]
+		and: [ edges = anObject edges
+		and: [ isEvolutionAxisVisible = anObject isEvolutionAxisVisible
+		and: [ evolutionSections = anObject evolutionSections ] ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -149,6 +153,22 @@ GtWardleyMapModel >> edges [
 GtWardleyMapModel >> edges: aCollection [
 	edges copy do: [ :anEdge | self removeEdge: anEdge ].
 	aCollection do: [ :anEdge | self addEdge: anEdge ]
+]
+
+{ #category : #'api - title' }
+GtWardleyMapModel >> evolutionSections [
+	<return: #Array of: #String>
+	^ evolutionSections
+		ifNil: [ evolutionSections := GtWardleyMapConstants defaultEvolutionSections ]
+]
+
+{ #category : #'api - title' }
+GtWardleyMapModel >> evolutionSections: aCollectionOfStrings [
+	self evolutionSections = aCollectionOfStrings
+		ifTrue: [ ^ self ].
+
+	evolutionSections := aCollectionOfStrings.
+	self notifyEvolutionSectionsChanged.
 ]
 
 { #category : #'gt-extensions' }
@@ -355,10 +375,12 @@ GtWardleyMapModel >> hasParent [
 GtWardleyMapModel >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ ((title hash 
+	^ ((((title hash 
 		bitXor: isTitleVisible hash) 
 		bitXor: nodes hash)
-		bitXor: edges hash
+		bitXor: edges hash)
+		bitXor: isEvolutionAxisVisible hash)
+		bitXor: evolutionSections hash
 ]
 
 { #category : #initialization }
@@ -367,10 +389,26 @@ GtWardleyMapModel >> initialize [
 
 	nodes := OrderedCollection new.
 	edges := OrderedCollection new.
-	sections := OrderedCollection new.
 	notes := OrderedCollection new.
 	title := GtWardleyMapUtility defaultMapTitle.
 	isTitleVisible := false.
+	evolutionSections := GtWardleyMapConstants defaultEvolutionSections.
+	isEvolutionAxisVisible := true
+]
+
+{ #category : #'api - evolution sections' }
+GtWardleyMapModel >> isEvolutionAxisVisible [
+	<return: #Boolean>
+	^ isEvolutionAxisVisible ifNil: [ isEvolutionAxisVisible := true ]
+]
+
+{ #category : #'api - evolution sections' }
+GtWardleyMapModel >> isEvolutionAxisVisible: aBoolean [
+	self isEvolutionAxisVisible = aBoolean
+		ifTrue: [ ^ self ].
+		
+	isEvolutionAxisVisible := aBoolean.
+	self notifyEvolutionAxisVisibilityChanged
 ]
 
 { #category : #'api - title' }
@@ -439,15 +477,9 @@ GtWardleyMapModel >> menuItemSectionsVisibilityButton [
 	<wardleyContextMenuItem: 6>
 	^ GtWardleyMapNodeButtonWithLabelMenuItem new
 		label: 'Switch sections';
-		condition: [ :aContextMenuItem | 
-			aContextMenuItem canvasWithSectionsElement isNotNil ];
 		action: [ :aContextMenuItem :aBrButton :aBrButtonModel :anEvent | 
-			| aCanvasParent |
-			aCanvasParent := aContextMenuItem canvasWithSectionsElement.
-			aCanvasParent hasEvolutionAxisLayer
-				ifFalse: [ aCanvasParent evolutionSections: {
-					'genesis'. 'custom built'. 'product (+rental)'. 'commodity' } ]
-				ifTrue: [ aCanvasParent removeChildAt: 1 ] ]
+			aContextMenuItem wardleyMapViewModel isEvolutionAxisVisible: 
+				aContextMenuItem wardleyMapViewModel isEvolutionAxisVisible not ]
 ]
 
 { #category : #'api - context menu' }
@@ -516,6 +548,16 @@ GtWardleyMapModel >> noteWithText: aString ifFound: aFoundBlock ifNone: aNoneBlo
 { #category : #'api - notes' }
 GtWardleyMapModel >> notes [
 	^ notes ifNil: [ notes := OrderedCollection new ]
+]
+
+{ #category : #'api - evolution sections' }
+GtWardleyMapModel >> notifyEvolutionAxisVisibilityChanged [
+	self announce: GtWardleyMapEvolutionAxisVisibilityChanged new
+]
+
+{ #category : #'api - evolution sections' }
+GtWardleyMapModel >> notifyEvolutionSectionsChanged [
+	self announce: GtWardleyMapEvolutionSectionsChanged new
 ]
 
 { #category : #'api - title' }

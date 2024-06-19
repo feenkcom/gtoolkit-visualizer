@@ -4,6 +4,16 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
+{ #category : #initialization }
+GtWardleyMapConstants class >> defaultEvolutionSections [
+	^ {
+		'genesis'.
+		'custom built'.
+		'product (+rental)'.
+		'commodity' 
+		}
+]
+
 { #category : #'api - constants' }
 GtWardleyMapConstants class >> edgeElevationIndex [
 	"I represent a default edge z-index"

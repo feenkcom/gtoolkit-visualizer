@@ -42,6 +42,8 @@ GtWardleyMapEvolutionAxisLayer >> initialize [
 GtWardleyMapEvolutionAxisLayer >> sections: aCollectionOfSectionNames [
 	| theColumnCount  theLabels theGridLines theGridEmptySpace theDivider |
 
+	self removeChildren.
+	
 	theColumnCount := aCollectionOfSectionNames size * 2.
 	self columnCount: theColumnCount.
 

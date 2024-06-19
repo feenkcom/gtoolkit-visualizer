@@ -229,6 +229,15 @@ GtWardleyMapFromDictionaryImporter >> importWardleyMapFrom: aDictionary [
 				ifPresent: [ :aBoolean | aWardleyMap isTitleVisible: aBoolean ] ].
 	
 	aDictionary
+		at: #evolution_axis
+		ifPresent: [ :theEvolutionAxisDictionary |
+			theEvolutionAxisDictionary
+				at: #is_visible
+				ifPresent: [ :aBoolean | aWardleyMap isEvolutionAxisVisible: aBoolean ];
+				at: #sections
+				ifPresent: [ :anArray | aWardleyMap evolutionSections: anArray ] ].
+	
+	aDictionary
 		at: #notes
 		ifPresent: [ :theNoteDictionaries | 
 			theNoteDictionaries
