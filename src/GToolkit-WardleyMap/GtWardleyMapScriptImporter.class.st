@@ -136,17 +136,11 @@ GtWardleyMapScriptImporter >> importEvolves [
 	ast
 		allNodesOfType: GtWMEvolveNode
 		do: [ :anAstNode | 
-			| aNameParts aSourceNodeName anEvolveName anAstName |
-			anAstName := anAstNode name ifNotNil: #source.
-			anAstName
-				ifNotNil: [ aNameParts := '->' split: anAstName.
-					self
-						assert: [ #(1 2) includes: aNameParts size ]
-						description: [ 'Evolve name can be with or without one arrow (->): ' format: {anAstName} ].
-					aSourceNodeName := aNameParts first trimRight.
-					anEvolveName := aNameParts size = 1
-							ifTrue: [ aSourceNodeName ]
-							ifFalse: [ aNameParts second trimBoth ].
+			| aSourceNodeName anEvolvedName |
+			aSourceNodeName := anAstNode name ifNotNil: #source.
+			anEvolvedName := anAstNode evolvedName ifNotNil: #source ifNil: [ aSourceNodeName ].
+			aSourceNodeName
+				ifNotNil: [
 					self
 						nodeNamed: aSourceNodeName
 						ifFound: [ :aSourceNodeModel | 
@@ -155,8 +149,8 @@ GtWardleyMapScriptImporter >> importEvolves [
 									aSourceNodeModel evolvedEvolution: anEvolution.
 									aSourceNodeModel isEvolveVisible: true.
 									aSourceNodeModel evolvedColor: GtWardleyMapConstants evolveColor.
-									aSourceNodeModel evolvedLabel: anEvolveName.
-									aSourceNodeName = anEvolveName ifFalse: [
+									aSourceNodeModel evolvedLabel: anEvolvedName.
+									aSourceNodeName = anEvolvedName ifFalse: [
 										aSourceNodeModel isEvolvedLabelVisible: true ].
 
 									anAstNode label

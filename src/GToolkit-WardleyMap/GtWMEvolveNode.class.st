@@ -6,7 +6,9 @@ Class {
 		'name',
 		'evolution',
 		'decorators',
-		'label'
+		'label',
+		'arrow',
+		'evolvedName'
 	],
 	#category : #'GToolkit-WardleyMap-Parser'
 }
@@ -14,6 +16,16 @@ Class {
 { #category : #generated }
 GtWMEvolveNode >> acceptVisitor: aProgramVisitor [
 	^ aProgramVisitor visitEvolve: self
+]
+
+{ #category : #generated }
+GtWMEvolveNode >> arrow [
+	^ arrow
+]
+
+{ #category : #generated }
+GtWMEvolveNode >> arrow: aSmaCCToken [
+	arrow := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -68,6 +80,16 @@ GtWMEvolveNode >> evolveToken: aSmaCCToken [
 	evolveToken := aSmaCCToken
 ]
 
+{ #category : #generated }
+GtWMEvolveNode >> evolvedName [
+	^ evolvedName
+]
+
+{ #category : #generated }
+GtWMEvolveNode >> evolvedName: aSmaCCToken [
+	evolvedName := aSmaCCToken
+]
+
 { #category : #'generated-initialize-release' }
 GtWMEvolveNode >> initialize [
 	super initialize.
@@ -103,5 +125,5 @@ GtWMEvolveNode >> nodeVariables [
 
 { #category : #generated }
 GtWMEvolveNode >> tokenVariables [
-	^ #(#evolveToken #name #evolution)
+	^ #(#evolveToken #name #evolution #arrow #evolvedName)
 ]

@@ -369,16 +369,17 @@ GtWardleyMapScanner >> scan5 [
 
 { #category : #generated }
 GtWardleyMapScanner >> scan6 [
-	[ self recordMatch: #(19).
-	self step.
-	(currentCharacter isSeparator or: [ currentCharacter == Character pageUp ])
-		ifTrue: [ [ self step.
-			currentCharacter isSeparator or: [ currentCharacter == Character pageUp ] ]
-				whileTrue.
-			(currentCharacter <= $/ or: [ currentCharacter >= $: ])
+	[ self step.
+	currentCharacter isSeparator or: [ currentCharacter == Character pageUp ] ]
+		whileTrue.
+	(currentCharacter <= $,
+		or: [ (currentCharacter between: $. and: $/) or: [ currentCharacter >= $: ] ])
+		ifTrue: [ [ self recordMatch: #(19).
+			self step.
+			(currentCharacter isSeparator or: [ currentCharacter == Character pageUp ])
 				ifTrue: [ ^ self scan6 ].
-			^ self reportLastMatch ].
-	true ] whileTrue
+			currentCharacter <= $, or: [ currentCharacter >= $. ] ] whileTrue ].
+	^ self reportLastMatch
 ]
 
 { #category : #generated }
@@ -405,8 +406,8 @@ GtWardleyMapScanner >> scan7 [
 { #category : #generated }
 GtWardleyMapScanner >> scanForToken [
 	scope == #nameWithoutSemicolon ifTrue: [ ^ self scanForTokenX1 ].
-	scope == #nameWithoutNumber ifTrue: [ ^ self scanForTokenX3 ].
-	scope == #title ifTrue: [ ^ self scanForTokenX2 ].
+	scope == #nameWithoutNumber ifTrue: [ ^ self scanForTokenX2 ].
+	scope == #title ifTrue: [ ^ self scanForTokenX3 ].
 	scope == #default ifTrue: [ ^ self scan1 ].
 	scope == #name
 		ifTrue: [ self step.
@@ -482,11 +483,11 @@ GtWardleyMapScanner >> scanForTokenX2 [
 			^ self reportLastMatch ].
 	(currentCharacter <= Character backspace
 		or: [ currentCharacter >= (Character value: 14) ])
-		ifTrue: [ [ self recordMatch: #(16).
+		ifTrue: [ [ self recordMatch: #(19).
 			self step.
-			currentCharacter <= Character tab
-				or: [ (currentCharacter between: Character pageUp and: Character newPage)
-						or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue ].
+			(currentCharacter isSeparator or: [ currentCharacter == Character pageUp ])
+				ifTrue: [ ^ self scan6 ].
+			true ] whileTrue ].
 	^ self reportLastMatch
 ]
 
@@ -508,7 +509,12 @@ GtWardleyMapScanner >> scanForTokenX3 [
 						or: [ currentCharacter == Character space ] ] ] whileTrue.
 			^ self reportLastMatch ].
 	(currentCharacter <= Character backspace
-		or: [ currentCharacter >= (Character value: 14) ]) ifTrue: [ ^ self scan6 ].
+		or: [ currentCharacter >= (Character value: 14) ])
+		ifTrue: [ [ self recordMatch: #(16).
+			self step.
+			currentCharacter <= Character tab
+				or: [ (currentCharacter between: Character pageUp and: Character newPage)
+						or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue ].
 	^ self reportLastMatch
 ]
 

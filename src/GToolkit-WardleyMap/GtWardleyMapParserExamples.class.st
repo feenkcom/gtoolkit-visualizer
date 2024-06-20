@@ -60,6 +60,60 @@ GtWardleyMapParserExamples >> parseScriptWithEvolution [
 ]
 
 { #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithEvolve1 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'evolve Node G 0.8 label [-5, 20]'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult evolves size equals: 1.
+	self assert: aResult evolves first name source equals: 'Node G'.
+	self assert: aResult evolves first evolution source equals: '0.8'.
+	self assert: aResult evolves first arrow equals: nil.
+	self assert: aResult evolves first evolvedName equals: nil.
+	self assert: aResult evolves first label x source equals: '-5'.
+	self assert: aResult evolves first label y source equals: '20'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithEvolve2 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'evolve Node G -> something g 0.8 label [-5, 20]'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult evolves size equals: 1.
+	self assert: aResult evolves first name source equals: 'Node G'.
+	self assert: aResult evolves first evolution source equals: '0.8'.
+	self assert: aResult evolves first arrow source equals: '->'.
+	self assert: aResult evolves first evolvedName source equals: 'something g'.
+	self assert: aResult evolves first label x source equals: '-5'.
+	self assert: aResult evolves first label y source equals: '20'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithEvolve3 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'evolve Node G -> something g 0.8 label [-5, 20] // extra line comment'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult evolves size equals: 1.
+	self assert: aResult evolves first name source equals: 'Node G'.
+	self assert: aResult evolves first evolution source equals: '0.8'.
+	self assert: aResult evolves first arrow source equals: '->'.
+	self assert: aResult evolves first evolvedName source equals: 'something g'.
+	self assert: aResult evolves first label x source equals: '-5'.
+	self assert: aResult evolves first label y source equals: '20'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
 GtWardleyMapParserExamples >> parseScriptWithLink1 [
 	<gtExample>
 	| aScript aResult |
@@ -207,8 +261,8 @@ GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	self assert: aResult pipelines third name source equals: 'Node F'.
 	self assert: aResult pipelines third elements size equals: 2.
 	self assert: aResult pipelines third evolves size equals: 1.
-	self flag: 'Ideally the evolve name would be "Node G" and "something g" would be an "evolvedName", "newName", or so.'.
-	self assert: aResult pipelines third evolves first name source equals: 'Node G -> something g'.
+	self assert: aResult pipelines third evolves first name source equals: 'Node G'.
+	self assert: aResult pipelines third evolves first evolvedName source equals: 'something g'.
 	self assert: aResult pipelines third evolves first evolution source equals: '0.8'.
 	self assert: aResult pipelines third evolves first label x source equals: '-5'.
 	self assert: aResult pipelines third evolves first label y source equals: '20'.
@@ -219,8 +273,8 @@ GtWardleyMapParserExamples >> parseScriptWithNewSyntaxForPipeline [
 	self assert: aResult evolves first label x source equals: '-5'.
 	self assert: aResult evolves first label y source equals: '21'.
 	
-	self flag: 'Ideally the evolve name would be "Node C" and "something c" would be an "evolvedName", "newName", or so.'.
-	self assert: aResult evolves second name source equals: 'Node C -> something c'.
+	self assert: aResult evolves second name source equals: 'Node C'.
+	self assert: aResult evolves second evolvedName source equals: 'something c'.
 	self assert: aResult evolves second evolution source equals: '0.9'.
 	self assert: aResult evolves second label x source equals: '-5'.
 	self assert: aResult evolves second label y source equals: '21'.
