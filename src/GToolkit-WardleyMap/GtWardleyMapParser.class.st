@@ -17,7 +17,7 @@ GtWardleyMapParser class >> ambiguousTransitions [
 
 { #category : #'generated-accessing' }
 GtWardleyMapParser class >> cacheId [
-	^'2024-06-20T01:03:42.548517-04:00'
+	^'2024-06-20T01:25:16.626276-04:00'
 ]
 
 { #category : #generated }
@@ -40,7 +40,7 @@ title name nameWithoutNumber nameWithoutSemicolon default <whitespace>
 	: \-? \d+ (\. \d+)?
 	;
 nameWithoutNumber <nameWithoutNumber>
-	: [^\s]+ (\s+ [^\s\d-][^\s-]*)*
+	: [^\s]+ (\s+ ( [^\s\d-][^\s\>]* | -[^\>][^\s]* ) )*
 	;
 name default <nodeName>
 	: [^\s\-\[\]] | \-[^\>\[\]] | \+[^\<\>\[\]]
@@ -266,117 +266,117 @@ SwitchToTitle
 { #category : #generated }
 GtWardleyMapParser class >> reduceTable [
 ^#(
-	#(91 0 #reduceActionForSwitchToDefault1: 5700609 true) 
-	#(87 0 #nil 5206017 false) 
-	#(92 0 #reduceActionForSwitchToTitle1: 5751809 true) 
-	#(64 0 #reduceActionForSwitchToNameWithoutNumber1: 3049473 true) 
-	#(49 1 #reduceActionFormap1: 1284097 false) 
-	#(52 0 #reduceActionFor_Eols_Line__1: 1337345 false) 
-	#(55 1 #reduceActionForLine12: 1389580 false) 
-	#(55 1 #reduceActionForLine8: 1389576 false) 
-	#(55 1 #reduceActionForLine9: 1389577 false) 
-	#(55 1 #reduceActionForLine6: 1389574 false) 
-	#(55 1 #reduceActionForLine3: 1389571 false) 
-	#(55 1 #reduceActionForLine5: 1389573 false) 
-	#(55 1 #reduceActionForLine11: 1389579 false) 
-	#(55 1 #reduceActionForLine4: 1389572 false) 
-	#(55 1 #reduceActionForLine7: 1389575 false) 
-	#(55 1 #reduceActionForLine10: 1389578 false) 
-	#(55 1 #reduceActionForLine2: 1389570 false) 
-	#(55 1 #reduceActionForLine13: 1389581 false) 
-	#(55 1 #reduceActionForLine14: 1389582 false) 
-	#(55 1 #reduceActionForLine17: 1389585 false) 
-	#(55 1 #reduceActionForLine18: 1389586 false) 
-	#(55 1 #reduceActionForLine15: 1389583 false) 
-	#(55 1 #reduceActionForLine16: 1389584 false) 
-	#(55 1 #reduceActionForLine1: 1389569 false) 
-	#(60 0 #reduceActionForSwitchToNameWithoutSemicolon1: 2498561 true) 
-	#(57 2 #reduceActionForPresentationAnnotation1: 1948673 false) 
-	#(83 0 #reduceActionForSwitchToUrl1: 4869121 true) 
-	#(49 2 #reduceActionFormap1: 1284098 false) 
-	#(50 2 #reduceActionForLines1: 1316865 false) 
-	#(70 2 #reduceActionForElement1: 3562497 false) 
-	#(54 1 #liftFirstValue: 1379329 false) 
-	#(53 2 #liftFirstValue: 1354753 false) 
-	#(50 3 #reduceActionForLines2: 1316866 false) 
-	#(52 2 #reduceActionFor_Eols_Line__2: 1337346 false) 
-	#(70 3 #reduceActionForElement2: 3562498 false) 
-	#(71 1 #reduceActionForExtendableComponent1: 3641345 false) 
-	#(85 3 #reduceActionForElement2: 4994049 false) 
-	#(80 3 #reduceActionForEvolution1: 4436993 false) 
-	#(84 3 #reduceActionForElement2: 4912129 false) 
-	#(65 3 #reduceActionForPipeline1: 3121153 false) 
-	#(58 3 #reduceActionForPresentationStyle1: 2038785 false) 
-	#(54 2 #liftFirstValue: 1379330 false) 
-	#(78 0 #reduceActionFor______comma__Coords__occurrence___1: 4158465 false) 
-	#(76 4 #reduceActionForAnnotation2: 4063234 false) 
-	#(88 4 #reduceActionForAttitude1: 5270529 false) 
-	#(88 4 #reduceActionForAttitude1: 5270530 false) 
-	#(88 4 #reduceActionForAttitude1: 5270531 false) 
-	#(88 4 #reduceActionForAttitude1: 5270532 false) 
-	#(88 4 #reduceActionForAttitude1: 5270533 false) 
-	#(88 4 #reduceActionForAttitude1: 5270534 false) 
-	#(51 2 #reduceActionFor_Eols_Line_1: 1337345 false) 
-	#(61 4 #reduceActionForAnchor1: 2576385 false) 
-	#(74 0 #reduceActionForDecorator__decorator__1: 3898369 false) 
-	#(79 4 #reduceActionForNote1: 4334593 false) 
-	#(81 4 #reduceActionForMethod3: 4612099 false) 
-	#(81 4 #reduceActionForMethod3: 4612097 false) 
-	#(81 4 #reduceActionForMethod3: 4612098 false) 
-	#(90 4 #reduceActionForTitle1: 5610497 false) 
-	#(62 4 #reduceActionForCoords1: 2664449 false) 
-	#(71 3 #reduceActionForExtendableComponent2: 3641346 false) 
-	#(73 1 #reduceActionForDecorators1: 3884033 false) 
-	#(80 5 #reduceActionForEvolution2: 4436994 false) 
-	#(79 5 #reduceActionForNote2: 4334594 false) 
-	#(59 5 #reduceActionForLink5: 2118661 false) 
-	#(59 5 #reduceActionForLink5: 2118659 false) 
-	#(59 5 #reduceActionForLink5: 2118657 false) 
-	#(59 5 #reduceActionForLink5: 2118663 false) 
-	#(78 2 #reduceActionFor______comma__Coords__occurrence___2: 4158466 false) 
-	#(63 6 #reduceActionForEvolve1: 2780161 false) 
-	#(74 2 #reduceActionForDecorator__decorator__2: 3898370 false) 
-	#(59 6 #reduceActionForLink11: 2118667 false) 
-	#(59 6 #reduceActionForLink11: 2118666 false) 
-	#(59 6 #reduceActionForLink11: 2118665 false) 
-	#(77 2 #reduceActionFor______comma__Coords__occurrence__1: 4158465 false) 
-	#(62 6 #reduceActionForCoords2: 2664450 false) 
-	#(82 7 #reduceActionForSubmap1: 4745217 false) 
-	#(71 5 #reduceActionForExtendableComponent4: 3641348 false) 
-	#(71 5 #reduceActionForExtendableComponent3: 3641347 false) 
-	#(80 7 #reduceActionForEvolution3: 4436995 false) 
-	#(56 7 #reduceActionForPresentationYAxis1: 1815553 false) 
-	#(59 7 #reduceActionForLink6: 2118662 false) 
-	#(59 7 #reduceActionForLink6: 2118660 false) 
-	#(59 7 #reduceActionForLink6: 2118658 false) 
-	#(59 7 #reduceActionForLink6: 2118664 false) 
-	#(76 8 #reduceActionForAnnotation1: 4063233 false) 
-	#(63 8 #reduceActionForEvolve2: 2780162 false) 
-	#(75 3 #reduceActionForDecorator1: 3924993 false) 
-	#(75 3 #reduceActionForDecorator1: 3924994 false) 
-	#(75 3 #reduceActionForDecorator1: 3924997 false) 
-	#(75 3 #reduceActionForDecorator1: 3924996 false) 
-	#(75 3 #reduceActionForDecorator1: 3924995 false) 
-	#(65 8 #reduceActionForPipeline3: 3121155 false) 
-	#(87 0 #nil 5206017 true) 
-	#(69 1 #reduceActionForInsidePipeline2: 3503106 false) 
-	#(68 0 #reduceActionFor______comma__Coords__occurrence___1: 3470337 false) 
-	#(69 1 #reduceActionForInsidePipeline1: 3503105 false) 
-	#(86 8 #reduceActionForUrl1: 5081089 false) 
-	#(71 7 #reduceActionForExtendableComponent5: 3641349 false) 
-	#(80 9 #reduceActionForEvolution4: 4436996 false) 
-	#(65 9 #reduceActionForPipeline2: 3121154 false) 
-	#(65 9 #reduceActionForPipeline4: 3121156 false) 
-	#(66 2 #reduceActionForInsidePipelines1: 3428353 false) 
-	#(89 9 #reduceActionForManyCoords1: 5443585 false) 
-	#(63 10 #reduceActionForEvolve3: 2780163 false) 
-	#(66 3 #reduceActionForInsidePipelines3: 3428355 false) 
-	#(66 3 #reduceActionForInsidePipelines1: 3428354 false) 
-	#(68 2 #reduceActionFor______comma__Coords__occurrence___2: 3470338 false) 
-	#(72 6 #reduceActionForLabel1: 3784705 false) 
-	#(66 4 #reduceActionForInsidePipelines3: 3428356 false) 
-	#(67 2 #reduceActionFor_Eols_Line_1: 3470337 false) 
-	#(63 12 #reduceActionForEvolve4: 2780164 false)
+	#(91 0 #reduceActionForSwitchToDefault1: 5722113 true) 
+	#(87 0 #reduceActionForSwitchToName1: 5227521 true) 
+	#(92 0 #reduceActionForSwitchToTitle1: 5773313 true) 
+	#(64 0 #reduceActionForSwitchToNameWithoutNumber1: 3070977 true) 
+	#(49 1 #reduceActionFormap1: 1305601 false) 
+	#(52 0 #reduceActionFor_Eols_Line__1: 1358849 false) 
+	#(55 1 #reduceActionForLine12: 1411084 false) 
+	#(55 1 #reduceActionForLine8: 1411080 false) 
+	#(55 1 #reduceActionForLine9: 1411081 false) 
+	#(55 1 #reduceActionForLine6: 1411078 false) 
+	#(55 1 #reduceActionForLine3: 1411075 false) 
+	#(55 1 #reduceActionForLine5: 1411077 false) 
+	#(55 1 #reduceActionForLine11: 1411083 false) 
+	#(55 1 #reduceActionForLine4: 1411076 false) 
+	#(55 1 #reduceActionForLine7: 1411079 false) 
+	#(55 1 #reduceActionForLine10: 1411082 false) 
+	#(55 1 #reduceActionForLine2: 1411074 false) 
+	#(55 1 #reduceActionForLine13: 1411085 false) 
+	#(55 1 #reduceActionForLine14: 1411086 false) 
+	#(55 1 #reduceActionForLine17: 1411089 false) 
+	#(55 1 #reduceActionForLine18: 1411090 false) 
+	#(55 1 #reduceActionForLine15: 1411087 false) 
+	#(55 1 #reduceActionForLine16: 1411088 false) 
+	#(55 1 #reduceActionForLine1: 1411073 false) 
+	#(60 0 #reduceActionForSwitchToNameWithoutSemicolon1: 2520065 true) 
+	#(57 2 #reduceActionForPresentationAnnotation1: 1970177 false) 
+	#(83 0 #reduceActionForSwitchToUrl1: 4890625 true) 
+	#(49 2 #reduceActionFormap1: 1305602 false) 
+	#(50 2 #reduceActionForLines1: 1338369 false) 
+	#(70 2 #reduceActionForElement1: 3584001 false) 
+	#(54 1 #liftFirstValue: 1400833 false) 
+	#(53 2 #liftFirstValue: 1376257 false) 
+	#(50 3 #reduceActionForLines2: 1338370 false) 
+	#(52 2 #reduceActionFor_Eols_Line__2: 1358850 false) 
+	#(70 3 #reduceActionForElement2: 3584002 false) 
+	#(71 1 #reduceActionForExtendableComponent1: 3662849 false) 
+	#(85 3 #reduceActionForElement2: 5015553 false) 
+	#(80 3 #reduceActionForEvolution1: 4458497 false) 
+	#(84 3 #reduceActionForElement2: 4933633 false) 
+	#(65 3 #reduceActionForPipeline1: 3142657 false) 
+	#(58 3 #reduceActionForPresentationStyle1: 2060289 false) 
+	#(54 2 #liftFirstValue: 1400834 false) 
+	#(78 0 #reduceActionFor______comma__Coords__occurrence___1: 4179969 false) 
+	#(76 4 #reduceActionForAnnotation2: 4084738 false) 
+	#(88 4 #reduceActionForAttitude1: 5292033 false) 
+	#(88 4 #reduceActionForAttitude1: 5292034 false) 
+	#(88 4 #reduceActionForAttitude1: 5292035 false) 
+	#(88 4 #reduceActionForAttitude1: 5292036 false) 
+	#(88 4 #reduceActionForAttitude1: 5292037 false) 
+	#(88 4 #reduceActionForAttitude1: 5292038 false) 
+	#(51 2 #reduceActionFor_Eols_Line_1: 1358849 false) 
+	#(61 4 #reduceActionForAnchor1: 2597889 false) 
+	#(74 0 #reduceActionForDecorator__decorator__1: 3919873 false) 
+	#(79 4 #reduceActionForNote1: 4356097 false) 
+	#(81 4 #reduceActionForMethod3: 4633603 false) 
+	#(81 4 #reduceActionForMethod3: 4633601 false) 
+	#(81 4 #reduceActionForMethod3: 4633602 false) 
+	#(90 4 #reduceActionForTitle1: 5632001 false) 
+	#(87 0 #reduceActionForSwitchToName1: 5227521 false) 
+	#(62 4 #reduceActionForCoords1: 2685953 false) 
+	#(71 3 #reduceActionForExtendableComponent2: 3662850 false) 
+	#(73 1 #reduceActionForDecorators1: 3905537 false) 
+	#(80 5 #reduceActionForEvolution2: 4458498 false) 
+	#(79 5 #reduceActionForNote2: 4356098 false) 
+	#(59 5 #reduceActionForLink5: 2140165 false) 
+	#(59 5 #reduceActionForLink5: 2140163 false) 
+	#(59 5 #reduceActionForLink5: 2140161 false) 
+	#(59 5 #reduceActionForLink5: 2140167 false) 
+	#(78 2 #reduceActionFor______comma__Coords__occurrence___2: 4179970 false) 
+	#(63 6 #reduceActionForEvolve1: 2801665 false) 
+	#(74 2 #reduceActionForDecorator__decorator__2: 3919874 false) 
+	#(59 6 #reduceActionForLink11: 2140171 false) 
+	#(59 6 #reduceActionForLink11: 2140170 false) 
+	#(59 6 #reduceActionForLink11: 2140169 false) 
+	#(77 2 #reduceActionFor______comma__Coords__occurrence__1: 4179969 false) 
+	#(62 6 #reduceActionForCoords2: 2685954 false) 
+	#(82 7 #reduceActionForSubmap1: 4766721 false) 
+	#(71 5 #reduceActionForExtendableComponent4: 3662852 false) 
+	#(71 5 #reduceActionForExtendableComponent3: 3662851 false) 
+	#(80 7 #reduceActionForEvolution3: 4458499 false) 
+	#(56 7 #reduceActionForPresentationYAxis1: 1837057 false) 
+	#(59 7 #reduceActionForLink6: 2140166 false) 
+	#(59 7 #reduceActionForLink6: 2140164 false) 
+	#(59 7 #reduceActionForLink6: 2140162 false) 
+	#(59 7 #reduceActionForLink6: 2140168 false) 
+	#(76 8 #reduceActionForAnnotation1: 4084737 false) 
+	#(63 8 #reduceActionForEvolve2: 2801666 false) 
+	#(75 3 #reduceActionForDecorator1: 3946497 false) 
+	#(75 3 #reduceActionForDecorator1: 3946498 false) 
+	#(75 3 #reduceActionForDecorator1: 3946501 false) 
+	#(75 3 #reduceActionForDecorator1: 3946500 false) 
+	#(75 3 #reduceActionForDecorator1: 3946499 false) 
+	#(65 8 #reduceActionForPipeline3: 3142659 false) 
+	#(69 1 #reduceActionForInsidePipeline2: 3524610 false) 
+	#(68 0 #reduceActionFor______comma__Coords__occurrence___1: 3491841 false) 
+	#(69 1 #reduceActionForInsidePipeline1: 3524609 false) 
+	#(86 8 #reduceActionForUrl1: 5102593 false) 
+	#(71 7 #reduceActionForExtendableComponent5: 3662853 false) 
+	#(80 9 #reduceActionForEvolution4: 4458500 false) 
+	#(65 9 #reduceActionForPipeline2: 3142658 false) 
+	#(65 9 #reduceActionForPipeline4: 3142660 false) 
+	#(66 2 #reduceActionForInsidePipelines1: 3449857 false) 
+	#(89 9 #reduceActionForManyCoords1: 5465089 false) 
+	#(63 10 #reduceActionForEvolve3: 2801667 false) 
+	#(66 3 #reduceActionForInsidePipelines3: 3449859 false) 
+	#(66 3 #reduceActionForInsidePipelines1: 3449858 false) 
+	#(68 2 #reduceActionFor______comma__Coords__occurrence___2: 3491842 false) 
+	#(72 6 #reduceActionForLabel1: 3806209 false) 
+	#(66 4 #reduceActionForInsidePipelines3: 3449860 false) 
+	#(67 2 #reduceActionFor_Eols_Line_1: 3491841 false) 
+	#(63 12 #reduceActionForEvolve4: 2801668 false)
 	).
 ]
 
@@ -535,45 +535,45 @@ GtWardleyMapParser class >> transitionTable [
 #[1 0 6 0 22 2 97 0 24 2 101 0 91 0 6 0 94] 
 #[1 0 6 0 22 2 105 0 24 2 109 0 91 0 6 0 94] 
 #[1 2 113 0 1 2 117 0 2 2 121 0 3] 
-#[1 2 125 0 10 0 10 0 13 2 129 0 77 2 133 0 87] 
+#[1 2 125 0 10 0 238 0 13 2 129 0 77 2 133 0 87] 
 #[0 2 137 0 18] 
-#[0 0 238 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
+#[0 0 242 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
 #[0 2 141 0 10] 
 #[1 0 6 0 5 2 145 0 91] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 35 2 149 0 73 2 53 0 74 0 214 0 94] 
 #[0 2 153 0 11] 
-#[1 0 242 0 15 0 242 0 22 2 157 0 34 2 161 0 35 2 165 0 72 0 242 0 94] 
-#[1 2 169 0 4 0 246 0 15 0 246 0 22 0 246 0 34 0 246 0 35 2 173 0 75 0 246 0 94] 
-#[1 2 177 0 11 0 250 0 22 0 250 0 94] 
-#[0 0 254 0 22 0 94] 
+#[1 0 246 0 15 0 246 0 22 2 157 0 34 2 161 0 35 2 165 0 72 0 246 0 94] 
+#[1 2 169 0 4 0 250 0 15 0 250 0 22 0 250 0 34 0 250 0 35 2 173 0 75 0 250 0 94] 
+#[1 2 177 0 11 0 254 0 22 0 254 0 94] 
+#[0 1 2 0 22 0 94] 
 #[0 2 181 0 18] 
 #[0 2 185 0 14] 
 #[0 2 189 0 46] 
 #[0 2 193 0 11] 
 #[0 2 197 0 23] 
-#[0 1 2 0 22 0 94] 
-#[0 2 201 0 23] 
 #[0 1 6 0 22 0 94] 
-#[0 2 205 0 23] 
+#[0 2 201 0 23] 
 #[0 1 10 0 22 0 94] 
-#[0 2 209 0 23] 
+#[0 2 205 0 23] 
 #[0 1 14 0 22 0 94] 
+#[0 2 209 0 23] 
+#[0 1 18 0 22 0 94] 
 #[0 2 213 0 93] 
 #[0 2 217 0 93] 
 #[0 2 221 0 93] 
 #[1 0 6 0 12 2 225 0 62 0 149 0 91] 
-#[0 1 18 0 10 0 13] 
+#[0 1 22 0 10 0 13] 
 #[0 2 229 0 13] 
 #[0 2 233 0 13] 
 #[0 2 237 0 18] 
 #[0 2 241 0 5] 
-#[1 1 22 0 15 1 22 0 22 2 161 0 35 2 245 0 72 1 22 0 94] 
+#[1 1 26 0 15 1 26 0 22 2 161 0 35 2 245 0 72 1 26 0 94] 
 #[1 0 6 0 19 2 249 0 91] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 35 2 253 0 73 2 53 0 74 0 214 0 94] 
 #[0 3 1 0 12] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 5 0 73 2 53 0 74 0 214 0 94] 
 #[1 3 9 0 28 3 13 0 29 3 17 0 31 3 21 0 36 3 25 0 38] 
-#[0 1 26 0 4 0 15 0 22 0 34 0 35 0 94] 
+#[0 1 30 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 3 29 0 93] 
 #[0 3 33 0 10] 
 #[0 3 37 0 22] 
@@ -583,48 +583,48 @@ GtWardleyMapParser class >> transitionTable [
 #[1 0 6 0 22 3 53 0 91 0 6 0 94] 
 #[1 0 6 0 22 3 57 0 91 0 6 0 94] 
 #[1 0 6 0 22 3 61 0 91 0 6 0 94] 
-#[0 1 30 0 22 0 94] 
 #[0 1 34 0 22 0 94] 
 #[0 1 38 0 22 0 94] 
-#[0 1 42 0 10 0 13] 
+#[0 1 42 0 22 0 94] 
+#[0 1 46 0 10 0 13] 
 #[0 3 65 0 93] 
-#[0 1 46 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
+#[0 1 50 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
 #[0 3 69 0 10] 
-#[0 1 50 0 22 0 94] 
+#[0 1 54 0 22 0 94] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 73 0 73 2 53 0 74 0 214 0 94] 
 #[0 3 77 0 19] 
-#[1 1 54 0 15 1 54 0 22 2 161 0 35 3 81 0 72 1 54 0 94] 
+#[1 1 58 0 15 1 58 0 22 2 161 0 35 3 81 0 72 1 58 0 94] 
 #[0 3 85 0 18] 
-#[0 1 58 0 15 0 22 0 94] 
+#[0 1 62 0 15 0 22 0 94] 
 #[0 3 89 0 5] 
 #[0 3 93 0 5] 
 #[0 3 97 0 5] 
 #[0 3 101 0 5] 
 #[0 3 105 0 5] 
-#[1 3 109 0 11 1 62 0 22 1 62 0 94] 
+#[1 3 109 0 11 1 66 0 22 1 66 0 94] 
 #[0 3 113 0 18] 
 #[1 3 117 0 15 0 6 0 22 0 10 0 30 0 18 0 33 3 121 0 53 3 125 0 63 0 73 0 64 3 129 0 66 3 133 0 69 3 137 0 70 3 141 0 87 0 129 0 91] 
 #[0 3 145 0 13] 
-#[0 1 66 0 22 0 94] 
 #[0 1 70 0 22 0 94] 
 #[0 1 74 0 22 0 94] 
 #[0 1 78 0 22 0 94] 
 #[0 1 82 0 22 0 94] 
 #[0 1 86 0 22 0 94] 
+#[0 1 90 0 22 0 94] 
 #[0 3 149 0 18] 
-#[0 1 90 0 15 0 22 0 94] 
+#[0 1 94 0 15 0 22 0 94] 
 #[0 3 153 0 18] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 157 0 73 2 53 0 74 0 214 0 94] 
 #[0 3 161 0 10] 
-#[0 1 94 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 98 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 102 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 106 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 110 0 4 0 15 0 22 0 34 0 35 0 94] 
+#[0 1 114 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 3 165 0 93] 
 #[0 3 169 0 13] 
-#[0 1 114 0 22 0 94] 
-#[1 1 118 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 173 0 69 3 137 0 70 3 141 0 87] 
+#[0 1 118 0 22 0 94] 
+#[1 0 238 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 173 0 69 3 137 0 70 3 141 0 87] 
 #[0 1 122 0 15 0 22] 
 #[0 3 177 0 15] 
 #[1 1 126 0 15 1 126 0 22 3 181 0 68] 
@@ -644,11 +644,11 @@ GtWardleyMapParser class >> transitionTable [
 #[1 1 162 0 15 1 162 0 22 2 161 0 35 3 209 0 72 1 162 0 94] 
 #[0 3 213 0 13] 
 #[1 1 166 0 15 0 6 0 22 3 217 0 53 3 205 0 67 0 129 0 91] 
-#[1 1 170 0 15 1 118 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
+#[1 1 170 0 15 0 238 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
 #[0 1 174 0 15 0 22] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 225 0 73 2 53 0 74 0 214 0 94] 
 #[0 1 178 0 4 0 15 0 22 0 94] 
-#[1 1 182 0 15 1 118 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
+#[1 1 182 0 15 0 238 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
 #[0 1 186 0 15 0 22] 
 #[0 1 190 0 15 0 22 0 94]
 	).
@@ -1380,6 +1380,12 @@ GtWardleyMapParser >> reduceActionForSubmap1: nodes [
 { #category : #'generated-reduction actions' }
 GtWardleyMapParser >> reduceActionForSwitchToDefault1: nodes [
 	self scope: #default.
+	^ nil
+]
+
+{ #category : #'generated-reduction actions' }
+GtWardleyMapParser >> reduceActionForSwitchToName1: nodes [
+	self scope: #name.
 	^ nil
 ]
 
