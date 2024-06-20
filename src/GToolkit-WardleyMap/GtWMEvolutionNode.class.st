@@ -88,6 +88,14 @@ GtWMEvolutionNode >> line4: aSmaCCToken [
 	line4 := aSmaCCToken
 ]
 
+{ #category : #accessing }
+GtWMEvolutionNode >> sections [
+	^ { self line1 source.
+		self line2 source.
+		self line3 source.
+		self line4 source }
+]
+
 { #category : #generated }
 GtWMEvolutionNode >> tokenVariables [
 	^ #(#evolutionToken #line1 #line2 #line3 #line4)

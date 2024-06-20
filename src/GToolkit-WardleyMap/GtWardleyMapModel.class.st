@@ -475,11 +475,7 @@ GtWardleyMapModel >> menuItemMapVisibilityLabel [
 { #category : #'api - context menu' }
 GtWardleyMapModel >> menuItemSectionsVisibilityButton [
 	<wardleyContextMenuItem: 6>
-	^ GtWardleyMapNodeButtonWithLabelMenuItem new
-		label: 'Switch sections';
-		action: [ :aContextMenuItem :aBrButton :aBrButtonModel :anEvent | 
-			aContextMenuItem wardleyMapViewModel isEvolutionAxisVisible: 
-				aContextMenuItem wardleyMapViewModel isEvolutionAxisVisible not ]
+	^ GtWardleyMapEvolutionAxisVisiblityMenuItem new
 ]
 
 { #category : #'api - context menu' }

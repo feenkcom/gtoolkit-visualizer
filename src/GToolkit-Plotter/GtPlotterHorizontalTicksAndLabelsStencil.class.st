@@ -34,14 +34,16 @@ GtPlotterHorizontalTicksAndLabelsStencil >> buildDefault [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> initialize [
-	super initialize.
-	eventHandler := GtPlotterScatterFocusXHandler new
-]
-
-{ #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 	^ GtPlotterHorizontalTickLabelsElement new
+		labelElement: [ :aGtPlotterScaleContext |
+			BlTextElement new
+				in: [:e | e userData 
+					at: #originalValue
+					put: aGtPlotterScaleContext originalValue ];
+				addEventHandler: scatterChart xEventHandler;
+				text: (aGtPlotterScaleContext scale 
+					formattedTick: aGtPlotterScaleContext originalValue) asRopedText ];
 		scale: scatterChart scaleX;
 		labelFormat: scatterChart labelFormatX;
 		constraintsDo: [ :c | c vertical fitContent ];
@@ -51,7 +53,6 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
-	eventHandler scatterChart: scatterChart.
 	^ GtPlotterHorizontalTicksElement new
 		scale: scatterChart scaleX;
 		tickElement: [ :aGtPlotterContext |
@@ -59,7 +60,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
 				in: [:e | e userData 
 					at: #originalValue
 					put: aGtPlotterContext originalValue ];
-				addEventHandler: eventHandler;
+				addEventHandler: scatterChart xEventHandler;
 				width: 2;
 				background: (Color gray alpha: 0.8);
 				yourself ];

@@ -11,10 +11,5 @@ GtPlotterScatterFocusYHandler >> dataValueFrom: each [
 
 { #category : #accessing }
 GtPlotterScatterFocusYHandler >> newLineFrom: fromElement to: toElement [
-	| line |
-	line := lineStencil create.
-	line 
-		fromAnchor: (BlElementCenterRightAnchor  element: fromElement);
-		toAnchor: (BlElementCenterLeftAnchor  element: toElement).
-	^ line
+	^ self newHorizontalLineFrom: fromElement to: toElement
 ]
