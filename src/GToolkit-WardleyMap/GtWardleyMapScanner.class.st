@@ -418,7 +418,7 @@ GtWardleyMapScanner >> scan8 [
 { #category : #generated }
 GtWardleyMapScanner >> scanForToken [
 	scope == #nameWithoutSemicolon ifTrue: [ ^ self scanForTokenX1 ].
-	scope == #nameWithoutNumber ifTrue: [ ^ self scanForTokenX3 ].
+	scope == #nameWithoutNumberAndArrow ifTrue: [ ^ self scanForTokenX3 ].
 	scope == #title ifTrue: [ ^ self scanForTokenX2 ].
 	scope == #default ifTrue: [ ^ self scan1 ].
 	scope == #name

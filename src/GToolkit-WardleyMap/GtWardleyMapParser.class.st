@@ -17,7 +17,7 @@ GtWardleyMapParser class >> ambiguousTransitions [
 
 { #category : #'generated-accessing' }
 GtWardleyMapParser class >> cacheId [
-	^'2024-06-20T01:25:16.626276-04:00'
+	^'2024-06-20T01:29:59.530476-04:00'
 ]
 
 { #category : #generated }
@@ -33,13 +33,13 @@ GtWardleyMapParser class >> definitionComment [
 %excludes name;title <titleLabel>
 	: [^\s] [^\r\n]*
 	;
-title name nameWithoutNumber nameWithoutSemicolon default <whitespace>
+title name nameWithoutNumberAndArrow nameWithoutSemicolon default <whitespace>
 	: [ \t\v]+
 	;
 <float>
 	: \-? \d+ (\. \d+)?
 	;
-nameWithoutNumber <nameWithoutNumber>
+nameWithoutNumberAndArrow <nameWithoutNumberAndArrow>
 	: [^\s]+ (\s+ ( [^\s\d-][^\s\>]* | -[^\>][^\s]* ) )*
 	;
 name default <nodeName>
@@ -51,7 +51,7 @@ url <url>
 nameWithoutSemicolon default <comment>
 	: \/\/ [^\r\n]*
 	;
-title name nameWithoutNumber nameWithoutSemicolon default  <eol>
+title name nameWithoutNumberAndArrow nameWithoutSemicolon default  <eol>
 	: [\r\n]+
 	;
 nameWithoutSemicolon <nameWithoutSemicolon>
@@ -181,10 +181,10 @@ Coords
 	: SwitchToDefault ""["" 'left' (<float> 'visibility' "","" 'comma')? <float> 'evolution' ""]"" 'right' {{}}
 	;
 Evolve
-	: SwitchToNameWithoutNumber <evolve> 'evolveToken' SwitchToDefault <nameWithoutNumber> 'name' ( SwitchToNameWithoutNumber ""->"" 'arrow' SwitchToDefault <nameWithoutNumber> 'evolvedName' )? <float> 'evolution' Decorators (Label 'label' Decorators )?{{}}
+	: SwitchToNameWithoutNumberAndArrow <evolve> 'evolveToken' SwitchToDefault <nameWithoutNumberAndArrow> 'name' ( SwitchToNameWithoutNumberAndArrow ""->"" 'arrow' SwitchToDefault <nameWithoutNumberAndArrow> 'evolvedName' )? <float> 'evolution' Decorators (Label 'label' Decorators )?{{}}
 	;
-SwitchToNameWithoutNumber
-	: [self scope: #nameWithoutNumber. nil]
+SwitchToNameWithoutNumberAndArrow
+	: [self scope: #nameWithoutNumberAndArrow. nil]
 	;
 Pipeline
 	: SwitchToName <pipeline> 'pipelineToken' <name> 'name' (SwitchToDefault ""["" 'left' <float> 'evolution1' "","" 'comma' <float> 'evolution2' ""]"" 'right')? {{}}
@@ -266,117 +266,116 @@ SwitchToTitle
 { #category : #generated }
 GtWardleyMapParser class >> reduceTable [
 ^#(
-	#(91 0 #reduceActionForSwitchToDefault1: 5722113 true) 
-	#(87 0 #reduceActionForSwitchToName1: 5227521 true) 
-	#(92 0 #reduceActionForSwitchToTitle1: 5773313 true) 
-	#(64 0 #reduceActionForSwitchToNameWithoutNumber1: 3070977 true) 
-	#(49 1 #reduceActionFormap1: 1305601 false) 
-	#(52 0 #reduceActionFor_Eols_Line__1: 1358849 false) 
-	#(55 1 #reduceActionForLine12: 1411084 false) 
-	#(55 1 #reduceActionForLine8: 1411080 false) 
-	#(55 1 #reduceActionForLine9: 1411081 false) 
-	#(55 1 #reduceActionForLine6: 1411078 false) 
-	#(55 1 #reduceActionForLine3: 1411075 false) 
-	#(55 1 #reduceActionForLine5: 1411077 false) 
-	#(55 1 #reduceActionForLine11: 1411083 false) 
-	#(55 1 #reduceActionForLine4: 1411076 false) 
-	#(55 1 #reduceActionForLine7: 1411079 false) 
-	#(55 1 #reduceActionForLine10: 1411082 false) 
-	#(55 1 #reduceActionForLine2: 1411074 false) 
-	#(55 1 #reduceActionForLine13: 1411085 false) 
-	#(55 1 #reduceActionForLine14: 1411086 false) 
-	#(55 1 #reduceActionForLine17: 1411089 false) 
-	#(55 1 #reduceActionForLine18: 1411090 false) 
-	#(55 1 #reduceActionForLine15: 1411087 false) 
-	#(55 1 #reduceActionForLine16: 1411088 false) 
-	#(55 1 #reduceActionForLine1: 1411073 false) 
-	#(60 0 #reduceActionForSwitchToNameWithoutSemicolon1: 2520065 true) 
-	#(57 2 #reduceActionForPresentationAnnotation1: 1970177 false) 
-	#(83 0 #reduceActionForSwitchToUrl1: 4890625 true) 
-	#(49 2 #reduceActionFormap1: 1305602 false) 
-	#(50 2 #reduceActionForLines1: 1338369 false) 
-	#(70 2 #reduceActionForElement1: 3584001 false) 
-	#(54 1 #liftFirstValue: 1400833 false) 
-	#(53 2 #liftFirstValue: 1376257 false) 
-	#(50 3 #reduceActionForLines2: 1338370 false) 
-	#(52 2 #reduceActionFor_Eols_Line__2: 1358850 false) 
-	#(70 3 #reduceActionForElement2: 3584002 false) 
-	#(71 1 #reduceActionForExtendableComponent1: 3662849 false) 
-	#(85 3 #reduceActionForElement2: 5015553 false) 
-	#(80 3 #reduceActionForEvolution1: 4458497 false) 
-	#(84 3 #reduceActionForElement2: 4933633 false) 
-	#(65 3 #reduceActionForPipeline1: 3142657 false) 
-	#(58 3 #reduceActionForPresentationStyle1: 2060289 false) 
-	#(54 2 #liftFirstValue: 1400834 false) 
-	#(78 0 #reduceActionFor______comma__Coords__occurrence___1: 4179969 false) 
-	#(76 4 #reduceActionForAnnotation2: 4084738 false) 
-	#(88 4 #reduceActionForAttitude1: 5292033 false) 
-	#(88 4 #reduceActionForAttitude1: 5292034 false) 
-	#(88 4 #reduceActionForAttitude1: 5292035 false) 
-	#(88 4 #reduceActionForAttitude1: 5292036 false) 
-	#(88 4 #reduceActionForAttitude1: 5292037 false) 
-	#(88 4 #reduceActionForAttitude1: 5292038 false) 
-	#(51 2 #reduceActionFor_Eols_Line_1: 1358849 false) 
-	#(61 4 #reduceActionForAnchor1: 2597889 false) 
-	#(74 0 #reduceActionForDecorator__decorator__1: 3919873 false) 
-	#(79 4 #reduceActionForNote1: 4356097 false) 
-	#(81 4 #reduceActionForMethod3: 4633603 false) 
-	#(81 4 #reduceActionForMethod3: 4633601 false) 
-	#(81 4 #reduceActionForMethod3: 4633602 false) 
-	#(90 4 #reduceActionForTitle1: 5632001 false) 
-	#(87 0 #reduceActionForSwitchToName1: 5227521 false) 
-	#(62 4 #reduceActionForCoords1: 2685953 false) 
-	#(71 3 #reduceActionForExtendableComponent2: 3662850 false) 
-	#(73 1 #reduceActionForDecorators1: 3905537 false) 
-	#(80 5 #reduceActionForEvolution2: 4458498 false) 
-	#(79 5 #reduceActionForNote2: 4356098 false) 
-	#(59 5 #reduceActionForLink5: 2140165 false) 
-	#(59 5 #reduceActionForLink5: 2140163 false) 
-	#(59 5 #reduceActionForLink5: 2140161 false) 
-	#(59 5 #reduceActionForLink5: 2140167 false) 
-	#(78 2 #reduceActionFor______comma__Coords__occurrence___2: 4179970 false) 
-	#(63 6 #reduceActionForEvolve1: 2801665 false) 
-	#(74 2 #reduceActionForDecorator__decorator__2: 3919874 false) 
-	#(59 6 #reduceActionForLink11: 2140171 false) 
-	#(59 6 #reduceActionForLink11: 2140170 false) 
-	#(59 6 #reduceActionForLink11: 2140169 false) 
-	#(77 2 #reduceActionFor______comma__Coords__occurrence__1: 4179969 false) 
-	#(62 6 #reduceActionForCoords2: 2685954 false) 
-	#(82 7 #reduceActionForSubmap1: 4766721 false) 
-	#(71 5 #reduceActionForExtendableComponent4: 3662852 false) 
-	#(71 5 #reduceActionForExtendableComponent3: 3662851 false) 
-	#(80 7 #reduceActionForEvolution3: 4458499 false) 
-	#(56 7 #reduceActionForPresentationYAxis1: 1837057 false) 
-	#(59 7 #reduceActionForLink6: 2140166 false) 
-	#(59 7 #reduceActionForLink6: 2140164 false) 
-	#(59 7 #reduceActionForLink6: 2140162 false) 
-	#(59 7 #reduceActionForLink6: 2140168 false) 
-	#(76 8 #reduceActionForAnnotation1: 4084737 false) 
-	#(63 8 #reduceActionForEvolve2: 2801666 false) 
-	#(75 3 #reduceActionForDecorator1: 3946497 false) 
-	#(75 3 #reduceActionForDecorator1: 3946498 false) 
-	#(75 3 #reduceActionForDecorator1: 3946501 false) 
-	#(75 3 #reduceActionForDecorator1: 3946500 false) 
-	#(75 3 #reduceActionForDecorator1: 3946499 false) 
-	#(65 8 #reduceActionForPipeline3: 3142659 false) 
-	#(69 1 #reduceActionForInsidePipeline2: 3524610 false) 
-	#(68 0 #reduceActionFor______comma__Coords__occurrence___1: 3491841 false) 
-	#(69 1 #reduceActionForInsidePipeline1: 3524609 false) 
-	#(86 8 #reduceActionForUrl1: 5102593 false) 
-	#(71 7 #reduceActionForExtendableComponent5: 3662853 false) 
-	#(80 9 #reduceActionForEvolution4: 4458500 false) 
-	#(65 9 #reduceActionForPipeline2: 3142658 false) 
-	#(65 9 #reduceActionForPipeline4: 3142660 false) 
-	#(66 2 #reduceActionForInsidePipelines1: 3449857 false) 
-	#(89 9 #reduceActionForManyCoords1: 5465089 false) 
-	#(63 10 #reduceActionForEvolve3: 2801667 false) 
-	#(66 3 #reduceActionForInsidePipelines3: 3449859 false) 
-	#(66 3 #reduceActionForInsidePipelines1: 3449858 false) 
-	#(68 2 #reduceActionFor______comma__Coords__occurrence___2: 3491842 false) 
-	#(72 6 #reduceActionForLabel1: 3806209 false) 
-	#(66 4 #reduceActionForInsidePipelines3: 3449860 false) 
-	#(67 2 #reduceActionFor_Eols_Line_1: 3491841 false) 
-	#(63 12 #reduceActionForEvolve4: 2801668 false)
+	#(91 0 #reduceActionForSwitchToDefault1: 5804033 true) 
+	#(87 0 #nil 5309441 false) 
+	#(92 0 #reduceActionForSwitchToTitle1: 5855233 true) 
+	#(64 0 #reduceActionForSwitchToNameWithoutNumberAndArrow1: 3136513 true) 
+	#(49 1 #reduceActionFormap1: 1338369 false) 
+	#(52 0 #reduceActionFor_Eols_Line__1: 1391617 false) 
+	#(55 1 #reduceActionForLine12: 1443852 false) 
+	#(55 1 #reduceActionForLine8: 1443848 false) 
+	#(55 1 #reduceActionForLine9: 1443849 false) 
+	#(55 1 #reduceActionForLine6: 1443846 false) 
+	#(55 1 #reduceActionForLine3: 1443843 false) 
+	#(55 1 #reduceActionForLine5: 1443845 false) 
+	#(55 1 #reduceActionForLine11: 1443851 false) 
+	#(55 1 #reduceActionForLine4: 1443844 false) 
+	#(55 1 #reduceActionForLine7: 1443847 false) 
+	#(55 1 #reduceActionForLine10: 1443850 false) 
+	#(55 1 #reduceActionForLine2: 1443842 false) 
+	#(55 1 #reduceActionForLine13: 1443853 false) 
+	#(55 1 #reduceActionForLine14: 1443854 false) 
+	#(55 1 #reduceActionForLine17: 1443857 false) 
+	#(55 1 #reduceActionForLine18: 1443858 false) 
+	#(55 1 #reduceActionForLine15: 1443855 false) 
+	#(55 1 #reduceActionForLine16: 1443856 false) 
+	#(55 1 #reduceActionForLine1: 1443841 false) 
+	#(60 0 #reduceActionForSwitchToNameWithoutSemicolon1: 2552833 true) 
+	#(57 2 #reduceActionForPresentationAnnotation1: 2002945 false) 
+	#(83 0 #reduceActionForSwitchToUrl1: 4972545 true) 
+	#(49 2 #reduceActionFormap1: 1338370 false) 
+	#(50 2 #reduceActionForLines1: 1371137 false) 
+	#(70 2 #reduceActionForElement1: 3665921 false) 
+	#(54 1 #liftFirstValue: 1433601 false) 
+	#(53 2 #liftFirstValue: 1409025 false) 
+	#(50 3 #reduceActionForLines2: 1371138 false) 
+	#(52 2 #reduceActionFor_Eols_Line__2: 1391618 false) 
+	#(70 3 #reduceActionForElement2: 3665922 false) 
+	#(71 1 #reduceActionForExtendableComponent1: 3744769 false) 
+	#(85 3 #reduceActionForElement2: 5097473 false) 
+	#(80 3 #reduceActionForEvolution1: 4540417 false) 
+	#(84 3 #reduceActionForElement2: 5015553 false) 
+	#(65 3 #reduceActionForPipeline1: 3224577 false) 
+	#(58 3 #reduceActionForPresentationStyle1: 2093057 false) 
+	#(54 2 #liftFirstValue: 1433602 false) 
+	#(78 0 #reduceActionFor______comma__Coords__occurrence___1: 4261889 false) 
+	#(76 4 #reduceActionForAnnotation2: 4166658 false) 
+	#(88 4 #reduceActionForAttitude1: 5373953 false) 
+	#(88 4 #reduceActionForAttitude1: 5373954 false) 
+	#(88 4 #reduceActionForAttitude1: 5373955 false) 
+	#(88 4 #reduceActionForAttitude1: 5373956 false) 
+	#(88 4 #reduceActionForAttitude1: 5373957 false) 
+	#(88 4 #reduceActionForAttitude1: 5373958 false) 
+	#(51 2 #reduceActionFor_Eols_Line_1: 1391617 false) 
+	#(61 4 #reduceActionForAnchor1: 2630657 false) 
+	#(74 0 #reduceActionForDecorator__decorator__1: 4001793 false) 
+	#(79 4 #reduceActionForNote1: 4438017 false) 
+	#(81 4 #reduceActionForMethod3: 4715523 false) 
+	#(81 4 #reduceActionForMethod3: 4715521 false) 
+	#(81 4 #reduceActionForMethod3: 4715522 false) 
+	#(90 4 #reduceActionForTitle1: 5713921 false) 
+	#(62 4 #reduceActionForCoords1: 2718721 false) 
+	#(71 3 #reduceActionForExtendableComponent2: 3744770 false) 
+	#(73 1 #reduceActionForDecorators1: 3987457 false) 
+	#(80 5 #reduceActionForEvolution2: 4540418 false) 
+	#(79 5 #reduceActionForNote2: 4438018 false) 
+	#(59 5 #reduceActionForLink5: 2172933 false) 
+	#(59 5 #reduceActionForLink5: 2172931 false) 
+	#(59 5 #reduceActionForLink5: 2172929 false) 
+	#(59 5 #reduceActionForLink5: 2172935 false) 
+	#(78 2 #reduceActionFor______comma__Coords__occurrence___2: 4261890 false) 
+	#(63 6 #reduceActionForEvolve1: 2834433 false) 
+	#(74 2 #reduceActionForDecorator__decorator__2: 4001794 false) 
+	#(59 6 #reduceActionForLink11: 2172939 false) 
+	#(59 6 #reduceActionForLink11: 2172938 false) 
+	#(59 6 #reduceActionForLink11: 2172937 false) 
+	#(77 2 #reduceActionFor______comma__Coords__occurrence__1: 4261889 false) 
+	#(62 6 #reduceActionForCoords2: 2718722 false) 
+	#(82 7 #reduceActionForSubmap1: 4848641 false) 
+	#(71 5 #reduceActionForExtendableComponent4: 3744772 false) 
+	#(71 5 #reduceActionForExtendableComponent3: 3744771 false) 
+	#(80 7 #reduceActionForEvolution3: 4540419 false) 
+	#(56 7 #reduceActionForPresentationYAxis1: 1869825 false) 
+	#(59 7 #reduceActionForLink6: 2172934 false) 
+	#(59 7 #reduceActionForLink6: 2172932 false) 
+	#(59 7 #reduceActionForLink6: 2172930 false) 
+	#(59 7 #reduceActionForLink6: 2172936 false) 
+	#(76 8 #reduceActionForAnnotation1: 4166657 false) 
+	#(63 8 #reduceActionForEvolve2: 2834434 false) 
+	#(75 3 #reduceActionForDecorator1: 4028417 false) 
+	#(75 3 #reduceActionForDecorator1: 4028418 false) 
+	#(75 3 #reduceActionForDecorator1: 4028421 false) 
+	#(75 3 #reduceActionForDecorator1: 4028420 false) 
+	#(75 3 #reduceActionForDecorator1: 4028419 false) 
+	#(65 8 #reduceActionForPipeline3: 3224579 false) 
+	#(69 1 #reduceActionForInsidePipeline2: 3606530 false) 
+	#(68 0 #reduceActionFor______comma__Coords__occurrence___1: 3573761 false) 
+	#(69 1 #reduceActionForInsidePipeline1: 3606529 false) 
+	#(86 8 #reduceActionForUrl1: 5184513 false) 
+	#(71 7 #reduceActionForExtendableComponent5: 3744773 false) 
+	#(80 9 #reduceActionForEvolution4: 4540420 false) 
+	#(65 9 #reduceActionForPipeline2: 3224578 false) 
+	#(65 9 #reduceActionForPipeline4: 3224580 false) 
+	#(66 2 #reduceActionForInsidePipelines1: 3531777 false) 
+	#(89 9 #reduceActionForManyCoords1: 5547009 false) 
+	#(63 10 #reduceActionForEvolve3: 2834435 false) 
+	#(66 3 #reduceActionForInsidePipelines3: 3531779 false) 
+	#(66 3 #reduceActionForInsidePipelines1: 3531778 false) 
+	#(68 2 #reduceActionFor______comma__Coords__occurrence___2: 3573762 false) 
+	#(72 6 #reduceActionForLabel1: 3888129 false) 
+	#(66 4 #reduceActionForInsidePipelines3: 3531780 false) 
+	#(67 2 #reduceActionFor_Eols_Line_1: 3573761 false) 
+	#(63 12 #reduceActionForEvolve4: 2834436 false)
 	).
 ]
 
@@ -392,7 +391,7 @@ GtWardleyMapParser class >> startingStateFormap [
 
 { #category : #generated }
 GtWardleyMapParser class >> symbolNames [
-	^ #('"''<"' '"''<>"' '"''>"' '"("' '")"' '"+''"' '"+<"' '"+<>"' '"+>"' '","' '"->"' '"["' '"]"' '"{"' '"}"' '<titleLabel>' '<whitespace>' '<float>' '<nameWithoutNumber>' '<nodeName>' '<comment>' '<eol>' '<nameWithoutSemicolon>' '<semicolon>' '<anchor>' '<annotation>' '<annotations>' '<build>' '<buy>' '<component>' '<ecosystem>' '<evolution>' '<evolve>' '<inertia>' '<label>' '<market>' '<note>' '<outsource>' '<pioneers>' '<pipeline>' '<settlers>' '<style>' '<submap>' '<title>' '<townplanners>' '<url>' '<yAxis>' 'B e g i n' 'map' 'Lines' '(Eols Line)' '(Eols Line)*' 'Eols' '<eol>+' 'Line' 'PresentationYAxis' 'PresentationAnnotation' 'PresentationStyle' 'Link' 'SwitchToNameWithoutSemicolon' 'Anchor' 'Coords' 'Evolve' 'SwitchToNameWithoutNumber' 'Pipeline' 'InsidePipelines' '(Eols InsidePipeline)' '(Eols InsidePipeline)*' 'InsidePipeline' 'Element' 'ExtendableComponent' 'Label' 'Decorators' 'Decorator ''decorator''*' 'Decorator' 'Annotation' '("," ''comma'' Coords ''occurrence'')' '("," ''comma'' Coords ''occurrence'')*' 'Note' 'Evolution' 'Method' 'Submap' 'SwitchToUrl' 'Market' 'Ecosystem' 'Url' 'SwitchToName' 'Attitude' 'ManyCoords' 'Title' 'SwitchToDefault' 'SwitchToTitle' '<name>' 'E O F' 'error')
+	^ #('"''<"' '"''<>"' '"''>"' '"("' '")"' '"+''"' '"+<"' '"+<>"' '"+>"' '","' '"->"' '"["' '"]"' '"{"' '"}"' '<titleLabel>' '<whitespace>' '<float>' '<nameWithoutNumberAndArrow>' '<nodeName>' '<comment>' '<eol>' '<nameWithoutSemicolon>' '<semicolon>' '<anchor>' '<annotation>' '<annotations>' '<build>' '<buy>' '<component>' '<ecosystem>' '<evolution>' '<evolve>' '<inertia>' '<label>' '<market>' '<note>' '<outsource>' '<pioneers>' '<pipeline>' '<settlers>' '<style>' '<submap>' '<title>' '<townplanners>' '<url>' '<yAxis>' 'B e g i n' 'map' 'Lines' '(Eols Line)' '(Eols Line)*' 'Eols' '<eol>+' 'Line' 'PresentationYAxis' 'PresentationAnnotation' 'PresentationStyle' 'Link' 'SwitchToNameWithoutSemicolon' 'Anchor' 'Coords' 'Evolve' 'SwitchToNameWithoutNumberAndArrow' 'Pipeline' 'InsidePipelines' '(Eols InsidePipeline)' '(Eols InsidePipeline)*' 'InsidePipeline' 'Element' 'ExtendableComponent' 'Label' 'Decorators' 'Decorator ''decorator''*' 'Decorator' 'Annotation' '("," ''comma'' Coords ''occurrence'')' '("," ''comma'' Coords ''occurrence'')*' 'Note' 'Evolution' 'Method' 'Submap' 'SwitchToUrl' 'Market' 'Ecosystem' 'Url' 'SwitchToName' 'Attitude' 'ManyCoords' 'Title' 'SwitchToDefault' 'SwitchToTitle' '<name>' 'E O F' 'error')
 ]
 
 { #category : #generated }
@@ -535,45 +534,45 @@ GtWardleyMapParser class >> transitionTable [
 #[1 0 6 0 22 2 97 0 24 2 101 0 91 0 6 0 94] 
 #[1 0 6 0 22 2 105 0 24 2 109 0 91 0 6 0 94] 
 #[1 2 113 0 1 2 117 0 2 2 121 0 3] 
-#[1 2 125 0 10 0 238 0 13 2 129 0 77 2 133 0 87] 
+#[1 2 125 0 10 0 10 0 13 2 129 0 77 2 133 0 87] 
 #[0 2 137 0 18] 
-#[0 0 242 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
+#[0 0 238 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
 #[0 2 141 0 10] 
 #[1 0 6 0 5 2 145 0 91] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 35 2 149 0 73 2 53 0 74 0 214 0 94] 
 #[0 2 153 0 11] 
-#[1 0 246 0 15 0 246 0 22 2 157 0 34 2 161 0 35 2 165 0 72 0 246 0 94] 
-#[1 2 169 0 4 0 250 0 15 0 250 0 22 0 250 0 34 0 250 0 35 2 173 0 75 0 250 0 94] 
-#[1 2 177 0 11 0 254 0 22 0 254 0 94] 
-#[0 1 2 0 22 0 94] 
+#[1 0 242 0 15 0 242 0 22 2 157 0 34 2 161 0 35 2 165 0 72 0 242 0 94] 
+#[1 2 169 0 4 0 246 0 15 0 246 0 22 0 246 0 34 0 246 0 35 2 173 0 75 0 246 0 94] 
+#[1 2 177 0 11 0 250 0 22 0 250 0 94] 
+#[0 0 254 0 22 0 94] 
 #[0 2 181 0 18] 
 #[0 2 185 0 14] 
 #[0 2 189 0 46] 
 #[0 2 193 0 11] 
 #[0 2 197 0 23] 
-#[0 1 6 0 22 0 94] 
+#[0 1 2 0 22 0 94] 
 #[0 2 201 0 23] 
-#[0 1 10 0 22 0 94] 
+#[0 1 6 0 22 0 94] 
 #[0 2 205 0 23] 
-#[0 1 14 0 22 0 94] 
+#[0 1 10 0 22 0 94] 
 #[0 2 209 0 23] 
-#[0 1 18 0 22 0 94] 
+#[0 1 14 0 22 0 94] 
 #[0 2 213 0 93] 
 #[0 2 217 0 93] 
 #[0 2 221 0 93] 
 #[1 0 6 0 12 2 225 0 62 0 149 0 91] 
-#[0 1 22 0 10 0 13] 
+#[0 1 18 0 10 0 13] 
 #[0 2 229 0 13] 
 #[0 2 233 0 13] 
 #[0 2 237 0 18] 
 #[0 2 241 0 5] 
-#[1 1 26 0 15 1 26 0 22 2 161 0 35 2 245 0 72 1 26 0 94] 
+#[1 1 22 0 15 1 22 0 22 2 161 0 35 2 245 0 72 1 22 0 94] 
 #[1 0 6 0 19 2 249 0 91] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 35 2 253 0 73 2 53 0 74 0 214 0 94] 
 #[0 3 1 0 12] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 5 0 73 2 53 0 74 0 214 0 94] 
 #[1 3 9 0 28 3 13 0 29 3 17 0 31 3 21 0 36 3 25 0 38] 
-#[0 1 30 0 4 0 15 0 22 0 34 0 35 0 94] 
+#[0 1 26 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 3 29 0 93] 
 #[0 3 33 0 10] 
 #[0 3 37 0 22] 
@@ -583,74 +582,74 @@ GtWardleyMapParser class >> transitionTable [
 #[1 0 6 0 22 3 53 0 91 0 6 0 94] 
 #[1 0 6 0 22 3 57 0 91 0 6 0 94] 
 #[1 0 6 0 22 3 61 0 91 0 6 0 94] 
+#[0 1 30 0 22 0 94] 
 #[0 1 34 0 22 0 94] 
 #[0 1 38 0 22 0 94] 
-#[0 1 42 0 22 0 94] 
-#[0 1 46 0 10 0 13] 
+#[0 1 42 0 10 0 13] 
 #[0 3 65 0 93] 
-#[0 1 50 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
+#[0 1 46 0 4 0 10 0 13 0 15 0 18 0 22 0 34 0 35 0 93 0 94] 
 #[0 3 69 0 10] 
-#[0 1 54 0 22 0 94] 
+#[0 1 50 0 22 0 94] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 73 0 73 2 53 0 74 0 214 0 94] 
 #[0 3 77 0 19] 
-#[1 1 58 0 15 1 58 0 22 2 161 0 35 3 81 0 72 1 58 0 94] 
+#[1 1 54 0 15 1 54 0 22 2 161 0 35 3 81 0 72 1 54 0 94] 
 #[0 3 85 0 18] 
-#[0 1 62 0 15 0 22 0 94] 
+#[0 1 58 0 15 0 22 0 94] 
 #[0 3 89 0 5] 
 #[0 3 93 0 5] 
 #[0 3 97 0 5] 
 #[0 3 101 0 5] 
 #[0 3 105 0 5] 
-#[1 3 109 0 11 1 66 0 22 1 66 0 94] 
+#[1 3 109 0 11 1 62 0 22 1 62 0 94] 
 #[0 3 113 0 18] 
 #[1 3 117 0 15 0 6 0 22 0 10 0 30 0 18 0 33 3 121 0 53 3 125 0 63 0 73 0 64 3 129 0 66 3 133 0 69 3 137 0 70 3 141 0 87 0 129 0 91] 
 #[0 3 145 0 13] 
+#[0 1 66 0 22 0 94] 
 #[0 1 70 0 22 0 94] 
 #[0 1 74 0 22 0 94] 
 #[0 1 78 0 22 0 94] 
 #[0 1 82 0 22 0 94] 
 #[0 1 86 0 22 0 94] 
-#[0 1 90 0 22 0 94] 
 #[0 3 149 0 18] 
-#[0 1 94 0 15 0 22 0 94] 
+#[0 1 90 0 15 0 22 0 94] 
 #[0 3 153 0 18] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 157 0 73 2 53 0 74 0 214 0 94] 
 #[0 3 161 0 10] 
+#[0 1 94 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 98 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 102 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 106 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 1 110 0 4 0 15 0 22 0 34 0 35 0 94] 
-#[0 1 114 0 4 0 15 0 22 0 34 0 35 0 94] 
 #[0 3 165 0 93] 
 #[0 3 169 0 13] 
-#[0 1 118 0 22 0 94] 
-#[1 0 238 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 173 0 69 3 137 0 70 3 141 0 87] 
-#[0 1 122 0 15 0 22] 
+#[0 1 114 0 22 0 94] 
+#[1 0 10 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 173 0 69 3 137 0 70 3 141 0 87] 
+#[0 1 118 0 15 0 22] 
 #[0 3 177 0 15] 
-#[1 1 126 0 15 1 126 0 22 3 181 0 68] 
-#[0 1 130 0 15 0 22] 
+#[1 1 122 0 15 1 122 0 22 3 181 0 68] 
+#[0 1 126 0 15 0 22] 
 #[0 0 205 0 30] 
-#[0 1 134 0 22 0 94] 
+#[0 1 130 0 22 0 94] 
 #[0 3 185 0 13] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 0 214 0 35 3 189 0 73 2 53 0 74 0 214 0 94] 
-#[0 1 138 0 15 0 22 0 94] 
+#[0 1 134 0 15 0 22 0 94] 
 #[0 3 193 0 18] 
+#[0 1 138 0 22 0 94] 
 #[0 1 142 0 22 0 94] 
+#[1 1 122 0 15 1 122 0 22 3 197 0 68] 
 #[0 1 146 0 22 0 94] 
-#[1 1 126 0 15 1 126 0 22 3 197 0 68] 
-#[0 1 150 0 22 0 94] 
-#[1 1 154 0 15 0 6 0 22 3 201 0 53 3 205 0 67 0 129 0 91] 
-#[0 1 158 0 18] 
-#[1 1 162 0 15 1 162 0 22 2 161 0 35 3 209 0 72 1 162 0 94] 
+#[1 1 150 0 15 0 6 0 22 3 201 0 53 3 205 0 67 0 129 0 91] 
+#[0 1 154 0 18] 
+#[1 1 158 0 15 1 158 0 22 2 161 0 35 3 209 0 72 1 158 0 94] 
 #[0 3 213 0 13] 
-#[1 1 166 0 15 0 6 0 22 3 217 0 53 3 205 0 67 0 129 0 91] 
-#[1 1 170 0 15 0 238 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
-#[0 1 174 0 15 0 22] 
+#[1 1 162 0 15 0 6 0 22 3 217 0 53 3 205 0 67 0 129 0 91] 
+#[1 1 166 0 15 0 10 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
+#[0 1 170 0 15 0 22] 
 #[1 0 214 0 4 0 214 0 15 0 214 0 22 3 225 0 73 2 53 0 74 0 214 0 94] 
-#[0 1 178 0 4 0 15 0 22 0 94] 
-#[1 1 182 0 15 0 238 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
-#[0 1 186 0 15 0 22] 
-#[0 1 190 0 15 0 22 0 94]
+#[0 1 174 0 4 0 15 0 22 0 94] 
+#[1 1 178 0 15 0 10 0 30 0 18 0 33 3 125 0 63 0 73 0 64 3 221 0 69 3 137 0 70 3 141 0 87] 
+#[0 1 182 0 15 0 22] 
+#[0 1 186 0 15 0 22 0 94]
 	).
 ]
 
@@ -1384,14 +1383,8 @@ GtWardleyMapParser >> reduceActionForSwitchToDefault1: nodes [
 ]
 
 { #category : #'generated-reduction actions' }
-GtWardleyMapParser >> reduceActionForSwitchToName1: nodes [
-	self scope: #name.
-	^ nil
-]
-
-{ #category : #'generated-reduction actions' }
-GtWardleyMapParser >> reduceActionForSwitchToNameWithoutNumber1: nodes [
-	self scope: #nameWithoutNumber.
+GtWardleyMapParser >> reduceActionForSwitchToNameWithoutNumberAndArrow1: nodes [
+	self scope: #nameWithoutNumberAndArrow.
 	^ nil
 ]
 
