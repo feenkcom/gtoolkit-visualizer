@@ -98,7 +98,7 @@ GtPlotterScatterChart >> dots [
 { #category : #accessing }
 GtPlotterScatterChart >> gtChartContent: aView [
 	<gtView>
-	self data  ifEmpty: [^ aView empty ].
+	self data size isZero ifTrue: [^ aView empty ].
 	
 	^ aView composite
 		title: 'Content';

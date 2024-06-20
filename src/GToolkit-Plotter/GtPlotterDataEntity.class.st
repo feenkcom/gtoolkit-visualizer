@@ -1,6 +1,6 @@
 Class {
 	#name : #GtPlotterDataEntity,
-	#superclass : #Collection,
+	#superclass : #Object,
 	#category : #'GToolkit-Plotter-Data'
 }
 
