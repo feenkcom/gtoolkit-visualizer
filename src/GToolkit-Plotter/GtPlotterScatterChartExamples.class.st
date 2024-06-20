@@ -14,6 +14,92 @@ GtPlotterScatterChartExamples >> emptyPlot [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> focusEventHandlersInScatterProjection [
+	<gtExample>
+	| aChart |
+	aChart := self projectionAxis.
+	aChart yEventHandler lineStencil: [ BlLineElement new
+		toHead: (BlArrowheadTriangle new 
+			scale: 4; 
+			background: Color blue);
+		border: (BlBorder builder 
+			dashed;
+			width: 2;
+			paint: (Color blue);
+			build);
+		yourself ].
+	aChart xEventHandler lineStencil: [ BlLineElement new
+		toHead: (BlArrowheadTriangle new 
+			scale: 4; 
+			background: Color red);
+		border: (BlBorder builder 
+			dashed;
+			width: 2;
+			paint: (Color red);
+			build);
+		yourself ];
+		highlightBlock: [:e |
+			e class = BlTextElement ifTrue: [
+				e textDo: [ :t | t foreground: Color red ]
+			] ];
+		unhighlightBlock: [:e | 
+			e class = BlTextElement ifTrue: [
+				e textDo: [ :t | t foreground: Color gray ]
+			] ].
+	aChart pointEventHandler lineStencil: [ BlLineElement new
+		toHead: (BlArrowheadTriangle new 
+			scale: 4; 
+			background: Color green);
+		border: (BlBorder builder
+			dashed;
+			width: 2;
+			paint: (Color green);
+			build);
+		yourself ];
+		highlightBlock: [:e | e background: Color green ].
+	^ aChart
+]
+
+{ #category : #accessing }
+GtPlotterScatterChartExamples >> focusEventHandlersInScatterProjectionWithAnimation [
+	<gtExample>
+	| aChart |
+	aChart := self focusEventHandlersInScatterProjection.
+	
+	aChart pointEventHandler lineStencil: [ BlLineElement new
+		visibility: BlVisibility hidden;
+		toHead: (BlArrowheadTriangle new 
+			scale: 4; 
+			background: Color green);
+		border: (BlBorder builder
+			width: 1;
+			paint: (Color green);
+			build);
+		yourself ];
+		highlightBlock: [:e :lines |
+			lines do:[:line |
+				| animation from to |
+				from := line fromPosition.
+				to := line toPosition.
+				animation := BlNumberTransition new
+					easing: BlEasing bounceOut;
+					onStepDo: [ :t | | p newAnchor |
+						line visibility: BlVisibility visible.
+						p := from interpolateTo: to at: t.
+						newAnchor := BlAbsolutePositionAnchor position: p.
+						line toAnchor: newAnchor
+					];
+					from: 0;
+					to: 1;
+					duration: 1 second.
+				e addAnimation: animation
+			].
+			
+		 ].
+	^ aChart
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> horizontalProjectionAxis [
 	<gtExample>
 	| aChart |
