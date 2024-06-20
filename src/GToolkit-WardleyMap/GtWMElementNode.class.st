@@ -22,7 +22,7 @@ GtWMElementNode >> asWardleyMapNode [
 	| node |
 	node := GtWardleyMapNodeModel new.
 	name ifNotNil: [ node label: name source ].
-	coords ifNotNil: [ node coordinate: coords maturity source asNumber @ (1 - coords visibility source asNumber) ].
+	coords ifNotNil: [ node coordinate: coords evolution source asNumber @ (1 - coords visibility source asNumber) ].
 	^ node
 ]
 

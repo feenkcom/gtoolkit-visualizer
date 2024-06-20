@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapTitleVisibilityCheckbox,
+	#name : #GtWardleyMapEvolutionAxisVisibilityCheckbox,
 	#superclass : #GtWardleyMapCheckbox,
 	#traits : 'TGtWithWardleyMapViewModel',
 	#classTraits : 'TGtWithWardleyMapViewModel classTrait',
@@ -7,59 +7,59 @@ Class {
 }
 
 { #category : #initialization }
-GtWardleyMapTitleVisibilityCheckbox >> initialize [
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> initialize [
 	super initialize.
 
 	self
 		enabled: true;
 		checked: false;
-		enabledLabel: 'visible title';
-		disabledLabel: 'Cannot change title visibility';
-		tooltipLabel: 'Toggle map title visibility';
+		enabledLabel: 'visible evolution axis';
+		disabledLabel: 'Cannot change evolution axis visibility';
+		tooltipLabel: 'Toggle map evolution axis visibility';
 		whenCheckedDo: [ :anEvent | self onCheckedDo: anEvent ];
 		whenUncheckedDo: [ :anEvent | self onUncheckedDo: anEvent  ]
 ]
 
 { #category : #'event handling' }
-GtWardleyMapTitleVisibilityCheckbox >> onCheckedDo: anEvent [
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> onCheckedDo: anEvent [
 	self hasWardleyMapViewModel ifFalse: [ ^ self ].
-	self wardleyMapViewModel isTitleVisible: true
+	self wardleyMapViewModel isEvolutionAxisVisible: true
 ]
 
 { #category : #'event handling' }
-GtWardleyMapTitleVisibilityCheckbox >> onTitleVisibilityChanged [
-	self checked: self wardleyMapViewModel isTitleVisible
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> onEvolutionAxisVisibilityChanged [
+	self checked: self wardleyMapViewModel isEvolutionAxisVisible
 ]
 
 { #category : #'event handling' }
-GtWardleyMapTitleVisibilityCheckbox >> onUncheckedDo: anEvent [
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> onUncheckedDo: anEvent [
 	self hasWardleyMapViewModel ifFalse: [ ^ self ].
-	self wardleyMapViewModel isTitleVisible: false
+	self wardleyMapViewModel isEvolutionAxisVisible: false
 ]
 
 { #category : #'api - wardley map view model' }
-GtWardleyMapTitleVisibilityCheckbox >> onWardleyMapViewModelChanged [
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> onWardleyMapViewModelChanged [
 	"Is sent when a new WardleyMap view model is assigned to the element"
 	
-	self onTitleVisibilityChanged
+	self onEvolutionAxisVisibilityChanged
 ]
 
 { #category : #'api - wardley map view model' }
-GtWardleyMapTitleVisibilityCheckbox >> subscribeToWardleyMapViewModel [
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> subscribeToWardleyMapViewModel [
 	"Is sent after a new WardleyMap view model is assigned to the element.
 	It is required to unsubscribe from the view model or domain model by implementing
 	#unsubscribeFromWardleyMapViewModel if elements subscribe to them"
 	
 	self wardleyMapViewModel weak
-		when: GtWardleyMapViewModelTitleVisibilityChanged
-		send: #onTitleVisibilityChanged
+		when: GtWardleyMapViewModelEvolutionAxisVisibilityChanged
+		send: #onEvolutionAxisVisibilityChanged
 		to: self
 ]
 
 { #category : #'api - wardley map view model' }
-GtWardleyMapTitleVisibilityCheckbox >> unsubscribeFromWardleyMapViewModel [
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> unsubscribeFromWardleyMapViewModel [
 	"Is sent before a new WardleyMap view model is assigned to the element.
 	Elements that subscribe to WardleyMap view model in domain model are required to implement this methods"
-
+	
 	self wardleyMapViewModel unsubscribe: self
 ]
