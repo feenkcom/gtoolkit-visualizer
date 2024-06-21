@@ -145,10 +145,17 @@ GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
 
 { #category : #accessing }
 GtWardleyMapElement >> onMapDecoratorsChanged [
-	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
-		aChild wardley isDecorator 
-			ifTrue: [ aChild removeFromParent. false ]
-			ifFalse: [ true ] ].
+	"For now we assume that decorator elements are added 
+	either to this element, canvasContainer, or canvasElement.
+	We cannot iterate over all elements, since we do not distinguish
+	between map, edge, and node decorator elements."
+	
+	self childrenDo: [ :aChild |
+		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
+	canvasContainer childrenDo: [ :aChild |
+		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
+	canvasElement childrenDo: [ :aChild |
+		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
 	
 	self wardleyMapViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
 		eachDecoratorViewModel decorateMapElement: self ].
