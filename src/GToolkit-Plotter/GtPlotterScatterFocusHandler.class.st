@@ -6,7 +6,7 @@ Class {
 		'lines',
 		'lineStencil',
 		'unhighlightBlock',
-		'hightlightBlock'
+		'highlightBlock'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
@@ -29,7 +29,7 @@ GtPlotterScatterFocusHandler >> dataValueFrom: each [
 { #category : #defaults }
 GtPlotterScatterFocusHandler >> defaultHighlightBlock [
 	^ [:anElement | | color |
-		color := self hightlightColor.
+		color := self highlightColor.
 		anElement class = BlTextElement 
 			ifTrue: [  anElement textDo: [ :t | t foreground: color ] ] 
 			ifFalse: [ anElement background: color ]
@@ -67,17 +67,17 @@ GtPlotterScatterFocusHandler >> gtDemo: aView [
 ]
 
 { #category : #accessing }
-GtPlotterScatterFocusHandler >> hightlightBlock [
-	^ hightlightBlock
+GtPlotterScatterFocusHandler >> highlightBlock [
+	^ highlightBlock
 ]
 
 { #category : #accessing }
-GtPlotterScatterFocusHandler >> hightlightBlock: anObject [
-	hightlightBlock := anObject
+GtPlotterScatterFocusHandler >> highlightBlock: anObject [
+	highlightBlock := anObject
 ]
 
 { #category : #defaults }
-GtPlotterScatterFocusHandler >> hightlightColor [
+GtPlotterScatterFocusHandler >> highlightColor [
 	^ Color blue alpha: 0.8
 ]
 
@@ -86,7 +86,7 @@ GtPlotterScatterFocusHandler >> initialize [
 	super initialize.
 	self 
 		lineStencil: self defaultLineStencil;
-		hightlightBlock: self defaultHighlightBlock;
+		highlightBlock: self defaultHighlightBlock;
 		unhighlightBlock: self defaultUnhighlightBlock
 ]
 
@@ -107,13 +107,15 @@ GtPlotterScatterFocusHandler >> mouseEnterEvent: aBlMouseEnterEvent [
 	self removeLineMarkers.
 	tickElement := aBlMouseEnterEvent currentTarget.
 	value := tickElement userData at: #originalValue.
-	hightlightBlock value: tickElement.
-	lines := scatterChart dots 
+	
+	lines := scatterChart dots
 		select: [:each | (self dataValueFrom: each) = value ]
 		thenCollect: [:each | 
 			self newLineFrom: tickElement to: each
 		].
-	tickElement parent parent parent addChildren: lines
+	tickElement parent parent parent addChildren: lines.
+	
+	highlightBlock cull: tickElement cull: lines
 ]
 
 { #category : #accessing }

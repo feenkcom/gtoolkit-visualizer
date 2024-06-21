@@ -11,7 +11,7 @@ GtPlotterScatterFocusPointHandler >> mouseEnterEvent: aBlMouseEnterEvent [
 	pointElement := aBlMouseEnterEvent currentTarget.
 	valueX := pointElement userData at: #originalX.
 	valueY := pointElement userData at: #originalY.
-	hightlightBlock value: pointElement.
+	
 	lines := OrderedCollection new.
 	newLines :=  scatterChart xTicks
 		select: [:each | (each userData at: #originalValue) = valueX ]
@@ -25,7 +25,8 @@ GtPlotterScatterFocusPointHandler >> mouseEnterEvent: aBlMouseEnterEvent [
 			self newHorizontalLineFrom: each to: pointElement
 		].
 	lines addAll: newLines.
-	pointElement parent parent parent addChildren: lines
+	pointElement parent parent parent addChildren: lines.
+	highlightBlock cull: pointElement cull: lines.
 ]
 
 { #category : #accessing }
