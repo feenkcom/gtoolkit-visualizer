@@ -72,6 +72,37 @@ GtWardleyMapElement >> createTitleElement [
 ]
 
 { #category : #'private - updating' }
+GtWardleyMapElement >> decorateEdgeViewModel: anEdgeViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext aEdgeElement aFromNodeElement aToNodeElement |
+	aEdgeElement := canvasElement
+			edgeViewFor: anEdgeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+			
+	aFromNodeElement := canvasElement
+			nodeViewFor: anEdgeViewModel fromNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aToNodeElement := canvasElement
+			nodeViewFor: anEdgeViewModel toNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aDecoratorContext := GtWardleyMapEdgeDecoratorContext new
+			mapElement: self;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			edgeViewModel: anEdgeViewModel;
+			edgeElement: aEdgeElement;
+			fromNodeElement: aFromNodeElement;
+			toNodeElement: aToNodeElement;
+			decoratorViewModel: aDecoratorViewModel.
+			
+	aDecoratorViewModel decorateEdgeElementInContext: aDecoratorContext
+]
+
+{ #category : #'private - updating' }
 GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewModel: aDecoratorViewModel [
 	| aDecoratorContext aNodeElement |
 	aNodeElement := canvasElement
@@ -137,6 +168,15 @@ GtWardleyMapElement >> onAcceptNewTitleWish: aWish [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapElement >> onEdgeDecoratorAdded: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self
+				decorateEdgeViewModel: anAnnouncement edgeViewModel
+				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapElement >> onEvolutionAxisVisibilityChanged: anAnnouncement [
 	BlTaskAction
 		enqueueElement: self
@@ -181,7 +221,15 @@ GtWardleyMapElement >> onMapDecoratorsChanged [
 	
 	self wardleyMapViewModel nodeViewModels do: [ :eachNodeViewModel | 
 		eachNodeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-			self decorateNodeViewModel: eachNodeViewModel withDecoratorViewModel: eachDecoratorViewModel ] ]
+			self 
+				decorateNodeViewModel: eachNodeViewModel 
+				withDecoratorViewModel: eachDecoratorViewModel ] ].
+			
+	self wardleyMapViewModel edgeViewModels do: [ :eachEdgeViewModel | 
+		eachEdgeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+			self 
+				decorateEdgeViewModel: eachEdgeViewModel 
+				withDecoratorViewModel: eachDecoratorViewModel ] ]
 ]
 
 { #category : #'event handling' }
@@ -265,6 +313,9 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 			to: self;
 		when: GtWardleyMapNodeDecoratorViewModelAdded
 			send: #onNodeDecoratorAdded:
+			to: self;
+		when: GtWardleyMapEdgeDecoratorViewModelAdded
+			send: #onEdgeDecoratorAdded:
 			to: self
 ]
 

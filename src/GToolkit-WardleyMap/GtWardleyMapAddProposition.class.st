@@ -12,36 +12,25 @@ Class {
 }
 
 { #category : #'api - wardley map decorator model' }
-GtWardleyMapAddProposition >> decorateEdgeElement: anEdgeElement decoratorViewModel: aDecoratorViewModel [
-	"The parent (map canvas) might not be available yet at the moment of decoration creation.
-	For that reason the add-child action is postponed."
-	
-	BlTaskAction enqueueElement: anEdgeElement action: [
-		| anEdgeViewModel aMapElement aFromNodeElement aToNodeElement aPropositionElement |
-		anEdgeViewModel := anEdgeElement wardleyMapEdgeViewModel.
-		aMapElement := anEdgeElement parent.
-		aFromNodeElement := aMapElement
-				nodeViewFor: anEdgeViewModel fromNodeViewModel
-				ifFound: [ :anElement | anElement ]
-				ifNone: [ nil ].
-	
-		aToNodeElement := aMapElement
-				nodeViewFor: anEdgeViewModel toNodeViewModel
-				ifFound: [ :anElement | anElement ]
-				ifNone: [ nil ].
-	
-		aPropositionElement := GtWardleyMapEdgePropositionElement new
+GtWardleyMapAddProposition >> decorateEdgeElementInContext: aEdgeDecoratorContext [
+	| anEdgeViewModel aCanvasElement aFromNodeElement aToNodeElement aPropositionElement |
+	anEdgeViewModel := aEdgeDecoratorContext edgeElement wardleyMapEdgeViewModel.
+	aCanvasElement := aEdgeDecoratorContext canvasElement.
+	aFromNodeElement := aEdgeDecoratorContext fromNodeElement.
+	aToNodeElement := aEdgeDecoratorContext toNodeElement.
+
+	aPropositionElement := GtWardleyMapEdgePropositionElement new
 			beAddProposition;
 			wardleyMapEdgeViewModel: anEdgeViewModel;
-			wardleyMapDecoratorViewModel: aDecoratorViewModel;
+			wardleyMapDecoratorViewModel: aEdgeDecoratorContext decoratorViewModel;
 			fromAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aFromNodeElement
 					relatedTo: aToNodeElement);
 			toAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aToNodeElement
 					relatedTo: aFromNodeElement).
-					
-		aMapElement addChild: aPropositionElement ]
+
+	aCanvasElement addChild: aPropositionElement
 ]
 
 { #category : #accessing }

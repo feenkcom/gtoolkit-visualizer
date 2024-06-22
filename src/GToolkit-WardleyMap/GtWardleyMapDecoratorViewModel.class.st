@@ -24,6 +24,11 @@ GtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
 ]
 
 { #category : #'api - wardley map decorator view model' }
+GtWardleyMapDecoratorViewModel >> decorateEdgeElementInContext: aEdgeDecoratorContext [
+	self wardleyMapDecoratorModel decorateEdgeElementInContext: aEdgeDecoratorContext
+]
+
+{ #category : #'api - wardley map decorator view model' }
 GtWardleyMapDecoratorViewModel >> decorateMapElement: aMapElement [
 	self wardleyMapDecoratorModel
 		decorateMapElement: aMapElement
