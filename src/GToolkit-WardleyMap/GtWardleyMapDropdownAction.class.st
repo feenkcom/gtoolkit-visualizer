@@ -19,17 +19,17 @@ GtWardleyMapDropdownAction >> content: anObject [
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
-	aNodeElement
+GtWardleyMapDropdownAction >> decorateNodeElementInContext: aNodeDecoratorContext [
+	aNodeDecoratorContext nodeElement
 		labelContainerDo: [ :aLabelContainer | 
 			| anActionContainer aButton |
 			anActionContainer := GtWardleyMapUtility ensureRightDecoratorContainerFor: aLabelContainer.
 			aButton := self newButton.
-			aDecoratorViewModel weak
+			aNodeDecoratorContext decoratorViewModel weak
 				when: GtWardleyMapNodeDecoratorViewModelRemoved
 				send: #removeFromParent
 				to: aButton.
-			aDecoratorViewModel weak
+			aNodeDecoratorContext decoratorViewModel weak
 				when: GtWardleyMapNodeLabelModelTextChanged
 				send: #removeFromParent
 				to: aButton.

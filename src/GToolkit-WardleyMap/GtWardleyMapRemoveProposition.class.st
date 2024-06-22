@@ -42,20 +42,18 @@ GtWardleyMapRemoveProposition >> decorateEdgeElement: anEdgeElement decoratorVie
 ]
 
 { #category : #accessing }
-GtWardleyMapRemoveProposition >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+GtWardleyMapRemoveProposition >> decorateNodeElementInContext: aNodeDecoratorContext [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
 		beRemoveProposition;
-		wardleyMapNodeViewModel: aNodeElement wardleyMapNodeViewModel;
-		wardleyMapDecoratorViewModel: aDecoratorViewModel;
-		nodeElement: aNodeElement.
+		wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+		wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
+		nodeElement: aNodeDecoratorContext nodeElement.
 		
-	BlTaskAction
-		enqueueElement: aNodeElement 
-		action: [ aNodeElement parent addChild: aHighlightElement ].
+	aNodeDecoratorContext canvasElement addChild: aHighlightElement.
 			
-	acceptAction decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel.
-	rejectAction decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel.
+	acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
+	rejectAction decorateNodeElementInContext: aNodeDecoratorContext
 ]
 
 { #category : #initialization }

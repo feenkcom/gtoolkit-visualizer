@@ -477,6 +477,10 @@ GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDec
 
 { #category : #'api - wardley map decorator view models' }
 GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
+	aWardleyMapDecoratorViewModel 
+		announce: (GtWardleyMapDecoratorViewModelRemoved new
+				mapViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
 	self
 		announce: (GtWardleyMapDecoratorViewModelRemoved new
 				mapViewModel: self;
@@ -762,10 +766,10 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapNodeModelEvolveVisibilityChanged
 			send: #onEvolveVisibilityChanged:
 			to: self;
-		when: GtWardleyMapNodeDecoratorModelAdded
+		when: GtWardleyMapDecoratorModelAdded
 			send: #onDecoratorAdded:
 			to: self;
-		when: GtWardleyMapNodeDecoratorModelRemoved
+		when: GtWardleyMapDecoratorModelRemoved
 			send: #onDecoratorRemoved:
 			to: self
 ]

@@ -268,6 +268,10 @@ GtWardleyMapNodeViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMa
 	self
 		announce: (GtWardleyMapNodeDecoratorViewModelAdded new
 				nodeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
+		announce: (GtWardleyMapNodeDecoratorViewModelAdded new
+				nodeViewModel: self;
 				decoratorViewModel: aWardleyMapDecoratorViewModel)
 ]
 

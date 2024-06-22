@@ -554,6 +554,22 @@ GtWardleyMapNodeModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapNodeModelResized new nodeModel: self)
 ]
 
+{ #category : #'api - decorators' }
+GtWardleyMapNodeModel >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelAdded new
+				nodeModel: self;
+				decoratorModel: aWardleyMapDecoratorModel)
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapNodeModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelRemoved new
+				nodeModel: self;
+				decoratorModel: aWardleyMapDecoratorModel)
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> pipelineCoordinate [
 	"Return a pipeline left and right side positions.

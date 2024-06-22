@@ -43,13 +43,13 @@ GtWardleyMapAction >> buttonLabelFromString: aString [
 ]
 
 { #category : #'api - wardley map decorator model' }
-GtWardleyMapAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
-	aNodeElement
+GtWardleyMapAction >> decorateNodeElementInContext: aNodeDecoratorContext [
+	aNodeDecoratorContext 
 		labelContainerDo: [ :aLabelContainer | 
 			| anActionContainer aButton |
 			anActionContainer := GtWardleyMapUtility ensureRightDecoratorContainerFor: aLabelContainer.
 			aButton := self newButton.
-			aDecoratorViewModel weak
+			aNodeDecoratorContext decoratorViewModel weak
 				when: GtWardleyMapNodeDecoratorViewModelRemoved
 				send: #removeFromParent
 				to: aButton.

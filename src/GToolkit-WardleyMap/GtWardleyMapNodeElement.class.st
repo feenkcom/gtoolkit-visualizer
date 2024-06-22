@@ -12,22 +12,6 @@ GtWardleyMapNodeElement >> beSquareGeometry [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeDecoratorAdded: anAnnouncement [
-	anAnnouncement decoratorViewModel decorateNodeElement: self
-]
-
-{ #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeDecoratorsChanged [
-	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
-		aChild wardley isDecorator 
-			ifTrue: [ aChild removeFromParent. false ]
-			ifFalse: [ true ] ].
-	
-	self wardleyMapNodeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-		eachDecoratorViewModel decorateNodeElement: self ].
-]
-
-{ #category : #'event handling' }
 GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 	self wardleyMapNodeViewModel isPipelineVisible
 		ifTrue: [ self beSquareGeometry ]
@@ -44,7 +28,6 @@ GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 
 	self onNodeLabelTextChanged.
 	self onNodeLabelMoved.
-	self onNodeDecoratorsChanged.
 ]
 
 { #category : #accessing }
@@ -65,8 +48,7 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged to: self;
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
-		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
-		when: GtWardleyMapNodeDecoratorViewModelAdded send: #onNodeDecoratorAdded: to: self.
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self.
 ]
 
 { #category : #'api - wardley map node view model' }

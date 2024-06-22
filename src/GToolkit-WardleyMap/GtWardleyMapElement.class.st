@@ -71,6 +71,25 @@ GtWardleyMapElement >> createTitleElement [
 		text: 'Title'
 ]
 
+{ #category : #'private - updating' }
+GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext aNodeElement |
+	aNodeElement := canvasElement
+			nodeViewFor: aNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aDecoratorContext := GtWardleyMapNodeDecoratorContext new
+			mapElement: self;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			nodeViewModel: aNodeViewModel;
+			nodeElement: aNodeElement;
+			decoratorViewModel: aDecoratorViewModel.
+			
+	aDecoratorViewModel decorateNodeElementInContext: aDecoratorContext
+]
+
 { #category : #initialization }
 GtWardleyMapElement >> defaultLayout [
 	^ BlLinearLayout vertical
@@ -136,14 +155,14 @@ GtWardleyMapElement >> onEvolutionSectionsChanged: anAnnouncement [
 	BlTaskAction enqueueElement: self action: [ self onEvolutionSectionsChanged ]
 ]
 
-{ #category : #accessing }
+{ #category : #'event handling' }
 GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
 	BlTaskAction
 		enqueueElement: self
 		action: [ anAnnouncement decoratorViewModel decorateMapElement: self ]
 ]
 
-{ #category : #accessing }
+{ #category : #'event handling' }
 GtWardleyMapElement >> onMapDecoratorsChanged [
 	"For now we assume that decorator elements are added 
 	either to this element, canvasContainer, or canvasElement.
@@ -159,6 +178,19 @@ GtWardleyMapElement >> onMapDecoratorsChanged [
 	
 	self wardleyMapViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
 		eachDecoratorViewModel decorateMapElement: self ].
+	
+	self wardleyMapViewModel nodeViewModels do: [ :eachNodeViewModel | 
+		eachNodeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+			self decorateNodeViewModel: eachNodeViewModel withDecoratorViewModel: eachDecoratorViewModel ] ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onNodeDecoratorAdded: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self
+				decorateNodeViewModel: anAnnouncement nodeViewModel
+				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
 ]
 
 { #category : #'event handling' }
@@ -230,6 +262,9 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 			to: self;
 		when: GtWardleyMapDecoratorViewModelAdded
 			send: #onMapDecoratorAdded:
+			to: self;
+		when: GtWardleyMapNodeDecoratorViewModelAdded
+			send: #onNodeDecoratorAdded:
 			to: self
 ]
 

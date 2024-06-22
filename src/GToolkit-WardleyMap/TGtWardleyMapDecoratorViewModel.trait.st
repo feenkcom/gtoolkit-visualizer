@@ -10,19 +10,26 @@ TGtWardleyMapDecoratorViewModel >> announce: anAnnouncement [
 
 { #category : #'api - wardley map decorator view model' }
 TGtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
+	
 ]
 
 { #category : #'api - wardley map decorator view model' }
-TGtWardleyMapDecoratorViewModel >> decorateNodeElement: aNodeElement [
+TGtWardleyMapDecoratorViewModel >> decorateMapElement: aMapElement [
+	
 ]
 
-{ #category : #initialization }
-TGtWardleyMapDecoratorViewModel >> parent: aParent [
+{ #category : #'api - wardley map decorator view model' }
+TGtWardleyMapDecoratorViewModel >> decorateNodeElementInContext: aNodeDecoratorContext [
 	
 ]
 
 { #category : #initialization }
-TGtWardleyMapDecoratorViewModel >> removeParent [
+TGtWardleyMapDecoratorViewModel >> parentViewModel: aParentViewModel [
+	
+]
+
+{ #category : #initialization }
+TGtWardleyMapDecoratorViewModel >> removeParentViewModel [
 	
 ]
 

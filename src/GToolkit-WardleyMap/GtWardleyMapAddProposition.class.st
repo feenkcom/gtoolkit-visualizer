@@ -45,22 +45,18 @@ GtWardleyMapAddProposition >> decorateEdgeElement: anEdgeElement decoratorViewMo
 ]
 
 { #category : #accessing }
-GtWardleyMapAddProposition >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+GtWardleyMapAddProposition >> decorateNodeElementInContext: aNodeDecoratorContext [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
 		beAddProposition;
-		wardleyMapNodeViewModel: aNodeElement wardleyMapNodeViewModel;
-		wardleyMapDecoratorViewModel: aDecoratorViewModel;
-		nodeElement: aNodeElement.
+		wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+		wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
+		nodeElement: aNodeDecoratorContext nodeElement.
 		
-	"The parent (map canvas) might not be available yet at the moment of decoration creation.
-	For that reason the add-child action is postponed."
-	BlTaskAction
-		enqueueElement: aNodeElement 
-		action: [ aNodeElement parent addChild: aHighlightElement ].
+	aNodeDecoratorContext canvasElement addChild: aHighlightElement.
 			
-	acceptAction decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel.
-	rejectAction decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel.
+	acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
+	rejectAction decorateNodeElementInContext: aNodeDecoratorContext
 ]
 
 { #category : #initialization }

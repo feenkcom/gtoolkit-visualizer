@@ -8,6 +8,7 @@ Trait {
 
 { #category : #'api - wardley map decorator view models' }
 TGtWithWardleyMapDecoratorViewModels >> addWardleyMapDecoratorViewModel: aWardleyMapDecoratorViewModel [
+	aWardleyMapDecoratorViewModel parentViewModel: self.
 	self wardleyMapDecoratorViewModels add: aWardleyMapDecoratorViewModel.
 	self notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel
 ]
@@ -22,18 +23,12 @@ TGtWithWardleyMapDecoratorViewModels >> mapDecoratorViewModelFor: aWardleyMapDec
 
 { #category : #'api - wardley map decorator view models' }
 TGtWithWardleyMapDecoratorViewModels >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel [
-	self
-		propagateAnnouncement: (GtWardleyMapNodeDecoratorViewModelAdded new
-				nodeViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+	self explicitRequirement
 ]
 
 { #category : #'api - wardley map decorator view models' }
 TGtWithWardleyMapDecoratorViewModels >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
-	self
-		propagateAnnouncement: (GtWardleyMapNodeDecoratorViewModelRemoved new
-				nodeViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+	self explicitRequirement
 ]
 
 { #category : #'api - wardley map decorator view models' }
@@ -55,6 +50,7 @@ TGtWithWardleyMapDecoratorViewModels >> onWardleyMapDecoratorModelRemoved: aWard
 { #category : #'api - wardley map decorator view models' }
 TGtWithWardleyMapDecoratorViewModels >> removeWardleyMapDecoratorViewModel: aWardleyMapDecoratorViewModel [
 	self wardleyMapDecoratorViewModels remove: aWardleyMapDecoratorViewModel ifAbsent: [ ^ self ].
+	aWardleyMapDecoratorViewModel removeParentViewModel.
 	self notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel
 ]
 

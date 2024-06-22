@@ -18,7 +18,8 @@ TGtWardleyMapDecoratorModel >> decorateMapElement: aMapElement decoratorViewMode
 ]
 
 { #category : #'api - wardley map decorator model' }
-TGtWardleyMapDecoratorModel >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+TGtWardleyMapDecoratorModel >> decorateNodeElementInContext: aNodeDecoratorContext [
+	
 ]
 
 { #category : #initialization }
