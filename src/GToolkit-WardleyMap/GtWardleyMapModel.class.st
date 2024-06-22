@@ -569,16 +569,14 @@ GtWardleyMapModel >> notifyTitleVisibilityChanged [
 { #category : #'api - decorators' }
 GtWardleyMapModel >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
 	self
-		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelAdded new
-				nodeModel: self;
+		propagateAnnouncement: (GtWardleyMapDecoratorModelAdded new
 				decoratorModel: aWardleyMapDecoratorModel)
 ]
 
 { #category : #'api - decorators' }
 GtWardleyMapModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorViewModel [
 	self
-		announce: (GtWardleyMapNodeDecoratorModelRemoved new
-				nodeModel: self;
+		announce: (GtWardleyMapDecoratorModelRemoved new
 				decoratorModel: aWardleyMapDecoratorViewModel)
 ]
 

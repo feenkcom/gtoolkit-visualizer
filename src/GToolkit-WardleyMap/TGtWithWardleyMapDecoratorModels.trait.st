@@ -24,18 +24,12 @@ TGtWithWardleyMapDecoratorModels >> gtWardleyMapDecoratorsFor: aView [
 
 { #category : #'api - decorators' }
 TGtWithWardleyMapDecoratorModels >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
-	self
-		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelAdded new
-				nodeModel: self;
-				decoratorModel: aWardleyMapDecoratorModel)
+	self explicitRequirement
 ]
 
 { #category : #'api - decorators' }
 TGtWithWardleyMapDecoratorModels >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorModel [
-	self
-		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelRemoved new
-				nodeModel: self;
-				decoratorModel: aWardleyMapDecoratorModel)
+	self explicitRequirement
 ]
 
 { #category : #'api - decorators' }

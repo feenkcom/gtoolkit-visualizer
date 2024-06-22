@@ -337,7 +337,7 @@ GtWardleyMapCanvasElement >> draggingPipelineElevationIndex [
 	^ 1
 ]
 
-{ #category : #private }
+{ #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> edgeViewFor: anEdgeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | eachChild graph isEdge and: [ eachChild wardleyMapEdgeViewModel = anEdgeViewModel ] ]
@@ -409,7 +409,7 @@ GtWardleyMapCanvasElement >> newPipelineId [
 GtWardleyMapCanvasElement >> nextElementId [
 ]
 
-{ #category : #private }
+{ #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> nodeViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | eachChild graph isNode and: [ eachChild wardleyMapNodeViewModel = aNodeViewModel ] ]
@@ -417,7 +417,7 @@ GtWardleyMapCanvasElement >> nodeViewFor: aNodeViewModel ifFound: aFoundBlock if
 		ifNone: aNoneBlock
 ]
 
-{ #category : #private }
+{ #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]

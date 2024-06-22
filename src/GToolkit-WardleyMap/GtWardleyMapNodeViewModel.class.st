@@ -36,11 +36,6 @@ GtWardleyMapNodeViewModel >> addInnerNodeViewModel: aNodeViewModel [
 	self wardleyMapNodeModel addInnerNode: aNodeViewModel wardleyMapNodeModel.
 ]
 
-{ #category : #'as yet unclassified' }
-GtWardleyMapNodeViewModel >> addWardleyMapDecoratorModel: aWardleyMapDecoratorModel [ 
-	self wardleyMapNodeModel addWardleyMapDecoratorModel: aWardleyMapDecoratorModel 
-]
-
 { #category : #announcer }
 GtWardleyMapNodeViewModel >> announcer [
 	<return: #Announcer>
@@ -271,6 +266,10 @@ GtWardleyMapNodeViewModel >> nodeSizeStep [
 { #category : #'api - wardley map decorator view models' }
 GtWardleyMapNodeViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel [
 	self
+		announce: (GtWardleyMapNodeDecoratorViewModelAdded new
+				nodeViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
 		announce: (GtWardleyMapNodeDecoratorViewModelAdded new
 				nodeViewModel: self;
 				decoratorViewModel: aWardleyMapDecoratorViewModel)

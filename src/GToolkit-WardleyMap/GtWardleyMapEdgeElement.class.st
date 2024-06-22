@@ -95,22 +95,6 @@ GtWardleyMapEdgeElement >> onEdgeColored: anAnnouncement [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapEdgeElement >> onEdgeDecoratorAdded: anAnnouncement [
-	anAnnouncement decoratorViewModel decorateEdgeElement: self
-]
-
-{ #category : #'event handling' }
-GtWardleyMapEdgeElement >> onEdgeDecoratorsChanged [
-	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
-		aChild wardley isDecorator 
-			ifTrue: [ aChild removeFromParent. false ]
-			ifFalse: [ true ] ].
-	
-	self wardleyMapEdgeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-		eachDecoratorViewModel decorateEdgeElement: self ].
-]
-
-{ #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeLabelMoved [
 	labelContainer constraintsDo: [ :c | 
 		c frame horizontal alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateX.
@@ -144,7 +128,6 @@ GtWardleyMapEdgeElement >> onWardleyMapEdgeViewModelChanged [
 	self onEdgeLabelVisiblityChanged.
 	self onEdgeLabelTextChanged.
 	self onEdgeLabelMoved.
-	self onEdgeDecoratorsChanged.
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -159,8 +142,7 @@ GtWardleyMapEdgeElement >> subscribeToWardleyMapEdgeViewModel [
 		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self;
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
 		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self;
-		when: GtWardleyMapEdgeDecoratorViewModelAdded send: #onEdgeDecoratorAdded: to: self.
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self.
 ]
 
 { #category : #'api - wardley map edge view model' }

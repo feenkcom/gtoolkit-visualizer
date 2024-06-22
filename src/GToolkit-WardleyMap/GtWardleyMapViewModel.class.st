@@ -345,6 +345,8 @@ GtWardleyMapViewModel >> gtNotesFor: aView [
 { #category : #'gt - extensions' }
 GtWardleyMapViewModel >> gtWardleyMapDecorators [
 	^ Array streamContents: [ :aStream | 
+		self wardleyMapDecoratorViewModels do: [ :aDecorator | 
+	 		aStream nextPut: self -> aDecorator ].
 	 	self nodeViewModels do: [ :each | 
 	 		each wardleyMapDecoratorViewModels do: [ :aDecorator | 
 	 			aStream nextPut: each -> aDecorator ] ].
@@ -477,6 +479,10 @@ GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDec
 
 { #category : #'api - wardley map decorator view models' }
 GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
+	aWardleyMapDecoratorViewModel 
+		announce: (GtWardleyMapDecoratorViewModelRemoved new
+				mapViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
 	self
 		announce: (GtWardleyMapDecoratorViewModelRemoved new
 				mapViewModel: self;
@@ -688,9 +694,13 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 			collect: [ :eachEvolveViewModel | self createEvolveEdgeViewModelFor: eachEvolveViewModel ]
 			as: OrderedCollection.
 			
+	"create note view models"
 	noteViewModels := self wardleyMapModel notes
 			collect: [ :eachNoteModel | self createNoteViewModelFor: eachNoteModel ]
 			as: OrderedCollection.
+			
+	"create decorator view models"
+	self wardleyMapDecoratorViewModelsFromModels: self wardleyMapModel wardleyMapDecoratorModels
 ]
 
 { #category : #accessing }
@@ -762,10 +772,10 @@ GtWardleyMapViewModel >> subscribeToWardleyMapModel [
 		when: GtWardleyMapNodeModelEvolveVisibilityChanged
 			send: #onEvolveVisibilityChanged:
 			to: self;
-		when: GtWardleyMapNodeDecoratorModelAdded
+		when: GtWardleyMapDecoratorModelAdded
 			send: #onDecoratorAdded:
 			to: self;
-		when: GtWardleyMapNodeDecoratorModelRemoved
+		when: GtWardleyMapDecoratorModelRemoved
 			send: #onDecoratorRemoved:
 			to: self
 ]

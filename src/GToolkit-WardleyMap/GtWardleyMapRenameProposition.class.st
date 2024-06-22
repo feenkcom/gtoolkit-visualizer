@@ -15,29 +15,19 @@ Class {
 }
 
 { #category : #'api - wardley map decorator model' }
-GtWardleyMapRenameProposition >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+GtWardleyMapRenameProposition >> decorateNodeElementInContext: aNodeDecoratorContext [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
 			beChangeProposition;
-			wardleyMapNodeViewModel: aNodeElement wardleyMapNodeViewModel;
-			wardleyMapDecoratorViewModel: aDecoratorViewModel;
-			nodeElement: aNodeElement.
+			wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+			wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
+			nodeElement: aNodeDecoratorContext nodeElement.
 
-	BlTaskAction
-		enqueueElement: aNodeElement
-		action: [ aNodeElement parent addChild: aHighlightElement ].
+	aNodeDecoratorContext canvasElement addChild: aHighlightElement.
 
-	dropdownAction
-		decorateNodeElement: aNodeElement
-		decoratorViewModel: aDecoratorViewModel.
-
-	acceptAction
-		decorateNodeElement: aNodeElement
-		decoratorViewModel: aDecoratorViewModel.
-	
-	rejectAction
-		decorateNodeElement: aNodeElement
-		decoratorViewModel: aDecoratorViewModel
+	dropdownAction decorateNodeElementInContext: aNodeDecoratorContext.
+	acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
+	rejectAction decorateNodeElementInContext: aNodeDecoratorContext
 ]
 
 { #category : #initialization }

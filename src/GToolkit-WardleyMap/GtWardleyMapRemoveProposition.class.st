@@ -12,50 +12,40 @@ Class {
 }
 
 { #category : #'api - wardley map decorator model' }
-GtWardleyMapRemoveProposition >> decorateEdgeElement: anEdgeElement decoratorViewModel: aDecoratorViewModel [
-	BlTaskAction enqueueElement: anEdgeElement action: [
-		| anEdgeViewModel aMapElement aFromNodeElement aToNodeElement aPropositionElement |
-		anEdgeViewModel := anEdgeElement wardleyMapEdgeViewModel.
-		aMapElement := anEdgeElement parent.
-		aFromNodeElement := aMapElement
-				nodeViewFor: anEdgeViewModel fromNodeViewModel
-				ifFound: [ :anElement | anElement ]
-				ifNone: [ nil ].
-	
-		aToNodeElement := aMapElement
-				nodeViewFor: anEdgeViewModel toNodeViewModel
-				ifFound: [ :anElement | anElement ]
-				ifNone: [ nil ].
-	
-		aPropositionElement := GtWardleyMapEdgePropositionElement new
+GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: anEdgeDecoratorContext [
+	| anEdgeViewModel aCanvasElement aFromNodeElement aToNodeElement aPropositionElement |
+	anEdgeViewModel := anEdgeDecoratorContext edgeElement wardleyMapEdgeViewModel.
+	aCanvasElement := anEdgeDecoratorContext canvasElement.
+	aFromNodeElement := anEdgeDecoratorContext fromNodeElement.
+	aToNodeElement := anEdgeDecoratorContext toNodeElement.
+
+	aPropositionElement := GtWardleyMapEdgePropositionElement new
 			beRemoveProposition;
 			wardleyMapEdgeViewModel: anEdgeViewModel;
-			wardleyMapDecoratorViewModel: aDecoratorViewModel;
+			wardleyMapDecoratorViewModel: anEdgeDecoratorContext decoratorViewModel;
 			fromAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aFromNodeElement
 					relatedTo: aToNodeElement);
 			toAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aToNodeElement
 					relatedTo: aFromNodeElement).
-					
-		aMapElement addChild: aPropositionElement ]
+
+	aCanvasElement addChild: aPropositionElement
 ]
 
 { #category : #accessing }
-GtWardleyMapRemoveProposition >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
+GtWardleyMapRemoveProposition >> decorateNodeElementInContext: aNodeDecoratorContext [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
 		beRemoveProposition;
-		wardleyMapNodeViewModel: aNodeElement wardleyMapNodeViewModel;
-		wardleyMapDecoratorViewModel: aDecoratorViewModel;
-		nodeElement: aNodeElement.
+		wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+		wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
+		nodeElement: aNodeDecoratorContext nodeElement.
 		
-	BlTaskAction
-		enqueueElement: aNodeElement 
-		action: [ aNodeElement parent addChild: aHighlightElement ].
+	aNodeDecoratorContext canvasElement addChild: aHighlightElement.
 			
-	acceptAction decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel.
-	rejectAction decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel.
+	acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
+	rejectAction decorateNodeElementInContext: aNodeDecoratorContext
 ]
 
 { #category : #initialization }

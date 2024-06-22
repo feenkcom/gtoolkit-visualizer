@@ -78,8 +78,8 @@ GtWardleyMapDecoratorExamples >> mapWithProposedModifications [
 	^ aMap
 ]
 
-{ #category : #accessing }
-GtWardleyMapDecoratorExamples >> mapwithProposedRename [
+{ #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorExamples >> mapWithProposedRename [
 	<gtExample>
 	| aMap aNodeA aRenameA |
 	aMap := self mapWithNodes.

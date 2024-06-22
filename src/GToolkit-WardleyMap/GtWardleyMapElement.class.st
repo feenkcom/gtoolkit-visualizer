@@ -71,6 +71,68 @@ GtWardleyMapElement >> createTitleElement [
 		text: 'Title'
 ]
 
+{ #category : #'private - updating' }
+GtWardleyMapElement >> decorateEdgeViewModel: anEdgeViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext aEdgeElement aFromNodeElement aToNodeElement |
+	aEdgeElement := canvasElement
+			edgeViewFor: anEdgeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+			
+	aFromNodeElement := canvasElement
+			nodeViewFor: anEdgeViewModel fromNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aToNodeElement := canvasElement
+			nodeViewFor: anEdgeViewModel toNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aDecoratorContext := GtWardleyMapEdgeDecoratorContext new
+			mapElement: self;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			edgeViewModel: anEdgeViewModel;
+			edgeElement: aEdgeElement;
+			fromNodeElement: aFromNodeElement;
+			toNodeElement: aToNodeElement;
+			decoratorViewModel: aDecoratorViewModel.
+			
+	aDecoratorViewModel decorateEdgeElementInContext: aDecoratorContext
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapElement >> decorateMapViewModel: aMapViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext |
+	aDecoratorContext := GtWardleyMapDecoratorContext new
+			mapElement: self;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			decoratorViewModel: aDecoratorViewModel.
+	
+	aDecoratorViewModel decorateMapElementInContext: aDecoratorContext
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext aNodeElement |
+	aNodeElement := canvasElement
+			nodeViewFor: aNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aDecoratorContext := GtWardleyMapNodeDecoratorContext new
+			mapElement: self;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			nodeViewModel: aNodeViewModel;
+			nodeElement: aNodeElement;
+			decoratorViewModel: aDecoratorViewModel.
+			
+	aDecoratorViewModel decorateNodeElementInContext: aDecoratorContext
+]
+
 { #category : #initialization }
 GtWardleyMapElement >> defaultLayout [
 	^ BlLinearLayout vertical
@@ -118,6 +180,15 @@ GtWardleyMapElement >> onAcceptNewTitleWish: aWish [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapElement >> onEdgeDecoratorAdded: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self
+				decorateEdgeViewModel: anAnnouncement edgeViewModel
+				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapElement >> onEvolutionAxisVisibilityChanged: anAnnouncement [
 	BlTaskAction
 		enqueueElement: self
@@ -136,29 +207,47 @@ GtWardleyMapElement >> onEvolutionSectionsChanged: anAnnouncement [
 	BlTaskAction enqueueElement: self action: [ self onEvolutionSectionsChanged ]
 ]
 
-{ #category : #accessing }
+{ #category : #'event handling' }
 GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
 	BlTaskAction
 		enqueueElement: self
-		action: [ anAnnouncement decoratorViewModel decorateMapElement: self ]
+		action: [ self
+				decorateMapViewModel: anAnnouncement mapViewModel
+				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
 ]
 
-{ #category : #accessing }
+{ #category : #'event handling' }
 GtWardleyMapElement >> onMapDecoratorsChanged [
-	"For now we assume that decorator elements are added 
-	either to this element, canvasContainer, or canvasElement.
-	We cannot iterate over all elements, since we do not distinguish
-	between map, edge, and node decorator elements."
-	
-	self childrenDo: [ :aChild |
-		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
-	canvasContainer childrenDo: [ :aChild |
-		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
-	canvasElement childrenDo: [ :aChild |
-		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
+	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
+		aChild wardley isDecorator 
+			ifTrue: [ aChild removeFromParent. false ]
+			ifFalse: [ true ] ].
 	
 	self wardleyMapViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-		eachDecoratorViewModel decorateMapElement: self ].
+		self
+			decorateMapViewModel: self wardleyMapViewModel
+			withDecoratorViewModel: eachDecoratorViewModel  ].
+	
+	self wardleyMapViewModel nodeViewModels do: [ :eachNodeViewModel | 
+		eachNodeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+			self 
+				decorateNodeViewModel: eachNodeViewModel 
+				withDecoratorViewModel: eachDecoratorViewModel ] ].
+			
+	self wardleyMapViewModel edgeViewModels do: [ :eachEdgeViewModel | 
+		eachEdgeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+			self 
+				decorateEdgeViewModel: eachEdgeViewModel 
+				withDecoratorViewModel: eachDecoratorViewModel ] ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onNodeDecoratorAdded: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self
+				decorateNodeViewModel: anAnnouncement nodeViewModel
+				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
 ]
 
 { #category : #'event handling' }
@@ -230,6 +319,12 @@ GtWardleyMapElement >> subscribeToWardleyMapViewModel [
 			to: self;
 		when: GtWardleyMapDecoratorViewModelAdded
 			send: #onMapDecoratorAdded:
+			to: self;
+		when: GtWardleyMapNodeDecoratorViewModelAdded
+			send: #onNodeDecoratorAdded:
+			to: self;
+		when: GtWardleyMapEdgeDecoratorViewModelAdded
+			send: #onEdgeDecoratorAdded:
 			to: self
 ]
 
