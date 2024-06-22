@@ -103,6 +103,18 @@ GtWardleyMapElement >> decorateEdgeViewModel: anEdgeViewModel withDecoratorViewM
 ]
 
 { #category : #'private - updating' }
+GtWardleyMapElement >> decorateMapViewModel: aMapViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext |
+	aDecoratorContext := GtWardleyMapDecoratorContext new
+			mapElement: self;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			decoratorViewModel: aDecoratorViewModel.
+	
+	aDecoratorViewModel decorateMapElementInContext: aDecoratorContext
+]
+
+{ #category : #'private - updating' }
 GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewModel: aDecoratorViewModel [
 	| aDecoratorContext aNodeElement |
 	aNodeElement := canvasElement
@@ -199,25 +211,22 @@ GtWardleyMapElement >> onEvolutionSectionsChanged: anAnnouncement [
 GtWardleyMapElement >> onMapDecoratorAdded: anAnnouncement [
 	BlTaskAction
 		enqueueElement: self
-		action: [ anAnnouncement decoratorViewModel decorateMapElement: self ]
+		action: [ self
+				decorateMapViewModel: anAnnouncement mapViewModel
+				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapElement >> onMapDecoratorsChanged [
-	"For now we assume that decorator elements are added 
-	either to this element, canvasContainer, or canvasElement.
-	We cannot iterate over all elements, since we do not distinguish
-	between map, edge, and node decorator elements."
-	
-	self childrenDo: [ :aChild |
-		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
-	canvasContainer childrenDo: [ :aChild |
-		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
-	canvasElement childrenDo: [ :aChild |
-		aChild wardley isDecorator ifTrue: [ aChild removeFromParent ] ].
+	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
+		aChild wardley isDecorator 
+			ifTrue: [ aChild removeFromParent. false ]
+			ifFalse: [ true ] ].
 	
 	self wardleyMapViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-		eachDecoratorViewModel decorateMapElement: self ].
+		self
+			decorateMapViewModel: self wardleyMapViewModel
+			withDecoratorViewModel: eachDecoratorViewModel  ].
 	
 	self wardleyMapViewModel nodeViewModels do: [ :eachNodeViewModel | 
 		eachNodeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 

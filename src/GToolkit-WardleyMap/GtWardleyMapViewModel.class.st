@@ -345,6 +345,8 @@ GtWardleyMapViewModel >> gtNotesFor: aView [
 { #category : #'gt - extensions' }
 GtWardleyMapViewModel >> gtWardleyMapDecorators [
 	^ Array streamContents: [ :aStream | 
+		self wardleyMapDecoratorViewModels do: [ :aDecorator | 
+	 		aStream nextPut: self -> aDecorator ].
 	 	self nodeViewModels do: [ :each | 
 	 		each wardleyMapDecoratorViewModels do: [ :aDecorator | 
 	 			aStream nextPut: each -> aDecorator ] ].
@@ -692,9 +694,13 @@ GtWardleyMapViewModel >> onWardleyMapModelChanged [
 			collect: [ :eachEvolveViewModel | self createEvolveEdgeViewModelFor: eachEvolveViewModel ]
 			as: OrderedCollection.
 			
+	"create note view models"
 	noteViewModels := self wardleyMapModel notes
 			collect: [ :eachNoteModel | self createNoteViewModelFor: eachNoteModel ]
 			as: OrderedCollection.
+			
+	"create decorator view models"
+	self wardleyMapDecoratorViewModelsFromModels: self wardleyMapModel wardleyMapDecoratorModels
 ]
 
 { #category : #accessing }

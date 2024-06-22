@@ -16,30 +16,6 @@ GtWardleyMapDecoratorViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
-	self wardleyMapDecoratorModel
-		decorateEdgeElement: anEdgeElement
-		decoratorViewModel: self
-]
-
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateEdgeElementInContext: aEdgeDecoratorContext [
-	self wardleyMapDecoratorModel decorateEdgeElementInContext: aEdgeDecoratorContext
-]
-
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateMapElement: aMapElement [
-	self wardleyMapDecoratorModel
-		decorateMapElement: aMapElement
-		decoratorViewModel: self
-]
-
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateNodeElementInContext: aNodeDecoratorContext [
-	self wardleyMapDecoratorModel decorateNodeElementInContext: aNodeDecoratorContext
-]
-
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapDecoratorViewModel >> onWardleyMapDecoratorModelChanged [
 	"Is sent when a new wardleyMapDecorator model is assigned to the view model"

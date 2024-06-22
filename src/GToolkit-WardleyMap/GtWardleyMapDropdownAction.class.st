@@ -23,7 +23,7 @@ GtWardleyMapDropdownAction >> decorateNodeElementInContext: aNodeDecoratorContex
 	aNodeDecoratorContext nodeElement
 		labelContainerDo: [ :aLabelContainer | 
 			| anActionContainer aButton |
-			anActionContainer := GtWardleyMapUtility ensureRightDecoratorContainerFor: aLabelContainer.
+			anActionContainer := GtWardleyMapUtility ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
 			aButton := self newButton.
 			aNodeDecoratorContext decoratorViewModel weak
 				when: GtWardleyMapNodeDecoratorViewModelRemoved

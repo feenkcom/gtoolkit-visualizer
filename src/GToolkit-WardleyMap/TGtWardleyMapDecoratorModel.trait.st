@@ -10,12 +10,13 @@ TGtWardleyMapDecoratorModel >> asDecoratorViewModel [
 ]
 
 { #category : #'api - wardley map decorator model' }
-TGtWardleyMapDecoratorModel >> decorateEdgeElementInContext: aEdgeDecoratorContext [
+TGtWardleyMapDecoratorModel >> decorateEdgeElementInContext: anEdgeDecoratorContext [
 	
 ]
 
 { #category : #'api - wardley map decorator model' }
-TGtWardleyMapDecoratorModel >> decorateMapElement: aMapElement decoratorViewModel: aDecoratorViewModel [
+TGtWardleyMapDecoratorModel >> decorateMapElementInContext: aMapDecoratorContext [
+	
 ]
 
 { #category : #'api - wardley map decorator model' }

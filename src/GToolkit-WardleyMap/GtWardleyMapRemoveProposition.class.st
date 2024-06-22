@@ -12,17 +12,17 @@ Class {
 }
 
 { #category : #'api - wardley map decorator model' }
-GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: aEdgeDecoratorContext [
+GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: anEdgeDecoratorContext [
 	| anEdgeViewModel aCanvasElement aFromNodeElement aToNodeElement aPropositionElement |
-	anEdgeViewModel := aEdgeDecoratorContext edgeElement wardleyMapEdgeViewModel.
-	aCanvasElement := aEdgeDecoratorContext canvasElement.
-	aFromNodeElement := aEdgeDecoratorContext fromNodeElement.
-	aToNodeElement := aEdgeDecoratorContext toNodeElement.
+	anEdgeViewModel := anEdgeDecoratorContext edgeElement wardleyMapEdgeViewModel.
+	aCanvasElement := anEdgeDecoratorContext canvasElement.
+	aFromNodeElement := anEdgeDecoratorContext fromNodeElement.
+	aToNodeElement := anEdgeDecoratorContext toNodeElement.
 
 	aPropositionElement := GtWardleyMapEdgePropositionElement new
 			beRemoveProposition;
 			wardleyMapEdgeViewModel: anEdgeViewModel;
-			wardleyMapDecoratorViewModel: aEdgeDecoratorContext decoratorViewModel;
+			wardleyMapDecoratorViewModel: anEdgeDecoratorContext decoratorViewModel;
 			fromAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aFromNodeElement
 					relatedTo: aToNodeElement);

@@ -34,12 +34,17 @@ GtWardleyMapAction >> aptitude: aBlock [
 	aptitude := aBlock
 ]
 
-{ #category : #private }
-GtWardleyMapAction >> buttonLabelFromString: aString [
-	aString size <= GtWardleyMapConstants maxButtonLabelCharacters 
-		ifTrue: [ ^ aString ].
-		
-	^ (aString copyFrom: 1 to: GtWardleyMapConstants maxButtonLabelCharacters - 3), '...'
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> decorateMapElementInContext: aMapDecoratorContext [
+	| anActionContainer aButton |
+	anActionContainer := GtWardleyMapUtility
+			ensureTopRightInnerDecoratorContainerFor: aMapDecoratorContext canvasElement.
+	aButton := self newButton.
+	aMapDecoratorContext decoratorViewModel weak
+		when: GtWardleyMapDecoratorViewModelRemoved
+		send: #removeFromParent
+		to: aButton.
+	anActionContainer addChild: aButton
 ]
 
 { #category : #'api - wardley map decorator model' }
@@ -47,7 +52,7 @@ GtWardleyMapAction >> decorateNodeElementInContext: aNodeDecoratorContext [
 	aNodeDecoratorContext 
 		labelContainerDo: [ :aLabelContainer | 
 			| anActionContainer aButton |
-			anActionContainer := GtWardleyMapUtility ensureRightDecoratorContainerFor: aLabelContainer.
+			anActionContainer := GtWardleyMapUtility ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
 			aButton := self newButton.
 			aNodeDecoratorContext decoratorViewModel weak
 				when: GtWardleyMapNodeDecoratorViewModelRemoved
