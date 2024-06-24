@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapEdgeBuilder,
+	#name : #GtWardleyMapEdgeBuilderEventHandler,
 	#superclass : #BlCustomEventHandler,
 	#instVars : [
 		'containerElement',
@@ -10,17 +10,17 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapEdgeBuilder >> containerElement [
+GtWardleyMapEdgeBuilderEventHandler >> containerElement [
 	^ containerElement
 ]
 
 { #category : #accessing }
-GtWardleyMapEdgeBuilder >> containerElement: anObject [
+GtWardleyMapEdgeBuilderEventHandler >> containerElement: anObject [
 	containerElement := anObject
 ]
 
 { #category : #'dnd handlers' }
-GtWardleyMapEdgeBuilder >> dragEndEvent: anEvent [
+GtWardleyMapEdgeBuilderEventHandler >> dragEndEvent: anEvent [
 	anEvent consumed: true.
 	
 	lineToAnchorElement
@@ -40,7 +40,7 @@ GtWardleyMapEdgeBuilder >> dragEndEvent: anEvent [
 ]
 
 { #category : #'dnd handlers' }
-GtWardleyMapEdgeBuilder >> dragEvent: anEvent [
+GtWardleyMapEdgeBuilderEventHandler >> dragEvent: anEvent [
 	anEvent consumed: true.
 	
 	lineToAnchorElement
@@ -50,7 +50,7 @@ GtWardleyMapEdgeBuilder >> dragEvent: anEvent [
 ]
 
 { #category : #'dnd handlers' }
-GtWardleyMapEdgeBuilder >> dragStartEvent: anEvent [
+GtWardleyMapEdgeBuilderEventHandler >> dragStartEvent: anEvent [
 	anEvent consumed: true.
 	
 	lineToAnchorElement
@@ -72,22 +72,22 @@ GtWardleyMapEdgeBuilder >> dragStartEvent: anEvent [
 ]
 
 { #category : #'api - accessing' }
-GtWardleyMapEdgeBuilder >> eventsToHandle [
+GtWardleyMapEdgeBuilderEventHandler >> eventsToHandle [
 	^ { BlDragStartEvent . BlDragEvent . BlDragEndEvent }
 ]
 
 { #category : #private }
-GtWardleyMapEdgeBuilder >> lineAnchorExtent [
+GtWardleyMapEdgeBuilderEventHandler >> lineAnchorExtent [
 	^ 6@6
 ]
 
 { #category : #private }
-GtWardleyMapEdgeBuilder >> relocateLineAnchorTo: aGlobalPosition [
+GtWardleyMapEdgeBuilderEventHandler >> relocateLineAnchorTo: aGlobalPosition [
 	lineToAnchorElement relocate: (self containerElement globalPointToLocal: aGlobalPosition)- (self lineAnchorExtent / 2.0)
 ]
 
 { #category : #'api - event managing' }
-GtWardleyMapEdgeBuilder >> wantsEvent: anEvent [
+GtWardleyMapEdgeBuilderEventHandler >> wantsEvent: anEvent [
 	(anEvent isKindOf: BlDragStartEvent)
 		ifTrue: [ ^ anEvent modifiers isPrimaryModifier ].
 

@@ -79,6 +79,11 @@ GtWardleyMapNodeSizePickerElement >> onNodeSizeChanged [
 	nodeSizeEditor text: self wardleyMapNodeViewModel nodeSize min asString
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeSizePickerElement >> onNodeSizeChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeSizeChanged ]
+]
+
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeSizePickerElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
@@ -94,7 +99,7 @@ GtWardleyMapNodeSizePickerElement >> subscribeToWardleyMapNodeViewModel [
 	
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelResized
-			send: #onNodeSizeChanged
+			send: #onNodeSizeChanged:
 			to: self.
 ]
 

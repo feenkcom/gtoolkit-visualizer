@@ -58,13 +58,28 @@ GtWardleyMapNodeEditorElement >> onEvolveVisibilityChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeEditorElement >> onEvolveVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEvolveVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onNodeSizeChanged [
 	
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodeEditorElement >> onNodeSizeChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeSizeChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged [
 	
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeEditorElement >> onPipelineVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onPipelineVisibilityChanged ]
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -92,13 +107,13 @@ GtWardleyMapNodeEditorElement >> subscribeToWardleyMapNodeViewModel [
 
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelResized
-			send: #onNodeSizeChanged
+			send: #onNodeSizeChanged:
 			to: self;
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged
-			send: #onPipelineVisibilityChanged
+			send: #onPipelineVisibilityChanged:
 			to: self;
 		when: GtWardleyMapNodeViewModelEvolveVisibilityChanged
-			send: #onEvolveVisibilityChanged
+			send: #onEvolveVisibilityChanged:
 			to: self
 ]
 

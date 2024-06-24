@@ -168,7 +168,7 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 				disallowOutOfBounds;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					anEvolveViewModel moveNodeTo: aNormalizedPosition ]);
-		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		addEventHandler: (GtWardleyMapEdgeBuilderEventHandler new containerElement: self);
 		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];
@@ -224,7 +224,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 				disallowOutOfBounds;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
-		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		addEventHandler: (GtWardleyMapEdgeBuilderEventHandler new containerElement: self);
 		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];

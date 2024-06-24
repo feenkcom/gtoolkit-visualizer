@@ -32,6 +32,11 @@ GtWardleyMapPipelineVisibilityCheckbox >> onPipelineVisibilityChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapPipelineVisibilityCheckbox >> onPipelineVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onPipelineVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapPipelineVisibilityCheckbox >> onUncheckedDo: anEvent [
 	self hasWardleyMapNodeViewModel ifFalse: [ ^ self ].
 	self wardleyMapNodeViewModel isPipelineVisible: false
@@ -52,7 +57,7 @@ GtWardleyMapPipelineVisibilityCheckbox >> subscribeToWardleyMapNodeViewModel [
 
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged
-		send: #onPipelineVisibilityChanged
+		send: #onPipelineVisibilityChanged:
 		to: self
 ]
 

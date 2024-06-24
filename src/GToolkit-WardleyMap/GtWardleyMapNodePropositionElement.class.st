@@ -83,6 +83,11 @@ GtWardleyMapNodePropositionElement >> onDecoratorRemoved [
 	self removeFromParent
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodePropositionElement >> onDecoratorRemoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onDecoratorRemoved ]
+]
+
 { #category : #'api - node element' }
 GtWardleyMapNodePropositionElement >> onNodeElementChanged [
 	self addLabelDecoration
@@ -103,6 +108,11 @@ GtWardleyMapNodePropositionElement >> onNodeMoved [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodePropositionElement >> onNodeMoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeMoved ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodePropositionElement >> onNodePipelineVisibilityChanged [
 	self wardleyMapNodeViewModel isPipelineVisible
 		ifTrue: [ self beSquareGeometry ]
@@ -110,13 +120,23 @@ GtWardleyMapNodePropositionElement >> onNodePipelineVisibilityChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodePropositionElement >> onNodePipelineVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodePipelineVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodePropositionElement >> onNodeRemoved: anAnnouncement [
-	self removeFromParent
+	BlTaskAction enqueueElement: self action: [ self removeFromParent ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapNodePropositionElement >> onNodeResized [
 	self size: self wardleyMapNodeViewModel nodeSize + GtWardleyMapConstants nodePropositionExtraSize
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodePropositionElement >> onNodeResized: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeResized ]
 ]
 
 { #category : #'api - wardley map decorator model' }
@@ -153,7 +173,7 @@ GtWardleyMapNodePropositionElement >> subscribeToWardleyMapDecoratorViewModel [
 
 	self wardleyMapDecoratorViewModel weak
 		when: GtWardleyMapNodeDecoratorViewModelRemoved
-		send: #onDecoratorRemoved 
+		send: #onDecoratorRemoved: 
 		to: self
 ]
 
@@ -164,9 +184,9 @@ GtWardleyMapNodePropositionElement >> subscribeToWardleyMapNodeViewModel [
 	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
 	
 	self wardleyMapNodeViewModel weak
-		when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved to: self;
-		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
-		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
+		when: GtWardleyMapNodeViewModelMoved send: #onNodeMoved: to: self;
+		when: GtWardleyMapNodeViewModelResized send: #onNodeResized: to: self;
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self
 ]
 
