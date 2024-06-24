@@ -8,7 +8,8 @@ Class {
 		'aptitude',
 		'model',
 		'tooltip',
-		'buttonClass'
+		'buttonClass',
+		'elementId'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -47,6 +48,7 @@ GtWardleyMapActionButtonStencil >> buttonClass: aButtonClass [
 GtWardleyMapActionButtonStencil >> create [
 	| aButton |
 	aButton := self buttonClass new.
+	elementId ifNotNil: [ aButton id: self elementId ].
 	icon ifNotNil: [ aButton icon: self icon ].
 	tooltip ifNotNil: [ aButton label: self tooltip ].
 	label ifNotNil: [ aButton label: self label ].
@@ -61,6 +63,17 @@ GtWardleyMapActionButtonStencil >> create [
 		c linear vertical alignCenter.
 		c linear horizontal alignCenter ].
 	^ aButton
+]
+
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> elementId [
+	<return: #BlElementId or: nil>
+	^ elementId
+]
+
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> elementId: anObject [
+	elementId := anObject
 ]
 
 { #category : #accessing }
