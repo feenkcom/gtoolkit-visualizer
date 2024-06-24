@@ -39,26 +39,23 @@ GtWardleyMapAction >> decorateMapElementInContext: aMapDecoratorContext [
 	| anActionContainer aButton |
 	anActionContainer := GtWardleyMapUtility
 			ensureTopRightInnerDecoratorContainerFor: aMapDecoratorContext canvasElement.
-	aButton := self newButton.
-	aMapDecoratorContext decoratorViewModel weak
-		when: GtWardleyMapDecoratorViewModelRemoved
-		send: #removeFromParent
-		to: aButton.
+	aButton := self newMapButton.
+	aButton wardleyMapDecoratorViewModel: aMapDecoratorContext decoratorViewModel.
 	anActionContainer addChild: aButton
 ]
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAction >> decorateNodeElementInContext: aNodeDecoratorContext [
-	aNodeDecoratorContext 
+	aNodeDecoratorContext
 		labelContainerDo: [ :aLabelContainer | 
 			| anActionContainer aButton |
-			anActionContainer := GtWardleyMapUtility ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
-			aButton := self newButton.
-			aNodeDecoratorContext decoratorViewModel weak
-				when: GtWardleyMapNodeDecoratorViewModelRemoved
-				send: #removeFromParent
-				to: aButton.
-			anActionContainer addChild: aButton. ]
+			anActionContainer := GtWardleyMapUtility
+					ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
+			aButton := self newNodeButton.
+			aButton
+				wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+				wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel.
+			anActionContainer addChild: aButton ]
 ]
 
 { #category : #'api - decoration' }
@@ -92,8 +89,9 @@ GtWardleyMapAction >> model: anObject [
 ]
 
 { #category : #private }
-GtWardleyMapAction >> newButton [
+GtWardleyMapAction >> newButton: aButtonClass [
 	^ GtWardleyMapActionButtonStencil new
+		buttonClass: aButtonClass;
 		icon: self icon;
 		label: self label;
 		tooltip: self tooltip;
@@ -101,6 +99,16 @@ GtWardleyMapAction >> newButton [
 		action: self action;
 		model: self model;
 		asElement
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> newMapButton [
+	^ self newButton: GtWardleyMapActionButton
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> newNodeButton [
+	^ self newButton: GtWardleyMapActionNodeButton
 ]
 
 { #category : #'api - decoration' }

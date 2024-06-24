@@ -7,7 +7,8 @@ Class {
 		'action',
 		'aptitude',
 		'model',
-		'tooltip'
+		'tooltip',
+		'buttonClass'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -32,10 +33,20 @@ GtWardleyMapActionButtonStencil >> aptitude: anObject [
 	aptitude := anObject
 ]
 
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> buttonClass [
+	^ buttonClass ifNil: [ buttonClass := BrButton ]
+]
+
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> buttonClass: aButtonClass [
+	buttonClass := aButtonClass
+]
+
 { #category : #building }
 GtWardleyMapActionButtonStencil >> create [
 	| aButton |
-	aButton := BrButton new.
+	aButton := self buttonClass new.
 	icon ifNotNil: [ aButton icon: self icon ].
 	tooltip ifNotNil: [ aButton label: self tooltip ].
 	label ifNotNil: [ aButton label: self label ].

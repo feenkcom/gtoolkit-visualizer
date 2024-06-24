@@ -93,13 +93,6 @@ GtWardleyMapNodePropositionElement >> onNodeElementChanged [
 	self addLabelDecoration
 ]
 
-{ #category : #'event handling' }
-GtWardleyMapNodePropositionElement >> onNodeElementPositionChanged: anEvent [
-	GtWardleyMapUtility
-		updateNodeElement: self
-		nodeViewModel: self wardleyMapNodeViewModel
-]
-
 { #category : #'api - node element' }
 GtWardleyMapNodePropositionElement >> onNodeMoved [
 	GtWardleyMapUtility
