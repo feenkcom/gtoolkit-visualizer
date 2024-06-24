@@ -162,6 +162,11 @@ GtWardleyMapEdgeModel >> printOn: aStream [
 		nextPutAll: ' }'
 ]
 
+{ #category : #'api - edge' }
+GtWardleyMapEdgeModel >> removeFromMap [
+	parent ifNotNil: [ :aParent | parent removeEdge: self ]
+]
+
 { #category : #'api - arrow' }
 GtWardleyMapEdgeModel >> reverse [
 	| temp |

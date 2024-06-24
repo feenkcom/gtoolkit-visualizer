@@ -79,6 +79,11 @@ GtWardleyMapEdgeElement >> initialize [
 ]
 
 { #category : #accessing }
+GtWardleyMapEdgeElement >> labelContainerDo: aBlock [
+	aBlock value: labelContainer
+]
+
+{ #category : #accessing }
 GtWardleyMapEdgeElement >> labelElementDo: aBlock [
 	aBlock value: labelElement
 ]
