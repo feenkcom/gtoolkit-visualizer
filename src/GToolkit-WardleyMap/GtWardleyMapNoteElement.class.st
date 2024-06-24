@@ -57,10 +57,20 @@ GtWardleyMapNoteElement >> onNoteColored [
 	labelElement aptitude foreground: self wardleyMapNoteViewModel color.
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNoteElement >> onNoteColored: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNoteColored ]
+]
+
 { #category : #'as yet unclassified' }
 GtWardleyMapNoteElement >> onNoteLabelChanged [
 	labelElement text: self wardleyMapNoteViewModel label.
 	labelElement aptitude foreground: self wardleyMapNoteViewModel color.
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNoteElement >> onNoteLabelChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNoteLabelChanged ]
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -78,8 +88,8 @@ GtWardleyMapNoteElement >> subscribeToWardleyMapNoteViewModel [
 	#unsubscribeFromWardleyMapNoteViewModel if elements subscribe to them"
 	
 	self wardleyMapNoteViewModel weak
-		when: GtWardleyMapNoteViewModelLabelChanged send: #onNoteLabelChanged to: self;
-		when: GtWardleyMapNoteViewModelColored send: #onNoteColored to: self
+		when: GtWardleyMapNoteViewModelLabelChanged send: #onNoteLabelChanged: to: self;
+		when: GtWardleyMapNoteViewModelColored send: #onNoteColored: to: self
 ]
 
 { #category : #'api - wardley map node view model' }

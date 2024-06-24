@@ -58,8 +58,18 @@ GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeArrowChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEdgePropositionElement >> onEdgeRemoved [
 	self removeFromParent
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeRemoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeRemoved ]
 ]
 
 { #category : #'event handling' }
@@ -69,6 +79,11 @@ GtWardleyMapEdgePropositionElement >> onEdgeResized [
 				paint: highlightColor
 				width: self wardleyMapEdgeViewModel lineWidth
 						+ GtWardleyMapConstants edgePropositionExtraWidth)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeResized: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeResized ]
 ]
 
 { #category : #'api - wardley map decorator model' }
@@ -93,9 +108,9 @@ GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapEdgeViewModel [
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
 	
 	self wardleyMapEdgeViewModel weak
-		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved to: self;
-		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged to: self.
+		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
+		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self.
 ]
 
 { #category : #'api - wardley map edge view model' }

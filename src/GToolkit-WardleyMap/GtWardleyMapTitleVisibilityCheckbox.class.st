@@ -32,6 +32,11 @@ GtWardleyMapTitleVisibilityCheckbox >> onTitleVisibilityChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapTitleVisibilityCheckbox >> onTitleVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onTitleVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapTitleVisibilityCheckbox >> onUncheckedDo: anEvent [
 	self hasWardleyMapViewModel ifFalse: [ ^ self ].
 	self wardleyMapViewModel isTitleVisible: false
@@ -52,7 +57,7 @@ GtWardleyMapTitleVisibilityCheckbox >> subscribeToWardleyMapViewModel [
 	
 	self wardleyMapViewModel weak
 		when: GtWardleyMapViewModelTitleVisibilityChanged
-		send: #onTitleVisibilityChanged
+		send: #onTitleVisibilityChanged:
 		to: self
 ]
 

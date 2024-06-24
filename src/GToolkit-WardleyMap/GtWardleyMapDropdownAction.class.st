@@ -14,8 +14,8 @@ GtWardleyMapDropdownAction >> content [
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> content: anObject [
-	content := anObject
+GtWardleyMapDropdownAction >> content: aBlock [
+	content := aBlock
 ]
 
 { #category : #accessing }
@@ -24,29 +24,24 @@ GtWardleyMapDropdownAction >> decorateNodeElementInContext: aNodeDecoratorContex
 		labelContainerDo: [ :aLabelContainer | 
 			| anActionContainer aButton |
 			anActionContainer := GtWardleyMapUtility ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
-			aButton := self newButton.
-			aNodeDecoratorContext decoratorViewModel weak
-				when: GtWardleyMapNodeDecoratorViewModelRemoved
-				send: #removeFromParent
-				to: aButton.
-			aNodeDecoratorContext decoratorViewModel weak
-				when: GtWardleyMapNodeLabelModelTextChanged
-				send: #removeFromParent
-				to: aButton.
+			aButton := self newNodeButton.
+			aButton
+				wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+				wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel weak.
 			anActionContainer addChild: aButton ]
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> newButton [
+GtWardleyMapDropdownAction >> newButton: aButtonClass [
 	| anAptitude |
 	anAptitude := BrGlamorousWithDropdownAptitude
-			handle: [ super newButton
+			handle: [ (super newButton: aButtonClass)
 					in: [ :theHandle | 
 						theHandle aptitude - BrGlamorousButtonExteriorAptitude ];
 					margin: BlInsets empty ]
 			content: self content.
 	preferredExtent ifNotNil: [ anAptitude preferredExtent: preferredExtent ].
-	^ super newButton addAptitude: anAptitude
+	^ (super newButton: aButtonClass) addAptitude: anAptitude
 ]
 
 { #category : #accessing }
