@@ -19,7 +19,12 @@ Class {
 
 { #category : #'private - updating' }
 GtWardleyMapCanvasElement >> addEdgeViewModel: anEdgeViewModel [
-	self addChild: (self createEdgeViewFor: anEdgeViewModel)
+	| anEdgeElement |
+	anEdgeElement := self createEdgeViewFor: anEdgeViewModel.
+	self addChild: anEdgeElement.
+	self fireEvent: (GtWardleyMapEdgeElementAdded new
+			edgeElement: anEdgeElement;
+			edgeViewModel: anEdgeViewModel)
 ]
 
 { #category : #'private - updating' }
@@ -68,7 +73,10 @@ GtWardleyMapCanvasElement >> addNewNodeViewModel: aNodeViewModel [
 										insidePipelineElement: aPipelineElement)
 										ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aNodeViewModel ] ] ] ] ].
 
-	self addChild: aNodeElement
+	self addChild: aNodeElement.
+	self fireEvent: (GtWardleyMapNodeElementAdded new 
+		nodeElement: aNodeElement;
+		nodeViewModel: aNodeViewModel)
 ]
 
 { #category : #'private - updating' }
