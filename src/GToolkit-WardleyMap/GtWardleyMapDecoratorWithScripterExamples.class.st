@@ -72,6 +72,112 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodes [
 ]
 
 { #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddNodeDWithAddProposition [
+	<gtExample>
+	| aScripter aNodeName aNodeD anEdgeCD aNodeC anEdgeCDName |
+	aScripter := self
+			scripterWithModel: [ GtWardleyMapDecoratorExamples new mapWithNodes ]
+			element: [ :aModel | 
+				GtWardleyMapElement new
+					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aModel) ].
+
+	aNodeD := GtWardleyMapNodeModelExamples new newNode.
+	aNodeName := 'Node D'.
+	aNodeD
+		label: aNodeName;
+		coordinate: 0.6 @ 0.8;
+		addWardleyMapDecoratorModel: GtWardleyMapAddProposition new.
+
+	aScripter do
+		label: 'Add Node D';
+		block: [ :anElement | 
+			(BrAsyncElementPromise on: anElement)
+				promise: [ aScripter model addNode: aNodeD ] asAsyncPromise ];
+		play.
+
+	aScripter
+		substeps: 'Assert Node D proposition elements'
+		do: [ :aStep | 
+			aStep assert
+				label: 'Assert Node D proposition element exists';
+				exists;
+				// GtWardleyMapNodePropositionElement;
+				@ [ :anElement | anElement wardleyMapNodeViewModel label = aNodeName ];
+				play.
+
+			aStep assert
+				label: 'Assert Node D proposition accept button exists';
+				exists;
+				// GtWardleyMapNodeElement;
+				@ [ :anElement | 
+					anElement graph isNode
+						and: [ anElement wardleyMapNodeViewModel label = aNodeName ] ];
+				// GtWardleyCenterRightOuterDecoratorId;
+				/ GtWardleyMapAddAcceptId;
+				play.
+
+			aStep assert
+				label: 'Assert Node D proposition reject button exists';
+				exists;
+				// GtWardleyMapNodeElement;
+				@ [ :anElement | 
+					anElement graph isNode
+						and: [ anElement wardleyMapNodeViewModel label = aNodeName ] ];
+				// GtWardleyCenterRightOuterDecoratorId;
+				/ GtWardleyMapAddRejectId;
+				play ].
+
+	aNodeC := aScripter model nodeWithName: 'Node C' ifFound: [ :aNode | aNode ] ifNone: [ nil ].
+
+	anEdgeCDName := 'Edge C->D'.
+	anEdgeCD := GtWardleyMapEdgeModel new
+			label: 'Edge C->D';
+			fromNode: aNodeC;
+			toNode: aNodeD;
+			width: 2;
+			addWardleyMapDecoratorModel: GtWardleyMapAddProposition new.
+
+	aScripter do
+		label: 'Add Edge C->D';
+		block: [ :anElement | 
+			(BrAsyncElementPromise on: anElement)
+				promise: [ aScripter model addEdge: anEdgeCD ] asAsyncPromise ];
+		play.
+
+	aScripter
+		substeps: 'Assert Edge C->D proposition elements'
+		do: [ :aStep | 
+			aStep assert
+				label: 'Assert Edge C->D proposition element exists';
+				exists;
+				// GtWardleyMapEdgePropositionElement;
+				@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeCDName ];
+				play.
+
+			aStep assert
+				label: 'Assert Edge C->D proposition accept button exists';
+				exists;
+				// GtWardleyMapEdgeElement;
+				@ [ :anElement | 
+					anElement graph isEdge
+						and: [ anElement wardleyMapEdgeViewModel label = anEdgeCDName ] ];
+				// GtWardleyMapAddAcceptId;
+				play.
+
+			aStep assert
+				label: 'Assert Edge C->D proposition reject button exists';
+				exists;
+				// GtWardleyMapEdgeElement;
+				@ [ :anElement | 
+					anElement graph isEdge
+						and: [ anElement wardleyMapEdgeViewModel label = anEdgeCDName ] ];
+				// GtWardleyMapAddRejectId;
+				play ].
+		
+	^ aScripter
+]
+
+{ #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddPropositions [
 	<gtExample>
 	| aScripter aNodeName |
