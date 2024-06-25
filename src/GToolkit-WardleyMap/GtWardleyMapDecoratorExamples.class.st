@@ -41,8 +41,9 @@ GtWardleyMapDecoratorExamples >> mapWithNodes [
 		fromNode: aNodeA;
 		toNode: aNodeC;
 		arrow: false;
-		label: 'Edge A->B';
-		isLabelVisible: false;
+		label: 'Edge A->C';
+		isLabelVisible: true;
+		labelCoordinate: 0.5801048393030112 @ 0.5316950839224487;
 		width: 2.
 	aMap addEdge: anEdgeAtoC.
 	

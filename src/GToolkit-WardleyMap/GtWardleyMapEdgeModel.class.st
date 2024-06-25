@@ -100,6 +100,16 @@ GtWardleyMapEdgeModel >> label: aString [
 ]
 
 { #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelCoordinate [
+	^ labelModel coordinate
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelCoordinate: aPoint [
+	labelModel coordinate: aPoint
+]
+
+{ #category : #'api - label' }
 GtWardleyMapEdgeModel >> labelModel [
 	<return: #GtWardleyMapEdgeLabelModel>
 	^ labelModel

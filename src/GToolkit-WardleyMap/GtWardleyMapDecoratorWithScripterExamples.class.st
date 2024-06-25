@@ -7,6 +7,32 @@ Class {
 }
 
 { #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorWithScripterExamples >> assertScripter: aStep nonExistentPropositionElementIds: aCollectionOfIds ofEdgeNamed: anEdgeName [
+	aStep
+		substeps: ('Assert "{1}" proposition elements' format: {anEdgeName})
+		do: [ :aSubStep | 
+			aSubStep assert
+				label: ('Assert "{1}" proposition element does not exist' format: {anEdgeName});
+				notExists;
+				// GtWardleyMapEdgePropositionElement;
+				@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeName ];
+				play.
+
+			aCollectionOfIds
+				do: [ :eachElementId | 
+					aSubStep assert
+						label: ('Assert "{1}" proposition {2} does not exist'
+								format: {anEdgeName. eachElementId asSymbol});
+						notExists;
+						// GtWardleyMapEdgeElement;
+						@ [ :anElement | 
+							anElement graph isNode
+								and: [ anElement wardleyMapNodeViewModel label = anEdgeName ] ];
+						/ eachElementId;
+						play ] ]
+]
+
+{ #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> assertScripter: aStep nonExistentPropositionElementIds: aCollectionOfIds ofNodeNamed: aNodeName [
 	aStep
 		substeps: ('Assert "{1}" proposition elements' format: {aNodeName})
@@ -154,6 +180,210 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 				// GtWardleyCenterRightOuterDecoratorId;
 				/ GtWardleyMapRemoveRejectId;
 				play ].
+				
+	aScripter
+		substeps: 'Assert Edge A->B proposition elements'
+		do: [ :aStep | 
+			| anEdgeName |
+			anEdgeName := 'Edge A->B'.
+			aStep assert
+				label: 'Assert Edge A->B proposition element exists';
+				exists;
+				// GtWardleyMapEdgePropositionElement;
+				@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeName ];
+				play.
+
+			aStep assert
+				label: 'Assert Edge A->B proposition accept button exists';
+				exists;
+				// GtWardleyMapEdgeElement;
+				@ [ :anElement | 
+					anElement graph isEdge
+						and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+				// GtWardleyMapAddAcceptId;
+				play.
+
+			aStep assert
+				label: 'Assert Edge A->B proposition reject button exists';
+				exists;
+				// GtWardleyMapEdgeElement;
+				@ [ :anElement | 
+					anElement graph isEdge
+						and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+				// GtWardleyMapAddRejectId;
+				play ].
+				
+	aScripter
+		substeps: 'Assert Edge A->C proposition elements'
+		do: [ :aStep | 
+			| anEdgeName |
+			anEdgeName := 'Edge A->C'.
+			aStep assert
+				label: 'Assert Edge A->C proposition element exists';
+				exists;
+				// GtWardleyMapEdgePropositionElement;
+				@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeName ];
+				play.
+
+			aStep assert
+				label: 'Assert Edge A->C proposition accept button exists';
+				exists;
+				// GtWardleyMapEdgeElement;
+				@ [ :anElement | 
+					anElement graph isEdge
+						and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+				// GtWardleyMapRemoveAcceptId;
+				play.
+
+			aStep assert
+				label: 'Assert Edge A->C proposition reject button exists';
+				exists;
+				// GtWardleyMapEdgeElement;
+				@ [ :anElement | 
+					anElement graph isEdge
+						and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+				// GtWardleyMapRemoveRejectId;
+				play ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeABAccept [
+	<gtExample>
+	| aScripter anEdgeName |
+	aScripter := self mapWithProposedModifications.
+
+	anEdgeName := 'Edge A->B'.
+	
+	aScripter click
+		label: 'Accept Edge A->B click';
+		// GtWardleyMapEdgeElement;
+		@ [ :anElement | 
+			anElement graph isEdge
+				and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+		// GtWardleyMapAddAcceptId;
+		play.
+
+	aScripter assert
+		label: 'Assert edge exists';
+		satisfies: [ :aModel | 
+			aModel
+				edgeWithName: anEdgeName
+				ifFound: [ :anEdge | true ]
+				ifNone: [ false ] ];
+		onModel;
+		play.
+
+	self
+		assertScripter: aScripter
+		nonExistentPropositionElementIds: { GtWardleyMapAddAcceptId. GtWardleyMapAddRejectId}
+		ofEdgeNamed: anEdgeName.
+
+	^ aScripter
+]
+
+{ #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeABReject [
+	<gtExample>
+	| aScripter anEdgeName |
+	aScripter := self mapWithProposedModifications.
+
+	anEdgeName := 'Edge A->B'.
+	
+	aScripter click
+		label: 'Reject Edge A->B click';
+		// GtWardleyMapEdgeElement;
+		@ [ :anElement | 
+			anElement graph isEdge
+				and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+		// GtWardleyMapAddRejectId;
+		play.
+
+	aScripter assert
+		label: 'Assert edge does not exist';
+		satisfies: [ :aModel | 
+			aModel
+				edgeWithName: anEdgeName
+				ifFound: [ :anEdge | false ]
+				ifNone: [ true ] ];
+		onModel;
+		play.
+
+	self
+		assertScripter: aScripter
+		nonExistentPropositionElementIds: { GtWardleyMapAddAcceptId. GtWardleyMapAddRejectId}
+		ofEdgeNamed: anEdgeName.
+
+	^ aScripter
+]
+
+{ #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeACAccept [
+	<gtExample>
+	| aScripter anEdgeName |
+	aScripter := self mapWithProposedModifications.
+
+	anEdgeName := 'Edge A->C'.
+	
+	aScripter click
+		label: 'Accept Edge A->C click';
+		// GtWardleyMapEdgeElement;
+		@ [ :anElement | 
+			anElement graph isEdge
+				and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+		// GtWardleyMapRemoveAcceptId;
+		play.
+
+	aScripter assert
+		label: 'Assert edge does not exist';
+		satisfies: [ :aModel | 
+			aModel
+				edgeWithName: anEdgeName
+				ifFound: [ :anEdge | false ]
+				ifNone: [ true ] ];
+		onModel;
+		play.
+
+	self
+		assertScripter: aScripter
+		nonExistentPropositionElementIds: { GtWardleyMapRemoveAcceptId. GtWardleyMapRemoveRejectId}
+		ofEdgeNamed: anEdgeName.
+
+	^ aScripter
+]
+
+{ #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeACReject [
+	<gtExample>
+	| aScripter anEdgeName |
+	aScripter := self mapWithProposedModifications.
+
+	anEdgeName := 'Edge A->C'.
+	
+	aScripter click
+		label: 'Reject Edge A->C click';
+		// GtWardleyMapEdgeElement;
+		@ [ :anElement | 
+			anElement graph isEdge
+				and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
+		// GtWardleyMapRemoveRejectId;
+		play.
+
+	aScripter assert
+		label: 'Assert edge exists';
+		satisfies: [ :aModel | 
+			aModel
+				edgeWithName: anEdgeName
+				ifFound: [ :anEdge | true ]
+				ifNone: [ true ] ];
+		onModel;
+		play.
+
+	self
+		assertScripter: aScripter
+		nonExistentPropositionElementIds: { GtWardleyMapRemoveAcceptId. GtWardleyMapRemoveRejectId}
+		ofEdgeNamed: anEdgeName.
 
 	^ aScripter
 ]
