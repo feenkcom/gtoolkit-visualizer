@@ -118,8 +118,14 @@ GtWardleyMapNodePropositionElement >> onNodePipelineVisibilityChanged: anAnnounc
 ]
 
 { #category : #'event handling' }
+GtWardleyMapNodePropositionElement >> onNodeRemoved [
+	self removeLabelDecoration.
+	self removeFromParent
+]
+
+{ #category : #'event handling' }
 GtWardleyMapNodePropositionElement >> onNodeRemoved: anAnnouncement [
-	BlTaskAction enqueueElement: self action: [ self removeFromParent ]
+	BlTaskAction enqueueElement: self action: [ self onNodeRemoved ]
 ]
 
 { #category : #'event handling' }

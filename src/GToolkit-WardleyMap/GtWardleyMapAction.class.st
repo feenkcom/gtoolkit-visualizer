@@ -37,11 +37,20 @@ GtWardleyMapAction >> aptitude: aBlock [
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAction >> decorateEdgeElementInContext: anEdgeDecoratorContext [
-	anEdgeDecoratorContext
-		labelContainerDo: [ :aLabelContainer | 
-			| anActionContainer aButton |
+	anEdgeDecoratorContext isLabelVisible
+		ifTrue: [ anEdgeDecoratorContext
+				labelContainerDo: [ :aLabelContainer | 
+					| anActionContainer aButton |
+					anActionContainer := GtWardleyMapUtility
+							ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
+					aButton := self newEdgeButton.
+					aButton
+						wardleyMapEdgeViewModel: anEdgeDecoratorContext edgeViewModel;
+						wardleyMapDecoratorViewModel: anEdgeDecoratorContext decoratorViewModel.
+					anActionContainer addChild: aButton ] ]
+		ifFalse: [ | anActionContainer aButton |
 			anActionContainer := GtWardleyMapUtility
-					ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
+					ensureCenterDecoratorContainerFor: anEdgeDecoratorContext edgeElement.
 			aButton := self newEdgeButton.
 			aButton
 				wardleyMapEdgeViewModel: anEdgeDecoratorContext edgeViewModel;

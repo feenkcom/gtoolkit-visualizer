@@ -10,6 +10,15 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
+{ #category : #'private - updating' }
+GtWardleyMapEdgePropositionElement >> addLabelDecoration [
+	edgeElement
+		labelElementDo: [ :aContainer | 
+			aContainer
+				geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
+				background: highlightColor ]
+]
+
 { #category : #initialization }
 GtWardleyMapEdgePropositionElement >> beAddProposition [
 	highlightColor := BrGlamorousColors successBackgroundColor.
@@ -28,14 +37,23 @@ GtWardleyMapEdgePropositionElement >> beRemoveProposition [
 				width: GtWardleyMapConstants edgePropositionWidth)
 ]
 
-{ #category : #accessing }
+{ #category : #'api - edge' }
 GtWardleyMapEdgePropositionElement >> edgeElement [
 	^ edgeElement
 ]
 
-{ #category : #accessing }
-GtWardleyMapEdgePropositionElement >> edgeElement: anObject [
-	edgeElement := anObject
+{ #category : #'api - edge' }
+GtWardleyMapEdgePropositionElement >> edgeElement: anEdgeElement [
+	self
+		assert: [ anEdgeElement isNotNil ]
+		description: [ 'Edge element be non-nil' ].
+	self
+		assert: [ edgeElement isNil ]
+		description: [ 'Edge element can be initialized only once' ].
+
+	edgeElement := anEdgeElement.
+
+	self onEdgeElementChanged
 ]
 
 { #category : #initialization }
@@ -48,6 +66,7 @@ GtWardleyMapEdgePropositionElement >> initialize [
 
 { #category : #'event handling' }
 GtWardleyMapEdgePropositionElement >> onDecoratorRemoved [
+	self removeLabelDecoration.
 	self removeFromParent
 ]
 
@@ -72,8 +91,14 @@ GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged: anAnnouncement [
 	BlTaskAction enqueueElement: self action: [ self onEdgeArrowChanged ]
 ]
 
+{ #category : #'api - edge' }
+GtWardleyMapEdgePropositionElement >> onEdgeElementChanged [
+	self addLabelDecoration
+]
+
 { #category : #'event handling' }
 GtWardleyMapEdgePropositionElement >> onEdgeRemoved [
+	self removeLabelDecoration.
 	self removeFromParent
 ]
 
@@ -109,6 +134,15 @@ GtWardleyMapEdgePropositionElement >> onWardleyMapEdgeViewModelChanged [
 	
 	self onEdgeResized.
 	self onEdgeArrowChanged
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapEdgePropositionElement >> removeLabelDecoration [
+	edgeElement
+		labelElementDo: [ :aContainer | 
+			aContainer
+				geometry: BlRectangleGeometry new;
+				background: BlBackground transparent ]
 ]
 
 { #category : #'api - wardley map decorator model' }

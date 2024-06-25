@@ -396,6 +396,7 @@ GtWardleyMapModelExamples >> newMapWithNodes [
 		arrow: true;
 		label: 'Edge A->B';
 		isLabelVisible: true;
+		labelCoordinate: 0.33 @ 0.53;
 		width: 2.
 
 	aWardleyMap := self newMap.
