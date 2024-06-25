@@ -19,19 +19,6 @@ GtWardleyMapDropdownAction >> content: aBlock [
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> decorateNodeElementInContext: aNodeDecoratorContext [
-	aNodeDecoratorContext nodeElement
-		labelContainerDo: [ :aLabelContainer | 
-			| anActionContainer aButton |
-			anActionContainer := GtWardleyMapUtility ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
-			aButton := self newNodeButton.
-			aButton
-				wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
-				wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel weak.
-			anActionContainer addChild: aButton ]
-]
-
-{ #category : #accessing }
 GtWardleyMapDropdownAction >> newButton: aButtonClass [
 	| anAptitude |
 	anAptitude := BrGlamorousWithDropdownAptitude

@@ -9,7 +9,8 @@ Class {
 		'action',
 		'aptitude',
 		'model',
-		'tooltip'
+		'tooltip',
+		'elementId'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
@@ -58,6 +59,17 @@ GtWardleyMapAction >> decorateNodeElementInContext: aNodeDecoratorContext [
 			anActionContainer addChild: aButton ]
 ]
 
+{ #category : #accessing }
+GtWardleyMapAction >> elementId [
+	<return: #BlElementId or: nil>
+	^ elementId
+]
+
+{ #category : #accessing }
+GtWardleyMapAction >> elementId: anObject [
+	elementId := anObject
+]
+
 { #category : #'api - decoration' }
 GtWardleyMapAction >> icon [
 	^ icon
@@ -92,6 +104,7 @@ GtWardleyMapAction >> model: anObject [
 GtWardleyMapAction >> newButton: aButtonClass [
 	^ GtWardleyMapActionButtonStencil new
 		buttonClass: aButtonClass;
+		elementId: self elementId;
 		icon: self icon;
 		label: self label;
 		tooltip: self tooltip;

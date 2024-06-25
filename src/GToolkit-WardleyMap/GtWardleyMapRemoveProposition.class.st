@@ -53,12 +53,14 @@ GtWardleyMapRemoveProposition >> initialize [
 	super initialize.
 
 	acceptAction := GtWardleyMapAction new.
+	acceptAction elementId: GtWardleyMapRemoveAcceptId.
 	acceptAction icon: BrGlamorousVectorIcons accept.
-	acceptAction tooltip: 'Remove node'.
+	acceptAction tooltip: 'Remove'.
 	acceptAction action: [ self onAcceptAction ].
 	rejectAction := GtWardleyMapAction new.
+	rejectAction elementId: GtWardleyMapRemoveRejectId.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
-	rejectAction tooltip: 'Keep node'.
+	rejectAction tooltip: 'Keep'.
 	rejectAction action: [ self onRejectAction ].
 ]
 

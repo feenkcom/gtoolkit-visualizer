@@ -53,13 +53,15 @@ GtWardleyMapAddProposition >> initialize [
 	super initialize.
 
 	acceptAction := GtWardleyMapAction new.
+	acceptAction elementId: GtWardleyMapAddAcceptId.
 	acceptAction icon: BrGlamorousVectorIcons accept.
-	acceptAction tooltip: 'Keep node'.
+	acceptAction tooltip: 'Keep'.
 	acceptAction action: [ self onAcceptAction ].
 	rejectAction := GtWardleyMapAction new.
+	rejectAction elementId: GtWardleyMapAddRejectId.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
 	rejectAction action: [ self onRejectAction ].
-	rejectAction tooltip: 'Remove node'.
+	rejectAction tooltip: 'Remove'.
 ]
 
 { #category : #'event handling' }

@@ -34,16 +34,19 @@ GtWardleyMapRenameProposition >> decorateNodeElementInContext: aNodeDecoratorCon
 GtWardleyMapRenameProposition >> initialize [
 	super initialize.
 	dropdownAction := GtWardleyMapDropdownAction new.
+	dropdownAction elementId: GtWardleyMapRenameProposalsId.
 	dropdownAction icon: BrGlamorousVectorIcons downwards.
 	dropdownAction tooltip: 'Proposed names'.
 	dropdownAction content: [ self newProposalList ].
 
 	acceptAction := GtWardleyMapAction new.
+	acceptAction elementId: GtWardleyMapRenameAcceptId.
 	acceptAction icon: BrGlamorousVectorIcons accept.
 	acceptAction tooltip: 'Accept rename'.
 	acceptAction action: [ self onProposalFinished ].
 
 	rejectAction := GtWardleyMapAction new.
+	rejectAction elementId: GtWardleyMapRenameRejectId.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
 	rejectAction tooltip: 'Keep original name'.
 	rejectAction action: [ self onRejectRename ]
@@ -80,6 +83,7 @@ GtWardleyMapRenameProposition >> newProposalList [
 					aptitude: (BrGlamorousLabelAptitude new
 							foreground: BrGlamorousColors disabledButtonTextColor).
 			aTitle2 := self newListItemElement
+					id: GtWardleyMapRenameOriginalNameId;
 					margin: (BlInsets
 							top: 0
 							right: 3
@@ -106,7 +110,10 @@ GtWardleyMapRenameProposition >> newProposalList [
 			vFitContentLimited;
 			items: self options;
 			itemStencil: [ self newListItemElement ];
-			itemDataBinder: [ :anItemElement :anItem | anItemElement text: anItem ].
+			itemDataBinder: [ :anItemElement :anItem :anItemIndex | 
+				anItemElement 
+					id: (GtWardleyMapRenameProposalId indexed: anItemIndex);
+					text: anItem ].
 
 
 	aContainer
