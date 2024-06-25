@@ -11,6 +11,39 @@ GtWardleyMapActionEdgeButton >> decoratorViewModelRemovedAnnouncementClass [
 	^ GtWardleyMapEdgeDecoratorViewModelRemoved
 ]
 
+{ #category : #'private - updating' }
+GtWardleyMapActionEdgeButton >> edgeElementDo: aBlock [
+	self allParentsDo: [ :aParent | 
+		aParent graph isEdge ifTrue: [ 
+			aBlock value: aParent ] ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapActionEdgeButton >> moveNextToLabelElement [
+	self
+		edgeElementDo: [ :anEdgeElement | 
+			anEdgeElement
+				labelContainerDo: [ :aLabelContainer | 
+					| anActionContainer |
+					anActionContainer := GtWardleyMapUtility
+							ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
+					anActionContainer == self parent ifFalse: [
+						self removeFromParent.
+						anActionContainer addChild: self ] ] ]
+]
+
+{ #category : #'private - updating' }
+GtWardleyMapActionEdgeButton >> moveToTheCenterOfEdgeElement [
+	self
+		edgeElementDo: [ :anEdgeElement | 
+			| anActionContainer |
+			anActionContainer := GtWardleyMapUtility
+					ensureCenterDecoratorContainerFor: anEdgeElement.
+			anActionContainer == self parent ifFalse: [ 
+				self removeFromParent.
+				anActionContainer addChild: self ] ]
+]
+
 { #category : #'event handling' }
 GtWardleyMapActionEdgeButton >> onEdgeRemoved [
 	self removeFromParent
@@ -21,11 +54,23 @@ GtWardleyMapActionEdgeButton >> onEdgeRemoved: anAnnouncement [
 	BlTaskAction enqueueElement: self action: [ self onEdgeRemoved ]
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapActionEdgeButton >> onEdgeVisibilityChanged [
+	self wardleyMapEdgeViewModel isLabelVisible
+		ifTrue: [ self moveNextToLabelElement ]
+		ifFalse: [ self moveToTheCenterOfEdgeElement ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapActionEdgeButton >> onEdgeVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeVisibilityChanged ]
+]
+
 { #category : #'api - wardley map edge view model' }
 GtWardleyMapActionEdgeButton >> onWardleyMapEdgeViewModelChanged [
 	"Is sent when a new wardleyMapEdge view model is assigned to the element"
 
-	
+	self onEdgeVisibilityChanged
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -37,6 +82,9 @@ GtWardleyMapActionEdgeButton >> subscribeToWardleyMapEdgeViewModel [
 	self wardleyMapEdgeViewModel weak
 		when: GtWardleyMapEdgeViewModelRemoved
 		send: #onEdgeRemoved:
+		to: self;
+		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged
+		send: #onEdgeVisibilityChanged:
 		to: self
 ]
 

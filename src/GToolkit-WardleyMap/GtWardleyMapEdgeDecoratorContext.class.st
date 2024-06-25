@@ -40,6 +40,11 @@ GtWardleyMapEdgeDecoratorContext >> fromNodeElement: anObject [
 	fromNodeElement := anObject
 ]
 
+{ #category : #testing }
+GtWardleyMapEdgeDecoratorContext >> isLabelVisible [
+	^ self edgeViewModel isLabelVisible
+]
+
 { #category : #accessing }
 GtWardleyMapEdgeDecoratorContext >> labelContainerDo: aBlock [
 	self edgeElement labelContainerDo: aBlock

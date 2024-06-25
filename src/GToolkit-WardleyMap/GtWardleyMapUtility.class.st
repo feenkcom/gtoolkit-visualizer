@@ -105,6 +105,28 @@ GtWardleyMapUtility class >> defaultMapTitle [
 ]
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> ensureCenterDecoratorContainerFor: anElement [
+	| aQuery aContainer |
+	aQuery := anElement query / GtWardleyCenterDecoratorId.
+	aQuery isEmpty ifFalse: [ ^ aQuery result anyOne ].
+
+	anElement clipChildren: false.
+	aContainer := GtWardleyMapDecoratorContainerElement new
+			id: GtWardleyCenterDecoratorId;
+			hFitContent;
+			vFitContent.
+	aContainer wardley beDecorator.
+	
+	aContainer constraintsDo: [ :c |
+		c ignoreByLayout.
+		c ignored horizontal alignCenter.
+		c ignored vertical alignCenter ].
+
+	anElement addChild: aContainer.
+	^ aContainer
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> ensureCenterRightOuterDecoratorContainerFor: anElement [
 	| aQuery aContainer |
 	aQuery := anElement query / GtWardleyCenterRightOuterDecoratorId.
