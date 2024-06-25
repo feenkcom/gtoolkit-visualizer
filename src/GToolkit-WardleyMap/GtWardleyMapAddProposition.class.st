@@ -23,6 +23,7 @@ GtWardleyMapAddProposition >> decorateEdgeElementInContext: anEdgeDecoratorConte
 			beAddProposition;
 			wardleyMapEdgeViewModel: anEdgeViewModel;
 			wardleyMapDecoratorViewModel: anEdgeDecoratorContext decoratorViewModel;
+			edgeElement: anEdgeDecoratorContext edgeElement;
 			fromAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aFromNodeElement
 					relatedTo: aToNodeElement);
