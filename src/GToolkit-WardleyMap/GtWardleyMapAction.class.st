@@ -36,6 +36,20 @@ GtWardleyMapAction >> aptitude: aBlock [
 ]
 
 { #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> decorateEdgeElementInContext: anEdgeDecoratorContext [
+	anEdgeDecoratorContext
+		labelContainerDo: [ :aLabelContainer | 
+			| anActionContainer aButton |
+			anActionContainer := GtWardleyMapUtility
+					ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
+			aButton := self newEdgeButton.
+			aButton
+				wardleyMapEdgeViewModel: anEdgeDecoratorContext edgeViewModel;
+				wardleyMapDecoratorViewModel: anEdgeDecoratorContext decoratorViewModel.
+			anActionContainer addChild: aButton ]
+]
+
+{ #category : #'api - wardley map decorator model' }
 GtWardleyMapAction >> decorateMapElementInContext: aMapDecoratorContext [
 	| anActionContainer aButton |
 	anActionContainer := GtWardleyMapUtility
@@ -112,6 +126,11 @@ GtWardleyMapAction >> newButton: aButtonClass [
 		action: self action;
 		model: self model;
 		asElement
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> newEdgeButton [
+	^ self newButton: GtWardleyMapActionEdgeButton
 ]
 
 { #category : #'api - wardley map decorator model' }

@@ -144,6 +144,14 @@ GtWardleyMapModel >> edgeFromNode: aFromNode toNode: aToNode ifFound: aFoundBloc
 		ifNone: aNoneBlock
 ]
 
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> edgeWithName: aName ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self edges
+		detect: [ :eachEdge | eachEdge label = aName ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> edges [
 	^ edges

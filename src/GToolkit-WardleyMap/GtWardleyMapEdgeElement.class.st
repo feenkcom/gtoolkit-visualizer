@@ -49,6 +49,8 @@ GtWardleyMapEdgeElement >> initialize [
 	"we have to wrap the editable label in a pullable element to allow text selection with drag"
 	labelContainer := BrHorizontalPane new
 			fitContent;
+			constraintsDo: [ :c | 
+				c ignoreByLayout ];
 			addEventHandler: (GtWardleyMapPullHandler new
 					containerElement: self;
 					allowOutOfBounds;
@@ -79,6 +81,11 @@ GtWardleyMapEdgeElement >> initialize [
 ]
 
 { #category : #accessing }
+GtWardleyMapEdgeElement >> labelContainerDo: aBlock [
+	aBlock value: labelContainer
+]
+
+{ #category : #accessing }
 GtWardleyMapEdgeElement >> labelElementDo: aBlock [
 	aBlock value: labelElement
 ]
@@ -100,8 +107,8 @@ GtWardleyMapEdgeElement >> onEdgeColored: anAnnouncement [
 { #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeLabelMoved [
 	labelContainer constraintsDo: [ :c | 
-		c frame horizontal alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateX.
-		c frame vertical alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateY ]
+		c ignored horizontal alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateX.
+		c ignored vertical alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateY ]
 ]
 
 { #category : #'event handling' }

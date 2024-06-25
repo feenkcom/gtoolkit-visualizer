@@ -47,6 +47,16 @@ GtWardleyMapEdgePropositionElement >> initialize [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onDecoratorRemoved [
+	self removeFromParent
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onDecoratorRemoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onDecoratorRemoved ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged [
 	self
 		toHead: (self wardleyMapEdgeViewModel hasLineArrow
@@ -101,6 +111,18 @@ GtWardleyMapEdgePropositionElement >> onWardleyMapEdgeViewModelChanged [
 	self onEdgeArrowChanged
 ]
 
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapDecoratorViewModel [
+	"Is sent after a new wardleyMapDecorator view model is assigned to the element.
+	It is required to unsubscribe from the view model by implementing
+	#unsubscribeFromWardleyMapDecoratorViewModel if element subscribes to them"
+
+	self wardleyMapDecoratorViewModel weak
+		when: GtWardleyMapEdgeDecoratorViewModelRemoved
+		send: #onDecoratorRemoved:
+		to: self
+]
+
 { #category : #'api - wardley map edge view model' }
 GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapEdgeViewModel [
 	"Is sent after a new wardleyMapEdge view model is assigned to the element.
@@ -111,6 +133,14 @@ GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapEdgeViewModel [
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
 		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self.
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapEdgePropositionElement >> unsubscribeFromWardleyMapDecoratorViewModel [
+	"Is sent before a new wardleyMapDecorator view model is assigned to the element.
+	Elements that subscribe to wardleyMapDecorator view model are required to implement this methods"
+
+	self wardleyMapDecoratorViewModel unsubscribe: self
 ]
 
 { #category : #'api - wardley map edge view model' }

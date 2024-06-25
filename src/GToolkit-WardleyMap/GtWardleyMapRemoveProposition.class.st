@@ -30,7 +30,10 @@ GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: anEdgeDecoratorCo
 					referenceElement: aToNodeElement
 					relatedTo: aFromNodeElement).
 
-	aCanvasElement addChild: aPropositionElement
+	aCanvasElement addChild: aPropositionElement.
+	
+	acceptAction decorateEdgeElementInContext: anEdgeDecoratorContext.
+	rejectAction decorateEdgeElementInContext: anEdgeDecoratorContext
 ]
 
 { #category : #accessing }

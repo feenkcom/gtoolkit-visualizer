@@ -41,6 +41,11 @@ GtWardleyMapEdgeDecoratorContext >> fromNodeElement: anObject [
 ]
 
 { #category : #accessing }
+GtWardleyMapEdgeDecoratorContext >> labelContainerDo: aBlock [
+	self edgeElement labelContainerDo: aBlock
+]
+
+{ #category : #accessing }
 GtWardleyMapEdgeDecoratorContext >> toNodeElement [
 	^ toNodeElement
 ]
