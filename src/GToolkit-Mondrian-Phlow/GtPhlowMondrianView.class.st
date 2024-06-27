@@ -32,8 +32,8 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 						transformedObject := transformation cull: graphModel.
 						mondrianElement phlow spawnObject: transformedObject ] ];
 		when: BlMouseWheelEvent
-			do: [ :event |
-				event primaryModifierPressed
+			do: [ :event | 
+				event modifiers = BlKeyModifiers primary
 					ifTrue: [ event isPrimarilyVertical
 							ifTrue: [ | eventYvector newZoomLevel scalingFactor |
 								event consumed: true.
