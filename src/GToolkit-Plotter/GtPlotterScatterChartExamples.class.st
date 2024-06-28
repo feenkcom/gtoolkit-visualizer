@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> boxPlotAxisDifferentGeometry [
+	<gtExample>
+	| aChart |
+	aChart :=  self scatterDifferentGeometry.
+	aChart labelFormatY: [:aValue | (aValue printShowingDecimalPlaces: 2) asRopedText foreground: Color darkGray ].
+	aChart withBoxPlotAxis.
+	 ^ aChart
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> emptyPlot [
 	<gtExample>
 	| chart |
@@ -104,7 +114,7 @@ GtPlotterScatterChartExamples >> horizontalProjectionAxis [
 	<gtExample>
 	| aChart |
 	aChart := self projectionAxis.
-	aChart axisXStencil: GtPlotterHorizontalProjectionTicksAndLabelsStencil new.
+	aChart axisXStencil: GtPlotterHorizontalProjectionTicksAndLabelsAxisStencil new.
 	^ aChart
 ]
 
@@ -208,6 +218,6 @@ GtPlotterScatterChartExamples >> verticalProjectionAxis [
 	<gtExample>
 	| aChart |
 	aChart := self projectionAxis.
-	aChart axisXStencil: GtPlotterHorizontalProjectionTicksAndVerticalLabelsStencil new.
+	aChart axisXStencil: GtPlotterHorizontalProjectionTicksAndVerticalLabelsAxisStencil new.
 	^ aChart
 ]

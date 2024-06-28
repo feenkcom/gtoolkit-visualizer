@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterVerticalTicksAndLabelsStencil,
-	#superclass : #GtPlotterTicksAndLabelsStencil,
+	#name : #GtPlotterVerticalTicksAndLabelsAxisStencil,
+	#superclass : #GtPlotterScatterAxisStencil,
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> addAxisYElementOn: aContainer [
 	aContainer addChild: (BlElement new
 		width: 2;
 		background: (Color veryVeryLightGray);
@@ -15,7 +15,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> buildDefault [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> buildDefault [
 	| aContainer |
 	aContainer := BrHorizontalPane new
 		hFitContent;
@@ -33,13 +33,13 @@ GtPlotterVerticalTicksAndLabelsStencil >> buildDefault [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> initialize [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> initialize [
 	super initialize.
 	eventHandler := GtPlotterScatterFocusYHandler new
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTickLabelsElement [
 	^ GtPlotterVerticalTickLabelsElement new
 		scale: scatterChart scaleY;
 		inverse;
@@ -69,7 +69,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTicksElement [
 	^ GtPlotterVerticalTicksElement new
 		scale: scatterChart scaleY;
 		tickElement: [ :aGtPlotterContext |
@@ -85,7 +85,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTitleElement [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTitleElement [
 
 	^ BrFrame new
 		fitContent;
