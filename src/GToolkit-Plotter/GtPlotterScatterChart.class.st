@@ -35,12 +35,12 @@ Class {
 
 { #category : #accessing }
 GtPlotterScatterChart >> axisXStencil: aGtPlotterHorizontalTicksAndLabelStencil [
-	axisXStencil := aGtPlotterHorizontalTicksAndLabelStencil asStencilBuilder: GtPlotterHorizontalTicksAndLabelsStencil
+	axisXStencil := aGtPlotterHorizontalTicksAndLabelStencil asStencilBuilder: GtPlotterHorizontalTicksAndLabelsAxisStencil
 ]
 
 { #category : #accessing }
 GtPlotterScatterChart >> axisYStencil: aGtPlotterVerticalTicksAndLabelsStencil [
-	axisYStencil := aGtPlotterVerticalTicksAndLabelsStencil asStencilBuilder: GtPlotterVerticalTicksAndLabelsStencil
+	axisYStencil := aGtPlotterVerticalTicksAndLabelsStencil asStencilBuilder: GtPlotterVerticalTicksAndLabelsAxisStencil
 ]
 
 { #category : #'api - instantiation' }
@@ -512,15 +512,21 @@ GtPlotterScatterChart >> with: aGtPlotterDataGroup [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChart >> withBoxPlotAxis [
+	self axisYStencil: GtPlotterVerticalBoxPlotAxisStencil new.
+	self axisXStencil: GtPlotterHorizontalBoxPlotAxisStencil new.
+]
+
+{ #category : #accessing }
 GtPlotterScatterChart >> withProjectionAxis [
-	self axisYStencil: GtPlotterVerticalProjectionTicksAndLabelsStencil new.
-	self axisXStencil: GtPlotterHorizontalProjectionTicksAndDiagonalLabelsStencil new.
+	self axisYStencil: GtPlotterVerticalProjectionTicksAndLabelsAxisStencil new.
+	self axisXStencil: GtPlotterHorizontalProjectionTicksAndDiagonalLabelsAxisStencil new.
 ]
 
 { #category : #accessing }
 GtPlotterScatterChart >> withTicksAndLabelsAxis [
-	self axisYStencil: GtPlotterVerticalTicksAndLabelsStencil new.
-	self axisXStencil: GtPlotterHorizontalTicksAndLabelsStencil new.
+	self axisYStencil: GtPlotterVerticalTicksAndLabelsAxisStencil new.
+	self axisXStencil: GtPlotterHorizontalTicksAndLabelsAxisStencil new.
 ]
 
 { #category : #accessing }

@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterHorizontalTicksAndLabelsStencil,
-	#superclass : #GtPlotterTicksAndLabelsStencil,
+	#name : #GtPlotterHorizontalTicksAndLabelsAxisStencil,
+	#superclass : #GtPlotterScatterAxisStencil,
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> addAxisXLineElementOn: aContainer [
 	aContainer addChild: (BlElement new
 		height: 2;
 		background: (Color veryVeryLightGray);
@@ -15,7 +15,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> buildDefault [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> buildDefault [
 	| aContainer |
 	aContainer := BrVerticalPane new
 		vFitContent;
@@ -34,7 +34,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> buildDefault [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTickLabelsElement [
 	^ GtPlotterHorizontalTickLabelsElement new
 		labelElement: [ :aGtPlotterScaleContext |
 			BlTextElement new
@@ -52,7 +52,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTicksElement [
 	^ GtPlotterHorizontalTicksElement new
 		scale: scatterChart scaleX;
 		tickElement: [ :aGtPlotterContext |
@@ -68,7 +68,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTitleElement [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTitleElement [
 
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new 
