@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #'api - views' }
+GtWardleyMapUtility class >> buttonLabelFromString: aString [
+	aString size <= GtWardleyMapConstants maxButtonLabelCharacters 
+		ifTrue: [ ^ aString ].
+		
+	^ (aString copyFrom: 1 to: GtWardleyMapConstants maxButtonLabelCharacters - 3), '...'
+]
+
+{ #category : #'api - views' }
 GtWardleyMapUtility class >> computePipelineModelVerticalCenterOffset: aPipelineNodeModel [
 	"I compute a pipeline element offset that should be used to
 	place the pipeline element below its node element.
@@ -97,14 +105,36 @@ GtWardleyMapUtility class >> defaultMapTitle [
 ]
 
 { #category : #'api - views' }
-GtWardleyMapUtility class >> ensureRightDecoratorContainerFor: anElement [
+GtWardleyMapUtility class >> ensureCenterDecoratorContainerFor: anElement [
 	| aQuery aContainer |
-	aQuery := anElement query / GtWardleyRightDecoratorId.
+	aQuery := anElement query / GtWardleyCenterDecoratorId.
 	aQuery isEmpty ifFalse: [ ^ aQuery result anyOne ].
 
 	anElement clipChildren: false.
 	aContainer := GtWardleyMapDecoratorContainerElement new
-			id: GtWardleyRightDecoratorId;
+			id: GtWardleyCenterDecoratorId;
+			hFitContent;
+			vFitContent.
+	aContainer wardley beDecorator.
+	
+	aContainer constraintsDo: [ :c |
+		c ignoreByLayout.
+		c ignored horizontal alignCenter.
+		c ignored vertical alignCenter ].
+
+	anElement addChild: aContainer.
+	^ aContainer
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> ensureCenterRightOuterDecoratorContainerFor: anElement [
+	| aQuery aContainer |
+	aQuery := anElement query / GtWardleyCenterRightOuterDecoratorId.
+	aQuery isEmpty ifFalse: [ ^ aQuery result anyOne ].
+
+	anElement clipChildren: false.
+	aContainer := GtWardleyMapDecoratorContainerElement new
+			id: GtWardleyCenterRightOuterDecoratorId;
 			hFitContent;
 			vFitContent.
 	aContainer wardley beDecorator.
@@ -113,6 +143,51 @@ GtWardleyMapUtility class >> ensureRightDecoratorContainerFor: anElement [
 		c ignoreByLayout.
 		c ignored horizontal alignLeftAt: 1.0.
 		c ignored vertical alignCenter ].
+
+	anElement addChild: aContainer.
+	^ aContainer
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> ensureTopLeftInnerDecoratorContainerFor: anElement [
+	| aQuery aContainer |
+	aQuery := anElement query / GtWardleyTopLeftInnerDecoratorId.
+	aQuery isEmpty ifFalse: [ ^ aQuery result anyOne ].
+
+	anElement clipChildren: false.
+	aContainer := GtWardleyMapDecoratorContainerElement new
+			id: GtWardleyTopLeftInnerDecoratorId;
+			hFitContent;
+			vFitContent.
+	aContainer wardley beDecorator.
+	
+	aContainer constraintsDo: [ :c |
+		c ignoreByLayout.
+		c ignored horizontal alignLeft.
+		c ignored vertical alignTop ].
+
+	anElement addChild: aContainer.
+	^ aContainer
+]
+
+{ #category : #'api - views' }
+GtWardleyMapUtility class >> ensureTopRightInnerDecoratorContainerFor: anElement [
+	| aQuery aContainer |
+	aQuery := anElement query / GtWardleyTopRightInnerDecoratorId.
+	aQuery isEmpty ifFalse: [ ^ aQuery result anyOne ].
+
+	anElement clipChildren: false.
+	aContainer := GtWardleyMapDecoratorContainerElement new
+			id: GtWardleyTopRightInnerDecoratorId;
+			margin: (BlInsets top: 3 right: 3);
+			hFitContent;
+			vFitContent.
+	aContainer wardley beDecorator.
+	
+	aContainer constraintsDo: [ :c |
+		c ignoreByLayout.
+		c ignored horizontal alignRight.
+		c ignored vertical alignTop ].
 
 	anElement addChild: aContainer.
 	^ aContainer

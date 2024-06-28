@@ -1,10 +1,10 @@
 Class {
-	#name : #GtWardleyRightDecoratorId,
+	#name : #GtWardleyCenterDecoratorId,
 	#superclass : #BlElementUniqueId,
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
 { #category : #converting }
-GtWardleyRightDecoratorId >> asSymbol [
-	^ #'wardley--right-decorator'
+GtWardleyCenterDecoratorId >> asSymbol [
+	^ #'wardley--center-decorator'
 ]

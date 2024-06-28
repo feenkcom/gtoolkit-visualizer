@@ -25,9 +25,15 @@ GtWardleyMapMaximizerAction >> aptitude: aBlock [
 ]
 
 { #category : #'api - wardley map decorator model' }
-GtWardleyMapMaximizerAction >> decorateNodeElement: aNodeElement decoratorViewModel: aDecoratorViewModel [
-	aNodeElement labelContainerDo: [ :aContainer | 
-		aContainer addChild: self newButton ]
+GtWardleyMapMaximizerAction >> decorateNodeElementInContext: aNodeDecoratorContext [
+	aNodeDecoratorContext nodeElement
+		labelContainerDo: [ :aContainer | 
+			| aButton |
+			aButton := self newNodeButton.
+			aButton
+				wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+				wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel.
+			aContainer addChild: aButton ]
 ]
 
 { #category : #accessing }
@@ -61,8 +67,9 @@ GtWardleyMapMaximizerAction >> model: anObject [
 ]
 
 { #category : #private }
-GtWardleyMapMaximizerAction >> newButton [
+GtWardleyMapMaximizerAction >> newButton: aButtonClass [
 	^ GtWardleyMapActionButtonStencil new
+		buttonClass: aButtonClass;
 		icon: self icon;
 		label: self label;
 		aptitude: self aptitude;
@@ -91,6 +98,11 @@ GtWardleyMapMaximizerAction >> newContainerInButton: aButton [
 	aButton addChild: aContainer.
 
 	^ aContainer
+]
+
+{ #category : #private }
+GtWardleyMapMaximizerAction >> newNodeButton [
+	^ self newButton: GtWardleyMapActionNodeButton
 ]
 
 { #category : #'event handling' }

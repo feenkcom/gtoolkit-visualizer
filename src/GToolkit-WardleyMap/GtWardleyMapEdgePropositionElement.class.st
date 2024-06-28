@@ -10,6 +10,15 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Views'
 }
 
+{ #category : #'private - updating' }
+GtWardleyMapEdgePropositionElement >> addLabelDecoration [
+	edgeElement
+		labelElementDo: [ :aContainer | 
+			aContainer
+				geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
+				background: highlightColor ]
+]
+
 { #category : #initialization }
 GtWardleyMapEdgePropositionElement >> beAddProposition [
 	highlightColor := BrGlamorousColors successBackgroundColor.
@@ -28,14 +37,23 @@ GtWardleyMapEdgePropositionElement >> beRemoveProposition [
 				width: GtWardleyMapConstants edgePropositionWidth)
 ]
 
-{ #category : #accessing }
+{ #category : #'api - edge' }
 GtWardleyMapEdgePropositionElement >> edgeElement [
 	^ edgeElement
 ]
 
-{ #category : #accessing }
-GtWardleyMapEdgePropositionElement >> edgeElement: anObject [
-	edgeElement := anObject
+{ #category : #'api - edge' }
+GtWardleyMapEdgePropositionElement >> edgeElement: anEdgeElement [
+	self
+		assert: [ anEdgeElement isNotNil ]
+		description: [ 'Edge element be non-nil' ].
+	self
+		assert: [ edgeElement isNil ]
+		description: [ 'Edge element can be initialized only once' ].
+
+	edgeElement := anEdgeElement.
+
+	self onEdgeElementChanged
 ]
 
 { #category : #initialization }
@@ -44,6 +62,17 @@ GtWardleyMapEdgePropositionElement >> initialize [
 	self beAddProposition.
 	self zIndex: GtWardleyMapConstants edgePropositionElevationIndex.
 	self wardley beDecorator
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onDecoratorRemoved [
+	self removeLabelDecoration.
+	self removeFromParent
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onDecoratorRemoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onDecoratorRemoved ]
 ]
 
 { #category : #'event handling' }
@@ -58,8 +87,24 @@ GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeArrowChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeArrowChanged ]
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgePropositionElement >> onEdgeElementChanged [
+	self addLabelDecoration
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEdgePropositionElement >> onEdgeRemoved [
+	self removeLabelDecoration.
 	self removeFromParent
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeRemoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeRemoved ]
 ]
 
 { #category : #'event handling' }
@@ -69,6 +114,11 @@ GtWardleyMapEdgePropositionElement >> onEdgeResized [
 				paint: highlightColor
 				width: self wardleyMapEdgeViewModel lineWidth
 						+ GtWardleyMapConstants edgePropositionExtraWidth)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgePropositionElement >> onEdgeResized: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeResized ]
 ]
 
 { #category : #'api - wardley map decorator model' }
@@ -86,6 +136,27 @@ GtWardleyMapEdgePropositionElement >> onWardleyMapEdgeViewModelChanged [
 	self onEdgeArrowChanged
 ]
 
+{ #category : #'private - updating' }
+GtWardleyMapEdgePropositionElement >> removeLabelDecoration [
+	edgeElement
+		labelElementDo: [ :aContainer | 
+			aContainer
+				geometry: BlRectangleGeometry new;
+				background: BlBackground transparent ]
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapDecoratorViewModel [
+	"Is sent after a new wardleyMapDecorator view model is assigned to the element.
+	It is required to unsubscribe from the view model by implementing
+	#unsubscribeFromWardleyMapDecoratorViewModel if element subscribes to them"
+
+	self wardleyMapDecoratorViewModel weak
+		when: GtWardleyMapEdgeDecoratorViewModelRemoved
+		send: #onDecoratorRemoved:
+		to: self
+]
+
 { #category : #'api - wardley map edge view model' }
 GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapEdgeViewModel [
 	"Is sent after a new wardleyMapEdge view model is assigned to the element.
@@ -93,9 +164,17 @@ GtWardleyMapEdgePropositionElement >> subscribeToWardleyMapEdgeViewModel [
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
 	
 	self wardleyMapEdgeViewModel weak
-		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved to: self;
-		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged to: self.
+		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self;
+		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self.
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapEdgePropositionElement >> unsubscribeFromWardleyMapDecoratorViewModel [
+	"Is sent before a new wardleyMapDecorator view model is assigned to the element.
+	Elements that subscribe to wardleyMapDecorator view model are required to implement this methods"
+
+	self wardleyMapDecoratorViewModel unsubscribe: self
 ]
 
 { #category : #'api - wardley map edge view model' }

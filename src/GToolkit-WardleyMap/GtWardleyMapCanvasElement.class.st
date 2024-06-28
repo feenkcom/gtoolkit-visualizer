@@ -19,7 +19,12 @@ Class {
 
 { #category : #'private - updating' }
 GtWardleyMapCanvasElement >> addEdgeViewModel: anEdgeViewModel [
-	self addChild: (self createEdgeViewFor: anEdgeViewModel)
+	| anEdgeElement |
+	anEdgeElement := self createEdgeViewFor: anEdgeViewModel.
+	self addChild: anEdgeElement.
+	self fireEvent: (GtWardleyMapEdgeElementAdded new
+			edgeElement: anEdgeElement;
+			edgeViewModel: anEdgeViewModel)
 ]
 
 { #category : #'private - updating' }
@@ -68,7 +73,10 @@ GtWardleyMapCanvasElement >> addNewNodeViewModel: aNodeViewModel [
 										insidePipelineElement: aPipelineElement)
 										ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aNodeViewModel ] ] ] ] ].
 
-	self addChild: aNodeElement
+	self addChild: aNodeElement.
+	self fireEvent: (GtWardleyMapNodeElementAdded new 
+		nodeElement: aNodeElement;
+		nodeViewModel: aNodeViewModel)
 ]
 
 { #category : #'private - updating' }
@@ -168,7 +176,7 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 				disallowOutOfBounds;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					anEvolveViewModel moveNodeTo: aNormalizedPosition ]);
-		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		addEventHandler: (GtWardleyMapEdgeBuilderEventHandler new containerElement: self);
 		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];
@@ -224,7 +232,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 				disallowOutOfBounds;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
-		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		addEventHandler: (GtWardleyMapEdgeBuilderEventHandler new containerElement: self);
 		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];
@@ -337,7 +345,7 @@ GtWardleyMapCanvasElement >> draggingPipelineElevationIndex [
 	^ 1
 ]
 
-{ #category : #private }
+{ #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> edgeViewFor: anEdgeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | eachChild graph isEdge and: [ eachChild wardleyMapEdgeViewModel = anEdgeViewModel ] ]
@@ -409,7 +417,7 @@ GtWardleyMapCanvasElement >> newPipelineId [
 GtWardleyMapCanvasElement >> nextElementId [
 ]
 
-{ #category : #private }
+{ #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> nodeViewFor: aNodeViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | eachChild graph isNode and: [ eachChild wardleyMapNodeViewModel = aNodeViewModel ] ]
@@ -417,7 +425,7 @@ GtWardleyMapCanvasElement >> nodeViewFor: aNodeViewModel ifFound: aFoundBlock if
 		ifNone: aNoneBlock
 ]
 
-{ #category : #private }
+{ #category : #'api - wardley map view model' }
 GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self children
 		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]

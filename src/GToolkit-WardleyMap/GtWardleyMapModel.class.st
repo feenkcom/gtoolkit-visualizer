@@ -144,6 +144,14 @@ GtWardleyMapModel >> edgeFromNode: aFromNode toNode: aToNode ifFound: aFoundBloc
 		ifNone: aNoneBlock
 ]
 
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> edgeWithName: aName ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self edges
+		detect: [ :eachEdge | eachEdge label = aName ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> edges [
 	^ edges
@@ -569,16 +577,14 @@ GtWardleyMapModel >> notifyTitleVisibilityChanged [
 { #category : #'api - decorators' }
 GtWardleyMapModel >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
 	self
-		propagateAnnouncement: (GtWardleyMapNodeDecoratorModelAdded new
-				nodeModel: self;
+		propagateAnnouncement: (GtWardleyMapDecoratorModelAdded new
 				decoratorModel: aWardleyMapDecoratorModel)
 ]
 
 { #category : #'api - decorators' }
 GtWardleyMapModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorViewModel [
 	self
-		announce: (GtWardleyMapNodeDecoratorModelRemoved new
-				nodeModel: self;
+		announce: (GtWardleyMapDecoratorModelRemoved new
 				decoratorModel: aWardleyMapDecoratorViewModel)
 ]
 

@@ -150,14 +150,29 @@ GtWardleyMapEdgeEditorElement >> onEdgeLabelVisiblityChanged [
 	visibilityCheckbox checked: self wardleyMapEdgeViewModel isLabelVisible
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapEdgeEditorElement >> onEdgeLabelVisiblityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeLabelVisiblityChanged ]
+]
+
 { #category : #private }
 GtWardleyMapEdgeEditorElement >> onLineArrowChanged [
 	arrowHeadCheckbox checked: self wardleyMapEdgeViewModel hasLineArrow
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapEdgeEditorElement >> onLineArrowChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onLineArrowChanged ]
+]
+
 { #category : #private }
 GtWardleyMapEdgeEditorElement >> onLineWidthChanged [
 	lineWidthEditor text: (self wardleyMapEdgeViewModel lineWidth printShowingDecimalPlaces: 2)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeEditorElement >> onLineWidthChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onLineWidthChanged ]
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -187,9 +202,9 @@ GtWardleyMapEdgeEditorElement >> subscribeToWardleyMapEdgeViewModel [
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
 
 	self wardleyMapEdgeViewModel weak
-		when: GtWardleyMapEdgeViewModelResized send: #onLineWidthChanged to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged to: self;
-		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self
+		when: GtWardleyMapEdgeViewModelResized send: #onLineWidthChanged: to: self;
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onLineArrowChanged: to: self;
+		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged: to: self
 ]
 
 { #category : #'api - wardley map edge view model' }

@@ -41,8 +41,9 @@ GtWardleyMapDecoratorExamples >> mapWithNodes [
 		fromNode: aNodeA;
 		toNode: aNodeC;
 		arrow: false;
-		label: 'Edge A->B';
+		label: 'Edge A->C';
 		isLabelVisible: false;
+		labelCoordinate: 0.58 @ 0.53;
 		width: 2.
 	aMap addEdge: anEdgeAtoC.
 	
@@ -78,8 +79,8 @@ GtWardleyMapDecoratorExamples >> mapWithProposedModifications [
 	^ aMap
 ]
 
-{ #category : #accessing }
-GtWardleyMapDecoratorExamples >> mapwithProposedRename [
+{ #category : #'examples - proposed modifications' }
+GtWardleyMapDecoratorExamples >> mapWithProposedRename [
 	<gtExample>
 	| aMap aNodeA aRenameA |
 	aMap := self mapWithNodes.

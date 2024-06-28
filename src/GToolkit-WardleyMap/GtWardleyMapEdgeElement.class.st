@@ -49,6 +49,8 @@ GtWardleyMapEdgeElement >> initialize [
 	"we have to wrap the editable label in a pullable element to allow text selection with drag"
 	labelContainer := BrHorizontalPane new
 			fitContent;
+			constraintsDo: [ :c | 
+				c ignoreByLayout ];
 			addEventHandler: (GtWardleyMapPullHandler new
 					containerElement: self;
 					allowOutOfBounds;
@@ -79,47 +81,49 @@ GtWardleyMapEdgeElement >> initialize [
 ]
 
 { #category : #accessing }
+GtWardleyMapEdgeElement >> labelContainerDo: aBlock [
+	aBlock value: labelContainer
+]
+
+{ #category : #accessing }
 GtWardleyMapEdgeElement >> labelElementDo: aBlock [
 	aBlock value: labelElement
 ]
 
 { #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeArrowChanged: anAnnouncement [
-	self updateLineArrow
+	BlTaskAction enqueueElement: self action: [ self updateLineArrow ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeColored: anAnnouncement [
-	self updateLineLook.
-	self updateLineArrow
-]
-
-{ #category : #'event handling' }
-GtWardleyMapEdgeElement >> onEdgeDecoratorAdded: anAnnouncement [
-	anAnnouncement decoratorViewModel decorateEdgeElement: self
-]
-
-{ #category : #'event handling' }
-GtWardleyMapEdgeElement >> onEdgeDecoratorsChanged [
-	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
-		aChild wardley isDecorator 
-			ifTrue: [ aChild removeFromParent. false ]
-			ifFalse: [ true ] ].
-	
-	self wardleyMapEdgeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-		eachDecoratorViewModel decorateEdgeElement: self ].
+	BlTaskAction
+		enqueueElement: self
+		action: [ 
+			self updateLineLook.
+			self updateLineArrow ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeLabelMoved [
 	labelContainer constraintsDo: [ :c | 
-		c frame horizontal alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateX.
-		c frame vertical alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateY ]
+		c ignored horizontal alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateX.
+		c ignored vertical alignCenterAt: self wardleyMapEdgeViewModel labelCoordinateY ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeLabelMoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeLabelMoved ]
 ]
 
 { #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeLabelTextChanged [
 	labelElement text: self wardleyMapEdgeViewModel label
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeLabelTextChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeLabelTextChanged ]
 ]
 
 { #category : #'event handling' }
@@ -130,8 +134,13 @@ GtWardleyMapEdgeElement >> onEdgeLabelVisiblityChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEdgeElement >> onEdgeLabelVisiblityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEdgeLabelVisiblityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEdgeElement >> onEdgeResized: anAnnouncement [
-	self updateLineLook
+	BlTaskAction enqueueElement: self action: [ self updateLineLook ]
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -144,7 +153,6 @@ GtWardleyMapEdgeElement >> onWardleyMapEdgeViewModelChanged [
 	self onEdgeLabelVisiblityChanged.
 	self onEdgeLabelTextChanged.
 	self onEdgeLabelMoved.
-	self onEdgeDecoratorsChanged.
 ]
 
 { #category : #'api - wardley map edge view model' }
@@ -154,13 +162,12 @@ GtWardleyMapEdgeElement >> subscribeToWardleyMapEdgeViewModel [
 	#unsubscribeFromWardleyMapEdgeViewModel if elements subscribe to them"
 	
 	self wardleyMapEdgeViewModel weak
-		when: GtWardleyMapEdgeViewModelLabelMoved send: #onEdgeLabelMoved to: self;
-		when: GtWardleyMapEdgeViewModelLabelTextChanged send: #onEdgeLabelTextChanged to: self;
-		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged to: self;
+		when: GtWardleyMapEdgeViewModelLabelMoved send: #onEdgeLabelMoved: to: self;
+		when: GtWardleyMapEdgeViewModelLabelTextChanged send: #onEdgeLabelTextChanged: to: self;
+		when: GtWardleyMapEdgeViewModelLabelVisibilityChanged send: #onEdgeLabelVisiblityChanged:  to: self;
 		when: GtWardleyMapEdgeViewModelResized send: #onEdgeResized: to: self;
 		when: GtWardleyMapEdgeViewModelColored send: #onEdgeColored: to: self;
-		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self;
-		when: GtWardleyMapEdgeDecoratorViewModelAdded send: #onEdgeDecoratorAdded: to: self.
+		when: GtWardleyMapEdgeViewModelArrowChanged send: #onEdgeArrowChanged: to: self.
 ]
 
 { #category : #'api - wardley map edge view model' }

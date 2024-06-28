@@ -1,5 +1,5 @@
 Class {
-	#name : #GtWardleyMapDecoratorModelAdded,
+	#name : #GtWardleyMapDecoratorModelRemoved,
 	#superclass : #GtWardleyMapModelAnnouncement,
 	#instVars : [
 		'decoratorModel'
@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-GtWardleyMapDecoratorModelAdded >> decoratorModel [
+GtWardleyMapDecoratorModelRemoved >> decoratorModel [
 	^ decoratorModel
 ]
 
 { #category : #accessing }
-GtWardleyMapDecoratorModelAdded >> decoratorModel: anObject [
+GtWardleyMapDecoratorModelRemoved >> decoratorModel: anObject [
 	decoratorModel := anObject
 ]

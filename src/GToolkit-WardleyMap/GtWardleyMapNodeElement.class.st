@@ -12,19 +12,18 @@ GtWardleyMapNodeElement >> beSquareGeometry [
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeDecoratorAdded: anAnnouncement [
-	anAnnouncement decoratorViewModel decorateNodeElement: self
+GtWardleyMapNodeElement >> onNodeColored: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeColored ]
 ]
 
 { #category : #'event handling' }
-GtWardleyMapNodeElement >> onNodeDecoratorsChanged [
-	self allChildrenBreadthFirstDoWhileTrue: [ :aChild | 
-		aChild wardley isDecorator 
-			ifTrue: [ aChild removeFromParent. false ]
-			ifFalse: [ true ] ].
-	
-	self wardleyMapNodeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
-		eachDecoratorViewModel decorateNodeElement: self ].
+GtWardleyMapNodeElement >> onNodeLabelMoved: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeLabelMoved ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeLabelTextChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeLabelTextChanged ]
 ]
 
 { #category : #'event handling' }
@@ -32,6 +31,16 @@ GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged [
 	self wardleyMapNodeViewModel isPipelineVisible
 		ifTrue: [ self beSquareGeometry ]
 		ifFalse: [ self beEllipseGeometry ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodePipelineVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodePipelineVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeResized: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeResized ]
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -44,7 +53,6 @@ GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 
 	self onNodeLabelTextChanged.
 	self onNodeLabelMoved.
-	self onNodeDecoratorsChanged.
 ]
 
 { #category : #accessing }
@@ -61,12 +69,11 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 	#unsubscribeFromWardleyMapNodeViewModel if elements subscribe to them"
 	
 	self wardleyMapNodeViewModel weak
-		when: GtWardleyMapNodeViewModelLabelMoved send: #onNodeLabelMoved to: self;
-		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged to: self;
-		when: GtWardleyMapNodeViewModelColored send: #onNodeColored to: self;
-		when: GtWardleyMapNodeViewModelResized send: #onNodeResized to: self;
-		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged to: self;
-		when: GtWardleyMapNodeDecoratorViewModelAdded send: #onNodeDecoratorAdded: to: self.
+		when: GtWardleyMapNodeViewModelLabelMoved send: #onNodeLabelMoved: to: self;
+		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged: to: self;
+		when: GtWardleyMapNodeViewModelColored send: #onNodeColored: to: self;
+		when: GtWardleyMapNodeViewModelResized send: #onNodeResized: to: self;
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self.
 ]
 
 { #category : #'api - wardley map node view model' }

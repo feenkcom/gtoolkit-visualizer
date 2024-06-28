@@ -4,7 +4,8 @@ Class {
 	#traits : 'TGtWardleyMapDecoratorViewModel + TGtWithWardleyMapDecoratorModel + TGtAnnouncer',
 	#classTraits : 'TGtWardleyMapDecoratorViewModel classTrait + TGtWithWardleyMapDecoratorModel classTrait + TGtAnnouncer classTrait',
 	#instVars : [
-		'announcer'
+		'announcer',
+		'parentViewModel'
 	],
 	#category : #'GToolkit-WardleyMap-! View models'
 }
@@ -15,30 +16,19 @@ GtWardleyMapDecoratorViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateEdgeElement: anEdgeElement [
-	self wardleyMapDecoratorModel
-		decorateEdgeElement: anEdgeElement
-		decoratorViewModel: self
-]
-
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateMapElement: anEdgeElement [
-	self wardleyMapDecoratorModel
-		decorateMapElement: anEdgeElement
-		decoratorViewModel: self
-]
-
-{ #category : #'api - wardley map decorator view model' }
-GtWardleyMapDecoratorViewModel >> decorateNodeElement: aNodeElement [
-	self wardleyMapDecoratorModel
-		decorateNodeElement: aNodeElement
-		decoratorViewModel: self
-]
-
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapDecoratorViewModel >> onWardleyMapDecoratorModelChanged [
 	"Is sent when a new wardleyMapDecorator model is assigned to the view model"
 
 	
+]
+
+{ #category : #initialization }
+GtWardleyMapDecoratorViewModel >> parentViewModel: aParentViewModel [
+	parentViewModel := aParentViewModel
+]
+
+{ #category : #initialization }
+GtWardleyMapDecoratorViewModel >> removeParentViewModel [
+	parentViewModel := nil
 ]
