@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterHorizontalProjectionTicksAndDiagonalLabelsStencil,
-	#superclass : #GtPlotterHorizontalProjectionTicksAndLabelsStencil,
+	#name : #GtPlotterHorizontalProjectionTicksAndDiagonalLabelsAxisStencil,
+	#superclass : #GtPlotterHorizontalProjectionTicksAndLabelsAxisStencil,
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterHorizontalProjectionTicksAndDiagonalLabelsStencil >> newAxisXTickLabelsElement [
+GtPlotterHorizontalProjectionTicksAndDiagonalLabelsAxisStencil >> newAxisXTickLabelsElement [
 	| axis |
 	axis := super newAxisXTickLabelsElement.
 	scatterChart xEventHandler layoutOnDiagonal.

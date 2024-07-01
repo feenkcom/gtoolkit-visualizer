@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPlotterTicksAndLabelsStencil,
+	#name : #GtPlotterScatterAxisStencil,
 	#superclass : #BrStencilBuilder,
 	#instVars : [
 		'scatterChart'
@@ -8,22 +8,22 @@ Class {
 }
 
 { #category : #accessing }
-GtPlotterTicksAndLabelsStencil >> paramsOn: aStencilExecutor [
+GtPlotterScatterAxisStencil >> paramsOn: aStencilExecutor [
 	aStencilExecutor push: self scatterChart
 ]
 
 { #category : #accessing }
-GtPlotterTicksAndLabelsStencil >> reset [
+GtPlotterScatterAxisStencil >> reset [
 	super reset.
 	scatterChart := nil
 ]
 
 { #category : #accessing }
-GtPlotterTicksAndLabelsStencil >> scatterChart [
+GtPlotterScatterAxisStencil >> scatterChart [
 	^ scatterChart
 ]
 
 { #category : #accessing }
-GtPlotterTicksAndLabelsStencil >> scatterChart: aGtPlotterScatterChart [
+GtPlotterScatterAxisStencil >> scatterChart: aGtPlotterScatterChart [
 	scatterChart := aGtPlotterScatterChart
 ]
