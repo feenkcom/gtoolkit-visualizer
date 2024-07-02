@@ -90,6 +90,17 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 					styleBlock: [ :styler | styler foreground: Color black ])
 						continueOnMatch: false.
 					
+				(GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMEvolveNode
+					variableNames: #(evolveToken)
+					styleBlock: [ :styler | styler foreground: Color purple ])
+						continueOnMatch: true.
+					
+				GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMEvolveNode
+					variableNames: #(evolution)
+					styleBlock: [ :styler | styler foreground: Color blue darker ].
+				
 				GtSmaCCKeywordTokensStylerRule
 					styleBlock: [ :styler | 
 						styler
