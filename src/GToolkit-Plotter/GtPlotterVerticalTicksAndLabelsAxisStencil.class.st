@@ -40,6 +40,8 @@ GtPlotterVerticalTicksAndLabelsAxisStencil >> initialize [
 
 { #category : #accessing }
 GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTickLabelsElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterVerticalTickLabelsElement new
 		scale: scatterChart scaleY;
 		inverse;
@@ -63,14 +65,24 @@ GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTickLabelsElement [
 					c vertical fitContent ] ];
 		constraintsDo: [ :c | 
 			c horizontal fitContent.
-			c padding: (BlInsets left: 10 right: 10) ];
+			];
+		padding: (BlInsets
+			top: padding top
+			bottom: padding bottom
+			left: 10
+			right: 10);
 		clipChildren: false;
 		labels: scatterChart ticksY
 ]
 
 { #category : #accessing }
 GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTicksElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterVerticalTicksElement new
+		padding: (BlInsets
+			top: padding top
+			bottom: padding bottom);
 		scale: scatterChart scaleY;
 		tickElement: [ :aGtPlotterContext |
 			BlElement new
