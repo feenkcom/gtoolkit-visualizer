@@ -87,6 +87,12 @@ GtPlotterScatterChartExamples >> emptyPlot [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> examplePackage [
+	<gtExample>
+	^ BlElement package definedClasses
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> focusEventHandlersInScatterProjection [
 	<gtExample>
 	| aChart |
@@ -215,6 +221,39 @@ GtPlotterScatterChartExamples >> scatterChart [
 		scaleY: GtPlotterLinearScale new;
 		titleY: 'Frequency';
 		ticksY: 10.
+
+	^ aChart
+	 
+]
+
+{ #category : #accessing }
+GtPlotterScatterChartExamples >> scatterChart4Package [
+	<gtExample>
+	| dataGroup aChart theData |
+	theData := self examplePackage.
+	
+	dataGroup := GtPlotterDataGroup new values: theData asOrderedCollection.
+	
+	aChart := GtPlotterScatterChart new
+		with: dataGroup;
+		valueX: [ :e | e methods size + e class methods size ];
+		scaleX: GtPlotterLinearScale new;
+		titleX: 'Number of methods';
+		ticksX: 10;
+		valueY: [ :e | e linesOfCode ];
+		scaleY: GtPlotterLinearScale new;
+		titleY: 'Lines of Code';
+		ticksY: 10;
+		withProjectionAxis;
+		dotElement: [ :aGtPlotterContext |
+			BlElement new
+				geometry: BlEllipseGeometry new;
+				size: 5 asPoint;
+				aptitude: (BrGlamorousWithTooltipAptitude 
+					content: [ BrLabel new
+						text: (aGtPlotterContext originalValue name);
+						aptitude: (BrGlamorousLabelAptitude new 
+							padding: (BlInsets all: 1)) ])].
 
 	^ aChart
 	 

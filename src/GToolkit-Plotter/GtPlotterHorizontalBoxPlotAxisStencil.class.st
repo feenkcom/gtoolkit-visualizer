@@ -197,7 +197,7 @@ GtPlotterHorizontalBoxPlotAxisStencil >> newOutlierElements [
 	^ self boxPlotModel outliers collect: [:each | | outPercent |
 		outPercent := scale map: each.
 		self outlierElementStencil create
-			addEventHandler: scatterChart yEventHandler;
+			addEventHandler: scatterChart xEventHandler;
 			in: [ :e | e userData at: #originalValue put: each ];
 			constraintsDo: [:c |
 				c frame vertical alignCenterAt: 0.5.
