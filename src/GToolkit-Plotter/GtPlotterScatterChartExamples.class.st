@@ -15,6 +15,57 @@ GtPlotterScatterChartExamples >> boxPlotAxisDifferentGeometry [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> boxPlotAxisGradientBox [
+	<gtExample>
+	| aChart boxStencil |
+	aChart :=  self scatterDifferentGeometry.
+	aChart labelFormatY: [:aValue | (aValue printShowingDecimalPlaces: 2) asRopedText foreground: Color darkGray ].
+	aChart withBoxPlotAxis.
+	boxStencil := [
+		BlElement new 
+			background: (BlPaintBackground new
+			paint: (BlLinearGradientPaint new
+				stops: {
+					0 -> Color red .
+					0.5 -> Color yellow.
+					1 -> Color blue};
+				start: 0@0;
+				end: 100@100))
+	].
+	aChart axisYStencil boxElementStencil: boxStencil.
+	aChart axisXStencil boxElementStencil: boxStencil.
+	 ^ aChart
+]
+
+{ #category : #accessing }
+GtPlotterScatterChartExamples >> boxPlotAxisRedDotMedian [
+	<gtExample>
+	| aChart boxStencil medianStencil |
+	aChart :=  self scatterDifferentGeometry.
+	aChart labelFormatY: [:aValue | (aValue printShowingDecimalPlaces: 2) asRopedText foreground: Color darkGray ].
+	aChart withBoxPlotAxis.
+	boxStencil := [ BlElement new].
+	medianStencil :=  [
+		BrFrame new
+			clipChildren: false;
+			size: 1 asPoint;
+			addChild: (BlElement new
+				size: 10 asPoint;
+				background: Color red;
+				geometry: BlEllipseGeometry new;
+				constraintsDo: [:c |
+					c frame horizontal alignCenterAt: 0.5.
+					c frame vertical alignCenterAt: 0.5.
+				])
+	].
+	aChart axisXStencil boxElementStencil: boxStencil.
+	aChart axisXStencil medianElementStencil: medianStencil.
+	aChart axisYStencil boxElementStencil: boxStencil.
+	aChart axisYStencil medianElementStencil: medianStencil.
+	 ^ aChart
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> boxPlotAxisTWhiskers [
 	<gtExample>
 	| aChart |
