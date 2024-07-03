@@ -2,7 +2,10 @@ Class {
 	#name : #GtD3WebViewServer,
 	#superclass : #Object,
 	#instVars : [
-		'configuration'
+		'configuration',
+		'zincServer',
+		'phlowRegistry',
+		'sourceProvider'
 	],
 	#classInstVars : [
 		'defaultInstance'
@@ -108,9 +111,15 @@ GtD3WebViewServer >> defaultZincServer [
 		ZnServer defaultOn: self class configurationClass defaultPortNumber ]
 ]
 
+{ #category : #'local actions' }
+GtD3WebViewServer >> ensureWrapperIsRegisteredFor: aPhlowWrapper [
+	phlowRegistry ensureWrapperIsRegisteredFor: aPhlowWrapper
+]
+
 { #category : #'gt-extensions' }
 GtD3WebViewServer >> gtOverviewFor: aView [
 	<gtView>
+	
 	^ aView forward 
 		title: 'Overview';
 		object: [ self zincServer ];
@@ -128,11 +137,15 @@ GtD3WebViewServer >> gtViewRestEndpointsFor: aView [
 { #category : #initialization }
 GtD3WebViewServer >> initialize [
 	super initialize.
+	
 	zincServer ifNil: [ 
 		"The Zinc server might be set before #initialize if the server is created 
 		using #basicInitialize for testing purposes."
 		zincServer := self defaultZincServer ].
-	 
+	
+	phlowRegistry := GtD3WebViewPhlowRegistry new.
+	sourceProvider := GtD3WebViewSourceProvider new.
+	
 	zincServer delegate: self defaultDelegate.
 	zincServer debugMode: true.
 ]
@@ -169,22 +182,39 @@ GtD3WebViewServer >> stop [
 
 { #category : #requests }
 GtD3WebViewServer >> viewCodeForRequest: aRequest [
-	^ './d3-barchart.html' asFileReference contents
+	| viewName phlowId |
+	
+	viewName := aRequest url queryAt: 'viewName'.
+	phlowId := aRequest url queryAt: 'phlowId'.
+	^ sourceProvider 
+		htmlForViewWithName: viewName
+		withDataUrl: (self viewDataUrlForProviderId: phlowId)
+]
+
+{ #category : #accessing }
+GtD3WebViewServer >> viewCodeUrlForViewNamed: aViewName withProviderId: anId [
+	^ self localhostUrl 	
+		addPathSegment: 'view';
+		queryAt: 'viewName' put: aViewName;
+		queryAt: 'phlowId' put: anId;
+		yourself
 ]
 
 { #category : #requests }
 GtD3WebViewServer >> viewDataForRequest: aRequest [
-	^ String streamContents: [ :aStream |
-	aStream << 'Label,Value'.
-	aStream crlf.
-	((Smalltalk allClasses 
-		sorted: [ :each | each methods size ] descending)
-			first: 20) 
-				do: [ :each | 
-					aStream << each name.
-					aStream << ','.
-					aStream << each methods size asString ] 
-				separatedBy: [ aStream crlf ] ]
+	^ phlowRegistry 
+		phlowWrapperWithId: (aRequest url queryAt: 'phlowId')
+		ifPresent: [ :aPhlowWrapper | 
+			aPhlowWrapper viewData ]
+		ifAbsent: [ 'Label,Value' ]
+]
+
+{ #category : #accessing }
+GtD3WebViewServer >> viewDataUrlForProviderId: aProviderId [
+	^ self localhostUrl 	
+		addPathSegment: 'data';
+		queryAt: 'phlowId' put: aProviderId;
+		yourself
 ]
 
 { #category : #accessing }

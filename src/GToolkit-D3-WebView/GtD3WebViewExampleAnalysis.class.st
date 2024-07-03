@@ -1,6 +1,9 @@
 Class {
 	#name : #GtD3WebViewExampleAnalysis,
 	#superclass : #Object,
+	#instVars : [
+		'numberOfClasses'
+	],
 	#category : #'GToolkit-D3-WebView'
 }
 
@@ -12,7 +15,7 @@ GtD3WebViewExampleAnalysis >> gtViewClassesWithMethodsFor: aView [
 		title: 'Classes with methods';
 		object: [
 			GtD3WebViewPhlowWrapper new 
-				viewId: #barchart;
+				viewName: #barchart;
 				dataProvider: (GtD3WebViewCsvDataProvider new 
 					objects: self top20LargeClasses;
 					rowLabel: [ :each | each name ];
@@ -21,8 +24,18 @@ GtD3WebViewExampleAnalysis >> gtViewClassesWithMethodsFor: aView [
 ]
 
 { #category : #accessing }
+GtD3WebViewExampleAnalysis >> numberOfClasses [
+	^ numberOfClasses ifNil: [ 20 ]
+]
+
+{ #category : #accessing }
+GtD3WebViewExampleAnalysis >> numberOfClasses: anInteger [
+	numberOfClasses := anInteger
+]
+
+{ #category : #accessing }
 GtD3WebViewExampleAnalysis >> top20LargeClasses [
 	^ (Smalltalk allClasses 
 		sorted: [ :each | each methods size ] descending)
-			first: 20
+			first: self numberOfClasses
 ]
