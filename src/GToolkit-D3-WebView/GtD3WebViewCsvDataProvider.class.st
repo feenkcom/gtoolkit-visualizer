@@ -59,3 +59,16 @@ GtD3WebViewCsvDataProvider >> valueFormatter [
 GtD3WebViewCsvDataProvider >> valueFormatter: anObject [
 	valueFormatter := anObject
 ]
+
+{ #category : #accessing }
+GtD3WebViewCsvDataProvider >> viewData [
+	^ String streamContents: [ :aStream |
+		aStream << 'Label,Value'.
+		aStream crlf.
+		self objects
+			do: [ :each | 
+				aStream << (self labelFormatter value: each) asString.
+				aStream << ','.
+				aStream << (self valueFormatter value: each) asString ] 
+			separatedBy: [ aStream crlf ] ]
+]
