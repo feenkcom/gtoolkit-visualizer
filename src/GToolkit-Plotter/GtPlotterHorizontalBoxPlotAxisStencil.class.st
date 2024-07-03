@@ -24,7 +24,7 @@ GtPlotterHorizontalBoxPlotAxisStencil >> boxElementStencil [
 
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> boxElementStencil: aStencil [
-	boxElementStencil := aStencil
+	boxElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ GtPlotterHorizontalBoxPlotAxisStencil >> leftWhiskerElementStencil [
 
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> leftWhiskerElementStencil: aStencil [
-	leftWhiskerElementStencil := aStencil
+	leftWhiskerElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -104,7 +104,7 @@ GtPlotterHorizontalBoxPlotAxisStencil >> medianElementStencil [
 
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> medianElementStencil: aStencil [
-	medianElementStencil := aStencil
+	medianElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -228,8 +228,8 @@ GtPlotterHorizontalBoxPlotAxisStencil >> outlierElementStencil [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalBoxPlotAxisStencil >> outlierElementStencil: anObject [
-	outlierElementStencil := anObject
+GtPlotterHorizontalBoxPlotAxisStencil >> outlierElementStencil: aStencil [
+	outlierElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -276,7 +276,7 @@ GtPlotterHorizontalBoxPlotAxisStencil >> rightWhiskerElementStencil [
 
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> rightWhiskerElementStencil: aStencil [
-	rightWhiskerElementStencil := aStencil
+	rightWhiskerElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }

@@ -25,7 +25,7 @@ GtPlotterVerticalBoxPlotAxisStencil >> bottomWhiskerStencil [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> bottomWhiskerStencil: aStencil [
-	bottomWhiskerStencil := aStencil
+	bottomWhiskerStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -35,7 +35,7 @@ GtPlotterVerticalBoxPlotAxisStencil >> boxElementStencil [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> boxElementStencil: aStencil [
-	boxElementStencil := aStencil
+	boxElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -104,7 +104,7 @@ GtPlotterVerticalBoxPlotAxisStencil >> medianElementStencil [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> medianElementStencil: aStencil [
-	medianElementStencil := aStencil
+	medianElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -221,7 +221,7 @@ GtPlotterVerticalBoxPlotAxisStencil >> outlierElementStencil [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> outlierElementStencil: aStencil [
-	outlierElementStencil := aStencil
+	outlierElementStencil := aStencil asStencil
 ]
 
 { #category : #accessing }
@@ -274,5 +274,5 @@ GtPlotterVerticalBoxPlotAxisStencil >> topWhiskerElementStencil [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> topWhiskerElementStencil: aStencil [
-	topWhiskerElementStencil := aStencil
+	topWhiskerElementStencil := aStencil asStencil
 ]
