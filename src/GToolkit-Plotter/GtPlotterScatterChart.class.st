@@ -28,10 +28,16 @@ Class {
 		'xEventHandler',
 		'pointEventHandler',
 		'yAxisElement',
-		'xAxisElement'
+		'xAxisElement',
+		'contentPadding'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
+
+{ #category : #accessing }
+GtPlotterScatterChart >> axisXStencil [
+	^ axisXStencil
+]
 
 { #category : #accessing }
 GtPlotterScatterChart >> axisXStencil: aGtPlotterHorizontalTicksAndLabelStencil [
@@ -39,8 +45,23 @@ GtPlotterScatterChart >> axisXStencil: aGtPlotterHorizontalTicksAndLabelStencil 
 ]
 
 { #category : #accessing }
+GtPlotterScatterChart >> axisYStencil [
+	^ axisYStencil
+]
+
+{ #category : #accessing }
 GtPlotterScatterChart >> axisYStencil: aGtPlotterVerticalTicksAndLabelsStencil [
 	axisYStencil := aGtPlotterVerticalTicksAndLabelsStencil asStencilBuilder: GtPlotterVerticalTicksAndLabelsAxisStencil
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> contentPadding [
+	^ contentPadding
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> contentPadding: aBlInsets [
+	contentPadding := aBlInsets
 ]
 
 { #category : #'api - instantiation' }
@@ -206,9 +227,11 @@ GtPlotterScatterChart >> initialize [
 			geometry: BlEllipseGeometry new;
 			size: 10 asPoint  ];
 		withTicksAndLabelsAxis;
+		contentPadding: (BlInsets all: 10);
 		xEventHandler: GtPlotterScatterFocusXHandler new;
 		yEventHandler: GtPlotterScatterFocusYHandler new;
 		pointEventHandler: GtPlotterScatterFocusPointHandler new.
+	
 	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #yourself.
@@ -323,6 +346,8 @@ GtPlotterScatterChart >> newAxisYElement [
 GtPlotterScatterChart >> newContentElement [
 	| aContainer |
 	aContainer := BrFrame new
+		clipChildren: false;
+		padding: self contentPadding;
 		matchParent.
 	
 	data groupsCollect: [ :aGroup |
@@ -365,7 +390,8 @@ GtPlotterScatterChart >> newPointElementFor: eachValue index: index [
 			anEvent consumed: true.
 			anEvent currentTarget phlow spawnObject: eachValue ];
 		constraintsDo: [:c |
-			c relativePosition percent: positionNormalized
+			c frame horizontal alignCenterAt: positionNormalized x.
+			c frame vertical alignCenterAt: positionNormalized y.
 		].
 	^ element
 
@@ -375,8 +401,8 @@ GtPlotterScatterChart >> newPointElementFor: eachValue index: index [
 GtPlotterScatterChart >> newPointsElementFor: aGroup [
 	| container dotElements |
 	container := BrFrame new.
+	container clipChildren: false.
 	container matchParent.
-	container layout: BlRelativePositionLayout new.
 	dotElements := aGroup collectWithIndex: [:eachValue :index |
 		(self newPointElementFor: eachValue index: index)
 			background: aGroup color;
@@ -515,6 +541,12 @@ GtPlotterScatterChart >> with: aGtPlotterDataGroup [
 GtPlotterScatterChart >> withBoxPlotAxis [
 	self axisYStencil: GtPlotterVerticalBoxPlotAxisStencil new.
 	self axisXStencil: GtPlotterHorizontalBoxPlotAxisStencil new.
+]
+
+{ #category : #accessing }
+GtPlotterScatterChart >> withBoxPlotAxisTWhiskers [
+	self axisYStencil: GtPlotterVerticalBoxPlotAxisTWhiskersStencil new.
+	self axisXStencil: GtPlotterHorizontalBoxPlotAxisTWhiskersStencil new.
 ]
 
 { #category : #accessing }

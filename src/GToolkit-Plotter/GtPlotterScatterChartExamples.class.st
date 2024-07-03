@@ -15,6 +15,18 @@ GtPlotterScatterChartExamples >> boxPlotAxisDifferentGeometry [
 ]
 
 { #category : #accessing }
+GtPlotterScatterChartExamples >> boxPlotAxisTWhiskers [
+	<gtExample>
+	| aChart |
+	aChart :=  self scatterDifferentGeometry.
+	aChart labelFormatY: [:aValue | (aValue printShowingDecimalPlaces: 2) asRopedText foreground: Color darkGray ].
+	aChart withBoxPlotAxisTWhiskers.
+	aChart axisXStencil color: Color blue.
+	aChart axisYStencil color: Color red.
+	 ^ aChart
+]
+
+{ #category : #accessing }
 GtPlotterScatterChartExamples >> emptyPlot [
 	<gtExample>
 	| chart |
@@ -199,6 +211,7 @@ GtPlotterScatterChartExamples >> scatterDifferentGeometry [
 				size: 20 asPoint ];
 		
 	 	yourself.
+	 aChart contentPadding: (BlInsets all: 20).
 	 aChart with: (aChart data background: [ :each |
 	 	| domain color |
 	 	domain := each at: #domain.

@@ -2,7 +2,13 @@ Class {
 	#name : #GtPlotterHorizontalBoxPlotAxisStencil,
 	#superclass : #GtPlotterHorizontalTicksAndLabelsAxisStencil,
 	#instVars : [
-		'boxPlotModel'
+		'boxPlotModel',
+		'boxElementStencil',
+		'medianElementStencil',
+		'outlierElementStencil',
+		'leftWhiskerElementStencil',
+		'rightWhiskerElementStencil',
+		'color'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
@@ -12,8 +18,93 @@ GtPlotterHorizontalBoxPlotAxisStencil >> addAxisXLineElementOn: aContainer [
 ]
 
 { #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> boxElementStencil [
+	^ boxElementStencil ifNil: [ boxElementStencil := self defaultBoxElementStencil]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> boxElementStencil: aStencil [
+	boxElementStencil := aStencil
+]
+
+{ #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> boxPlotModel [
 	^ boxPlotModel ifNil: [ boxPlotModel := self newBoxPlotModel ]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> color [
+	^ color ifNil: [ Color gray]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> color: aColor [
+	color := aColor
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> defaultBoxElementStencil [
+	^ [ BlElement new
+		border: (BlBorder paint: self color)] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> defaultLeftWhiskerElementStencil [
+	^ [ BlElement new
+			background: self color;
+			constraintsDo: [:c |
+				c horizontal matchParent.
+				c vertical exact: 1.
+				c frame vertical alignCenterAt: 0.5.
+			];
+			yourself] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> defaultMedianElementStencil [
+	^ [ BlElement new
+		background: self color;
+		size: 1@1 ] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> defaultOutlierElementStencil [
+	^ [ BlElement new
+			geometry: BlCircleGeometry new;
+			background: self color;
+			size: 5 asPoint ] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> defaultRightWhiskerElementStencil [
+	^ [ BlElement new
+			background: self color;
+			constraintsDo: [:c |
+				c horizontal matchParent.
+				c vertical exact: 1.
+				c frame vertical alignCenterAt: 0.5.
+			];
+			yourself] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> leftWhiskerElementStencil [
+	^ leftWhiskerElementStencil ifNil: [ leftWhiskerElementStencil := self defaultLeftWhiskerElementStencil ]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> leftWhiskerElementStencil: aStencil [
+	leftWhiskerElementStencil := aStencil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> medianElementStencil [
+	^ medianElementStencil ifNil: [ medianElementStencil := self defaultMedianElementStencil]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> medianElementStencil: aStencil [
+	medianElementStencil := aStencil
 ]
 
 { #category : #accessing }
@@ -33,8 +124,12 @@ GtPlotterHorizontalBoxPlotAxisStencil >> newAxisXTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> newAxisXTicksElement [
-	| pane model |
+	| pane model padding |
+	padding := scatterChart contentPadding.
 	pane := BrFrame new
+		padding: (BlInsets
+			left: padding left
+			right: padding right);
 		matchParent;
 		clipChildren: false.
 	model := self boxPlotModel.
@@ -55,8 +150,7 @@ GtPlotterHorizontalBoxPlotAxisStencil >> newAxisXTicksElement [
 GtPlotterHorizontalBoxPlotAxisStencil >> newBoxElement [
 	| pq1 |
 	pq1 := self pQuartile1.
-	^ BlElement new
-		border: (BlBorder paint: Color gray);
+	^ self boxElementStencil create
 		constraintsDo: [:c |
 			c vertical matchParent.
 			c horizontal matchParent.
@@ -76,28 +170,20 @@ GtPlotterHorizontalBoxPlotAxisStencil >> newLeftWhiskerElement [
 	| pq0 |
 	pq0 := self pQuartile0.
 	^ BrFrame new
+		clipChildren: false;
 		constraintsDo: [:c |
 			c vertical matchParent.
 			c horizontal matchParent.
 			c frame horizontal alignLeftAt: pq0.
 			c frame horizontal weight: self pQuartile1 - pq0
 		];
-		addChild: (BlElement new
-			background: Color gray;
-			constraintsDo: [:c |
-				c horizontal matchParent.
-				c vertical exact: 1.
-				c frame vertical alignCenterAt: 0.5.
-			];
-			yourself).
+		addChild: self leftWhiskerElementStencil create.
 ]
 
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> newMedianElement [
-	^ BlElement new
-		background: Color gray;
+	^ self medianElementStencil create
 		constraintsDo: [:c |
-			c horizontal exact: 1.
 			c vertical matchParent.
 			c frame horizontal alignCenterAt: self pQuartile2.
 		];
@@ -110,14 +196,10 @@ GtPlotterHorizontalBoxPlotAxisStencil >> newOutlierElements [
 	scale := self scale.
 	^ self boxPlotModel outliers collect: [:each | | outPercent |
 		outPercent := scale map: each.
-		BlElement new
+		self outlierElementStencil create
 			addEventHandler: scatterChart yEventHandler;
 			in: [ :e | e userData at: #originalValue put: each ];
-			geometry: BlCircleGeometry new;
-			border: (BlBorder paint: Color gray);
 			constraintsDo: [:c |
-				c vertical exact: 10.
-				c horizontal exact: 10.
 				c frame vertical alignCenterAt: 0.5.
 				c frame horizontal alignCenterAt: outPercent
 			];
@@ -130,20 +212,24 @@ GtPlotterHorizontalBoxPlotAxisStencil >> newRightWhiskerElement [
 	| pq3 |
 	pq3 := self pQuartile3.
 	^ BrFrame new
+		clipChildren: false;
 		constraintsDo: [:c |
 			c vertical matchParent.
 			c horizontal matchParent.
 			c frame horizontal alignLeftAt: pq3.
 			c frame horizontal weight: self pQuartile4 - pq3
 		];
-		addChild: (BlElement new
-			background: Color gray;
-			constraintsDo: [:c |
-				c horizontal matchParent.
-				c vertical exact: 1.
-				c frame vertical alignCenterAt: 0.5.
-			];
-			yourself).
+		addChild: self rightWhiskerElementStencil create.
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> outlierElementStencil [
+	^ outlierElementStencil ifNil: [ outlierElementStencil := self defaultOutlierElementStencil ]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> outlierElementStencil: anObject [
+	outlierElementStencil := anObject
 ]
 
 { #category : #accessing }
@@ -174,7 +260,23 @@ GtPlotterHorizontalBoxPlotAxisStencil >> pQuartile4 [
 { #category : #accessing }
 GtPlotterHorizontalBoxPlotAxisStencil >> reset [
 	super reset.
-	boxPlotModel := nil
+	boxPlotModel := nil.
+	color := nil.
+	boxElementStencil := nil.
+	medianElementStencil := nil.
+	outlierElementStencil := nil.
+	leftWhiskerElementStencil := nil.
+	rightWhiskerElementStencil := nil
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> rightWhiskerElementStencil [
+	^ rightWhiskerElementStencil ifNil: [ rightWhiskerElementStencil := self defaultRightWhiskerElementStencil ]
+]
+
+{ #category : #accessing }
+GtPlotterHorizontalBoxPlotAxisStencil >> rightWhiskerElementStencil: aStencil [
+	rightWhiskerElementStencil := aStencil
 ]
 
 { #category : #accessing }

@@ -2,7 +2,13 @@ Class {
 	#name : #GtPlotterVerticalBoxPlotAxisStencil,
 	#superclass : #GtPlotterVerticalTicksAndLabelsAxisStencil,
 	#instVars : [
-		'boxPlotModel'
+		'boxPlotModel',
+		'boxElementStencil',
+		'medianElementStencil',
+		'bottomWhiskerStencil',
+		'topWhiskerElementStencil',
+		'color',
+		'outlierElementStencil'
 	],
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
@@ -12,8 +18,93 @@ GtPlotterVerticalBoxPlotAxisStencil >> addAxisYElementOn: aContainer [
 ]
 
 { #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> bottomWhiskerStencil [
+	^ bottomWhiskerStencil ifNil: [ 
+		bottomWhiskerStencil := self defaultBottomWiskerStencil]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> bottomWhiskerStencil: aStencil [
+	bottomWhiskerStencil := aStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> boxElementStencil [
+	^ boxElementStencil ifNil: [boxElementStencil := self defaultBoxElementStencil]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> boxElementStencil: aStencil [
+	boxElementStencil := aStencil
+]
+
+{ #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> boxPlotModel [
 	^ boxPlotModel ifNil: [ boxPlotModel := self newBoxPlotModel]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> color [
+	^ color ifNil: [ color := Color gray ]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> color: aColor [
+	color := aColor
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> defaultBottomWiskerStencil [
+	^ [ BlElement new
+		background: self color;
+		constraintsDo: [:c |
+			c vertical matchParent.
+			c horizontal exact: 1.
+			c frame horizontal alignCenterAt: 0.5.
+		] ] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> defaultBoxElementStencil [
+	^ [ BlElement new
+		border: (BlBorder paint: self color)] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> defaultMedianElementStencil [
+	^ [ BlElement new
+		background: self color;
+		size: 1@1 ] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> defaultOutlierElementStencil [
+	^ [ BlElement new
+			geometry: BlCircleGeometry new;
+			background: self color;
+			size: 5 asPoint ] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> defaultTopWhiskerElementStencil [
+	^[ BlElement new
+			background: self color;
+			constraintsDo: [:c |
+				c vertical matchParent.
+				c horizontal exact: 1.
+				c frame horizontal alignCenterAt: 0.5.
+			];
+			yourself ] asStencil
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> medianElementStencil [
+	^ medianElementStencil ifNil: [ medianElementStencil := self defaultMedianElementStencil]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> medianElementStencil: aStencil [
+	medianElementStencil := aStencil
 ]
 
 { #category : #accessing }
@@ -25,9 +116,13 @@ GtPlotterVerticalBoxPlotAxisStencil >> newAxisYTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> newAxisYTicksElement [
-	| pane model |
+	| pane model padding |
+	padding := scatterChart contentPadding.
 	pane := BrFrame new
 		matchParent;
+		padding: (BlInsets
+			top: padding top
+			bottom: padding bottom);
 		clipChildren: false.
 	model := self boxPlotModel.
 	
@@ -48,28 +143,21 @@ GtPlotterVerticalBoxPlotAxisStencil >> newBottomWhiskerElement [
 	| pq1 |
 	pq1 := self pQuartile1.
 	^ BrFrame new
+		clipChildren: false;
 		constraintsDo: [:c |
 			c vertical matchParent.
 			c horizontal matchParent.
 			c frame vertical alignTopAt: pq1.
 			c frame vertical weight: self pQuartile0 - pq1
 		];
-		addChild: (BlElement new
-			background: Color gray;
-			constraintsDo: [:c |
-				c vertical matchParent.
-				c horizontal exact: 1.
-				c frame horizontal alignCenterAt: 0.5.
-			];
-			yourself).
+		addChild: self bottomWhiskerStencil create.
 ]
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> newBoxElement [
 	| pq3 |
 	pq3 := self pQuartile3.
-	^ BlElement new
-		border: (BlBorder paint: Color gray);
+	^ self boxElementStencil create
 		constraintsDo: [:c |
 			c vertical matchParent.
 			c horizontal matchParent.
@@ -86,10 +174,8 @@ GtPlotterVerticalBoxPlotAxisStencil >> newBoxPlotModel [
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> newMedianElement [
-	^ BlElement new
-		background: Color gray;
+	^ self medianElementStencil create 
 		constraintsDo: [:c |
-			c vertical exact: 1.
 			c horizontal matchParent.
 			c frame vertical alignCenterAt: self pQuartile2.
 		];
@@ -102,14 +188,10 @@ GtPlotterVerticalBoxPlotAxisStencil >> newOutlierElements [
 	scale := self scale.
 	^ self boxPlotModel outliers collect: [:each | | outPercent |
 		outPercent := 1 - (scale map: each).
-		BlElement new
+		self outlierElementStencil create
 			addEventHandler: scatterChart yEventHandler;
 			in: [ :e | e userData at: #originalValue put: each ];
-			geometry: BlCircleGeometry new;
-			border: (BlBorder paint: Color gray);
 			constraintsDo: [:c |
-				c vertical exact: 10.
-				c horizontal exact: 10.
 				c frame horizontal alignCenterAt: 0.5.
 				c frame vertical alignCenterAt: outPercent
 			];
@@ -122,20 +204,24 @@ GtPlotterVerticalBoxPlotAxisStencil >> newTopWhiskerElement [
 	| pq4 |
 	pq4 := self pQuartile4.
 	^ BrFrame new
+		clipChildren: false;
 		constraintsDo: [:c |
 			c vertical matchParent.
 			c horizontal matchParent.
 			c frame vertical alignTopAt: pq4.
 			c frame vertical weight: self pQuartile3 - pq4
 		];
-		addChild: (BlElement new
-			background: Color gray;
-			constraintsDo: [:c |
-				c vertical matchParent.
-				c horizontal exact: 1.
-				c frame horizontal alignCenterAt: 0.5.
-			];
-			yourself).
+		addChild: self topWhiskerElementStencil create
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> outlierElementStencil [
+	^ outlierElementStencil ifNil: [ outlierElementStencil := self defaultOutlierElementStencil ]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> outlierElementStencil: aStencil [
+	outlierElementStencil := aStencil
 ]
 
 { #category : #accessing }
@@ -166,10 +252,27 @@ GtPlotterVerticalBoxPlotAxisStencil >> pQuartile4 [
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> reset [
 	super reset.
-	boxPlotModel := nil
+	boxPlotModel := nil.
+	bottomWhiskerStencil := nil.
+	boxElementStencil := nil.
+	medianElementStencil := nil.
+	outlierElementStencil := nil.
+	topWhiskerElementStencil := nil.
+	color := nil.
+	
 ]
 
 { #category : #accessing }
 GtPlotterVerticalBoxPlotAxisStencil >> scale [
 	^ scatterChart scaleY
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> topWhiskerElementStencil [
+	^ topWhiskerElementStencil ifNil: [ topWhiskerElementStencil := self defaultTopWhiskerElementStencil]
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBoxPlotAxisStencil >> topWhiskerElementStencil: aStencil [
+	topWhiskerElementStencil := aStencil
 ]

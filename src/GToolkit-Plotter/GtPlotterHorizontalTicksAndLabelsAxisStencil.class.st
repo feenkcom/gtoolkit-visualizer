@@ -35,7 +35,12 @@ GtPlotterHorizontalTicksAndLabelsAxisStencil >> buildDefault [
 
 { #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTickLabelsElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterHorizontalTickLabelsElement new
+		padding: (BlInsets
+			left: padding left
+			right: padding right);
 		labelElement: [ :aGtPlotterScaleContext |
 			BlTextElement new
 				in: [:e | e userData 
@@ -53,7 +58,12 @@ GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTickLabelsElement [
 
 { #category : #accessing }
 GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTicksElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterHorizontalTicksElement new
+		padding: (BlInsets
+			left: padding left
+			right: padding right);
 		scale: scatterChart scaleX;
 		tickElement: [ :aGtPlotterContext |
 			BlElement new
