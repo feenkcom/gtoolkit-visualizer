@@ -30,15 +30,9 @@ GtWMLabelNode >> comma: aSmaCCToken [
 { #category : #'api - convenience' }
 GtWMLabelNode >> coordinate [
 	<return: #Point or: nil>
-	| anXString anYString anXNumber anYNumber |
-	anXString := self x ifNotNil: #source.
-	anYString := self y ifNotNil: #source.
-
-	anXString ifNil: [ ^ nil ].
-	anYString ifNil: [ ^ nil ].
-
-	anXNumber := anXString asNumber.
-	anYNumber := anYString asNumber.
+	| anXNumber anYNumber |
+	anXNumber := GtWMProgramNode parseFloatToken: self x.
+	anYNumber := GtWMProgramNode parseFloatToken: self y.
 
 	anXNumber ifNil: [ ^ nil ].
 	anYNumber ifNil: [ ^ nil ].

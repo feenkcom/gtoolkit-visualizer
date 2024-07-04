@@ -58,16 +58,7 @@ GtWMEvolveNode >> evolution: aSmaCCToken [
 { #category : #accessing }
 GtWMEvolveNode >> evolutionNumber [
 	<return: #Number or: nil>
-	| anXString anXNumber |
-	anXString := self evolution ifNotNil: #source.
-
-	anXString ifNil: [ ^ nil ].
-
-	anXNumber := anXString asNumber.
-
-	anXNumber ifNil: [ ^ nil ].
-
-	^ anXNumber
+	^ GtWMProgramNode parseFloatToken: self evolution
 ]
 
 { #category : #generated }

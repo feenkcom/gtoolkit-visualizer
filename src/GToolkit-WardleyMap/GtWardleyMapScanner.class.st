@@ -67,11 +67,41 @@ GtWardleyMapScanner >> scan1 [
 	currentCharacter == $) ifTrue: [ ^ self recordAndReportMatch: #(5 20) ].
 	currentCharacter == $+ ifTrue: [ ^ self scan3 ].
 	currentCharacter == $, ifTrue: [ ^ self recordAndReportMatch: #(10 20) ].
-	currentCharacter == $- ifTrue: [ ^ self scan1X5 ].
+	currentCharacter == $- ifTrue: [ ^ self scan1X3 ].
+	currentCharacter == $. ifTrue: [ ^ self scan4 ].
 	currentCharacter == $/ ifTrue: [ ^ self scan1X2 ].
 	currentCharacter == $[ ifTrue: [ ^ self recordAndReportMatch: #(12) ].
 	currentCharacter == $] ifTrue: [ ^ self recordAndReportMatch: #(13) ].
 	^ self scan1X20
+]
+
+{ #category : #generated }
+GtWardleyMapScanner >> scan10 [
+	[ self step.
+	currentCharacter == $/ ifTrue: [ ^ self scan11 ].
+	currentCharacter == Character tab
+		or: [ (currentCharacter between: Character pageUp and: Character newPage)
+				or: [ currentCharacter == Character space ] ] ] whileTrue.
+	(currentCharacter <= Character backspace
+		or: [ (currentCharacter between: (Character value: 14) and: $:)
+				or: [ currentCharacter >= $< ] ])
+		ifTrue: [ [ self recordMatch: #(23).
+			self step.
+			currentCharacter == $/ ifTrue: [ ^ self scan11 ].
+			(currentCharacter == Character tab
+				or: [ (currentCharacter between: Character pageUp and: Character newPage)
+						or: [ currentCharacter == Character space ] ]) ifTrue: [ ^ self scan10 ].
+			currentCharacter <= Character backspace
+				or: [ (currentCharacter between: (Character value: 14) and: $:)
+						or: [ currentCharacter >= $< ] ] ] whileTrue ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+GtWardleyMapScanner >> scan11 [
+	self step.
+	currentCharacter ~~ $/ ifTrue: [ ^ self scan10 ].
+	^ self reportLastMatch
 ]
 
 { #category : #generated }
@@ -182,7 +212,7 @@ GtWardleyMapScanner >> scan1X19 [
 	currentCharacter == $y ifTrue: [ ^ self scan1X9 ].
 	currentCharacter == ${ ifTrue: [ ^ self recordAndReportMatch: #(14 20) ].
 	currentCharacter == $} ifTrue: [ ^ self recordAndReportMatch: #(15 20) ].
-	currentCharacter isDigit ifTrue: [ ^ self scan4 ].
+	currentCharacter isDigit ifTrue: [ ^ self scan5 ].
 	(currentCharacter == Character lf or: [ currentCharacter == Character cr ])
 		ifTrue: [ ^ self scan1X18 ].
 	((currentCharacter between: Character tab and: Character pageUp)
@@ -208,7 +238,7 @@ GtWardleyMapScanner >> scan1X2 [
 
 { #category : #generated }
 GtWardleyMapScanner >> scan1X20 [
-	currentCharacter == $a ifTrue: [ ^ self scan1X4 ].
+	currentCharacter == $a ifTrue: [ ^ self scan1X5 ].
 	currentCharacter == $b ifTrue: [ ^ self scan1X8 ].
 	currentCharacter == $c ifTrue: [ ^ self scan1X15 ].
 	currentCharacter == $e ifTrue: [ ^ self scan1X1 ].
@@ -218,13 +248,25 @@ GtWardleyMapScanner >> scan1X20 [
 	currentCharacter == $n ifTrue: [ ^ self scan1X11 ].
 	currentCharacter == $o ifTrue: [ ^ self scan1X10 ].
 	currentCharacter == $p ifTrue: [ ^ self scan1X6 ].
-	currentCharacter == $s ifTrue: [ ^ self scan1X3 ].
+	currentCharacter == $s ifTrue: [ ^ self scan1X4 ].
 	currentCharacter == $t ifTrue: [ ^ self scan1X7 ].
 	^ self scan1X19
 ]
 
 { #category : #generated }
 GtWardleyMapScanner >> scan1X3 [
+	self step.
+	currentCharacter == $. ifTrue: [ ^ self scan4 ].
+	currentCharacter == $> ifTrue: [ ^ self recordAndReportMatch: #(11) ].
+	currentCharacter isDigit ifTrue: [ ^ self scan5 ].
+	(currentCharacter <= $Z
+		or: [ currentCharacter == $\ or: [ currentCharacter >= $^ ] ])
+		ifTrue: [ ^ self recordAndReportMatch: #(20) ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+GtWardleyMapScanner >> scan1X4 [
 	self recordMatch: #(20).
 	self step.
 	currentCharacter == $e
@@ -239,7 +281,7 @@ GtWardleyMapScanner >> scan1X3 [
 ]
 
 { #category : #generated }
-GtWardleyMapScanner >> scan1X4 [
+GtWardleyMapScanner >> scan1X5 [
 	self recordMatch: #(20).
 	self step.
 	currentCharacter == $n
@@ -252,17 +294,6 @@ GtWardleyMapScanner >> scan1X4 [
 						ifTrue: [ self recordMatch: #(26).
 							self step.
 							currentCharacter == $s ifTrue: [ ^ self recordAndReportMatch: #(27) ] ] ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-GtWardleyMapScanner >> scan1X5 [
-	self step.
-	currentCharacter == $> ifTrue: [ ^ self recordAndReportMatch: #(11) ].
-	currentCharacter isDigit ifTrue: [ ^ self scan4 ].
-	(currentCharacter <= $Z
-		or: [ currentCharacter == $\ or: [ currentCharacter >= $^ ] ])
-		ifTrue: [ ^ self recordAndReportMatch: #(20) ].
 	^ self reportLastMatch
 ]
 
@@ -346,19 +377,30 @@ GtWardleyMapScanner >> scan3 [
 
 { #category : #generated }
 GtWardleyMapScanner >> scan4 [
-	self recordMatch: #(18 20).
+	self recordMatch: #(20).
 	self step.
-	currentCharacter == $. ifTrue: [ ^ self scan5 ].
 	currentCharacter isDigit
 		ifTrue: [ [ self recordMatch: #(18).
 			self step.
-			currentCharacter == $. ifTrue: [ ^ self scan5 ].
 			currentCharacter isDigit ] whileTrue ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 GtWardleyMapScanner >> scan5 [
+	self recordMatch: #(18 20).
+	self step.
+	currentCharacter == $. ifTrue: [ ^ self scan6 ].
+	currentCharacter isDigit
+		ifTrue: [ [ self recordMatch: #(18).
+			self step.
+			currentCharacter == $. ifTrue: [ ^ self scan6 ].
+			currentCharacter isDigit ] whileTrue ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+GtWardleyMapScanner >> scan6 [
 	self step.
 	currentCharacter isDigit
 		ifTrue: [ [ self recordMatch: #(18).
@@ -368,20 +410,20 @@ GtWardleyMapScanner >> scan5 [
 ]
 
 { #category : #generated }
-GtWardleyMapScanner >> scan6 [
+GtWardleyMapScanner >> scan7 [
 	[ self recordMatch: #(19).
 	self step.
 	(currentCharacter isSeparator or: [ currentCharacter == Character pageUp ])
-		ifTrue: [ ^ self scan7 ].
+		ifTrue: [ ^ self scan8 ].
 	true ] whileTrue
 ]
 
 { #category : #generated }
-GtWardleyMapScanner >> scan7 [
+GtWardleyMapScanner >> scan8 [
 	[ self step.
 	currentCharacter == $-
 		ifTrue: [ self step.
-			currentCharacter ~~ $> ifTrue: [ ^ self scan6 ].
+			currentCharacter ~~ $> ifTrue: [ ^ self scan7 ].
 			^ self reportLastMatch ].
 	currentCharacter isSeparator or: [ currentCharacter == Character pageUp ] ]
 		whileTrue.
@@ -389,31 +431,25 @@ GtWardleyMapScanner >> scan7 [
 		ifTrue: [ [ self recordMatch: #(19).
 			self step.
 			(currentCharacter isSeparator or: [ currentCharacter == Character pageUp ])
-				ifTrue: [ ^ self scan7 ].
+				ifTrue: [ ^ self scan8 ].
 			currentCharacter <= $= or: [ currentCharacter >= $? ] ] whileTrue ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-GtWardleyMapScanner >> scan8 [
+GtWardleyMapScanner >> scan9 [
 	[ self recordMatch: #(23).
 	self step.
+	currentCharacter == $/
+		ifTrue: [ self step.
+			currentCharacter ~~ $/ ifTrue: [ ^ self scan9 ].
+			^ self reportLastMatch ].
 	(currentCharacter == Character tab
 		or: [ (currentCharacter between: Character pageUp and: Character newPage)
-				or: [ currentCharacter == Character space ] ])
-		ifTrue: [ [ self step.
-			currentCharacter == Character tab
-				or: [ (currentCharacter between: Character pageUp and: Character newPage)
-						or: [ currentCharacter == Character space ] ] ] whileTrue.
-			(currentCharacter <= Character backspace
-				or: [ (currentCharacter between: (Character value: 14) and: $.)
-						or: [ (currentCharacter between: $0 and: $:) or: [ currentCharacter >= $< ] ] ])
-				ifTrue: [ ^ self scan8 ].
-			^ self reportLastMatch ].
+				or: [ currentCharacter == Character space ] ]) ifTrue: [ ^ self scan10 ].
 	currentCharacter <= Character backspace
-		or: [ (currentCharacter between: (Character value: 14) and: $.)
-				or: [ (currentCharacter between: $0 and: $:) or: [ currentCharacter >= $< ] ] ] ]
-		whileTrue.
+		or: [ (currentCharacter between: (Character value: 14) and: $:)
+				or: [ currentCharacter >= $< ] ] ] whileTrue.
 	^ self reportLastMatch
 ]
 
@@ -456,8 +492,9 @@ GtWardleyMapScanner >> scanForTokenX1 [
 					self step.
 					currentCharacter <= Character tab
 						or: [ (currentCharacter between: Character pageUp and: Character newPage)
-								or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue ].
-			^ self reportLastMatch ].
+								or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue.
+					^ self reportLastMatch ].
+			^ self scan9 ].
 	currentCharacter == $; ifTrue: [ ^ self recordAndReportMatch: #(24) ].
 	(currentCharacter == Character lf or: [ currentCharacter == Character cr ])
 		ifTrue: [ [ self recordMatch: #(22).
@@ -474,7 +511,7 @@ GtWardleyMapScanner >> scanForTokenX1 [
 						or: [ currentCharacter == Character space ] ] ] whileTrue.
 			^ self reportLastMatch ].
 	(currentCharacter <= Character backspace
-		or: [ currentCharacter >= (Character value: 14) ]) ifTrue: [ ^ self scan8 ].
+		or: [ currentCharacter >= (Character value: 14) ]) ifTrue: [ ^ self scan9 ].
 	^ self reportLastMatch
 ]
 
@@ -523,7 +560,7 @@ GtWardleyMapScanner >> scanForTokenX3 [
 						or: [ currentCharacter == Character space ] ] ] whileTrue.
 			^ self reportLastMatch ].
 	(currentCharacter <= Character backspace
-		or: [ currentCharacter >= (Character value: 14) ]) ifTrue: [ ^ self scan6 ].
+		or: [ currentCharacter >= (Character value: 14) ]) ifTrue: [ ^ self scan7 ].
 	^ self reportLastMatch
 ]
 

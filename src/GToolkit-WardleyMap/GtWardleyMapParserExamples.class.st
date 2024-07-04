@@ -230,6 +230,86 @@ GtWardleyMapParserExamples >> parseScriptWithLink12 [
 ]
 
 { #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink13 [
+	<gtExample>
+	| aScript aResult |
+	aScript := '"Best" (legacy)->"common library"'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: '"Best" (legacy)'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: '"common library"'.
+	self assert: aResult links first comment equals: nil.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink14 [
+	<gtExample>
+	| aScript aResult |
+	aScript := '"Best" (legacy) ->C# / .Net'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: '"Best" (legacy)'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: 'C# / .Net'.
+	self assert: aResult links first comment equals: nil.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink15 [
+	<gtExample>
+	| aScript aResult |
+	aScript := '/something ->/slash / another slash'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: '/something'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: '/slash / another slash'.
+	self assert: aResult links first comment equals: nil.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink16 [
+	<gtExample>
+	| aScript aResult |
+	aScript := '/something ->/slash / another slash // commented line'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: '/something'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: '/slash / another slash'.
+	self assert: aResult links first comment equals: nil.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
+GtWardleyMapParserExamples >> parseScriptWithLink17 [
+	<gtExample>
+	| aScript aResult |
+	aScript := '/something ->/slash / another slash ; link I/O label // commented line'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult links size equals: 1.
+	self assert: aResult links first start source equals: '/something'.
+	self assert: aResult links first arrow source equals: '->'.
+	self assert: aResult links first end source equals: '/slash / another slash'.
+	self assert: aResult links first comment source equals: 'link I/O label'.
+
+	^ aResult
+]
+
+{ #category : #'examples - link' }
 GtWardleyMapParserExamples >> parseScriptWithLink2 [
 	<gtExample>
 	| aScript aResult |
@@ -512,6 +592,38 @@ GtWardleyMapParserExamples >> parseScriptWithPipeline [
 	self assert: aResult links first start source equals: 'node f'.
 	self assert: aResult links first arrow source equals: '->'.
 	self assert: aResult links first end source equals: 'node a'.
+
+	^ aResult
+]
+
+{ #category : #'examples - pipeline' }
+GtWardleyMapParserExamples >> parseScriptWithPipeline1 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'pipeline node a [0.08, .6]'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult pipelines size equals: 1.
+	self assert: aResult pipelines first name source equals: 'node a'.
+	self assert: aResult pipelines first evolution1 source equals: '0.08'.
+	self assert: aResult pipelines first evolution2 source equals: '.6'.
+	self assert: aResult pipelines first coordinate equals: 0.08 @0.6.
+
+	^ aResult
+]
+
+{ #category : #'examples - pipeline' }
+GtWardleyMapParserExamples >> parseScriptWithPipeline2 [
+	<gtExample>
+	| aScript aResult |
+	aScript := 'pipeline node a [-.08, -.6]'.
+	aResult := GtWardleyMapParser parse: aScript.
+	
+	self assert: aResult pipelines size equals: 1.
+	self assert: aResult pipelines first name source equals: 'node a'.
+	self assert: aResult pipelines first evolution1 source equals: '-.08'.
+	self assert: aResult pipelines first evolution2 source equals: '-.6'.
+	self assert: aResult pipelines first coordinate equals: -0.08 @ -0.6.
 
 	^ aResult
 ]
