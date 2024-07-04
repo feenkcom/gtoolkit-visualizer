@@ -17,10 +17,10 @@ GtD3WebViewExampleAnalysis >> gtViewClassesWithMethodsFor: aView [
 			GtD3WebViewPhlowWrapper new 
 				viewName: #barchart;
 				dataProvider: (GtD3WebViewCsvDataProvider new 
-					objects: self top20LargeClasses;
+					objects: [self top20LargeClasses];
 					rowLabel: [ :each | each name ];
 					rowValue: [ :each | each methods size ]) ];
- 		view: #gtViewWebViewFor:
+ 		view: #gtBasicViewWebViewFor:
 ]
 
 { #category : #accessing }

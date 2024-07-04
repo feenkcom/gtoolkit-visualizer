@@ -5,7 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-GtD3WebViewSourceProvider >> htmlForViewWithName: aViewName withDataUrl: anUrl [
-	^ ('.' asFileReference / ('d3-', aViewName, '.html')) contents
-		copyReplaceAll: '{url}' with: anUrl asString
+GtD3WebViewSourceProvider >> htmlForViewWithName: aViewName dataUrl: aDataUrl selectionUrl: aSelectionUrl [
+	^ (('.' asFileReference / ('d3-', aViewName, '.html')) contents
+		copyReplaceAll: '{dataUrl}' with: aDataUrl asString)
+		copyReplaceAll: '{selectionUrl}' with: aSelectionUrl asString
 ]

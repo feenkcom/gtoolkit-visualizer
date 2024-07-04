@@ -98,11 +98,13 @@ GtD3WebViewServer >> configuration: aSyncServerConfiguration [
 
 { #category : #initialization }
 GtD3WebViewServer >> defaultDelegate [
-	^ (ZnDispatcherDelegate new
+	^ ZnDispatcherDelegate new
 		map: '/view' to: [ :request :response | 
 			response entity: (ZnStringEntity html: (self viewCodeForRequest: request)) ];
 		map: '/data' to: [ :request :response | 
-			response entity: (ZnStringEntity text: (self viewDataForRequest: request)) ])
+			response entity: (ZnStringEntity text: (self viewDataForRequest: request)) ];
+		map: '/send' to: [ :request :response | 
+			response entity: (ZnStringEntity text: (self navigateForRequest: request)) ]
 ]
 
 { #category : #initialization }
@@ -160,6 +162,22 @@ GtD3WebViewServer >> localhostUrl [
 	^ ('http://localhost:{1}' format: {self port}) asZnUrl
 ]
 
+{ #category : #requests }
+GtD3WebViewServer >> navigateForRequest: aRequest [
+	| phlowId objectId |
+
+	phlowId := aRequest url queryAt: 'phlowId'.
+	objectId := aRequest url queryAt: 'objectId'.
+	
+	phlowRegistry 
+		phlowWrapperWithId: phlowId
+		ifPresent: [ :aPhlowWrapper | 
+			aPhlowWrapper navigateToObjectWithId: objectId ]
+		ifAbsent: [  ].
+	
+	^ ''
+]
+
 { #category : #accessing }
 GtD3WebViewServer >> port [
 	^ self zincServer port
@@ -168,6 +186,14 @@ GtD3WebViewServer >> port [
 { #category : #accessing }
 GtD3WebViewServer >> port: aNumber [
 	^ self zincServer port: aNumber
+]
+
+{ #category : #accessing }
+GtD3WebViewServer >> selectionUrlForProviderId: aProviderId [
+	^ self localhostUrl 	
+		addPathSegment: 'send';
+		queryAt: 'phlowId' put: aProviderId;
+		yourself
 ]
 
 { #category : #actions }
@@ -188,7 +214,8 @@ GtD3WebViewServer >> viewCodeForRequest: aRequest [
 	phlowId := aRequest url queryAt: 'phlowId'.
 	^ sourceProvider 
 		htmlForViewWithName: viewName
-		withDataUrl: (self viewDataUrlForProviderId: phlowId)
+		dataUrl: (self viewDataUrlForProviderId: phlowId)
+		selectionUrl: (self selectionUrlForProviderId: phlowId)
 ]
 
 { #category : #accessing }

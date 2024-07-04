@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'dataProvider',
 		'id',
-		'viewName'
+		'viewName',
+		'webViewElement'
 	],
 	#category : #'GToolkit-D3-WebView'
 }
@@ -26,20 +27,20 @@ GtD3WebViewPhlowWrapper >> ensureWrapperIsRegistered [
 ]
 
 { #category : #'gt - extensions' }
-GtD3WebViewPhlowWrapper >> gtViewWeb2ViewFor: aView [ 
-	
+GtD3WebViewPhlowWrapper >> gtBasicViewWebViewFor: aView [ 
+	"<gtView>"
 	
 	^ aView forward
 		title: 'Classes with methods';
 		object: [
-			GtWebViewElement new
-				url:GtD3WebViewServer defaultInstance localhostUrl asString, 'view' ];
+			self ensureWrapperIsRegistered.
+			self webViewElementForWrapper ];
  		view: #gtLiveFor:
 ]
 
 { #category : #'gt - extensions' }
 GtD3WebViewPhlowWrapper >> gtViewWebViewFor: aView [ 
-	<gtView>
+	"<gtView>"
 	
 	^ aView forward
 		title: 'Classes with methods';
@@ -59,6 +60,15 @@ GtD3WebViewPhlowWrapper >> initialize [
 	super initialize.
 	
 	id := (UUID new) base64Encoded
+]
+
+{ #category : #accessing }
+GtD3WebViewPhlowWrapper >> navigateToObjectWithId: anId [
+	webViewElement ifNil: [ ^ self ].
+	
+	webViewElement phlow 
+		spawnObject: (self dataProvider 
+			objectsByIndex at: anId asNumber)
 ]
 
 { #category : #accessing }
@@ -83,8 +93,9 @@ GtD3WebViewPhlowWrapper >> viewName: aViewName [
 
 { #category : #'gt - extensions' }
 GtD3WebViewPhlowWrapper >> webViewElementForWrapper [
-	^ GtWebViewElement new
-		url: (self server 
-			viewCodeUrlForViewNamed: self viewName
-			withProviderId: self id) asString
+	^ webViewElement ifNil: [ 
+		webViewElement := GtWebViewElement new
+			url: (self server 
+				viewCodeUrlForViewNamed: self viewName
+				withProviderId: self id) asString ]
 ]
