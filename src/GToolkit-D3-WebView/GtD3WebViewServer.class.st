@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'configuration',
 		'zincServer',
-		'phlowRegistry',
-		'sourceProvider'
+		'phlowRegistry'
 	],
 	#classInstVars : [
 		'defaultInstance'

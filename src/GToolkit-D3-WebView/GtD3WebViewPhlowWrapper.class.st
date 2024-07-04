@@ -33,16 +33,41 @@ GtD3WebViewPhlowWrapper >> gtBasicViewWebViewFor: aView [
 ]
 
 { #category : #'gt - extensions' }
+GtD3WebViewPhlowWrapper >> gtViewDataFor: aView [ 
+	<gtView>
+	
+	^ aView forward
+		title: 'View data';
+		priority: 20;
+		object: [
+			self viewData ];
+ 		view: #gtStringFor: 
+]
+
+{ #category : #'gt - extensions' }
+GtD3WebViewPhlowWrapper >> gtViewSourceFor: aView [ 
+	<gtView>
+	
+	^ aView forward
+		title: 'View source';
+		priority: 15;
+		object: [
+			self viewSource ];
+ 		view: #gtStringFor: 
+]
+
+{ #category : #'gt - extensions' }
 GtD3WebViewPhlowWrapper >> gtViewWebViewFor: aView [ 
 	<gtView>
 	
 	^ aView forward
 		title: 'Web View';
+		priority: 10;
 		object: [
 			"Whenever we show the view we createa new wrapper and web view"
 			self class new 
 				viewSpecification:  self viewSpecification ];
- 		view: #gtBasicViewWebViewFor
+ 		view: #gtBasicViewWebViewFor:
 ]
 
 { #category : #accessing }
@@ -69,6 +94,13 @@ GtD3WebViewPhlowWrapper >> navigateToObjectWithId: anId [
 { #category : #accessing }
 GtD3WebViewPhlowWrapper >> selectionUrl [
 	^ self server selectionUrlForProviderId: self id
+]
+
+{ #category : #accessing }
+GtD3WebViewPhlowWrapper >> selectionUrlForObjectId: anObjectId [
+	^ self selectionUrl
+		queryAt: 'objectId' put: anObjectId;
+		yourself
 ]
 
 { #category : #accessing }

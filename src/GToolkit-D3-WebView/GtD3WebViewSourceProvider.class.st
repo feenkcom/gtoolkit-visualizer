@@ -17,6 +17,16 @@ GtD3WebViewSourceProvider class >> forGToolkitVisualiserExamplesFolder [
 			/ 'd3'
 ]
 
+{ #category : #'gt - extensions' }
+GtD3WebViewSourceProvider >> gtViewFilesFor: aView [
+	<gtView>
+	
+	^ aView forward 
+		title: 'Sources folder';
+		object: [ self sourcesFolder ];
+		view: #gtTreeFor:
+]
+
 { #category : #accessing }
 GtD3WebViewSourceProvider >> htmlForViewWithName: aViewName dataUrl: aDataUrl selectionUrl: aSelectionUrl [
 	^ ((self sourcesFolder / ('d3-', aViewName, '.html')) contents
