@@ -14,6 +14,17 @@ GtD3WebViewPhlowRegistry >> ensureWrapperIsRegisteredFor: aPhlowWrapper [
 		ifAbsentPut: [ aPhlowWrapper ]
 ]
 
+{ #category : #accessing }
+GtD3WebViewPhlowRegistry >> gtViewRegisteredWrappersFor: aView [ 
+	<gtView>
+	
+	^ aView columnedList 
+		title: 'Registered view';
+		items: [ phlowWrappersById associations ];
+		column: 'Id' text: [ :assoc | assoc key ];
+		column: 'View name' text: [ :assoc | assoc value viewName ]
+]
+
 { #category : #initialization }
 GtD3WebViewPhlowRegistry >> initialize [
 	super initialize.
