@@ -3,9 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'columnNames',
-		'objects',
 		'labelFormatter',
-		'valueFormatter'
+		'valueFormatter',
+		'objectsComputation',
+		'objectsByIndex'
 	],
 	#category : #'GToolkit-D3-WebView'
 }
@@ -21,6 +22,11 @@ GtD3WebViewCsvDataProvider >> columnNames: anObject [
 ]
 
 { #category : #accessing }
+GtD3WebViewCsvDataProvider >> computeObjectsWithIds [
+	^ objectsComputation value asOrderedCollection
+]
+
+{ #category : #accessing }
 GtD3WebViewCsvDataProvider >> labelFormatter [
 	^ labelFormatter
 ]
@@ -31,13 +37,27 @@ GtD3WebViewCsvDataProvider >> labelFormatter: anObject [
 ]
 
 { #category : #accessing }
-GtD3WebViewCsvDataProvider >> objects [
-	^ objects
+GtD3WebViewCsvDataProvider >> objects: aBlockClosure [
+	objectsComputation := aBlockClosure
 ]
 
 { #category : #accessing }
-GtD3WebViewCsvDataProvider >> objects: anObject [
-	objects := anObject
+GtD3WebViewCsvDataProvider >> objectsByIndex [
+	^ objectsByIndex ifNil: [
+		objectsByIndex := self computeObjectsWithIds]
+]
+
+{ #category : #accessing }
+GtD3WebViewCsvDataProvider >> objectsWithIndexDo: elementBlock separatedBy: separatorBlock [
+	| beforeFirst |
+	
+	beforeFirst := true.
+	self objectsByIndex withIndexDo:
+		[:each :index |
+		beforeFirst
+			ifTrue: [beforeFirst := false]
+			ifFalse: [separatorBlock value].
+		elementBlock value: each value: index]
 ]
 
 { #category : #accessing }
@@ -63,12 +83,14 @@ GtD3WebViewCsvDataProvider >> valueFormatter: anObject [
 { #category : #accessing }
 GtD3WebViewCsvDataProvider >> viewData [
 	^ String streamContents: [ :aStream |
-		aStream << 'Label,Value'.
+		aStream << 'Label,Value,Id'.
 		aStream crlf.
-		self objects
-			do: [ :each | 
+		self 
+			objectsWithIndexDo: [ :each  :index| 
 				aStream << (self labelFormatter value: each) asString.
 				aStream << ','.
-				aStream << (self valueFormatter value: each) asString ] 
+				aStream << (self valueFormatter value: each) asString.
+				aStream << ','.
+				aStream << index asString ] 
 			separatedBy: [ aStream crlf ] ]
 ]

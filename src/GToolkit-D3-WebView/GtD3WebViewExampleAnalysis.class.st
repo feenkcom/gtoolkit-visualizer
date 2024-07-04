@@ -14,10 +14,12 @@ GtD3WebViewExampleAnalysis >> gtViewClassesWithMethodsFor: aView [
 	^ aView forward
 		title: 'Classes with methods';
 		object: [
-			GtD3WebViewPhlowWrapper new 
+			GtD3WebViewPhlowLocalSpecification new 
 				viewName: #barchart;
+				sourceProvider: (GtD3WebViewSourceProvider 
+					forGToolkitVisualiserExamplesFolder);
 				dataProvider: (GtD3WebViewCsvDataProvider new 
-					objects: self top20LargeClasses;
+					objects: [self top20LargeClasses];
 					rowLabel: [ :each | each name ];
 					rowValue: [ :each | each methods size ]) ];
  		view: #gtViewWebViewFor:
