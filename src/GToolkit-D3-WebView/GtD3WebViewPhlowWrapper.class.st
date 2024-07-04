@@ -2,22 +2,16 @@ Class {
 	#name : #GtD3WebViewPhlowWrapper,
 	#superclass : #Object,
 	#instVars : [
-		'dataProvider',
 		'id',
-		'viewName',
-		'webViewElement'
+		'webViewElement',
+		'viewSpecification'
 	],
 	#category : #'GToolkit-D3-WebView'
 }
 
 { #category : #accessing }
 GtD3WebViewPhlowWrapper >> dataProvider [
-	^ dataProvider
-]
-
-{ #category : #accessing }
-GtD3WebViewPhlowWrapper >> dataProvider: anObject [
-	dataProvider := anObject
+	^ viewSpecification dataProvider
 ]
 
 { #category : #'gt - extensions' }
@@ -28,10 +22,10 @@ GtD3WebViewPhlowWrapper >> ensureWrapperIsRegistered [
 
 { #category : #'gt - extensions' }
 GtD3WebViewPhlowWrapper >> gtBasicViewWebViewFor: aView [ 
-	"<gtView>"
+	"Defines the logic for rendering the view"
 	
 	^ aView forward
-		title: 'Classes with methods';
+		title: 'Web View';
 		object: [
 			self ensureWrapperIsRegistered.
 			self webViewElementForWrapper ];
@@ -40,14 +34,15 @@ GtD3WebViewPhlowWrapper >> gtBasicViewWebViewFor: aView [
 
 { #category : #'gt - extensions' }
 GtD3WebViewPhlowWrapper >> gtViewWebViewFor: aView [ 
-	"<gtView>"
+	<gtView>
 	
 	^ aView forward
-		title: 'Classes with methods';
+		title: 'Web View';
 		object: [
-			self ensureWrapperIsRegistered.
-			self webViewElementForWrapper ];
- 		view: #gtLiveFor:
+			"Whenever we show the view we createa new wrapper and web view"
+			self class new 
+				viewSpecification:  self viewSpecification ];
+ 		view: #gtBasicViewWebViewFor
 ]
 
 { #category : #accessing }
@@ -55,7 +50,7 @@ GtD3WebViewPhlowWrapper >> id [
 	^ id
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 GtD3WebViewPhlowWrapper >> initialize [
 	super initialize.
 	
@@ -72,8 +67,18 @@ GtD3WebViewPhlowWrapper >> navigateToObjectWithId: anId [
 ]
 
 { #category : #accessing }
+GtD3WebViewPhlowWrapper >> selectionUrl [
+	^ self server selectionUrlForProviderId: self id
+]
+
+{ #category : #accessing }
 GtD3WebViewPhlowWrapper >> server [
 	^ GtD3WebViewServer defaultInstance
+]
+
+{ #category : #accessing }
+GtD3WebViewPhlowWrapper >> sourceProvider [
+	^ viewSpecification sourceProvider
 ]
 
 { #category : #accessing }
@@ -82,20 +87,42 @@ GtD3WebViewPhlowWrapper >> viewData [
 ]
 
 { #category : #accessing }
-GtD3WebViewPhlowWrapper >> viewName [
-	^ viewName
+GtD3WebViewPhlowWrapper >> viewDataUrl [
+	^ self server viewDataUrlForProviderId: self id
 ]
 
 { #category : #accessing }
-GtD3WebViewPhlowWrapper >> viewName: aViewName [
-	viewName := aViewName
+GtD3WebViewPhlowWrapper >> viewName [
+	^ viewSpecification viewName
+]
+
+{ #category : #accessing }
+GtD3WebViewPhlowWrapper >> viewSource [
+	^ self sourceProvider
+		htmlForViewWithName: self viewName
+		dataUrl: self viewDataUrl
+		selectionUrl: self selectionUrl
+]
+
+{ #category : #'gt - extensions' }
+GtD3WebViewPhlowWrapper >> viewSourceUrl [
+	^ self server viewCodeUrlForViewNamed: self viewName withProviderId: self id
+]
+
+{ #category : #accessing }
+GtD3WebViewPhlowWrapper >> viewSpecification [
+	^ viewSpecification
+]
+
+{ #category : #accessing }
+GtD3WebViewPhlowWrapper >> viewSpecification: aViewSpecification [
+	viewSpecification := aViewSpecification
 ]
 
 { #category : #'gt - extensions' }
 GtD3WebViewPhlowWrapper >> webViewElementForWrapper [
-	^ webViewElement ifNil: [ 
-		webViewElement := GtWebViewElement new
-			url: (self server 
-				viewCodeUrlForViewNamed: self viewName
-				withProviderId: self id) asString ]
+	^ webViewElement
+		ifNil: [ 
+			webViewElement := GtWebViewElement new 
+				url: self viewSourceUrl asString ]
 ]

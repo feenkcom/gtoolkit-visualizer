@@ -146,7 +146,6 @@ GtD3WebViewServer >> initialize [
 		zincServer := self defaultZincServer ].
 	
 	phlowRegistry := GtD3WebViewPhlowRegistry new.
-	sourceProvider := GtD3WebViewSourceProvider new.
 	
 	zincServer delegate: self defaultDelegate.
 	zincServer debugMode: true.
@@ -208,14 +207,12 @@ GtD3WebViewServer >> stop [
 
 { #category : #requests }
 GtD3WebViewServer >> viewCodeForRequest: aRequest [
-	| viewName phlowId |
-	
-	viewName := aRequest url queryAt: 'viewName'.
-	phlowId := aRequest url queryAt: 'phlowId'.
-	^ sourceProvider 
-		htmlForViewWithName: viewName
-		dataUrl: (self viewDataUrlForProviderId: phlowId)
-		selectionUrl: (self selectionUrlForProviderId: phlowId)
+
+	^ phlowRegistry 
+		phlowWrapperWithId: (aRequest url queryAt: 'phlowId')
+		ifPresent: [ :aPhlowWrapper | 
+			aPhlowWrapper viewSource ]
+		ifAbsent: [ '' ]
 ]
 
 { #category : #accessing }

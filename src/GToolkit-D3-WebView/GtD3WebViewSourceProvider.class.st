@@ -1,12 +1,36 @@
 Class {
 	#name : #GtD3WebViewSourceProvider,
 	#superclass : #Object,
+	#instVars : [
+		'sourcesFolder'
+	],
 	#category : #'GToolkit-D3-WebView'
 }
 
+{ #category : #'instance creation' }
+GtD3WebViewSourceProvider class >> forGToolkitVisualiserExamplesFolder [
+	^ self new 
+		sourcesFolder: FileLocator gtResource 
+			/ 'feenkcom' 
+			/ 'gtoolkit-visualizer' 
+			/ 'data' 
+			/ 'd3'
+]
+
 { #category : #accessing }
 GtD3WebViewSourceProvider >> htmlForViewWithName: aViewName dataUrl: aDataUrl selectionUrl: aSelectionUrl [
-	^ (('.' asFileReference / ('d3-', aViewName, '.html')) contents
+	^ ((self sourcesFolder / ('d3-', aViewName, '.html')) contents
 		copyReplaceAll: '{dataUrl}' with: aDataUrl asString)
 		copyReplaceAll: '{selectionUrl}' with: aSelectionUrl asString
+]
+
+{ #category : #accessing }
+GtD3WebViewSourceProvider >> sourcesFolder [
+	^ sourcesFolder ifNil: [
+		'.' asFileReference ]
+]
+
+{ #category : #configuring }
+GtD3WebViewSourceProvider >> sourcesFolder: aFolderOrFileLocator [
+	sourcesFolder := aFolderOrFileLocator
 ]
