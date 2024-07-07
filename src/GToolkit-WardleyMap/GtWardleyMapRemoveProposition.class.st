@@ -68,6 +68,16 @@ GtWardleyMapRemoveProposition >> initialize [
 	rejectAction action: [ self onRejectAction ].
 ]
 
+{ #category : #testing }
+GtWardleyMapRemoveProposition >> isActionableProposition [
+	"Return true if it can be handled by GtWardleyMapAllProposition.
+	Such decorator must implement #onAcceptAction and #onRejectAction methods.
+	Return false in other cases."
+
+	<return: #Boolean>
+	^ true
+]
+
 { #category : #'event handling' }
 GtWardleyMapRemoveProposition >> onAcceptAction [
 	parent ifNil: [ ^ self ].
