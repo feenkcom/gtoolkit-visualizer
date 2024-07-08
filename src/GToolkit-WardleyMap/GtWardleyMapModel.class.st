@@ -163,6 +163,13 @@ GtWardleyMapModel >> edges: aCollection [
 	aCollection do: [ :anEdge | self addEdge: anEdge ]
 ]
 
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> ensureAllProposition [
+	(self wardleyMapDecoratorModels anySatisfy: #isAllProposition)
+		ifTrue: [ ^ self ].
+	self addWardleyMapDecoratorModel: GtWardleyMapAllProposition new
+]
+
 { #category : #'api - title' }
 GtWardleyMapModel >> evolutionSections [
 	<return: #Array of: #String>
