@@ -62,6 +62,15 @@ GtWardleyMapViewModel >> addNewNoteAt: aNormalizedPosition [
 	self wardleyMapModel addNote: aNewNote
 ]
 
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapViewModel >> allWardleyMapDecoratorViewModelsDo: aBlock [
+	self wardleyMapDecoratorViewModels do: aBlock.
+	self nodeViewModels
+		do: [ :eachNodeViewModel | eachNodeViewModel wardleyMapDecoratorViewModels do: aBlock ].
+	self edgeViewModels
+		do: [ :eachEdgeViewModel | eachEdgeViewModel wardleyMapDecoratorViewModels do: aBlock ]
+]
+
 { #category : #announcer }
 GtWardleyMapViewModel >> announcer [
 	<return: #Announcer>
@@ -364,6 +373,11 @@ GtWardleyMapViewModel >> gtWardleyMapDecoratorsFor: aView [
 		items: [ self gtWardleyMapDecorators ];
 		column: 'Item' text: [ :anAssoc | anAssoc key ];
 		column: 'Decorator' text: [ :anAssoc | anAssoc value ];
+		column: 'Proposition'
+			text: [ :anAssoc | 
+				anAssoc value isActionableProposition
+					ifTrue: [ 'yes' ]
+					ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 50;
 		send: #value
 ]
 
@@ -486,7 +500,7 @@ GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapD
 	self
 		announce: (GtWardleyMapDecoratorViewModelRemoved new
 				mapViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
 ]
 
 { #category : #'api - wardley map model' }

@@ -34,6 +34,15 @@ TGtWardleyMapDecoratorModel >> isActionableProposition [
 	^ false
 ]
 
+{ #category : #testing }
+TGtWardleyMapDecoratorModel >> isAllProposition [
+	"Return true if it is a GtWardleyMapAllProposition.
+	Return false in other cases."
+
+	<return: #Boolean>
+	^ false
+]
+
 { #category : #initialization }
 TGtWardleyMapDecoratorModel >> parent: aParent [
 	

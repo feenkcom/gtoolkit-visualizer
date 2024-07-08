@@ -124,7 +124,13 @@ GtWardleyMapEdgeViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMa
 	self
 		announce: (GtWardleyMapEdgeDecoratorViewModelAdded new
 				edgeViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
+		ifNotNil: [ :aMapViewModel | 
+			aMapViewModel
+				announce: (GtWardleyMapEdgeDecoratorViewModelAdded new
+						edgeViewModel: self;
+						decoratorViewModel: aWardleyMapDecoratorViewModel) ]
 ]
 
 { #category : #'api - wardley map decorator view models' }
@@ -136,7 +142,13 @@ GtWardleyMapEdgeViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardley
 	self
 		announce: (GtWardleyMapEdgeDecoratorViewModelRemoved new
 				edgeViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
+		ifNotNil: [ :aMapViewModel | 
+			aMapViewModel
+				announce: (GtWardleyMapEdgeDecoratorViewModelRemoved new
+						edgeViewModel: self;
+						decoratorViewModel: aWardleyMapDecoratorViewModel) ]
 ]
 
 { #category : #'event handling' }
