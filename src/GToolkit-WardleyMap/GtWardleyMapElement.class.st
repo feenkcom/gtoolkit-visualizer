@@ -91,6 +91,7 @@ GtWardleyMapElement >> decorateEdgeViewModel: anEdgeViewModel withDecoratorViewM
 
 	aDecoratorContext := GtWardleyMapEdgeDecoratorContext new
 			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
 			canvasContainer: canvasContainer;
 			canvasElement: canvasElement;
 			edgeViewModel: anEdgeViewModel;
@@ -107,6 +108,7 @@ GtWardleyMapElement >> decorateMapViewModel: aMapViewModel withDecoratorViewMode
 	| aDecoratorContext |
 	aDecoratorContext := GtWardleyMapDecoratorContext new
 			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
 			canvasContainer: canvasContainer;
 			canvasElement: canvasElement;
 			decoratorViewModel: aDecoratorViewModel.
@@ -124,6 +126,7 @@ GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewMo
 
 	aDecoratorContext := GtWardleyMapNodeDecoratorContext new
 			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
 			canvasContainer: canvasContainer;
 			canvasElement: canvasElement;
 			nodeViewModel: aNodeViewModel;

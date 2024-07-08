@@ -5,7 +5,8 @@ Class {
 		'mapElement',
 		'canvasContainer',
 		'canvasElement',
-		'decoratorViewModel'
+		'decoratorViewModel',
+		'mapViewModel'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -48,4 +49,14 @@ GtWardleyMapDecoratorContext >> mapElement [
 { #category : #accessing }
 GtWardleyMapDecoratorContext >> mapElement: anObject [
 	mapElement := anObject
+]
+
+{ #category : #accessing }
+GtWardleyMapDecoratorContext >> mapViewModel [
+	^ mapViewModel
+]
+
+{ #category : #accessing }
+GtWardleyMapDecoratorContext >> mapViewModel: anObject [
+	mapViewModel := anObject
 ]
