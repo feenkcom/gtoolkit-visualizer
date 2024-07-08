@@ -4,8 +4,6 @@ Class {
 	#traits : 'TGtWardleyMapDecoratorModel',
 	#classTraits : 'TGtWardleyMapDecoratorModel classTrait',
 	#instVars : [
-		'acceptAction',
-		'rejectAction',
 		'parent'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
@@ -13,8 +11,14 @@ Class {
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAllProposition >> decorateMapElementInContext: aMapDecoratorContext [
-	acceptAction decorateMapElementInContext: aMapDecoratorContext.
-	rejectAction decorateMapElementInContext: aMapDecoratorContext
+	| anActionContainer anElement |
+	anActionContainer := GtWardleyMapUtility
+			ensureTopRightInnerDecoratorContainerFor: aMapDecoratorContext canvasElement.
+	anElement := GtWardleyMapAllPropositionElement new
+		wardleyMapViewModel: aMapDecoratorContext mapViewModel;
+		wardleyMapDecoratorViewModel: aMapDecoratorContext decoratorViewModel.
+		
+	anActionContainer addChild: anElement.
 ]
 
 { #category : #private }
@@ -31,34 +35,31 @@ GtWardleyMapAllProposition >> evaluateAllActionablePropositionsCalling: aSymbol 
 		do: [ :eachDecorator | eachDecorator isActionableProposition ifTrue: [ eachDecorator perform: aSymbol ] ]
 ]
 
-{ #category : #initialization }
-GtWardleyMapAllProposition >> initialize [
-	super initialize.
+{ #category : #testing }
+GtWardleyMapAllProposition >> isAllProposition [
+	"Return true if it is a GtWardleyMapAllProposition.
+	Return false in other cases."
 
-	acceptAction := GtWardleyMapAction new.
-	acceptAction elementId: GtWardleyMapAllAcceptId.
-	acceptAction icon: BrGlamorousVectorIcons accept.
-	acceptAction tooltip: 'Accept all'.
-	acceptAction action: [ self onAcceptAction ].
-	rejectAction := GtWardleyMapAction new.
-	rejectAction elementId: GtWardleyMapAllRejectId.
-	rejectAction icon: BrGlamorousVectorIcons cancel.
-	rejectAction action: [ self onRejectAction ].
-	rejectAction tooltip: 'Reject all'.
+	<return: #Boolean>
+	^ true
 ]
 
 { #category : #'event handling' }
 GtWardleyMapAllProposition >> onAcceptAction [
+	"Note that it does not remove itself from the model as it is the element
+	which makes itself visible or hidden based on actionable proposition count."
+
 	parent ifNil: [ ^ self ].
-	self evaluateAllActionablePropositionsCalling: #onAcceptAction.
-	parent removeWardleyMapDecoratorModel: self
+	self evaluateAllActionablePropositionsCalling: #onAcceptAction
 ]
 
 { #category : #'event handling' }
 GtWardleyMapAllProposition >> onRejectAction [
+	"Note that it does not remove itself from the model as it is the element
+	which makes itself visible or hidden based on actionable proposition count."
+
 	parent ifNil: [ ^ self ].
-	self evaluateAllActionablePropositionsCalling: #onRejectAction.
-	parent removeWardleyMapDecoratorModel: self
+	self evaluateAllActionablePropositionsCalling: #onRejectAction
 ]
 
 { #category : #initialization }

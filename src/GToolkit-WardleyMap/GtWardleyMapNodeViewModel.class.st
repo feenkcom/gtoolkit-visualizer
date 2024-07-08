@@ -116,15 +116,6 @@ GtWardleyMapNodeViewModel >> gtContextMenuItemsFor: aView [
 		view: #gtContextMenuItemsFor:
 ]
 
-{ #category : #'gt - extensions' }
-GtWardleyMapNodeViewModel >> gtWardleyMapDecoratorsFor: aView [
-	<gtView>
-	^ aView columnedList
-		title: 'Decorators';
-		items: [ self wardleyMapDecoratorViewModels copy ];
-		column: 'Name' text: #yourself
-]
-
 { #category : #'api - node' }
 GtWardleyMapNodeViewModel >> increaseNodeSize [
 	self nodeSize: ((self nodeSize + self nodeSizeStep) roundTo: 1@1)
@@ -270,9 +261,11 @@ GtWardleyMapNodeViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMa
 				nodeViewModel: self;
 				decoratorViewModel: aWardleyMapDecoratorViewModel).
 	self wardleyMapViewModel
-		announce: (GtWardleyMapNodeDecoratorViewModelAdded new
-				nodeViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+		ifNotNil: [ :aMapViewModel | 
+			aMapViewModel
+				announce: (GtWardleyMapNodeDecoratorViewModelAdded new
+						nodeViewModel: self;
+						decoratorViewModel: aWardleyMapDecoratorViewModel) ]
 ]
 
 { #category : #'api - wardley map decorator view models' }
@@ -284,7 +277,13 @@ GtWardleyMapNodeViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardley
 	self
 		announce: (GtWardleyMapNodeDecoratorViewModelRemoved new
 				nodeViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
+		ifNotNil: [ :aMapViewModel | 
+			aMapViewModel
+				announce: (GtWardleyMapNodeDecoratorViewModelRemoved new
+						nodeViewModel: self;
+						decoratorViewModel: aWardleyMapDecoratorViewModel) ]
 ]
 
 { #category : #'event handling' }

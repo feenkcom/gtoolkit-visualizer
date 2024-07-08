@@ -163,6 +163,13 @@ GtWardleyMapModel >> edges: aCollection [
 	aCollection do: [ :anEdge | self addEdge: anEdge ]
 ]
 
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> ensureAllProposition [
+	(self wardleyMapDecoratorModels anySatisfy: #isAllProposition)
+		ifTrue: [ ^ self ].
+	self addWardleyMapDecoratorModel: GtWardleyMapAllProposition new
+]
+
 { #category : #'api - title' }
 GtWardleyMapModel >> evolutionSections [
 	<return: #Array of: #String>
@@ -303,11 +310,13 @@ GtWardleyMapModel >> gtNotesFor: aView [
 { #category : #'gt - extensions' }
 GtWardleyMapModel >> gtWardleyMapDecorators [
 	^ Array streamContents: [ :aStream | 
-	 	self nodes do: [ :each | 
+		self wardleyMapDecoratorModels  do: [ :aDecorator | 
+				aStream nextPut: self -> aDecorator ].
+		self nodes do: [ :each | 
 	 		each wardleyMapDecoratorModels do: [ :aDecorator | 
-	 			aStream nextPut: each -> aDecorator ] ].
-	 	self edges do: [ :each | 
-	 		each wardleyMapDecoratorModels do: [ :aDecorator | 
+				aStream nextPut: each -> aDecorator ] ].
+		self edges do: [ :each | 
+			each wardleyMapDecoratorModels do: [ :aDecorator | 
 	 			aStream nextPut: each -> aDecorator ] ] ]
 ]
 
@@ -320,6 +329,11 @@ GtWardleyMapModel >> gtWardleyMapDecoratorsFor: aView [
 		items: [ self gtWardleyMapDecorators ];
 		column: 'Item' text: [ :anAssoc | anAssoc key ];
 		column: 'Decorator' text: [ :anAssoc | anAssoc value ];
+		column: 'Proposition'
+			text: [ :anAssoc | 
+				anAssoc value isActionableProposition
+					ifTrue: [ 'yes' ]
+					ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 50;
 		send: #value
 ]
 
