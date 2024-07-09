@@ -23,7 +23,16 @@ GtD3WebViewExampleAnalysis >> gtViewClassesWithMethodsFor: aView [
 					objects: [self top20LargeClasses];
 					rowLabel: [ :each | each name ];
 					rowValue: [ :each | each methods size ]) ];
- 		view: #gtViewWebViewFor:
+ 		view: #gtViewWebViewFor:;
+ 		
+ 		actionButtonIcon: BrGlamorousVectorIcons browse 
+ 			label: 'Source' 
+ 			tooltip: 'View the html of the view' 
+ 			action: [ :aButton |
+ 				aButton phlow spawnObject: (GtD3WebViewPhlowLocalSpecification new 
+					viewName: #barchart;
+					sourceProvider:(GtD3WebViewSourceProvider 
+						forGToolkitVisualiserExamplesFolder)) createPhlowWrapper viewSource ] 
 ]
 
 { #category : #accessing }
