@@ -36,6 +36,14 @@ GtWardleyMapModelGroup >> gtNodeProfilesFor: aView [
 				elements := association value
 						collect: [ :aNode | 
 							BlElement new
+								aptitude: (BrStyleCommonAptitude new
+										default: [ :s | s background: (Color black alpha: 0.2) ];
+										hovered: [ :s | s background: BrGlamorousColors primaryBorderColor ];
+										pressed: [ :s | s background: BrGlamorousColors pressedButtonBorderColor ]);
+								when: BlClickEvent
+									do: [ :e | 
+										e target phlow spawnObject: aNode parent.
+										e consumed: true ];
 								size: 10 @ 10;
 								geometry: BlCircleGeometry new;
 								background: (Color black alpha: 0.2);
