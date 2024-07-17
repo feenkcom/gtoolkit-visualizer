@@ -48,7 +48,7 @@ GtPlotterDataEntity >> color [
 	<return: #Color>
 	self
 		colorDo: [ :aColor | ^ aColor ].
-	^ Color lightGray
+	^ Color black
 ]
 
 { #category : #'api - decorators' }
