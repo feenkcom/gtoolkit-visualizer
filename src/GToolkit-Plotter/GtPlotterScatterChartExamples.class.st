@@ -222,8 +222,7 @@ GtPlotterScatterChartExamples >> scatterChart [
 		titleY: 'Frequency';
 		ticksY: 10.
 
-	^ aChart
-	 
+	^ aChart	 
 ]
 
 { #category : #accessing }
