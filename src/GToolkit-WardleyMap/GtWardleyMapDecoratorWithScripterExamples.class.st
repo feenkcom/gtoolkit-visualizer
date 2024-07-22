@@ -109,6 +109,93 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodes [
 	^ aScripter
 ]
 
+{ #category : #'examples - highlights' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights [
+	<gtExample>
+	| aScripter aNodeName anEdgeName |
+	aScripter := self mapWithNodes.
+
+	aNodeName := 'Node A'.
+
+	aScripter do
+		label: 'Add Node A highlight';
+		block: [ :aMapElement | 
+			| aMap aNodeA |
+			aMap := aMapElement wardleyMapViewModel wardleyMapModel.
+			aNodeA := aMap nodeWithName: aNodeName ifFound: [ :aNode | aNode ] ifNone: [ nil ].
+			aMapElement wardleyMapViewModel
+				nodeViewModelFor: aNodeA
+				ifFound: [ :theNode | theNode addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
+				ifNone: [ AssertionFailure signal: 'Node A not found' ] ];
+		play.
+
+	aScripter assert
+		label: 'Assert Node A highlight element exists';
+		exists;
+		// GtWardleyMapNodePropositionElement;
+		@ [ :anElement | anElement wardleyMapNodeViewModel label = aNodeName ];
+		play.
+		
+	anEdgeName := 'Edge A->B'.
+		
+	aScripter do
+		label: 'Add Edge A->B highlight';
+		block: [ :aMapElement | 
+			| aMap anEdgeAB |
+			aMap := aMapElement wardleyMapViewModel wardleyMapModel.
+			anEdgeAB := aMap edgeWithName: anEdgeName ifFound: [ :anEdge | anEdge ] ifNone: [ nil ].
+			aMapElement wardleyMapViewModel
+				edgeViewModelFor: anEdgeAB
+				ifFound: [ :theEdge | theEdge addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
+				ifNone: [ AssertionFailure signal: 'Edge A->B not found' ] ];
+		play.
+
+	aScripter assert
+		label: 'Assert Edge A->B highlight element exists';
+		exists;
+		// GtWardleyMapEdgePropositionElement;
+		@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeName ];
+		play.
+
+	^ aScripter
+]
+
+{ #category : #'examples - highlights' }
+GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights_DeleteNodeA [
+	<gtExample>
+	| aScripter aNodeName anEdgeName |
+	aScripter := self mapWithNodesAddHighlights.
+
+	aNodeName := 'Node A'.
+	anEdgeName := 'Edge A->B'.
+	
+	aScripter do
+		label: 'Delete Node A';
+		block: [ :aMap | 
+			aMap 
+				nodeWithName: aNodeName 
+				ifFound: [ :aNode | aMap removeNode: aNode ] 
+				ifNone: [ AssertionFailure signal: 'Node A not found' ] ];
+		onModel;
+		play.
+		
+	aScripter assert
+		label: 'Assert Node A highlight element does not exist';
+		notExists;
+		// GtWardleyMapNodePropositionElement;
+		@ [ :anElement | anElement wardleyMapNodeViewModel label = aNodeName ];
+		play.
+		
+	aScripter assert
+		label: 'Assert Edge A->B highlight element does not exist';
+		notExists;
+		// GtWardleyMapEdgePropositionElement;
+		@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeName ];
+		play.
+	
+	^ aScripter
+]
+
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddNodeDWithAddProposition [
 	<gtExample>

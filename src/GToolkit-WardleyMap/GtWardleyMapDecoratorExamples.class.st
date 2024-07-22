@@ -17,6 +17,44 @@ GtWardleyMapDecoratorExamples >> mapElementWithProposedModifications [
 	^ anElement
 ]
 
+{ #category : #'examples - highlights' }
+GtWardleyMapDecoratorExamples >> mapViewModelWithNodeAndEdgeHighlight [
+	"It exemplifies the case, when we add decorators to view models only.
+	Such case is useful when we want to highlight items (nodes, edges)
+	in a specific view, but not in other views."
+	
+	<gtExample>
+	| aMap  aMapViewModel aNodeA anEdgeAB |
+	aMap := self mapWithNodes.
+	aMapViewModel := GtWardleyMapViewModel new wardleyMapModel: aMap.
+	
+	aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :aNode | aNode ] ifNone: [ nil ].
+	aMapViewModel 
+		nodeViewModelFor: aNodeA 
+		ifFound: [ :aNodeViewModel | 
+			aNodeViewModel addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
+		ifNone: [].
+		
+	anEdgeAB := aMap edgeWithName: 'Edge A->B' ifFound: [ :aNode | aNode ] ifNone: [ nil ].
+	aMapViewModel 
+		edgeViewModelFor: anEdgeAB 
+		ifFound: [ :anEdgeViewModel | 
+			anEdgeViewModel addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
+		ifNone: [].
+	
+	^ aMapViewModel
+]
+
+{ #category : #examples }
+GtWardleyMapDecoratorExamples >> mapViewModelWithNodes [
+	<gtExample>
+	| aMap  aMapViewModel |
+	aMap := self mapWithNodes.
+	aMapViewModel := GtWardleyMapViewModel new wardleyMapModel: aMap.
+	
+	^ aMapViewModel
+]
+
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorExamples >> mapViewModelWithProposedModifications [
 	<gtExample>
