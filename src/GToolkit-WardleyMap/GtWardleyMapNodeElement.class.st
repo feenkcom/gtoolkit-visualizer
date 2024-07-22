@@ -43,6 +43,17 @@ GtWardleyMapNodeElement >> onNodeResized: anAnnouncement [
 	BlTaskAction enqueueElement: self action: [ self onNodeResized ]
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeElement >> onNodeSwitchToEditMode: anAnnouncement [
+	anAnnouncement isHandled ifTrue: [ ^ self ].
+	anAnnouncement isHandled: true.
+	
+	self labelElementDo: [ :anEditableLabel | 
+		anEditableLabel switchToEditor.
+		anEditableLabel selecter all; select.
+		anEditableLabel requestFocus ]
+]
+
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
@@ -73,7 +84,8 @@ GtWardleyMapNodeElement >> subscribeToWardleyMapNodeViewModel [
 		when: GtWardleyMapNodeViewModelLabelTextChanged send: #onNodeLabelTextChanged: to: self;
 		when: GtWardleyMapNodeViewModelColored send: #onNodeColored: to: self;
 		when: GtWardleyMapNodeViewModelResized send: #onNodeResized: to: self;
-		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self.
+		when: GtWardleyMapNodeViewModelPipelineVisibilityChanged send: #onNodePipelineVisibilityChanged: to: self;
+		when: GtWardleyMapNodeViewModelSwitchToEditMode send: #onNodeSwitchToEditMode: to: self.
 ]
 
 { #category : #'api - wardley map node view model' }

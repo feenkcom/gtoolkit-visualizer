@@ -29,7 +29,7 @@ GtWardleyMapViewModel >> addNewEdgeFrom: aFromNodeViewModel to: aToNodeViewModel
 ]
 
 { #category : #'api - map' }
-GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
+GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition fromElement: anElement [
 	| aNewNode |
 	self
 		assert: [ 0 <= aNormalizedPosition x and: [ aNormalizedPosition x <= 1.0 ] ]
@@ -42,7 +42,15 @@ GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
 			coordinate: aNormalizedPosition;
 			color: self defaultColor.
 
-	self wardleyMapModel addNode: aNewNode
+	self wardleyMapModel addNode: aNewNode.
+	
+	^ self 
+		nodeViewModelFor: aNewNode 
+		ifFound: [ :aNodeViewModel | 
+			anElement ifNotNil: [
+				BlTaskAction enqueueElement: anElement action: [ aNodeViewModel requestEditableModel ] ].
+			aNodeViewModel ] 
+		ifNone: [ AssertionFailure signal: ('Node view model not found: {1}' format: { aNewNode }) ]
 ]
 
 { #category : #'api - map' }
