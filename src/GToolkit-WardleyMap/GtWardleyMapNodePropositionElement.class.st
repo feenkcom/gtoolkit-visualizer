@@ -35,6 +35,11 @@ GtWardleyMapNodePropositionElement >> beEllipseGeometry [
 ]
 
 { #category : #initialization }
+GtWardleyMapNodePropositionElement >> beHighlight [
+	self highlightColor: BrGlamorousColors failureBackgroundColor.
+]
+
+{ #category : #initialization }
 GtWardleyMapNodePropositionElement >> beRemoveProposition [
 	self highlightColor: BrGlamorousColors errorBackgroundColor
 ]
@@ -44,7 +49,7 @@ GtWardleyMapNodePropositionElement >> beSquareGeometry [
 	self geometry: BlSquare new
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GtWardleyMapNodePropositionElement >> highlightColor: aColor [
 	highlightColor := aColor.
 	self background: highlightColor
