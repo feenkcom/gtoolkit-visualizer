@@ -124,12 +124,62 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 				play.
 				
 			aStep assert
+				label: 'Assert node label cursor is visible';
+				satisfies: [ :aCursorElement | aCursorElement visibility isVisible ]
+					description: [ 'Node label cursor must be visible' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				// BrCursorElement;
+				play.
+				
+			aStep assert
 				label: 'Assert node label focus';
 				satisfies: [ :anEditorLabel | anEditorLabel isFocused ]
 					description: [ 'Node label must be focused' ];
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				play ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel [
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes_addNewNode.
+				
+	aScripter
+		substeps: 'Type new node label'
+		do: [ :aStep | 
+				
+			aStep type
+				label: 'Type new node label';
+				text: 'Node Z';
+				play.
+				
+			aStep keyPress
+				key: BlKeyboardKey return;
+				play.
+				
+			aStep assert
+				label: 'Assert node label read-only mode';
+				satisfies: [ :anEditorLabel | anEditorLabel isReadOnly ]
+					description: [ 'Node label must be in read-only mode' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label cursor is not visible';
+				satisfies: [ :aCursorElement | aCursorElement visibility isVisible not ]
+					description: [ 'Node label cursor must not be visible' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				// BrCursorElement;
+				play.
+
+	].
 
 	^ aScripter
 ]
