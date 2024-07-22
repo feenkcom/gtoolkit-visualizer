@@ -374,10 +374,7 @@ GtWardleyMapCanvasElement >> initialize [
 
 	self
 		when: BlDoubleClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			(self width isZero or: [ self height isZero ])
-				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
+		do: [ :anEvent | self onDoubleClickEvent: anEvent ].
 ]
 
 { #category : #accessing }
@@ -431,6 +428,15 @@ GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock if
 		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onDoubleClickEvent: anEvent [
+	anEvent consumed: true.
+	(self width isZero or: [ self height isZero ]) ifTrue: [ ^ self ].
+	self wardleyMapViewModel
+		addNewNodeAt: anEvent localPosition / self extent
+		fromElement: self
 ]
 
 { #category : #'event handling' }

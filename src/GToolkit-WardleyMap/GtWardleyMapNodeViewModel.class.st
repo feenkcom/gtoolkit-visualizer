@@ -427,6 +427,12 @@ GtWardleyMapNodeViewModel >> removeWardleyMapDecoratorModel: aWardleyMapDecorato
 		removeWardleyMapDecoratorModel: aWardleyMapDecoratorModel
 ]
 
+{ #category : #'api - node' }
+GtWardleyMapNodeViewModel >> requestEditableModel [
+	self announce: (GtWardleyMapNodeViewModelSwitchToEditMode new
+		nodeViewModel: self)
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeViewModel >> snapInnerNodeViewModel: anInnerNodeViewModel [
 	anInnerNodeViewModel wardleyMapNodeModel y: self coordinateY

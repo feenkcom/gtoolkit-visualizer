@@ -465,9 +465,10 @@ GtWardleyMapModel >> menuItemAddNodeButton [
 			aNormalizedPosition := GtWardleyMapUtility
 					normalizedItemPositionOnEvent: anEvent
 					canvas: aContextMenuItem canvasElement.
-			aNormalizedPosition ifNotNil: [ 
-				aContextMenuItem wardleyMapViewModel 
-					addNewNodeAt: aNormalizedPosition ].
+			aNormalizedPosition
+				ifNotNil: [ aContextMenuItem wardleyMapViewModel
+						addNewNodeAt: aNormalizedPosition
+						fromElement: aBrButton ].
 			aContextMenuItem editorElement fireEvent: BrContextMenuHideWish new ]
 ]
 

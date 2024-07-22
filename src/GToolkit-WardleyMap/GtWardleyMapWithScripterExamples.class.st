@@ -89,6 +89,52 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 ]
 
 { #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes.
+
+	aScripter
+		substeps: 'Add new node'
+		do: [ :aStep | 
+			aStep doubleClick
+				label: 'Double click to add new node';
+				play.
+		
+			aStep assert
+				label: 'Assert new node is added';
+				exists;
+				// (#node asBlocElementId indexed: 10);
+				play.
+				
+			aStep assert
+				label: 'Assert node label edit mode';
+				satisfies: [ :anEditorLabel | anEditorLabel isEditable ]
+					description: [ 'Node label must be in edit mode' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label text selection';
+				value: [ :anEditorLabel | anEditorLabel selection indices ]
+					equals: [ :anEditorLabel | 1 to: 5 ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label focus';
+				satisfies: [ :anEditorLabel | anEditorLabel isFocused ]
+					description: [ 'Node label must be focused' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_assertInitialWidgetPositions [
 	<gtExample>
 	| aScripter |
