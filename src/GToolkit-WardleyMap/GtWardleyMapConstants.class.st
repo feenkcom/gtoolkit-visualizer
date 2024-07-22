@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
-{ #category : #initialization }
+{ #category : #'api - constants' }
 GtWardleyMapConstants class >> defaultEvolutionSections [
 	^ {
 		'genesis'.
@@ -18,7 +18,7 @@ GtWardleyMapConstants class >> defaultEvolutionSections [
 GtWardleyMapConstants class >> edgeElevationIndex [
 	"I represent a default edge z-index"
 
-	^ -1
+	^ 1
 ]
 
 { #category : #'api - constants' }
@@ -169,6 +169,13 @@ GtWardleyMapConstants class >> noteColor [
 	"I represent a default note model color"
 
 	^ Color black
+]
+
+{ #category : #'api - constants' }
+GtWardleyMapConstants class >> pipelineElevationIndex [
+	"I represent a pipeline z-index"
+
+	^ 0
 ]
 
 { #category : #'api - constants' }

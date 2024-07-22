@@ -90,32 +90,35 @@ GtWardleyMapCanvasElement >> addNoteViewModel: aNoteViewModel [
 { #category : #initialization }
 GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 	| aFromNodeElement aToNodeElement |
-
 	aFromNodeElement := self
-		nodeViewFor: anEdgeViewModel fromNodeViewModel
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
+			nodeViewFor: anEdgeViewModel fromNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
 
 	aToNodeElement := self
-		nodeViewFor: anEdgeViewModel toNodeViewModel
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
+			nodeViewFor: anEdgeViewModel toNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
 
 	^ GtWardleyMapEdgeElement new
 		in: [ :aLineElement | aLineElement graph beEdge ];
-		id: (self newEdgeId);
+		id: self newEdgeId;
 		wardleyMapEdgeViewModel: anEdgeViewModel;
-		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
-		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
-		zIndex: GtWardleyMapConstants edgeElevationIndex;
+		fromAnchor: (BlNearestPositionEllipseAnchor
+				referenceElement: aFromNodeElement
+				relatedTo: aToNodeElement);
+		toAnchor: (BlNearestPositionEllipseAnchor
+				referenceElement: aToNodeElement
+				relatedTo: aFromNodeElement);
+		zIndex: self defaultEdgeElevationIndex;
 		addAptitude: (BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: 5@5;
-					geometry: BlEllipseGeometry new ]
-			content: [ GtWardleyMapEdgeEditorElement new
-				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapEdgeViewModel: anEdgeViewModel;
-				requestFocus ])
+				handle: [ BlElement new
+						size: 5 @ 5;
+						geometry: BlEllipseGeometry new ]
+				content: [ GtWardleyMapEdgeEditorElement new
+						wardleyMapViewModel: self wardleyMapViewModel;
+						wardleyMapEdgeViewModel: anEdgeViewModel;
+						requestFocus ])
 ]
 
 { #category : #initialization }
@@ -316,6 +319,11 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> defaultEdgeElevationIndex [
+	^ GtWardleyMapConstants edgeElevationIndex
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> defaultNodeElevationIndex [
 	^ GtWardleyMapConstants nodeElevationIndex
 ]
@@ -327,7 +335,7 @@ GtWardleyMapCanvasElement >> defaultNoteElevationIndex [
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> defaultPipelineElevationIndex [
-	^ 0
+	^ GtWardleyMapConstants pipelineElevationIndex
 ]
 
 { #category : #initialization }

@@ -89,6 +89,49 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 ]
 
 { #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addInnerEdge [
+	<gtExample>
+	| aScripter anEdgeName |
+	aScripter := self pipelineWithInnerNodes.
+
+	anEdgeName := 'Edge D->E'.
+	
+	aScripter do
+		label: 'Add Edge D->E';
+		block: [ :aMap | 
+			| aNodeD aNodeE anEdgeDE |
+			aNodeD := aMap nodeWithName: 'Node D' ifFound: [ :each | each ] ifNone: [ nil ].
+			aNodeE := aMap nodeWithName: 'Node E' ifFound: [ :each | each ] ifNone: [ nil ].
+			anEdgeDE := GtWardleyMapEdgeModel new
+				label: 'Edge D->E';
+				fromNode: aNodeD;
+				toNode: aNodeE;
+				width: 2.
+			aMap addEdge: anEdgeDE ];
+		onModel;
+		play.
+		
+	aScripter 
+		substeps: 'Edge D->E hovering'
+		do: [ :aStep | 
+			aStep mouseMoveOver
+				label: 'Hover Edge D->E';
+				// (#edge asBlocElementId indexed: 10);
+				play.
+				
+			aStep assert
+				label: 'Node A is highlighted';
+				value: [ :aNodeElement | aNodeElement border ]
+					equals: [ BlBorder paint: GtWardleyMapConstants hoverColor width: 2 ];
+				// (#edge asBlocElementId indexed: 10);
+				play
+		].
+
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 	<gtExample>
 	| aScripter |
