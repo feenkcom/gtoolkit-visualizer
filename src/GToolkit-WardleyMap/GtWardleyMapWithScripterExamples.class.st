@@ -144,6 +144,62 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 ]
 
 { #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCanvas [
+	"When we click outside of a node label, we want to lose the label focus
+	and its hide cursor."
+
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes_addNewNode.
+				
+	aScripter
+		substeps: 'Type node label and click outside'
+		do: [ :aStep | 
+				
+			aStep type
+				label: 'Type new node label';
+				text: 'Node Z';
+				play.
+				
+			aStep click
+				play.
+				
+			aStep assert
+				label: 'Assert node label focus';
+				satisfies: [ :anEditorLabel | anEditorLabel isFocused not ]
+					description: [ 'Node label must not be focused' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label read-only mode';
+				satisfies: [ :anEditorLabel | anEditorLabel isReadOnly ]
+					description: [ 'Node label must be in read-only mode' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label cursor is not visible';
+				satisfies: [ :aCursorElement | aCursorElement visibility isVisible not ]
+					description: [ 'Node label cursor must not be visible' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				// BrCursorElement;
+				play.
+				
+			aStep assert
+				label: 'Assert node model label is set';
+				value: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel label ]
+					equals: 'Node Z';
+				// (#node asBlocElementId indexed: 10);
+				play. ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel [
 	<gtExample>
 	| aScripter |
@@ -177,6 +233,13 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel 
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				// BrCursorElement;
+				play.
+				
+			aStep assert
+				label: 'Assert node model label is set';
+				value: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel label ]
+					equals: 'Node Z';
+				// (#node asBlocElementId indexed: 10);
 				play.
 
 	].

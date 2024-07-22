@@ -367,7 +367,7 @@ GtWardleyMapCanvasElement >> initialize [
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-
+		
 	self layout: BlFrameLayout new.
 
 	self installContextMenu.
@@ -375,6 +375,13 @@ GtWardleyMapCanvasElement >> initialize [
 	self
 		when: BlDoubleClickEvent
 		do: [ :anEvent | self onDoubleClickEvent: anEvent ].
+		
+	"When users click on the canvas, we want to lose focus of other elements,
+	e.g., of node editable labels."
+	self beFocusable.
+	self
+		when: BlClickEvent
+		do: [ :anEvent | self onClickEvent: anEvent ].
 ]
 
 { #category : #accessing }
@@ -428,6 +435,12 @@ GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock if
 		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onClickEvent: anEvent [ 
+	anEvent consumed: true.
+	self requestFocus
 ]
 
 { #category : #'event handling' }
