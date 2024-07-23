@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TGtGroupWithItems',
 	#classTraits : 'TGtGroupWithItems classTrait',
-	#category : #'GToolkit-WardleyMap'
+	#category : #'GToolkit-WardleyMap-! Models'
 }
 
 { #category : #accessing }

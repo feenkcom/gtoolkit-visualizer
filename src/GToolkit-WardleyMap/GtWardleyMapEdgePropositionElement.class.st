@@ -21,20 +21,17 @@ GtWardleyMapEdgePropositionElement >> addLabelDecoration [
 
 { #category : #initialization }
 GtWardleyMapEdgePropositionElement >> beAddProposition [
-	highlightColor := BrGlamorousColors successBackgroundColor.
-	self
-		border: (BlBorder
-				paint: highlightColor
-				width: GtWardleyMapConstants edgePropositionWidth)
+	self highlightColor: BrGlamorousColors successBackgroundColor.
+]
+
+{ #category : #initialization }
+GtWardleyMapEdgePropositionElement >> beHighlight [
+	self highlightColor: BrGlamorousColors failureBackgroundColor.
 ]
 
 { #category : #initialization }
 GtWardleyMapEdgePropositionElement >> beRemoveProposition [
-	highlightColor := BrGlamorousColors errorBackgroundColor.
-	self
-		border: (BlBorder
-				paint: highlightColor
-				width: GtWardleyMapConstants edgePropositionWidth)
+	self highlightColor: BrGlamorousColors errorBackgroundColor.
 ]
 
 { #category : #'api - edge' }
@@ -54,6 +51,15 @@ GtWardleyMapEdgePropositionElement >> edgeElement: anEdgeElement [
 	edgeElement := anEdgeElement.
 
 	self onEdgeElementChanged
+]
+
+{ #category : #initialization }
+GtWardleyMapEdgePropositionElement >> highlightColor: aColor [
+	highlightColor := aColor.
+	self
+		border: (BlBorder
+				paint: highlightColor
+				width: GtWardleyMapConstants edgePropositionWidth)
 ]
 
 { #category : #initialization }

@@ -90,32 +90,35 @@ GtWardleyMapCanvasElement >> addNoteViewModel: aNoteViewModel [
 { #category : #initialization }
 GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 	| aFromNodeElement aToNodeElement |
-
 	aFromNodeElement := self
-		nodeViewFor: anEdgeViewModel fromNodeViewModel
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
+			nodeViewFor: anEdgeViewModel fromNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
 
 	aToNodeElement := self
-		nodeViewFor: anEdgeViewModel toNodeViewModel
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
+			nodeViewFor: anEdgeViewModel toNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
 
 	^ GtWardleyMapEdgeElement new
 		in: [ :aLineElement | aLineElement graph beEdge ];
-		id: (self newEdgeId);
+		id: self newEdgeId;
 		wardleyMapEdgeViewModel: anEdgeViewModel;
-		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
-		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
-		zIndex: GtWardleyMapConstants edgeElevationIndex;
+		fromAnchor: (BlNearestPositionEllipseAnchor
+				referenceElement: aFromNodeElement
+				relatedTo: aToNodeElement);
+		toAnchor: (BlNearestPositionEllipseAnchor
+				referenceElement: aToNodeElement
+				relatedTo: aFromNodeElement);
+		zIndex: self defaultEdgeElevationIndex;
 		addAptitude: (BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: 5@5;
-					geometry: BlEllipseGeometry new ]
-			content: [ GtWardleyMapEdgeEditorElement new
-				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapEdgeViewModel: anEdgeViewModel;
-				requestFocus ])
+				handle: [ BlElement new
+						size: 5 @ 5;
+						geometry: BlEllipseGeometry new ]
+				content: [ GtWardleyMapEdgeEditorElement new
+						wardleyMapViewModel: self wardleyMapViewModel;
+						wardleyMapEdgeViewModel: anEdgeViewModel;
+						requestFocus ])
 ]
 
 { #category : #initialization }
@@ -316,6 +319,11 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 ]
 
 { #category : #initialization }
+GtWardleyMapCanvasElement >> defaultEdgeElevationIndex [
+	^ GtWardleyMapConstants edgeElevationIndex
+]
+
+{ #category : #initialization }
 GtWardleyMapCanvasElement >> defaultNodeElevationIndex [
 	^ GtWardleyMapConstants nodeElevationIndex
 ]
@@ -327,7 +335,7 @@ GtWardleyMapCanvasElement >> defaultNoteElevationIndex [
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> defaultPipelineElevationIndex [
-	^ 0
+	^ GtWardleyMapConstants pipelineElevationIndex
 ]
 
 { #category : #initialization }
@@ -367,17 +375,21 @@ GtWardleyMapCanvasElement >> initialize [
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-
+		
 	self layout: BlFrameLayout new.
 
 	self installContextMenu.
 
 	self
 		when: BlDoubleClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			(self width isZero or: [ self height isZero ])
-				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
+		do: [ :anEvent | self onDoubleClickEvent: anEvent ].
+		
+	"When users click on the canvas, we want to lose focus of other elements,
+	e.g., of node editable labels."
+	self beFocusable.
+	self
+		when: BlClickEvent
+		do: [ :anEvent | self onClickEvent: anEvent ].
 ]
 
 { #category : #accessing }
@@ -431,6 +443,21 @@ GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock if
 		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onClickEvent: anEvent [ 
+	anEvent consumed: true.
+	self requestFocus
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onDoubleClickEvent: anEvent [
+	anEvent consumed: true.
+	(self width isZero or: [ self height isZero ]) ifTrue: [ ^ self ].
+	self wardleyMapViewModel
+		addNewNodeAt: anEvent localPosition / self extent
+		fromElement: self
 ]
 
 { #category : #'event handling' }

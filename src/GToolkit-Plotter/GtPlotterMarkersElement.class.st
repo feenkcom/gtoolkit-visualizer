@@ -33,14 +33,11 @@ GtPlotterMarkersElement >> initialize [
 
 { #category : #initialization }
 GtPlotterMarkersElement >> initializeElements [
-	| aScaleContext |
-
-	aScaleContext := GtPlotterDoubleScaleContext new.
 
 	self removeChildren: elements.
 	self addChildren: (elements := self values collectWithIndex: [ :eachValue :anIndex |
-		| eachElement |
-		
+		| eachElement aScaleContext |
+		aScaleContext := GtPlotterDoubleScaleContext new.
 		aScaleContext
 			scaleX: scaleX;
 			originalValue: eachValue;

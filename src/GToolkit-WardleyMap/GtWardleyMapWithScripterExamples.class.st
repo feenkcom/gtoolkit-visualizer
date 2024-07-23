@@ -28,6 +28,98 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes [
 ]
 
 { #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addAndHoverInnerEdge [
+	<gtExample>
+	| aScripter anEdgeName |
+	aScripter := self pipelineWithInnerNodes.
+
+	anEdgeName := 'Edge D->E'.
+	
+	aScripter do
+		label: 'Add Edge D->E';
+		block: [ :aMap | 
+			| aNodeD aNodeE anEdgeDE |
+			aNodeD := aMap nodeWithName: 'Node D' ifFound: [ :each | each ] ifNone: [ nil ].
+			aNodeE := aMap nodeWithName: 'Node E' ifFound: [ :each | each ] ifNone: [ nil ].
+			anEdgeDE := GtWardleyMapEdgeModel new
+				label: 'Edge D->E';
+				fromNode: aNodeD;
+				toNode: aNodeE;
+				width: 2.
+			aMap addEdge: anEdgeDE ];
+		onModel;
+		play.
+		
+	aScripter 
+		substeps: 'Edge D->E hovering'
+		do: [ :aStep | 
+			aStep mouseMoveOver
+				label: 'Hover Edge D->E';
+				// (#edge asBlocElementId indexed: 10);
+				play.
+				
+			aStep assert
+				label: 'Assert Edge D->E is hovered';
+				value: [ :aNodeElement | aNodeElement border ]
+					equals: [ BlBorder paint: GtWardleyMapConstants hoverColor width: 2 ];
+				// (#edge asBlocElementId indexed: 10);
+				play
+		].
+
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEdgeFC [
+	<gtExample>
+	| aScripter anEdgeCount |
+	aScripter := self pipelineWithInnerNodes.
+
+	aScripter 
+		substeps: 'Add Edge D->E primary dragging between nodes'
+		do: [ :aStep | 
+			aStep do
+				label: 'Get edge count';
+				block: [ :aMap | anEdgeCount := aMap edges size ];
+				onModel;
+				play.
+		
+			aStep mouseMoveOver 
+				label: 'Mouse over Node D';
+				// (#node asBlocElementId indexed: 5); 
+				play.
+			aStep mouseDown
+				modifiers: BlKeyModifiers primary;
+				play.
+			aStep mouseMoveOver
+				label: 'Move mouse to Node E';
+				modifiers: BlKeyModifiers primary;
+				// (#node asBlocElementId indexed: 2); 
+				play.
+			aStep mouseUp
+				modifiers: BlKeyModifiers primary;
+				play.
+			
+			aStep assert
+				label: 'Assert edge count + 1';
+				value: [ :aMap | aMap edges size ] equals: [ anEdgeCount + 1 ];
+				onModel;
+				play.
+				
+			aStep assert
+				label: 'Assert Node F is not highlighted';
+				value: [ :aNodeElement | (aNodeElement childNamed: #node) background ]
+					equals: [ :aNodeElement | (aNodeElement wardleyMapNodeViewModel nodeColor) asBlBackground ];
+				// (#node asBlocElementId indexed: 5);
+				play
+			 ].
+
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 	<gtExample>
 	| aScripter |
@@ -84,6 +176,165 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 				play
 		].
 
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes.
+
+	aScripter
+		substeps: 'Add new node'
+		do: [ :aStep | 
+			aStep doubleClick
+				label: 'Double click to add new node';
+				play.
+		
+			aStep assert
+				label: 'Assert new node is added';
+				exists;
+				// (#node asBlocElementId indexed: 10);
+				play.
+				
+			aStep assert
+				label: 'Assert node label edit mode';
+				satisfies: [ :anEditorLabel | anEditorLabel isEditable ]
+					description: [ 'Node label must be in edit mode' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label text selection';
+				value: [ :anEditorLabel | anEditorLabel selection indices ]
+					equals: [ :anEditorLabel | 1 to: 5 ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label cursor is visible';
+				satisfies: [ :aCursorElement | aCursorElement visibility isVisible ]
+					description: [ 'Node label cursor must be visible' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				// BrCursorElement;
+				play.
+				
+			aStep assert
+				label: 'Assert node label focus';
+				satisfies: [ :anEditorLabel | anEditorLabel isFocused ]
+					description: [ 'Node label must be focused' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCanvas [
+	"When we click outside of a node label, we want to lose the label focus
+	and its hide cursor."
+
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes_addNewNode.
+				
+	aScripter
+		substeps: 'Type node label and click outside'
+		do: [ :aStep | 
+				
+			aStep type
+				label: 'Type new node label';
+				text: 'Node Z';
+				play.
+				
+			aStep click
+				play.
+				
+			aStep assert
+				label: 'Assert node label focus';
+				satisfies: [ :anEditorLabel | anEditorLabel isFocused not ]
+					description: [ 'Node label must not be focused' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label read-only mode';
+				satisfies: [ :anEditorLabel | anEditorLabel isReadOnly ]
+					description: [ 'Node label must be in read-only mode' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label cursor is not visible';
+				satisfies: [ :aCursorElement | aCursorElement visibility isVisible not ]
+					description: [ 'Node label cursor must not be visible' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				// BrCursorElement;
+				play.
+				
+			aStep assert
+				label: 'Assert node model label is set';
+				value: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel label ]
+					equals: 'Node Z';
+				// (#node asBlocElementId indexed: 10);
+				play. ].
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel [
+	<gtExample>
+	| aScripter |
+	aScripter := self pipelineWithInnerNodes_addNewNode.
+				
+	aScripter
+		substeps: 'Type new node label'
+		do: [ :aStep | 
+				
+			aStep type
+				label: 'Type new node label';
+				text: 'Node Z';
+				play.
+				
+			aStep keyPress
+				key: BlKeyboardKey return;
+				play.
+				
+			aStep assert
+				label: 'Assert node label read-only mode';
+				satisfies: [ :anEditorLabel | anEditorLabel isReadOnly ]
+					description: [ 'Node label must be in read-only mode' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				play.
+				
+			aStep assert
+				label: 'Assert node label cursor is not visible';
+				satisfies: [ :aCursorElement | aCursorElement visibility isVisible not ]
+					description: [ 'Node label cursor must not be visible' ];
+				// (#node asBlocElementId indexed: 10);
+				// GtWardleyMapNodeLabelId;
+				// BrCursorElement;
+				play.
+				
+			aStep assert
+				label: 'Assert node model label is set';
+				value: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel label ]
+					equals: 'Node Z';
+				// (#node asBlocElementId indexed: 10);
+				play.
+
+	].
 
 	^ aScripter
 ]

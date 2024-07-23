@@ -29,6 +29,9 @@ GtWardleyMapEdgeBuilderEventHandler >> dragEndEvent: anEvent [
 	lineToAnchorElement removeFromParent.
 	lineElement removeFromParent.
 
+	"Remove source node hovering"
+	anEvent currentTarget onUnhovered.
+	
 	self containerElement
 		childrenAt: (self containerElement globalPointToLocal: anEvent position)
 		do: [ :eachChild |
