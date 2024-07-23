@@ -71,6 +71,55 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addAndHoverInnerEdge 
 ]
 
 { #category : #'examples - ui' }
+GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEdgeFC [
+	<gtExample>
+	| aScripter anEdgeCount |
+	aScripter := self pipelineWithInnerNodes.
+
+	aScripter 
+		substeps: 'Add Edge D->E primary dragging between nodes'
+		do: [ :aStep | 
+			aStep do
+				label: 'Get edge count';
+				block: [ :aMap | anEdgeCount := aMap edges size ];
+				onModel;
+				play.
+		
+			aStep mouseMoveOver 
+				label: 'Mouse over Node D';
+				// (#node asBlocElementId indexed: 5); 
+				play.
+			aStep mouseDown
+				modifiers: BlKeyModifiers primary;
+				play.
+			aStep mouseMoveOver
+				label: 'Move mouse to Node E';
+				modifiers: BlKeyModifiers primary;
+				// (#node asBlocElementId indexed: 2); 
+				play.
+			aStep mouseUp
+				modifiers: BlKeyModifiers primary;
+				play.
+			
+			aStep assert
+				label: 'Assert edge count + 1';
+				value: [ :aMap | aMap edges size ] equals: [ anEdgeCount + 1 ];
+				onModel;
+				play.
+				
+			aStep assert
+				label: 'Assert Node F is not highlighted';
+				value: [ :aNodeElement | (aNodeElement childNamed: #node) background ]
+					equals: [ :aNodeElement | (aNodeElement wardleyMapNodeViewModel nodeColor) asBlBackground ];
+				// (#node asBlocElementId indexed: 5);
+				play
+			 ].
+
+
+	^ aScripter
+]
+
+{ #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 	<gtExample>
 	| aScripter |
