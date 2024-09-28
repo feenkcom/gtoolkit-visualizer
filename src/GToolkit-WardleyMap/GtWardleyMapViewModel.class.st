@@ -422,6 +422,11 @@ GtWardleyMapViewModel >> initialize [
 			Color blue.
 			Color blue lighter.
 			Color blue muchLighter.
+			Color magenta muchDarker.
+			Color magenta twiceDarker.
+			Color magenta.
+			Color magenta twiceLighter.
+			Color magenta muchLighter.
 			Color green muchDarker.
 			Color green twiceDarker.
 			Color green darker.
