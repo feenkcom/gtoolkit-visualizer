@@ -9,7 +9,8 @@ Class {
 		'stencil',
 		'aptitude',
 		'model',
-		'preferredBackground'
+		'preferredBackground',
+		'tooltip'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
@@ -72,6 +73,7 @@ GtWardleyMapMaximizerAction >> newButton: aButtonClass [
 		buttonClass: aButtonClass;
 		icon: self icon;
 		label: self label;
+		tooltip: self tooltip;
 		aptitude: self aptitude;
 		action: [ :aButton | self onMaximizeFrom: aButton ];
 		model: self model;
@@ -139,4 +141,14 @@ GtWardleyMapMaximizerAction >> stencil [
 { #category : #accessing }
 GtWardleyMapMaximizerAction >> stencil: aStencil [
 	stencil := aStencil asStencil
+]
+
+{ #category : #private }
+GtWardleyMapMaximizerAction >> tooltip [
+	^ tooltip
+]
+
+{ #category : #accessing }
+GtWardleyMapMaximizerAction >> tooltip: aString [ 
+	tooltip := aString
 ]
