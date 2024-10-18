@@ -41,50 +41,50 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.1322/src' ].
+				spec repository: 'github://feenkcom/Brick:v0.8.1323/src' ].
 		spec
 			baseline: 'Beacon' with: [
 				spec repository: 'github://feenkcom/pharo-beacon:6143981eb0705cfb325a426b8ed4910980639169/repository' ].
 		spec
 			baseline: 'GToolkit4SmaCC' with: [
-				spec repository: 'github://feenkcom/gt4smacc:v0.8.292/src' ].
+				spec repository: 'github://feenkcom/gt4smacc:v0.8.293/src' ].
 		spec
 			baseline: 'GToolkitAnnouncerUtility' with: [
-				spec repository: 'github://feenkcom/gtoolkit-utility:v0.8.334/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-utility:v0.8.335/src' ].
 		spec
 			baseline: 'GToolkitPhlow' with: [
-				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1431/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1432/src' ].
 		spec
 			baseline: 'GToolkit4Pharo' with: [
-				spec repository: 'github://feenkcom/gt4pharo:v0.6.1847/src' ].
+				spec repository: 'github://feenkcom/gt4pharo:v0.6.1848/src' ].
 		spec
 			baseline: 'GToolkitPresenter' with: [
-				spec repository: 'github://feenkcom/gtoolkit-presenter:v0.8.1974/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-presenter:v0.8.1975/src' ].
 		spec
 			baseline: 'GToolkitCoder' with: [
-				spec repository: 'github://feenkcom/gtoolkit-coder:v0.8.1804/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-coder:v0.8.1805/src' ].
 
 		spec package: 'GToolkit-BlocGraph' with: [
-			spec requires: #('Brick') ].
+			spec requires: #(#Brick) ].
 		spec package: 'GToolkit-BlocGraph-Grad' with: [
-			spec requires: #('GToolkit-BlocGraph') ].
+			spec requires: #(#'GToolkit-BlocGraph') ].
 		spec package: 'GToolkit-BlocGraph-Layouts' with: [
-			spec requires: #('GToolkit-BlocGraph') ].
+			spec requires: #(#'GToolkit-BlocGraph') ].
 		spec package: 'GToolkit-Mondrian' with: [
-			spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'GToolkit-BlocGraph-Grad' 'Beacon' 'GToolkitPhlow' 'GToolkit4Pharo') ].
+			spec requires: #(#Brick #'GToolkit-BlocGraph' #'GToolkit-BlocGraph-Layouts' #'GToolkit-BlocGraph-Grad' #Beacon #GToolkitPhlow #GToolkit4Pharo) ].
 		spec package: 'GToolkit-Mondrian-Glamour' with: [
-			spec requires: #('GToolkit-Mondrian') ].
+			spec requires: #(#'GToolkit-Mondrian') ].
 		spec package: 'GToolkit-Connector' with: [
-			spec requires: #('Brick' 'GToolkit-BlocGraph' 'GToolkit-BlocGraph-Layouts' 'GToolkit-BlocGraph-Grad' 'GToolkitPhlow' 'GToolkitPresenter') ].
+			spec requires: #(#Brick #'GToolkit-BlocGraph' #'GToolkit-BlocGraph-Layouts' #'GToolkit-BlocGraph-Grad' #GToolkitPhlow #GToolkitPresenter) ].
 		spec package: 'GToolkit-Diagrammer' with: [
-			spec requires: #('Brick') ].
+			spec requires: #(#Brick) ].
 		spec package: 'GToolkit-TreeMap' with: [
-			spec requires: #('Brick' 'GToolkit-BlocGraph-Layouts') ].
+			spec requires: #(#Brick #'GToolkit-BlocGraph-Layouts') ].
 		spec package: 'GToolkit-Plotter' with: [
-			spec requires: #('Brick') ].
+			spec requires: #(#Brick) ].
 		spec package: 'GToolkit-WardleyMap' with: [
-			spec requires: #('Brick' 'GToolkit4SmaCC' 'GToolkitAnnouncerUtility' 'GToolkitCoder') ].
+			spec requires: #(#Brick #GToolkit4SmaCC #GToolkitAnnouncerUtility #GToolkitCoder) ].
 		spec package: 'GToolkit-SequenceDiagram' with: [
-			spec requires: #('Brick' 'GToolkitAnnouncerUtility') ].
+			spec requires: #(#Brick #GToolkitAnnouncerUtility) ].
 	]
 ]
