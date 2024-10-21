@@ -169,13 +169,15 @@ GtGradHorizontalTreeLayoutExamples >> compactSubtrees2 [
 
 	self
 		assert: aParentNode children layoutBounds
-		equals: {61.0 @ 22.0 corner: 111.0 @ 42.0.
-				122.0 @ 0.0 corner: 172.0 @ 20.0.
-				122.0 @ 22.0 corner: 172.0 @ 42.0.
-				122.0 @ 44.0 corner: 172.0 @ 64.0.
-				183.0 @ 33.0 corner: 233.0 @ 53.0.
-				183.0 @ 55.0 corner: 233.0 @ 75.0.
-				0.0 @ 22.0 corner: 50.0 @ 42.0}.
+		equals: {
+		(0.0@22.0) corner: (50.0@42.0).
+		(61.0@0.0) corner: (111.0@20.0).
+		(61.0@22.0) corner: (111.0@42.0).
+		(61.0@44.0) corner: (111.0@64.0).
+		(122.0@33.0) corner: (172.0@53.0).
+		(122.0@55.0) corner: (172.0@75.0).
+		(0.0@105.0) corner: (50.0@125.0)
+	}.
 
 	^ aParentNode
 ]
