@@ -21,8 +21,7 @@ GtGradTreeForest class >> from: aCollectionOfElements separateSubtrees: aBool [
 	visitedDictionary := IdentityDictionary new.
 	aCollectionOfElements
 		do: [ :aNodeElement | 
-			((visitedDictionary includesKey: aNodeElement)
-				or: [ aNodeElement hasNodesAlongIncomingEdges ])
+			(visitedDictionary includesKey: aNodeElement)
 				ifFalse: [ | aTreeNode |
 					aTreeNode := GtGradTreeNode on: aNodeElement.
 					visitedDictionary at: aNodeElement put: aTreeNode.
