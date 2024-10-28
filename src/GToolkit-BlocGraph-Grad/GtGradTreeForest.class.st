@@ -16,18 +16,25 @@ GtGradTreeForest class >> dfs: theRootNode visited: aVisitedDictionary [
 GtGradTreeForest class >> from: aCollectionOfElements separateSubtrees: aBool [
 	"Create a forest of node trees using depth-first-search algorithm"
 
-	| allTrees visitedDictionary |
+	| allTrees visitedDictionary aTreeNode |
 	allTrees := OrderedDictionary new.
 	visitedDictionary := IdentityDictionary new.
 	aCollectionOfElements
 		do: [ :aNodeElement | 
-			(visitedDictionary includesKey: aNodeElement)
-				ifFalse: [ | aTreeNode |
-					aTreeNode := GtGradTreeNode on: aNodeElement.
+			((visitedDictionary includesKey: aNodeElement)
+				or: [ aNodeElement hasNodesAlongIncomingEdges ])
+				ifFalse: [ aTreeNode := GtGradTreeNode on: aNodeElement.
 					visitedDictionary at: aNodeElement put: aTreeNode.
 					self dfs: aTreeNode visited: visitedDictionary.
 					aBool ifTrue: [ aTreeNode addChildNodesToLeaves ].
-					allTrees at: aTreeNode root put: #root ] ].
+					allTrees at: aTreeNode root put: #root ] ].	
+	"Handle the case where every node is part of a cycle"
+	allTrees isEmpty
+		ifTrue: [ aTreeNode := GtGradTreeNode on: aCollectionOfElements first.
+			visitedDictionary at: aCollectionOfElements first put: aTreeNode.
+			self dfs: aTreeNode visited: visitedDictionary.
+			aBool ifTrue: [ aTreeNode addChildNodesToLeaves ].
+			allTrees at: aTreeNode root put: #root ].
 	^ self new trees: allTrees keys
 ]
 

@@ -38,20 +38,21 @@ GtGradHorizontalDominanceTreeLayoutExamples >> deepestParentInForestExample [
 					6 -> 2.
 					6 -> 3.
 					6 -> 4.
-					3 -> 2.
-					4 -> 5}.
+					3->2.
+					4->5.
+					}.
 
 	aTreeLayout := self dominanceTreeLayout.
 	aTreeLayout separateSubtrees: false.
-	aTreeLayout measure: aParentNode.
-	self
-		assert: aParentNode children layoutBounds
-		equals: {0.0 @ 0.0 corner: 50.0 @ 20.0.
-				61.0 @ 0.0 corner: 111.0 @ 20.0.
-				61.0 @ 50.0 corner: 111.0 @ 70.0.
-				61.0 @ 72.0 corner: 111.0 @ 92.0.
-				183.0 @ 72.0 corner: 233.0 @ 92.0.
-				0.0 @ 61.0 corner: 50.0 @ 81.0}.
+	aTreeLayout measure: aParentNode.	
+	self assert: aParentNode children layoutBounds equals: {
+		(0.0@0.0) corner: (50.0@20.0).
+		(122.0@50.0) corner: (172.0@70.0).
+		(61.0@50.0) corner: (111.0@70.0).
+		(61.0@72.0) corner: (111.0@92.0).
+		(122.0@72.0) corner: (172.0@92.0).
+		(0.0@61.0) corner: (50.0@81.0)
+	}.
 
 	^ aParentNode
 ]
