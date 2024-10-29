@@ -13,25 +13,31 @@ GtGradTreeForest class >> dfs: theRootNode visited: aVisitedDictionary [
 ]
 
 { #category : #'instance-creation' }
+GtGradTreeForest class >> findUnvisitedNodeFrom: aCollectionOfElements visited: visitedDictionary [
+	"Find an unvisited node with no parents, otherwise any unvisited node"
+	| aNodeElement |
+	aNodeElement := aCollectionOfElements
+			detect: [ :node | 
+				((visitedDictionary includesKey: node) or: [ node hasNodesAlongIncomingEdges ])
+					not ]
+			ifNone: [ aCollectionOfElements
+					detect: [ :node | (visitedDictionary includesKey: node) not ] ].
+	^ aNodeElement
+]
+
+{ #category : #'instance-creation' }
 GtGradTreeForest class >> from: aCollectionOfElements separateSubtrees: aBool [
 	"Create a forest of node trees using depth-first-search algorithm"
 
-	| allTrees visitedDictionary aTreeNode |
+	| allTrees visitedDictionary aTreeNode aNodeElement |
 	allTrees := OrderedDictionary new.
 	visitedDictionary := IdentityDictionary new.
-	aCollectionOfElements
-		do: [ :aNodeElement | 
-			((visitedDictionary includesKey: aNodeElement)
-				or: [ aNodeElement hasNodesAlongIncomingEdges ])
-				ifFalse: [ aTreeNode := GtGradTreeNode on: aNodeElement.
-					visitedDictionary at: aNodeElement put: aTreeNode.
-					self dfs: aTreeNode visited: visitedDictionary.
-					aBool ifTrue: [ aTreeNode addChildNodesToLeaves ].
-					allTrees at: aTreeNode root put: #root ] ].	
-	"Handle the case where every node is part of a cycle"
-	allTrees isEmpty
-		ifTrue: [ aTreeNode := GtGradTreeNode on: aCollectionOfElements first.
-			visitedDictionary at: aCollectionOfElements first put: aTreeNode.
+	[ visitedDictionary size = aCollectionOfElements size ]
+		whileFalse: [ aNodeElement := self
+					findUnvisitedNodeFrom: aCollectionOfElements
+					visited: visitedDictionary.
+			aTreeNode := GtGradTreeNode on: aNodeElement.
+			visitedDictionary at: aNodeElement put: aTreeNode.
 			self dfs: aTreeNode visited: visitedDictionary.
 			aBool ifTrue: [ aTreeNode addChildNodesToLeaves ].
 			allTrees at: aTreeNode root put: #root ].
