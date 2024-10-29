@@ -30,6 +30,27 @@ Class {
 }
 
 { #category : #'example - instance creation' }
+GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith4NodeCycle [
+	<gtExample>
+
+	^ self
+		createGraph: 4
+		pairs: { (1->2). (2->3). (3->4). (4->1) }
+]
+
+{ #category : #'example - instance creation' }
+GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith4NodeCycleAndSeparateSubtree [
+	<gtExample>
+	^ self
+		createGraph: 6
+		pairs: {1 -> 2.
+				2 -> 3.
+				3 -> 4.
+				4 -> 1.
+				5 -> 6}
+]
+
+{ #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith5Nodes [
 	<gtExample>
 
