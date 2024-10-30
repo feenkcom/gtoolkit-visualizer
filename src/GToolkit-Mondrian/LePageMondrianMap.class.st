@@ -11,10 +11,10 @@ Class {
 	#name : #LePageMondrianMap,
 	#superclass : #Object,
 	#instVars : [
-		'pageTitles',
 		'database',
 		'explicitPositions',
-		'connections'
+		'connections',
+		'pageCategoriesAndTitles'
 	],
 	#category : #'GToolkit-Mondrian-Lepiter'
 }
@@ -30,12 +30,30 @@ LePageMondrianMap class >> forPages: pageTitles inDatabase: aDatabase withConnec
 
 { #category : #example }
 LePageMondrianMap >> connections [
-	"Just the raw connections by page title."
+	"Dictionary of connections by category and page title."
 	^ connections
 ]
 
 { #category : #accessing }
 LePageMondrianMap >> connections: pageConnectionAssociations [
+	"connections := pageConnectionAssociations asDictionary"
+	
+	"Inject the missing categories when only the titles are supplied."
+
+	connections := (pageConnectionAssociations
+			collect: [ :assoc | 
+				{''.
+					assoc key}
+					-> (assoc value
+							collect: [ :each | 
+								{''.
+									each} ]) ]) asDictionary
+]
+
+{ #category : #accessing }
+LePageMondrianMap >> connectionsWithCategories: pageConnectionAssociations [
+	"Categories are supplied, so don't need to inject them."
+
 	connections := pageConnectionAssociations asDictionary
 ]
 
@@ -83,12 +101,29 @@ LePageMondrianMap >> gtMapFor: aView [
 ]
 
 { #category : #example }
+LePageMondrianMap >> pageCategoriesAndTitles [
+	^ pageCategoriesAndTitles
+]
+
+{ #category : #accessing }
+LePageMondrianMap >> pageCategoriesAndTitles: aCategoryAndTitleCollection [
+	"eg {{'(M) '.'Moldable Object'} ...}"
+	pageCategoriesAndTitles := aCategoryAndTitleCollection
+]
+
+{ #category : #example }
 LePageMondrianMap >> pageMap [
 	| m |
 	m := GtMondrian new.
+	
+	m nodes
+		stencil: [ :categoryAndTitle | (LePageTitleLabelBuilder forCategory: categoryAndTitle first andTitle: categoryAndTitle second andDatabase: self database) build ];
+		with: self pageCategoriesAndTitles.
+		"
 	m nodes
 		stencil: [ :title | (LePageTitleLabelBuilder forTitle: title andDatabase: self database) build ];
-		with: self pageTitles.
+		with: self pageTitles."
+		
 	m edges
 		fromNearestBounds;
 		toNearestBounds;
@@ -114,10 +149,14 @@ LePageMondrianMap >> pageMapWithExplicitPositions [
 
 { #category : #example }
 LePageMondrianMap >> pageTitles [
-	^ pageTitles
+	^ pageCategoriesAndTitles collect: #second
 ]
 
 { #category : #accessing }
 LePageMondrianMap >> pageTitles: aStringCollection [
-	pageTitles := aStringCollection
+	"Fill in empty categories"
+	pageCategoriesAndTitles := aStringCollection
+			collect: [ :title | 
+				{''.
+					title} ]
 ]
