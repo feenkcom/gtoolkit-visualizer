@@ -41,7 +41,7 @@ LePageMondrianMapExamples >> oldPatternMapwithExplicitPositions [
 		(self root children collect: #position)"
 
 	<gtExample>
-	^ self patternMap
+	^ self oldPatternMap
 		explicitPositions: {184.9584903717041 @ 245.31882731119794.
 				372.0 @ 243.91666666666669.
 				399.2699890136719 @ 297.9166666666667.

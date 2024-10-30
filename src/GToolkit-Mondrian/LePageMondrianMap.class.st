@@ -87,13 +87,7 @@ LePageMondrianMap >> pageMap [
 	| m |
 	m := GtMondrian new.
 	m nodes
-		stencil: [ :title |
-		(LePageTitleLabelBuilder forTitle: title andDatabase: self database) build
-		
-			"(page isKindOf: LePage)
-				ifTrue: [ page asClickableLabel asStencil ]
-				ifFalse: [ (self labelFor: page) asStencil ] "
-				];
+		stencil: [ :title | (LePageTitleLabelBuilder forTitle: title andDatabase: self database) build ];
 		with: self pageTitles.
 	m edges
 		fromNearestBounds;
