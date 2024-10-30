@@ -140,6 +140,19 @@ LePageMondrianMapExamples >> simpleMap [
 ]
 
 { #category : #accessing }
+LePageMondrianMapExamples >> simpleMapWithCategories [
+	<gtExample>
+	^ LePageMondrianMap new
+		pageCategoriesAndTitles: {{''. 'Explainable System'}.
+				{'(T) '. 'Moldable Tool'}.
+				{'(P) '. 'Tooling Buildup'}};
+		database: LeDatabase gtBook;
+		connectionsWithCategories: {{''.'Explainable System'}
+					-> {{'(T) '.'Moldable Tool'}.
+							{'(P) '.'Tooling Buildup'}}}
+]
+
+{ #category : #accessing }
 LePageMondrianMapExamples >> simpleMapWithMissingPages [
 	"A map where some pages are missing -- hover shows them as pink, and clicking goes to nil."
 
