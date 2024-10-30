@@ -100,6 +100,11 @@ LePageMondrianMap >> gtMapFor: aView [
 		view: #gtLiveFor:
 ]
 
+{ #category : #testing }
+LePageMondrianMap >> missingPages [
+	^ self pageTitles reject: [ :title | self database hasPageNamed: title ]
+]
+
 { #category : #example }
 LePageMondrianMap >> pageCategoriesAndTitles [
 	^ pageCategoriesAndTitles
