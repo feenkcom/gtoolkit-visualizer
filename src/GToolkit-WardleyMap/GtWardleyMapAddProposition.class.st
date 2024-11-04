@@ -6,10 +6,16 @@ Class {
 	#instVars : [
 		'acceptAction',
 		'rejectAction',
-		'parent'
+		'parent',
+		'isReadOnly'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
+
+{ #category : #'as yet unclassified' }
+GtWardleyMapAddProposition >> beReadOnly [
+	isReadOnly := true
+]
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAddProposition >> decorateEdgeElementInContext: anEdgeDecoratorContext [
@@ -32,24 +38,26 @@ GtWardleyMapAddProposition >> decorateEdgeElementInContext: anEdgeDecoratorConte
 					relatedTo: aFromNodeElement).
 
 	aCanvasElement addChild: aPropositionElement.
-	
-	acceptAction decorateEdgeElementInContext: anEdgeDecoratorContext.
-	rejectAction decorateEdgeElementInContext: anEdgeDecoratorContext
+
+	isReadOnly
+		ifFalse: [ acceptAction decorateEdgeElementInContext: anEdgeDecoratorContext.
+			rejectAction decorateEdgeElementInContext: anEdgeDecoratorContext ]
 ]
 
 { #category : #accessing }
 GtWardleyMapAddProposition >> decorateNodeElementInContext: aNodeDecoratorContext [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
-		beAddProposition;
-		wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
-		wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
-		nodeElement: aNodeDecoratorContext nodeElement.
-		
+			beAddProposition;
+			wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+			wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
+			nodeElement: aNodeDecoratorContext nodeElement.
+
 	aNodeDecoratorContext canvasElement addChild: aHighlightElement.
-			
-	acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
-	rejectAction decorateNodeElementInContext: aNodeDecoratorContext
+
+	isReadOnly
+		ifFalse: [ acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
+			rejectAction decorateNodeElementInContext: aNodeDecoratorContext ]
 ]
 
 { #category : #initialization }
