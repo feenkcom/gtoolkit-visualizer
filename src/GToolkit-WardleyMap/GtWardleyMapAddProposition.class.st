@@ -74,6 +74,8 @@ GtWardleyMapAddProposition >> initialize [
 	rejectAction icon: BrGlamorousVectorIcons cancel.
 	rejectAction action: [ self onRejectAction ].
 	rejectAction tooltip: 'Remove'.
+	
+	isReadOnly := false
 ]
 
 { #category : #testing }

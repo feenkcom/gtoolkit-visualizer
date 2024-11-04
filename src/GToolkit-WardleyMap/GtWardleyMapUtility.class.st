@@ -4,6 +4,59 @@ Class {
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
 
+{ #category : #'api - diffing' }
+GtWardleyMapUtility class >> addModelAsPropositionsFrom: aModel to: propositionModel [
+	^ self
+		addModelAsPropositionsFrom: aModel
+		to: propositionModel
+		withPropositionBlock: #yourself
+]
+
+{ #category : #'api - diffing' }
+GtWardleyMapUtility class >> addModelAsPropositionsFrom: aModel to: propositionModel withPropositionBlock: aBlock [
+	| unsetNodes nodes unsetEdges |
+	unsetNodes := aModel nodes copy.
+	nodes := Dictionary new.
+
+	propositionModel nodes
+		do: [ :aNode | 
+			| aName |
+			aName := aNode label.
+			unsetNodes
+				detect: [ :anUnsetNode | aName = anUnsetNode label ]
+				ifFound: [ :anUnsetNode | unsetNodes remove: anUnsetNode ]
+				ifNone: [ aNode removeParent
+						addWardleyMapDecoratorModel: (aBlock value: GtWardleyMapAddProposition new).
+					aModel addNode: aNode.
+					nodes at: aName put: aNode ] ].
+
+	unsetNodes
+		do: [ :aNode | 
+			aNode
+				addWardleyMapDecoratorModel: (aBlock value: GtWardleyMapRemoveProposition new) ].
+
+	unsetEdges := aModel edges copy.
+
+	propositionModel edges
+		do: [ :anEdge | 
+			| aKey |
+			aKey := anEdge fromNode label -> anEdge toNode label.
+			unsetEdges
+				detect: [ :anUnsetEdge | aKey = (anUnsetEdge fromNode label -> anUnsetEdge toNode label) ]
+				ifFound: [ :anUnsetEdge | unsetEdges remove: anUnsetEdge ]
+				ifNone: [ anEdge removeParent
+						addWardleyMapDecoratorModel: (aBlock value: GtWardleyMapAddProposition new);
+						fromNode: (nodes at: aKey key);
+						toNode: (nodes at: aKey value).
+					aModel addEdge: anEdge ] ].
+
+	unsetEdges
+		do: [ :anEdge | 
+			anEdge
+				addWardleyMapDecoratorModel: (aBlock value: GtWardleyMapRemoveProposition new) ].
+	^ aModel
+]
+
 { #category : #'api - views' }
 GtWardleyMapUtility class >> buttonLabelFromString: aString [
 	aString size <= GtWardleyMapConstants maxButtonLabelCharacters 
