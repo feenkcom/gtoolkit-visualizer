@@ -5,7 +5,7 @@ Class {
 		'step',
 		'nodes'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }
@@ -22,6 +22,23 @@ GtGraphTreemapSquarifyStepPreview >> asElementWithOccupiedArea [
 	aContainer constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
+	
+	self previousStepsWithDifferentAreasFromDownDo: [ :eachStep | 
+		eachStep nodesDo: [ :eachNode |  
+			eachNode hasBounds ifTrue: [ 
+				| anElement |
+				anElement := eachNode asElement
+					size: eachNode extent asFloatPoint;
+					relocate: eachNode position asFloatPoint.
+				(anElement childWithId: #'treemap--node-label')
+					aptitude foreground: Color black.
+				(anElement childWithId: #'rectangle')
+					background: Color veryLightGray.
+				aContainer addChild: anElement
+			].
+		].
+	].
+	
 	aContainer addChild: self rectangle asElementWithOccupiedArea as: #occupiedArea.
 	self nodesDo: [ :eachNode | 
 		eachNode hasBounds ifTrue: [ 
@@ -30,7 +47,7 @@ GtGraphTreemapSquarifyStepPreview >> asElementWithOccupiedArea [
 				size: eachNode extent asFloatPoint;
 				relocate: eachNode position asFloatPoint.
 			anElement allChildrenBreadthFirstDo: [ :eachChild | 
-				eachChild background: BlBackground transparent ]. 
+				eachChild background: BlBackground transparent ].
 			aContainer addChild: anElement ] ].
 	^ aContainer
 ]
@@ -40,10 +57,21 @@ GtGraphTreemapSquarifyStepPreview >> asPreviewStep [
 	^ self
 ]
 
+{ #category : #comparing }
+GtGraphTreemapSquarifyStepPreview >> isSameStep: aStep [
+	^ self step == aStep or: [ self == aStep ]
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyStepPreview >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
 	^ nodes
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStepPreview >> nodesCount [
+	<return: #Integer>
+	^ self step nodesCount
 ]
 
 { #category : #enumerating }
@@ -57,9 +85,26 @@ GtGraphTreemapSquarifyStepPreview >> occupiedWeight [
 ]
 
 { #category : #accessing }
+GtGraphTreemapSquarifyStepPreview >> orientationName [
+	<return: #String>
+	^ self step orientationName
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarifyStepPreview >> previousStepsWithDifferentAreasFromDownDo: aBlock [
+	self step previousStepsWithDifferentAreasFromDownDo: aBlock
+]
+
+{ #category : #accessing }
 GtGraphTreemapSquarifyStepPreview >> rectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ self step rectangle
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStepPreview >> rectangleBounds [
+	<return: #BlRope>
+	^ self step rectangleBounds
 ]
 
 { #category : #squarifying }
@@ -79,6 +124,28 @@ GtGraphTreemapSquarifyStepPreview >> step [
 GtGraphTreemapSquarifyStepPreview >> step: anObject [
 	step := anObject.
 	self squarifyNodes.
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStepPreview >> successName [
+	<return: #BlRope>
+	^ self step successName
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStepPreview >> withPreviousAndNextSteps [
+	<return: #Array of: #GtGraphTreemapSquarifyAbstractStep>
+	^ self step withPreviousAndNextSteps
+		collect: [ :eachStep | 
+			eachStep == self step 
+				ifTrue: [ self ] 
+				ifFalse: [ eachStep ] ]
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStepPreview >> worstString [
+	<return: #String>
+	^ self step worstString
 ]
 
 { #category : #'gt-extension' }

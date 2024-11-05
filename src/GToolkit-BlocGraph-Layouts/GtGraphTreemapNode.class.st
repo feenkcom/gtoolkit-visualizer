@@ -12,12 +12,13 @@ Class {
 		'value',
 		'totalValue'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #converting }
 GtGraphTreemapNode >> asElement [
 	^ super asElement addChild: (BrLabel new
+		id: #'treemap--node-label';
 		aptitude: BrGlamorousLabelAptitude;
 		text: (self value asRopedText foreground: Color lightGray);
 		constraintsDo: [ :c | 
