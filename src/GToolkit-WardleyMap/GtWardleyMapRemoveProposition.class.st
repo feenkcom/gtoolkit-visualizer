@@ -64,6 +64,7 @@ GtWardleyMapRemoveProposition >> decorateNodeElementInContext: aNodeDecoratorCon
 GtWardleyMapRemoveProposition >> initialize [
 	super initialize.
 
+	isReadOnly := false.
 	acceptAction := GtWardleyMapAction new.
 	acceptAction elementId: GtWardleyMapRemoveAcceptId.
 	acceptAction icon: BrGlamorousVectorIcons accept.
