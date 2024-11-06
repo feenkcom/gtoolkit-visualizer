@@ -27,9 +27,10 @@ Class {
 		'rectangle',
 		'worst',
 		'nextStep',
-		'rejectedStep'
+		'rejectedStep',
+		'previousStep'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #factory }
@@ -88,6 +89,7 @@ GtGraphTreemapSquarifyStep >> hasNextStep [
 { #category : #initialization }
 GtGraphTreemapSquarifyStep >> initialize [
 	super initialize.
+	previousStep := self class null.
 	nextStep := self class null.
 	rejectedStep := self class null.
 	nodes := #().
@@ -106,8 +108,9 @@ GtGraphTreemapSquarifyStep >> nextStep [
 ]
 
 { #category : #accessing }
-GtGraphTreemapSquarifyStep >> nextStep: anObject [
-	nextStep := anObject
+GtGraphTreemapSquarifyStep >> nextStep: aStep [
+	aStep previousStep: self.
+	nextStep := aStep
 ]
 
 { #category : #accessing }
@@ -150,6 +153,58 @@ GtGraphTreemapSquarifyStep >> orientationName [
 ]
 
 { #category : #accessing }
+GtGraphTreemapSquarifyStep >> previousStep [
+	<return: #GtGraphTreemapSquarifyStep>
+	^ previousStep
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStep >> previousStep: anObject [
+	previousStep := anObject
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarifyStep >> previousStepsFromDownDo: aBlock [
+	| aPreviousStep |
+	aPreviousStep := self previousStep.
+	aPreviousStep isDefinedStep ifFalse: [ ^ self ].
+	aBlock cull: aPreviousStep.
+	aPreviousStep previousStepsFromDownDo: aBlock
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarifyStep >> previousStepsFromTopDo: aBlock [
+	| aPreviousStep |
+	aPreviousStep := self previousStep.
+	aPreviousStep isDefinedStep ifFalse: [ ^ self ].
+	aPreviousStep previousStepsFromTopDo: aBlock.
+	aBlock cull: aPreviousStep
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarifyStep >> previousStepsWithDifferentAreasFromDownDo: aBlock [
+	| aRectangleBounds |
+	aRectangleBounds := self rectangleBounds.
+	self previousStepsFromDownDo: [ :eachStep | 
+		aRectangleBounds = eachStep rectangleBounds ifFalse: [ 
+			aBlock cull: eachStep.
+			aRectangleBounds := eachStep rectangleBounds ] ]
+]
+
+{ #category : #enumerating }
+GtGraphTreemapSquarifyStep >> previousStepsWithDifferentAreasFromTopDo: aBlock [
+	| aQueue |
+	aQueue := LIFOQueue new.
+	self previousStepsWithDifferentAreasFromDownDo: [ :eachStep | 
+		aQueue push: eachStep ].
+	[ 
+		| aStep |
+		aStep := aQueue nextIfNone: [ ^ self ].
+		aBlock cull: aStep 
+	] repeat
+]
+
+{ #category : #accessing }
 GtGraphTreemapSquarifyStep >> rectangle [
 	^ rectangle
 ]
@@ -174,6 +229,7 @@ GtGraphTreemapSquarifyStep >> rejectedStep [
 
 { #category : #accessing }
 GtGraphTreemapSquarifyStep >> rejectedStep: aStep [
+	aStep previousStep: self.
 	rejectedStep := aStep asRejectedStep
 ]
 
@@ -229,6 +285,15 @@ GtGraphTreemapSquarifyStep >> successName [
 { #category : #squarifying }
 GtGraphTreemapSquarifyStep >> updateOccupiedArea [
 	self rectangle updateOccupiedArea: self
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyStep >> withPreviousAndNextSteps [
+	<return: #Array of: #GtGraphTreemapSquarifyStep>
+	^ Array streamContents: [ :aStream | 
+		self previousStepsWithDifferentAreasFromTopDo: [ :eachStep | 
+			aStream nextPut: eachStep ].
+		self stepsDo: [ :eachRow | aStream nextPut: eachRow ] ]
 ]
 
 { #category : #accessing }

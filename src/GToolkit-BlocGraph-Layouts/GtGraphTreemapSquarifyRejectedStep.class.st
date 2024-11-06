@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'step'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }
@@ -103,6 +103,16 @@ GtGraphTreemapSquarifyRejectedStep >> stepsDo: anOneArgBlock [
 GtGraphTreemapSquarifyRejectedStep >> successName [
 	<return: #BlRope>
 	^ 'Rejected' asRopedText foreground: BrGlamorousColors errorBackgroundColor
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyRejectedStep >> withPreviousAndNextSteps [
+	<return: #Array of: #GtGraphTreemapSquarifyAbstractStep>
+	^ self step withPreviousAndNextSteps
+		collect: [ :eachStep | 
+			eachStep == self step 
+				ifTrue: [ self ] 
+				ifFalse: [ eachStep ] ]
 ]
 
 { #category : #'accessing - worst' }
