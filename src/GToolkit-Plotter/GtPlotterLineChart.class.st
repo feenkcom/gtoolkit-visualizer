@@ -395,7 +395,7 @@ GtPlotterLineChart >> newContentElement [
 { #category : #'instance creation' }
 GtPlotterLineChart >> newContentLineElementFor: aGroup [
 	^ BlElement new
-		geometry: (BlNormalizedPolyline vertices: (self newContentLineVerticesFor: aGroup));
+		geometry: (BlNormalizedPolylineGeometry vertices: (self newContentLineVerticesFor: aGroup));
 		border: (BlBorder paint: aGroup color width: 1);
 		outskirts: BlOutskirts centered;
 		constraintsDo: [ :c |

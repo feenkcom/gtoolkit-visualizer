@@ -36,7 +36,7 @@ GtDiagrammerLineJoinPicker >> initialize [
 					scaleBy: 0.8;
 					translateBy: (0 @ ((lineWidth / 2.0) - 1)) negated ];
 				outskirts: BlOutskirts centered;
-				geometry: (BlPolyline vertices: { (lineOffset) @ (cellSize y) . (cellSize x / 2.0) @ (lineWidth / 1) . (cellSize x - lineOffset) @ cellSize y });
+				geometry: (BlPolylineGeometry vertices: { (lineOffset) @ (cellSize y) . (cellSize x / 2.0) @ (lineWidth / 1) . (cellSize x - lineOffset) @ cellSize y });
 				border: (BlBorder builder lineJoin: aLineJoin; width: lineWidth; paint: (Color gray alpha: 0.5); build)).
 		
 		BrToggle new

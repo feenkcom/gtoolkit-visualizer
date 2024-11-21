@@ -6,9 +6,9 @@ Class {
 
 { #category : #initialization }
 GtWardleyMapNodeElement >> beSquareGeometry [
-	self geometry: BlSquare new.
+	self geometry: BlSquareGeometry new.
 	self nodeElementDo: [ :anElement | 
-		anElement geometry: BlSquare new ]
+		anElement geometry: BlSquareGeometry new ]
 ]
 
 { #category : #'event handling' }
