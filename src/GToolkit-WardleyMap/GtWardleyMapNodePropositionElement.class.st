@@ -46,7 +46,7 @@ GtWardleyMapNodePropositionElement >> beRemoveProposition [
 
 { #category : #initialization }
 GtWardleyMapNodePropositionElement >> beSquareGeometry [
-	self geometry: BlSquare new
+	self geometry: BlSquareGeometry new
 ]
 
 { #category : #initialization }

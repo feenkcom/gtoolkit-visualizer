@@ -234,7 +234,7 @@ GtPlotterRawLineExamples >> content [
 GtPlotterRawLineExamples >> contentLine [
 	<gtExample>
 	^ BlElement new
-		geometry: (BlNormalizedPolyline vertices: self contentLineVertices);
+		geometry: (BlNormalizedPolylineGeometry vertices: self contentLineVertices);
 		border: (BlBorder paint: Color orange width: 2);
 		outskirts: BlOutskirts centered;
 		constraintsDo: [ :c | 

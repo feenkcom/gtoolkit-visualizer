@@ -1,13 +1,13 @@
 Class {
 	#name : #GtPlotterDonutValuesElement,
 	#superclass : #GtPlotterSingleScaleValueBasedElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }
 GtPlotterDonutValuesElement >> defaultValueElement [
 	^ [ :aGtPlotterScaleContext | BlElement new
-		geometry: (BlAnnulusSector new
+		geometry: (BlAnnulusSectorGeometry new
 			startAngle: aGtPlotterScaleContext startAngle;
 			endAngle: aGtPlotterScaleContext endAngle);
 		outskirts: (BlOutskirts centered) ] asStencilBuilder: GtPlotterScaleBasedStencilBuilder

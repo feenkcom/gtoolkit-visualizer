@@ -265,7 +265,7 @@ GtPlotterScatterChartExamples >> scatterChartWithPopup [
 	aChart :=  self scatterChart
 		dotElement: [ :aGtPlotterContext | 
 			BlElement new
-				geometry: BlSquare new;
+				geometry: BlSquareGeometry new;
 				size: 20 asPoint;
 				aptitude: (BrGlamorousWithTooltipAptitude 
 					content: [ BrLabel new
@@ -290,9 +290,9 @@ GtPlotterScatterChartExamples >> scatterDifferentGeometry [
 			(domain endsWith: 'com')
 				ifTrue: [ geometry := BlEllipseGeometry new ].
 			(domain endsWith: 'cn')
-				ifTrue: [ geometry := BlSquare new ].
+				ifTrue: [ geometry := BlSquareGeometry new ].
 			(domain endsWith: 'tv')
-				ifTrue: [ geometry := BlPolygon vertices: RSShapeFactory star points * 10 + 10
+				ifTrue: [ geometry := BlPolygonGeometry vertices: RSShapeFactory star points * 10 + 10
 					 ].
 			BlElement new
 				geometry: geometry;
