@@ -199,10 +199,7 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 		wardleyMapNodeViewModel: aNodeViewModel;
 		when: GtPhlowObjectToSpawn
 			do: [ :anEvent | 
-				self fireEvent: (GtPhlowObjectToSpawn new
-							previousSpawnEvent: anEvent;
-							tool: anEvent tool;
-							sourceElement: anEvent target) ]
+				self phlow spawnPreviousEvent: anEvent ]
 ]
 
 { #category : #initialization }
