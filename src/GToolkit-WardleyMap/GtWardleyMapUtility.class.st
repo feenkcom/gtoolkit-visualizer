@@ -27,7 +27,7 @@ GtWardleyMapUtility class >> addModelAsPropositionsFrom: aModel to: propositionM
 				ifFound: [ :anUnsetNode | 
 					nodes at: aName put: anUnsetNode.
 					aNode wardleyMapDecoratorModels
-						do: [ :aDecorator | anUnsetNode addWardleyMapDecoratorModel: (aDecorator copy removeParent) ].
+						do: [ :aDecorator | anUnsetNode addWardleyMapDecoratorModel: aDecorator copy removeParent ].
 					unsetNodes remove: anUnsetNode ]
 				ifNone: [ aNode removeParent
 						addWardleyMapDecoratorModel: (aBlock value: GtWardleyMapAddProposition new).
@@ -58,6 +58,9 @@ GtWardleyMapUtility class >> addModelAsPropositionsFrom: aModel to: propositionM
 		do: [ :anEdge | 
 			anEdge
 				addWardleyMapDecoratorModel: (aBlock value: GtWardleyMapRemoveProposition new) ].
+
+	aModel ensureAllProposition.
+
 	^ aModel
 ]
 
