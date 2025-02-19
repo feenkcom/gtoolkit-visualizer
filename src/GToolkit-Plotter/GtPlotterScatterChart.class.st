@@ -1,23 +1,7 @@
 Class {
 	#name : #GtPlotterScatterChart,
-	#superclass : #GtPlotterBuilder,
+	#superclass : #GtPlotterXYChart,
 	#instVars : [
-		'data',
-		'scaleX',
-		'scaleY',
-		'ticksX',
-		'ticksY',
-		'titleX',
-		'titleY',
-		'valueX',
-		'valueY',
-		'labelFormatX',
-		'labelFormatY',
-		'isAlreadyInitialized',
-		'minX',
-		'maxX',
-		'minY',
-		'maxY',
 		'dotElementStencil',
 		'valuesX',
 		'valuesY',
@@ -36,7 +20,7 @@ Class {
 
 { #category : #accessing }
 GtPlotterScatterChart >> axisXStencil [
-	^ axisXStencil
+	^ axisXStencil scatterChart: self
 ]
 
 { #category : #accessing }
@@ -46,7 +30,7 @@ GtPlotterScatterChart >> axisXStencil: aGtPlotterHorizontalTicksAndLabelStencil 
 
 { #category : #accessing }
 GtPlotterScatterChart >> axisYStencil [
-	^ axisYStencil
+	^ axisYStencil scatterChart: self
 ]
 
 { #category : #accessing }
@@ -94,11 +78,6 @@ GtPlotterScatterChart >> create [
 	self styleChartElement: aContainer.
 	
 	^ aContainer
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> data [
-	^ data
 ]
 
 { #category : #accessing }
@@ -268,66 +247,6 @@ GtPlotterScatterChart >> initializeScales [
 	
 ]
 
-{ #category : #accessing }
-GtPlotterScatterChart >> labelFormatX [
-	^ labelFormatX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> labelFormatX: anObject [
-	labelFormatX := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> labelFormatY [
-	^ labelFormatY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> labelFormatY: anObject [
-	labelFormatY := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> maxX [
-	^ maxX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> maxX: anObject [
-	maxX := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> maxY [
-	^ maxY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> maxY: anObject [
-	maxY := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> minX [
-	^ minX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> minX: anObject [
-	minX := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> minY [
-	^ minY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> minY: anObject [
-	minY := anObject
-]
-
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> newAxisXElement [
 	^ axisXStencil
@@ -425,91 +344,9 @@ GtPlotterScatterChart >> pointEventHandler: aGtPlotterScatterFocusPointHandler [
 	pointEventHandler scatterChart: self.
 ]
 
-{ #category : #accessing }
-GtPlotterScatterChart >> scaleX [
-	^ scaleX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> scaleX: anObject [
-	scaleX := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> scaleY [
-	^ scaleY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> scaleY: anObject [
-	scaleY := anObject
-]
-
 { #category : #'api - instantiation' }
 GtPlotterScatterChart >> scaledPoint: eachValue [
 	^ (scaleX map: (valueX value: eachValue)) @ (1 - (scaleY map: (valueY value: eachValue)))
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> ticksX [
-	^ ticksX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> ticksX: aNumber [
-	"Define number of axis ticks"
-	ticksX := aNumber
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> ticksY [
-	^ ticksY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> ticksY: aNumber [
-	"Define number of axis ticks"
-	ticksY := aNumber
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> titleX [
-	^ titleX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> titleX: aString [
-	titleX := aString
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> titleY [
-	^ titleY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> titleY: aString [
-	titleY := aString
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> valueX [
-	^ valueX
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> valueX: anObject [
-	valueX := anObject
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> valueY [
-	^ valueY
-]
-
-{ #category : #accessing }
-GtPlotterScatterChart >> valueY: anObject [
-	valueY := anObject
 ]
 
 { #category : #accessing }
@@ -557,8 +394,10 @@ GtPlotterScatterChart >> withProjectionAxis [
 
 { #category : #accessing }
 GtPlotterScatterChart >> withTicksAndLabelsAxis [
-	self axisYStencil: GtPlotterVerticalTicksAndLabelsAxisStencil new.
-	self axisXStencil: GtPlotterHorizontalTicksAndLabelsAxisStencil new.
+	self
+		axisYStencil: (GtPlotterVerticalTicksAndLabelsAxisStencil new scatterChart: self).
+	self
+		axisXStencil: (GtPlotterHorizontalTicksAndLabelsAxisStencil new scatterChart: self)
 ]
 
 { #category : #accessing }
