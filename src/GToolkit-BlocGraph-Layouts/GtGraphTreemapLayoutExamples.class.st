@@ -232,6 +232,56 @@ GtGraphTreemapLayoutExamples >> rectangleWithOriginalAsElementWithInformation [
 	^ aRectangle
 ]
 
+{ #category : #'as yet unclassified' }
+GtGraphTreemapLayoutExamples >> scriptedSquarifyStep3 [
+	<gtExample>
+	<noTest>
+	| scripter |
+	scripter := BlScripter new.
+	scripter element: (GtInspector createOn: self squarifyWithSevenNodes) maximized.
+	scripter click
+		label: 'Select the Steps  list view';
+		id: #bar index: 3;
+		play.
+	scripter click
+		label: 'Select the 3rd step';
+		id: GtPhlowColumnedListId;
+		id: #scrollable;
+		onChildAt: 3;
+		// GtPhlowCellElement;
+		@ 1;
+		play.
+	scripter doubleClick
+		label: 'Double-click on the step';
+		play.
+	^ scripter elementWithoutParent
+]
+
+{ #category : #'as yet unclassified' }
+GtGraphTreemapLayoutExamples >> scriptedSquarifyStep4 [
+	<gtExample>
+	<noTest>
+	| scripter |
+	scripter := BlScripter new.
+	scripter element: (GtInspector createOn: self squarifyWithSevenNodes) maximized.
+	scripter click
+		label: 'Select the Steps  list view';
+		id: #bar index: 3;
+		play.
+	scripter click
+		label: 'Select the 4th step';
+		id: GtPhlowColumnedListId;
+		id: #scrollable;
+		onChildAt: 4;
+		// GtPhlowCellElement;
+		@ 1;
+		play.
+	scripter doubleClick
+		label: 'Double-click on the step';
+		play.
+	^ scripter elementWithoutParent
+]
+
 { #category : #'examples - slice algorithm - code' }
 GtGraphTreemapLayoutExamples >> sliceHorizontal [
 	<gtExample>
