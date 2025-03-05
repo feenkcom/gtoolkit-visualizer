@@ -999,7 +999,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 	aScripter click
 		label: 'Select Node X proposed name';
 		onSpaceRoot;
-		/ BrAnchoredOuterContainer;
+		onDropdown: true;
 		// (GtWardleyMapRenameProposalId indexed: 1);
 		play.
 
