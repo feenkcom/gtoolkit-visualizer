@@ -2,8 +2,7 @@ Class {
 	#name : #GtWardleyMapDropdownAction,
 	#superclass : #GtWardleyMapAction,
 	#instVars : [
-		'content',
-		'preferredExtent'
+		'content'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
@@ -21,22 +20,16 @@ GtWardleyMapDropdownAction >> content: aBlock [
 { #category : #accessing }
 GtWardleyMapDropdownAction >> newButton: aButtonClass [
 	| anAptitude |
-	anAptitude := BrGlamorousWithDropdownAptitude
+	anAptitude := BrGlamorousWithExplicitDropdownAptitude
 			handle: [ (super newButton: aButtonClass)
 					in: [ :theHandle | 
 						theHandle aptitude - BrGlamorousButtonExteriorAptitude ];
 					margin: BlInsets empty ]
 			content: self content.
-	preferredExtent ifNotNil: [ anAptitude preferredExtent: preferredExtent ].
 	^ (super newButton: aButtonClass) addAptitude: anAptitude
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> preferredExtent [
-	^ preferredExtent
-]
-
-{ #category : #accessing }
 GtWardleyMapDropdownAction >> preferredExtent: anObject [
-	preferredExtent := anObject
+	"ignored, we use new dropdown implementation that does not need this workaround."
 ]
