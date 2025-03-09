@@ -146,7 +146,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 			aStep click
 				label: 'Click on add evolve';
 				onSpaceRoot;
-				// BrAnchoredElement;
+				onDropdown: true;
 				// (GtWardleyMapContextMenuItemId
 						definingMethod: GtWardleyMapNodeModel>>#menuItemNodeAddEvolveButton);
 				play.
@@ -435,7 +435,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_deleteNodeWithPipelin
 			aStep click
 				label: 'Click on delete node';
 				onSpaceRoot;
-				// BrAnchoredElement;
+				onDropdown: true;
 				// (GtWardleyMapContextMenuItemId
 						definingMethod: GtWardleyMapNodeModel >> #menuItemNodeDeleteButton);
 				play.

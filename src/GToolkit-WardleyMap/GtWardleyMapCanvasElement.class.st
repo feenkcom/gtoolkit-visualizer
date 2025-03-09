@@ -111,10 +111,7 @@ GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 				referenceElement: aToNodeElement
 				relatedTo: aFromNodeElement);
 		zIndex: self defaultEdgeElevationIndex;
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: 5 @ 5;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ GtWardleyMapEdgeEditorElement new
 						wardleyMapViewModel: self wardleyMapViewModel;
 						wardleyMapEdgeViewModel: anEdgeViewModel;
@@ -185,10 +182,7 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 			c graph beNode ];
 		in: [ :theElement |
 			GtWardleyMapUtility updateNodeElement: theElement nodeViewModel: anEvolveViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: anEvolveViewModel nodeSize / 2.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createEvolveEditorFor: anEvolveViewModel ])
 ]
 
@@ -238,10 +232,7 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 			c graph beNode ];
 		in: [ :theElement |
 			GtWardleyMapUtility updateNodeElement: theElement nodeViewModel: aNodeViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: aNodeViewModel nodeSize / 2.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createNodeEditorFor: aNodeViewModel ])
 ]
 
@@ -275,10 +266,7 @@ GtWardleyMapCanvasElement >> createNoteViewFor: aNoteViewModel [
 		zIndex: self defaultNoteElevationIndex;
 		in: [ :theElement |
 			GtWardleyMapUtility updateNoteElement: theElement noteViewModel: aNoteViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: 5.0 @ 5.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createNoteEditorFor: aNoteViewModel ]);
 		yourself
 ]
@@ -308,10 +296,7 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 			GtWardleyMapUtility
 				updatePipelineElement: theElement
 				nodeViewModel: aNodeViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: aNodeViewModel nodeSize / 2.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createNodeEditorFor: aNodeViewModel ])
 ]
 
@@ -392,14 +377,11 @@ GtWardleyMapCanvasElement >> initialize [
 { #category : #accessing }
 GtWardleyMapCanvasElement >> installContextMenu [
 	self
-		addAptitude: ((BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: 5 @ 5;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ GtWardleyMapEditorElement new
 						canvas: self;
 						wardleyMapViewModel: self wardleyMapViewModel;
-						requestFocus ]) preferredExtent: 120 @ 100.0)
+						requestFocus ])
 ]
 
 { #category : #initialization }
