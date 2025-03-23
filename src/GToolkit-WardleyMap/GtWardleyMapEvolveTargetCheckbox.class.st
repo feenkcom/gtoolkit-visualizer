@@ -35,7 +35,7 @@ GtWardleyMapEvolveTargetCheckbox >> initialize [
 
 	checkbox := BrCheckbox new
 			aptitude: BrGlamorousCheckboxAptitude
-					+ (BrGlamorousWithLabelTooltipAptitude new text: 'Toggle evolve target posibility');
+					+ (BrGlamorousWithExplicitTooltipAptitude text: 'Toggle evolve target posibility');
 			checked: false;
 			whenCheckedDo: [ :anEvent |  ];
 			whenUncheckedDo: [ :anEvent |  ];
@@ -44,9 +44,11 @@ GtWardleyMapEvolveTargetCheckbox >> initialize [
 	label := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 			text: 'evolve node'.
-			
+
 	disabledLabel := BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray; italic);
+			aptitude: (BrGlamorousLabelAptitude new
+					foreground: Color darkGray;
+					italic);
 			text: 'Cannot become an evolve node';
 			visibility: BlVisibility gone.
 

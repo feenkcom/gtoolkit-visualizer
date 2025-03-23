@@ -672,24 +672,23 @@ GtPlotterLineChartExamples >> plotWithDefaultProjections [
 GtPlotterLineChartExamples >> plotWithProjections [
 	<gtExample>
 	| lineChart |
-	
 	lineChart := self plot.
 	lineChart
 		projectionXValues: [ :aData | aData values select: [ :e | e value > 20 ] ];
 		projectionXLabelElement: [ :aGtPlotterScaleContext | 
-				BlTextElement new text: (
-					(aGtPlotterScaleContext originalValue value asRopedText, ' commits' asRopedText) 
+			BlTextElement new
+				text: (aGtPlotterScaleContext originalValue value asRopedText , ' commits' asRopedText
 						foreground: Color gray) ];
 		projectionXLabelStyle: [ :anElement :aGtPlotterScaleContext | 
-			anElement 
+			anElement
 				background: BlBackground transparent;
-				addAptitude: (BrGlamorousWithLabelTooltipAptitude new 
-					text: aGtPlotterScaleContext originalValue key asRopedText) ];
+				addAptitude: (BrGlamorousWithExplicitTooltipAptitude
+						text: aGtPlotterScaleContext originalValue key asRopedText) ];
 		projectionXLineStyle: [ :anElement :aGtPlotterScaleContext | 
-			anElement 
+			anElement
 				background: (aGtPlotterScaleContext originalValue value > 30
-					ifTrue: [ Color red ]
-					ifFalse: [ Color veryLightGray ]) ].
+						ifTrue: [ Color red ]
+						ifFalse: [ Color veryLightGray ]) ].
 
 	^ lineChart
 ]

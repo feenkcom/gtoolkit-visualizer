@@ -24,7 +24,7 @@ GtWardleyMapEvolveLabelVisibilityCheckbox >> initialize [
 
 	checkbox := BrCheckbox new
 			aptitude: BrGlamorousCheckboxAptitude
-					+ (BrGlamorousWithLabelTooltipAptitude new text: 'Toggle evolve label visibility');
+					+ (BrGlamorousWithExplicitTooltipAptitude text: 'Toggle evolve label visibility');
 			checked: false;
 			whenCheckedDo: [ :anEvent |  ];
 			whenUncheckedDo: [ :anEvent |  ];
@@ -33,7 +33,7 @@ GtWardleyMapEvolveLabelVisibilityCheckbox >> initialize [
 	label := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 			text: 'visible evolve label'.
-			
+
 	self addChild: checkbox.
 	self addChild: label.
 

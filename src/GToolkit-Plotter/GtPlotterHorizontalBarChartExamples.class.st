@@ -11,27 +11,32 @@ Class {
 GtPlotterHorizontalBarChartExamples >> brickDependenciesSizesBarChart [
 	<gtExample>
 	| projects packages theData maxLines aBarWidthScale barChart |
-	projects := BaselineOfBrick version withDeepCollect: [ :each | 
-				each projects collect: #version ] as: Set.
-	packages := projects collect: [:project | 
-		{project . project gtRPackages sumNumbers: #linesOfCode}].
+	projects := BaselineOfBrick version
+			withDeepCollect: [ :each | each projects collect: #version ]
+			as: Set.
+	packages := projects
+			collect: [ :project | 
+				{project.
+					project gtRPackages sumNumbers: #linesOfCode} ].
 	theData := GtPlotterDataGroup new values: packages.
-	theData := theData sorted: [ :a :b | (a last) > (b last) ].
+	theData := theData sorted: [ :a :b | a last > b last ].
 	theData := theData
-		labelled: [ :each | each first gtDisplayString gtRemovePrefix: 'BaselineOf' ].
+			labelled: [ :each | each first gtDisplayString gtRemovePrefix: 'BaselineOf' ].
 	theData := theData background: [ :each | Color blue alpha: 0.5 ].
 
-	maxLines := theData inject: 0 intoValues: [ :anAmount :eachValue | 
-		anAmount max: eachValue last ].
+	maxLines := theData
+			inject: 0
+			intoValues: [ :anAmount :eachValue | anAmount max: eachValue last ].
 	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: maxLines.
 
 	barChart := GtPlotterHorizontalBarChart new.
-	barChart barElement: [ :aGtPlotterContext | 
-		BlElement new
-			aptitude: ((BrGlamorousWithTooltipAptitude2 content: [
-			BrLabel new
-				text: (aGtPlotterContext originalValue second);
-				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ]) hideDelay: 0; showDelay: 0) ].
+	barChart
+		barElement: [ :aGtPlotterContext | 
+			BlElement new
+				aptitude: ((BrGlamorousWithExplicitTooltipAptitude
+						text: aGtPlotterContext originalValue second)
+						hideDelay: 0;
+						showDelay: 0) ].
 	barChart barLabelSpacing: 160.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue last ].
@@ -166,29 +171,42 @@ GtPlotterHorizontalBarChartExamples >> sequoiaSearchResults [
 GtPlotterHorizontalBarChartExamples >> sequoiaSearchResultsGroupedByGenus [
 	<gtExample>
 	| theData barChart aMaxPages aBarWidthScale |
-		
 	theData := GtPlotterDataGroup new values: self sequoias.
-	
+
 	theData := theData sorted: [ :a :b | (a at: #pages) > (b at: #pages) ].
-	
+
 	theData := theData
-		groupedBy: [ :each | each at: #genus ]
-		sorted: [ :a :b | a < b ]
-		labelled: [ :eachGenus | eachGenus ].
+			groupedBy: [ :each | each at: #genus ]
+			sorted: [ :a :b | a < b ]
+			labelled: [ :eachGenus | eachGenus ].
 
-	theData := theData background: [ :each | (each at: #extinct)
-		ifTrue: [ Color r: 216 g: 55 b: 62 range: 255 ]
-		ifFalse: [ Color r: 66 g: 188 b: 238 range: 255 ] ].
+	theData := theData
+			background: [ :each | 
+				(each at: #extinct)
+					ifTrue: [ Color
+							r: 216
+							g: 55
+							b: 62
+							range: 255 ]
+					ifFalse: [ Color
+							r: 66
+							g: 188
+							b: 238
+							range: 255 ] ].
 
-	aMaxPages := theData inject: 0 intoValues: [ :anAmount :eachValue | anAmount max: (eachValue at: #pages) ].
+	aMaxPages := theData
+			inject: 0
+			intoValues: [ :anAmount :eachValue | anAmount max: (eachValue at: #pages) ].
 	aBarWidthScale := GtPlotterLinearScale new domainFrom: 0 to: aMaxPages.
 
 	barChart := GtPlotterHorizontalBarChart new.
-	barChart barElement: [ :aGtPlotterContext | BlElement new
-		aptitude: ((BrGlamorousWithTooltipAptitude2 content: [
-			BrLabel new
-				text: (aGtPlotterContext originalValue at: #species);
-				aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 5)) ]) hideDelay: 0; showDelay: 0) ].
+	barChart
+		barElement: [ :aGtPlotterContext | 
+			BlElement new
+				aptitude: ((BrGlamorousWithExplicitTooltipAptitude
+						text: (aGtPlotterContext originalValue at: #species))
+						hideDelay: 0;
+						showDelay: 0) ].
 	barChart barLabelSpacing: 125.
 	barChart barWidthScale: aBarWidthScale.
 	barChart barWidthData: [ :eachValue | eachValue at: #pages ].

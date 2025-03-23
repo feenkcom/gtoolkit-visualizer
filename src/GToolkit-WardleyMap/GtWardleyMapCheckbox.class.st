@@ -44,7 +44,7 @@ GtWardleyMapCheckbox >> initialize [
 
 	checkbox := BrCheckbox new
 			aptitude: BrGlamorousCheckboxAptitude
-					+ (tooltipAptitude := BrGlamorousWithLabelTooltipAptitude new text: 'Toggle');
+					+ (tooltipAptitude := BrGlamorousWithExplicitTooltipAptitude text: 'Toggle');
 			checked: false;
 			whenCheckedDo: [ :anEvent |  ];
 			whenUncheckedDo: [ :anEvent |  ];
@@ -53,9 +53,11 @@ GtWardleyMapCheckbox >> initialize [
 	enabledLabel := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
 			text: ''.
-			
+
 	disabledLabel := BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray; italic);
+			aptitude: (BrGlamorousLabelAptitude new
+					foreground: Color darkGray;
+					italic);
 			text: 'disabled';
 			visibility: BlVisibility gone.
 
