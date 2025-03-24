@@ -49,10 +49,8 @@ GtPlotterVerticalBarChartExamples >> brickDependenciesSizesBarChart [
 	barChart
 		barElement: [ :aGtPlotterContext | 
 			BlElement new
-				aptitude: (BrGlamorousWithTooltipAptitude
-						content: [ BrLabel new
-								text: aGtPlotterContext originalValue second;
-								aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ]) ].
+				aptitude: (BrGlamorousWithExplicitTooltipAptitude
+						text: aGtPlotterContext originalValue second) ].
 	barChart barLabelSpacing: 100.
 	barChart barHeightScale: aBarScale.
 	barChart barWidthScale constant: 50.
@@ -80,10 +78,8 @@ GtPlotterVerticalBarChartExamples >> coloredBarChart [
 	chart
 		barElement: [ :aGtPlotterContext | 
 			BlElement new
-				aptitude: (BrGlamorousWithTooltipAptitude
-						content: [ BrLabel new
-								text: aGtPlotterContext originalValue value;
-								aptitude: (BrGlamorousLabelAptitude new padding: (BlInsets all: 1)) ]) ].
+				aptitude: (BrGlamorousWithExplicitTooltipAptitude
+						text: aGtPlotterContext originalValue value) ].
 	chart barHeightScale: scale.
 	chart barWidthScale constant: 10.
 	chart barHeightData: [ :eachValue | eachValue value ].

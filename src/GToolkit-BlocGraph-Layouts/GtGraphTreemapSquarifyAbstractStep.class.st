@@ -43,7 +43,7 @@ GtGraphTreemapSquarifyAbstractStep >> gtAllStepsFor: aView [
 						size: 8@8; 
 						background: BrGlamorousColors primaryBorderColor; 
 						geometry: BlCircleGeometry new;
-						aptitude: (BrGlamorousWithLabelTooltipAptitude text: 'This step') ] 
+						aptitude: (BrGlamorousWithExplicitTooltipAptitude text: 'This step') ] 
 					ifFalse: [ BlElement new size: 0 @ 0 ] ]
 			width: 16;
 		column: 'Success' text: [ :aStep | aStep  successName ] width: 80;
