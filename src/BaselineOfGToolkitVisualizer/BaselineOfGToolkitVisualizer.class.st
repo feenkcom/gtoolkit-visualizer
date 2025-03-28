@@ -47,7 +47,7 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 				spec repository: 'github://feenkcom/pharo-beacon:81761d016958d6f20497371ff2564b966b0dc272/repository' ].
 		spec
 			baseline: 'GToolkit4SmaCC' with: [
-				spec repository: 'github://feenkcom/gt4smacc:v0.8.380/src' ].
+				spec repository: 'github://feenkcom/gt4smacc:v0.8.381/src' ].
 		spec
 			baseline: 'GToolkitAnnouncerUtility' with: [
 				spec repository: 'github://feenkcom/gtoolkit-utility:v0.8.362/src' ].
