@@ -1,20 +1,19 @@
 Class {
 	#name : #GtPlotterBuilderExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Example - Builders'
+	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
 { #category : #'example - website visits' }
 GtPlotterBuilderExamples >> sequoias [
 	<gtExample>
-	
-	^ self sequoiasRaw collect: [ :each |
-		{ 
-			#species -> each first.
-			#genus -> each second.
-			#extinct -> each third not.
-			#pages -> each fourth
-		} asDictionary ]
+	<return: #Array>
+	^ self sequoiasRaw
+		collect: [ :each | 
+			{#species -> each first.
+				#genus -> each second.
+				#extinct -> each third not.
+				#pages -> each fourth} asDictionary ]
 ]
 
 { #category : #'example - website visits' }
@@ -38,13 +37,12 @@ GtPlotterBuilderExamples >> sequoiasRaw [
 { #category : #'example - website visits' }
 GtPlotterBuilderExamples >> websiteVisits [
 	<gtExample>
-
-	^ self websiteVisitsRaw collect: [ :each |
-		{ 
-			#domain -> each first.
-			#duration -> each second.
-			#frequency -> each third
-		} asDictionary ]
+	<return: #Array>
+	^ self websiteVisitsRaw
+		collect: [ :each | 
+			{#domain -> each first.
+				#duration -> each second.
+				#frequency -> each third} asDictionary ]
 ]
 
 { #category : #'example - website visits' }

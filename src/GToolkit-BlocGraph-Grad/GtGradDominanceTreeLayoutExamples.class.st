@@ -32,15 +32,19 @@ Class {
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith4NodeCycle [
 	<gtExample>
-
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 4
-		pairs: { (1->2). (2->3). (3->4). (4->1) }
+		pairs: {1 -> 2.
+				2 -> 3.
+				3 -> 4.
+				4 -> 1}
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith4NodeCycleAndSeparateSubtree [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 6
 		pairs: {1 -> 2.
@@ -53,48 +57,69 @@ GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith4NodeCycleAndSepa
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWith5Nodes [
 	<gtExample>
-
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 5
-		pairs: { (1->2). (1->3). (3->4). (4->5). (2->5) }
+		pairs: {1 -> 2.
+				1 -> 3.
+				3 -> 4.
+				4 -> 5.
+				2 -> 5}
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith8Nodes [
 	<gtExample>
-
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 8
-		pairs: {
-			(1->2). (1->3).
-			(3->4). (4->5).
-			(2->6). (2->5).
-			(5->6). (6->7).
-			(7->8). (4->8) }
+		pairs: {1 -> 2.
+				1 -> 3.
+				3 -> 4.
+				4 -> 5.
+				2 -> 6.
+				2 -> 5.
+				5 -> 6.
+				6 -> 7.
+				7 -> 8.
+				4 -> 8}
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith9Nodes [
 	<gtExample>
-	
-	^  self
+	<return: #BlLayoutParentNodeWithEdges>
+	^ self
 		createGraph: 9
-		pairs: {
-			(1->2). (1->3).
-			(2->4). (2->7). (2->9).
-			(3->5). (5->6). (6->7). (7->8). (9->8) }
+		pairs: {1 -> 2.
+				1 -> 3.
+				2 -> 4.
+				2 -> 7.
+				2 -> 9.
+				3 -> 5.
+				5 -> 6.
+				6 -> 7.
+				7 -> 8.
+				9 -> 8}
 ]
 
 { #category : #'example - instance creation' }
 GtGradDominanceTreeLayoutExamples >> constructDominanceTreeWithMultiplePathsToANodesWith9NodesAndACycle [
 	<gtExample>
-	
-	^  self
+	<return: #BlLayoutParentNodeWithEdges>
+	^ self
 		createGraph: 9
-		pairs: {
-			(1->2). (1->3).
-			(2->4). (2->7). (2->9).
-			(3->5). (5->6). (6->7). (7->8). (7->2). (9->8) }
+		pairs: {1 -> 2.
+				1 -> 3.
+				2 -> 4.
+				2 -> 7.
+				2 -> 9.
+				3 -> 5.
+				5 -> 6.
+				6 -> 7.
+				7 -> 8.
+				7 -> 2.
+				9 -> 8}
 ]
 
 { #category : #'example - instance creation' }
