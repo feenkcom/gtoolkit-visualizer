@@ -9,14 +9,13 @@ Class {
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self
 			scripterWithModel: [ GtWardleyMapModelExamples new newMapWithPipelineInnerNodes ]
 			element: [ :aModel | 
 				GtWardleyMapCanvasElement new
-					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aModel) ].	
-					
-	"Ensure an extent to compute exact node positions, dragging, etc."
+					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aModel) ].	"Ensure an extent to compute exact node positions, dragging, etc."
 	aScripter
 		doStep: [ :s | 
 			s
@@ -30,41 +29,47 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes [
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addAndHoverInnerEdge [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter anEdgeName |
 	aScripter := self pipelineWithInnerNodes.
 
 	anEdgeName := 'Edge D->E'.
-	
+
 	aScripter do
 		label: 'Add Edge D->E';
 		block: [ :aMap | 
 			| aNodeD aNodeE anEdgeDE |
-			aNodeD := aMap nodeWithName: 'Node D' ifFound: [ :each | each ] ifNone: [ nil ].
-			aNodeE := aMap nodeWithName: 'Node E' ifFound: [ :each | each ] ifNone: [ nil ].
+			aNodeD := aMap
+					nodeWithName: 'Node D'
+					ifFound: [ :each | each ]
+					ifNone: [ nil ].
+			aNodeE := aMap
+					nodeWithName: 'Node E'
+					ifFound: [ :each | each ]
+					ifNone: [ nil ].
 			anEdgeDE := GtWardleyMapEdgeModel new
-				label: 'Edge D->E';
-				fromNode: aNodeD;
-				toNode: aNodeE;
-				width: 2.
+					label: 'Edge D->E';
+					fromNode: aNodeD;
+					toNode: aNodeE;
+					width: 2.
 			aMap addEdge: anEdgeDE ];
 		onModel;
 		play.
-		
-	aScripter 
+
+	aScripter
 		substeps: 'Edge D->E hovering'
 		do: [ :aStep | 
 			aStep mouseMoveOver
 				label: 'Hover Edge D->E';
 				// (#edge asBlocElementId indexed: 10);
 				play.
-				
+
 			aStep assert
 				label: 'Assert Edge D->E is hovered';
 				value: [ :aNodeElement | aNodeElement border ]
 					equals: [ BlBorder paint: GtWardleyMapConstants hoverColor width: 2 ];
 				// (#edge asBlocElementId indexed: 10);
-				play
-		].
+				play ].
 
 
 	^ aScripter
@@ -73,10 +78,11 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addAndHoverInnerEdge 
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEdgeFC [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter anEdgeCount |
 	aScripter := self pipelineWithInnerNodes.
 
-	aScripter 
+	aScripter
 		substeps: 'Add Edge D->E primary dragging between nodes'
 		do: [ :aStep | 
 			aStep do
@@ -84,10 +90,10 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEdgeFC [
 				block: [ :aMap | anEdgeCount := aMap edges size ];
 				onModel;
 				play.
-		
-			aStep mouseMoveOver 
+
+			aStep mouseMoveOver
 				label: 'Mouse over Node D';
-				// (#node asBlocElementId indexed: 5); 
+				// (#node asBlocElementId indexed: 5);
 				play.
 			aStep mouseDown
 				modifiers: BlKeyModifiers primary;
@@ -95,25 +101,24 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEdgeFC [
 			aStep mouseMoveOver
 				label: 'Move mouse to Node E';
 				modifiers: BlKeyModifiers primary;
-				// (#node asBlocElementId indexed: 2); 
+				// (#node asBlocElementId indexed: 2);
 				play.
 			aStep mouseUp
 				modifiers: BlKeyModifiers primary;
 				play.
-			
+
 			aStep assert
 				label: 'Assert edge count + 1';
 				value: [ :aMap | aMap edges size ] equals: [ anEdgeCount + 1 ];
 				onModel;
 				play.
-				
+
 			aStep assert
 				label: 'Assert Node F is not highlighted';
 				value: [ :aNodeElement | (aNodeElement childNamed: #node) background ]
-					equals: [ :aNodeElement | (aNodeElement wardleyMapNodeViewModel nodeColor) asBlBackground ];
+					equals: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel nodeColor asBlBackground ];
 				// (#node asBlocElementId indexed: 5);
-				play
-			 ].
+				play ].
 
 
 	^ aScripter
@@ -122,6 +127,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEdgeFC [
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes.
 
@@ -129,15 +135,17 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 		substeps: 'Add Node A evolve'
 		do: [ :aStep | 
 			| aNodeElementsCount aPipelineElementCount anEvolveElementCount anEdgeCount |
-			aStep do 
+			aStep do
 				label: 'Count canvas elements';
-				block: [ :aCanvas |
+				block: [ :aCanvas | 
 					aNodeElementsCount := (aCanvas query / GtWardleyMapNodeElement) all size.
-					aPipelineElementCount := (aCanvas query / GtWardleyMapPipelineElement) all size.
-					anEvolveElementCount := (aCanvas query / GtWardleyMapEvolveElement) all size.
-					anEdgeCount := (aCanvas query / GtWardleyMapEdgeElement) all size.  ];
+					aPipelineElementCount := (aCanvas query / GtWardleyMapPipelineElement) all
+							size.
+					anEvolveElementCount := (aCanvas query / GtWardleyMapEvolveElement) all
+							size.
+					anEdgeCount := (aCanvas query / GtWardleyMapEdgeElement) all size ];
 				play.
-		
+
 			aStep secondaryClick
 				label: 'Open context menu';
 				id: (#node asBlocElementId indexed: 0);
@@ -148,33 +156,32 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 				onSpaceRoot;
 				onDropdown: true;
 				// (GtWardleyMapContextMenuItemId
-						definingMethod: GtWardleyMapNodeModel>>#menuItemNodeAddEvolveButton);
+						definingMethod: GtWardleyMapNodeModel >> #menuItemNodeAddEvolveButton);
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert node elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapNodeElement) all size ]
 					equals: aNodeElementsCount;
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert pipeline elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapPipelineElement) all size ]
 					equals: aPipelineElementCount;
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert evolve elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapEvolveElement) all size ]
 					equals: anEvolveElementCount + 1;
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert edge elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapEdgeElement) all size ]
 					equals: anEdgeCount + 1;
-				play
-		].
+				play ].
 
 
 	^ aScripter
@@ -183,6 +190,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addEvolve [
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes.
 
@@ -192,13 +200,13 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 			aStep doubleClick
 				label: 'Double click to add new node';
 				play.
-		
+
 			aStep assert
 				label: 'Assert new node is added';
 				exists;
 				// (#node asBlocElementId indexed: 10);
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label edit mode';
 				satisfies: [ :anEditorLabel | anEditorLabel isEditable ]
@@ -206,7 +214,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label text selection';
 				value: [ :anEditorLabel | anEditorLabel selection indices ]
@@ -214,7 +222,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label cursor is visible';
 				satisfies: [ :aCursorElement | aCursorElement visibility isVisible ]
@@ -223,7 +231,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode [
 				// GtWardleyMapNodeLabelId;
 				// BrCursorElement;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label focus';
 				satisfies: [ :anEditorLabel | anEditorLabel isFocused ]
@@ -241,21 +249,20 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCan
 	and its hide cursor."
 
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes_addNewNode.
-				
+
 	aScripter
 		substeps: 'Type node label and click outside'
 		do: [ :aStep | 
-				
 			aStep type
 				label: 'Type new node label';
 				text: 'Node Z';
 				play.
-				
-			aStep click
-				play.
-				
+
+			aStep click play.
+
 			aStep assert
 				label: 'Assert node label focus';
 				satisfies: [ :anEditorLabel | anEditorLabel isFocused not ]
@@ -263,7 +270,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCan
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label read-only mode';
 				satisfies: [ :anEditorLabel | anEditorLabel isReadOnly ]
@@ -271,7 +278,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCan
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label cursor is not visible';
 				satisfies: [ :aCursorElement | aCursorElement visibility isVisible not ]
@@ -280,13 +287,13 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCan
 				// GtWardleyMapNodeLabelId;
 				// BrCursorElement;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node model label is set';
 				value: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel label ]
 					equals: 'Node Z';
 				// (#node asBlocElementId indexed: 10);
-				play. ].
+				play ].
 
 	^ aScripter
 ]
@@ -294,22 +301,22 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_clickOnCan
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes_addNewNode.
-				
+
 	aScripter
 		substeps: 'Type new node label'
 		do: [ :aStep | 
-				
 			aStep type
 				label: 'Type new node label';
 				text: 'Node Z';
 				play.
-				
+
 			aStep keyPress
 				key: BlKeyboardKey return;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label read-only mode';
 				satisfies: [ :anEditorLabel | anEditorLabel isReadOnly ]
@@ -317,7 +324,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel 
 				// (#node asBlocElementId indexed: 10);
 				// GtWardleyMapNodeLabelId;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node label cursor is not visible';
 				satisfies: [ :aCursorElement | aCursorElement visibility isVisible not ]
@@ -326,15 +333,13 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel 
 				// GtWardleyMapNodeLabelId;
 				// BrCursorElement;
 				play.
-				
+
 			aStep assert
 				label: 'Assert node model label is set';
 				value: [ :aNodeElement | aNodeElement wardleyMapNodeViewModel label ]
 					equals: 'Node Z';
 				// (#node asBlocElementId indexed: 10);
-				play.
-
-	].
+				play ].
 
 	^ aScripter
 ]
@@ -342,6 +347,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_addNewNode_typeLabel 
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_assertInitialWidgetPositions [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes.
 
@@ -411,6 +417,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_assertInitialWidgetPo
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_deleteNodeWithPipelineAndEvolve [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes_addEvolve.
 
@@ -418,15 +425,17 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_deleteNodeWithPipelin
 		substeps: 'Delete Node A'
 		do: [ :aStep | 
 			| aNodeElementsCount aPipelineElementCount anEvolveElementCount anEdgeCount |
-			aStep do 
+			aStep do
 				label: 'Count canvas elements';
-				block: [ :aCanvas |
+				block: [ :aCanvas | 
 					aNodeElementsCount := (aCanvas query / GtWardleyMapNodeElement) all size.
-					aPipelineElementCount := (aCanvas query / GtWardleyMapPipelineElement) all size.
-					anEvolveElementCount := (aCanvas query / GtWardleyMapEvolveElement) all size.
-					anEdgeCount := (aCanvas query / GtWardleyMapEdgeElement) all size.  ];
+					aPipelineElementCount := (aCanvas query / GtWardleyMapPipelineElement) all
+							size.
+					anEvolveElementCount := (aCanvas query / GtWardleyMapEvolveElement) all
+							size.
+					anEdgeCount := (aCanvas query / GtWardleyMapEdgeElement) all size ];
 				play.
-		
+
 			aStep secondaryClick
 				label: 'Open context menu';
 				id: (#node asBlocElementId indexed: 0);
@@ -439,31 +448,30 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_deleteNodeWithPipelin
 				// (GtWardleyMapContextMenuItemId
 						definingMethod: GtWardleyMapNodeModel >> #menuItemNodeDeleteButton);
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert node elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapNodeElement) all size ]
 					equals: aNodeElementsCount - 1;
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert pipeline elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapPipelineElement) all size ]
 					equals: aPipelineElementCount - 1;
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert evolve elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapEvolveElement) all size ]
 					equals: anEvolveElementCount - 1;
 				play.
-				
-			aStep assert 
+
+			aStep assert
 				label: 'Assert edge elements count';
 				value: [ :aCanvas | (aCanvas query / GtWardleyMapEdgeElement) all size ]
 					equals: anEdgeCount - 2;
-				play
-		].
+				play ].
 
 
 	^ aScripter
@@ -472,6 +480,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_deleteNodeWithPipelin
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_mouseOverLabelA [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes.
 
@@ -514,6 +523,7 @@ GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_mouseOverLabelA [
 { #category : #'examples - ui' }
 GtWardleyMapWithScripterExamples >> pipelineWithInnerNodes_mouseOverNodeA [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self pipelineWithInnerNodes.
 

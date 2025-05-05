@@ -99,9 +99,10 @@ GtWardleyMapDecoratorWithScripterExamples >> collectWardleyAnnouncements: aScrip
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodes [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self
-			scripterWithModel: [ GtWardleyMapDecoratorExamples new mapWithNodes]
+			scripterWithModel: [ GtWardleyMapDecoratorExamples new mapWithNodes ]
 			element: [ :aMap | 
 				GtWardleyMapElement new
 					wardleyMapViewModel: (GtWardleyMapViewModel new wardleyMapModel: aMap) ].
@@ -112,6 +113,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodes [
 { #category : #'examples - highlights' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName anEdgeName |
 	aScripter := self mapWithNodes.
 
@@ -122,10 +124,15 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights [
 		block: [ :aMapElement | 
 			| aMap aNodeA |
 			aMap := aMapElement wardleyMapViewModel wardleyMapModel.
-			aNodeA := aMap nodeWithName: aNodeName ifFound: [ :aNode | aNode ] ifNone: [ nil ].
+			aNodeA := aMap
+					nodeWithName: aNodeName
+					ifFound: [ :aNode | aNode ]
+					ifNone: [ nil ].
 			aMapElement wardleyMapViewModel
 				nodeViewModelFor: aNodeA
-				ifFound: [ :theNode | theNode addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
+				ifFound: [ :theNode | 
+					theNode
+						addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
 				ifNone: [ AssertionFailure signal: 'Node A not found' ] ];
 		play.
 
@@ -135,18 +142,23 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights [
 		// GtWardleyMapNodePropositionElement;
 		@ [ :anElement | anElement wardleyMapNodeViewModel label = aNodeName ];
 		play.
-		
+
 	anEdgeName := 'Edge A->B'.
-		
+
 	aScripter do
 		label: 'Add Edge A->B highlight';
 		block: [ :aMapElement | 
 			| aMap anEdgeAB |
 			aMap := aMapElement wardleyMapViewModel wardleyMapModel.
-			anEdgeAB := aMap edgeWithName: anEdgeName ifFound: [ :anEdge | anEdge ] ifNone: [ nil ].
+			anEdgeAB := aMap
+					edgeWithName: anEdgeName
+					ifFound: [ :anEdge | anEdge ]
+					ifNone: [ nil ].
 			aMapElement wardleyMapViewModel
 				edgeViewModelFor: anEdgeAB
-				ifFound: [ :theEdge | theEdge addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
+				ifFound: [ :theEdge | 
+					theEdge
+						addWardleyMapDecoratorViewModel: GtWardleyMapHighlight new asDecoratorViewModel ]
 				ifNone: [ AssertionFailure signal: 'Edge A->B not found' ] ];
 		play.
 
@@ -163,42 +175,44 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights [
 { #category : #'examples - highlights' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddHighlights_DeleteNodeA [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName anEdgeName |
 	aScripter := self mapWithNodesAddHighlights.
 
 	aNodeName := 'Node A'.
 	anEdgeName := 'Edge A->B'.
-	
+
 	aScripter do
 		label: 'Delete Node A';
 		block: [ :aMap | 
-			aMap 
-				nodeWithName: aNodeName 
-				ifFound: [ :aNode | aMap removeNode: aNode ] 
+			aMap
+				nodeWithName: aNodeName
+				ifFound: [ :aNode | aMap removeNode: aNode ]
 				ifNone: [ AssertionFailure signal: 'Node A not found' ] ];
 		onModel;
 		play.
-		
+
 	aScripter assert
 		label: 'Assert Node A highlight element does not exist';
 		notExists;
 		// GtWardleyMapNodePropositionElement;
 		@ [ :anElement | anElement wardleyMapNodeViewModel label = aNodeName ];
 		play.
-		
+
 	aScripter assert
 		label: 'Assert Edge A->B highlight element does not exist';
 		notExists;
 		// GtWardleyMapEdgePropositionElement;
 		@ [ :anElement | anElement wardleyMapEdgeViewModel label = anEdgeName ];
 		play.
-	
+
 	^ aScripter
 ]
 
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddNodeDWithAddProposition [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName aNodeD anEdgeCD aNodeC anEdgeCDName |
 	aScripter := self
 			scripterWithModel: [ GtWardleyMapDecoratorExamples new mapWithNodes ]
@@ -252,7 +266,10 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddNodeDWithAddProposit
 				/ GtWardleyMapAddRejectId;
 				play ].
 
-	aNodeC := aScripter model nodeWithName: 'Node C' ifFound: [ :aNode | aNode ] ifNone: [ nil ].
+	aNodeC := aScripter model
+			nodeWithName: 'Node C'
+			ifFound: [ :aNode | aNode ]
+			ifNone: [ nil ].
 
 	anEdgeCDName := 'Edge C->D'.
 	anEdgeCD := GtWardleyMapEdgeModel new
@@ -298,13 +315,14 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddNodeDWithAddProposit
 						and: [ anElement wardleyMapEdgeViewModel label = anEdgeCDName ] ];
 				// GtWardleyMapAddRejectId;
 				play ].
-		
+
 	^ aScripter
 ]
 
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddPropositions [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self
 			scripterWithModel: [ GtWardleyMapDecoratorExamples new mapWithNodes ]
@@ -362,6 +380,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithNodesAddPropositions [
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self
 			scripterWithModel: [ GtWardleyMapDecoratorExamples new mapWithProposedModifications ]
@@ -449,7 +468,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 				// GtWardleyCenterRightOuterDecoratorId;
 				/ GtWardleyMapRenameRejectId;
 				play ].
-				
+
 	aScripter
 		substeps: 'Assert Node C proposition elements'
 		do: [ :aStep | 
@@ -483,7 +502,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 				// GtWardleyCenterRightOuterDecoratorId;
 				/ GtWardleyMapRemoveRejectId;
 				play ].
-				
+
 	aScripter
 		substeps: 'Assert Edge A->B proposition elements'
 		do: [ :aStep | 
@@ -515,7 +534,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 						and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
 				// GtWardleyMapAddRejectId;
 				play ].
-				
+
 	aScripter
 		substeps: 'Assert Edge A->C proposition elements'
 		do: [ :aStep | 
@@ -547,10 +566,8 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 						and: [ anElement wardleyMapEdgeViewModel label = anEdgeName ] ];
 				// GtWardleyMapRemoveRejectId;
 				play ].
-	
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 5.
+
+	self assertScripter: aScripter allPropositionElementCounter: 5.
 
 	^ aScripter
 ]
@@ -558,6 +575,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications [
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAccept [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications.
 
@@ -569,14 +587,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAcc
 
 	aScripter assert
 		label: 'Assert model edge and nodes';
-		satisfies: [ :aModel | 
-			aModel edges size = 1 and: [ aModel nodes size = 2 ] ];
+		satisfies: [ :aModel | aModel edges size = 1 and: [ aModel nodes size = 2 ] ];
 		onModel;
 		play.
 
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 0.
+	self assertScripter: aScripter allPropositionElementCounter: 0.
 
 	^ aScripter
 ]
@@ -584,25 +599,34 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAcc
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAccept_AddEdgeABRemoveProposition [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications_AllAccept.
 	self collectWardleyAnnouncements: aScripter.
-	
+
 	aScripter do
 		label: 'Add Edge A->B remove proposition';
-		block: [ :aMap |
+		block: [ :aMap | 
 			| aNodeA aNodeB anEdgeAB aRemoveAB |
-			aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :theNode | theNode] ifNone: [ nil ].
-			aNodeB := aMap nodeWithName: 'Node B' ifFound: [ :theNode | theNode] ifNone: [ nil ].
-			anEdgeAB := aMap edgeFromNode: aNodeA toNode: aNodeB ifFound: [ :theEdge | theEdge ] ifNone: [ nil ].
+			aNodeA := aMap
+					nodeWithName: 'Node A'
+					ifFound: [ :theNode | theNode ]
+					ifNone: [ nil ].
+			aNodeB := aMap
+					nodeWithName: 'Node B'
+					ifFound: [ :theNode | theNode ]
+					ifNone: [ nil ].
+			anEdgeAB := aMap
+					edgeFromNode: aNodeA
+					toNode: aNodeB
+					ifFound: [ :theEdge | theEdge ]
+					ifNone: [ nil ].
 			aRemoveAB := GtWardleyMapRemoveProposition new.
 			anEdgeAB addWardleyMapDecoratorModel: aRemoveAB ];
 		onModel;
 		play.
 
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 1.
+	self assertScripter: aScripter allPropositionElementCounter: 1.
 
 	^ aScripter
 ]
@@ -610,24 +634,28 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAcc
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAccept_AddNodeARenameProposition [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications_AllAccept.
 	self collectWardleyAnnouncements: aScripter.
-	
+
 	aScripter do
 		label: 'Add rename Node A proposition';
-		block: [ :aMap |
+		block: [ :aMap | 
 			| aNodeA aRenameA |
-			aNodeA := aMap nodeWithName: 'Node A' ifFound: [ :theNode | theNode] ifNone: [ nil ].
+			aNodeA := aMap
+					nodeWithName: 'Node A'
+					ifFound: [ :theNode | theNode ]
+					ifNone: [ nil ].
 			aRenameA := GtWardleyMapRenameProposition new
-			options: {'Node X'. 'Node Y'. 'Node Z'}.
+					options: {'Node X'.
+							'Node Y'.
+							'Node Z'}.
 			aNodeA addWardleyMapDecoratorModel: aRenameA ];
 		onModel;
 		play.
 
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 1.
+	self assertScripter: aScripter allPropositionElementCounter: 1.
 
 	^ aScripter
 ]
@@ -635,6 +663,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllAcc
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllReject [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications.
 
@@ -646,14 +675,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllRej
 
 	aScripter assert
 		label: 'Assert model edge and nodes';
-		satisfies: [ :aModel | 
-			aModel edges size = 0 and: [ aModel nodes size = 2 ] ];
+		satisfies: [ :aModel | aModel edges size = 0 and: [ aModel nodes size = 2 ] ];
 		onModel;
 		play.
 
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 0.
+	self assertScripter: aScripter allPropositionElementCounter: 0.
 
 	^ aScripter
 ]
@@ -661,19 +687,17 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_AllRej
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_DeleteAllNodes [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications.
 
 	aScripter do
 		label: 'Delete all nodes';
-		block: [ :aMap | 
-			aMap nodes copy do: [ :aNode | aMap removeNode: aNode ] ];
+		block: [ :aMap | aMap nodes copy do: [ :aNode | aMap removeNode: aNode ] ];
 		onModel;
 		play.
-	
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 0.
+
+	self assertScripter: aScripter allPropositionElementCounter: 0.
 
 	^ aScripter
 ]
@@ -681,14 +705,15 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_Delete
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_DeleteAllNodes_AddNodeAWithAddProposition [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications_DeleteAllNodes.
 
 	self collectWardleyAnnouncements: aScripter.
-	
+
 	aScripter do
 		label: 'Add Node A add proposition';
-		block: [ :aMap |
+		block: [ :aMap | 
 			| aNodeA anAddA |
 			aNodeA := GtWardleyMapNodeModel new label: 'Node A'.
 			anAddA := GtWardleyMapAddProposition new.
@@ -696,10 +721,8 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_Delete
 			aMap addNode: aNodeA ];
 		onModel;
 		play.
-	
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 1.
+
+	self assertScripter: aScripter allPropositionElementCounter: 1.
 
 	^ aScripter
 ]
@@ -707,22 +730,21 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_Delete
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_DeleteEdgeAB [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications.
 
 	aScripter do
 		label: 'Delete Edge A->B';
 		block: [ :aMap | 
-			aMap 
-				edgeWithName: 'Edge A->B' 
-				ifFound: [ :anEdge | aMap removeEdge: anEdge ] 
+			aMap
+				edgeWithName: 'Edge A->B'
+				ifFound: [ :anEdge | aMap removeEdge: anEdge ]
 				ifNone: [ AssertionFailure signal: 'Edge A->B not found' ] ];
 		onModel;
 		play.
-	
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -730,22 +752,21 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_Delete
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_DeleteNodeA [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self mapWithProposedModifications.
 
 	aScripter do
 		label: 'Delete Node A';
 		block: [ :aMap | 
-			aMap 
-				nodeWithName: 'Node A' 
-				ifFound: [ :aNode | aMap removeNode: aNode ] 
+			aMap
+				nodeWithName: 'Node A'
+				ifFound: [ :aNode | aMap removeNode: aNode ]
 				ifNone: [ AssertionFailure signal: 'Node A not found' ] ];
 		onModel;
 		play.
-	
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 2.
+
+	self assertScripter: aScripter allPropositionElementCounter: 2.
 
 	^ aScripter
 ]
@@ -753,11 +774,12 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_Delete
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeABAccept [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter anEdgeName |
 	aScripter := self mapWithProposedModifications.
 	anEdgeName := 'Edge A->B'.
 	self collectWardleyAnnouncements: aScripter.
-	
+
 	aScripter click
 		label: 'Accept Edge A->B click';
 		// GtWardleyMapEdgeElement;
@@ -787,11 +809,12 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAB
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeABReject [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter anEdgeName |
 	aScripter := self mapWithProposedModifications.
 
 	anEdgeName := 'Edge A->B'.
-	
+
 	aScripter click
 		label: 'Reject Edge A->B click';
 		// GtWardleyMapEdgeElement;
@@ -813,12 +836,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAB
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapAddAcceptId. GtWardleyMapAddRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapAddAcceptId.
+				GtWardleyMapAddRejectId}
 		ofEdgeNamed: anEdgeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -826,11 +848,12 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAB
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeACAccept [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter anEdgeName |
 	aScripter := self mapWithProposedModifications.
 
 	anEdgeName := 'Edge A->C'.
-	
+
 	aScripter click
 		label: 'Accept Edge A->C click';
 		// GtWardleyMapEdgeElement;
@@ -852,12 +875,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAC
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapRemoveAcceptId. GtWardleyMapRemoveRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapRemoveAcceptId.
+				GtWardleyMapRemoveRejectId}
 		ofEdgeNamed: anEdgeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -865,11 +887,12 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAC
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeACReject [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter anEdgeName |
 	aScripter := self mapWithProposedModifications.
 
 	anEdgeName := 'Edge A->C'.
-	
+
 	aScripter click
 		label: 'Reject Edge A->C click';
 		// GtWardleyMapEdgeElement;
@@ -891,12 +914,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAC
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapRemoveAcceptId. GtWardleyMapRemoveRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapRemoveAcceptId.
+				GtWardleyMapRemoveRejectId}
 		ofEdgeNamed: anEdgeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -904,6 +926,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_EdgeAC
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeAAccept [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications.
 
@@ -930,12 +953,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeAA
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapAddAcceptId. GtWardleyMapAddRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapAddAcceptId.
+				GtWardleyMapAddRejectId}
 		ofNodeNamed: aNodeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -943,6 +965,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeAA
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeAReject [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications.
 
@@ -969,12 +992,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeAR
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapAddAcceptId. GtWardleyMapAddRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapAddAcceptId.
+				GtWardleyMapAddRejectId}
 		ofNodeNamed: aNodeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 2.
+
+	self assertScripter: aScripter allPropositionElementCounter: 2.
 
 	^ aScripter
 ]
@@ -982,6 +1004,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeAR
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBSelectProposedName [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications.
 
@@ -1017,10 +1040,8 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 			description: [ 'Node B must be renamed to Node X' ];
 		onModel;
 		play.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 5.
+
+	self assertScripter: aScripter allPropositionElementCounter: 5.
 
 	^ aScripter
 ]
@@ -1028,6 +1049,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBSelectProposedName_Accept [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications_NodeBSelectProposedName.
 
@@ -1059,12 +1081,12 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapRenameProposalsId. GtWardleyMapRenameAcceptId. GtWardleyMapRenameRejectId }
+		nonExistentPropositionElementIds: {GtWardleyMapRenameProposalsId.
+				GtWardleyMapRenameAcceptId.
+				GtWardleyMapRenameRejectId}
 		ofNodeNamed: aNodeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -1072,6 +1094,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBSelectProposedName_Reject [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications_NodeBSelectProposedName.
 
@@ -1104,12 +1127,12 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapRenameProposalsId. GtWardleyMapRenameAcceptId. GtWardleyMapRenameRejectId }
+		nonExistentPropositionElementIds: {GtWardleyMapRenameProposalsId.
+				GtWardleyMapRenameAcceptId.
+				GtWardleyMapRenameRejectId}
 		ofNodeNamed: aNodeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]
@@ -1117,6 +1140,7 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeBS
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeCAcceptRemoval [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications.
 
@@ -1143,19 +1167,19 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeCA
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapRemoveAcceptId. GtWardleyMapRemoveRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapRemoveAcceptId.
+				GtWardleyMapRemoveRejectId}
 		ofNodeNamed: aNodeName.
 
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 3.
-		
+	self assertScripter: aScripter allPropositionElementCounter: 3.
+
 	^ aScripter
 ]
 
 { #category : #'examples - proposed modifications' }
 GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeCRejectRemoval [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter aNodeName |
 	aScripter := self mapWithProposedModifications.
 
@@ -1182,12 +1206,11 @@ GtWardleyMapDecoratorWithScripterExamples >> mapWithProposedModifications_NodeCR
 
 	self
 		assertScripter: aScripter
-		nonExistentPropositionElementIds: { GtWardleyMapRemoveAcceptId. GtWardleyMapRemoveRejectId}
+		nonExistentPropositionElementIds: {GtWardleyMapRemoveAcceptId.
+				GtWardleyMapRemoveRejectId}
 		ofNodeNamed: aNodeName.
-		
-	self 
-		assertScripter: aScripter
-		allPropositionElementCounter: 4.
+
+	self assertScripter: aScripter allPropositionElementCounter: 4.
 
 	^ aScripter
 ]

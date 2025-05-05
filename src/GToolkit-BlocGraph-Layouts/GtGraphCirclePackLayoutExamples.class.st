@@ -1,22 +1,18 @@
 Class {
 	#name : #GtGraphCirclePackLayoutExamples,
 	#superclass : #GtGraphLayoutExamples,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #example }
 GtGraphCirclePackLayoutExamples >> squaredNodes [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	| aParentNode aLayout |
+	aParentNode := self createNodes: 20 extent: 50 @ 50.
 
-	aParentNode := self
-		createNodes: 20
-		extent: 50@50.
-		
 	aLayout := GtGraphCirclePackLayout new.
-	aLayout measure: aParentNode.
-	
-	"self assert: aParentNode children layoutBounds equals: {
+	aLayout measure: aParentNode.	"self assert: aParentNode children layoutBounds equals: {
 		(200@100) corner: (220@120).
 		(195@131) corner: (215@151).
 		(181@159) corner: (201@179).
