@@ -125,7 +125,7 @@ GtWardleyMapMaximizerAction >> parent: aParent [
 
 { #category : #accessing }
 GtWardleyMapMaximizerAction >> preferredBackground [
-	^ preferredBackground ifNil: [ preferredBackground := BrGlamorousColors backdropColor ]
+	^ preferredBackground ifNil: [ preferredBackground := BlTheme default default backdropBackground ]
 ]
 
 { #category : #accessing }
