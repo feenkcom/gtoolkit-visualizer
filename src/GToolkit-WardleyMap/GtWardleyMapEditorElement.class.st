@@ -42,7 +42,7 @@ GtWardleyMapEditorElement >> initialize [
 		hFitContent;
 		vFitContentLimited;
 		padding: (BlInsets all: 3);
-		background: self theme default contentBackgroundColor.
+		background: self theme default contentBackground.
 	self createPropertiesEditorContainer.
 	self
 		addChild: (BrScrollPane new
