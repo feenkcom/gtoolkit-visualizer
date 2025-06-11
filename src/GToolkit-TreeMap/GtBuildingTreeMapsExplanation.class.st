@@ -75,7 +75,7 @@ GtBuildingTreeMapsExplanation >> tree [
 	^ GtNestedTreeBuilder new
 		data: (Smalltalk allClassesAndTraits select: [ :c | c name beginsWith: 'Br' ]);
 		groupBy: [ :aClass | aClass package ];
-		groupBy: [ :aClass | aClass package classTags detect: [ :e | e hasClass: aClass ] ];
+		groupBy: [ :aClass | aClass package classTags detect: [ :e | e includesClass: aClass ] ];
 		weight: [ :aClass | aClass methods size max: 1 ];
 		build
 ]
