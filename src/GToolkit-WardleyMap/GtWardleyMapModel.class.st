@@ -511,12 +511,12 @@ GtWardleyMapModel >> menuItemTitleVisibilityPicker [
 GtWardleyMapModel >> nextUniqueId [
 	| aNextId |
 	
-	aNextId := UUIDGenerator next.
+	aNextId := UUID new.
 	[
 	self
 		nodeWithId: aNextId
 		ifFound: [ false ]
-		ifNone: [ true ] ] whileFalse: [ aNextId := UUIDGenerator next ].
+		ifNone: [ true ] ] whileFalse: [ aNextId := UUID new ].
 
 	^ aNextId
 ]
