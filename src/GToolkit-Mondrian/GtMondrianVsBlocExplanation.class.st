@@ -139,6 +139,25 @@ GtMondrianVsBlocExplanation >> rootWithHybridEdges [
 ]
 
 { #category : #accessing }
+GtMondrianVsBlocExplanation >> rootWithHybridEdgesAndOneExtraLine [
+	<gtExample>
+	| root node6 node7 line |
+	root := GtMondrianVsBlocExplanation new rootWithHybridEdges.
+	node6 := root graph nodeChildren detect: [ :aChild | aChild graph model = 6 ].
+	node7 := root graph nodeChildren detect: [ :aChild | aChild graph model = 7 ].
+	line := BlLineElement new border: Color red.
+	line
+		fromAnchor: (BlNearestPositionBoundsAnchor referenceElement: node6 relatedTo: node7);
+		toAnchor: (BlNearestPositionBoundsAnchor referenceElement: node7 relatedTo: node6).
+	line constraints ignoreByLayout.
+	line
+		when: BlClickEvent
+		do: [ :e | e target phlow spawnObject: node6 graph model -> node7 graph model ].
+	root addChild: line.
+	^ root
+]
+
+{ #category : #accessing }
 GtMondrianVsBlocExplanation >> rootWithMultipleNodes [
 	<gtExample>
 	<return: #BlCanvassableElement>
