@@ -33,12 +33,6 @@ GtPlotterVerticalTicksAndLabelsAxisStencil >> buildDefault [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsAxisStencil >> initialize [
-	super initialize.
-	eventHandler := GtPlotterScatterFocusYHandler new
-]
-
-{ #category : #accessing }
 GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTickLabelsElement [
 	| padding |
 	padding := scatterChart contentPadding.
