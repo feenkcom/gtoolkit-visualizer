@@ -364,7 +364,7 @@ GtMondrianDomainExamples >> packageDependencies [
 	view := self emptyView.	"packages := {'Glamour-Core' . 'Glamour-Presentations'.
 	'Glamour-Morphic-Renderer' . 'Glamour-Browsers'} collect: #asPackage.
 	"
-	packages := RPackageOrganizer default packages
+	packages := self packageOrganizer packages
 			select: [ :each | each name beginsWith: 'GToolkit-' ].
 	dependencies := packages
 			flatCollect: [ :p | 
