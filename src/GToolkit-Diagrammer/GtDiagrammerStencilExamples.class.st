@@ -30,43 +30,39 @@ Class {
 { #category : #'example - arrowhead' }
 GtDiagrammerStencilExamples >> arrowheadFilledCircle [
 	<gtExample>
-
-	^ GtDiagrammerArrowheadFilledCircleStencil new
-		scale: 5
+	<return: #GtDiagrammerArrowheadFilledCircleStencil>
+	^ GtDiagrammerArrowheadFilledCircleStencil new scale: 5
 ]
 
 { #category : #'example - arrowhead' }
 GtDiagrammerStencilExamples >> arrowheadFilledTriangle [
 	<gtExample>
-
+	<return: #GtDiagrammerArrowheadFilledTriangleStencil>
 	^ GtDiagrammerArrowheadFilledTriangleStencil new
 		scale: 5;
-		"make the border of the arrowhead be 1.5x size of the width of the line"
-		borderFraction: 1.5
+		borderFraction: 1.5	"make the border of the arrowhead be 1.5x size of the width of the line"
 ]
 
 { #category : #'example - arrowhead' }
 GtDiagrammerStencilExamples >> arrowheadHollowCircle [
 	<gtExample>
-
-	^ GtDiagrammerArrowheadHollowCircleStencil new
-		scale: 5
+	<return: #GtDiagrammerArrowheadHollowCircleStencil>
+	^ GtDiagrammerArrowheadHollowCircleStencil new scale: 5
 ]
 
 { #category : #'example - arrowhead' }
 GtDiagrammerStencilExamples >> arrowheadHollowTriangle [
 	<gtExample>
-
+	<return: #GtDiagrammerArrowheadHollowTriangleStencil>
 	^ GtDiagrammerArrowheadHollowTriangleStencil new
 		scale: 5;
-		"make the border of the arrowhead be 1.5x size of the width of the line"
-		borderFraction: 1.5
+		borderFraction: 1.5	"make the border of the arrowhead be 1.5x size of the width of the line"
 ]
 
 { #category : #'example - arrowhead' }
 GtDiagrammerStencilExamples >> arrowheadSimple [
 	<gtExample>
-
+	<return: #GtDiagrammerArrowheadSimpleArrowStencil>
 	^ GtDiagrammerArrowheadSimpleArrowStencil new
 		arrowLengthFraction: 12;
 		arrowNoseAngle: 60

@@ -7,6 +7,7 @@ Class {
 { #category : #accessing }
 GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith15Nodes [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	| aParentNode aTreeLayout |
 	aParentNode := self constructBinaryTreeWith15Nodes.
 
@@ -36,6 +37,7 @@ GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith15Nodes [
 { #category : #accessing }
 GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	| aParentNode aTreeLayout |
 	aParentNode := self constructBinaryTreeWith15Nodes.
 
@@ -66,6 +68,7 @@ GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith15NodesReversed [
 { #category : #accessing }
 GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7Nodes [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	| aParentNode aTreeLayout |
 	aParentNode := self constructBinaryTreeWith7Nodes.
 
@@ -88,6 +91,7 @@ GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7Nodes [
 { #category : #accessing }
 GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	| aParentNode aTreeLayout |
 	aParentNode := self constructBinaryTreeWith7Nodes.
 
@@ -110,6 +114,7 @@ GtGradSugiyamaTreeLayoutExamples >> binaryTreeWith7NodesReversed [
 { #category : #accessing }
 GtGradSugiyamaTreeLayoutExamples >> compactSubtrees [
 	<gtExample>
+	<return: #BlLayoutParentNodeWithEdges>
 	| aParentNode aTreeLayout |
 	aParentNode := self constructTreeWithNodesWithAndWithoutChildrenOnTheSameLevel.
 
@@ -161,8 +166,8 @@ GtGradSugiyamaTreeLayoutExamples >> disconnectedGraph [
 { #category : #accessing }
 GtGradSugiyamaTreeLayoutExamples >> treeLayout [
 	<gtExample>
-	|  aTreeLayout |
-
+	<return: #GtGradSugiyamaTreeLayout>
+	| aTreeLayout |
 	aTreeLayout := GtGradSugiyamaTreeLayout new.
 	self assert: aTreeLayout horizontalGap equals: 3.
 	self assert: aTreeLayout verticalGap equals: 20.

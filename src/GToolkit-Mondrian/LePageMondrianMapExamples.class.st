@@ -9,6 +9,7 @@ LePageMondrianMapExamples >> oldPatternMap [
 	"The original map of patterns with default layout."
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := LePageMondrianMap new
 			pageTitles: {'Moldable Object'.
@@ -44,6 +45,7 @@ LePageMondrianMapExamples >> oldPatternMapwithExplicitPositions [
 		(self root children collect: #position)"
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := self oldPatternMap
 			explicitPositions: {184.9584903717041 @ 245.31882731119794.
@@ -71,6 +73,7 @@ LePageMondrianMapExamples >> oldPatternMapwithExplicitPositions [
 { #category : #accessing }
 LePageMondrianMapExamples >> patternMap [
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := self patternMapDefaultLayout
 			explicitPositions: self patternMapExplicitPositions;
@@ -85,6 +88,7 @@ LePageMondrianMapExamples >> patternMapDefaultLayout [
 	This is the default layout."
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := LePageMondrianMap new
 			pageTitles: {'Explainable System'.
@@ -142,6 +146,7 @@ LePageMondrianMapExamples >> patternMapWithCategories [
 	"Pattern map from EuroPLoP 24 paper, with categories and Composed Narrative"
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := LePageMondrianMap new
 			pageCategoriesAndTitles: self patternPagesWithCategories;
@@ -233,6 +238,7 @@ LePageMondrianMapExamples >> patternMapWithCategoriesExplicitPositions [
 { #category : #accessing }
 LePageMondrianMapExamples >> patternPagesWithCategories [
 	<gtExample>
+	<return: #Array>
 	^ {{''.
 			'Explainable System'}.
 		{'(T) '.
@@ -272,6 +278,7 @@ LePageMondrianMapExamples >> simpleMap [
 	"A simple map with default layout."
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := LePageMondrianMap new
 			pageTitles: {'Glamorous Toolkit'.
@@ -288,17 +295,22 @@ LePageMondrianMapExamples >> simpleMap [
 { #category : #accessing }
 LePageMondrianMapExamples >> simpleMapWithCategories [
 	<gtExample>
+	<return: #LePageMondrianMap>
 	| map |
 	map := LePageMondrianMap new
-			pageCategoriesAndTitles: 
-					{{''. 'Explainable System'}.
-					{'(T) '. 'Moldable Tool'}.
-					{'(P) '. 'Tooling Buildup'}};
+			pageCategoriesAndTitles: {{''.
+						'Explainable System'}.
+					{'(T) '.
+						'Moldable Tool'}.
+					{'(P) '.
+						'Tooling Buildup'}};
 			database: LeDatabase gtBook;
-			connectionsWithCategories: {
-					{''. 'Explainable System'} -> {
-						{'(T) '. 'Moldable Tool'}.
-						{'(P) '. 'Tooling Buildup'}}}.
+			connectionsWithCategories: {{''.
+						'Explainable System'}
+						-> {{'(T) '.
+									'Moldable Tool'}.
+								{'(P) '.
+									'Tooling Buildup'}}}.
 	self assert: map missingPages isEmpty.
 	^ map
 ]
@@ -308,6 +320,7 @@ LePageMondrianMapExamples >> simpleMapWithMissingPages [
 	"A map where some pages are missing -- hover shows them as pink, and clicking goes to nil."
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	^ LePageMondrianMap new
 		pageTitles: {'Glamorous Toolkit'.
 				'A Missing Page'.

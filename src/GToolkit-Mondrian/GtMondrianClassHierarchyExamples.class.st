@@ -107,13 +107,12 @@ GtMondrianClassHierarchyExamples >> assertNumberOfNodesIn: view [
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTree [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
-	view nodes
-		with: targetClass withAllSubclasses.
-	view edges
-		connectToAll: #subclasses.
+	view nodes with: targetClass withAllSubclasses.
+	view edges connectToAll: #subclasses.
 	view layout horizontalTree.
 	self assertNumberOfElementsIn: view.
 	^ view
@@ -122,17 +121,15 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTree [
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [
-		    "Any graphical element can be used a shape."
-			BlElement new
-				border: (BlBorder paint: Color gray width: 1) ]; 
+		shape: [  "Any graphical element can be used a shape."BlElement new
+				border: (BlBorder paint: Color gray width: 1) ];
 		with: targetClass withAllSubclasses.
-	view edges
-		connectToAll: #subclasses.
+	view edges connectToAll: #subclasses.
 	view layout horizontalTree.
 	^ view
 ]
@@ -140,14 +137,15 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShapeWithSize [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass |
+		shape: [ :aClass | 
 			BlElement new
 				border: (BlBorder paint: Color gray width: 1);
-				size: (aClass numberOfMethods min: 50 max: 5) asPoint ]; 
+				size: (aClass numberOfMethods min: 50 max: 5) asPoint ];
 		with: targetClass withAllSubclasses.
 	view edges
 		fromRightCenter;
@@ -160,16 +158,16 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShapeWi
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithClassNames [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass |
+		shape: [ :aClass | 
 			BlTextElement new
 				text: aClass name asRopedText;
 				border: (BlBorder paint: Color gray width: 1);
-				constraintsDo: [ :c |
-					c padding: (BlInsets all: 10) ] ]; 
+				constraintsDo: [ :c | c padding: (BlInsets all: 10) ] ];
 		with: targetClass withAllSubclasses.
 	view edges
 		fromRightCenter;
@@ -182,17 +180,16 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithClassNames [
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithCustomShapeForClasses [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass |
-			GtMondrianClassHierarchyExampleElement new 
-				className: aClass name ]; 
+		shape: [ :aClass | GtMondrianClassHierarchyExampleElement new className: aClass name ];
 		with: targetClass withAllSubclasses;
-		forEach: [ :aClass |
+		forEach: [ :aClass | 
 			view nodes
-				shape: [ :aMethod |
+				shape: [ :aMethod | 
 					BlElement new
 						size: (aMethod linesOfCode min: 50 max: 5) asPoint;
 						border: (BlBorder paint: Color blue width: 1) ];
@@ -203,24 +200,23 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithCustomShapeF
 		toLeftCenter;
 		connectToAll: #subclasses.
 	view layout horizontalTree.
-	^ view 
+	^ view
 ]
 
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithInBetweenEdges [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ 
-			BlElement new
-				border: (BlBorder paint: Color gray width: 1) ]; 
+		shape: [ BlElement new border: (BlBorder paint: Color gray width: 1) ];
 		with: targetClass withAllSubclasses.
 	view edges
-		fromRightCenter; "Start from the center of the right side "
-		toLeftCenter;    "End at the the center of the left"
-		connectToAll: #subclasses.
+		fromRightCenter;
+		toLeftCenter;
+		connectToAll: #subclasses.	"Start from the center of the right side "	"End at the the center of the left"
 	view layout horizontalTree.
 	^ view
 ]
@@ -228,71 +224,65 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithInBetweenEdg
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethods [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ 
-			BlElement new
+		shape: [ BlElement new
 				border: (BlBorder paint: Color gray width: 1);
-				constraintsDo: [ :c |
-					c padding: (BlInsets all: 5) ] ]; 
+				constraintsDo: [ :c | c padding: (BlInsets all: 5) ] ];
 		with: targetClass withAllSubclasses;
-		"Builds the content of each class shape."
-		forEach: [ :aClass |
+		forEach: [ :aClass | 
 			view nodes
-				shape: [ 
-					BlElement new
+				shape: [ BlElement new
 						size: 10 @ 10;
 						border: (BlBorder paint: Color blue width: 1) ];
 				with: aClass methods.
-			view layout grid].
+			view layout grid ].	"Builds the content of each class shape."
 	view edges
 		fromRightCenter;
 		toLeftCenter;
 		connectToAll: #subclasses.
 	view layout horizontalTree.
-	^ view 
+	^ view
 ]
 
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethodsAndClassNames [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass |
+		shape: [ :aClass | 
 			| containerElement labelElement methodsElement |
 			"We create a container to hold the label and the methods."
 			containerElement := BlElement new
-				layout: BlLinearLayout vertical;
-				border: (BlBorder paint: Color gray width: 1);
-				constraintsDo: [ :c |
-					c padding: (BlInsets all: 5).
-					c horizontal fitContent.
-					c vertical fitContent ].
+					layout: BlLinearLayout vertical;
+					border: (BlBorder paint: Color gray width: 1);
+					constraintsDo: [ :c | 
+						c padding: (BlInsets all: 5).
+						c horizontal fitContent.
+						c vertical fitContent ].
 			labelElement := BrLabel new
-				text: aClass name;
-				aptitude: (BrLabelAptitude new 
-					fontSize: 10);
-				constraintsDo: [ :c | 
-					c padding: (BlInsets all: 5).
-					c linear horizontal alignCenter ].
-			"We create the element that will hold the methods."
+					text: aClass name;
+					aptitude: (BrLabelAptitude new fontSize: 10);
+					constraintsDo: [ :c | 
+						c padding: (BlInsets all: 5).
+						c linear horizontal alignCenter ].	"We create the element that will hold the methods."
 			methodsElement := BlElement new
-				constraintsDo: [ :c | 
-					c linear horizontal alignCenter ].
-			"We tell mMndrian to add all child shapes to this element."
+					constraintsDo: [ :c | c linear horizontal alignCenter ].	"We tell mMndrian to add all child shapes to this element."
 			methodsElement graph beChildrenContainer.
 			containerElement
 				addChild: labelElement;
 				addChild: methodsElement.
-			containerElement ]; 
+			containerElement ];
 		with: targetClass withAllSubclasses;
-		forEach: [ :aClass |
+		forEach: [ :aClass | 
 			view nodes
-				shape: [ :aMethod |
+				shape: [ :aMethod | 
 					BlElement new
 						size: (aMethod linesOfCode min: 50 max: 5) asPoint;
 						border: (BlBorder paint: Color blue width: 1) ];
@@ -303,48 +293,46 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethod
 		toLeftCenter;
 		connectToAll: #subclasses.
 	view layout horizontalTree.
-	^ view 
+	^ view
 ]
 
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethodsWithSize [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ 
-			BlElement new
+		shape: [ BlElement new
 				border: (BlBorder paint: Color gray width: 1);
-				constraintsDo: [ :c |
-					c padding: (BlInsets all: 5) ] ]; 
+				constraintsDo: [ :c | c padding: (BlInsets all: 5) ] ];
 		with: targetClass withAllSubclasses;
-		forEach: [ :aClass |
+		forEach: [ :aClass | 
 			view nodes
-				shape: [ :aMethod |
+				shape: [ :aMethod | 
 					BlElement new
 						size: (aMethod linesOfCode min: 50 max: 5) asPoint;
 						border: (BlBorder paint: Color blue width: 1) ];
 				with: aClass methods.
-			view layout grid].
+			view layout grid ].
 	view edges
 		fromRightCenter;
 		toLeftCenter;
 		connectToAll: #subclasses.
 	view layout horizontalTree.
-	^ view 
+	^ view
 ]
 
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyNodesAndEdges [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
-	view nodes
-		with: targetClass withAllSubclasses.
-	view edges
-		connectToAll: #subclasses.
+	view nodes with: targetClass withAllSubclasses.
+	view edges connectToAll: #subclasses.
 	self assertNumberOfElementsIn: view.
 	^ view
 ]
@@ -352,11 +340,11 @@ GtMondrianClassHierarchyExamples >> classHierarchyNodesAndEdges [
 { #category : #'tutorial - nesting' }
 GtMondrianClassHierarchyExamples >> classHierarchyNodesOnly [
 	<gtExample>
+	<return: #GtMondrian>
 	| targetClass view |
 	targetClass := self targetClass.
 	view := self emptyView.
-	view nodes
-		with: targetClass withAllSubclasses.
+	view nodes with: targetClass withAllSubclasses.
 	self assertNumberOfNodesIn: view.
 	^ view
 ]
@@ -364,6 +352,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyNodesOnly [
 { #category : #examples }
 GtMondrianClassHierarchyExamples >> emptyView [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	self assertEmptyView: view.

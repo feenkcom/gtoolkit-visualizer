@@ -114,9 +114,16 @@ GtMondrianBasicExamples >> capturingEdgesNotCreated [
 { #category : #'tutorial - nodes, edges, layouts' }
 GtMondrianBasicExamples >> edgesBetweenNodes [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self multipleNodes.
-	view edges connect: {1 . 2 . 3 . 4} from: [ :x | x // 2 ] to: [ :x | x ].
+	view edges
+		connect: {1.
+				2.
+				3.
+				4}
+		from: [ :x | x // 2 ]
+		to: [ :x | x ].
 	self assert: view topStep root graph edgeChildren size equals: 3.
 	^ view
 ]
@@ -124,6 +131,7 @@ GtMondrianBasicExamples >> edgesBetweenNodes [
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> edgesWithChangingColorsOnHover [
 	<gtExample>
+	<return: #GtMondrian>
 	| m |
 	m := GtMondrian new.
 	m nodes
@@ -131,13 +139,15 @@ GtMondrianBasicExamples >> edgesWithChangingColorsOnHover [
 			BlElement new
 				border: (BlBorder paint: Color black);
 				geometry: BlEllipseGeometry new;
-				size: x * 2 @ (x * 2);
-				when: BlMouseEnterEvent do: [ :anEvent | 
-					anEvent currentTarget graph connectedEdges do: [ :inner | 
-							inner element border: (BlBorder paint: (Color red alpha: 0.5)) ] ];
-				when: BlMouseLeaveEvent do: [ :anEvent | 
-					anEvent currentTarget graph connectedEdges do: [ :inner | 
-							inner element border: (BlBorder paint: (Color blue alpha: 0.5)) ] ] ];
+				size: (x * 2) @ (x * 2);
+				when: BlMouseEnterEvent
+					do: [ :anEvent | 
+						anEvent currentTarget graph connectedEdges
+							do: [ :inner | inner element border: (BlBorder paint: (Color red alpha: 0.5)) ] ];
+				when: BlMouseLeaveEvent
+					do: [ :anEvent | 
+						anEvent currentTarget graph connectedEdges
+							do: [ :inner | inner element border: (BlBorder paint: (Color blue alpha: 0.5)) ] ] ];
 		with: (1 to: 9).
 	m edges
 		stencil: [ :x | 
@@ -152,15 +162,18 @@ GtMondrianBasicExamples >> edgesWithChangingColorsOnHover [
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> edgesWithTextAndThickerLinesHorizontalTree [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self nodesWithText.
 	view edges
 		fromRightCenter;
 		toLeftCenter;
-		stencil: [ :x | BlLineElement new border: (BlBorder paint: (Color lightGray alpha: 0.4) width: x) ];
+		stencil: [ :x | 
+			BlLineElement new
+				border: (BlBorder paint: (Color lightGray alpha: 0.4) width: x) ];
 		connectFrom: [ :x | x // 2 ].
-	view topStep root graph edgeChildren do: [ :edgeChild | 
-		self assert: edgeChild border width > 1 ].
+	view topStep root graph edgeChildren
+		do: [ :edgeChild | self assert: edgeChild border width > 1 ].
 	view layout horizontalTree levelDistance: 40.
 	^ view
 ]
@@ -168,13 +181,16 @@ GtMondrianBasicExamples >> edgesWithTextAndThickerLinesHorizontalTree [
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> edgesWithThickerLines [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self nodesWithEllipses.
 	view edges
 		stencil: [ :x | BlLineElement new border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
-	view topStep root graph edgeChildren do: [ :edgeChild | 
-			self assert: edgeChild border width = edgeChild graph connectedNodes asArray last graph model ].
+	view topStep root graph edgeChildren
+		do: [ :edgeChild | 
+			self
+				assert: edgeChild border width = edgeChild graph connectedNodes asArray last graph model ].
 	view layout tree.
 	^ view
 ]
@@ -182,6 +198,7 @@ GtMondrianBasicExamples >> edgesWithThickerLines [
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> edgesWithThickerLinesDependingOnTheFromNode [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self nodesWithEllipses.
 	view edges
@@ -190,7 +207,10 @@ GtMondrianBasicExamples >> edgesWithThickerLinesDependingOnTheFromNode [
 				border: (BlBorder paint: (Color blue alpha: 0.5) width: fromElement graph model) ];
 		connectFrom: [ :x | x // 2 ].
 	view topStep root graph edgeChildren
-		do: [ :edgeChild | self assert: edgeChild border width = edgeChild graph connectedNodes asArray first graph model ].
+		do: [ :edgeChild | 
+			self
+				assert: edgeChild border width
+						= edgeChild graph connectedNodes asArray first graph model ].
 	view layout tree.
 	^ view
 ]
@@ -198,15 +218,14 @@ GtMondrianBasicExamples >> edgesWithThickerLinesDependingOnTheFromNode [
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> edgesWithThickerLinesHorizontalTree [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self nodesWithEllipses.
 	view edges
-		stencil: [ :x | 
-			BlLineElement new
-				border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
+		stencil: [ :x | BlLineElement new border: (BlBorder paint: (Color blue alpha: 0.5) width: x) ];
 		connectFrom: [ :x | x // 2 ].
-	view root graph edgeChildren do: [:edgeElement | 
-		self assert: edgeElement border width > 1 ].
+	view root graph edgeChildren
+		do: [ :edgeElement | self assert: edgeElement border width > 1 ].
 	view layout horizontalTree.
 	^ view
 ]
@@ -214,6 +233,7 @@ GtMondrianBasicExamples >> edgesWithThickerLinesHorizontalTree [
 { #category : #'examples shapes' }
 GtMondrianBasicExamples >> elipseWithCustomShape [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	view nodes
@@ -231,6 +251,7 @@ GtMondrianBasicExamples >> elipseWithCustomShape [
 { #category : #'examples shapes' }
 GtMondrianBasicExamples >> elipseWithFactoryMethod [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	view nodes
@@ -246,6 +267,7 @@ GtMondrianBasicExamples >> elipseWithFactoryMethod [
 { #category : #'examples shapes' }
 GtMondrianBasicExamples >> elipseWithReusedShape [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	view nodes
@@ -262,6 +284,7 @@ GtMondrianBasicExamples >> elipseWithReusedShape [
 { #category : #'tutorial - nodes, edges, layouts' }
 GtMondrianBasicExamples >> emptyView [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	self assert: view topStep root children isEmpty.
@@ -271,20 +294,26 @@ GtMondrianBasicExamples >> emptyView [
 { #category : #'tutorial - nodes, edges, layouts' }
 GtMondrianBasicExamples >> layoutOnEdgesBetweenNodes [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self edgesBetweenNodes.
 	view layout tree.
 	self assert: (view root layout isKindOf: BlOnceLayout).
-	self assert: (view root layout layout notNil).
+	self assert: view root layout layout notNil.
 	^ view
 ]
 
 { #category : #'tutorial - nodes, edges, layouts' }
 GtMondrianBasicExamples >> multipleNodes [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
-	view nodes with: {1 . 2 . 3 . 4}.
+	view nodes
+		with: {1.
+				2.
+				3.
+				4}.
 	self assert: view topStep root children size equals: 4.
 	^ view
 ]
@@ -292,36 +321,38 @@ GtMondrianBasicExamples >> multipleNodes [
 { #category : #'tutorial - nesting' }
 GtMondrianBasicExamples >> nestedNodes [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
 	view nodes
 		shape: [ :x | 
-			BlElement new  
+			BlElement new
 				background: Color paleOrange;
 				constraintsDo: [ :c | c margin: (BlInsets all: 10) ] ];
 		with: (1 to: 9)
-		forEach: [ :each |
-			view nodes 
-				shape: [ :x | BlTextElement new text: x asString asRopedText ];
-				with: (10 * each to: (10 * each + 4)).
-			view layout circle radius: 20 ].
+			forEach: [ :each | 
+				view nodes
+					shape: [ :x | BlTextElement new text: x asString asRopedText ];
+					with: (10 * each to: 10 * each + 4).
+				view layout circle radius: 20 ].
 	self assert: view root children size = 9.
-	view root children do: [:child | self assert: child children size = 5 ].
+	view root children do: [ :child | self assert: child children size = 5 ].
 	^ view
 ]
 
 { #category : #'node creation' }
 GtMondrianBasicExamples >> nestedNodesInDifferentContainers [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	view nodes
 		shape: [ :anObject | 
 			| label labelContainer contents1 contents2 grid |
 			label := BlTextElement new
-				text: anObject asString asRopedText;
-				padding: (BlInsets all: 5);
-				constraintsDo: [ :c | c frame horizontal alignCenter ].
+					text: anObject asString asRopedText;
+					padding: (BlInsets all: 5);
+					constraintsDo: [ :c | c frame horizontal alignCenter ].
 			labelContainer := BlElement new.
 			labelContainer
 				layout: BlFrameLayout new;
@@ -332,35 +363,44 @@ GtMondrianBasicExamples >> nestedNodesInDifferentContainers [
 					c vertical fitContent ];
 				addChild: label.
 			contents1 := BlElement new
-				layout: BlLinearLayout horizontal;
-				constraintsDo: [ :c | 
-					c vertical fitContent.
-					c horizontal fitContent ];
-				background: Color yellow;
-				padding: (BlInsets all: 5).
+					layout: BlLinearLayout horizontal;
+					constraintsDo: [ :c | 
+						c vertical fitContent.
+						c horizontal fitContent ];
+					background: Color yellow;
+					padding: (BlInsets all: 5).
 			contents1 graph beChildrenContainer: #one.
 			contents2 := BlElement new
-				layout: BlLinearLayout horizontal;
-				constraintsDo: [ :c | 
-					c vertical fitContent.
-					c horizontal fitContent ];
-				background: Color orange;
-				padding: (BlInsets all: 5).
+					layout: BlLinearLayout horizontal;
+					constraintsDo: [ :c | 
+						c vertical fitContent.
+						c horizontal fitContent ];
+					background: Color orange;
+					padding: (BlInsets all: 5).
 			contents2 graph beChildrenContainer: #two.
 			grid := GtWidthExpandingElement new
-				layout: (BlGridLayout vertical cellSpacing: 1);
-				constraintsDo: [ :c | 
-					c vertical fitContent.
-					c horizontal fitContent ];
-				background: Color white;
-				border: (BlBorder paint: Color gray);
-				addChildren:
-					{labelContainer.
-					contents1.
-					contents2} ];
-		with: {1 . 2};
-		forEach: [ :each | view nodes with: {10 . 11 . 12} ] in: #one;
-		forEach: [ :each | view nodes with: {20 . 21} ] in: #two.
+					layout: (BlGridLayout vertical cellSpacing: 1);
+					constraintsDo: [ :c | 
+						c vertical fitContent.
+						c horizontal fitContent ];
+					background: Color white;
+					border: (BlBorder paint: Color gray);
+					addChildren: {labelContainer.
+							contents1.
+							contents2} ];
+		with: {1.
+				2};
+		forEach: [ :each | 
+				view nodes
+					with: {10.
+							11.
+							12} ]
+			in: #one;
+		forEach: [ :each | 
+				view nodes
+					with: {20.
+							21} ]
+			in: #two.
 	view layout grid.
 	^ view
 ]
@@ -368,81 +408,86 @@ GtMondrianBasicExamples >> nestedNodesInDifferentContainers [
 { #category : #'node creation' }
 GtMondrianBasicExamples >> nestedNodesWithDefaultUMLClassShape [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
-	view nodes 
+	view nodes
 		shape: [ :each | GtMondrianUMLClassElement withDefaultContainer ];
-		with: (1 to: 10 ); 
-		forEach: [:each | view nodes with: (1 to: 10) ].
+		with: (1 to: 10);
+		forEach: [ :each | view nodes with: (1 to: 10) ].
 	^ view
 ]
 
 { #category : #'tutorial - advanced' }
 GtMondrianBasicExamples >> nestedNodesWithGlobalEdges [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
 	view nodes
 		stencil: [ :each | GtMondrianUMLClassElement withDefaultContainer label: each asString ];
-		with:
-			{(1 to: 3).
-			(4 to: 6)}
-		forEach: [ :collection | 
-			view nodes
-				shape: [ :x | BlTextElement new text: x asString asRopedText ];
-				with: collection.
-			view layout circle ].
+		with: {1 to: 3.
+					4 to: 6}
+			forEach: [ :collection | 
+				view nodes
+					shape: [ :x | BlTextElement new text: x asString asRopedText ];
+					with: collection.
+				view layout circle ].
 	view edges
-		connect:
-			{(1 -> 2).
-			(3 -> 1).
-			(1 -> 4).
-			(4 -> 6).
-			(5 -> 6)}
+		connect: {1 -> 2.
+				3 -> 1.
+				1 -> 4.
+				4 -> 6.
+				5 -> 6}
 		from: [ :x | x key ]
 		to: [ :x | x value ].
 	view layout circle radius: 100.
-	self assert: (view root children select: [ :each | each graph isEdge ]) size = 5.
+	self
+		assert: (view root children select: [ :each | each graph isEdge ]) size = 5.
 	^ view
 ]
 
 { #category : #'node creation' }
 GtMondrianBasicExamples >> nestedNodesWithUMLClassShape [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
-	view nodes 
+	view nodes
 		shape: [ :each | GtMondrianUMLClassElement withContainers: #(one two) ];
-		with: (1 to: 10 ); 
-		forEach: [:each | view nodes with: (1 to: 10) ] in: #one;
-		forEach: [:each | view nodes with: (1 to: 20) ] in: #two.
+		with: (1 to: 10);
+		forEach: [ :each | view nodes with: (1 to: 10) ] in: #one;
+		forEach: [ :each | view nodes with: (1 to: 20) ] in: #two.
 	^ view
 ]
 
 { #category : #'tutorial - nesting' }
 GtMondrianBasicExamples >> nestedWithEdges [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self nestedNodes.
-	view edges 
+	view edges
 		fromCenterBottom;
 		toCenterTop;
 		connectFrom: [ :x | x // 2 ].
 	view layout tree.
-	self assert: (view root children select: [ :each | each graph isEdge ]) size = 8.
+	self
+		assert: (view root children select: [ :each | each graph isEdge ]) size = 8.
 	^ view
 ]
 
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> nodesWithEllipses [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	view nodes
 		stencil: [ :x | 
-			BlElement new 
+			BlElement new
 				border: (BlBorder paint: Color black);
-				geometry: BlEllipseGeometry new; 
+				geometry: BlEllipseGeometry new;
 				size: (x * 2) @ (x * 2) ];
 		with: (1 to: 9).
 	self assert: view topStep root graph nodeChildren size = 9.
@@ -452,6 +497,7 @@ GtMondrianBasicExamples >> nodesWithEllipses [
 { #category : #'tutorial - shapes' }
 GtMondrianBasicExamples >> nodesWithText [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := GtMondrian new.
 	view nodes
@@ -467,6 +513,7 @@ GtMondrianBasicExamples >> nodesWithText [
 { #category : #'node creation' }
 GtMondrianBasicExamples >> oneNode [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
 	view nodes with: {1}.
@@ -477,12 +524,17 @@ GtMondrianBasicExamples >> oneNode [
 { #category : #'tutorial - advanced' }
 GtMondrianBasicExamples >> passiveEdgeBetweenTwoNodes [
 	<gtExample>
+	<return: #GtMondrian>
 	| m nodeElements |
 	m := GtMondrian new.
-	m nodes with: { 1. 2}.
-	m edges 
+	m nodes
+		with: {1.
+				2}.
+	m edges
 		passive;
-		connect: {1->2} from: #key to: #value.
+		connect: {1 -> 2}
+			from: #key
+			to: #value.
 	m layout tree.
 	m root forceLayout.
 	nodeElements := m root graph allNodeChildren.
@@ -495,6 +547,7 @@ GtMondrianBasicExamples >> passiveEdgeBetweenTwoNodes [
 { #category : #'tutorial - advanced' }
 GtMondrianBasicExamples >> passiveEdges [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
 	view nodes
@@ -502,13 +555,10 @@ GtMondrianBasicExamples >> passiveEdges [
 		with: (1 to: 100).
 	view edges connectFrom: [ :x | x // 2 ].
 	view edges
-		shape: [ :x | 
-			BlLineElement new
-				border: (BlBorder paint: (Color red alpha: 0.5) width: 2) ];
+		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color red alpha: 0.5) width: 2) ];
 		passive;
-		connect:
-			{(1 -> 12).
-			(11 -> 19)}
+		connect: {1 -> 12.
+					11 -> 19}
 			from: #key
 			to: #value.
 	view layout tree.
@@ -518,30 +568,32 @@ GtMondrianBasicExamples >> passiveEdges [
 { #category : #'tutorial - advanced' }
 GtMondrianBasicExamples >> passiveEdgesWithNesting [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
 	view nodes
 		shape: [ :x | 
-			BlElement new 
-				geometry: BlEllipseGeometry new; 
+			BlElement new
+				geometry: BlEllipseGeometry new;
 				border: (BlBorder paint: Color black);
 				constraintsDo: [ :c | c padding: (BlInsets all: 10) ] ];
 		with: (1 to: 9)
-		forEach: [ :each |
-			view nodes 
-				shape: [ :x | BlTextElement new text: x asString asRopedText ];
-				with: (10 * each to: (10 * each + 9)).
-			view layout circle radius: 50 ].
-	view edges 
+			forEach: [ :each | 
+				view nodes
+					shape: [ :x | BlTextElement new text: x asString asRopedText ];
+					with: (10 * each to: 10 * each + 9).
+				view layout circle radius: 50 ].
+	view edges
 		fromCenterBottom;
 		toCenterTop;
 		connectFrom: [ :x | x // 2 ].
-	view edges 
-		shape: [ :x |
-			BlLineElement new
-				border: (BlBorder paint: (Color red alpha: 0.5) width: 5) ];
-		passive; 
-		connect: { 1->53 . 11 -> 19 } from: #key to: #value.
+	view edges
+		shape: [ :x | BlLineElement new border: (BlBorder paint: (Color red alpha: 0.5) width: 5) ];
+		passive;
+		connect: {1 -> 53.
+					11 -> 19}
+			from: #key
+			to: #value.
 	view layout tree.
 	^ view
 ]
@@ -549,9 +601,13 @@ GtMondrianBasicExamples >> passiveEdgesWithNesting [
 { #category : #'node creation' }
 GtMondrianBasicExamples >> twoNodesWithEmptyForEach [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
-	view nodes with: {1 . 2} forEach: [ :each |  ].
+	view nodes
+		with: {1.
+				2}
+		forEach: [ :each |  ].
 	self assert: view topStep root children size equals: 2.
 	^ view
 ]
@@ -559,12 +615,14 @@ GtMondrianBasicExamples >> twoNodesWithEmptyForEach [
 { #category : #'node creation' }
 GtMondrianBasicExamples >> twoNodesWithNodesInForEach [
 	<gtExample>
+	<return: #GtMondrian>
 	| view |
 	view := self emptyView.
 	view nodes
-		with:
-			{{1 . 2 . 3}.
-			{4}}
+		with: {{1.
+					2.
+					3}.
+				{4}}
 		forEach: [ :collection | view nodes with: collection ].
 	self assert: view topStep root children size equals: 2.
 	self assert: view topStep root children first children size equals: 3.
