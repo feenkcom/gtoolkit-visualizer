@@ -757,7 +757,8 @@ GtWardleyMapModelExamples >> understandingWhenMapChanges [
 	theAnnouncements := OrderedCollection new.
 	aWardleyMap
 		when: GtWardleyMapAnnouncement
-		do: [ :anAnnouncement | theAnnouncements add: anAnnouncement ].
+		do: [ :anAnnouncement | theAnnouncements add: anAnnouncement ]
+		for: self.
 
 	aWardleyMap nodes second label: 'Changed Node B'.
 
