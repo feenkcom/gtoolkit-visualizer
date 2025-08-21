@@ -17,8 +17,8 @@ LePageMondrianMapExamples >> oldPatternMap [
 					'Project Diary'.
 					'Contextual Playground'.
 					'Example Object'.
-					'Custom View'.
-					'Custom Action'.
+					'Contextual View'.
+					'Contextual Action'.
 					'Simple View'.
 					'Moldable Collection Wrapper'};
 			database: LeDatabase gtBook;
@@ -28,10 +28,10 @@ LePageMondrianMapExamples >> oldPatternMap [
 								'Contextual Playground'}.
 					'Project Diary' -> {'Example Object'}.
 					'Contextual Playground'
-						-> {'Custom View'.
-								'Custom Action'.
+						-> {'Contextual View'.
+								'Contextual Action'.
 								'Example Object'}.
-					'Custom View'
+					'Contextual View'
 						-> {'Simple View'.
 								'Moldable Collection Wrapper'}}.
 	self assert: map missingPages isEmpty.
@@ -94,9 +94,9 @@ LePageMondrianMapExamples >> patternMapDefaultLayout [
 			pageTitles: {'Explainable System'.
 					'Moldable Tool'.
 					'Contextual Playground'.
-					'Custom View'.
-					'Custom Search'.
-					'Custom Action'.
+					'Contextual View'.
+					'Contextual Search'.
+					'Contextual Action'.
 					'Moldable Object'.
 					'Example Object'.
 					'Moldable Data Wrapper'.
@@ -125,11 +125,11 @@ LePageMondrianMapExamples >> patternMapDefaultLayout [
 					'Example Object' -> {'Moldable Object'}.
 					'Moldable Data Wrapper' -> {'Moldable Object'}.
 					'Contextual Playground'
-						-> {'Custom View'.
-								'Custom Search'.
-								'Custom Action'}.
-					'Custom View' -> {'Simple View'}.
-					'Custom Search' -> {'Moldable Collection Wrapper'}.
+						-> {'Contextual View'.
+								'Contextual Search'.
+								'Contextual Action'}.
+					'Contextual View' -> {'Simple View'}.
+					'Contextual Search' -> {'Moldable Collection Wrapper'}.
 					'Throwaway Analysis Tool' -> {'Contextual Playground'}};
 			yourself.
 	self assert: map missingPages isEmpty.
@@ -206,17 +206,17 @@ LePageMondrianMapExamples >> patternMapWithCategories [
 					{'(T) '.
 						'Contextual Playground'}
 						-> {{'(T) '.
-									'Custom View'}.
+									'Contextual View'}.
 								{'(T) '.
-									'Custom Search'}.
+									'Contextual Search'}.
 								{'(T) '.
-									'Custom Action'}}.
+									'Contextual Action'}}.
 					{'(T) '.
-						'Custom View'}
+						'Contextual View'}
 						-> {{'(P) '.
 									'Simple View'}}.
 					{'(T) '.
-						'Custom Search'}
+						'Contextual Search'}
 						-> {{'(M) '.
 									'Moldable Collection Wrapper'}}.
 					{'(P) '.
@@ -246,11 +246,11 @@ LePageMondrianMapExamples >> patternPagesWithCategories [
 		{'(T) '.
 			'Contextual Playground'}.
 		{'(T) '.
-			'Custom View'}.
+			'Contextual View'}.
 		{'(T) '.
-			'Custom Search'}.
+			'Contextual Search'}.
 		{'(T) '.
-			'Custom Action'}.
+			'Contextual Action'}.
 		{'(T) '.
 			'Composed Narrative'}.
 		{'(M) '.
