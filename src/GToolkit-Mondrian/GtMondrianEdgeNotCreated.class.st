@@ -48,6 +48,15 @@ GtMondrianEdgeNotCreated >> model: anObject [
 	model := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+GtMondrianEdgeNotCreated >> printOneLineContentsOn: aStream [
+	aStream
+		<< 'toModel: '; print: self toModel;
+		<< ' | toElement: '; print: self toElement;
+		<< ' | fromModel: '; print: self fromModel;
+		<< ' | fromElement: '; print: self fromElement.
+]
+
 { #category : #accessing }
 GtMondrianEdgeNotCreated >> toElement [
 	^ toElement
