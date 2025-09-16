@@ -126,7 +126,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShape [
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [  "Any graphical element can be used a shape."BlElement new
+		stencil: [  "Any graphical element can be used a shape."BlElement new
 				border: (BlBorder paint: Color gray width: 1) ];
 		with: targetClass withAllSubclasses.
 	view edges connectToAll: #subclasses.
@@ -142,7 +142,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithBasicShapeWi
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass | 
+		stencil: [ :aClass | 
 			BlElement new
 				border: (BlBorder paint: Color gray width: 1);
 				size: (aClass numberOfMethods min: 50 max: 5) asPoint ];
@@ -163,7 +163,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithClassNames [
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass | 
+		stencil: [ :aClass | 
 			BlTextElement new
 				text: aClass name asRopedText;
 				border: (BlBorder paint: Color gray width: 1);
@@ -185,7 +185,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithCustomShapeF
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass | GtMondrianClassHierarchyExampleElement new className: aClass name ];
+		stencil: [ :aClass | GtMondrianClassHierarchyExampleElement new className: aClass name ];
 		with: targetClass withAllSubclasses;
 		forEach: [ :aClass | 
 			view nodes
@@ -211,7 +211,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithInBetweenEdg
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ BlElement new border: (BlBorder paint: Color gray width: 1) ];
+		stencil: [ BlElement new border: (BlBorder paint: Color gray width: 1) ];
 		with: targetClass withAllSubclasses.
 	view edges
 		fromRightCenter;
@@ -229,7 +229,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethod
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ BlElement new
+		stencil: [ BlElement new
 				border: (BlBorder paint: Color gray width: 1);
 				constraintsDo: [ :c | c padding: (BlInsets all: 5) ] ];
 		with: targetClass withAllSubclasses;
@@ -256,7 +256,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethod
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ :aClass | 
+		stencil: [ :aClass | 
 			| containerElement labelElement methodsElement |
 			"We create a container to hold the label and the methods."
 			containerElement := BlElement new
@@ -304,7 +304,7 @@ GtMondrianClassHierarchyExamples >> classHierarchyHorizontalTreeWithNestedMethod
 	targetClass := self targetClass.
 	view := self emptyView.
 	view nodes
-		shape: [ BlElement new
+		stencil: [ BlElement new
 				border: (BlBorder paint: Color gray width: 1);
 				constraintsDo: [ :c | c padding: (BlInsets all: 5) ] ];
 		with: targetClass withAllSubclasses;

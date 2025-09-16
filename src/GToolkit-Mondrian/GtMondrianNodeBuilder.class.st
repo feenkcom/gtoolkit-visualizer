@@ -85,9 +85,10 @@ GtMondrianNodeBuilder >> nodeElementFor: anObject [
 
 { #category : #'scripting - shape' }
 GtMondrianNodeBuilder >> umlClassShapeWithName: aBlock [
-	self shape: [ :each | 
-		GtMondrianUMLClassElement withDefaultContainer 
-			label: (aBlock value: each) asString ]
+	self
+		stencil: [ :each | 
+			GtMondrianUMLClassElement withDefaultContainer
+				label: (aBlock value: each) asString ]
 ]
 
 { #category : #'scripting - shape' }
