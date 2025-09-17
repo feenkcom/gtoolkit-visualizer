@@ -11,7 +11,7 @@ GtMondrianLayoutExamples >> centeredDominanceSimpleVerticalTree [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -37,7 +37,7 @@ GtMondrianLayoutExamples >> centeredDominanceVerticalTree [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -71,7 +71,7 @@ GtMondrianLayoutExamples >> horizontalDominanceTree [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -100,7 +100,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutBinaryTree15Nodes [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -117,7 +117,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutGraphWithCycles [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -159,7 +159,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTree [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -192,7 +192,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeReversed [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -228,7 +228,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutSimpleNonBinaryTreeWithBiggerDis
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -263,7 +263,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithBottomAlignment [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				zIndex: 10;
 				background: Color black;
@@ -285,7 +285,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithCenterAlignment [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				zIndex: 10;
 				background: Color black;
@@ -308,7 +308,7 @@ GtMondrianLayoutExamples >> horizontalTreeLayoutWithNodeAndLevelDistances [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				zIndex: 10;
 				background: Color black;
@@ -331,7 +331,7 @@ GtMondrianLayoutExamples >> simpleTreeForceDirectedExample [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -348,7 +348,7 @@ GtMondrianLayoutExamples >> sugiyamaTreeLayout [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :cls | 
+		stencil: [ :cls | 
 			BlElement new
 				zIndex: 10;
 				background: (Color black alpha: 0.4);
@@ -369,7 +369,7 @@ GtMondrianLayoutExamples >> verticalDominanceTree [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -398,7 +398,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutBinaryTree15Nodes [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -415,7 +415,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutGraphWithCycles [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -457,7 +457,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTree [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -490,7 +490,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTreeReversed [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -525,7 +525,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutSimpleNonBinaryTreeWithBiggerDista
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				size: 50 @ 50;
 				background: Color black ];
@@ -560,7 +560,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutWithBottomAlignment [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				zIndex: 10;
 				background: Color black;
@@ -581,7 +581,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutWithCenterAlignment [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				zIndex: 10;
 				background: Color black;
@@ -602,7 +602,7 @@ GtMondrianLayoutExamples >> verticalTreeLayoutWithNodeAndLevelDistances [
 	| mondrian |
 	mondrian := GtMondrian new.
 	mondrian nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				zIndex: 10;
 				background: Color black;

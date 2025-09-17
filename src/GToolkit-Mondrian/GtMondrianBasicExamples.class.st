@@ -325,14 +325,14 @@ GtMondrianBasicExamples >> nestedNodes [
 	| view |
 	view := self emptyView.
 	view nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				background: Color paleOrange;
 				constraintsDo: [ :c | c margin: (BlInsets all: 10) ] ];
 		with: (1 to: 9)
 			forEach: [ :each | 
 				view nodes
-					shape: [ :x | BlTextElement new text: x asString asRopedText ];
+					stencil: [ :x | BlTextElement new text: x asString asRopedText ];
 					with: (10 * each to: 10 * each + 4).
 				view layout circle radius: 20 ].
 	self assert: view root children size = 9.
@@ -347,7 +347,7 @@ GtMondrianBasicExamples >> nestedNodesInDifferentContainers [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :anObject | 
+		stencil: [ :anObject | 
 			| label labelContainer contents1 contents2 grid |
 			label := BlTextElement new
 					text: anObject asString asRopedText;
@@ -412,7 +412,7 @@ GtMondrianBasicExamples >> nestedNodesWithDefaultUMLClassShape [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :each | GtMondrianUMLClassElement withDefaultContainer ];
+		stencil: [ :each | GtMondrianUMLClassElement withDefaultContainer ];
 		with: (1 to: 10);
 		forEach: [ :each | view nodes with: (1 to: 10) ].
 	^ view
@@ -430,7 +430,7 @@ GtMondrianBasicExamples >> nestedNodesWithGlobalEdges [
 					4 to: 6}
 			forEach: [ :collection | 
 				view nodes
-					shape: [ :x | BlTextElement new text: x asString asRopedText ];
+					stencil: [ :x | BlTextElement new text: x asString asRopedText ];
 					with: collection.
 				view layout circle ].
 	view edges
@@ -454,7 +454,7 @@ GtMondrianBasicExamples >> nestedNodesWithUMLClassShape [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :each | GtMondrianUMLClassElement withContainers: #(one two) ];
+		stencil: [ :each | GtMondrianUMLClassElement withContainers: #(one two) ];
 		with: (1 to: 10);
 		forEach: [ :each | view nodes with: (1 to: 10) ] in: #one;
 		forEach: [ :each | view nodes with: (1 to: 20) ] in: #two.
@@ -501,7 +501,7 @@ GtMondrianBasicExamples >> nodesWithText [
 	| view |
 	view := GtMondrian new.
 	view nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlTextElement new
 				text: x gtDisplayString asRopedText;
 				padding: (BlInsets all: 5);
@@ -551,7 +551,7 @@ GtMondrianBasicExamples >> passiveEdges [
 	| view |
 	view := self emptyView.
 	view nodes
-		shape: [ :x | BlTextElement new text: x asString asRopedText ];
+		stencil: [ :x | BlTextElement new text: x asString asRopedText ];
 		with: (1 to: 100).
 	view edges connectFrom: [ :x | x // 2 ].
 	view edges
@@ -572,7 +572,7 @@ GtMondrianBasicExamples >> passiveEdgesWithNesting [
 	| view |
 	view := self emptyView.
 	view nodes
-		shape: [ :x | 
+		stencil: [ :x | 
 			BlElement new
 				geometry: BlEllipseGeometry new;
 				border: (BlBorder paint: Color black);

@@ -51,7 +51,7 @@ GtMondrianDomainExamples >> buttonLabelLookEventPropagation [
 	aView := self emptyView.
 
 	aView nodes
-		shape: [ :aTarget | 
+		stencil: [ :aTarget | 
 			| text |
 			text := aTarget gtDisplayString asRopedText.
 			text attributes: {BlTextForegroundAttribute paint: Color lightGray}.
@@ -234,7 +234,7 @@ GtMondrianDomainExamples >> editorElements [
 	element forceLayout.
 	view := GtMondrian new.
 	view nodes
-		shape: [ :each | 
+		stencil: [ :each | 
 			| form content container label labelText |
 			container := BlElement new
 					constraintsDo: [ :c | 
@@ -319,7 +319,7 @@ GtMondrianDomainExamples >> exampleDependencies [
 	| view |
 	view := self emptyView.
 	view nodes
-		shape: [ :each | 
+		stencil: [ :each | 
 			(GtPharoMethodCoder forMethod: each method) asElement
 				constraintsDo: [ :c | 
 					c horizontal exact: 200.
@@ -375,7 +375,7 @@ GtMondrianDomainExamples >> packageDependencies [
 							each value} ]
 					thenSelect: [ :tuple | tuple first ~= tuple second ] ].
 	view nodes
-		shape: [ :p | 
+		stencil: [ :p | 
 			| shape text label defaultContainer |
 			shape := BlElement new.
 			shape layout: (BlGridLayout vertical cellSpacing: 0).
@@ -487,7 +487,7 @@ GtMondrianDomainExamples >> umlClasses [
 		with: BlElementVectorGeometry withAllSubclasses;
 		forEach: [ :class | 
 			view nodes
-				shape: [ :method | 
+				stencil: [ :method | 
 					BlTextElement new
 						text: method selector asRopedText;
 						padding: (BlInsets
