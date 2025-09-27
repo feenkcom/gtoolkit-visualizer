@@ -1,7 +1,7 @@
 Class {
 	#name : #GtConnectorVisualSourceElementAddedEvent,
 	#superclass : #GtConnectorVisualElementEvent,
-	#category : 'GToolkit-Connector-Events'
+	#category : #'GToolkit-Connector-Events'
 }
 
 { #category : #sending }

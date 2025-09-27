@@ -58,26 +58,26 @@ GtPhlowMondrianView >> initialize [
 	self actionStencil: [ 
 		BrButton new 
 			aptitude: BrGlamorousButtonWithIconAptitude;
-			icon: BrGlamorousIcons zoomin asElement;
+			icon: BrGlamorousVectorIcons zoomin asElement;
 			label: 'Zoom in';
 			action: [ mondrianElement zoomIn ] ].
 	self actionStencil: [ 
 		BrButton new 
 			aptitude: BrGlamorousButtonWithIconAptitude;
-			icon: BrGlamorousIcons zoomout asElement ;
+			icon: BrGlamorousVectorIcons zoomout asElement ;
 			label: 'Zoom out';
 			action: [ mondrianElement zoomOut ] ].
 	self actionStencil: [ 
 		BrButton new 
 			aptitude: BrGlamorousButtonWithIconAptitude;
-			icon: BrGlamorousIcons zoomtofit asElement ;
+			icon: BrGlamorousVectorIcons zoomtofit asElement ;
 			label: 'Zoom to fit';
 			action: [ mondrianElement zoomToFit ] ].
 	self actionStencil: [ 
 		BrButton new
 			aptitude: BrGlamorousButtonWithIconAptitude;
 			label: 'Reset to actual size';
-			icon: BrGlamorousIcons actualsize asElement;
+			icon: BrGlamorousVectorIcons actualsize asElement;
 			action: [ mondrianElement zoomToActualSize ] ]
 	
 ]

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : 'GToolkit-Connector-Core'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #'api - converting' }

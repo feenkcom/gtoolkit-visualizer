@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'elementRole'
 	],
-	#category : 'GToolkit-Connector-Logging'
+	#category : #'GToolkit-Connector-Logging'
 }
 
 { #category : #accessing }
