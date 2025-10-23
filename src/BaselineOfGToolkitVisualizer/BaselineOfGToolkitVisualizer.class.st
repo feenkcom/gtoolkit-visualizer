@@ -53,16 +53,16 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 				spec repository: 'github://feenkcom/gtoolkit-utility:v0.8.409/src' ].
 		spec
 			baseline: 'GToolkitPhlow' with: [
-				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1873/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1874/src' ].
 		spec
 			baseline: 'GToolkit4Pharo' with: [
-				spec repository: 'github://feenkcom/gt4pharo:v0.6.2493/src' ].
+				spec repository: 'github://feenkcom/gt4pharo:v0.6.2494/src' ].
 		spec
 			baseline: 'GToolkitPresenter' with: [
-				spec repository: 'github://feenkcom/gtoolkit-presenter:v0.8.2622/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-presenter:v0.8.2623/src' ].
 		spec
 			baseline: 'GToolkitCoder' with: [
-				spec repository: 'github://feenkcom/gtoolkit-coder:v0.8.2353/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-coder:v0.8.2354/src' ].
 
 		spec package: 'GToolkit-BlocGraph' with: [
 			spec requires: #(#Brick) ].
