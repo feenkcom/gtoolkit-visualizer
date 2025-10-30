@@ -59,8 +59,7 @@ GtMondrianEdgesExplanation >> definingEdgesWithConnectItemsFromToBlock [
 { #category : #'as yet unclassified' }
 GtMondrianEdgesExplanation >> loggingTheEdgesNotCreated [
 	<gtExample>
-	^ MemoryLogger
-		reset;
+	^ MemoryLogger new
 		startFor: GtMondrianEdgeNotCreated;
 		runDuring: [ | m |
 			m := GtMondrian new.
