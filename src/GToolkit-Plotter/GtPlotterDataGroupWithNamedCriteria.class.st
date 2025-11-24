@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #initialization }

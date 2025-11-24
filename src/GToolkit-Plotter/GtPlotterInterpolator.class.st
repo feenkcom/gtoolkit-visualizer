@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterInterpolator,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Interpolator'
+	#category : #'GToolkit-Plotter-Interpolator'
 }
 
 { #category : #interpolation }

@@ -5,7 +5,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #'instance creation' }

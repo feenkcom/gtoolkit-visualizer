@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'isStacking'
 	],
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #initialization }

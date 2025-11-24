@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'constant'
 	],
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #accessing }

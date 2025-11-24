@@ -6,7 +6,7 @@ I draw horizontal timeline chart.
 Class {
 	#name : #GtPlotterHorizontalTimeline,
 	#superclass : #GtPlotterTimeline,
-	#category : 'GToolkit-Plotter-Builder - Timeline'
+	#category : #'GToolkit-Plotter-Builder - Timeline'
 }
 
 { #category : #'api - instantiation' }

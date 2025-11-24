@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'entities'
 	],
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #accessing }

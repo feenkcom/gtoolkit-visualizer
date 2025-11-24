@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'timeIntervals'
 	],
-	#category : 'GToolkit-Plotter-Tick'
+	#category : #'GToolkit-Plotter-Tick'
 }
 
 { #category : #'instance creation' }

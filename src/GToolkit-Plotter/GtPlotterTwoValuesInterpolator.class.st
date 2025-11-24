@@ -5,7 +5,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : 'GToolkit-Plotter-Interpolator'
+	#category : #'GToolkit-Plotter-Interpolator'
 }
 
 { #category : #'instance creation' }

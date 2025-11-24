@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'plots'
 	],
-	#category : 'GToolkit-Plotter-Builder - Composite Chart'
+	#category : #'GToolkit-Plotter-Builder - Composite Chart'
 }
 
 { #category : #'private - plots' }

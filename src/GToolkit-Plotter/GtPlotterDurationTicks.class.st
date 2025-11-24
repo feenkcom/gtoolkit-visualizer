@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDurationTicks,
 	#superclass : #GtPlotterTicks,
-	#category : 'GToolkit-Plotter-Tick'
+	#category : #'GToolkit-Plotter-Tick'
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'step'
 	],
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }
 
 { #category : #accessing }

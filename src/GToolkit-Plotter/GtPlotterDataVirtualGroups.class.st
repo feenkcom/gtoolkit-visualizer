@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDataVirtualGroups,
 	#superclass : #GtPlotterDataGroups,
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #testing }
