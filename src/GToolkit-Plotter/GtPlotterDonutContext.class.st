@@ -6,7 +6,7 @@ Class {
 		'endAngle',
 		'totalAngle'
 	],
-	#category : 'GToolkit-Plotter-Core - Context'
+	#category : #'GToolkit-Plotter-Core - Context'
 }
 
 { #category : #accessing }

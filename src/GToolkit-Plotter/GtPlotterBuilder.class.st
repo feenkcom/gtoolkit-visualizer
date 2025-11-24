@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'chartStyle'
 	],
-	#category : 'GToolkit-Plotter-! Plotter'
+	#category : #'GToolkit-Plotter-! Plotter'
 }
 
 { #category : #'instance creation' }

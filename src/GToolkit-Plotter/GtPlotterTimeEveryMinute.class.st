@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterTimeEveryMinute,
 	#superclass : #GtPlotterTimeInterval,
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterScaleMagnitudeDomain,
 	#superclass : #GtPlotterScaleIntervalDomain,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #private }

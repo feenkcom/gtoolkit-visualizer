@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterIdentityScale,
 	#superclass : #GtPlotterContinuousScale,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #'operators-mapping' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterHorizontalSeparateBarGroupStencilBuilder,
 	#superclass : #GtPlotterHorizontalBarGroupStencilBuilder,
-	#category : 'GToolkit-Plotter-Builder - Bar Chart'
+	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #'api - instantiation' }

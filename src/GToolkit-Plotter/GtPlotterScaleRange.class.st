@@ -8,7 +8,7 @@ https://en.wikipedia.org/wiki/Range_(mathematics)
 Class {
 	#name : #GtPlotterScaleRange,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #'api - polymorphism' }

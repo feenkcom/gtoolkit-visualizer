@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'scale'
 	],
-	#category : 'GToolkit-Plotter-Builder - Composite Chart'
+	#category : #'GToolkit-Plotter-Builder - Composite Chart'
 }
 
 { #category : #converting }

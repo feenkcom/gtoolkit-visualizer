@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'label'
 	],
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #comparing }

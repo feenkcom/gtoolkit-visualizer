@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'plots'
 	],
-	#category : 'GToolkit-Plotter-! Plotter'
+	#category : #'GToolkit-Plotter-! Plotter'
 }
 
 { #category : #'private - plots' }

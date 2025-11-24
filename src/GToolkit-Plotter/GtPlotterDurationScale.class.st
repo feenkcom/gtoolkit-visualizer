@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDurationScale,
 	#superclass : #GtPlotterContinuousScale,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #'api - domain' }

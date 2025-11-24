@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'criteria'
 	],
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #accessing }
