@@ -13,15 +13,15 @@ GtPlotterScatterFocusPointHandler >> mouseEnterEvent: aBlMouseEnterEvent [
 	valueY := pointElement userData at: #originalY.
 	
 	lines := OrderedCollection new.
-	newLines :=  scatterChart xTicks
-		select: [:each | (each userData at: #originalValue ifAbsent: [ nil ]) = valueX ]
-		thenCollect: [:each | 
+	newLines :=  (scatterChart xTicks
+		select: [:each | (each userData at: #originalValue ifAbsent: [ nil ]) = valueX ])
+		collect: [:each | 
 			self newVerticalLineFrom: each to: pointElement
 		].
 	lines addAll: newLines.
-	newLines :=  scatterChart yTicks
-		select: [:each | (each userData at: #originalValue ifAbsent: [ nil ]) = valueY ]
-		thenCollect: [:each | 
+	newLines :=  (scatterChart yTicks
+		select: [:each | (each userData at: #originalValue ifAbsent: [ nil ]) = valueY ])
+		collect: [:each | 
 			self newHorizontalLineFrom: each to: pointElement
 		].
 	lines addAll: newLines.
