@@ -5,7 +5,7 @@ Class {
 		'circles',
 		'neighbourCircle'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #'private - algebra' }

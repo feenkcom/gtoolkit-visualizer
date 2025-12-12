@@ -6,7 +6,7 @@ A ROCircleLayout is xxxxxxxxx.
 Class {
 	#name : #GtGraphCircleLayout,
 	#superclass : #GtGraphAbstractCircleLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #'instance creation' }

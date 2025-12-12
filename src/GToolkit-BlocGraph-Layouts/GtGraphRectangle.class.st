@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'margin'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
 }
 
 { #category : #'instance creation' }

@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Utilities'
+	#category : #'GToolkit-BlocGraph-Layouts-Utilities'
 }
 
 { #category : #cleanup }
