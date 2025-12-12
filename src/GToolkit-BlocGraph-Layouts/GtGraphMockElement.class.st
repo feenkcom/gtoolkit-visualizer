@@ -5,7 +5,7 @@ Class {
 		'realElement',
 		'position'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #action }

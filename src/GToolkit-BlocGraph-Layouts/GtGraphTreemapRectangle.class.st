@@ -11,7 +11,7 @@ Class {
 		'extent',
 		'position'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #converting }

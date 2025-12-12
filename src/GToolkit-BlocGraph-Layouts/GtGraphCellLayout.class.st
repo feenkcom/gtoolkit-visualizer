@@ -17,7 +17,7 @@ Class {
 		'translateElement',
 		'align'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #accessing }

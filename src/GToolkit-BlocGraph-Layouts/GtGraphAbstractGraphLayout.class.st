@@ -8,7 +8,7 @@ Class {
 		'cachedParents',
 		'cachedParentsWithHighestNestings'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #constants }

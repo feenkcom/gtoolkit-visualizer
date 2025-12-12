@@ -25,7 +25,7 @@ Class {
 		'maxLayer',
 		'maxAbcissa'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #algorithm }
