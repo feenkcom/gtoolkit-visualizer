@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'weight'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
 { #category : #initialization }

@@ -265,13 +265,12 @@ GtGraphTreemapLayoutExamples >> rectangleWithOriginalAsElementWithInformation [
 { #category : #'as yet unclassified' }
 GtGraphTreemapLayoutExamples >> scriptedSquarifyStep3 [
 	<gtExample>
-	<noTest>
 	| scripter |
 	scripter := BlScripter new.
 	scripter element: (GtInspector createOn: self squarifyWithSevenNodes) maximized.
-	scripter click
-		label: 'Select the Steps  list view';
-		id: #bar index: 3;
+	scripter inspectorStep
+		label: 'Select the Steps list view';
+		clickOnTabWithName: 'Steps list';
 		play.
 	scripter click
 		label: 'Select the 3rd step';
@@ -290,13 +289,12 @@ GtGraphTreemapLayoutExamples >> scriptedSquarifyStep3 [
 { #category : #'as yet unclassified' }
 GtGraphTreemapLayoutExamples >> scriptedSquarifyStep4 [
 	<gtExample>
-	<noTest>
 	| scripter |
 	scripter := BlScripter new.
 	scripter element: (GtInspector createOn: self squarifyWithSevenNodes) maximized.
-	scripter click
-		label: 'Select the Steps  list view';
-		id: #bar index: 3;
+	scripter inspectorStep
+		label: 'Select the Steps list view';
+		clickOnTabWithName: 'Steps list';
 		play.
 	scripter click
 		label: 'Select the 4th step';

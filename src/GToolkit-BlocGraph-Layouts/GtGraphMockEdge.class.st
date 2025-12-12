@@ -5,7 +5,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #accessing }

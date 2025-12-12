@@ -1,6 +1,6 @@
 Trait {
 	#name : #TGtGraphLayoutUtils,
-	#category : 'GToolkit-BlocGraph-Layouts-Basic'
+	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
 
 { #category : #utils }

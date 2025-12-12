@@ -14,7 +14,7 @@ In the following example, I occupy top-right side of a total area with {{gtExamp
 Class {
 	#name : #GtGraphTreemapSquarifyLandscapeRectangle,
 	#superclass : #GtGraphTreemapSquarifyAreaRectangle,
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }

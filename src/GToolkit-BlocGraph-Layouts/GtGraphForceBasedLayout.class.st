@@ -93,7 +93,7 @@ Class {
 		'initialLayout',
 		'nbIterations'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #algorithm }

@@ -12,7 +12,7 @@ The following example shows an area with three nodes:
 Class {
 	#name : #GtGraphTreemapSliceHorizontal,
 	#superclass : #GtGraphTreemapSlice,
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'root'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Rectangle'
 }
 
 { #category : #adding }
