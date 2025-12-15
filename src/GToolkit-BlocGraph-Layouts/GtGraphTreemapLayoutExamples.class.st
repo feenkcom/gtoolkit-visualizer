@@ -272,16 +272,13 @@ GtGraphTreemapLayoutExamples >> scriptedSquarifyStep3 [
 		label: 'Select the Steps list view';
 		clickOnTabWithName: 'Steps list';
 		play.
-	scripter click
+	scripter doubleClick
 		label: 'Select the 3rd step';
 		id: GtPhlowColumnedListId;
 		id: #scrollable;
 		onChildAt: 3;
 		// GtPhlowCellElement;
 		@ 1;
-		play.
-	scripter doubleClick
-		label: 'Double-click on the step';
 		play.
 	^ scripter elementWithoutParent
 ]
@@ -296,16 +293,13 @@ GtGraphTreemapLayoutExamples >> scriptedSquarifyStep4 [
 		label: 'Select the Steps list view';
 		clickOnTabWithName: 'Steps list';
 		play.
-	scripter click
+	scripter doubleClick
 		label: 'Select the 4th step';
 		id: GtPhlowColumnedListId;
 		id: #scrollable;
 		onChildAt: 4;
 		// GtPhlowCellElement;
 		@ 1;
-		play.
-	scripter doubleClick
-		label: 'Double-click on the step';
 		play.
 	^ scripter elementWithoutParent
 ]
