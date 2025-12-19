@@ -1,7 +1,7 @@
 Class {
 	#name : #GtHeightExpandingElement,
 	#superclass : #BlElement,
-	#category : 'GToolkit-Mondrian'
+	#category : #'GToolkit-Mondrian'
 }
 
 { #category : #layout }
