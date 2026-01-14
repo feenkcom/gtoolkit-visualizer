@@ -90,9 +90,32 @@ GtGraphTreemapSquarifyAbstractStep >> isDefinedStep [
 	^ true
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyAbstractStep >> isRejectedStep [
+	^ false
+]
+
 { #category : #comparing }
 GtGraphTreemapSquarifyAbstractStep >> isSameStep: aStep [
 	^ self == aStep
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyAbstractStep >> largestRectangleChain [
+	"Return the value of the longest successful path with one rejected step"
+
+	<return: #Integer>
+	| maxChainCount currentChainCount |
+	maxChainCount := 0.
+	currentChainCount := 0.
+	self allSteps
+		do: [ :eachStep | 
+			currentChainCount := currentChainCount + 1.
+			eachStep isRejectedStep
+				ifTrue: [ maxChainCount := maxChainCount max: currentChainCount.
+					currentChainCount := 0 ] ].
+
+	^ maxChainCount
 ]
 
 { #category : #accessing }

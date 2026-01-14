@@ -57,6 +57,11 @@ GtGraphTreemapSquarifyStepPreview >> asPreviewStep [
 	^ self
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyStepPreview >> isRejectedStep [
+	^ self step isRejectedStep
+]
+
 { #category : #comparing }
 GtGraphTreemapSquarifyStepPreview >> isSameStep: aStep [
 	^ self step == aStep or: [ self == aStep ]

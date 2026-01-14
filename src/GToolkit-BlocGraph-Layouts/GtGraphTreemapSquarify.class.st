@@ -63,33 +63,69 @@ GtGraphTreemapSquarify >> allSteps [
 
 { #category : #converting }
 GtGraphTreemapSquarify >> asAllStepsPreview [
-	| aContainer theStepsToElements |
-	aContainer := BlElement new 
-		constraintsDo: [ :c | 
-			c horizontal fitContent.
-			c vertical fitContent ];
-		layout: (BlGridLayout new columnCount: 3; cellSpacing: 5).
+	| columnCount currentColumn aContainer theStepsToElements |
+	columnCount := firstStep largestRectangleChain.
+
+	aContainer := BlElement new
+			constraintsDo: [ :c | 
+				c horizontal fitContent.
+				c vertical fitContent ];
+			layout: (BlGridLayout new
+					columnCount: columnCount;
+					cellSpacing: 5).
 	theStepsToElements := IdentityDictionary new.
-	self allSteps do: [ :eachStep |
-		| anElement |
-		anElement := eachStep asElementWithOccupiedArea.
-		anElement margin: (BlInsets all: 10).
-		theStepsToElements at: eachStep put: anElement.
-		aContainer addChild: anElement ].
-	theStepsToElements associationsDo: [ :anAssoc |
-		| aNextStep aNextStepElement |
-		anAssoc key hasNextStep ifTrue: [ 
-			aNextStep := anAssoc key nextStep.
-			aNextStepElement := theStepsToElements at: aNextStep.
-			anAssoc value graph connectTo: aNextStepElement.
-			aContainer addChild: (BlLineElement new
-				constraintsDo: [ :c | c ignoreByLayout ];
-				border: (BlBorder paint: (Color gray alpha: 0.3) width: 2);
-					zIndex: -2;
-					fromAnchor: (BlElementBottomCenterAnchor referenceElement: anAssoc value relatedTo: aNextStepElement);
-					toAnchor: (BlElementTopCenterAnchor referenceElement: aNextStepElement relatedTo: anAssoc value);
-					fromHead: (BlArrowheadSimpleArrow new border: (BlBorder builder paint: (Color gray darker alpha: 0.3); width: 5; build))) ]
-	].
+
+	currentColumn := 0.
+	self allSteps
+		do: [ :eachStep | 
+			| anElement |
+			currentColumn := currentColumn + 1.
+			anElement := eachStep asElementWithOccupiedArea.
+			anElement margin: (BlInsets all: 20).
+			theStepsToElements at: eachStep put: anElement.
+			aContainer addChild: anElement.
+
+			eachStep isRejectedStep
+				ifTrue: [ columnCount - currentColumn
+						timesRepeat: [ aContainer addChild: (BlElement new size: 1 @ 1) ].
+					currentColumn := 0 ] ].
+
+	theStepsToElements
+		keysAndValuesDo: [ :eachStep :eachStepElement | 
+			| aNextStep aNextStepElement |
+			eachStep hasNextStep
+				ifTrue: [ aNextStep := eachStep nextStep.
+					aNextStepElement := theStepsToElements at: aNextStep.
+					eachStepElement graph connectTo: aNextStepElement.
+					aContainer
+						addChild: (BlLineElement new
+								constraintsDo: [ :c | c ignoreByLayout ];
+								border: (BlBorder paint: (Color gray alpha: 0.3) width: 2);
+								zIndex: -2;
+								fromAnchor: (BlNearestPositionBoundsAnchor nearestTo: aNextStepElement from: eachStepElement);
+								toAnchor: (BlNearestPositionBoundsAnchor nearestTo: eachStepElement from: aNextStepElement);
+								toHead: (BlArrowheadSimpleArrow new
+										border: (BlBorder builder
+												paint: (Color gray darker alpha: 0.3);
+												width: 5;
+												build))) ].
+
+			(eachStep isRejectedStep not and: [ eachStep rejectedStep isDefinedStep ])
+				ifTrue: [ aNextStep := eachStep rejectedStep.
+					aNextStepElement := theStepsToElements at: aNextStep.
+					eachStepElement graph connectTo: aNextStepElement.
+					aContainer
+						addChild: (BlLineElement new
+								constraintsDo: [ :c | c ignoreByLayout ];
+								border: (BlBorder paint: (Color gray alpha: 0.3) width: 2);
+								zIndex: -2;
+								fromAnchor: (BlNearestPositionBoundsAnchor nearestTo: aNextStepElement from: eachStepElement);
+								toAnchor: (BlNearestPositionBoundsAnchor nearestTo: eachStepElement from: aNextStepElement);
+								toHead: (BlArrowheadSimpleArrow new
+										border: (BlBorder builder
+												paint: (Color gray darker alpha: 0.3);
+												width: 5;
+												build))) ] ].
 	^ aContainer
 ]
 
