@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'layout'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #'instance creation' }
