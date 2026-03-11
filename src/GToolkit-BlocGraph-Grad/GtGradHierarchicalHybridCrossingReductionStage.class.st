@@ -28,7 +28,7 @@ GtGradHierarchicalHybridCrossingReductionStage >> calculateRankCrossings: aRanks
 	"ranks is a collection of sets"
 	currentRank := model ranks at: aRanksIndex.
 	previousRank := model ranks at: (aRanksIndex - 1).
-	connections := Array2D rows: currentRank size columns: previousRank size.
+	connections := BlArray2D rows: currentRank size columns: previousRank size.
 	totalCrossings := 0.
 	
 	currentRank do: [ :anElement |

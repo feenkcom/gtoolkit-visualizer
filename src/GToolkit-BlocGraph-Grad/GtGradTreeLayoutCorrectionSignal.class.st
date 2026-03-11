@@ -5,7 +5,7 @@ Class {
 		'node',
 		'alignmentCorrection'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Signals'
+	#category : #'GToolkit-BlocGraph-Grad-Signals'
 }
 
 { #category : #testing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGradTreeNodesCenterAlignment,
 	#superclass : #GtGradTreeNodesAlignment,
-	#category : 'GToolkit-BlocGraph-Grad-Tree'
+	#category : #'GToolkit-BlocGraph-Grad-Tree'
 }
 
 { #category : #calculating }

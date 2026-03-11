@@ -11,7 +11,7 @@ Class {
 		'rCurrent',
 		'radius'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Signals'
+	#category : #'GToolkit-BlocGraph-Grad-Signals'
 }
 
 { #category : #accessing }
