@@ -160,7 +160,7 @@ Object >> gtObjectConnectorTableIn: connector [
 			| icon |
 			icon := ([ aNode rawValue gtInspectorIcon ifNil: [ aNode rawValue class systemIcon ] ]
 				on: Error
-				do: [ :error | self iconNamed: #smallWarningIcon ]).
+				do: [ :error | self iconNamed: #smallWarning ]).
 			icon asElement].
 	list column
 		title: 'Variable';
