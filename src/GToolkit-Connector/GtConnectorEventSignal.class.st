@@ -1,7 +1,7 @@
 Class {
 	#name : #GtConnectorEventSignal,
 	#superclass : #GtConnectorBasicEventSignal,
-	#category : 'GToolkit-Connector-Logging'
+	#category : #'GToolkit-Connector-Logging'
 }
 
 { #category : #ui }

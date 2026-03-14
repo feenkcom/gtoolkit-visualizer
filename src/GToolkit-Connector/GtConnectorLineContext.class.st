@@ -6,7 +6,7 @@ Class {
 		'fromElement',
 		'toElement'
 	],
-	#category : 'GToolkit-Connector-Core'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #'instance creation' }

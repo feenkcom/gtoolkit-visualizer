@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'element'
 	],
-	#category : 'GToolkit-Connector-Events'
+	#category : #'GToolkit-Connector-Events'
 }
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'connector'
 	],
-	#category : 'GToolkit-Connector-Events'
+	#category : #'GToolkit-Connector-Events'
 }
 
 { #category : #accessing }
