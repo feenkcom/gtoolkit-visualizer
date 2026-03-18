@@ -1,38 +1,25 @@
 Class {
 	#name : #GtWardleyMapAddEdgeChange,
-	#superclass : #GtWardleyMapChange,
+	#superclass : #GtWardleyMapEdgeChange,
 	#instVars : [
-		'fromNode',
-		'toNode',
-		'label',
-		'labelCoordinate',
-		'arrow',
-		'isLabelVisible',
-		'width',
-		'newEdge',
-		'color'
+		'newEdge'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> arrow [
-	^ arrow
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> arrow: aBoolean [
-	arrow := aBoolean
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> color [
-	^ color
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> color: aColor [
-	color := aColor
+{ #category : #'as yet unclassified' }
+GtWardleyMapAddEdgeChange class >> onMap: aMap andEdge: anEdge [
+	| undo |
+	undo := self onMap: aMap.
+	undo fromNode: anEdge fromNode.
+	undo toNode: anEdge toNode.
+	undo label: anEdge label.
+	undo labelCoordinate: anEdge labelCoordinate.
+	undo arrow: anEdge arrow.
+	undo isLabelVisible: anEdge isLabelVisible.
+	undo width: anEdge width.
+	undo color: anEdge color.
+	^ undo
 ]
 
 { #category : #private }
@@ -41,12 +28,12 @@ GtWardleyMapAddEdgeChange >> executeNotifying: aBlock [
 	newEdge := GtWardleyMapEdgeModel new.
 	newEdge fromNode: fromNode.
 	newEdge toNode: toNode.
+	arrow ifNotNil: [ newEdge arrow: arrow ].
+	color ifNotNil: [ newEdge color: color ].
+	isLabelVisible ifNotNil: [ newEdge isLabelVisible: isLabelVisible ].
 	label ifNotNil: [ newEdge label: label ].
 	labelCoordinate ifNotNil: [ newEdge labelCoordinate: labelCoordinate ].
-	arrow ifNotNil: [ newEdge arrow: arrow ].
-	isLabelVisible ifNotNil: [ newEdge isLabelVisible: isLabelVisible ].
 	width ifNotNil: [ newEdge width: width ].
-	color ifNotNil: [ newEdge color: color ].
 	map addEdge: newEdge.
 	undo := GtWardleyMapRemoveEdgeChange onMap: map.
 	undo edge: newEdge.
@@ -54,66 +41,6 @@ GtWardleyMapAddEdgeChange >> executeNotifying: aBlock [
 ]
 
 { #category : #accessing }
-GtWardleyMapAddEdgeChange >> fromNode [
-	^ fromNode
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> fromNode: aNode [
-	fromNode := aNode
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> isLabelVisible [
-	^ isLabelVisible
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> isLabelVisible: aBoolean [
-	isLabelVisible := aBoolean
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> label [
-	^ label
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> label: aString [
-	label := aString
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> labelCoordinate [
-	^ labelCoordinate
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> labelCoordinate: aPoint [
-	labelCoordinate := aPoint
-]
-
-{ #category : #accessing }
 GtWardleyMapAddEdgeChange >> newEdge [
 	^ newEdge
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> toNode [
-	^ toNode
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> toNode: aNode [
-	toNode := aNode
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> width [
-	^ width
-]
-
-{ #category : #accessing }
-GtWardleyMapAddEdgeChange >> width: aNumber [
-	width := aNumber
 ]

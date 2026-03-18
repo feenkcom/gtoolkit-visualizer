@@ -48,6 +48,18 @@ GtWardleyMapChangeExamples >> addNodeBChange [
 	^ nodeBChange
 ]
 
+{ #category : #adding }
+GtWardleyMapChangeExamples >> addNoteChange [
+	<gtExample>
+	| change |
+	change := GtWardleyMapAddNoteChange
+			onMap: self executeAddABEdgeChange first map.
+	change label: 'This is a note'.
+	change visibility: 0.25.
+	change evolution: 0.75.
+	^ change
+]
+
 { #category : #private }
 GtWardleyMapChangeExamples >> emptyMap [
 	^ GtWardleyMapModel new
@@ -114,7 +126,70 @@ GtWardleyMapChangeExamples >> executeAddNodeBChangeExample [
 	<gtExample>
 	| change |
 	change := self executeAddNodeBChange first.
-	^ change newNode parent
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeAddNoteChange [
+	| change undoChange note |
+	change := self addNoteChange.
+	undoChange := change execute.
+
+	self assert: undoChange class equals: GtWardleyMapRemoveNoteChange.
+
+	note := change newNote.
+	self validateNote: note.
+	^ {change.
+		undoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeAddNoteChangeExample [
+	<gtExample>
+	| change |
+	change := self executeAddNoteChange first.
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeUpdateABEdgeChange [
+	| change undoChange edge |
+	change := self updateABEdgeChange.
+	undoChange := change execute.
+	self assert: undoChange class equals: GtWardleyMapUpdateEdgeChange.
+	edge := change edge.
+	self validateABEdgeUpdate: edge.
+	^ {change.
+		undoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeUpdateABEdgeChangeExample [
+	<gtExample>
+	| change |
+	change := self executeUpdateABEdgeChange first.
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeUpdateNodeAChange [
+	| change undoChange |
+	change := self updateNodeAChange.
+	undoChange := change execute.
+
+	self assert: undoChange class equals: GtWardleyMapUpdateNodeChange.
+
+	self validateUpdates: change node.
+	^ {change.
+		undoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeUpdateNodeAChangeExample [
+	<gtExample>
+	| change |
+	change := self executeUpdateNodeAChange first.
+	^ change map
 ]
 
 { #category : #private }
@@ -138,7 +213,7 @@ GtWardleyMapChangeExamples >> nodeBProperties [
 ]
 
 { #category : #adding }
-GtWardleyMapChangeExamples >> redoUndoExecuteAddABEdgeChange [
+GtWardleyMapChangeExamples >> redoUndoExecuteAddABEdgeChangeExample [
 	<gtExample>
 	| change |
 	change := self undoExecuteAddABEdgeChange last.
@@ -156,6 +231,42 @@ GtWardleyMapChangeExamples >> redoUndoExecuteAddNodeAChangeExample [
 
 	self assert: redoChange class equals: GtWardleyMapRemoveNodeChange.
 	self validateNodeA: undoChange newNode.
+	^ undoChange map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> redoUndoExecuteAddNoteChangeExample [
+	<gtExample>
+	| undoChange redoChange |
+	undoChange := self undoExecuteAddNoteChange last.
+	redoChange := undoChange execute.
+
+	self assert: redoChange class equals: GtWardleyMapRemoveNoteChange.
+	self validateNote: undoChange newNote.
+	^ undoChange map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> redoUndoExecuteUpdateABEdgeChangeExample [
+	<gtExample>
+	| undoChange redoChange |
+	undoChange := self undoExecuteUpdateABEdgeChange last.
+	redoChange := undoChange execute.
+
+	self assert: redoChange class equals: GtWardleyMapUpdateEdgeChange.
+	self validateABEdgeUpdate: undoChange edge.
+	^ undoChange map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> redoUndoExecuteUpdateNodeAChangeExample [
+	<gtExample>
+	| undoChange redoChange |
+	undoChange := self undoExecuteUpdateNodeAChange last.
+	redoChange := undoChange execute.
+
+	self assert: redoChange class equals: GtWardleyMapUpdateNodeChange.
+	self validateUpdates: undoChange node.
 	^ undoChange map
 ]
 
@@ -200,6 +311,96 @@ GtWardleyMapChangeExamples >> undoExecuteAddNodeAChangeExample [
 ]
 
 { #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteAddNoteChange [
+	| redoChange undoChange |
+	undoChange := self executeAddNoteChange last.
+	redoChange := undoChange execute.
+
+	self assert: redoChange class equals: GtWardleyMapAddNoteChange.
+
+	^ {undoChange.
+		redoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteAddNoteChangeExample [
+	<gtExample>
+	| change |
+	change := self undoExecuteAddNoteChange first.
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteUpdateABEdgeChange [
+	| redoChange undoChange |
+	undoChange := self executeUpdateABEdgeChange last.
+	redoChange := undoChange execute.
+
+	self assert: redoChange class equals: GtWardleyMapUpdateEdgeChange.
+
+	^ {undoChange.
+		redoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteUpdateABEdgeChangeExample [
+	<gtExample>
+	| change |
+	change := self undoExecuteUpdateABEdgeChange first.
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteUpdateNodeAChange [
+	| redoChange undoChange |
+	undoChange := self executeUpdateNodeAChange last.
+	redoChange := undoChange execute.
+
+	self assert: redoChange class equals: GtWardleyMapUpdateNodeChange.
+
+	^ {undoChange.
+		redoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteUpdateNodeAChangeExample [
+	<gtExample>
+	| change |
+	change := self undoExecuteUpdateNodeAChange first.
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> updateABEdgeChange [
+	<gtExample>
+	| change |
+	change := GtWardleyMapUpdateEdgeChange
+			onMap: self executeAddNoteChange first map.
+	change arrow: false.
+	change color: Color blue.
+	change edge: change map edges first.
+	^ change
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> updateNodeAChange [
+	<gtExample>
+	| change |
+	change := GtWardleyMapUpdateNodeChange
+			onMap: self executeAddNoteChange first map.
+	change isEvolveVisible: true.
+	change evolvedLabel: 'Evolve label'.
+	change evolvedColor: Color yellow muchDarker.
+	change evolvedEvolution: 0.45.
+	change isEvolvedLabelVisible: true.
+	change map
+		nodeWithName: 'Node A'
+		ifFound: [ :n | change node: n ]
+		ifNone: [ self error: 'Node not found' ].
+	^ change
+]
+
+{ #category : #adding }
 GtWardleyMapChangeExamples >> validateABEdge: newEdge [
 	self assert: newEdge fromNode label equals: 'Node A'.
 	self assert: newEdge toNode label equals: 'Node B'.
@@ -210,16 +411,38 @@ GtWardleyMapChangeExamples >> validateABEdge: newEdge [
 ]
 
 { #category : #adding }
-GtWardleyMapChangeExamples >> validateNodeA: node [
-	self nodeAProperties
-		do: [ :each | self assert: (node perform: each first) equals: each second ]
+GtWardleyMapChangeExamples >> validateABEdgeUpdate: edge [
+	self assert: edge arrow equals: false.
+	self assert: edge color equals: Color blue
 ]
 
 { #category : #adding }
-GtWardleyMapChangeExamples >> validateNodeB: node [
+GtWardleyMapChangeExamples >> validateNodeA: aNode [
+	self nodeAProperties
+		do: [ :each | self assert: (aNode perform: each first) equals: each second ]
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> validateNodeB: aNode [
 	self nodeBProperties
 		do: [ :each | 
 			#labelCoordinate = each first
-				ifTrue: [ self assert: node labelModel coordinate equals: each second ]
-				ifFalse: [ self assert: (node perform: each first) equals: each second ] ]
+				ifTrue: [ self assert: aNode labelModel coordinate equals: each second ]
+				ifFalse: [ self assert: (aNode perform: each first) equals: each second ] ]
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> validateNote: aNote [
+	self assert: aNote label equals: 'This is a note'.
+	self assert: aNote evolution equals: 0.75.
+	self assert: aNote visibility equals: 0.25
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> validateUpdates: aNode [
+	self assert: aNode isEvolveVisible equals: true.
+	self assert: aNode evolvedLabel equals: 'Evolve label'.
+	self assert: aNode evolvedColor equals: Color yellow muchDarker.
+	self assert: aNode evolvedEvolution equals: 0.45.
+	self assert: aNode isEvolvedLabelVisible equals: true
 ]
