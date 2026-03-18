@@ -20,15 +20,7 @@ GtWardleyMapRemoveEdgeChange >> edge: anObject [
 { #category : #'as yet unclassified' }
 GtWardleyMapRemoveEdgeChange >> executeNotifying: aBlock [
 	| undo |
-	undo := GtWardleyMapAddEdgeChange onMap: map.
-	undo fromNode: edge fromNode.
-	undo toNode: edge toNode.
-	undo label: edge label.
-	undo labelCoordinate: edge labelCoordinate.
-	undo arrow: edge arrow.
-	undo isLabelVisible: edge isLabelVisible.
-	undo width: edge width.
-	undo color: edge color.
+	undo := GtWardleyMapAddEdgeChange onMap: map andEdge: edge.
 	edge removeFromMap.
 	^ undo
 ]
