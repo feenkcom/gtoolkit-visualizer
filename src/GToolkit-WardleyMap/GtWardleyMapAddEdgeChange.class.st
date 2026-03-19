@@ -7,7 +7,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtWardleyMapAddEdgeChange class >> onMap: aMap andEdge: anEdge [
 	| undo |
 	undo := self onMap: aMap.

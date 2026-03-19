@@ -7,7 +7,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtWardleyMapAddNodeChange class >> onMap: aMap andNode: aNode [
 	| undo |
 	undo := self onMap: aMap.

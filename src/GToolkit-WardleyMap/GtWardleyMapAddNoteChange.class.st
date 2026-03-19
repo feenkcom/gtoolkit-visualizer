@@ -1,17 +1,13 @@
 Class {
 	#name : #GtWardleyMapAddNoteChange,
-	#superclass : #GtWardleyMapChange,
+	#superclass : #GtWardleyMapNoteChange,
 	#instVars : [
-		'label',
-		'evolution',
-		'visibility',
-		'newNote',
-		'color'
+		'newNote'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GtWardleyMapAddNoteChange class >> onMap: aMap andNote: aNote [
 	| undo |
 	undo := self onMap: aMap.
@@ -22,27 +18,7 @@ GtWardleyMapAddNoteChange class >> onMap: aMap andNote: aNote [
 	^ undo
 ]
 
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> color [
-	^ color
-]
-
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> color: aColor [
-	color := aColor
-]
-
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> evolution [
-	^ evolution
-]
-
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> evolution: aNumber [
-	evolution := aNumber
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
 	newNote := GtWardleyMapNoteModel new.
 	color ifNotNil: [ newNote color: color ].
@@ -54,26 +30,6 @@ GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
 ]
 
 { #category : #accessing }
-GtWardleyMapAddNoteChange >> label [
-	^ label
-]
-
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> label: aString [
-	label := aString
-]
-
-{ #category : #accessing }
 GtWardleyMapAddNoteChange >> newNote [
 	^ newNote
-]
-
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> visibility [
-	^ visibility
-]
-
-{ #category : #accessing }
-GtWardleyMapAddNoteChange >> visibility: aNumber [
-	visibility := aNumber
 ]

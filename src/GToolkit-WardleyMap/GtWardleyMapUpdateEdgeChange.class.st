@@ -17,7 +17,7 @@ GtWardleyMapUpdateEdgeChange >> edge: anEdge [
 	edge := anEdge
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtWardleyMapUpdateEdgeChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self copy.

@@ -7,10 +7,18 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtWardleyMapRemoveNodeChange >> executeNotifying: aBlock [
-	| undo |
-	undo := GtWardleyMapAddNodeChange onMap: map andNode: node.
+	| undoNode undo edges |
+	undoNode := GtWardleyMapAddNodeChange onMap: map andNode: node.
+	edges := map edges
+			select: [ :each | each toNode == node or: [ each fromNode == node ] ].
+	edges notEmpty
+		ifTrue: [ undo := RBCompositeRefactoryChange new.
+			undo addChange: undoNode.
+			edges
+				do: [ :each | undo addChange: (GtWardleyMapAddEdgeChange onMap: map andEdge: each) ] ]
+		ifFalse: [ undo := undoNode ].
 	node removeFromMap.
 	^ undo
 ]
