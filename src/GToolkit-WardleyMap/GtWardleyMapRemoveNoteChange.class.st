@@ -7,7 +7,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtWardleyMapRemoveNoteChange >> executeNotifying: aBlock [
 	| undo |
 	undo := GtWardleyMapAddNoteChange onMap: map andNote: note.

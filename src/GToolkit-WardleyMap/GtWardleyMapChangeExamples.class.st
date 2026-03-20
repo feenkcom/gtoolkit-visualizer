@@ -28,6 +28,26 @@ GtWardleyMapChangeExamples >> addABEdgeChange [
 ]
 
 { #category : #adding }
+GtWardleyMapChangeExamples >> addInnerNodeToNodeAChange [
+	<gtExample>
+	| map addNode innerNodeChange |
+	map := self executeAddABEdgeChange first map.
+	addNode := GtWardleyMapAddNodeChange onMap: map.
+	addNode label: 'Inner node'.
+	addNode visibility: 0.125.
+	addNode evolution: 0.375.
+	addNode color: Color green muchDarker.
+	addNode execute.
+	innerNodeChange := GtWardleyMapAddInnerNodeChange onMap: map.
+	innerNodeChange innerNode: addNode newNode.
+	map
+		nodeWithName: 'Node A'
+		ifFound: [ :n | innerNodeChange outerNode: n ]
+		ifNone: [ self error: 'Node not found' ].
+	^ innerNodeChange
+]
+
+{ #category : #adding }
 GtWardleyMapChangeExamples >> addNodeAChange [
 	<gtExample>
 	| change |
@@ -82,6 +102,32 @@ GtWardleyMapChangeExamples >> executeAddABEdgeChangeExample [
 	<gtExample>
 	| change |
 	change := self executeAddABEdgeChange first.
+	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeAddInnerNodeToNodeAChange [
+	| change undoChange map |
+	change := self addInnerNodeToNodeAChange.
+	undoChange := change execute.
+
+	map := change map.
+	map
+		nodeWithName: 'Node A'
+		ifFound: [ :n | 
+			self assert: n innerNodes size equals: 1.
+			self assert: n innerNodes any label equals: 'Inner node' ]
+		ifNone: [ self error: 'Node not found' ].
+
+	^ {change.
+		undoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> executeAddInnerNodeToNodeAChangeExample [
+	<gtExample>
+	| change |
+	change := self executeAddInnerNodeToNodeAChange first.
 	^ change map
 ]
 
@@ -151,7 +197,46 @@ GtWardleyMapChangeExamples >> executeAddNoteChangeExample [
 	^ change map
 ]
 
-{ #category : #adding }
+{ #category : #removing }
+GtWardleyMapChangeExamples >> executeRemoveABEdgeChange [
+	| change undoChange |
+	change := self removeABEdgeChange.
+	undoChange := change execute.
+	self assert: undoChange class equals: GtWardleyMapAddEdgeChange.
+	^ {change.
+		undoChange}
+]
+
+{ #category : #removing }
+GtWardleyMapChangeExamples >> executeRemoveABEdgeChangeExample [
+	<gtExample>
+	| change |
+	change := self executeRemoveABEdgeChange first.
+	self assert: change map edges isEmpty.
+	^ change map
+]
+
+{ #category : #removing }
+GtWardleyMapChangeExamples >> executeRemoveANodeWithEdge [
+	| change undoChange |
+	change := self removeANodeWithEdge.
+	undoChange := change execute.
+	self assert: (undoChange isKindOf: RBCompositeRefactoryChange).
+	self assert: change map edges isEmpty.
+	^ {change.
+		undoChange}
+]
+
+{ #category : #removing }
+GtWardleyMapChangeExamples >> executeRemoveANodeWithEdgeExample [
+	<gtExample>
+	| change |
+	change := self executeRemoveANodeWithEdge first.
+	self assert: change map edges isEmpty.
+	^ change map
+]
+
+{ #category : #updating }
 GtWardleyMapChangeExamples >> executeUpdateABEdgeChange [
 	| change undoChange edge |
 	change := self updateABEdgeChange.
@@ -163,7 +248,7 @@ GtWardleyMapChangeExamples >> executeUpdateABEdgeChange [
 		undoChange}
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> executeUpdateABEdgeChangeExample [
 	<gtExample>
 	| change |
@@ -171,7 +256,32 @@ GtWardleyMapChangeExamples >> executeUpdateABEdgeChangeExample [
 	^ change map
 ]
 
-{ #category : #adding }
+{ #category : #updating }
+GtWardleyMapChangeExamples >> executeUpdateMapChange [
+	| change undoChange map |
+	change := self updateMapChange.
+	undoChange := change execute.
+	map := change map.
+
+	self assert: undoChange class equals: GtWardleyMapUpdateMapChange.
+
+	self assert: map isEvolutionAxisVisible not.
+	self assert: map isTitleVisible.
+	self assert: map title equals: 'Map title'.
+	
+	^ {change.
+		undoChange}
+]
+
+{ #category : #updating }
+GtWardleyMapChangeExamples >> executeUpdateMapChangeExample [
+	<gtExample>
+	| change |
+	change := self executeUpdateMapChange first.
+	^ change map
+]
+
+{ #category : #updating }
 GtWardleyMapChangeExamples >> executeUpdateNodeAChange [
 	| change undoChange |
 	change := self updateNodeAChange.
@@ -184,7 +294,7 @@ GtWardleyMapChangeExamples >> executeUpdateNodeAChange [
 		undoChange}
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> executeUpdateNodeAChangeExample [
 	<gtExample>
 	| change |
@@ -223,6 +333,15 @@ GtWardleyMapChangeExamples >> redoUndoExecuteAddABEdgeChangeExample [
 ]
 
 { #category : #adding }
+GtWardleyMapChangeExamples >> redoUndoExecuteAddInnerNodeToNodeAChangeExample [
+	<gtExample>
+	| change |
+	change := self undoExecuteAddInnerNodeToNodeAChange last.
+	change execute.
+	^ change gtAllChanges first map
+]
+
+{ #category : #adding }
 GtWardleyMapChangeExamples >> redoUndoExecuteAddNodeAChangeExample [
 	<gtExample>
 	| undoChange redoChange |
@@ -246,7 +365,7 @@ GtWardleyMapChangeExamples >> redoUndoExecuteAddNoteChangeExample [
 	^ undoChange map
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> redoUndoExecuteUpdateABEdgeChangeExample [
 	<gtExample>
 	| undoChange redoChange |
@@ -258,7 +377,7 @@ GtWardleyMapChangeExamples >> redoUndoExecuteUpdateABEdgeChangeExample [
 	^ undoChange map
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> redoUndoExecuteUpdateNodeAChangeExample [
 	<gtExample>
 	| undoChange redoChange |
@@ -268,6 +387,28 @@ GtWardleyMapChangeExamples >> redoUndoExecuteUpdateNodeAChangeExample [
 	self assert: redoChange class equals: GtWardleyMapUpdateNodeChange.
 	self validateUpdates: undoChange node.
 	^ undoChange map
+]
+
+{ #category : #removing }
+GtWardleyMapChangeExamples >> removeABEdgeChange [
+	<gtExample>
+	| map edgeChange |
+	map := self executeAddABEdgeChange first map.
+	edgeChange := (GtWardleyMapRemoveEdgeChange onMap: map) edge: map edges first.
+	^ edgeChange
+]
+
+{ #category : #removing }
+GtWardleyMapChangeExamples >> removeANodeWithEdge [
+	<gtExample>
+	| map nodeChange |
+	map := self executeAddABEdgeChange first map.
+	nodeChange := GtWardleyMapRemoveNodeChange onMap: map.
+	map
+		nodeWithName: 'Node A'
+		ifFound: [ :n | nodeChange node: n ]
+		ifNone: [ self error: 'Node not found' ].
+	^ nodeChange
 ]
 
 { #category : #adding }
@@ -288,6 +429,33 @@ GtWardleyMapChangeExamples >> undoExecuteAddABEdgeChangeExample [
 	| change |
 	change := self undoExecuteAddABEdgeChange first.
 	^ change map
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteAddInnerNodeToNodeAChange [
+	| redoChange undoChange changes originalChange |
+	changes := self executeAddInnerNodeToNodeAChange.
+	originalChange := changes first.
+	undoChange := changes last.
+	redoChange := undoChange execute.
+
+	self assert: originalChange outerNode innerNodes isEmpty.
+	self assert: originalChange outerNode isPipelineVisible not.
+	self assert: originalChange innerNode label equals: 'Inner node'.
+	self assert: originalChange innerNode visibility equals: 0.125.
+	self assert: originalChange innerNode evolution equals: 0.375.
+	self assert: originalChange innerNode color equals: Color green muchDarker.
+
+	^ {undoChange.
+		redoChange}
+]
+
+{ #category : #adding }
+GtWardleyMapChangeExamples >> undoExecuteAddInnerNodeToNodeAChangeExample [
+	<gtExample>
+	| change |
+	change := self undoExecuteAddInnerNodeToNodeAChange first.
+	^ change gtAllChanges first map
 ]
 
 { #category : #adding }
@@ -330,7 +498,34 @@ GtWardleyMapChangeExamples >> undoExecuteAddNoteChangeExample [
 	^ change map
 ]
 
-{ #category : #adding }
+{ #category : #removing }
+GtWardleyMapChangeExamples >> undoExecuteRemoveANodeWithEdge [
+	| redoChange undoChange |
+	undoChange := self executeRemoveANodeWithEdge last.
+	redoChange := undoChange execute.
+
+	self assert: (redoChange isKindOf: RBRefactoryChange).
+
+	^ {undoChange.
+		redoChange}
+]
+
+{ #category : #removing }
+GtWardleyMapChangeExamples >> undoExecuteRemoveANodeWithEdgeExample [
+	<gtExample>
+	| change map |
+	change := self undoExecuteRemoveANodeWithEdge first.
+	map := change gtAllChanges first map.
+	self assert: map edges notEmpty.
+	map
+		nodeWithName: 'Node A'
+		ifFound: [ :n | self validateNodeA: n ]
+		ifNone: [ self error: 'Node not found' ].
+	self validateABEdge: map edges first.
+	^ map
+]
+
+{ #category : #updating }
 GtWardleyMapChangeExamples >> undoExecuteUpdateABEdgeChange [
 	| redoChange undoChange |
 	undoChange := self executeUpdateABEdgeChange last.
@@ -342,7 +537,7 @@ GtWardleyMapChangeExamples >> undoExecuteUpdateABEdgeChange [
 		redoChange}
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> undoExecuteUpdateABEdgeChangeExample [
 	<gtExample>
 	| change |
@@ -350,7 +545,32 @@ GtWardleyMapChangeExamples >> undoExecuteUpdateABEdgeChangeExample [
 	^ change map
 ]
 
-{ #category : #adding }
+{ #category : #updating }
+GtWardleyMapChangeExamples >> undoExecuteUpdateMapChange [
+	| redoChange undoChange map |
+	undoChange := self executeUpdateMapChange last.
+	redoChange := undoChange execute.
+	map := undoChange map.
+
+	self assert: redoChange class equals: GtWardleyMapUpdateMapChange.
+
+	self assert: map isEvolutionAxisVisible.
+	self assert: map isTitleVisible not.
+	self assert: map title equals: 'Wardley Map'.
+
+	^ {undoChange.
+		redoChange}
+]
+
+{ #category : #updating }
+GtWardleyMapChangeExamples >> undoExecuteUpdateMapChangeExample [
+	<gtExample>
+	| change |
+	change := self undoExecuteUpdateMapChange first.
+	^ change map
+]
+
+{ #category : #updating }
 GtWardleyMapChangeExamples >> undoExecuteUpdateNodeAChange [
 	| redoChange undoChange |
 	undoChange := self executeUpdateNodeAChange last.
@@ -362,7 +582,7 @@ GtWardleyMapChangeExamples >> undoExecuteUpdateNodeAChange [
 		redoChange}
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> undoExecuteUpdateNodeAChangeExample [
 	<gtExample>
 	| change |
@@ -370,7 +590,7 @@ GtWardleyMapChangeExamples >> undoExecuteUpdateNodeAChangeExample [
 	^ change map
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 GtWardleyMapChangeExamples >> updateABEdgeChange [
 	<gtExample>
 	| change |
@@ -382,7 +602,19 @@ GtWardleyMapChangeExamples >> updateABEdgeChange [
 	^ change
 ]
 
-{ #category : #adding }
+{ #category : #updating }
+GtWardleyMapChangeExamples >> updateMapChange [
+	<gtExample>
+	| change |
+	change := GtWardleyMapUpdateMapChange
+			onMap: self executeAddNoteChange first map.
+	change isEvolutionAxisVisible: false.
+	change isTitleVisible: true.
+	change title: 'Map title'.
+	^ change
+]
+
+{ #category : #updating }
 GtWardleyMapChangeExamples >> updateNodeAChange [
 	<gtExample>
 	| change |
@@ -400,7 +632,7 @@ GtWardleyMapChangeExamples >> updateNodeAChange [
 	^ change
 ]
 
-{ #category : #adding }
+{ #category : #private }
 GtWardleyMapChangeExamples >> validateABEdge: newEdge [
 	self assert: newEdge fromNode label equals: 'Node A'.
 	self assert: newEdge toNode label equals: 'Node B'.
@@ -410,19 +642,19 @@ GtWardleyMapChangeExamples >> validateABEdge: newEdge [
 	self assert: newEdge width equals: 2
 ]
 
-{ #category : #adding }
+{ #category : #private }
 GtWardleyMapChangeExamples >> validateABEdgeUpdate: edge [
 	self assert: edge arrow equals: false.
 	self assert: edge color equals: Color blue
 ]
 
-{ #category : #adding }
+{ #category : #private }
 GtWardleyMapChangeExamples >> validateNodeA: aNode [
 	self nodeAProperties
 		do: [ :each | self assert: (aNode perform: each first) equals: each second ]
 ]
 
-{ #category : #adding }
+{ #category : #private }
 GtWardleyMapChangeExamples >> validateNodeB: aNode [
 	self nodeBProperties
 		do: [ :each | 
@@ -431,14 +663,14 @@ GtWardleyMapChangeExamples >> validateNodeB: aNode [
 				ifFalse: [ self assert: (aNode perform: each first) equals: each second ] ]
 ]
 
-{ #category : #adding }
+{ #category : #private }
 GtWardleyMapChangeExamples >> validateNote: aNote [
 	self assert: aNote label equals: 'This is a note'.
 	self assert: aNote evolution equals: 0.75.
 	self assert: aNote visibility equals: 0.25
 ]
 
-{ #category : #adding }
+{ #category : #private }
 GtWardleyMapChangeExamples >> validateUpdates: aNode [
 	self assert: aNode isEvolveVisible equals: true.
 	self assert: aNode evolvedLabel equals: 'Evolve label'.

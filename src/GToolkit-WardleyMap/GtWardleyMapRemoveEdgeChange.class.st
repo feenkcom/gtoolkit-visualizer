@@ -17,7 +17,7 @@ GtWardleyMapRemoveEdgeChange >> edge: anObject [
 	edge := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtWardleyMapRemoveEdgeChange >> executeNotifying: aBlock [
 	| undo |
 	undo := GtWardleyMapAddEdgeChange onMap: map andEdge: edge.
