@@ -198,9 +198,6 @@ GtWardleyMapScriptExporter >> exportNewSyntaxNode: aNode [
 		stream nextPut: $}.
 		self newLine
 	].
-	
-	"and split the group by an empty line"
-	self newLine.
 ]
 
 { #category : #'private - exporting' }

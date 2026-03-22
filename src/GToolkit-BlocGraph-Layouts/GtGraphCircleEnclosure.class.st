@@ -29,7 +29,7 @@ Class {
 	#instVars : [
 		'circles'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #algebra }

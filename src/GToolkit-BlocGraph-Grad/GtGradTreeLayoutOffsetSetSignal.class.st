@@ -6,7 +6,7 @@ Class {
 		'offsetX',
 		'offsetY'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Signals'
+	#category : #'GToolkit-BlocGraph-Grad-Signals'
 }
 
 { #category : #testing }

@@ -9,7 +9,8 @@ Class {
 		'stencil',
 		'aptitude',
 		'model',
-		'preferredBackground'
+		'preferredBackground',
+		'tooltip'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
@@ -26,8 +27,14 @@ GtWardleyMapMaximizerAction >> aptitude: aBlock [
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapMaximizerAction >> decorateNodeElementInContext: aNodeDecoratorContext [
-	aNodeDecoratorContext nodeElement labelContainerDo: [ :aContainer | 
-		aContainer addChild: self newButton ]
+	aNodeDecoratorContext nodeElement
+		labelContainerDo: [ :aContainer | 
+			| aButton |
+			aButton := self newNodeButton.
+			aButton
+				wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+				wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel.
+			aContainer addChild: aButton ]
 ]
 
 { #category : #accessing }
@@ -61,10 +68,12 @@ GtWardleyMapMaximizerAction >> model: anObject [
 ]
 
 { #category : #private }
-GtWardleyMapMaximizerAction >> newButton [
+GtWardleyMapMaximizerAction >> newButton: aButtonClass [
 	^ GtWardleyMapActionButtonStencil new
+		buttonClass: aButtonClass;
 		icon: self icon;
 		label: self label;
+		tooltip: self tooltip;
 		aptitude: self aptitude;
 		action: [ :aButton | self onMaximizeFrom: aButton ];
 		model: self model;
@@ -93,6 +102,11 @@ GtWardleyMapMaximizerAction >> newContainerInButton: aButton [
 	^ aContainer
 ]
 
+{ #category : #private }
+GtWardleyMapMaximizerAction >> newNodeButton [
+	^ self newButton: GtWardleyMapActionNodeButton
+]
+
 { #category : #'event handling' }
 GtWardleyMapMaximizerAction >> onMaximizeFrom: aButton [ 
 	| aContainer |
@@ -111,7 +125,7 @@ GtWardleyMapMaximizerAction >> parent: aParent [
 
 { #category : #accessing }
 GtWardleyMapMaximizerAction >> preferredBackground [
-	^ preferredBackground ifNil: [ preferredBackground := BrGlamorousColors backdropColor ]
+	^ preferredBackground ifNil: [ preferredBackground := BlTheme default default backdropBackground ]
 ]
 
 { #category : #accessing }
@@ -127,4 +141,14 @@ GtWardleyMapMaximizerAction >> stencil [
 { #category : #accessing }
 GtWardleyMapMaximizerAction >> stencil: aStencil [
 	stencil := aStencil asStencil
+]
+
+{ #category : #private }
+GtWardleyMapMaximizerAction >> tooltip [
+	^ tooltip
+]
+
+{ #category : #accessing }
+GtWardleyMapMaximizerAction >> tooltip: aString [ 
+	tooltip := aString
 ]

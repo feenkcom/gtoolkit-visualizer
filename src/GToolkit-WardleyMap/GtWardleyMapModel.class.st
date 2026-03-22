@@ -144,6 +144,14 @@ GtWardleyMapModel >> edgeFromNode: aFromNode toNode: aToNode ifFound: aFoundBloc
 		ifNone: aNoneBlock
 ]
 
+{ #category : #'api - nodes' }
+GtWardleyMapModel >> edgeWithName: aName ifFound: aFoundBlock ifNone: aNoneBlock [
+	^ self edges
+		detect: [ :eachEdge | eachEdge label = aName ]
+		ifFound: aFoundBlock
+		ifNone: aNoneBlock
+]
+
 { #category : #'api - edges' }
 GtWardleyMapModel >> edges [
 	^ edges
@@ -153,6 +161,13 @@ GtWardleyMapModel >> edges [
 GtWardleyMapModel >> edges: aCollection [
 	edges copy do: [ :anEdge | self removeEdge: anEdge ].
 	aCollection do: [ :anEdge | self addEdge: anEdge ]
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapModel >> ensureAllProposition [
+	(self wardleyMapDecoratorModels anySatisfy: #isAllProposition)
+		ifTrue: [ ^ self ].
+	self addWardleyMapDecoratorModel: GtWardleyMapAllProposition new
 ]
 
 { #category : #'api - title' }
@@ -295,11 +310,13 @@ GtWardleyMapModel >> gtNotesFor: aView [
 { #category : #'gt - extensions' }
 GtWardleyMapModel >> gtWardleyMapDecorators [
 	^ Array streamContents: [ :aStream | 
-	 	self nodes do: [ :each | 
+		self wardleyMapDecoratorModels  do: [ :aDecorator | 
+				aStream nextPut: self -> aDecorator ].
+		self nodes do: [ :each | 
 	 		each wardleyMapDecoratorModels do: [ :aDecorator | 
-	 			aStream nextPut: each -> aDecorator ] ].
-	 	self edges do: [ :each | 
-	 		each wardleyMapDecoratorModels do: [ :aDecorator | 
+				aStream nextPut: each -> aDecorator ] ].
+		self edges do: [ :each | 
+			each wardleyMapDecoratorModels do: [ :aDecorator | 
 	 			aStream nextPut: each -> aDecorator ] ] ]
 ]
 
@@ -312,6 +329,11 @@ GtWardleyMapModel >> gtWardleyMapDecoratorsFor: aView [
 		items: [ self gtWardleyMapDecorators ];
 		column: 'Item' text: [ :anAssoc | anAssoc key ];
 		column: 'Decorator' text: [ :anAssoc | anAssoc value ];
+		column: 'Proposition'
+			text: [ :anAssoc | 
+				anAssoc value isActionableProposition
+					ifTrue: [ 'yes' ]
+					ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 50;
 		send: #value
 ]
 
@@ -443,9 +465,10 @@ GtWardleyMapModel >> menuItemAddNodeButton [
 			aNormalizedPosition := GtWardleyMapUtility
 					normalizedItemPositionOnEvent: anEvent
 					canvas: aContextMenuItem canvasElement.
-			aNormalizedPosition ifNotNil: [ 
-				aContextMenuItem wardleyMapViewModel 
-					addNewNodeAt: aNormalizedPosition ].
+			aNormalizedPosition
+				ifNotNil: [ aContextMenuItem wardleyMapViewModel
+						addNewNodeAt: aNormalizedPosition
+						fromElement: aBrButton ].
 			aContextMenuItem editorElement fireEvent: BrContextMenuHideWish new ]
 ]
 
@@ -488,12 +511,12 @@ GtWardleyMapModel >> menuItemTitleVisibilityPicker [
 GtWardleyMapModel >> nextUniqueId [
 	| aNextId |
 	
-	aNextId := UUIDGenerator next.
+	aNextId := UUID new.
 	[
 	self
 		nodeWithId: aNextId
 		ifFound: [ false ]
-		ifNone: [ true ] ] whileFalse: [ aNextId := UUIDGenerator next ].
+		ifNone: [ true ] ] whileFalse: [ aNextId := UUID new ].
 
 	^ aNextId
 ]

@@ -12,7 +12,7 @@ Class {
 { #category : #'instance creation' }
 GtDiagrammerUmlNoteStencil >> create [
 	^ GtDiagrammerLabelledElement new
-		geometry: (BlPolygon vertices: ({
+		geometry: (BlPolygonGeometry vertices: ({
 		0@0.
 		90@0.
 		100@10.

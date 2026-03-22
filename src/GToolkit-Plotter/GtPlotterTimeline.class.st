@@ -17,7 +17,7 @@ Class {
 		'AxisProjection',
 		'AxisTicks'
 	],
-	#category : 'GToolkit-Plotter-Builder - Timeline'
+	#category : #'GToolkit-Plotter-Builder - Timeline'
 }
 
 { #category : #'class initialization' }

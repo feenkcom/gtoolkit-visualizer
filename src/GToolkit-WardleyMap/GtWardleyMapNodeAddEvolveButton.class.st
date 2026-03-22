@@ -31,6 +31,11 @@ GtWardleyMapNodeAddEvolveButton >> onEvolveVisibilityChanged [
 	self enabled: self wardleyMapNodeViewModel canAddEvolveNode
 ]
 
+{ #category : #'event handling' }
+GtWardleyMapNodeAddEvolveButton >> onEvolveVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEvolveVisibilityChanged ]
+]
+
 { #category : #'api - wardley map node view model' }
 GtWardleyMapNodeAddEvolveButton >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
@@ -46,7 +51,7 @@ GtWardleyMapNodeAddEvolveButton >> subscribeToWardleyMapNodeViewModel [
 
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelEvolveVisibilityChanged
-		send: #onEvolveVisibilityChanged
+		send: #onEvolveVisibilityChanged:
 		to: self
 ]
 

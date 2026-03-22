@@ -7,6 +7,7 @@ Class {
 { #category : #accessing }
 GtWardleyMapNodePullDirectionExamples >> horizontalPullDirection_3_5 [
 	<gtExample>
+	<return: #'GtWardleyMapNodeHorizontalPullDirection class'>
 	| aDirection |
 	aDirection := GtWardleyMapNodePullDirection fromDragDelta: 3 @ 5.
 
@@ -18,6 +19,7 @@ GtWardleyMapNodePullDirectionExamples >> horizontalPullDirection_3_5 [
 { #category : #accessing }
 GtWardleyMapNodePullDirectionExamples >> horizontalPullDirection_5_m1 [
 	<gtExample>
+	<return: #'GtWardleyMapNodeHorizontalPullDirection class'>
 	| aDirection |
 	aDirection := GtWardleyMapNodePullDirection fromDragDelta: 5 @ -1.
 
@@ -29,6 +31,7 @@ GtWardleyMapNodePullDirectionExamples >> horizontalPullDirection_5_m1 [
 { #category : #accessing }
 GtWardleyMapNodePullDirectionExamples >> verticalPullDirection_10_10 [
 	<gtExample>
+	<return: #'GtWardleyMapNodeVerticalPullDirection class'>
 	| aDirection |
 	aDirection := GtWardleyMapNodePullDirection fromDragDelta: 10 @ 10.
 
@@ -40,6 +43,7 @@ GtWardleyMapNodePullDirectionExamples >> verticalPullDirection_10_10 [
 { #category : #accessing }
 GtWardleyMapNodePullDirectionExamples >> verticalPullDirection_6_m10 [
 	<gtExample>
+	<return: #'GtWardleyMapNodeVerticalPullDirection class'>
 	| aDirection |
 	aDirection := GtWardleyMapNodePullDirection fromDragDelta: 6 @ -10.
 

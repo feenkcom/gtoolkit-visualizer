@@ -13,6 +13,20 @@ TGtWithWardleyMapDecoratorViewModels >> addWardleyMapDecoratorViewModel: aWardle
 	self notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel
 ]
 
+{ #category : #'gt - extensions' }
+TGtWithWardleyMapDecoratorViewModels >> gtWardleyMapDecoratorsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Decorators';
+		items: [ self wardleyMapDecoratorViewModels copy ];
+		column: 'Name' text: #yourself;
+		column: 'Proposition'
+			text: [ :anItem | 
+				anItem isActionableProposition
+					ifTrue: [ 'yes' ]
+					ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 50
+]
+
 { #category : #'api - wardley map decorator view models' }
 TGtWithWardleyMapDecoratorViewModels >> mapDecoratorViewModelFor: aWardleyMapDecoratorModel ifFound: aFoundBlock ifNone: aNoneBlock [
 	^ self wardleyMapDecoratorViewModels

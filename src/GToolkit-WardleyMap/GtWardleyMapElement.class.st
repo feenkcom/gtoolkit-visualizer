@@ -91,6 +91,7 @@ GtWardleyMapElement >> decorateEdgeViewModel: anEdgeViewModel withDecoratorViewM
 
 	aDecoratorContext := GtWardleyMapEdgeDecoratorContext new
 			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
 			canvasContainer: canvasContainer;
 			canvasElement: canvasElement;
 			edgeViewModel: anEdgeViewModel;
@@ -107,6 +108,7 @@ GtWardleyMapElement >> decorateMapViewModel: aMapViewModel withDecoratorViewMode
 	| aDecoratorContext |
 	aDecoratorContext := GtWardleyMapDecoratorContext new
 			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
 			canvasContainer: canvasContainer;
 			canvasElement: canvasElement;
 			decoratorViewModel: aDecoratorViewModel.
@@ -124,6 +126,7 @@ GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewMo
 
 	aDecoratorContext := GtWardleyMapNodeDecoratorContext new
 			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
 			canvasContainer: canvasContainer;
 			canvasElement: canvasElement;
 			nodeViewModel: aNodeViewModel;
@@ -168,8 +171,15 @@ GtWardleyMapElement >> initialize [
 	canvasContainer addChild: evolutionAxisElement.
 	canvasContainer addChild: canvasElement.
 
-	self addChildren: { titleElement. canvasContainer }.
+	self addChildren: {titleElement. canvasContainer}.
 
+	self
+		when: GtWardleyMapNodeElementAdded
+		do: [ :anEvent | self onNodeElementAdded: anEvent ].
+	self
+		when: GtWardleyMapEdgeElementAdded
+		do: [ :anEvent | self onEdgeElementAdded: anEvent ].
+		
 	self matchParent
 ]
 
@@ -186,6 +196,17 @@ GtWardleyMapElement >> onEdgeDecoratorAdded: anAnnouncement [
 		action: [ self
 				decorateEdgeViewModel: anAnnouncement edgeViewModel
 				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onEdgeElementAdded: anEvent [
+	| anEdgeViewModel |
+	anEdgeViewModel := anEvent edgeViewModel.
+	anEdgeViewModel wardleyMapDecoratorViewModels
+		do: [ :aDecoratorViewModel | 
+			self
+				decorateEdgeViewModel: anEdgeViewModel
+				withDecoratorViewModel: aDecoratorViewModel ]
 ]
 
 { #category : #'event handling' }
@@ -248,6 +269,17 @@ GtWardleyMapElement >> onNodeDecoratorAdded: anAnnouncement [
 		action: [ self
 				decorateNodeViewModel: anAnnouncement nodeViewModel
 				withDecoratorViewModel: anAnnouncement decoratorViewModel ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapElement >> onNodeElementAdded: anEvent [
+	| aNodeViewModel |
+	aNodeViewModel := anEvent nodeViewModel.
+	aNodeViewModel wardleyMapDecoratorViewModels
+		do: [ :aDecoratorViewModel | 
+			self
+				decorateNodeViewModel: aNodeViewModel
+				withDecoratorViewModel: aDecoratorViewModel ]
 ]
 
 { #category : #'event handling' }

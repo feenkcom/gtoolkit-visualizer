@@ -1,7 +1,7 @@
 Class {
 	#name : #GtConnectorBasicSignal,
 	#superclass : #BeaconSignal,
-	#category : 'GToolkit-Connector-Logging'
+	#category : #'GToolkit-Connector-Logging'
 }
 
 { #category : #testing }

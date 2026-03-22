@@ -1,5 +1,5 @@
 Class {
 	#name : #GtPlotterContinuousScale,
 	#superclass : #GtPlotterScale,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }

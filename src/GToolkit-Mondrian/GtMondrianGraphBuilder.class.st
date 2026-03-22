@@ -25,7 +25,10 @@ GtMondrianGraphBuilder >> elementStencilBuilder: aBlock [
 
 { #category : #scripting }
 GtMondrianGraphBuilder >> shape: aBlock [
-	self stencil: aBlock
+	"self
+		deprecated: 'Use stencil: instead'
+		transformWith: '`@rcv shape: `@arg' -> '`@rcv stencil: `@arg'.
+	"self stencil: aBlock
 ]
 
 { #category : #scripting }

@@ -28,36 +28,44 @@ To add a visual queue, we need to explicitly add a line element.
 Class {
 	#name : #GtGraphLayoutBasicExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-BlocGraph-Layouts-Examples'
+	#category : #'GToolkit-BlocGraph-Layouts-Examples'
 }
 
 { #category : #'examples - graph' }
 GtGraphLayoutBasicExamples >> elementsTreeWithEdges [
 	<gtExample>
+	<return: #BlElement>
 	| elementToVisualize root |
-
 	elementToVisualize := BlChicken chicken.
 	elementToVisualize forceLayout.
 
-	root := BlElement new constraintsDo: [:c | 
-		c horizontal matchParent.
-		c vertical matchParent ].
+	root := BlElement new
+			constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent ].
 
 	root graph beNode: elementToVisualize.
-	elementToVisualize allChildrenBreadthFirstDo: [ :each | 
-		| label |
-		label := BlTextElement new
-			text: each gtDisplayString asRopedText;
-			background: Color white;
-			effect: (BlGaussianShadowEffect color: (Color gray alpha: 0.5) width: 5 offset: 0@0).
+	elementToVisualize
+		allChildrenBreadthFirstDo: [ :each | 
+			| label |
+			label := BlTextElement new
+					text: each gtDisplayString asRopedText;
+					background: Color white;
+					effect: (BlGaussianShadowEffect
+							color: (Color gray alpha: 0.5)
+							width: 5
+							offset: 0 @ 0).
 
-		label graph beNode: each.
-		root children 
-			detect: [ :child | child graph model = each parent ]
-			ifFound: [ :parentLabel | parentLabel graph connectTo: label ].
-		root addChild: label ].
+			label graph beNode: each.
+			root children
+				detect: [ :child | child graph model = each parent ]
+				ifFound: [ :parentLabel | parentLabel graph connectTo: label ].
+			root addChild: label ].
 
-	root layout: (GtGraphHorizontalTreeLayout new layered; verticalGap: 20).
+	root
+		layout: (GtGraphHorizontalTreeLayout new
+				layered;
+				verticalGap: 20).
 
 	^ root
 ]
@@ -65,24 +73,27 @@ GtGraphLayoutBasicExamples >> elementsTreeWithEdges [
 { #category : #'examples - graph' }
 GtGraphLayoutBasicExamples >> elementsTreeWithEdgesAndLines [
 	<gtExample>
+	<return: #BlElement>
 	| root elementToVisualize |
-
 	root := self elementsTreeWithEdges.
 
 	elementToVisualize := root graph model.
-	elementToVisualize allChildrenBreadthFirstDo: [ :each | 
-		| label |
-		label := root children detect: [ :child | child graph model = each ] ifNone: []. 
-		root children 
-			detect: [ :child | child graph model = each parent ]
-			ifFound: [ :parentLabel |
-				| line |
-				line := BlLineElement new.
-				line constraints ignoreByLayout.
-				line
-					border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
-					fromAnchor: (BlElementCenterRightAnchor element: parentLabel);
-					toAnchor: (BlElementCenterLeftAnchor element: label).
-				root addChild: line ] ].
+	elementToVisualize
+		allChildrenBreadthFirstDo: [ :each | 
+			| label |
+			label := root children
+					detect: [ :child | child graph model = each ]
+					ifNone: [  ].
+			root children
+				detect: [ :child | child graph model = each parent ]
+				ifFound: [ :parentLabel | 
+					| line |
+					line := BlLineElement new.
+					line constraints ignoreByLayout.
+					line
+						border: (BlBorder paint: (Color gray alpha: 0.2) width: 5);
+						fromAnchor: (BlElementCenterRightAnchor element: parentLabel);
+						toAnchor: (BlElementCenterLeftAnchor element: label).
+					root addChild: line ] ].
 	^ root
 ]

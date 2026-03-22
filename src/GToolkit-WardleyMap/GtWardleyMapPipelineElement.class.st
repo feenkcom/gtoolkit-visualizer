@@ -22,11 +22,21 @@ GtWardleyMapPipelineElement >> onNodeColored [
 		border: (BlBorder paint: self wardleyMapNodeViewModel pipelineColor width: 1)
 ]
 
-{ #category : #'api - wardley map node view model' }
-GtWardleyMapPipelineElement >> onNodePipelineResized: anAnnouncement [
+{ #category : #'event handling' }
+GtWardleyMapPipelineElement >> onNodeColored: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeColored ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapPipelineElement >> onNodePipelineResized [
 	GtWardleyMapUtility
 		updatePipelineElement: self
 		nodeViewModel: self wardleyMapNodeViewModel
+]
+
+{ #category : #'event handling' }
+GtWardleyMapPipelineElement >> onNodePipelineResized: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodePipelineResized ]
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -34,6 +44,7 @@ GtWardleyMapPipelineElement >> onWardleyMapNodeViewModelChanged [
 	"Is sent when a new WardleyMapNode view model is assigned to the element"
 
 	self onNodeColored.
+	self onNodePipelineResized.
 ]
 
 { #category : #'api - wardley map node view model' }
@@ -44,7 +55,7 @@ GtWardleyMapPipelineElement >> subscribeToWardleyMapNodeViewModel [
 
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelColored
-			send: #onNodeColored
+			send: #onNodeColored:
 			to: self;
 		when: GtWardleyMapNodeViewModelPipelineResized
 			send: #onNodePipelineResized:

@@ -13,6 +13,7 @@ Class {
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> accountDbClassRole [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRole>
 	accountDb ifNotNil: [ :aParticipant | ^ aParticipant ].
 
 	accountDb := self basicClassRole.
@@ -26,6 +27,7 @@ GtSequenceDiagramExamples >> accountDbClassRole [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> accountDbElement [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRoleElement>
 	| anElement aViewModel |
 	anElement := self basicClassRoleElement.
 	aViewModel := self accountDbViewModel.
@@ -41,6 +43,7 @@ GtSequenceDiagramExamples >> accountDbElement [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> accountDbViewModel [
 	<gtExample>
+	<return: #GtSequenceDiagramParticipantViewModel>
 	| aViewModel aParticipant allAnnouncements |
 	aViewModel := self basicParticipantViewModel.
 	aParticipant := self accountDbClassRole.
@@ -63,6 +66,7 @@ GtSequenceDiagramExamples >> accountDbViewModel [
 { #category : #'examples - actor' }
 GtSequenceDiagramExamples >> actor [
 	<gtExample>
+	<return: #GtSequenceDiagramActor>
 	userActor ifNotNil: [ :anActor | ^ anActor ].
 
 	userActor := self basicActor.
@@ -82,6 +86,7 @@ GtSequenceDiagramExamples >> actor [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> actorElement [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRoleElement>
 	| anElement aViewModel |
 	anElement := self basicClassRoleElement.
 	aViewModel := self actorViewModel.
@@ -97,6 +102,7 @@ GtSequenceDiagramExamples >> actorElement [
 { #category : #'examples - actor' }
 GtSequenceDiagramExamples >> actorViewModel [
 	<gtExample>
+	<return: #GtSequenceDiagramParticipantViewModel>
 	| aViewModel aParticipant allAnnouncements |
 	aViewModel := self basicParticipantViewModel.
 	aParticipant := self actor.
@@ -119,6 +125,7 @@ GtSequenceDiagramExamples >> actorViewModel [
 { #category : #'examples - actor' }
 GtSequenceDiagramExamples >> basicActor [
 	<gtExample>
+	<return: #GtSequenceDiagramActor>
 	| aParticipant |
 	aParticipant := GtSequenceDiagramActor new.
 
@@ -130,6 +137,7 @@ GtSequenceDiagramExamples >> basicActor [
 { #category : #'examples - builder' }
 GtSequenceDiagramExamples >> basicBuilder [
 	<gtExample>
+	<return: #GtSequenceDiagramBuilder>
 	| aBuilder |
 	aBuilder := GtSequenceDiagram builder.
 
@@ -139,6 +147,7 @@ GtSequenceDiagramExamples >> basicBuilder [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> basicClassRole [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRole>
 	| aParticipant |
 	aParticipant := GtSequenceDiagramClassRole new.
 
@@ -151,6 +160,7 @@ GtSequenceDiagramExamples >> basicClassRole [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> basicClassRoleElement [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRoleElement>
 	| anElement |
 	anElement := GtSequenceDiagramClassRoleElement new.
 
@@ -162,6 +172,7 @@ GtSequenceDiagramExamples >> basicClassRoleElement [
 { #category : #'examples - view model' }
 GtSequenceDiagramExamples >> basicParticipantViewModel [
 	<gtExample>
+	<return: #GtSequenceDiagramParticipantViewModel>
 	| aViewModel |
 	aViewModel := GtSequenceDiagramParticipantViewModel new.
 
@@ -173,6 +184,7 @@ GtSequenceDiagramExamples >> basicParticipantViewModel [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> basicResponseMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramResponseMessage>
 	| aMessage |
 	aMessage := GtSequenceDiagramResponseMessage new.
 
@@ -182,6 +194,7 @@ GtSequenceDiagramExamples >> basicResponseMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> basicSelfMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSelfMessage>
 	| aMessage |
 	aMessage := GtSequenceDiagramSelfMessage new.
 
@@ -191,6 +204,7 @@ GtSequenceDiagramExamples >> basicSelfMessage [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> basicSequenceDiagram [
 	<gtExample>
+	<return: #GtSequenceDiagram>
 	| aDiagram |
 	aDiagram := GtSequenceDiagram new.
 
@@ -202,6 +216,7 @@ GtSequenceDiagramExamples >> basicSequenceDiagram [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> basicSequenceDiagramElement [
 	<gtExample>
+	<return: #GtSequenceDiagramElement>
 	| anElement |
 	anElement := GtSequenceDiagramElement new.
 
@@ -213,6 +228,7 @@ GtSequenceDiagramExamples >> basicSequenceDiagramElement [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> basicSequenceDiagramViewModel [
 	<gtExample>
+	<return: #GtSequenceDiagramViewModel>
 	| aViewModel |
 	aViewModel := GtSequenceDiagramViewModel new.
 
@@ -224,6 +240,7 @@ GtSequenceDiagramExamples >> basicSequenceDiagramViewModel [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> basicSynchronousMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSendMessage>
 	| aMessage |
 	aMessage := GtSequenceDiagramSendMessage new.
 
@@ -233,6 +250,7 @@ GtSequenceDiagramExamples >> basicSynchronousMessage [
 { #category : #'examples - builder' }
 GtSequenceDiagramExamples >> builderWithOneMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramBuilder>
 	| aBuilder aSender aReceiver |
 	aBuilder := self basicBuilder.
 
@@ -251,6 +269,7 @@ GtSequenceDiagramExamples >> builderWithOneMessage [
 { #category : #'examples - builder' }
 GtSequenceDiagramExamples >> diagramWithOneMessage [
 	<gtExample>
+	<return: #GtSequenceDiagram>
 	| aBuilder aDiagram |
 	aBuilder := self builderWithOneMessage.
 	aDiagram := aBuilder build.
@@ -267,6 +286,7 @@ GtSequenceDiagramExamples >> diagramWithOneMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> displayLogonScreenMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSelfMessage>
 	| aMessage |
 	aMessage := self basicSelfMessage.
 
@@ -280,6 +300,7 @@ GtSequenceDiagramExamples >> displayLogonScreenMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> isInDatabaseMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSendMessage>
 	| aMessage aSystem anAccountDb |
 	aMessage := self basicSynchronousMessage.
 
@@ -303,6 +324,7 @@ GtSequenceDiagramExamples >> isInDatabaseMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> isInDatabaseResponseMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramResponseMessage>
 	| aMessage aSystem anAccountDb |
 	aMessage := self basicResponseMessage.
 
@@ -326,6 +348,7 @@ GtSequenceDiagramExamples >> isInDatabaseResponseMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> isValidMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSendMessage>
 	| aMessage anInnerMessage aSecurityLogon anAccountDb aResponseMessage |
 	aMessage := self basicSynchronousMessage.
 
@@ -354,6 +377,7 @@ GtSequenceDiagramExamples >> isValidMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> isValidResponseMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramResponseMessage>
 	| aMessage aSecurityLogon anAccountDb |
 	aMessage := self basicResponseMessage.
 
@@ -376,6 +400,7 @@ GtSequenceDiagramExamples >> isValidResponseMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> nameAndPasswordMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSendMessage>
 	| aMessage anInnerMessage aSecurityLogon anActor anInnerResponse |
 	aMessage := self basicSynchronousMessage.
 
@@ -403,6 +428,7 @@ GtSequenceDiagramExamples >> nameAndPasswordMessage [
 { #category : #'examples - message' }
 GtSequenceDiagramExamples >> requestLogonMessage [
 	<gtExample>
+	<return: #GtSequenceDiagramSendMessage>
 	| aMessage anInnerMessage aSecurityLogon anActor |
 	aMessage := self basicSynchronousMessage.
 
@@ -426,6 +452,7 @@ GtSequenceDiagramExamples >> requestLogonMessage [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> securityLogonClassRole [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRole>
 	securityLogon ifNotNil: [ :aParticipant | ^ aParticipant ].
 
 	securityLogon := self basicClassRole.
@@ -439,6 +466,7 @@ GtSequenceDiagramExamples >> securityLogonClassRole [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> securityLogonElement [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRoleElement>
 	| anElement aViewModel |
 	anElement := self basicClassRoleElement.
 	aViewModel := self securityLogonViewModel.
@@ -454,6 +482,7 @@ GtSequenceDiagramExamples >> securityLogonElement [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> securityLogonViewModel [
 	<gtExample>
+	<return: #GtSequenceDiagramParticipantViewModel>
 	| aViewModel aParticipant allAnnouncements |
 	aViewModel := self basicParticipantViewModel.
 	aParticipant := self securityLogonClassRole.
@@ -476,6 +505,7 @@ GtSequenceDiagramExamples >> securityLogonViewModel [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> sequenceDiagram [
 	<gtExample>
+	<return: #GtSequenceDiagram>
 	| aDiagram anActor aLogon anAccountDB aLogonMessage nameAndPasswordMessage aSystem |
 	aDiagram := self basicSequenceDiagram.
 	anActor := self actor.
@@ -509,6 +539,7 @@ GtSequenceDiagramExamples >> sequenceDiagram [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> sequenceDiagramElement [
 	<gtExample>
+	<return: #BlPannableElement>
 	| anElement aViewModel |
 	anElement := self basicSequenceDiagramElement.
 	aViewModel := self sequenceDiagramViewModel.
@@ -524,6 +555,7 @@ GtSequenceDiagramExamples >> sequenceDiagramElement [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> sequenceDiagramViewModel [
 	<gtExample>
+	<return: #GtSequenceDiagramViewModel>
 	| aViewModel aDiagram allAnnouncements |
 	aViewModel := self basicSequenceDiagramViewModel.
 	aDiagram := self sequenceDiagram.
@@ -548,6 +580,7 @@ GtSequenceDiagramExamples >> sequenceDiagramViewModel [
 { #category : #'examples - sequence diagram' }
 GtSequenceDiagramExamples >> sequenceDiagram_messagesDepthFirstDo [
 	<gtExample>
+	<return: #GtSequenceDiagram>
 	| aDiagram aMessage allMessages |
 	aDiagram := self sequenceDiagram.
 
@@ -565,6 +598,7 @@ GtSequenceDiagramExamples >> sequenceDiagram_messagesDepthFirstDo [
 { #category : #'examples - class role' }
 GtSequenceDiagramExamples >> systemClassRole [
 	<gtExample>
+	<return: #GtSequenceDiagramClassRole>
 	system ifNotNil: [ :aParticipant | ^ aParticipant ].
 
 	system := self basicClassRole.

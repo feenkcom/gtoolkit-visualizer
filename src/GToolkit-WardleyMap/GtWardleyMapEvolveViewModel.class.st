@@ -118,7 +118,7 @@ GtWardleyMapEvolveViewModel >> moveNodeLabelTo: aNormalizedPoint [
 
 { #category : #'api - evolve' }
 GtWardleyMapEvolveViewModel >> moveNodeTo: aNormalizedPoint [
-	self wardleyMapNodeModel evolvedMaturity: aNormalizedPoint x
+	self wardleyMapNodeModel evolvedEvolution: aNormalizedPoint x
 ]
 
 { #category : #'api - evolve' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDurationMonth,
 	#superclass : #GtPlotterDuration,
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }
 
 { #category : #converting }

@@ -20,7 +20,7 @@ Class {
 		'gapSize',
 		'lineItemsCountBlock'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #public }

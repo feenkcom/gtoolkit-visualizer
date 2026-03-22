@@ -29,7 +29,7 @@ GtWardleyMapViewModel >> addNewEdgeFrom: aFromNodeViewModel to: aToNodeViewModel
 ]
 
 { #category : #'api - map' }
-GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
+GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition fromElement: anElement [
 	| aNewNode |
 	self
 		assert: [ 0 <= aNormalizedPosition x and: [ aNormalizedPosition x <= 1.0 ] ]
@@ -42,7 +42,15 @@ GtWardleyMapViewModel >> addNewNodeAt: aNormalizedPosition [
 			coordinate: aNormalizedPosition;
 			color: self defaultColor.
 
-	self wardleyMapModel addNode: aNewNode
+	self wardleyMapModel addNode: aNewNode.
+	
+	^ self 
+		nodeViewModelFor: aNewNode 
+		ifFound: [ :aNodeViewModel | 
+			anElement ifNotNil: [
+				BlTaskAction enqueueElement: anElement action: [ aNodeViewModel requestEditableModel ] ].
+			aNodeViewModel ] 
+		ifNone: [ AssertionFailure signal: ('Node view model not found: {1}' format: { aNewNode }) ]
 ]
 
 { #category : #'api - map' }
@@ -60,6 +68,15 @@ GtWardleyMapViewModel >> addNewNoteAt: aNormalizedPosition [
 			color: self defaultColor.
 
 	self wardleyMapModel addNote: aNewNote
+]
+
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapViewModel >> allWardleyMapDecoratorViewModelsDo: aBlock [
+	self wardleyMapDecoratorViewModels do: aBlock.
+	self nodeViewModels
+		do: [ :eachNodeViewModel | eachNodeViewModel wardleyMapDecoratorViewModels do: aBlock ].
+	self edgeViewModels
+		do: [ :eachEdgeViewModel | eachEdgeViewModel wardleyMapDecoratorViewModels do: aBlock ]
 ]
 
 { #category : #announcer }
@@ -364,6 +381,11 @@ GtWardleyMapViewModel >> gtWardleyMapDecoratorsFor: aView [
 		items: [ self gtWardleyMapDecorators ];
 		column: 'Item' text: [ :anAssoc | anAssoc key ];
 		column: 'Decorator' text: [ :anAssoc | anAssoc value ];
+		column: 'Proposition'
+			text: [ :anAssoc | 
+				anAssoc value isActionableProposition
+					ifTrue: [ 'yes' ]
+					ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 50;
 		send: #value
 ]
 
@@ -400,6 +422,11 @@ GtWardleyMapViewModel >> initialize [
 			Color blue.
 			Color blue lighter.
 			Color blue muchLighter.
+			Color magenta muchDarker.
+			Color magenta twiceDarker.
+			Color magenta.
+			Color magenta twiceLighter.
+			Color magenta muchLighter.
 			Color green muchDarker.
 			Color green twiceDarker.
 			Color green darker.
@@ -486,7 +513,7 @@ GtWardleyMapViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapD
 	self
 		announce: (GtWardleyMapDecoratorViewModelRemoved new
 				mapViewModel: self;
-				decoratorViewModel: aWardleyMapDecoratorViewModel)
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
 ]
 
 { #category : #'api - wardley map model' }

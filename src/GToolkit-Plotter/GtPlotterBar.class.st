@@ -9,7 +9,7 @@ Class {
 		'gap',
 		'elementStencil'
 	],
-	#category : 'GToolkit-Plotter-Builder - Bar Chart'
+	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ I draw horizontal chart ticks.
 Class {
 	#name : #GtPlotterHorizontalTicksElement,
 	#superclass : #GtPlotterTicksElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }

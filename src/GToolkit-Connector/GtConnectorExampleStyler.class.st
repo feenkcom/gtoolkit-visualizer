@@ -5,7 +5,7 @@ Class {
 		'exampleAction',
 		'previousLinks'
 	],
-	#category : 'GToolkit-Connector-Extensions'
+	#category : #'GToolkit-Connector-Extensions'
 }
 
 { #category : #factory }
@@ -54,7 +54,7 @@ GtConnectorExampleStyler >> extraStyle: aText ast: ast [
 		targetExampleMethod := ast methodNode methodClass lookupSelector: each selector.
 		
 		aLink := GtConnectorLink
-			source: ast method
+			source: ast compiledMethod
 			target: targetExampleMethod.
 
 		buttonAttribute := GtConnectorTextButtonAttribute link: aLink.

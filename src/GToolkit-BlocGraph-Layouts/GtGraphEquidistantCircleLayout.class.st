@@ -14,7 +14,7 @@ v
 Class {
 	#name : #GtGraphEquidistantCircleLayout,
 	#superclass : #GtGraphAbstractWeightedCircleLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #hook }

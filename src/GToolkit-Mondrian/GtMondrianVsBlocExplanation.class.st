@@ -54,34 +54,37 @@ Class {
 { #category : #accessing }
 GtMondrianVsBlocExplanation >> blocWithMultipleNodes [
 	<gtExample>
+	<return: #BlPannableElement>
 	| root |
-	root := BlElement new constraintsDo: [ :c |
-	    c horizontal fitContent.
-	    c vertical fitContent ].
-	(1 to: 9) do: [ :x |
-		root addChild: ( BlTextElement new text: x asString asRopedText )].
-	root layout: (BlGridLayout new 
-		columnCount: root children size sqrt asInteger;
-		cellSpacing: 2).
+	root := BlElement new
+			constraintsDo: [ :c | 
+				c horizontal fitContent.
+				c vertical fitContent ].
+	(1 to: 9)
+		do: [ :x | root addChild: (BlTextElement new text: x asString asRopedText) ].
+	root
+		layout: (BlGridLayout new
+				columnCount: root children size sqrt asInteger;
+				cellSpacing: 2).
 	^ root asPannableElement
 ]
 
 { #category : #accessing }
 GtMondrianVsBlocExplanation >> graphNodeChildrenOfRoot [
 	<gtExample>
+	<return: #Array>
 	| root nodeChildren |
 	root := self rootWithMultipleNodes.
 	nodeChildren := root graph nodeChildren.
-	self assert:nodeChildren size = 9.
-	nodeChildren do: [ :aChild| 
-		self assert: aChild graph isNode
-	].
-	^ nodeChildren 
+	self assert: nodeChildren size = 9.
+	nodeChildren do: [ :aChild | self assert: aChild graph isNode ].
+	^ nodeChildren
 ]
 
 { #category : #accessing }
 GtMondrianVsBlocExplanation >> multipleNodes [
 	<gtExample>
+	<return: #GtMondrian>
 	| m |
 	m := GtMondrian new.
 	m nodes with: (1 to: 9).
@@ -92,21 +95,27 @@ GtMondrianVsBlocExplanation >> multipleNodes [
 { #category : #accessing }
 GtMondrianVsBlocExplanation >> multipleNodesWithEdges [
 	<gtExample>
+	<return: #GtMondrian>
 	| m |
 	m := self multipleNodesWithStencil.
-	m edges connect: { 5->1 . 5->3 . 5->8} from: #key to: #value.
+	m edges
+		connect: {5 -> 1.
+				5 -> 3.
+				5 -> 8}
+		from: #key
+		to: #value.
 	self assert: m root graph edgeChildren size = 3.
-	m root graph edgeChildren do: [ :aChild |
-		self assert: aChild graph isEdge ].
+	m root graph edgeChildren do: [ :aChild | self assert: aChild graph isEdge ].
 	^ m
 ]
 
 { #category : #accessing }
 GtMondrianVsBlocExplanation >> multipleNodesWithStencil [
 	<gtExample>
+	<return: #GtMondrian>
 	| m |
 	m := GtMondrian new.
-	m nodes 
+	m nodes
 		stencil: [ :x | BlTextElement new text: x asString asRopedText ];
 		with: (1 to: 9).
 	m layout grid.
@@ -116,12 +125,13 @@ GtMondrianVsBlocExplanation >> multipleNodesWithStencil [
 { #category : #accessing }
 GtMondrianVsBlocExplanation >> rootWithHybridEdges [
 	<gtExample>
+	<return: #BlCanvassableElement>
 	| m root node6 node7 node9 |
 	m := self multipleNodesWithEdges.
 	root := m root.
-	node6 := root graph nodeChildren detect: [ :aChild | aChild graph model = 6].
-	node7 := root graph nodeChildren detect: [ :aChild | aChild graph model = 7].
-	node9 := root graph nodeChildren detect: [ :aChild | aChild graph model = 9].
+	node6 := root graph nodeChildren detect: [ :aChild | aChild graph model = 6 ].
+	node7 := root graph nodeChildren detect: [ :aChild | aChild graph model = 7 ].
+	node9 := root graph nodeChildren detect: [ :aChild | aChild graph model = 9 ].
 	node6 graph connectTo: node7.
 	node6 graph connectTo: node9.
 	root layout: GtGradVerticalTreeLayout new.
@@ -129,8 +139,28 @@ GtMondrianVsBlocExplanation >> rootWithHybridEdges [
 ]
 
 { #category : #accessing }
+GtMondrianVsBlocExplanation >> rootWithHybridEdgesAndOneExtraLine [
+	<gtExample>
+	| root node6 node7 line |
+	root := GtMondrianVsBlocExplanation new rootWithHybridEdges.
+	node6 := root graph nodeChildren detect: [ :aChild | aChild graph model = 6 ].
+	node7 := root graph nodeChildren detect: [ :aChild | aChild graph model = 7 ].
+	line := BlLineElement new border: Color red.
+	line
+		fromAnchor: (BlNearestPositionBoundsAnchor referenceElement: node6 relatedTo: node7);
+		toAnchor: (BlNearestPositionBoundsAnchor referenceElement: node7 relatedTo: node6).
+	line constraints ignoreByLayout.
+	line
+		when: BlClickEvent
+		do: [ :e | e target phlow spawnObject: node6 graph model -> node7 graph model ].
+	root addChild: line.
+	^ root
+]
+
+{ #category : #accessing }
 GtMondrianVsBlocExplanation >> rootWithMultipleNodes [
 	<gtExample>
+	<return: #BlCanvassableElement>
 	| m |
 	m := self multipleNodes.
 	self assert: (m root isKindOf: BlElement).

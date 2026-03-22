@@ -24,6 +24,25 @@ TGtWardleyMapDecoratorModel >> decorateNodeElementInContext: aNodeDecoratorConte
 	
 ]
 
+{ #category : #testing }
+TGtWardleyMapDecoratorModel >> isActionableProposition [
+	"Return true if it can be handled by GtWardleyMapAllProposition.
+	Such decorator must implement #onAcceptAction and #onRejectAction methods.
+	Return false in other cases."
+
+	<return: #Boolean>
+	^ false
+]
+
+{ #category : #testing }
+TGtWardleyMapDecoratorModel >> isAllProposition [
+	"Return true if it is a GtWardleyMapAllProposition.
+	Return false in other cases."
+
+	<return: #Boolean>
+	^ false
+]
+
 { #category : #initialization }
 TGtWardleyMapDecoratorModel >> parent: aParent [
 	
@@ -32,8 +51,4 @@ TGtWardleyMapDecoratorModel >> parent: aParent [
 { #category : #initialization }
 TGtWardleyMapDecoratorModel >> removeParent [
 	
-]
-
-{ #category : #'api - wardley map decorator model' }
-TGtWardleyMapDecoratorModel >> undecorateMapElement: aMapElement decoratorViewModel: aDecoratorViewModel [
 ]

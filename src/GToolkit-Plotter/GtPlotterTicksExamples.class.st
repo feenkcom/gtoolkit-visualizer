@@ -1,5 +1,5 @@
 Class {
 	#name : #GtPlotterTicksExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Examples'
+	#category : #'GToolkit-Plotter-Examples'
 }

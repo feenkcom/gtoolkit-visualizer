@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterHorizontalAdjacentBarGroupStencilBuilder,
 	#superclass : #GtPlotterHorizontalBarGroupStencilBuilder,
-	#category : 'GToolkit-Plotter-Builder - Bar Chart'
+	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
 
 { #category : #'api - instantiation' }
@@ -18,6 +18,6 @@ GtPlotterHorizontalAdjacentBarGroupStencilBuilder >> buildDefault [
 		when: BlClickEvent do: [ :anEvent |
 			anEvent consumed: true.
 			anEvent currentTarget phlow spawnObject: aGtPlotterContext originalValue ];
-		geometry: (BlHistogram new beLeftToRight values: aGtPlotterContext mappedValue);
+		geometry: (BlHistogramGeometry new beLeftToRight values: aGtPlotterContext mappedValue);
 		background: self group color
 ]

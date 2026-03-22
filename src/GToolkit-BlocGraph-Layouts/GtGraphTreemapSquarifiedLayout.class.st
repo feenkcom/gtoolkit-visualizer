@@ -12,7 +12,7 @@ I use {{gtClass:GtGraphTreemapSquarify}} to compute {{gtClass:BlElement}} childr
 Class {
 	#name : #GtGraphTreemapSquarifiedLayout,
 	#superclass : #GtGraphTreemapLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
 { #category : #initialization }

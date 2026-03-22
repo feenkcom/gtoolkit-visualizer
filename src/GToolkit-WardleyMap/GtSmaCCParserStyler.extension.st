@@ -11,6 +11,11 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 					nodeClassName: #GtWMPresentationStyleNode
 					variableNames: #(styleToken)
 					styleBlock: [ :styler | styler foreground: Color purple ].
+					
+				GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMEvolutionNode
+					variableNames: #(evolutionToken arrows)
+					styleBlock: [ :styler | styler foreground: Color purple ].
 		
 				GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMTitleNode
@@ -26,7 +31,7 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMElementNode
 					variableNames: #(name)
-					styleBlock: [ :styler | styler foreground: Color darkGray ]).
+					styleBlock: [ :styler | styler foreground: Color black ]).
 						
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMLabelNode
@@ -76,15 +81,26 @@ GtSmaCCParserStyler class >> wardleyMapStyler: aParserClass [
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMLinkNode
 					variableNames: #(arrow)
-					styleBlock: [ :styler | styler foreground: Color veryLightGray ])
+					styleBlock: [ :styler | styler foreground: Color purple ])
 						continueOnMatch: true.
 						
 				(GtSmaCCNodeVariableStylerRule
 					nodeClassName: #GtWMLinkNode
 					variableNames: #(start end)
-					styleBlock: [ :styler | styler foreground: Color darkGray ])
+					styleBlock: [ :styler | styler foreground: Color black ])
 						continueOnMatch: false.
 					
+				(GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMEvolveNode
+					variableNames: #(evolveToken)
+					styleBlock: [ :styler | styler foreground: Color purple ])
+						continueOnMatch: true.
+					
+				GtSmaCCNodeVariableStylerRule
+					nodeClassName: #GtWMEvolveNode
+					variableNames: #(evolution)
+					styleBlock: [ :styler | styler foreground: Color blue darker ].
+				
 				GtSmaCCKeywordTokensStylerRule
 					styleBlock: [ :styler | 
 						styler

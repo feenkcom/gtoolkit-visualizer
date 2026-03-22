@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterHorizontalProjectionTicksAndVerticalLabelsStencil,
-	#superclass : #GtPlotterHorizontalProjectionTicksAndLabelsStencil,
+	#name : #GtPlotterHorizontalProjectionTicksAndVerticalLabelsAxisStencil,
+	#superclass : #GtPlotterHorizontalProjectionTicksAndLabelsAxisStencil,
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterHorizontalProjectionTicksAndVerticalLabelsStencil >> newAxisXTickLabelsElement [
+GtPlotterHorizontalProjectionTicksAndVerticalLabelsAxisStencil >> newAxisXTickLabelsElement [
 	| axis |
 	axis := super newAxisXTickLabelsElement.
 	axis tickValues: scatterChart valuesX asSortedCollection.

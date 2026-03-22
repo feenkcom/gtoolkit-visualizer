@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'sortFunction'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Treemap'
 }
 
 { #category : #constraints }

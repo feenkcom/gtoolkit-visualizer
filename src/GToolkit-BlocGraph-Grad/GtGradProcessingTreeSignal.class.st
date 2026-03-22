@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'root'
 	],
-	#category : 'GToolkit-BlocGraph-Grad-Signals'
+	#category : #'GToolkit-BlocGraph-Grad-Signals'
 }
 
 { #category : #testing }

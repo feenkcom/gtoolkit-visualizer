@@ -6,21 +6,21 @@ See my subclasses {{gtClass:GtPlotterRawHorizontalTimelineExamples|expanded=true
 Class {
 	#name : #GtPlotterRawHorizontalTimelineExamples,
 	#superclass : #GtPlotterRawTimelineExamples,
-	#category : 'GToolkit-Plotter-Example - Charts'
+	#category : #'GToolkit-Plotter-Example - Charts'
 }
 
 { #category : #'examples - timeline' }
 GtPlotterRawHorizontalTimelineExamples >> dots [
 	<gtExample>
-	
+	<return: #GtPlotterMarkersElement>
 	^ GtPlotterMarkersElement new
 		scaleY: self scale;
 		x: [ :each | 0.5 ];
 		y: #key;
 		constraintsDo: [ :c | c vertical fitContent ];
-		markerStyle: [ :anElement |
+		markerStyle: [ :anElement | 
 			anElement
-				size: 16@16;
+				size: 16 @ 16;
 				border: (BlBorder paint: Color gray width: 2);
 				background: Color white ];
 		horizontalMarkerLayout;
@@ -30,10 +30,12 @@ GtPlotterRawHorizontalTimelineExamples >> dots [
 { #category : #'examples - axis' }
 GtPlotterRawHorizontalTimelineExamples >> labels [
 	<gtExample>
-	
+	<return: #GtPlotterHorizontalTickLabelsElement>
 	^ GtPlotterHorizontalTickLabelsElement new
 		scale: self scale;
-		labelFormat: [ :eachDateAndTime | (eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) asRopedText foreground: Color darkGray ];
+		labelFormat: [ :eachDateAndTime | 
+			(eachDateAndTime monthAbbreviation , ' ' , eachDateAndTime year asString)
+				asRopedText foreground: Color darkGray ];
 		constraintsDo: [ :c | c vertical fitContent ];
 		clipChildren: false;
 		labels: 10
@@ -42,10 +44,10 @@ GtPlotterRawHorizontalTimelineExamples >> labels [
 { #category : #'examples - timeline' }
 GtPlotterRawHorizontalTimelineExamples >> line [
 	<gtExample>
-	
+	<return: #BlElement>
 	^ BlElement new
 		height: 2;
-		background: (Color veryVeryLightGray);
+		background: Color veryVeryLightGray;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c frame vertical alignCenterAt: 0.5 ]
@@ -54,11 +56,10 @@ GtPlotterRawHorizontalTimelineExamples >> line [
 { #category : #'examples - timeline' }
 GtPlotterRawHorizontalTimelineExamples >> timeline [
 	<gtExample>
-	
+	<return: #BrFrame>
 	^ BrFrame new
 		vFitContent;
 		hMatchParent;
-		addChildren: {
-			self line.
-			self dots }
+		addChildren: {self line.
+				self dots}
 ]

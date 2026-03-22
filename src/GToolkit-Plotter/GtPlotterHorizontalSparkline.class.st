@@ -9,7 +9,7 @@ Class {
 		'scaleDataBlockY',
 		'lineWidth'
 	],
-	#category : 'GToolkit-Plotter-Builder - Sparkline'
+	#category : #'GToolkit-Plotter-Builder - Sparkline'
 }
 
 { #category : #'api - instantiation' }
@@ -28,7 +28,7 @@ GtPlotterHorizontalSparkline >> create [
 		theVertices := aGroup values collect: [ :eachValue | ((scaleX map: (scaleDataBlockX cull: eachValue)) @ (1 - (scaleY map: (scaleDataBlockY cull: eachValue)))) ].
 		
 		BlElement new
-			geometry: (BlNormalizedPolyline vertices: theVertices);
+			geometry: (BlNormalizedPolylineGeometry vertices: theVertices);
 			border: (BlBorder paint: aGroup color width: self lineWidth);
 			outskirts: BlOutskirts centered;
 			constraintsDo: [ :c |

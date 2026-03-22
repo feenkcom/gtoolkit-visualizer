@@ -1,0 +1,35 @@
+Class {
+	#name : #GtWardleyMapAddNoteChange,
+	#superclass : #GtWardleyMapNoteChange,
+	#instVars : [
+		'newNote'
+	],
+	#category : #'GToolkit-WardleyMap-Changes'
+}
+
+{ #category : #'instance creation' }
+GtWardleyMapAddNoteChange class >> onMap: aMap andNote: aNote [
+	| undo |
+	undo := self onMap: aMap.
+	undo color: aNote color.
+	undo evolution: aNote evolution.
+	undo label: aNote label.
+	undo visibility: aNote visibility.
+	^ undo
+]
+
+{ #category : #private }
+GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
+	newNote := GtWardleyMapNoteModel new.
+	color ifNotNil: [ newNote color: color ].
+	evolution ifNotNil: [ newNote evolution: evolution ].
+	label ifNotNil: [ newNote label: label ].
+	visibility ifNotNil: [ newNote visibility: visibility ].
+	map addNote: newNote.
+	^ (GtWardleyMapRemoveNoteChange onMap: map) note: newNote
+]
+
+{ #category : #accessing }
+GtWardleyMapAddNoteChange >> newNote [
+	^ newNote
+]

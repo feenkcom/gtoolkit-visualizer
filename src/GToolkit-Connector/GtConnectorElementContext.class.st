@@ -11,7 +11,7 @@ Class {
 		'element',
 		'connectorConnections'
 	],
-	#category : 'GToolkit-Connector-Core'
+	#category : #'GToolkit-Connector-Core'
 }
 
 { #category : #'instance creation' }

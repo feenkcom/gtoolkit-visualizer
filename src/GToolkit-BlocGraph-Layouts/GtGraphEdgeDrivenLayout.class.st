@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'edges'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }

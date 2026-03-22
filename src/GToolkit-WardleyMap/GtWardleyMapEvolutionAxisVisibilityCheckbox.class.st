@@ -32,6 +32,13 @@ GtWardleyMapEvolutionAxisVisibilityCheckbox >> onEvolutionAxisVisibilityChanged 
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEvolutionAxisVisibilityCheckbox >> onEvolutionAxisVisibilityChanged: anAnnouncement [
+	BlTaskAction
+		enqueueElement: self
+		action: [ self onEvolutionAxisVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEvolutionAxisVisibilityCheckbox >> onUncheckedDo: anEvent [
 	self hasWardleyMapViewModel ifFalse: [ ^ self ].
 	self wardleyMapViewModel isEvolutionAxisVisible: false
@@ -52,7 +59,7 @@ GtWardleyMapEvolutionAxisVisibilityCheckbox >> subscribeToWardleyMapViewModel [
 	
 	self wardleyMapViewModel weak
 		when: GtWardleyMapViewModelEvolutionAxisVisibilityChanged
-		send: #onEvolutionAxisVisibilityChanged
+		send: #onEvolutionAxisVisibilityChanged:
 		to: self
 ]
 

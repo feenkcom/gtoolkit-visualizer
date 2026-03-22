@@ -22,7 +22,7 @@ Class {
 		'totalArea',
 		'length'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }

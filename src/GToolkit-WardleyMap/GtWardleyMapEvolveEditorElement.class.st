@@ -173,8 +173,18 @@ GtWardleyMapEvolveEditorElement >> onEvolveLabelVisibilityChanged [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapEvolveEditorElement >> onEvolveLabelVisibilityChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onEvolveLabelVisibilityChanged ]
+]
+
+{ #category : #'event handling' }
 GtWardleyMapEvolveEditorElement >> onNodeSizeChanged [
 	nodeSizeEditor text: (self wardleyMapNodeViewModel nodeSize min asString)
+]
+
+{ #category : #'event handling' }
+GtWardleyMapEvolveEditorElement >> onNodeSizeChanged: anAnnouncement [
+	BlTaskAction enqueueElement: self action: [ self onNodeSizeChanged ]
 ]
 
 { #category : #'event handling' }
@@ -210,10 +220,10 @@ GtWardleyMapEvolveEditorElement >> subscribeToWardleyMapNodeViewModel [
 
 	self wardleyMapNodeViewModel weak
 		when: GtWardleyMapNodeViewModelResized
-			send: #onNodeSizeChanged
+			send: #onNodeSizeChanged:
 			to: self;
 		when: GtWardleyMapEvolveViewModelLabelVisibilityChanged
-			send: #onEvolveLabelVisibilityChanged
+			send: #onEvolveLabelVisibilityChanged:
 			to: self
 ]
 

@@ -33,7 +33,7 @@ GtWardleyMapNodeBasicElement >> initialize [
 			id: GtWardleyMapNodeLabelId;
 			aptitude: BrGlamorousRegularEditorAptitude new;
 			when: BrEditorAcceptWish
-				do: [ :aWish | self wardleyMapNodeViewModel label: aWish text asString ];
+				do: [ :aWish | self onEditorAcceptWish: aWish ];
 			text: 'Label'.
 			
 	"we have to wrap the editable label in a pullable element to allow text selection with drag"
@@ -82,6 +82,13 @@ GtWardleyMapNodeBasicElement >> labelElementDo: aBlock [
 { #category : #accessing }
 GtWardleyMapNodeBasicElement >> nodeElementDo: aBlock [
 	nodeElement ifNotNil: [ :anElement | aBlock cull: anElement cull: self ]
+]
+
+{ #category : #'event handling' }
+GtWardleyMapNodeBasicElement >> onEditorAcceptWish: aWish [ 
+	aWish consumed: true.
+	aWish currentTarget loseFocus.
+	self wardleyMapNodeViewModel label: aWish text asString
 ]
 
 { #category : #'event handling' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphHorizontalDominanceTreeLayout,
 	#superclass : #GtGraphAbstractHorizontalTreeLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #'hook-private' }

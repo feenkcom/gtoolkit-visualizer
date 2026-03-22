@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'stencil'
 	],
-	#category : 'GToolkit-Plotter-Builder - Composite Chart'
+	#category : #'GToolkit-Plotter-Builder - Composite Chart'
 }
 
 { #category : #'api - instantiation' }

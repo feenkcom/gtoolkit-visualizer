@@ -38,15 +38,9 @@ GtWMPipelineNode >> compositeNodeVariables [
 { #category : #'api - convenience' }
 GtWMPipelineNode >> coordinate [
 	<return: #Point or: nil>
-	| anXString anYString anXNumber anYNumber |
-	anXString := self evolution1 ifNotNil: #source.
-	anYString := self evolution2 ifNotNil: #source.
-
-	anXString ifNil: [ ^ nil ].
-	anYString ifNil: [ ^ nil ].
-
-	anXNumber := anXString asNumber.
-	anYNumber := anYString asNumber.
+	| anXNumber anYNumber |
+	anXNumber := GtWMProgramNode parseFloatToken: self evolution1.
+	anYNumber := GtWMProgramNode parseFloatToken: self evolution2.
 
 	anXNumber ifNil: [ ^ nil ].
 	anYNumber ifNil: [ ^ nil ].

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'isGrouping'
 	],
-	#category : 'GToolkit-Plotter-Data'
+	#category : #'GToolkit-Plotter-Data'
 }
 
 { #category : #initialization }

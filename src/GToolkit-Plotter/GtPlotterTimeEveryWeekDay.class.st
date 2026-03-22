@@ -4,5 +4,5 @@ Class {
 	#instVars : [
 		'day'
 	],
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }

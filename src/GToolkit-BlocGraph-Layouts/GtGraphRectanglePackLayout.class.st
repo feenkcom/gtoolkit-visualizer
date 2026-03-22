@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphRectanglePackLayout,
 	#superclass : #GtGraphLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Packing'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
 { #category : #hook }

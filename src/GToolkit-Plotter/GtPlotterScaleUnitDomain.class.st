@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterScaleUnitDomain,
 	#superclass : #GtPlotterScaleDomain,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #comparing }

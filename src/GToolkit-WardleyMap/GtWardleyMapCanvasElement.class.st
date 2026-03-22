@@ -19,7 +19,12 @@ Class {
 
 { #category : #'private - updating' }
 GtWardleyMapCanvasElement >> addEdgeViewModel: anEdgeViewModel [
-	self addChild: (self createEdgeViewFor: anEdgeViewModel)
+	| anEdgeElement |
+	anEdgeElement := self createEdgeViewFor: anEdgeViewModel.
+	self addChild: anEdgeElement.
+	self fireEvent: (GtWardleyMapEdgeElementAdded new
+			edgeElement: anEdgeElement;
+			edgeViewModel: anEdgeViewModel)
 ]
 
 { #category : #'private - updating' }
@@ -68,7 +73,10 @@ GtWardleyMapCanvasElement >> addNewNodeViewModel: aNodeViewModel [
 										insidePipelineElement: aPipelineElement)
 										ifTrue: [ aPipelineElement wardleyMapNodeViewModel addInnerNodeViewModel: aNodeViewModel ] ] ] ] ].
 
-	self addChild: aNodeElement
+	self addChild: aNodeElement.
+	self fireEvent: (GtWardleyMapNodeElementAdded new 
+		nodeElement: aNodeElement;
+		nodeViewModel: aNodeViewModel)
 ]
 
 { #category : #'private - updating' }
@@ -82,32 +90,32 @@ GtWardleyMapCanvasElement >> addNoteViewModel: aNoteViewModel [
 { #category : #initialization }
 GtWardleyMapCanvasElement >> createEdgeViewFor: anEdgeViewModel [
 	| aFromNodeElement aToNodeElement |
-
 	aFromNodeElement := self
-		nodeViewFor: anEdgeViewModel fromNodeViewModel
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
+			nodeViewFor: anEdgeViewModel fromNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
 
 	aToNodeElement := self
-		nodeViewFor: anEdgeViewModel toNodeViewModel
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
+			nodeViewFor: anEdgeViewModel toNodeViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
 
 	^ GtWardleyMapEdgeElement new
 		in: [ :aLineElement | aLineElement graph beEdge ];
-		id: (self newEdgeId);
+		id: self newEdgeId;
 		wardleyMapEdgeViewModel: anEdgeViewModel;
-		fromAnchor: (BlNearestPositionEllipseAnchor referenceElement: aFromNodeElement relatedTo: aToNodeElement);
-		toAnchor: (BlNearestPositionEllipseAnchor referenceElement: aToNodeElement relatedTo: aFromNodeElement);
-		zIndex: GtWardleyMapConstants edgeElevationIndex;
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-			handle: [ BlElement new
-					size: 5@5;
-					geometry: BlEllipseGeometry new ]
-			content: [ GtWardleyMapEdgeEditorElement new
-				wardleyMapViewModel: self wardleyMapViewModel;
-				wardleyMapEdgeViewModel: anEdgeViewModel;
-				requestFocus ])
+		fromAnchor: (BlNearestPositionEllipseAnchor
+				referenceElement: aFromNodeElement
+				relatedTo: aToNodeElement);
+		toAnchor: (BlNearestPositionEllipseAnchor
+				referenceElement: aToNodeElement
+				relatedTo: aFromNodeElement);
+		zIndex: self defaultEdgeElevationIndex;
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
+				content: [ GtWardleyMapEdgeEditorElement new
+						wardleyMapViewModel: self wardleyMapViewModel;
+						wardleyMapEdgeViewModel: anEdgeViewModel;
+						requestFocus ])
 ]
 
 { #category : #initialization }
@@ -168,16 +176,13 @@ GtWardleyMapCanvasElement >> createEvolveViewFor: anEvolveViewModel [
 				disallowOutOfBounds;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					anEvolveViewModel moveNodeTo: aNormalizedPosition ]);
-		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		addEventHandler: (GtWardleyMapEdgeBuilderEventHandler new containerElement: self);
 		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];
 		in: [ :theElement |
 			GtWardleyMapUtility updateNodeElement: theElement nodeViewModel: anEvolveViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: anEvolveViewModel nodeSize / 2.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createEvolveEditorFor: anEvolveViewModel ])
 ]
 
@@ -188,10 +193,7 @@ GtWardleyMapCanvasElement >> createNodeEditorFor: aNodeViewModel [
 		wardleyMapNodeViewModel: aNodeViewModel;
 		when: GtPhlowObjectToSpawn
 			do: [ :anEvent | 
-				self fireEvent: (GtPhlowObjectToSpawn new
-							previousSpawnEvent: anEvent;
-							tool: anEvent tool;
-							sourceElement: anEvent target) ]
+				self phlow spawnPreviousEvent: anEvent ]
 ]
 
 { #category : #initialization }
@@ -224,16 +226,13 @@ GtWardleyMapCanvasElement >> createNodeViewFor: aNodeViewModel [
 				disallowOutOfBounds;
 				whenPulled: [ :aPulledElement :aNormalizedPosition | 
 					aNodeViewModel moveNodeTo: aNormalizedPosition ]);
-		addEventHandler: (GtWardleyMapEdgeBuilder new containerElement: self);
+		addEventHandler: (GtWardleyMapEdgeBuilderEventHandler new containerElement: self);
 		zIndex: self defaultNodeElevationIndex;
 		constraintsDo: [ :c | 
 			c graph beNode ];
 		in: [ :theElement |
 			GtWardleyMapUtility updateNodeElement: theElement nodeViewModel: aNodeViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: aNodeViewModel nodeSize / 2.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createNodeEditorFor: aNodeViewModel ])
 ]
 
@@ -267,10 +266,7 @@ GtWardleyMapCanvasElement >> createNoteViewFor: aNoteViewModel [
 		zIndex: self defaultNoteElevationIndex;
 		in: [ :theElement |
 			GtWardleyMapUtility updateNoteElement: theElement noteViewModel: aNoteViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: 5.0 @ 5.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createNoteEditorFor: aNoteViewModel ]);
 		yourself
 ]
@@ -300,11 +296,13 @@ GtWardleyMapCanvasElement >> createPipelineViewFor: aNodeViewModel [
 			GtWardleyMapUtility
 				updatePipelineElement: theElement
 				nodeViewModel: aNodeViewModel ];
-		addAptitude: (BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: aNodeViewModel nodeSize / 2.0;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ self createNodeEditorFor: aNodeViewModel ])
+]
+
+{ #category : #initialization }
+GtWardleyMapCanvasElement >> defaultEdgeElevationIndex [
+	^ GtWardleyMapConstants edgeElevationIndex
 ]
 
 { #category : #initialization }
@@ -319,7 +317,7 @@ GtWardleyMapCanvasElement >> defaultNoteElevationIndex [
 
 { #category : #initialization }
 GtWardleyMapCanvasElement >> defaultPipelineElevationIndex [
-	^ 0
+	^ GtWardleyMapConstants pipelineElevationIndex
 ]
 
 { #category : #initialization }
@@ -359,30 +357,31 @@ GtWardleyMapCanvasElement >> initialize [
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-
+		
 	self layout: BlFrameLayout new.
 
 	self installContextMenu.
 
 	self
 		when: BlDoubleClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			(self width isZero or: [ self height isZero ])
-				ifFalse: [ self wardleyMapViewModel addNewNodeAt: anEvent localPosition / self extent ] ].
+		do: [ :anEvent | self onDoubleClickEvent: anEvent ].
+		
+	"When users click on the canvas, we want to lose focus of other elements,
+	e.g., of node editable labels."
+	self beFocusable.
+	self
+		when: BlClickEvent
+		do: [ :anEvent | self onClickEvent: anEvent ].
 ]
 
 { #category : #accessing }
 GtWardleyMapCanvasElement >> installContextMenu [
 	self
-		addAptitude: ((BrGlamorousWithContextMenuAptitude
-				handle: [ BlElement new
-						size: 5 @ 5;
-						geometry: BlEllipseGeometry new ]
+		addAptitude: (BrGlamorousWithExplicitContextMenuAptitude
 				content: [ GtWardleyMapEditorElement new
 						canvas: self;
 						wardleyMapViewModel: self wardleyMapViewModel;
-						requestFocus ]) preferredExtent: 120 @ 100.0)
+						requestFocus ])
 ]
 
 { #category : #initialization }
@@ -423,6 +422,21 @@ GtWardleyMapCanvasElement >> noteViewFor: aNoteViewModel ifFound: aFoundBlock if
 		detect: [ :eachChild | (eachChild isKindOf: GtWardleyMapNoteElement) and: [ eachChild wardleyMapNoteViewModel = aNoteViewModel ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onClickEvent: anEvent [ 
+	anEvent consumed: true.
+	self requestFocus
+]
+
+{ #category : #'event handling' }
+GtWardleyMapCanvasElement >> onDoubleClickEvent: anEvent [
+	anEvent consumed: true.
+	(self width isZero or: [ self height isZero ]) ifTrue: [ ^ self ].
+	self wardleyMapViewModel
+		addNewNodeAt: anEvent localPosition / self extent
+		fromElement: self
 ]
 
 { #category : #'event handling' }

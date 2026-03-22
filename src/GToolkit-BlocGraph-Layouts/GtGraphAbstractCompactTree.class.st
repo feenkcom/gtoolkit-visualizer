@@ -7,7 +7,7 @@ Class {
 		'initialLayout',
 		'margin'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }

@@ -9,29 +9,33 @@ LePageMondrianMapExamples >> oldPatternMap [
 	"The original map of patterns with default layout."
 
 	<gtExample>
-	^ LePageMondrianMap new
-		pageTitles: {'Moldable Object'.
-				'Moldable Data Wrapper'.
-				'Project Diary'.
-				'Contextual Playground'.
-				'Example Object'.
-				'Custom View'.
-				'Custom Action'.
-				'Simple View'.
-				'Moldable Collection Wrapper'};
-		database: LeDatabase gtBook;
-		connections: {'Moldable Object'
-					-> {'Moldable Data Wrapper'.
-							'Project Diary'.
-							'Contextual Playground'}.
-				'Project Diary' -> {'Example Object'}.
-				'Contextual Playground'
-					-> {'Custom View'.
-							'Custom Action'.
-							'Example Object'}.
-				'Custom View'
-					-> {'Simple View'.
-							'Moldable Collection Wrapper'}}
+	<return: #LePageMondrianMap>
+	| map |
+	map := LePageMondrianMap new
+			pageTitles: {'Moldable Object'.
+					'Moldable Data Wrapper'.
+					'Project Diary'.
+					'Contextual Playground'.
+					'Example Object'.
+					'Contextual View'.
+					'Contextual Action'.
+					'Simple View'.
+					'Moldable Collection Wrapper'};
+			database: LeDatabase gtBook;
+			connections: {'Moldable Object'
+						-> {'Moldable Data Wrapper'.
+								'Project Diary'.
+								'Contextual Playground'}.
+					'Project Diary' -> {'Example Object'}.
+					'Contextual Playground'
+						-> {'Contextual View'.
+								'Contextual Action'.
+								'Example Object'}.
+					'Contextual View'
+						-> {'Simple View'.
+								'Moldable Collection Wrapper'}}.
+	self assert: map missingPages isEmpty.
+	^ map
 ]
 
 { #category : #accessing }
@@ -41,82 +45,95 @@ LePageMondrianMapExamples >> oldPatternMapwithExplicitPositions [
 		(self root children collect: #position)"
 
 	<gtExample>
-	^ self patternMap
-		explicitPositions: {184.9584903717041 @ 245.31882731119794.
-				372.0 @ 243.91666666666669.
-				399.2699890136719 @ 297.9166666666667.
-				163.60298538208008 @ 351.9166666666667.
-				392.554988861084 @ 354.51450602213544.
-				195.3509864807129 @ 420.51450602213544.
-				353.4189872741699 @ 420.51450602213544.
-				139.4889907836914 @ 483.1123453776042.
-				241.65098571777344 @ 483.1123453776042.
-				297.3524875640869 @ 259.2440187484011.
-				297.3524875640869 @ 274.55073920388384.
-				241.26675975939287 @ 274.9166666666667.
-				446.2144626644011 @ 327.51450602213544.
-				242.00638569915492 @ 381.5145060221354.
-				277.1290380863739 @ 381.51450602213544.
-				320.310977935791 @ 367.70853786158517.
-				197.80934387551858 @ 450.11234537760424.
-				257.7372079134252 @ 450.11234537760424}
+	<return: #LePageMondrianMap>
+	| map |
+	map := self oldPatternMap
+			explicitPositions: {184.9584903717041 @ 245.31882731119794.
+					372.0 @ 243.91666666666669.
+					399.2699890136719 @ 297.9166666666667.
+					163.60298538208008 @ 351.9166666666667.
+					392.554988861084 @ 354.51450602213544.
+					195.3509864807129 @ 420.51450602213544.
+					353.4189872741699 @ 420.51450602213544.
+					139.4889907836914 @ 483.1123453776042.
+					241.65098571777344 @ 483.1123453776042.
+					297.3524875640869 @ 259.2440187484011.
+					297.3524875640869 @ 274.55073920388384.
+					241.26675975939287 @ 274.9166666666667.
+					446.2144626644011 @ 327.51450602213544.
+					242.00638569915492 @ 381.5145060221354.
+					277.1290380863739 @ 381.51450602213544.
+					320.310977935791 @ 367.70853786158517.
+					197.80934387551858 @ 450.11234537760424.
+					257.7372079134252 @ 450.11234537760424}.
+	self assert: map missingPages isEmpty.
+	^ map
 ]
 
 { #category : #accessing }
 LePageMondrianMapExamples >> patternMap [
 	<gtExample>
-	^ self patternMapDefaultLayout
-		explicitPositions: self patternMapExplicitPositions;
-		yourself
+	<return: #LePageMondrianMap>
+	| map |
+	map := self patternMapDefaultLayout
+			explicitPositions: self patternMapExplicitPositions;
+			yourself.
+	self assert: map missingPages isEmpty.
+	^ map
 ]
 
 { #category : #accessing }
 LePageMondrianMapExamples >> patternMapDefaultLayout [
 	"Revised pattern map with patterns from the EuroPLoP submission.
 	This is the default layout."
+
 	<gtExample>
-	^ LePageMondrianMap new
-		pageTitles: {'Explainable System'.
-				'Moldable Tool'.
-				'Contextual Playground'.
-				'Custom View'.
-				'Custom Search'.
-				'Custom Action'.
-				'Moldable Object'.
-				'Example Object'.
-				'Moldable Data Wrapper'.
-				'Moldable Collection Wrapper'.
-				'Project Diary'.
-				'Tooling Buildup'.
-				'Blind Spot'.
-				'Simple View'.
-				'Throwaway Analysis Tool'};
-		database: LeDatabase gtBook;
-		connections: {'Explainable System'
-					-> {'Moldable Tool'.
-							'Tooling Buildup'.
-							'Blind Spot'.
-							'Project Diary'}.
-				'Moldable Tool' -> {'Moldable Object'}.
-				'Tooling Buildup' -> {'Moldable Object'}.
-				'Blind Spot' -> {'Moldable Object'}.
-				'Project Diary'
-					-> {'Moldable Object'.
-							'Example Object'}.
-				'Moldable Object'
-					-> {'Example Object'.
-							'Contextual Playground'.
-							'Moldable Data Wrapper'}.
-				'Example Object' -> {'Moldable Object'}.
-				'Moldable Data Wrapper' -> {'Moldable Object'}.
-				'Contextual Playground'
-					-> {'Custom View'.
-							'Custom Search'.
-							'Custom Action'}.
-				'Custom View' -> {'Simple View'}.
-				'Custom Search' -> {'Moldable Collection Wrapper'}.
-				'Throwaway Analysis Tool' -> {'Contextual Playground'}};
-		yourself
+	<return: #LePageMondrianMap>
+	| map |
+	map := LePageMondrianMap new
+			pageTitles: {'Explainable System'.
+					'Moldable Tool'.
+					'Contextual Playground'.
+					'Contextual View'.
+					'Contextual Search'.
+					'Contextual Action'.
+					'Moldable Object'.
+					'Example Object'.
+					'Moldable Data Wrapper'.
+					'Moldable Collection Wrapper'.
+					'Project Diary'.
+					'Tooling Buildup'.
+					'Blind Spot'.
+					'Simple View'.
+					'Throwaway Analysis Tool'};
+			database: LeDatabase gtBook;
+			connections: {'Explainable System'
+						-> {'Moldable Tool'.
+								'Tooling Buildup'.
+								'Blind Spot'.
+								'Project Diary'}.
+					'Moldable Tool' -> {'Moldable Object'}.
+					'Tooling Buildup' -> {'Moldable Object'}.
+					'Blind Spot' -> {'Moldable Object'}.
+					'Project Diary'
+						-> {'Moldable Object'.
+								'Example Object'}.
+					'Moldable Object'
+						-> {'Example Object'.
+								'Contextual Playground'.
+								'Moldable Data Wrapper'}.
+					'Example Object' -> {'Moldable Object'}.
+					'Moldable Data Wrapper' -> {'Moldable Object'}.
+					'Contextual Playground'
+						-> {'Contextual View'.
+								'Contextual Search'.
+								'Contextual Action'}.
+					'Contextual View' -> {'Simple View'}.
+					'Contextual Search' -> {'Moldable Collection Wrapper'}.
+					'Throwaway Analysis Tool' -> {'Contextual Playground'}};
+			yourself.
+	self assert: map missingPages isEmpty.
+	^ map
 ]
 
 { #category : #accessing }
@@ -125,18 +142,177 @@ LePageMondrianMapExamples >> patternMapExplicitPositions [
 ]
 
 { #category : #accessing }
+LePageMondrianMapExamples >> patternMapWithCategories [
+	"Pattern map from EuroPLoP 24 paper, with categories and Composed Narrative"
+
+	<gtExample>
+	<return: #LePageMondrianMap>
+	| map |
+	map := LePageMondrianMap new
+			pageCategoriesAndTitles: self patternPagesWithCategories;
+			database: LeDatabase gtBook;
+			connectionsWithCategories: {{''.
+						'Explainable System'}
+						-> {{'(T) '.
+									'Moldable Tool'}.
+								{'(P) '.
+									'Tooling Buildup'}.
+								{'(P) '.
+									'Blind Spot'}.
+								{'(P) '.
+									'Project Diary'}}.
+					{'(T) '.
+						'Moldable Tool'}
+						-> {{'(M) '.
+									'Moldable Object'}}.
+					{'(P) '.
+						'Tooling Buildup'}
+						-> {{'(M) '.
+									'Moldable Object'}}.
+					{'(P) '.
+						'Blind Spot'}
+						-> {{'(T) '.
+									'Composed Narrative'}.
+								{'(M) '.
+									'Moldable Object'}}.
+					{'(T) '.
+						'Composed Narrative'}
+						-> {{'(T) '.
+									'Moldable Tool'}.
+								{'(M) '.
+									'Moldable Object'}}.
+					{'(P) '.
+						'Project Diary'}
+						-> {{'(T) '.
+									'Composed Narrative'}.
+								{'(M) '.
+									'Example Object'}}.
+					{'(M) '.
+						'Moldable Object'}
+						-> {{'(M) '.
+									'Example Object'}.
+								{'(T) '.
+									'Contextual Playground'}.
+								{'(M) '.
+									'Moldable Data Wrapper'}}.
+					{'(M) '.
+						'Example Object'}
+						-> {{'(M) '.
+									'Moldable Object'}}.
+					{'(M) '.
+						'Moldable Data Wrapper'}
+						-> {{'(M) '.
+									'Moldable Object'}}.
+					{'(T) '.
+						'Contextual Playground'}
+						-> {{'(T) '.
+									'Contextual View'}.
+								{'(T) '.
+									'Contextual Search'}.
+								{'(T) '.
+									'Contextual Action'}}.
+					{'(T) '.
+						'Contextual View'}
+						-> {{'(P) '.
+									'Simple View'}}.
+					{'(T) '.
+						'Contextual Search'}
+						-> {{'(M) '.
+									'Moldable Collection Wrapper'}}.
+					{'(P) '.
+						'Throwaway Analysis Tool'}
+						-> {{'(T) '.
+									'Contextual Playground'}}};
+			yourself.
+	self assert: map missingPages isEmpty.
+	^ map
+		explicitPositions: self patternMapWithCategoriesExplicitPositions;
+		yourself
+]
+
+{ #category : #accessing }
+LePageMondrianMapExamples >> patternMapWithCategoriesExplicitPositions [
+	^ {(42.47800064086914@52.98549397786462). (-165.02799606323242@184.58333333333337). (21.202003479003906@308.77901204427087). (40.85099983215332@365.3768513997396). (282.8230037689209@363.3768513997396). (-164.20500373840332@362.3768513997396). (29.22899627685547@183.18117268880212). (40.552001953125@251.18117268880212). (-164.5@251.77901204427087). (280.44799041748047@250.77901204427087). (282.2249927520752@421.97469075520837). (51.46799850463867@117.58333333333337). (-163.5680046081543@118.58333333333337). (281.94800186157227@116.58333333333337). (53.82499885559082@422.97469075520837). (282.2589988708496@287.9854939778646). (-80.6736785082072@82.58333333333337). (-50.98995633465178@82.58333333333337). (161.2630567712685@82.58333333333337). (109.14527439622032@82.58333333333337). (-57.24437334591479@214.18117268880212). (108.36491359462082@338.37685139973956). (176.27080304184122@338.3768513997396). (-36.559032111662816@338.3768513997396). (108.15346346723265@394.9746907552083). (364.7694423724771@392.97469075520837). (-44.5680046081543@198.50411230707226). (109.20330556424382@212.77901204427087). (-30.797996520996094@266.1785041257077). (109.23360201165006@280.77901204427087). (177.85199737548828@265.71720979317337). (-30.797996520996094@266.1785041257077). (177.85199737548828@265.71720979317337). (109.0260129251521@147.18117268880212). (-74.86300155399843@147.18117268880212). (-74.7058995977735@148.18117268880212). (158.5393328547449@146.1597730780413). (133.61137343572352@146.18117268880212). (197.44799041748047@310.17137655920493)}
+]
+
+{ #category : #accessing }
+LePageMondrianMapExamples >> patternPagesWithCategories [
+	<gtExample>
+	<return: #Array>
+	^ {{''.
+			'Explainable System'}.
+		{'(T) '.
+			'Moldable Tool'}.
+		{'(T) '.
+			'Contextual Playground'}.
+		{'(T) '.
+			'Contextual View'}.
+		{'(T) '.
+			'Contextual Search'}.
+		{'(T) '.
+			'Contextual Action'}.
+		{'(T) '.
+			'Composed Narrative'}.
+		{'(M) '.
+			'Moldable Object'}.
+		{'(M) '.
+			'Example Object'}.
+		{'(M) '.
+			'Moldable Data Wrapper'}.
+		{'(M) '.
+			'Moldable Collection Wrapper'}.
+		{'(P) '.
+			'Project Diary'}.
+		{'(P) '.
+			'Tooling Buildup'}.
+		{'(P) '.
+			'Blind Spot'}.
+		{'(P) '.
+			'Simple View'}.
+		{'(P) '.
+			'Throwaway Analysis Tool'}}
+]
+
+{ #category : #accessing }
 LePageMondrianMapExamples >> simpleMap [
 	"A simple map with default layout."
 
 	<gtExample>
-	^ LePageMondrianMap new
-		pageTitles: {'Glamorous Toolkit'.
-				'About this book'.
-				'Get started'};
-		database: LeDatabase gtBook;
-		connections: {'Glamorous Toolkit'
-					-> {'About this book'.
-							'Get started'}}
+	<return: #LePageMondrianMap>
+	| map |
+	map := LePageMondrianMap new
+			pageTitles: {'Glamorous Toolkit'.
+					'About this book'.
+					'Get started'};
+			database: LeDatabase gtBook;
+			connections: {'Glamorous Toolkit'
+						-> {'About this book'.
+								'Get started'}}.
+	self assert: map missingPages isEmpty.
+	^ map
+]
+
+{ #category : #accessing }
+LePageMondrianMapExamples >> simpleMapWithCategories [
+	<gtExample>
+	<return: #LePageMondrianMap>
+	| map |
+	map := LePageMondrianMap new
+			pageCategoriesAndTitles: {{''.
+						'Explainable System'}.
+					{'(T) '.
+						'Moldable Tool'}.
+					{'(P) '.
+						'Tooling Buildup'}};
+			database: LeDatabase gtBook;
+			connectionsWithCategories: {{''.
+						'Explainable System'}
+						-> {{'(T) '.
+									'Moldable Tool'}.
+								{'(P) '.
+									'Tooling Buildup'}}}.
+	self assert: map missingPages isEmpty.
+	^ map
 ]
 
 { #category : #accessing }
@@ -144,6 +320,7 @@ LePageMondrianMapExamples >> simpleMapWithMissingPages [
 	"A map where some pages are missing -- hover shows them as pink, and clicking goes to nil."
 
 	<gtExample>
+	<return: #LePageMondrianMap>
 	^ LePageMondrianMap new
 		pageTitles: {'Glamorous Toolkit'.
 				'A Missing Page'.

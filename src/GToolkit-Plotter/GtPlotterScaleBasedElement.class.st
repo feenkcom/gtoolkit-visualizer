@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterScaleBasedElement,
 	#superclass : #BlElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }

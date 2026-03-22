@@ -100,6 +100,16 @@ GtWardleyMapEdgeModel >> label: aString [
 ]
 
 { #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelCoordinate [
+	^ labelModel coordinate
+]
+
+{ #category : #'api - label' }
+GtWardleyMapEdgeModel >> labelCoordinate: aPoint [
+	labelModel coordinate: aPoint
+]
+
+{ #category : #'api - label' }
 GtWardleyMapEdgeModel >> labelModel [
 	<return: #GtWardleyMapEdgeLabelModel>
 	^ labelModel
@@ -160,6 +170,11 @@ GtWardleyMapEdgeModel >> printOn: aStream [
 		nextPutAll: '; arrow: ';
 		print: self arrow;
 		nextPutAll: ' }'
+]
+
+{ #category : #'api - edge' }
+GtWardleyMapEdgeModel >> removeFromMap [
+	parent ifNotNil: [ :aParent | parent removeEdge: self ]
 ]
 
 { #category : #'api - arrow' }

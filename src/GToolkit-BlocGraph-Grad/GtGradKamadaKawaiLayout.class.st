@@ -245,7 +245,7 @@ GtGradKamadaKawaiLayout >> initializeLayout: theNodes [
 	| diameter num dijkstra paths |
 	num := theNodes size.
 	dijkstra := DijkstrasShortestPath new.
-	distanceMatrix := Array2D new: num tabulate: [ :i :j | 0 ].
+	distanceMatrix := BlArray2D new: num tabulate: [ :i :j | 0 ].
 	self
 		randomlyPositionNodes: theNodes
 		maxVerticalValue: height

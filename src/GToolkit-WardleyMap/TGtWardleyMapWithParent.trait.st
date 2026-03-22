@@ -51,5 +51,8 @@ TGtWardleyMapWithParent >> propagateAnnouncement: anAnnouncement [
 
 { #category : #'api - parent' }
 TGtWardleyMapWithParent >> removeParent [
+	"Use this method after the removal of this object from its parent.
+	In other words, it must (and can only) be called by its parent, after its removal."
+
 	parent := nil
 ]

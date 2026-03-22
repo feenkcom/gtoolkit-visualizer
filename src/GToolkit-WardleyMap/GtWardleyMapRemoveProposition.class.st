@@ -6,10 +6,16 @@ Class {
 	#instVars : [
 		'acceptAction',
 		'rejectAction',
-		'parent'
+		'parent',
+		'isReadOnly'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
+
+{ #category : #'as yet unclassified' }
+GtWardleyMapRemoveProposition >> beReadOnly [
+	isReadOnly := true
+]
 
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: anEdgeDecoratorContext [
@@ -23,6 +29,7 @@ GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: anEdgeDecoratorCo
 			beRemoveProposition;
 			wardleyMapEdgeViewModel: anEdgeViewModel;
 			wardleyMapDecoratorViewModel: anEdgeDecoratorContext decoratorViewModel;
+			edgeElement: anEdgeDecoratorContext edgeElement;
 			fromAnchor: (BlNearestPositionEllipseAnchor
 					referenceElement: aFromNodeElement
 					relatedTo: aToNodeElement);
@@ -30,36 +37,54 @@ GtWardleyMapRemoveProposition >> decorateEdgeElementInContext: anEdgeDecoratorCo
 					referenceElement: aToNodeElement
 					relatedTo: aFromNodeElement).
 
-	aCanvasElement addChild: aPropositionElement
+	aCanvasElement addChild: aPropositionElement.
+
+	isReadOnly
+		ifFalse: [ acceptAction decorateEdgeElementInContext: anEdgeDecoratorContext.
+			rejectAction decorateEdgeElementInContext: anEdgeDecoratorContext ]
 ]
 
 { #category : #accessing }
 GtWardleyMapRemoveProposition >> decorateNodeElementInContext: aNodeDecoratorContext [
 	| aHighlightElement |
 	aHighlightElement := GtWardleyMapNodePropositionElement new
-		beRemoveProposition;
-		wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
-		wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
-		nodeElement: aNodeDecoratorContext nodeElement.
-		
+			beRemoveProposition;
+			wardleyMapNodeViewModel: aNodeDecoratorContext nodeViewModel;
+			wardleyMapDecoratorViewModel: aNodeDecoratorContext decoratorViewModel;
+			nodeElement: aNodeDecoratorContext nodeElement.
+
 	aNodeDecoratorContext canvasElement addChild: aHighlightElement.
-			
-	acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
-	rejectAction decorateNodeElementInContext: aNodeDecoratorContext
+
+	isReadOnly
+		ifFalse: [ acceptAction decorateNodeElementInContext: aNodeDecoratorContext.
+			rejectAction decorateNodeElementInContext: aNodeDecoratorContext ]
 ]
 
 { #category : #initialization }
 GtWardleyMapRemoveProposition >> initialize [
 	super initialize.
 
+	isReadOnly := false.
 	acceptAction := GtWardleyMapAction new.
+	acceptAction elementId: GtWardleyMapRemoveAcceptId.
 	acceptAction icon: BrGlamorousVectorIcons accept.
-	acceptAction tooltip: 'Remove node'.
+	acceptAction tooltip: 'Remove'.
 	acceptAction action: [ self onAcceptAction ].
 	rejectAction := GtWardleyMapAction new.
+	rejectAction elementId: GtWardleyMapRemoveRejectId.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
-	rejectAction tooltip: 'Keep node'.
+	rejectAction tooltip: 'Keep'.
 	rejectAction action: [ self onRejectAction ].
+]
+
+{ #category : #testing }
+GtWardleyMapRemoveProposition >> isActionableProposition [
+	"Return true if it can be handled by GtWardleyMapAllProposition.
+	Such decorator must implement #onAcceptAction and #onRejectAction methods.
+	Return false in other cases."
+
+	<return: #Boolean>
+	^ true
 ]
 
 { #category : #'event handling' }

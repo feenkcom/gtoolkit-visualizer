@@ -21,16 +21,29 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 	mondrianElement := mondrianInstance asPannableElement.
 	mondrianElement
 		when: BlClickEvent
-		do: [ :event | 
-			event target withAllParents
-				detect: [ :element | element graph isNode or: [ element graph isEdge ] ]
-				ifFound: [ :element | 
-					| transformedObject graphModel |
-					graphModel := element graph isEdge
-							ifFalse: [ element graph model ]
-							ifTrue: [ element graph model model ].
-					transformedObject := transformation cull: graphModel.
-					mondrianElement phlow spawnObject: transformedObject ] ].
+			do: [ :event | 
+				event target withAllParentsUpTo: mondrianElement
+					detect: [ :element | element graph isNode or: [ element graph isEdge ] ]
+					ifFound: [ :element | 
+						| transformedObject graphModel |
+						graphModel := element graph isEdge
+								ifFalse: [ element graph model ]
+								ifTrue: [ element graph model model ].
+						transformedObject := transformation cull: graphModel.
+						mondrianElement phlow spawnObject: transformedObject ]
+					ifNone: [] ];
+		when: BlMouseWheelEvent
+			do: [ :event | 
+				event modifiers = BlKeyModifiers primary
+					ifTrue: [ event isPrimarilyVertical
+							ifTrue: [ | eventYvector newZoomLevel scalingFactor |
+								event consumed: true.
+								eventYvector := event vector y.
+								scalingFactor := 1 / 2.
+								newZoomLevel := (eventYvector positive
+										ifTrue: [ mondrianElement zoomLevel * scalingFactor reciprocal ]
+										ifFalse: [ mondrianElement zoomLevel * scalingFactor ]) round: 2.
+								mondrianElement zoomLevel: newZoomLevel ] ] ].
 	wrapper addChild: mondrianElement.
 	self beViewElement: wrapper.
 	^ aBlock value: wrapper
@@ -45,26 +58,26 @@ GtPhlowMondrianView >> initialize [
 	self actionStencil: [ 
 		BrButton new 
 			aptitude: BrGlamorousButtonWithIconAptitude;
-			icon: BrGlamorousIcons zoomin asElement;
+			icon: BrGlamorousVectorIcons zoomin asElement;
 			label: 'Zoom in';
 			action: [ mondrianElement zoomIn ] ].
 	self actionStencil: [ 
 		BrButton new 
 			aptitude: BrGlamorousButtonWithIconAptitude;
-			icon: BrGlamorousIcons zoomout asElement ;
+			icon: BrGlamorousVectorIcons zoomout asElement ;
 			label: 'Zoom out';
 			action: [ mondrianElement zoomOut ] ].
 	self actionStencil: [ 
 		BrButton new 
 			aptitude: BrGlamorousButtonWithIconAptitude;
-			icon: BrGlamorousIcons zoomtofit asElement ;
+			icon: BrGlamorousVectorIcons zoomtofit asElement ;
 			label: 'Zoom to fit';
 			action: [ mondrianElement zoomToFit ] ].
 	self actionStencil: [ 
 		BrButton new
 			aptitude: BrGlamorousButtonWithIconAptitude;
 			label: 'Reset to actual size';
-			icon: BrGlamorousIcons actualsize asElement;
+			icon: BrGlamorousVectorIcons actualsize asElement;
 			action: [ mondrianElement zoomToActualSize ] ]
 	
 ]

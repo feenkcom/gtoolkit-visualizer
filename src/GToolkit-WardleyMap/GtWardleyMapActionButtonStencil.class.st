@@ -7,7 +7,9 @@ Class {
 		'action',
 		'aptitude',
 		'model',
-		'tooltip'
+		'tooltip',
+		'buttonClass',
+		'elementId'
 	],
 	#category : #'GToolkit-WardleyMap-Helpers'
 }
@@ -32,10 +34,21 @@ GtWardleyMapActionButtonStencil >> aptitude: anObject [
 	aptitude := anObject
 ]
 
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> buttonClass [
+	^ buttonClass ifNil: [ buttonClass := BrButton ]
+]
+
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> buttonClass: aButtonClass [
+	buttonClass := aButtonClass
+]
+
 { #category : #building }
 GtWardleyMapActionButtonStencil >> create [
 	| aButton |
-	aButton := BrButton new.
+	aButton := self buttonClass new.
+	elementId ifNotNil: [ aButton id: self elementId ].
 	icon ifNotNil: [ aButton icon: self icon ].
 	tooltip ifNotNil: [ aButton label: self tooltip ].
 	label ifNotNil: [ aButton label: self label ].
@@ -50,6 +63,17 @@ GtWardleyMapActionButtonStencil >> create [
 		c linear vertical alignCenter.
 		c linear horizontal alignCenter ].
 	^ aButton
+]
+
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> elementId [
+	<return: #BlElementId or: nil>
+	^ elementId
+]
+
+{ #category : #accessing }
+GtWardleyMapActionButtonStencil >> elementId: anObject [
+	elementId := anObject
 ]
 
 { #category : #accessing }
@@ -85,16 +109,15 @@ GtWardleyMapActionButtonStencil >> model: anObject [
 { #category : #private }
 GtWardleyMapActionButtonStencil >> newButtonAptitude [
 	aptitude ifNotNil: [ :aBlock | ^ aBlock value ].
-	icon ifNil: [ 
-		tooltip
-			ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new ]
-			ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new 
-				+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ] ].
-	label ifNil: [ 
-		^ BrGlamorousButtonWithIconAptitude new ].
-	tooltip ifNotNil: [  
-		^ BrGlamorousButtonWithIconAndLabelAptitude new 
-			+ (BrGlamorousWithLabelTooltipAptitude new text: tooltip) ].
+	icon
+		ifNil: [ tooltip
+				ifNil: [ ^ BrGlamorousButtonWithLabelAptitude new ]
+				ifNotNil: [ ^ BrGlamorousButtonWithLabelAptitude new
+						+ (BrGlamorousWithExplicitTooltipAptitude text: tooltip) ] ].
+	label ifNil: [ ^ BrGlamorousButtonWithIconAptitude new ].
+	tooltip
+		ifNotNil: [ ^ BrGlamorousButtonWithIconAndLabelAptitude new
+				+ (BrGlamorousWithExplicitTooltipAptitude text: tooltip) ].
 	^ BrGlamorousButtonWithIconAndLabelAptitude new
 ]
 

@@ -47,14 +47,16 @@ Class {
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> fileReference [
 	<gtExample>
-	^ GtResourcesUtility resourceAtPath: 'feenkcom/gtoolkit/doc' 
+	<return: #FileReference>
+	^ GtResourcesUtility resourceAtPath: 'feenkcom/gtoolkit/doc'
 ]
 
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> fileReferenceTreeMap [
 	<gtExample>
+	<return: #GtNestedRectangleTreeMap>
 	^ GtNestedRectangleTreeMap new
-		roots: { self fileReference };
+		roots: {self fileReference};
 		leaves: [ :aNode | aNode files ];
 		deep: [ :aNode | aNode directories ]
 ]
@@ -62,70 +64,74 @@ GtBuildingTreeMapsExplanation >> fileReferenceTreeMap [
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> fileReferenceTreeMapWithLeavesSize [
 	<gtExample>
-	^ self fileReferenceTreeMap 
-		leavesSize: [ :aNode | aNode size max: 1000 ]
+	<return: #GtNestedRectangleTreeMap>
+	^ self fileReferenceTreeMap leavesSize: [ :aNode | aNode size max: 1000 ]
 ]
 
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> tree [
 	<gtExample>
+	<return: #GtNestedTreeNode>
 	^ GtNestedTreeBuilder new
-			data: (Smalltalk allClassesAndTraits select: [:c | 
-			c name beginsWith: 'Br']);
+		data: (Smalltalk allClassesAndTraits select: [ :c | c name beginsWith: 'Br' ]);
 		groupBy: [ :aClass | aClass package ];
-		groupBy: [ :aClass | aClass package classTags detect: [ :e | e hasClass: aClass ] ];
-		weight: [ :aClass | aClass methods size max: 1];
-		build.
+		groupBy: [ :aClass | aClass package tags detect: [ :e | e includesClass: aClass ] ];
+		weight: [ :aClass | aClass methods size max: 1 ];
+		build
 ]
 
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemap [
 	<gtExample>
+	<return: #GtNestedRectangleTreeMap>
 	^ GtNestedRectangleTreeMap new
-		roots: { self tree };
+		roots: {self tree};
 		leaves: [ :aNode | aNode leaves ];
 		deep: [ :aNode | aNode nodes ]
 ]
 
 { #category : #accessing }
-GtBuildingTreeMapsExplanation >> treemapWithCustomContainerElement [ 
+GtBuildingTreeMapsExplanation >> treemapWithCustomContainerElement [
 	<gtExample>
-	^ self treemapWithCustomLeafElement 
+	<return: #GtNestedRectangleTreeMap>
+	^ self treemapWithCustomLeafElement
 		containerElement: [ :anElement :aNodeContext | 
-			aNodeContext level = 2 ifTrue: [ 
-				anElement addChild: (BrLabel new 
-					text: (aNodeContext  model name name withoutPrefix: 'Brick-'); 
-					aptitude: (BrGlamorousLabelAptitude new fontSize: 8; foreground: Color gray); 
-					constraintsDo: [ :c | c ignoreByLayout. ])].
-			anElement border: (BlBorder 
-				paint: (Color gray alpha: 0.7 / aNodeContext level) 
-				width: 1).
+			aNodeContext level = 2
+				ifTrue: [ anElement
+						addChild: (BrLabel new
+								text: (aNodeContext model name name withoutPrefix: 'Brick-');
+								aptitude: (BrGlamorousLabelAptitude new
+										fontSize: 8;
+										foreground: Color gray);
+								constraintsDo: [ :c | c ignoreByLayout ]) ].
+			anElement
+				border: (BlBorder paint: (Color gray alpha: 0.7 / aNodeContext level) width: 1).
 			anElement padding: (BlInsets all: 1) ]
 ]
 
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemapWithCustomLeafElement [
 	<gtExample>
+	<return: #GtNestedRectangleTreeMap>
 	^ self treemapWithLeavesSize
 		leafElement: [ :anElement :aLeafContext | 
 			| isGtView isGtExample |
 			isGtView := aLeafContext model item itOrItsSuperclassesDefineGTViews.
-			isGtExample := aLeafContext model item methods anySatisfy: [ :aMethod | 
-				aMethod isGTExampleMethod ].
-			anElement border: (BlBorder 
-				paint: (Color gray alpha: 0.5 / aLeafContext level) 
-				width: 1).
-			anElement background: (isGtView 
-				ifTrue: [(Color blue alpha: 0.6)] 
-				ifFalse: [ 
-					isGtExample 
-						ifTrue: [ Color green muchDarker alpha: 0.6] 
-						ifFalse: [ Color transparent ]]) ]
+			isGtExample := aLeafContext model item methods
+					anySatisfy: [ :aMethod | aMethod isGTExampleMethod ].
+			anElement
+				border: (BlBorder paint: (Color gray alpha: 0.5 / aLeafContext level) width: 1).
+			anElement
+				background: (isGtView
+						ifTrue: [ Color blue alpha: 0.6 ]
+						ifFalse: [ isGtExample
+								ifTrue: [ Color green muchDarker alpha: 0.6 ]
+								ifFalse: [ Color transparent ] ]) ]
 ]
 
 { #category : #accessing }
 GtBuildingTreeMapsExplanation >> treemapWithLeavesSize [
 	<gtExample>
-	^ self treemap 
-		leavesSize: [ :aNode | aNode weight ]
+	<return: #GtNestedRectangleTreeMap>
+	^ self treemap leavesSize: [ :aNode | aNode weight ]
 ]

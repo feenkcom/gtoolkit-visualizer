@@ -11,7 +11,7 @@ Class {
 
 { #category : #'instance creation' }
 GtDiagrammerStarStencil >> create [
-	^ (BlPolygon vertices: ({
+	^ (BlPolygonGeometry vertices: ({
 		50@0.
 		65@40.
 		100@40.

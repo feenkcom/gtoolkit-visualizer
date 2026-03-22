@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterVerticalTicksAndLabelsStencil,
-	#superclass : #GtPlotterTicksAndLabelsStencil,
+	#name : #GtPlotterVerticalTicksAndLabelsAxisStencil,
+	#superclass : #GtPlotterScatterAxisStencil,
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> addAxisYElementOn: aContainer [
 	aContainer addChild: (BlElement new
 		width: 2;
 		background: (Color veryVeryLightGray);
@@ -15,7 +15,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> addAxisYElementOn: aContainer [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> buildDefault [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> buildDefault [
 	| aContainer |
 	aContainer := BrHorizontalPane new
 		hFitContent;
@@ -33,13 +33,9 @@ GtPlotterVerticalTicksAndLabelsStencil >> buildDefault [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> initialize [
-	super initialize.
-	eventHandler := GtPlotterScatterFocusYHandler new
-]
-
-{ #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTickLabelsElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterVerticalTickLabelsElement new
 		scale: scatterChart scaleY;
 		inverse;
@@ -63,14 +59,24 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTickLabelsElement [
 					c vertical fitContent ] ];
 		constraintsDo: [ :c | 
 			c horizontal fitContent.
-			c padding: (BlInsets left: 10 right: 10) ];
+			];
+		padding: (BlInsets
+			top: padding top
+			bottom: padding bottom
+			left: 10
+			right: 10);
 		clipChildren: false;
 		labels: scatterChart ticksY
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTicksElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterVerticalTicksElement new
+		padding: (BlInsets
+			top: padding top
+			bottom: padding bottom);
 		scale: scatterChart scaleY;
 		tickElement: [ :aGtPlotterContext |
 			BlElement new
@@ -85,7 +91,7 @@ GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTicksElement [
 ]
 
 { #category : #accessing }
-GtPlotterVerticalTicksAndLabelsStencil >> newAxisYTitleElement [
+GtPlotterVerticalTicksAndLabelsAxisStencil >> newAxisYTitleElement [
 
 	^ BrFrame new
 		fitContent;

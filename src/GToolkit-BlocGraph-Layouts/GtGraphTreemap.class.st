@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'nodes'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #testing }

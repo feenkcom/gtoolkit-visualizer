@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'enclosureCircle'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts - Packing'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts - Packing'
 }
 
 { #category : #measure }

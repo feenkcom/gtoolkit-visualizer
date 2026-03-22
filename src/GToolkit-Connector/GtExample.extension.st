@@ -95,7 +95,7 @@ GtExample >> buildRightResizerFor: blankContainer [
 GtExample >> buildSourceButton: vocalEditorContainer [
 	| aGoButton |
 	aGoButton := GtInspectorRoundButtonStencil new asElement
-		icon: (BrGlamorousIcons file asElement);
+		icon: (BrGlamorousVectorIcons file asElement);
 		constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets top: -10 left: 0 bottom: 0 right: 0).

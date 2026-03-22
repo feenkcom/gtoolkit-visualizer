@@ -16,6 +16,17 @@ GtWardleyMapDecoratorViewModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #printing }
+GtWardleyMapDecoratorViewModel >> gtDisplayOn: aStream [
+	aStream nextPutAll: 'Decorator view model: '. 
+	wardleyMapDecoratorModel gtDisplayOn: aStream
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapDecoratorViewModel >> isActionableProposition [
+	^ self wardleyMapDecoratorModel isActionableProposition
+]
+
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapDecoratorViewModel >> onWardleyMapDecoratorModelChanged [
 	"Is sent when a new wardleyMapDecorator model is assigned to the view model"

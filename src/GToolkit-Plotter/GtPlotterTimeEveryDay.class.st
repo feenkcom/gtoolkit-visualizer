@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterTimeEveryDay,
 	#superclass : #GtPlotterTimeInterval,
-	#category : 'GToolkit-Plotter-Time'
+	#category : #'GToolkit-Plotter-Time'
 }
 
 { #category : #'instance creation' }
@@ -24,7 +24,7 @@ GtPlotterTimeEveryDay >> from: aStartDateAndTime to: anEndDateAndTime do: aBlock
 	
 	aCeilStart := (aStartDateAndTime hour isZero)
 		ifTrue: [ aStartDateAndTime ]
-		ifFalse: [ aStartDateAndTime next ].
+		ifFalse: [ (aStartDateAndTime asDate addDays: 1) asDateAndTime ].
 		
 	(aCeilStart to: anEndDateAndTime by: step days) scheduleDo: aBlock
 ]

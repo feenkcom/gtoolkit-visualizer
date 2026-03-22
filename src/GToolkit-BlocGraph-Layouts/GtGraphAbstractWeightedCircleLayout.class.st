@@ -6,7 +6,7 @@ I am the abstract root class of weighted circle layout. Look at the class commen
 Class {
 	#name : #GtGraphAbstractWeightedCircleLayout,
 	#superclass : #GtGraphCircleLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #hook }

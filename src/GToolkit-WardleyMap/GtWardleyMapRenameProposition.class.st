@@ -34,19 +34,32 @@ GtWardleyMapRenameProposition >> decorateNodeElementInContext: aNodeDecoratorCon
 GtWardleyMapRenameProposition >> initialize [
 	super initialize.
 	dropdownAction := GtWardleyMapDropdownAction new.
+	dropdownAction elementId: GtWardleyMapRenameProposalsId.
 	dropdownAction icon: BrGlamorousVectorIcons downwards.
 	dropdownAction tooltip: 'Proposed names'.
 	dropdownAction content: [ self newProposalList ].
 
 	acceptAction := GtWardleyMapAction new.
+	acceptAction elementId: GtWardleyMapRenameAcceptId.
 	acceptAction icon: BrGlamorousVectorIcons accept.
 	acceptAction tooltip: 'Accept rename'.
-	acceptAction action: [ self onProposalFinished ].
+	acceptAction action: [ self onAcceptAction ].
 
 	rejectAction := GtWardleyMapAction new.
+	rejectAction elementId: GtWardleyMapRenameRejectId.
 	rejectAction icon: BrGlamorousVectorIcons cancel.
 	rejectAction tooltip: 'Keep original name'.
-	rejectAction action: [ self onRejectRename ]
+	rejectAction action: [ self onRejectAction ]
+]
+
+{ #category : #testing }
+GtWardleyMapRenameProposition >> isActionableProposition [
+	"Return true if it can be handled by GtWardleyMapAllProposition.
+	Such decorator must implement #onAcceptAction and #onRejectAction methods.
+	Return false in other cases."
+
+	<return: #Boolean>
+	^ true
 ]
 
 { #category : #initialization }
@@ -80,6 +93,7 @@ GtWardleyMapRenameProposition >> newProposalList [
 					aptitude: (BrGlamorousLabelAptitude new
 							foreground: BrGlamorousColors disabledButtonTextColor).
 			aTitle2 := self newListItemElement
+					id: GtWardleyMapRenameOriginalNameId;
 					margin: (BlInsets
 							top: 0
 							right: 3
@@ -106,7 +120,10 @@ GtWardleyMapRenameProposition >> newProposalList [
 			vFitContentLimited;
 			items: self options;
 			itemStencil: [ self newListItemElement ];
-			itemDataBinder: [ :anItemElement :anItem | anItemElement text: anItem ].
+			itemDataBinder: [ :anItemElement :anItem :anItemIndex | 
+				anItemElement 
+					id: (GtWardleyMapRenameProposalId indexed: anItemIndex);
+					text: anItem ].
 
 
 	aContainer
@@ -116,9 +133,19 @@ GtWardleyMapRenameProposition >> newProposalList [
 ]
 
 { #category : #'event handling' }
+GtWardleyMapRenameProposition >> onAcceptAction [
+	self onProposalFinished
+]
+
+{ #category : #'event handling' }
 GtWardleyMapRenameProposition >> onProposalFinished [
 	parent ifNil: [ ^ self ].
 	parent removeWardleyMapDecoratorModel: self.
+]
+
+{ #category : #'event handling' }
+GtWardleyMapRenameProposition >> onRejectAction [
+	self onRejectRename
 ]
 
 { #category : #'event handling' }

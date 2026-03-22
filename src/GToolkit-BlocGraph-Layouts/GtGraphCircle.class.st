@@ -6,7 +6,7 @@ Class {
 		'radius',
 		'margin'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Circle'
 }
 
 { #category : #converting }

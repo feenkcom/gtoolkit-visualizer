@@ -6,7 +6,7 @@ Class {
 		'scaleY',
 		'elements'
 	],
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }

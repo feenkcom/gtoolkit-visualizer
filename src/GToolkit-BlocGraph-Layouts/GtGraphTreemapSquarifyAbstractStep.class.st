@@ -35,7 +35,17 @@ GtGraphTreemapSquarifyAbstractStep >> gtAllStepsFor: aView [
 	^ aView columnedList 
 		title: 'Steps';
 		priority: 3;
-		items: [ self allSteps ];
+		items: [ self withPreviousAndNextSteps ];
+		column: ''
+			icon: [ :aStep | 
+				(self isSameStep: aStep)
+					ifTrue: [ BlElement new 
+						size: 8@8; 
+						background: BrGlamorousColors primaryBorderColor; 
+						geometry: BlCircleGeometry new;
+						aptitude: (BrGlamorousWithExplicitTooltipAptitude text: 'This step') ] 
+					ifFalse: [ BlElement new size: 0 @ 0 ] ]
+			width: 16;
 		column: 'Success' text: [ :aStep | aStep  successName ] width: 80;
 		column: 'Type' text: [ :aStep | aStep orientationName ] width: 100;
 		column: 'Worst Aspect' text: [ :aStep | aStep  worstString ];
@@ -80,6 +90,34 @@ GtGraphTreemapSquarifyAbstractStep >> isDefinedStep [
 	^ true
 ]
 
+{ #category : #testing }
+GtGraphTreemapSquarifyAbstractStep >> isRejectedStep [
+	^ false
+]
+
+{ #category : #comparing }
+GtGraphTreemapSquarifyAbstractStep >> isSameStep: aStep [
+	^ self == aStep
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyAbstractStep >> largestRectangleChain [
+	"Return the value of the longest successful path with one rejected step"
+
+	<return: #Integer>
+	| maxChainCount currentChainCount |
+	maxChainCount := 0.
+	currentChainCount := 0.
+	self allSteps
+		do: [ :eachStep | 
+			currentChainCount := currentChainCount + 1.
+			eachStep isRejectedStep
+				ifTrue: [ maxChainCount := maxChainCount max: currentChainCount.
+					currentChainCount := 0 ] ].
+
+	^ maxChainCount
+]
+
 { #category : #accessing }
 GtGraphTreemapSquarifyAbstractStep >> nodes [
 	<return: #Array of: #GtGraphTreemapNode>
@@ -90,6 +128,12 @@ GtGraphTreemapSquarifyAbstractStep >> nodes [
 GtGraphTreemapSquarifyAbstractStep >> rectangle [
 	<return: #GtGraphTreemapSquarifyAreaRectangle>
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtGraphTreemapSquarifyAbstractStep >> withPreviousAndNextSteps [
+	<return: #Array of: #GtGraphTreemapSquarifyAbstractStep>
+	^ self allSteps
 ]
 
 { #category : #'gt-extension' }

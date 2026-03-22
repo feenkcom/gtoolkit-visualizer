@@ -12,37 +12,61 @@ GtGradHierarchicalLayoutExamples >> allNodesHaveIncomingEdges [
 { #category : #'examples - instance creation' }
 GtGradHierarchicalLayoutExamples >> createDisconnectedGraph [
 	<gtExample>
-
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 7
-		pairs: { (1->2). (2->3). (3->4). (5->6). (6->7) }
+		pairs: {1 -> 2.
+				2 -> 3.
+				3 -> 4.
+				5 -> 6.
+				6 -> 7}
 ]
 
 { #category : #'examples - instance creation' }
 GtGradHierarchicalLayoutExamples >> createGraphWithAllMultipleRanks [
 	<gtExample>
-	
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 5
-		pairs: { (1->2). (2->3). (3->4). (4->5). (4->2). (1->5). (2->5). (4->1) }
+		pairs: {1 -> 2.
+				2 -> 3.
+				3 -> 4.
+				4 -> 5.
+				4 -> 2.
+				1 -> 5.
+				2 -> 5.
+				4 -> 1}
 ]
 
 { #category : #'examples - instance creation' }
 GtGradHierarchicalLayoutExamples >> createGraphWithAllNodesHaveIncomingEdges [
 	<gtExample>
-	
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 5
-		pairs: { (1->2). (2->3). (3->4). (4->5). (4->2). (1->5). (2->5). (4->1) }
+		pairs: {1 -> 2.
+				2 -> 3.
+				3 -> 4.
+				4 -> 5.
+				4 -> 2.
+				1 -> 5.
+				2 -> 5.
+				4 -> 1}
 ]
 
 { #category : #'examples - instance creation' }
 GtGradHierarchicalLayoutExamples >> createSimpleGraph [
 	<gtExample>
-
+	<return: #BlLayoutParentNodeWithEdges>
 	^ self
 		createGraph: 7
-		pairs: { (1->2). (2->3). (3->4). (2->5). (5->6). (6->7). (7-> 3) }
+		pairs: {1 -> 2.
+				2 -> 3.
+				3 -> 4.
+				2 -> 5.
+				5 -> 6.
+				6 -> 7.
+				7 -> 3}
 ]
 
 { #category : #'examples - layout' }

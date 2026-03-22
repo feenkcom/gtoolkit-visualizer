@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'defaultTranslator'
 	],
-	#category : 'GToolkit-BlocGraph-Layouts-Basic'
+	#category : #'GToolkit-BlocGraph-Layouts-Basic'
 }
 
 { #category : #accessing }

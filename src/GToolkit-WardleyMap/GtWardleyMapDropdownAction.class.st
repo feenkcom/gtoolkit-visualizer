@@ -2,8 +2,7 @@ Class {
 	#name : #GtWardleyMapDropdownAction,
 	#superclass : #GtWardleyMapAction,
 	#instVars : [
-		'content',
-		'preferredExtent'
+		'content'
 	],
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
@@ -14,47 +13,23 @@ GtWardleyMapDropdownAction >> content [
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> content: anObject [
-	content := anObject
+GtWardleyMapDropdownAction >> content: aBlock [
+	content := aBlock
 ]
 
 { #category : #accessing }
-GtWardleyMapDropdownAction >> decorateNodeElementInContext: aNodeDecoratorContext [
-	aNodeDecoratorContext nodeElement
-		labelContainerDo: [ :aLabelContainer | 
-			| anActionContainer aButton |
-			anActionContainer := GtWardleyMapUtility ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
-			aButton := self newButton.
-			aNodeDecoratorContext decoratorViewModel weak
-				when: GtWardleyMapNodeDecoratorViewModelRemoved
-				send: #removeFromParent
-				to: aButton.
-			aNodeDecoratorContext decoratorViewModel weak
-				when: GtWardleyMapNodeLabelModelTextChanged
-				send: #removeFromParent
-				to: aButton.
-			anActionContainer addChild: aButton ]
-]
-
-{ #category : #accessing }
-GtWardleyMapDropdownAction >> newButton [
+GtWardleyMapDropdownAction >> newButton: aButtonClass [
 	| anAptitude |
-	anAptitude := BrGlamorousWithDropdownAptitude
-			handle: [ super newButton
+	anAptitude := BrGlamorousWithExplicitDropdownAptitude
+			handle: [ (super newButton: aButtonClass)
 					in: [ :theHandle | 
 						theHandle aptitude - BrGlamorousButtonExteriorAptitude ];
 					margin: BlInsets empty ]
 			content: self content.
-	preferredExtent ifNotNil: [ anAptitude preferredExtent: preferredExtent ].
-	^ super newButton addAptitude: anAptitude
-]
-
-{ #category : #accessing }
-GtWardleyMapDropdownAction >> preferredExtent [
-	^ preferredExtent
+	^ (super newButton: aButtonClass) addAptitude: anAptitude
 ]
 
 { #category : #accessing }
 GtWardleyMapDropdownAction >> preferredExtent: anObject [
-	preferredExtent := anObject
+	"ignored, we use new dropdown implementation that does not need this workaround."
 ]

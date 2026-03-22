@@ -12,7 +12,7 @@ I draw vertical projections.
 Class {
 	#name : #GtPlotterVerticalValueProjectionsElement,
 	#superclass : #GtPlotterSingleScaleValueBasedElement,
-	#category : 'GToolkit-Plotter-Core - Elements'
+	#category : #'GToolkit-Plotter-Core - Elements'
 }
 
 { #category : #initialization }

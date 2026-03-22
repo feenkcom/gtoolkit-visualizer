@@ -30,7 +30,7 @@ GtWardleyMapScriptExamples >> convertToLf: aScript [
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withCommentCr [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := 'style wardley
 
@@ -51,26 +51,26 @@ node b->node d // this is a comment
 '.
 
 	self assertCrNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withCommentLf [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := self convertToLf: self withCommentCr.
 
 	self assertLfNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCr [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := '// General
 // Map is licensed under creative commons share alike.
@@ -113,14 +113,14 @@ Node C->Node F;comment on C-F edge
 '.
 
 	self assertCrNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesCrSimplified [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := 'style wardley
 
@@ -130,24 +130,20 @@ evolution genesis / concept -> custom / emerging -> product / converging -> comm
 note Node C pipeline comment [0.45, 0.45]
 
 component Node A [0.95, 0.66] label [-10, 29]
-
 component Node B [0.84, 0.57] label [-91, -5]
 pipeline Node B
-
 component Node C [0.50, 0.67] label [-2, -17]
 pipeline Node C
 {
 component Node D [0.17] label [-63, 14]
 component Node E [0.80] label [20, 18]
 }
-
 component Node F [0.18, 0.70] label [4, -12]
 pipeline Node F
 {
 component Node G [0.67] label [-31, 15]
 component Node H [0.75] label [15, 16]
 }
-
 
 evolve Node B 0.73 label [-5, 21]
 evolve Node C -> something c 0.90 label [-5, 21]
@@ -160,26 +156,26 @@ Node C->Node F;comment on C-F edge
 '.
 
 	self assertCrNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNewSyntaxForPipelinesLfSimplified [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := self convertToLf: self withNewSyntaxForPipelinesCrSimplified.
 
 	self assertLfNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNoteCr [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := 'style wardley
 
@@ -199,26 +195,26 @@ node b->node d
 '.
 
 	self assertCrNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withNoteLf [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := self convertToLf: self withNoteCr.
 
 	self assertLfNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withPipelineCr [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := 'style wardley
 
@@ -239,26 +235,26 @@ node f->node a
 '.
 
 	self assertCrNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withPipelineLf [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := self convertToLf: self withPipelineCr.
 
 	self assertLfNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withTwoPipelinesCr [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := 'style wardley
 
@@ -279,18 +275,18 @@ pipeline node d [0.23, 0.79]
 '.
 
 	self assertCrNewLine: aScript.
-	
+
 	^ aScript
 ]
 
 { #category : #'examples - scripts' }
 GtWardleyMapScriptExamples >> withTwoPipelinesLf [
 	<gtExample>
-
+	<return: #ByteString>
 	| aScript |
 	aScript := self convertToLf: self withTwoPipelinesCr.
 
 	self assertLfNewLine: aScript.
-	
+
 	^ aScript
 ]

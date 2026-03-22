@@ -19,7 +19,12 @@ TGtWithWardleyMapDecoratorModels >> gtWardleyMapDecoratorsFor: aView [
 	^ aView columnedList
 		title: 'Decorators';
 		items: [ self wardleyMapDecoratorModels copy ];
-		column: 'Name' text: #yourself
+		column: 'Name' text: #yourself;
+		column: 'Proposition'
+			text: [ :anItem | 
+				anItem isActionableProposition
+					ifTrue: [ 'yes' ]
+					ifFalse: [ 'no' asRopedText foreground: BrGlamorousColors disabledButtonTextColor ] ] width: 50
 ]
 
 { #category : #'api - decorators' }

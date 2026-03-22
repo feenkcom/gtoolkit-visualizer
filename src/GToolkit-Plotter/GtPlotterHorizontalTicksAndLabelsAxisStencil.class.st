@@ -1,11 +1,11 @@
 Class {
-	#name : #GtPlotterHorizontalTicksAndLabelsStencil,
-	#superclass : #GtPlotterTicksAndLabelsStencil,
+	#name : #GtPlotterHorizontalTicksAndLabelsAxisStencil,
+	#superclass : #GtPlotterScatterAxisStencil,
 	#category : #'GToolkit-Plotter-Builder - Scatter Chart'
 }
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> addAxisXLineElementOn: aContainer [
 	aContainer addChild: (BlElement new
 		height: 2;
 		background: (Color veryVeryLightGray);
@@ -15,7 +15,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> addAxisXLineElementOn: aContainer [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> buildDefault [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> buildDefault [
 	| aContainer |
 	aContainer := BrVerticalPane new
 		vFitContent;
@@ -34,8 +34,13 @@ GtPlotterHorizontalTicksAndLabelsStencil >> buildDefault [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTickLabelsElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterHorizontalTickLabelsElement new
+		padding: (BlInsets
+			left: padding left
+			right: padding right);
 		labelElement: [ :aGtPlotterScaleContext |
 			BlTextElement new
 				in: [:e | e userData 
@@ -52,8 +57,13 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTickLabelsElement [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTicksElement [
+	| padding |
+	padding := scatterChart contentPadding.
 	^ GtPlotterHorizontalTicksElement new
+		padding: (BlInsets
+			left: padding left
+			right: padding right);
 		scale: scatterChart scaleX;
 		tickElement: [ :aGtPlotterContext |
 			BlElement new
@@ -68,7 +78,7 @@ GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTicksElement [
 ]
 
 { #category : #accessing }
-GtPlotterHorizontalTicksAndLabelsStencil >> newAxisXTitleElement [
+GtPlotterHorizontalTicksAndLabelsAxisStencil >> newAxisXTitleElement [
 
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new 

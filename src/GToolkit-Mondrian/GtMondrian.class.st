@@ -27,9 +27,24 @@ GtMondrian >> asScalableElement [
 	^ self asElement
 ]
 
+{ #category : #accessing }
+GtMondrian >> edgeElements [
+	^ self root allChildrenBreadthFirstSelect: [ :each | each graph isEdge ]
+]
+
 { #category : #scripting }
 GtMondrian >> edges [
 	^ GtMondrianEdgeBuilder new mondrian: self
+]
+
+{ #category : #views }
+GtMondrian >> gtEdgeElementsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Edge elements';
+		priority: 15;
+		items: [ self edgeElements ];
+		column: 'Edge' text: [ :each | each gtDisplayString ]
 ]
 
 { #category : #ui }
@@ -37,8 +52,18 @@ GtMondrian >> gtLiveFor: aView [
 	<gtView>
 	^ aView mondrian
 		title: 'Live';
-		priority: 50;
+		priority: 1;
 		initialize: self
+]
+
+{ #category : #views }
+GtMondrian >> gtNodeElementsFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Node elements';
+		priority: 10;
+		items: [ self nodeElements ];
+		column: 'Element' text: [ :each | each gtDisplayString ]
 ]
 
 { #category : #initialize }
@@ -69,6 +94,11 @@ GtMondrian >> nodeAt: anObject ifAbsent: aBlock [
 { #category : #accessing }
 GtMondrian >> nodeAt: anObject put: aNode [
 	^ self topStep nodeAt: anObject put: aNode
+]
+
+{ #category : #accessing }
+GtMondrian >> nodeElements [
+	^ self root allChildrenBreadthFirstSelect: [ :each | each graph isNode ]
 ]
 
 { #category : #scripting }

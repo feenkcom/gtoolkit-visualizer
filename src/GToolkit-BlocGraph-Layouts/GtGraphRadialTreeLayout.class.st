@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphRadialTreeLayout,
 	#superclass : #GtGraphAbstractCompactTree,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #algorithm }

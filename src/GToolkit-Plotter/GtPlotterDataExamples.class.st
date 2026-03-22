@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlotterDataExamples,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Example - Data'
+	#category : #'GToolkit-Plotter-Example - Data'
 }
 
 { #category : #accessing }
@@ -10018,9 +10018,9 @@ GtPlotterDataExamples class >> browsers [
 { #category : #'raw data' }
 GtPlotterDataExamples >> browserData [
 	<gtExample>
-
+	<return: #Array>
 	^ self class browserData
-		collect: [ :eachArray |
+		collect: [ :eachArray | 
 			Dictionary new
 				at: #browser put: eachArray first;
 				at: #duration put: eachArray second days;
@@ -10032,49 +10032,50 @@ GtPlotterDataExamples >> browserData [
 { #category : #'instance creation' }
 GtPlotterDataExamples >> browserDataGroup [
 	<gtExample>
-
+	<return: #GtPlotterDataGroup>
 	^ GtPlotterDataGroup new values: self browserData
 ]
 
 { #category : #'instance creation' }
 GtPlotterDataExamples >> browserDataGroupSortedByBrowser [
 	<gtExample>
+	<return: #GtPlotterDataGroup>
 	| aGroup |
-		
-	aGroup := self browserDataGroup sorted: [ :a :b | (a at: #browser) < (b at: #browser) ].
-	
+	aGroup := self browserDataGroup
+			sorted: [ :a :b | (a at: #browser) < (b at: #browser) ].
+
 	self assert: ((aGroup at: 1) values first at: #browser) equals: #Chrome.
-	self assert: ((aGroup at: aGroup size) values first at: #browser) equals: #Safari.
-	
+	self
+		assert: ((aGroup at: aGroup size) values first at: #browser)
+		equals: #Safari.
+
 	self assert: aGroup size equals: self browserData size.
 	self assert: aGroup isComposite not.
 	self assert: aGroup isDecorator not.
 	self assert: aGroup isLogicalGroup not.
-	
+
 	^ aGroup
 ]
 
 { #category : #'instance creation' }
 GtPlotterDataExamples >> browserDataGroupSortedByDanger [
 	<gtExample>
+	<return: #GtPlotterDataGroup>
 	| aGroup theDanger |
-	
-	theDanger := { 
-		#high -> 1.
-		#medium -> 2.
-		#low -> 3.
-	} asDictionary.
-	
-	aGroup := self browserDataGroup sorted: [ :a :b |
-		(theDanger at: (a at: #danger)) < (theDanger at: (b at: #danger)) ].
-	
+	theDanger := {#high -> 1.
+			#medium -> 2.
+			#low -> 3} asDictionary.
+
+	aGroup := self browserDataGroup
+			sorted: [ :a :b | (theDanger at: (a at: #danger)) < (theDanger at: (b at: #danger)) ].
+
 	self assert: ((aGroup at: 1) values first at: #danger) equals: #high.
 	self assert: ((aGroup at: aGroup size) values first at: #danger) equals: #low.
-	
+
 	self assert: aGroup size equals: self browserData size.
 	self assert: aGroup isComposite not.
 	self assert: aGroup isDecorator not.
 	self assert: aGroup isLogicalGroup not.
-	
+
 	^ aGroup
 ]

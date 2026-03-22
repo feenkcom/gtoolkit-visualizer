@@ -1,7 +1,7 @@
 Class {
 	#name : #GtGraphAbstractHorizontalTreeLayout,
 	#superclass : #GtGraphAbstractRegularTreeLayout,
-	#category : 'GToolkit-BlocGraph-Layouts-Layouts'
+	#category : #'GToolkit-BlocGraph-Layouts-Layouts'
 }
 
 { #category : #testing }

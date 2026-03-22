@@ -7,7 +7,7 @@ See {{gtClass:GtGraphTreemapSquarifyWorst}} for more details and examples.
 Class {
 	#name : #GtGraphTreemapSquarifyWorstAspectRatio,
 	#superclass : #GtGraphTreemapSquarifyWorst,
-	#category : 'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
+	#category : #'GToolkit-BlocGraph-Layouts-Data Structures - Treemap'
 }
 
 { #category : #accessing }

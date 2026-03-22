@@ -8,7 +8,7 @@ https://en.wikipedia.org/wiki/Domain_of_a_function
 Class {
 	#name : #GtPlotterScaleDomain,
 	#superclass : #Object,
-	#category : 'GToolkit-Plotter-Scale'
+	#category : #'GToolkit-Plotter-Scale'
 }
 
 { #category : #'api - polymorphism' }
