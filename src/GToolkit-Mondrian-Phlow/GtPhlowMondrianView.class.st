@@ -31,19 +31,7 @@ GtPhlowMondrianView >> asElementDo: aBlock [
 								ifTrue: [ element graph model model ].
 						transformedObject := transformation cull: graphModel.
 						mondrianElement phlow spawnObject: transformedObject ]
-					ifNone: [] ];
-		when: BlMouseWheelEvent
-			do: [ :event | 
-				event modifiers = BlKeyModifiers primary
-					ifTrue: [ event isPrimarilyVertical
-							ifTrue: [ | eventYvector newZoomLevel scalingFactor |
-								event consumed: true.
-								eventYvector := event vector y.
-								scalingFactor := 1 / 2.
-								newZoomLevel := (eventYvector positive
-										ifTrue: [ mondrianElement zoomLevel * scalingFactor reciprocal ]
-										ifFalse: [ mondrianElement zoomLevel * scalingFactor ]) round: 2.
-								mondrianElement zoomLevel: newZoomLevel ] ] ].
+					ifNone: [] ].
 	wrapper addChild: mondrianElement.
 	self beViewElement: wrapper.
 	^ aBlock value: wrapper
