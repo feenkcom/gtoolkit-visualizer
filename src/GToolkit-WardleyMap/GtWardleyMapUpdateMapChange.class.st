@@ -9,7 +9,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtWardleyMapUpdateMapChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self copy.

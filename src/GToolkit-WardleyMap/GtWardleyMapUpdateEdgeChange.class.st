@@ -10,6 +10,9 @@ Class {
 { #category : #accessing }
 GtWardleyMapUpdateEdgeChange >> edge [
 	^ edge
+		ifNil: [ edge := map edges
+					detect: [ :each | each fromNode id = self fromNodeId and: [ each toNode id = self toNodeId ] ]
+					ifNone: [  ] ]
 ]
 
 { #category : #accessing }
@@ -21,29 +24,31 @@ GtWardleyMapUpdateEdgeChange >> edge: anEdge [
 GtWardleyMapUpdateEdgeChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self copy.
-	fromNode
-		ifNotNil: [ undo fromNode: edge fromNode.
-			edge fromNode: fromNode ].
-	toNode
-		ifNotNil: [ undo toNode: edge toNode.
-			edge toNode: toNode ].
+	self fromNode
+		ifNotNil: [ :node | 
+			undo fromNode: self edge fromNode.
+			self edge fromNode: node ].
+	self toNode
+		ifNotNil: [ :node | 
+			undo toNode: self edge toNode.
+			self edge toNode: node ].
 	arrow
-		ifNotNil: [ undo arrow: edge arrow.
-			edge arrow: arrow ].
+		ifNotNil: [ undo arrow: self edge arrow.
+			self edge arrow: arrow ].
 	color
-		ifNotNil: [ undo color: edge color.
-			edge color: color ].
+		ifNotNil: [ undo color: self edge color.
+			self edge color: color ].
 	isLabelVisible
-		ifNotNil: [ undo isLabelVisible: edge isLabelVisible.
-			edge isLabelVisible: isLabelVisible ].
+		ifNotNil: [ undo isLabelVisible: self edge isLabelVisible.
+			self edge isLabelVisible: isLabelVisible ].
 	label
-		ifNotNil: [ undo label: edge label.
-			edge label: label ].
+		ifNotNil: [ undo label: self edge label.
+			self edge label: label ].
 	labelCoordinate
-		ifNotNil: [ undo labelCoordinate: edge labelCoordinate.
-			edge labelCoordinate: labelCoordinate ].
+		ifNotNil: [ undo labelCoordinate: self edge labelCoordinate.
+			self edge labelCoordinate: labelCoordinate ].
 	width
-		ifNotNil: [ undo width: edge width.
-			edge width: width ].
+		ifNotNil: [ undo width: self edge width.
+			self edge width: width ].
 	^ undo
 ]

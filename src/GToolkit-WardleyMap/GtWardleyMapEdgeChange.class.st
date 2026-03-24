@@ -9,7 +9,9 @@ Class {
 		'arrow',
 		'isLabelVisible',
 		'width',
-		'color'
+		'color',
+		'fromNodeId',
+		'toNodeId'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
@@ -37,11 +39,25 @@ GtWardleyMapEdgeChange >> color: aColor [
 { #category : #accessing }
 GtWardleyMapEdgeChange >> fromNode [
 	^ fromNode
+		ifNil: [ map
+				nodeWithId: fromNodeId
+				ifFound: [ :each | each ]
+				ifNone: [  ] ]
 ]
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> fromNode: aNode [
 	fromNode := aNode
+]
+
+{ #category : #accessing }
+GtWardleyMapEdgeChange >> fromNodeId [
+	^ fromNodeId ifNil: [ fromNode ifNotNil: [ fromNode id ] ]
+]
+
+{ #category : #accessing }
+GtWardleyMapEdgeChange >> fromNodeId: anObject [
+	fromNodeId := anObject
 ]
 
 { #category : #accessing }
@@ -77,11 +93,25 @@ GtWardleyMapEdgeChange >> labelCoordinate: aPoint [
 { #category : #accessing }
 GtWardleyMapEdgeChange >> toNode [
 	^ toNode
+		ifNil: [ map
+				nodeWithId: toNodeId
+				ifFound: [ :each | each ]
+				ifNone: [  ] ]
 ]
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> toNode: aNode [
 	toNode := aNode
+]
+
+{ #category : #accessing }
+GtWardleyMapEdgeChange >> toNodeId [
+	^ toNodeId ifNil: [ toNode ifNotNil: [ toNode id ] ]
+]
+
+{ #category : #accessing }
+GtWardleyMapEdgeChange >> toNodeId: anObject [
+	toNodeId := anObject
 ]
 
 { #category : #accessing }

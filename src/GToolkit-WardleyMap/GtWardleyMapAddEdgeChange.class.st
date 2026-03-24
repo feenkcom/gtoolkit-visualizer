@@ -26,8 +26,8 @@ GtWardleyMapAddEdgeChange class >> onMap: aMap andEdge: anEdge [
 GtWardleyMapAddEdgeChange >> executeNotifying: aBlock [
 	| undo |
 	newEdge := GtWardleyMapEdgeModel new.
-	newEdge fromNode: fromNode.
-	newEdge toNode: toNode.
+	newEdge fromNode: self fromNode.
+	newEdge toNode: self toNode.
 	arrow ifNotNil: [ newEdge arrow: arrow ].
 	color ifNotNil: [ newEdge color: color ].
 	isLabelVisible ifNotNil: [ newEdge isLabelVisible: isLabelVisible ].
