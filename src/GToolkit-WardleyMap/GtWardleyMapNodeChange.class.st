@@ -87,8 +87,8 @@ GtWardleyMapNodeChange >> evolvedSize [
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeChange >> evolvedSize: aNumber [
-	evolvedSize := aNumber
+GtWardleyMapNodeChange >> evolvedSize: aPoint [
+	evolvedSize := aPoint
 ]
 
 { #category : #accessing }

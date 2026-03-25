@@ -5,7 +5,8 @@ Class {
 		'label',
 		'evolution',
 		'visibility',
-		'color'
+		'color',
+		'id'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
@@ -28,6 +29,16 @@ GtWardleyMapNoteChange >> evolution [
 { #category : #accessing }
 GtWardleyMapNoteChange >> evolution: aNumber [
 	evolution := aNumber
+]
+
+{ #category : #accessing }
+GtWardleyMapNoteChange >> id [
+	^ id
+]
+
+{ #category : #accessing }
+GtWardleyMapNoteChange >> id: anObject [
+	id := anObject
 ]
 
 { #category : #accessing }

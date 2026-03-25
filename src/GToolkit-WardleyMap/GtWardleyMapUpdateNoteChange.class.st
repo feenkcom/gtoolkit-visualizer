@@ -12,23 +12,27 @@ GtWardleyMapUpdateNoteChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self copy.
 	color
-		ifNotNil: [ undo color: note color.
-			note color: color ].
+		ifNotNil: [ undo color: self note color.
+			self note color: color ].
 	evolution
-		ifNotNil: [ undo evolution: note evolution.
-			note evolution: evolution ].
+		ifNotNil: [ undo evolution: self note evolution.
+			self note evolution: evolution ].
 	label
-		ifNotNil: [ undo label: note label.
-			note label: label ].
+		ifNotNil: [ undo label: self note label.
+			self note label: label ].
 	visibility
-		ifNotNil: [ undo visibility: note visibility.
-			note visibility: visibility ].
+		ifNotNil: [ undo visibility: self note visibility.
+			self note visibility: visibility ].
 	^ undo
 ]
 
 { #category : #accessing }
 GtWardleyMapUpdateNoteChange >> note [
 	^ note
+		ifNil: [ note := map
+					noteWithId: id
+					ifFound: [ :each | each ]
+					ifNone: [  ] ]
 ]
 
 { #category : #accessing }

@@ -23,6 +23,7 @@ GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
 	newNote := GtWardleyMapNoteModel new.
 	color ifNotNil: [ newNote color: color ].
 	evolution ifNotNil: [ newNote evolution: evolution ].
+	id ifNotNil: [ newNote id: id ].
 	label ifNotNil: [ newNote label: label ].
 	visibility ifNotNil: [ newNote visibility: visibility ].
 	map addNote: newNote.
