@@ -14,6 +14,14 @@ GtWardleyMapChange class >> onMap: aWardleyMapModel [
 		yourself
 ]
 
+{ #category : #copying }
+GtWardleyMapChange >> copyForPreviewIn: previewMap using: mapping [
+	| copy |
+	copy := self copy.
+	copy map: previewMap.
+	^ copy
+]
+
 { #category : #accessing }
 GtWardleyMapChange >> map [
 	^ map

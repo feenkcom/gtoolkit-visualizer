@@ -156,6 +156,14 @@ GtWardleyMapNodeEvolveModel >> notifySizeChanged [
 	self propagateAnnouncement: (GtWardleyMapEvolveModelResized new evolveModel: self)
 ]
 
+{ #category : #copying }
+GtWardleyMapNodeEvolveModel >> postCopy [
+	super postCopy.
+	announcer := nil.
+	parent := nil.
+	self labelModel: self labelModel copy
+]
+
 { #category : #printing }
 GtWardleyMapNodeEvolveModel >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."

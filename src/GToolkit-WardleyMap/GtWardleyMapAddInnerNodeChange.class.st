@@ -8,6 +8,15 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
+{ #category : #copying }
+GtWardleyMapAddInnerNodeChange >> copyForPreviewIn: previewMap using: mapping [
+	| copy |
+	copy := super copyForPreviewIn: previewMap using: mapping.
+	innerNode ifNotNil: [ copy innerNode: (mapping at: innerNode) ].
+	outerNode ifNotNil: [ copy outerNode: (mapping at: outerNode) ].
+	^ copy
+]
+
 { #category : #private }
 GtWardleyMapAddInnerNodeChange >> executeNotifying: aBlock [
 	| undoChanges |

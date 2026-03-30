@@ -92,3 +92,10 @@ GtWardleyMapNodeLabelModel >> notifyLabelTextChanged [
 GtWardleyMapNodeLabelModel >> notifyParentChanged [
 	
 ]
+
+{ #category : #copying }
+GtWardleyMapNodeLabelModel >> postCopy [
+	super postCopy.
+	announcer := nil.
+	parent := nil
+]
