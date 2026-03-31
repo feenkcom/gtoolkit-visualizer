@@ -7,6 +7,14 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
+{ #category : #copying }
+GtWardleyMapRemoveNodeChange >> copyForPreviewIn: previewMap using: mapping [
+	| copy |
+	copy := super copyForPreviewIn: previewMap using: mapping.
+	node ifNotNil: [ copy node: (mapping at: node) ].
+	^ copy
+]
+
 { #category : #private }
 GtWardleyMapRemoveNodeChange >> executeNotifying: aBlock [
 	| undoNode undo edges |

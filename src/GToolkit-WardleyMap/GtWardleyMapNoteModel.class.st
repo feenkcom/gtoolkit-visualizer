@@ -132,6 +132,13 @@ GtWardleyMapNoteModel >> notifyParentChanged [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+GtWardleyMapNoteModel >> postCopy [
+	super postCopy.
+	announcer := nil.
+	parent := nil
+]
+
 { #category : #printing }
 GtWardleyMapNoteModel >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."

@@ -157,6 +157,14 @@ GtWardleyMapEdgeModel >> notifyWidthChanged [
 	self propagateAnnouncement: (GtWardleyMapEdgeModelResized new edgeModel: self)
 ]
 
+{ #category : #'as yet unclassified' }
+GtWardleyMapEdgeModel >> postCopy [
+	super postCopy.
+	announcer := nil.
+	parent := nil.
+	self labelModel: self labelModel copy
+]
+
 { #category : #printing }
 GtWardleyMapEdgeModel >> printOn: aStream [
 	aStream

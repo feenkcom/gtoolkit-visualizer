@@ -7,6 +7,14 @@ Class {
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
+{ #category : #copying }
+GtWardleyMapRemoveNoteChange >> copyForPreviewIn: previewMap using: mapping [
+	| copy |
+	copy := super copyForPreviewIn: previewMap using: mapping.
+	note ifNotNil: [ copy note: (mapping at: note) ].
+	^ copy
+]
+
 { #category : #private }
 GtWardleyMapRemoveNoteChange >> executeNotifying: aBlock [
 	| undo |

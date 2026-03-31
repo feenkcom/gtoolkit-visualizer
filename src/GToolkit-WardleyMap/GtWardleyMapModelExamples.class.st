@@ -4,6 +4,42 @@ Class {
 	#category : #'GToolkit-WardleyMap-Examples'
 }
 
+{ #category : #'examples - model' }
+GtWardleyMapModelExamples >> copyMapWithPipelineInnerNodes [
+	<gtExample>
+	<return: #GtWardleyMapModel>
+	| original copy |
+	original := self newMapWithPipelineInnerNodes.
+	copy := original copy.
+	self assert: copy nodes size equals: original nodes size.
+	self assert: copy edges size equals: original edges size.
+	self assert: copy notes size equals: original notes size.
+	copy nodes
+		with: original nodes
+		do: [ :c :o | 
+			self assert: c label equals: o label.
+			self assert: c innerNodes size equals: o innerNodes size ].
+	copy edges
+		with: original edges
+		do: [ :c :o | self assert: c label equals: o label ].
+	copy notes
+		with: original notes
+		do: [ :c :o | self assert: c label equals: o label ].
+	copy nodes do: [ :each | each label: '*' , each label ].
+	copy edges do: [ :each | each label: '*' , each label ].
+	copy notes do: [ :each | each label: '*' , each label ].
+	copy nodes
+		with: original nodes
+		do: [ :c :o | self assert: c label equals: '*' , o label ].
+	copy edges
+		with: original edges
+		do: [ :c :o | self assert: c label equals: '*' , o label ].
+	copy notes
+		with: original notes
+		do: [ :c :o | self assert: c label equals: '*' , o label ].
+	^ copy
+]
+
 { #category : #'examples - elements' }
 GtWardleyMapModelExamples >> elementWithNodes_nodeBAsEvolveTarget [
 	<gtExample>

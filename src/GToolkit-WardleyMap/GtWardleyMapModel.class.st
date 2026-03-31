@@ -603,6 +603,39 @@ GtWardleyMapModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecorator
 				decoratorModel: aWardleyMapDecoratorViewModel)
 ]
 
+{ #category : #copying }
+GtWardleyMapModel >> postCopy [
+	| nodeMap |
+	super postCopy.
+	announcer := nil.
+
+	nodeMap := IdentityDictionary new.
+	nodes := nodes
+			collect: [ :each | 
+				| newNode |
+				newNode := each copy
+						parent: self;
+						yourself.
+				nodeMap at: each put: newNode.
+				newNode ].
+	nodeMap
+		keysAndValuesDo: [ :original :copy | 
+			original innerNodes notEmpty
+				ifTrue: [ copy innerNodes: (original innerNodes collect: [ :inner | nodeMap at: inner ]) ] ].
+	edges := edges
+			collect: [ :each | 
+				each copy
+					fromNode: (nodeMap at: each fromNode);
+					toNode: (nodeMap at: each toNode);
+					parent: self;
+					yourself ].
+	notes := notes
+			collect: [ :each | 
+				each copy
+					parent: self;
+					yourself ]
+]
+
 { #category : #accessing }
 GtWardleyMapModel >> propagateAnnouncement: anAnnouncement [
 	self announce: anAnnouncement

@@ -624,6 +624,17 @@ GtWardleyMapNodeModel >> pipelineNode: aNodeModel [
 	pipelineNode := aNodeModel
 ]
 
+{ #category : #'as yet unclassified' }
+GtWardleyMapNodeModel >> postCopy [
+	super postCopy.
+	announcer := nil.
+	parent := nil.
+	innerNodes := #().
+	pipelineNode := nil.
+	self labelModel: self labelModel copy.
+	self evolveModel: self evolveModel copy
+]
+
 { #category : #'api - pipeline' }
 GtWardleyMapNodeModel >> prepareInnerNode: aNodeModel [
 	"I prepare a node to be added as my inner node"

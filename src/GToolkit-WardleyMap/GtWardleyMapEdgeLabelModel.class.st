@@ -107,3 +107,10 @@ GtWardleyMapEdgeLabelModel >> notifyCoordinateChanged [
 GtWardleyMapEdgeLabelModel >> notifyParentChanged [
 	
 ]
+
+{ #category : #copying }
+GtWardleyMapEdgeLabelModel >> postCopy [
+	super postCopy.
+	announcer := nil.
+	parent := nil
+]
