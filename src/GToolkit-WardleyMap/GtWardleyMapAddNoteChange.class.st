@@ -34,3 +34,8 @@ GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
 GtWardleyMapAddNoteChange >> newNote [
 	^ newNote
 ]
+
+{ #category : #accessing }
+GtWardleyMapAddNoteChange >> note [
+	^ self newNote
+]

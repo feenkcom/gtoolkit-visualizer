@@ -46,6 +46,11 @@ GtWardleyMapEdgeChange >> copyForPreviewIn: previewMap using: mapping [
 ]
 
 { #category : #accessing }
+GtWardleyMapEdgeChange >> edge [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 GtWardleyMapEdgeChange >> fromNode [
 	^ fromNode
 		ifNil: [ map
@@ -67,6 +72,14 @@ GtWardleyMapEdgeChange >> fromNodeId [
 { #category : #accessing }
 GtWardleyMapEdgeChange >> fromNodeId: anObject [
 	fromNodeId := anObject
+]
+
+{ #category : #accessing }
+GtWardleyMapEdgeChange >> highlightModifications [
+	| highlight |
+	self execute.
+	highlight := GtWardleyMapHighlight new.
+	self edge addWardleyMapDecoratorModel: highlight
 ]
 
 { #category : #accessing }

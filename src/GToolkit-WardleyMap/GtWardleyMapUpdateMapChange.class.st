@@ -26,6 +26,14 @@ GtWardleyMapUpdateMapChange >> executeNotifying: aBlock [
 ]
 
 { #category : #accessing }
+GtWardleyMapUpdateMapChange >> highlightModifications [
+	| highlight |
+	self execute.
+	highlight := GtWardleyMapHighlight new.
+	self map addWardleyMapDecoratorModel: highlight
+]
+
+{ #category : #accessing }
 GtWardleyMapUpdateMapChange >> isEvolutionAxisVisible [
 	^ isEvolutionAxisVisible
 ]

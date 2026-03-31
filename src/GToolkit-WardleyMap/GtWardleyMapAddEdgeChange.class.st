@@ -22,6 +22,11 @@ GtWardleyMapAddEdgeChange class >> onMap: aMap andEdge: anEdge [
 	^ undo
 ]
 
+{ #category : #accessing }
+GtWardleyMapAddEdgeChange >> edge [
+	^ self newEdge
+]
+
 { #category : #private }
 GtWardleyMapAddEdgeChange >> executeNotifying: aBlock [
 	| undo |

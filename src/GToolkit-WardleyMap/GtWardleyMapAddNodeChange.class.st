@@ -59,3 +59,8 @@ GtWardleyMapAddNodeChange >> executeNotifying: aBlock [
 GtWardleyMapAddNodeChange >> newNode [
 	^ newNode
 ]
+
+{ #category : #accessing }
+GtWardleyMapAddNodeChange >> node [
+	^ self newNode
+]

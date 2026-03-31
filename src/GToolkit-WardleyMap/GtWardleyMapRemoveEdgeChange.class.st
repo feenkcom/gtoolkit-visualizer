@@ -32,3 +32,10 @@ GtWardleyMapRemoveEdgeChange >> executeNotifying: aBlock [
 	edge removeFromMap.
 	^ undo
 ]
+
+{ #category : #accessing }
+GtWardleyMapRemoveEdgeChange >> highlightModifications [
+	| highlight |
+	highlight := GtWardleyMapHighlight new.
+	self edge addWardleyMapDecoratorModel: highlight
+]

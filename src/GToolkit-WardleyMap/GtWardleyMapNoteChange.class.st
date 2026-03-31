@@ -32,6 +32,14 @@ GtWardleyMapNoteChange >> evolution: aNumber [
 ]
 
 { #category : #accessing }
+GtWardleyMapNoteChange >> highlightModifications [
+	| highlight |
+	self execute.
+	highlight := GtWardleyMapHighlight new.
+	self note addWardleyMapDecoratorModel: highlight
+]
+
+{ #category : #accessing }
 GtWardleyMapNoteChange >> id [
 	^ id
 ]
@@ -49,6 +57,11 @@ GtWardleyMapNoteChange >> label [
 { #category : #accessing }
 GtWardleyMapNoteChange >> label: aString [
 	label := aString
+]
+
+{ #category : #accessing }
+GtWardleyMapNoteChange >> note [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
