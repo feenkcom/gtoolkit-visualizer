@@ -92,6 +92,14 @@ GtWardleyMapNodeChange >> evolvedSize: aPoint [
 ]
 
 { #category : #accessing }
+GtWardleyMapNodeChange >> highlightModifications [
+	| highlight |
+	self execute.
+	highlight := GtWardleyMapHighlight new.
+	self node addWardleyMapDecoratorModel: highlight
+]
+
+{ #category : #accessing }
 GtWardleyMapNodeChange >> id [
 	^ id
 ]
@@ -149,6 +157,11 @@ GtWardleyMapNodeChange >> labelCoordinate [
 { #category : #accessing }
 GtWardleyMapNodeChange >> labelCoordinate: aPoint [
 	labelCoordinate := aPoint
+]
+
+{ #category : #accessing }
+GtWardleyMapNodeChange >> node [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

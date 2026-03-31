@@ -23,6 +23,20 @@ GtWardleyMapCompositeChange >> copyForPreview [
 ]
 
 { #category : #accessing }
+GtWardleyMapCompositeChange >> gtDiffElementClass [
+	^ GtWardleyMapCompositeChangeDiffElement
+]
+
+{ #category : #accessing }
+GtWardleyMapCompositeChange >> highlightedModificationsInPreview [
+	| copy |
+	copy := self copyForPreview.
+	self changes ifNil: [ ^ copy map ].
+	copy changes do: [ :each | each highlightModifications ].
+	^ copy map
+]
+
+{ #category : #accessing }
 GtWardleyMapCompositeChange >> map [
 	^ map
 ]
