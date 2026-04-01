@@ -35,7 +35,7 @@ GtWardleyMapNoteChange >> evolution: aNumber [
 GtWardleyMapNoteChange >> highlightModifications [
 	| highlight |
 	self execute.
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self note addWardleyMapDecoratorModel: highlight
 ]
 

@@ -633,7 +633,13 @@ GtWardleyMapModel >> postCopy [
 			collect: [ :each | 
 				each copy
 					parent: self;
-					yourself ]
+					yourself ].
+	wardleyMapDecoratorModels := wardleyMapDecoratorModels
+			ifNotNil: [ wardleyMapDecoratorModels
+					collect: [ :each | 
+						each copy
+							parent: self;
+							yourself ] ]
 ]
 
 { #category : #accessing }

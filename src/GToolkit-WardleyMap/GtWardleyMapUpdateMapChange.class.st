@@ -29,7 +29,7 @@ GtWardleyMapUpdateMapChange >> executeNotifying: aBlock [
 GtWardleyMapUpdateMapChange >> highlightModifications [
 	| highlight |
 	self execute.
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self map addWardleyMapDecoratorModel: highlight
 ]
 

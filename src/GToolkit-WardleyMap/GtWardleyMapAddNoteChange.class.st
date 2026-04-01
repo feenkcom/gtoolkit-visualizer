@@ -31,6 +31,11 @@ GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
 ]
 
 { #category : #accessing }
+GtWardleyMapAddNoteChange >> highlightType [
+	^ #add
+]
+
+{ #category : #accessing }
 GtWardleyMapAddNoteChange >> newNote [
 	^ newNote
 ]

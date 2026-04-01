@@ -36,6 +36,11 @@ GtWardleyMapRemoveEdgeChange >> executeNotifying: aBlock [
 { #category : #accessing }
 GtWardleyMapRemoveEdgeChange >> highlightModifications [
 	| highlight |
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self edge addWardleyMapDecoratorModel: highlight
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveEdgeChange >> highlightType [
+	^ #remove
 ]

@@ -162,7 +162,13 @@ GtWardleyMapEdgeModel >> postCopy [
 	super postCopy.
 	announcer := nil.
 	parent := nil.
-	self labelModel: self labelModel copy
+	self labelModel: self labelModel copy.
+	wardleyMapDecoratorModels := wardleyMapDecoratorModels
+			ifNotNil: [ wardleyMapDecoratorModels
+					collect: [ :each | 
+						each copy
+							parent: self;
+							yourself ] ]
 ]
 
 { #category : #printing }

@@ -78,7 +78,7 @@ GtWardleyMapEdgeChange >> fromNodeId: anObject [
 GtWardleyMapEdgeChange >> highlightModifications [
 	| highlight |
 	self execute.
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self edge addWardleyMapDecoratorModel: highlight
 ]
 

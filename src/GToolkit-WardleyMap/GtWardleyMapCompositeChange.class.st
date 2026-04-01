@@ -27,6 +27,15 @@ GtWardleyMapCompositeChange >> gtDiffElementClass [
 	^ GtWardleyMapCompositeChangeDiffElement
 ]
 
+{ #category : #'as yet unclassified' }
+GtWardleyMapCompositeChange >> gtHighlightedModificationsIn: aView [
+	<gtView>
+	^ aView forward
+		title: 'Highlighted changes';
+		object: [ self highlightedModificationsInPreview ];
+		view: #gtLiveFor:
+]
+
 { #category : #accessing }
 GtWardleyMapCompositeChange >> highlightedModificationsInPreview [
 	| copy |

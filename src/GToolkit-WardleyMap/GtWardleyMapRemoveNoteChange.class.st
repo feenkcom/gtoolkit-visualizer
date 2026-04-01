@@ -26,8 +26,13 @@ GtWardleyMapRemoveNoteChange >> executeNotifying: aBlock [
 { #category : #accessing }
 GtWardleyMapRemoveNoteChange >> highlightModifications [
 	| highlight |
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self note addWardleyMapDecoratorModel: highlight
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveNoteChange >> highlightType [
+	^ #remove
 ]
 
 { #category : #accessing }
