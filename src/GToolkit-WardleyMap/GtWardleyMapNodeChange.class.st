@@ -95,7 +95,7 @@ GtWardleyMapNodeChange >> evolvedSize: aPoint [
 GtWardleyMapNodeChange >> highlightModifications [
 	| highlight |
 	self execute.
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self node addWardleyMapDecoratorModel: highlight
 ]
 

@@ -174,6 +174,12 @@ GtWardleyMapRenameProposition >> parent: aParent [
 	originalLabel := parent label
 ]
 
+{ #category : #copying }
+GtWardleyMapRenameProposition >> postCopy [
+	super postCopy.
+	parent := nil
+]
+
 { #category : #accessing }
 GtWardleyMapRenameProposition >> removeParent [
 	parent := nil

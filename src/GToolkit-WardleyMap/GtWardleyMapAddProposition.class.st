@@ -12,7 +12,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public accessing' }
 GtWardleyMapAddProposition >> beReadOnly [
 	isReadOnly := true
 ]
@@ -105,6 +105,12 @@ GtWardleyMapAddProposition >> parent: aParent [
 	self assert: [ parent isNil ] description: [ 'Only one parent is allowed' ].
 
 	parent := aParent
+]
+
+{ #category : #copying }
+GtWardleyMapAddProposition >> postCopy [
+	super postCopy.
+	parent := nil
 ]
 
 { #category : #initialization }

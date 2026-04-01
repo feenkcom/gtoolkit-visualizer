@@ -12,7 +12,7 @@ Class {
 	#category : #'GToolkit-WardleyMap-! Models - Decorators'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public accessing' }
 GtWardleyMapRemoveProposition >> beReadOnly [
 	isReadOnly := true
 ]
@@ -104,6 +104,12 @@ GtWardleyMapRemoveProposition >> parent: aParent [
 	self assert: [ parent isNil ] description: [ 'Only one parent is allowed' ].
 
 	parent := aParent
+]
+
+{ #category : #copying }
+GtWardleyMapRemoveProposition >> postCopy [
+	super postCopy.
+	parent := nil
 ]
 
 { #category : #initialization }

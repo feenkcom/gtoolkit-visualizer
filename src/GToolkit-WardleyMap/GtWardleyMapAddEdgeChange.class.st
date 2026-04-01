@@ -46,6 +46,11 @@ GtWardleyMapAddEdgeChange >> executeNotifying: aBlock [
 ]
 
 { #category : #accessing }
+GtWardleyMapAddEdgeChange >> highlightType [
+	^ #add
+]
+
+{ #category : #accessing }
 GtWardleyMapAddEdgeChange >> newEdge [
 	^ newEdge
 ]

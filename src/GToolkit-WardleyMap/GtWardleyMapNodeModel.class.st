@@ -632,7 +632,13 @@ GtWardleyMapNodeModel >> postCopy [
 	innerNodes := #().
 	pipelineNode := nil.
 	self labelModel: self labelModel copy.
-	self evolveModel: self evolveModel copy
+	self evolveModel: self evolveModel copy.
+	wardleyMapDecoratorModels := wardleyMapDecoratorModels
+			ifNotNil: [ wardleyMapDecoratorModels
+					collect: [ :each | 
+						each copy
+							parent: self;
+							yourself ] ]
 ]
 
 { #category : #'api - pipeline' }

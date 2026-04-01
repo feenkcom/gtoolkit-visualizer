@@ -70,6 +70,12 @@ GtWardleyMapAllProposition >> parent: aParent [
 	parent := aParent
 ]
 
+{ #category : #copying }
+GtWardleyMapAllProposition >> postCopy [
+	super postCopy.
+	parent := nil
+]
+
 { #category : #initialization }
 GtWardleyMapAllProposition >> removeParent [
 	parent := nil

@@ -29,7 +29,7 @@ GtWardleyMapRemoveInnerNodeChange >> executeNotifying: aBlock [
 GtWardleyMapRemoveInnerNodeChange >> highlightModifications [
 	| highlight |
 	self execute.
-	highlight := GtWardleyMapHighlight new.
+	highlight := self highlight.
 	self node addWardleyMapDecoratorModel: highlight
 ]
 

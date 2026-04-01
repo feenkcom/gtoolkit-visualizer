@@ -22,8 +22,20 @@ GtWardleyMapChange >> copyForPreviewIn: previewMap using: mapping [
 	^ copy
 ]
 
+{ #category : #accessing }
+GtWardleyMapChange >> highlight [
+	^ GtWardleyMapHighlight new
+		highlightType: self highlightType;
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 GtWardleyMapChange >> highlightModifications [
+]
+
+{ #category : #accessing }
+GtWardleyMapChange >> highlightType [
+	^ #update
 ]
 
 { #category : #accessing }
