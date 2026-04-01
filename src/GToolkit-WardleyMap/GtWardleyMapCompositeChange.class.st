@@ -2,6 +2,7 @@ Class {
 	#name : #GtWardleyMapCompositeChange,
 	#superclass : #RBCompositeRefactoryChange,
 	#instVars : [
+		'originalMap',
 		'map'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
@@ -10,16 +11,30 @@ Class {
 { #category : #copying }
 GtWardleyMapCompositeChange >> copyForPreview [
 	| copy previewMap mapping |
-	previewMap := map copy.
+	previewMap := self originalMap copy.
 	mapping := IdentityDictionary new.
-	map nodes with: previewMap nodes do: [ :node :pre | mapping at: node put: pre ].
-	map edges with: previewMap edges do: [ :edge :pre | mapping at: edge put: pre ].
-	map notes with: previewMap notes do: [ :note :pre | mapping at: note put: pre ].
+	self originalMap nodes
+		with: previewMap nodes
+		do: [ :node :pre | mapping at: node put: pre ].
+	self originalMap edges
+		with: previewMap edges
+		do: [ :edge :pre | mapping at: edge put: pre ].
+	self originalMap notes
+		with: previewMap notes
+		do: [ :note :pre | mapping at: note put: pre ].
 	copy := self class new.
 	copy map: previewMap.
 	copy
 		changes: (changes collect: [ :each | each copyForPreviewIn: previewMap using: mapping ]).
 	^ copy
+]
+
+{ #category : #'as yet unclassified' }
+GtWardleyMapCompositeChange >> executeNotifying: aBlock [
+	| undo |
+	undo := super executeNotifying: aBlock.
+	undo originalMap: map copy.
+	^ undo
 ]
 
 { #category : #accessing }
@@ -53,6 +68,16 @@ GtWardleyMapCompositeChange >> map [
 { #category : #accessing }
 GtWardleyMapCompositeChange >> map: anObject [
 	map := anObject
+]
+
+{ #category : #accessing }
+GtWardleyMapCompositeChange >> originalMap [
+	^ originalMap ifNil: [ originalMap := map copy ]
+]
+
+{ #category : #accessing }
+GtWardleyMapCompositeChange >> originalMap: anObject [
+	originalMap := anObject
 ]
 
 { #category : #copying }
