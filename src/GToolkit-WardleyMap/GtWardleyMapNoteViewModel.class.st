@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNoteViewModel,
 	#superclass : #Object,
-	#traits : 'TGtWithWardleyMapNoteModel + TGtAnnouncer',
-	#classTraits : 'TGtWithWardleyMapNoteModel classTrait + TGtAnnouncer classTrait',
+	#traits : 'TGtWithWardleyMapNoteModel + TGtAnnouncer + TGtWithWardleyMapDecoratorViewModels',
+	#classTraits : 'TGtWithWardleyMapNoteModel classTrait + TGtAnnouncer classTrait + TGtWithWardleyMapDecoratorViewModels classTrait',
 	#instVars : [
 		'announcer',
 		'wardleyMapViewModel'
@@ -71,9 +71,51 @@ GtWardleyMapNoteViewModel >> noteColor [
 	^ self wardleyMapNoteModel color
 ]
 
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapNoteViewModel >> notifyWardleyMapDecoratorViewModelAdded: aWardleyMapDecoratorViewModel [
+	self
+		announce: (GtWardleyMapNoteDecoratorViewModelAdded new
+				noteViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
+		ifNotNil: [ :aMapViewModel | 
+			aMapViewModel
+				announce: (GtWardleyMapNoteDecoratorViewModelAdded new
+						noteViewModel: self;
+						decoratorViewModel: aWardleyMapDecoratorViewModel) ]
+]
+
+{ #category : #'api - wardley map decorator view models' }
+GtWardleyMapNoteViewModel >> notifyWardleyMapDecoratorViewModelRemoved: aWardleyMapDecoratorViewModel [
+	aWardleyMapDecoratorViewModel
+		announce: (GtWardleyMapNoteDecoratorViewModelRemoved new
+				noteViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self
+		announce: (GtWardleyMapNoteDecoratorViewModelRemoved new
+				noteViewModel: self;
+				decoratorViewModel: aWardleyMapDecoratorViewModel).
+	self wardleyMapViewModel
+		ifNotNil: [ :aMapViewModel | 
+			aMapViewModel
+				announce: (GtWardleyMapNoteDecoratorViewModelRemoved new
+						noteViewModel: self;
+						decoratorViewModel: aWardleyMapDecoratorViewModel) ]
+]
+
 { #category : #'api - wardley map node model' }
 GtWardleyMapNoteViewModel >> onNoteColored: anAnnouncement [
 	self announce: (GtWardleyMapNoteViewModelColored new noteViewModel: self)
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNoteViewModel >> onNoteDecoratorAdded: anAnnouncement [
+	self onWardleyMapDecoratorModelAdded: anAnnouncement decoratorModel
+]
+
+{ #category : #'api - wardley map node model' }
+GtWardleyMapNoteViewModel >> onNoteDecoratorRemoved: anAnnouncement [
+	self onWardleyMapDecoratorModelRemoved: anAnnouncement decoratorModel
 ]
 
 { #category : #'api - wardley map node model' }
@@ -91,7 +133,8 @@ GtWardleyMapNoteViewModel >> onNoteMoved: anAnnouncement [
 GtWardleyMapNoteViewModel >> onWardleyMapNoteModelChanged [
 	"Is sent when a new wardleyMapNote model is assigned to the view model"
 
-	
+	self
+		wardleyMapDecoratorViewModelsFromModels: self wardleyMapNoteModel wardleyMapDecoratorModels
 ]
 
 { #category : #'api - note' }
@@ -108,7 +151,9 @@ GtWardleyMapNoteViewModel >> subscribeToWardleyMapNoteModel [
 	self wardleyMapNoteModel weak
 		when: GtWardleyMapNoteModelMoved send: #onNoteMoved: to: self;
 		when: GtWardleyMapNoteModelColored send: #onNoteColored: to: self;
-		when: GtWardleyMapNoteModelLabelChanged send: #onNoteLabelChanged: to: self
+		when: GtWardleyMapNoteModelLabelChanged send: #onNoteLabelChanged: to: self;
+		when: GtWardleyMapNoteDecoratorModelAdded send: #onNoteDecoratorAdded: to: self;
+		when: GtWardleyMapNoteDecoratorModelRemoved send: #onNoteDecoratorRemoved: to: self.
 ]
 
 { #category : #'api - wardley map node model' }

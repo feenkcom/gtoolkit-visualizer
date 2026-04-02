@@ -672,6 +672,7 @@ GtWardleyMapViewModel >> onNoteRemoved: aNoteAddedAnnouncement [
 		noteViewModelFor: aNoteAddedAnnouncement noteModel
 		ifFound: [ :aNoteViewModel |
 			noteViewModels remove: aNoteViewModel.
+			aNoteViewModel announce: (GtWardleyMapNoteViewModelRemoved new noteViewModel: aNoteViewModel).
 			self announce: (GtWardleyMapNoteViewModelRemoved new noteViewModel: aNoteViewModel) ]
 		ifNone: [ ]
 ]

@@ -47,6 +47,19 @@ GtWardleyMapHighlight >> decorateNodeElementInContext: aNodeDecoratorContext [
 	aNodeDecoratorContext canvasElement addChild: aHighlightElement
 ]
 
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapHighlight >> decorateNoteElementInContext: aNoteDecoratorContext [
+	| aHighlightElement |
+	aHighlightElement := GtWardleyMapNotePropositionElement new.
+	self setHighlightTypeOn: aHighlightElement.
+	aHighlightElement
+		wardleyMapNoteViewModel: aNoteDecoratorContext noteViewModel;
+		wardleyMapDecoratorViewModel: aNoteDecoratorContext decoratorViewModel;
+		noteElement: aNoteDecoratorContext noteElement.
+
+	aNoteDecoratorContext canvasElement addChild: aHighlightElement
+]
+
 { #category : #accessing }
 GtWardleyMapHighlight >> highlightType [
 	^ highlightType

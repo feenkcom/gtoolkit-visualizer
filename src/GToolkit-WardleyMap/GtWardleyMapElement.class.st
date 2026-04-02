@@ -136,6 +136,26 @@ GtWardleyMapElement >> decorateNodeViewModel: aNodeViewModel withDecoratorViewMo
 	aDecoratorViewModel decorateNodeElementInContext: aDecoratorContext
 ]
 
+{ #category : #'private - updating' }
+GtWardleyMapElement >> decorateNoteViewModel: aNoteViewModel withDecoratorViewModel: aDecoratorViewModel [
+	| aDecoratorContext aNoteElement |
+	aNoteElement := canvasElement
+			noteViewFor: aNoteViewModel
+			ifFound: [ :anElement | anElement ]
+			ifNone: [ ^ self ].
+
+	aDecoratorContext := GtWardleyMapNoteDecoratorContext new
+			mapElement: self;
+			mapViewModel: self wardleyMapViewModel;
+			canvasContainer: canvasContainer;
+			canvasElement: canvasElement;
+			noteViewModel: aNoteViewModel;
+			noteElement: aNoteElement;
+			decoratorViewModel: aDecoratorViewModel.
+			
+	aDecoratorViewModel decorateNoteElementInContext: aDecoratorContext
+]
+
 { #category : #initialization }
 GtWardleyMapElement >> defaultLayout [
 	^ BlLinearLayout vertical
@@ -259,6 +279,12 @@ GtWardleyMapElement >> onMapDecoratorsChanged [
 		eachEdgeViewModel wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
 			self 
 				decorateEdgeViewModel: eachEdgeViewModel 
+				withDecoratorViewModel: eachDecoratorViewModel ] ].
+			
+	self wardleyMapViewModel noteViewModels do: [ :each | 
+		each wardleyMapDecoratorViewModels do: [ :eachDecoratorViewModel | 
+			self 
+				decorateNoteViewModel: each 
 				withDecoratorViewModel: eachDecoratorViewModel ] ]
 ]
 

@@ -11,7 +11,11 @@ Class {
 GtWardleyMapRemoveEdgeChange >> copyForPreviewIn: previewMap using: mapping [
 	| copy |
 	copy := super copyForPreviewIn: previewMap using: mapping.
-	edge ifNotNil: [ copy edge: (mapping at: edge) ].
+	edge
+		ifNotNil: [ copy
+				edge: (mapping
+						at: {edge fromNode id.
+								edge toNode id}) ].
 	^ copy
 ]
 

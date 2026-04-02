@@ -23,6 +23,12 @@ TGtWardleyMapDecoratorViewModel >> decorateNodeElementInContext: aGtWardleyNodeD
 	self wardleyMapDecoratorModel decorateNodeElementInContext: aGtWardleyNodeDecoratorContext
 ]
 
+{ #category : #'api - wardley map decorator view model' }
+TGtWardleyMapDecoratorViewModel >> decorateNoteElementInContext: aGtWardleyNoteDecoratorContext [
+	self wardleyMapDecoratorModel
+		decorateNoteElementInContext: aGtWardleyNoteDecoratorContext
+]
+
 { #category : #initialization }
 TGtWardleyMapDecoratorViewModel >> parentViewModel: aParentViewModel [
 	

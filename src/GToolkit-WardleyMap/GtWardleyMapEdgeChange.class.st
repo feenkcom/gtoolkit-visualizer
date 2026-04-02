@@ -40,8 +40,8 @@ GtWardleyMapEdgeChange >> color: aColor [
 GtWardleyMapEdgeChange >> copyForPreviewIn: previewMap using: mapping [
 	| copy |
 	copy := super copyForPreviewIn: previewMap using: mapping.
-	fromNode ifNotNil: [ copy fromNode: (mapping at: fromNode) ].
-	toNode ifNotNil: [ copy toNode: (mapping at: toNode) ].
+	fromNode ifNotNil: [ copy fromNode: (mapping at: fromNode id) ].
+	toNode ifNotNil: [ copy toNode: (mapping at: toNode id) ].
 	^ copy
 ]
 

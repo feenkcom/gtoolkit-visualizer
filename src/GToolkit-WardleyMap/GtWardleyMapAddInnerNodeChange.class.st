@@ -12,8 +12,8 @@ Class {
 GtWardleyMapAddInnerNodeChange >> copyForPreviewIn: previewMap using: mapping [
 	| copy |
 	copy := super copyForPreviewIn: previewMap using: mapping.
-	innerNode ifNotNil: [ copy innerNode: (mapping at: innerNode) ].
-	outerNode ifNotNil: [ copy outerNode: (mapping at: outerNode) ].
+	innerNode ifNotNil: [ copy innerNode: (mapping at: innerNode id) ].
+	outerNode ifNotNil: [ copy outerNode: (mapping at: outerNode id) ].
 	^ copy
 ]
 

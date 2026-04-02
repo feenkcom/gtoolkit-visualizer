@@ -1,8 +1,8 @@
 Class {
 	#name : #GtWardleyMapNoteModel,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapExportable + TGtWardleyMapWithParent + TGtWardleyMapWithColor + TGtWardleyMapVisitable',
-	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapVisitable classTrait',
+	#traits : 'TGtAnnouncer + TGtWardleyMapWithCoordinate + TGtWardleyMapExportable + TGtWardleyMapWithParent + TGtWardleyMapWithColor + TGtWardleyMapVisitable + TGtWithWardleyMapDecoratorModels',
+	#classTraits : 'TGtAnnouncer classTrait + TGtWardleyMapWithCoordinate classTrait + TGtWardleyMapExportable classTrait + TGtWardleyMapWithParent classTrait + TGtWardleyMapWithColor classTrait + TGtWardleyMapVisitable classTrait + TGtWithWardleyMapDecoratorModels classTrait',
 	#instVars : [
 		'id',
 		'announcer',
@@ -130,6 +130,22 @@ GtWardleyMapNoteModel >> notifyLabelChanged [
 { #category : #'api - parent' }
 GtWardleyMapNoteModel >> notifyParentChanged [
 	
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapNoteModel >> notifyWardleyMapDecoratorModelAdded: aWardleyMapDecoratorModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNoteDecoratorModelAdded new
+				noteModel: self;
+				decoratorModel: aWardleyMapDecoratorModel)
+]
+
+{ #category : #'api - decorators' }
+GtWardleyMapNoteModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecoratorModel [
+	self
+		propagateAnnouncement: (GtWardleyMapNoteDecoratorModelRemoved new
+				noteModel: self;
+				decoratorModel: aWardleyMapDecoratorModel)
 ]
 
 { #category : #'as yet unclassified' }
