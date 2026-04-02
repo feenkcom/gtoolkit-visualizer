@@ -11,7 +11,7 @@ Class {
 GtWardleyMapUpdateNoteChange >> copyForPreviewIn: previewMap using: mapping [
 	| copy |
 	copy := super copyForPreviewIn: previewMap using: mapping.
-	note ifNotNil: [ copy note: (mapping at: note) ].
+	note ifNotNil: [ copy note: (mapping at: note id) ].
 	^ copy
 ]
 

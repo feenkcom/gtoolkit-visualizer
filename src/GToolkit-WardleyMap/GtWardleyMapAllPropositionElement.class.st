@@ -207,9 +207,11 @@ GtWardleyMapAllPropositionElement >> subscribeToWardleyMapViewModel [
 		when: GtWardleyMapDecoratorViewModelAdded send: #onDecoratorAdded: to: self;
 		when: GtWardleyMapNodeDecoratorViewModelAdded send: #onDecoratorAdded: to: self;
 		when: GtWardleyMapEdgeDecoratorViewModelAdded send: #onDecoratorAdded: to: self;
+		when: GtWardleyMapNoteDecoratorViewModelAdded send: #onDecoratorAdded: to: self;
 		when: GtWardleyMapDecoratorViewModelRemoved send: #onDecoratorRemoved: to: self;
 		when: GtWardleyMapNodeDecoratorViewModelRemoved send: #onDecoratorRemoved: to: self;
 		when: GtWardleyMapEdgeDecoratorViewModelRemoved send: #onDecoratorRemoved: to: self;
+		when: GtWardleyMapNoteDecoratorViewModelRemoved send: #onDecoratorRemoved: to: self;
 		when: GtWardleyMapNodeViewModelRemoved send: #onNodeRemoved: to: self;
 		when: GtWardleyMapEdgeViewModelRemoved send: #onEdgeRemoved: to: self
 ]

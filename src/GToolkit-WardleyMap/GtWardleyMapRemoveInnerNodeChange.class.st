@@ -11,7 +11,7 @@ Class {
 GtWardleyMapRemoveInnerNodeChange >> copyForPreviewIn: previewMap using: mapping [
 	| copy |
 	copy := super copyForPreviewIn: previewMap using: mapping.
-	node ifNotNil: [ copy node: (mapping at: node) ].
+	node ifNotNil: [ copy node: (mapping at: node id) ].
 	^ copy
 ]
 

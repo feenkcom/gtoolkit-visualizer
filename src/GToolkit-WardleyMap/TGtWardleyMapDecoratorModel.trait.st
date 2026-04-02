@@ -24,6 +24,11 @@ TGtWardleyMapDecoratorModel >> decorateNodeElementInContext: aNodeDecoratorConte
 	
 ]
 
+{ #category : #'api - wardley map decorator model' }
+TGtWardleyMapDecoratorModel >> decorateNoteElementInContext: aNoteDecoratorContext [
+	
+]
+
 { #category : #testing }
 TGtWardleyMapDecoratorModel >> isActionableProposition [
 	"Return true if it can be handled by GtWardleyMapAllProposition.

@@ -15,13 +15,17 @@ GtWardleyMapCompositeChange >> copyForPreview [
 	mapping := IdentityDictionary new.
 	self originalMap nodes
 		with: previewMap nodes
-		do: [ :node :pre | mapping at: node put: pre ].
+		do: [ :node :pre | mapping at: node id put: pre ].
 	self originalMap edges
 		with: previewMap edges
-		do: [ :edge :pre | mapping at: edge put: pre ].
+		do: [ :edge :pre | 
+			mapping
+				at: {edge fromNode id.
+						edge toNode id}
+				put: pre ].
 	self originalMap notes
 		with: previewMap notes
-		do: [ :note :pre | mapping at: note put: pre ].
+		do: [ :note :pre | mapping at: note id put: pre ].
 	copy := self class new.
 	copy map: previewMap.
 	copy
