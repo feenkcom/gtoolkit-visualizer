@@ -2,22 +2,15 @@ Class {
 	#name : #GtWardleyMapRemoveNodeChange,
 	#superclass : #GtWardleyMapChange,
 	#instVars : [
-		'node'
+		'nodeId'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #copying }
-GtWardleyMapRemoveNodeChange >> copyForPreviewIn: previewMap using: mapping [
-	| copy |
-	copy := super copyForPreviewIn: previewMap using: mapping.
-	node ifNotNil: [ copy node: (mapping at: node id) ].
-	^ copy
-]
-
 { #category : #private }
 GtWardleyMapRemoveNodeChange >> executeNotifying: aBlock [
-	| undoNode undo edges |
+	| undoNode undo edges node |
+	node := self node.
 	undoNode := GtWardleyMapAddNodeChange onMap: map andNode: node.
 	edges := map edges
 			select: [ :each | each toNode == node or: [ each fromNode == node ] ].
@@ -45,10 +38,23 @@ GtWardleyMapRemoveNodeChange >> highlightType [
 
 { #category : #accessing }
 GtWardleyMapRemoveNodeChange >> node [
-	^ node
+	^ map
+		nodeWithId: (UUID gtFromString: nodeId)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
 GtWardleyMapRemoveNodeChange >> node: anObject [
-	node := anObject
+	nodeId := anObject id asString36
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveNodeChange >> nodeId [
+	^ nodeId
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveNodeChange >> nodeId: anObject [
+	nodeId := anObject
 ]

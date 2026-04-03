@@ -2,39 +2,50 @@ Class {
 	#name : #GtWardleyMapRemoveEdgeChange,
 	#superclass : #GtWardleyMapChange,
 	#instVars : [
-		'edge'
+		'fromNodeId',
+		'toNodeId'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #copying }
-GtWardleyMapRemoveEdgeChange >> copyForPreviewIn: previewMap using: mapping [
-	| copy |
-	copy := super copyForPreviewIn: previewMap using: mapping.
-	edge
-		ifNotNil: [ copy
-				edge: (mapping
-						at: {edge fromNode id.
-								edge toNode id}) ].
-	^ copy
-]
-
 { #category : #accessing }
 GtWardleyMapRemoveEdgeChange >> edge [
-	^ edge
+	| fromUUID toUUID |
+	fromUUID := UUID gtFromString: fromNodeId.
+	toUUID := UUID gtFromString: toNodeId.
+	^ map edges
+		detect: [ :each | each fromNode id = fromUUID and: [ each toNode id = toUUID ] ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
 GtWardleyMapRemoveEdgeChange >> edge: anObject [
-	edge := anObject
+	fromNodeId := anObject fromNode id asString36.
+	toNodeId := anObject toNode id asString36
 ]
 
 { #category : #private }
 GtWardleyMapRemoveEdgeChange >> executeNotifying: aBlock [
 	| undo |
-	undo := GtWardleyMapAddEdgeChange onMap: map andEdge: edge.
-	edge removeFromMap.
+	self edge
+		ifNotNil: [ :edge | 
+			undo := GtWardleyMapAddEdgeChange onMap: map andEdge: edge.
+			edge removeFromMap ]
+		ifNil: [ undo := (GtWardleyMapAddEdgeChange onMap: map)
+					fromNodeId: fromNodeId;
+					toNodeId: toNodeId;
+					yourself ].
 	^ undo
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveEdgeChange >> fromNodeId [
+	^ fromNodeId
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveEdgeChange >> fromNodeId: anObject [
+	fromNodeId := anObject
 ]
 
 { #category : #accessing }
@@ -47,4 +58,14 @@ GtWardleyMapRemoveEdgeChange >> highlightModifications [
 { #category : #accessing }
 GtWardleyMapRemoveEdgeChange >> highlightType [
 	^ #remove
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveEdgeChange >> toNodeId [
+	^ toNodeId
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveEdgeChange >> toNodeId: anObject [
+	toNodeId := anObject
 ]

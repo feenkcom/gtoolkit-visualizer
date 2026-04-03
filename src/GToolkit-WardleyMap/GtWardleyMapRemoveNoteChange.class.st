@@ -2,22 +2,15 @@ Class {
 	#name : #GtWardleyMapRemoveNoteChange,
 	#superclass : #GtWardleyMapChange,
 	#instVars : [
-		'note'
+		'noteId'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #copying }
-GtWardleyMapRemoveNoteChange >> copyForPreviewIn: previewMap using: mapping [
-	| copy |
-	copy := super copyForPreviewIn: previewMap using: mapping.
-	note ifNotNil: [ copy note: (mapping at: note id) ].
-	^ copy
-]
-
 { #category : #private }
 GtWardleyMapRemoveNoteChange >> executeNotifying: aBlock [
-	| undo |
+	| undo note |
+	note := self note.
 	undo := GtWardleyMapAddNoteChange onMap: map andNote: note.
 	map removeNote: note.
 	^ undo
@@ -37,10 +30,23 @@ GtWardleyMapRemoveNoteChange >> highlightType [
 
 { #category : #accessing }
 GtWardleyMapRemoveNoteChange >> note [
-	^ note
+	^ map
+		noteWithId: (UUID gtFromString: noteId)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
 GtWardleyMapRemoveNoteChange >> note: aNote [
-	note := aNote
+	noteId := aNote id asString36
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveNoteChange >> noteId [
+	^ noteId
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveNoteChange >> noteId: anObject [
+	noteId := anObject
 ]
