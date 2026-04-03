@@ -608,6 +608,7 @@ GtWardleyMapModel >> postCopy [
 	| nodeMap |
 	super postCopy.
 	announcer := nil.
+	options ifNotNil: [ options := options copy ].
 
 	nodeMap := IdentityDictionary new.
 	nodes := nodes
