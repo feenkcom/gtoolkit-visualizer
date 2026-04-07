@@ -18,7 +18,7 @@ GtWardleyMapAddNodeChange class >> onMap: aMap andNode: aNode [
 	undo evolvedLabel: aNode evolvedLabel.
 	undo evolvedLabelCoordinate: aNode evolvedLabelCoordinate.
 	undo evolvedSize: aNode evolvedSize.
-	aNode hasId ifTrue: [ undo id: aNode id ].
+	aNode hasId ifTrue: [ undo id: aNode id asString36 ].
 	undo isEvolvedLabelVisible: aNode isEvolvedLabelVisible.
 	undo isEvolveVisible: aNode isEvolveVisible.
 	undo isPipelineVisible: aNode isPipelineVisible.
@@ -41,7 +41,7 @@ GtWardleyMapAddNodeChange >> executeNotifying: aBlock [
 	evolvedLabelCoordinate
 		ifNotNil: [ newNode evolvedLabelCoordinate: evolvedLabelCoordinate ].
 	evolvedSize ifNotNil: [ newNode evolvedSize: evolvedSize ].
-	id ifNotNil: [ newNode id: id ].
+	id ifNotNil: [ newNode id: (UUID gtFromString: id) ].
 	isEvolvedLabelVisible
 		ifNotNil: [ newNode isEvolvedLabelVisible: isEvolvedLabelVisible ].
 	isEvolveVisible ifNotNil: [ newNode isEvolveVisible: isEvolveVisible ].

@@ -1,84 +1,61 @@
 Class {
 	#name : #GtWardleyMapUpdateNodeChange,
 	#superclass : #GtWardleyMapNodeChange,
-	#instVars : [
-		'node'
-	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
-
-{ #category : #copying }
-GtWardleyMapUpdateNodeChange >> copyForPreviewIn: previewMap using: mapping [
-	| copy |
-	copy := super copyForPreviewIn: previewMap using: mapping.
-	node ifNotNil: [ copy node: (mapping at: node id) ].
-	^ copy
-]
 
 { #category : #private }
 GtWardleyMapUpdateNodeChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self copy.
-
-	color
-		ifNotNil: [ undo color: self node color.
-			self node color: color ].
-	evolution
-		ifNotNil: [ undo evolution: self node evolution.
-			self node evolution: evolution ].
-	evolvedColor
-		ifNotNil: [ undo evolvedColor: self node evolvedColor.
-			self node evolvedColor: evolvedColor ].
-	evolvedEvolution
-		ifNotNil: [ undo evolvedEvolution: self node evolvedEvolution.
-			self node evolvedEvolution: evolvedEvolution ].
-	evolvedLabel
-		ifNotNil: [ undo evolvedLabel: self node evolvedLabel.
-			self node evolvedLabel: evolvedLabel ].
-	evolvedLabelCoordinate
-		ifNotNil: [ undo evolvedLabelCoordinate: self node evolvedLabelCoordinate.
-			self node evolvedLabelCoordinate: evolvedLabelCoordinate ].
-	evolvedSize
-		ifNotNil: [ undo evolvedSize: self node evolvedSize.
-			self node evolvedSize: evolvedSize ].
-	id
-		ifNotNil: [ undo id: self node id.
-			self node id: id ].
-	isEvolvedLabelVisible
-		ifNotNil: [ undo isEvolvedLabelVisible: self node isEvolvedLabelVisible.
-			self node isEvolvedLabelVisible: isEvolvedLabelVisible ].
-	isEvolveVisible
-		ifNotNil: [ undo isEvolveVisible: self node isEvolveVisible.
-			self node isEvolveVisible: isEvolveVisible ].
-	isPipelineVisible
-		ifNotNil: [ undo isPipelineVisible: self node isPipelineVisible.
-			self node isPipelineVisible: isPipelineVisible ].
-	label
-		ifNotNil: [ undo label: self node label.
-			self node label: label ].
-	labelCoordinate
-		ifNotNil: [ undo labelCoordinate: self node labelCoordinate.
-			self node labelModel coordinate: labelCoordinate ].
-	pipelineCoordinate
-		ifNotNil: [ undo pipelineCoordinate: self node pipelineCoordinate.
-			self node pipelineCoordinate: pipelineCoordinate ].
-	visibility
-		ifNotNil: [ undo visibility: self node visibility.
-			self node visibility: visibility ].
-
+	self node
+		ifNotNil: [ :node | 
+			color
+				ifNotNil: [ undo color: node color.
+					node color: color ].
+			evolution
+				ifNotNil: [ undo evolution: node evolution.
+					node evolution: evolution ].
+			evolvedColor
+				ifNotNil: [ undo evolvedColor: node evolvedColor.
+					node evolvedColor: evolvedColor ].
+			evolvedEvolution
+				ifNotNil: [ undo evolvedEvolution: node evolvedEvolution.
+					node evolvedEvolution: evolvedEvolution ].
+			evolvedLabel
+				ifNotNil: [ undo evolvedLabel: node evolvedLabel.
+					node evolvedLabel: evolvedLabel ].
+			evolvedLabelCoordinate
+				ifNotNil: [ undo evolvedLabelCoordinate: node evolvedLabelCoordinate.
+					node evolvedLabelCoordinate: evolvedLabelCoordinate ].
+			evolvedSize
+				ifNotNil: [ undo evolvedSize: node evolvedSize.
+					node evolvedSize: evolvedSize ].
+			isEvolvedLabelVisible
+				ifNotNil: [ undo isEvolvedLabelVisible: node isEvolvedLabelVisible.
+					node isEvolvedLabelVisible: isEvolvedLabelVisible ].
+			isEvolveVisible
+				ifNotNil: [ undo isEvolveVisible: node isEvolveVisible.
+					node isEvolveVisible: isEvolveVisible ].
+			isPipelineVisible
+				ifNotNil: [ undo isPipelineVisible: node isPipelineVisible.
+					node isPipelineVisible: isPipelineVisible ].
+			label
+				ifNotNil: [ undo label: node label.
+					node label: label ].
+			labelCoordinate
+				ifNotNil: [ undo labelCoordinate: node labelCoordinate.
+					node labelModel coordinate: labelCoordinate ].
+			pipelineCoordinate
+				ifNotNil: [ undo pipelineCoordinate: node pipelineCoordinate.
+					node pipelineCoordinate: pipelineCoordinate ].
+			visibility
+				ifNotNil: [ undo visibility: node visibility.
+					node visibility: visibility ] ].
 	^ undo
 ]
 
 { #category : #accessing }
-GtWardleyMapUpdateNodeChange >> node [
-	^ node
-		ifNil: [ node := map
-					nodeWithId: id
-					ifFound: [ :each | each ]
-					ifNone: [  ] ]
-]
-
-{ #category : #accessing }
 GtWardleyMapUpdateNodeChange >> node: anObject [
-	node := anObject
+	id := anObject id asString36
 ]

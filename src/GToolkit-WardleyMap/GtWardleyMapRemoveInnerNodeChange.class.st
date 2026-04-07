@@ -2,22 +2,15 @@ Class {
 	#name : #GtWardleyMapRemoveInnerNodeChange,
 	#superclass : #GtWardleyMapChange,
 	#instVars : [
-		'node'
+		'innerNodeId'
 	],
 	#category : #'GToolkit-WardleyMap-Changes'
 }
 
-{ #category : #copying }
-GtWardleyMapRemoveInnerNodeChange >> copyForPreviewIn: previewMap using: mapping [
-	| copy |
-	copy := super copyForPreviewIn: previewMap using: mapping.
-	node ifNotNil: [ copy node: (mapping at: node id) ].
-	^ copy
-]
-
 { #category : #private }
 GtWardleyMapRemoveInnerNodeChange >> executeNotifying: aBlock [
-	| undo |
+	| undo node |
+	node := self node.
 	undo := (GtWardleyMapAddInnerNodeChange onMap: map)
 			outerNode: node pipelineNode;
 			innerNode: node.
@@ -34,11 +27,24 @@ GtWardleyMapRemoveInnerNodeChange >> highlightModifications [
 ]
 
 { #category : #accessing }
+GtWardleyMapRemoveInnerNodeChange >> innerNodeId [
+	^ innerNodeId
+]
+
+{ #category : #accessing }
+GtWardleyMapRemoveInnerNodeChange >> innerNodeId: anObject [
+	innerNodeId := anObject
+]
+
+{ #category : #accessing }
 GtWardleyMapRemoveInnerNodeChange >> node [
-	^ node
+	^ map
+		nodeWithId: (UUID gtFromString: innerNodeId)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
 GtWardleyMapRemoveInnerNodeChange >> node: anObject [
-	node := anObject
+	innerNodeId := anObject id asString36
 ]

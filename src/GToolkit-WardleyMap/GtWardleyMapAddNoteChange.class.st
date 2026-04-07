@@ -11,6 +11,7 @@ Class {
 GtWardleyMapAddNoteChange class >> onMap: aMap andNote: aNote [
 	| undo |
 	undo := self onMap: aMap.
+	undo id: aNote id asString36.
 	undo color: aNote color.
 	undo evolution: aNote evolution.
 	undo label: aNote label.
@@ -23,7 +24,7 @@ GtWardleyMapAddNoteChange >> executeNotifying: aBlock [
 	newNote := GtWardleyMapNoteModel new.
 	color ifNotNil: [ newNote color: color ].
 	evolution ifNotNil: [ newNote evolution: evolution ].
-	id ifNotNil: [ newNote id: id ].
+	id ifNotNil: [ newNote id: (UUID gtFromString: id) ].
 	label ifNotNil: [ newNote label: label ].
 	visibility ifNotNil: [ newNote visibility: visibility ].
 	map addNote: newNote.

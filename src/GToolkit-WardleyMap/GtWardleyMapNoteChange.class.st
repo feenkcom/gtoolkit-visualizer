@@ -45,8 +45,8 @@ GtWardleyMapNoteChange >> id [
 ]
 
 { #category : #accessing }
-GtWardleyMapNoteChange >> id: anObject [
-	id := anObject
+GtWardleyMapNoteChange >> id: aString [
+	id := aString
 ]
 
 { #category : #accessing }
@@ -61,7 +61,10 @@ GtWardleyMapNoteChange >> label: aString [
 
 { #category : #accessing }
 GtWardleyMapNoteChange >> note [
-	^ self subclassResponsibility
+	^ map
+		noteWithId: (UUID gtFromString: id)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
