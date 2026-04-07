@@ -60,6 +60,22 @@ GtWardleyMapRemoveProposition >> decorateNodeElementInContext: aNodeDecoratorCon
 			rejectAction decorateNodeElementInContext: aNodeDecoratorContext ]
 ]
 
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapRemoveProposition >> decorateNoteElementInContext: aNoteDecoratorContext [
+	| aHighlightElement |
+	aHighlightElement := GtWardleyMapNotePropositionElement new
+			beRemoveProposition;
+			wardleyMapNoteViewModel: aNoteDecoratorContext noteViewModel;
+			wardleyMapDecoratorViewModel: aNoteDecoratorContext decoratorViewModel;
+			noteElement: aNoteDecoratorContext noteElement.
+
+	aNoteDecoratorContext canvasElement addChild: aHighlightElement.
+
+	isReadOnly
+		ifFalse: [ acceptAction decorateNoteElementInContext: aNoteDecoratorContext.
+			rejectAction decorateNoteElementInContext: aNoteDecoratorContext ]
+]
+
 { #category : #initialization }
 GtWardleyMapRemoveProposition >> initialize [
 	super initialize.

@@ -82,6 +82,20 @@ GtWardleyMapAction >> decorateNodeElementInContext: aNodeDecoratorContext [
 			anActionContainer addChild: aButton ]
 ]
 
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> decorateNoteElementInContext: aNoteDecoratorContext [
+	aNoteDecoratorContext
+		labelContainerDo: [ :aLabelContainer | 
+			| anActionContainer aButton |
+			anActionContainer := GtWardleyMapUtility
+					ensureCenterRightOuterDecoratorContainerFor: aLabelContainer.
+			aButton := self newNoteButton.
+			aButton
+				wardleyMapNoteViewModel: aNoteDecoratorContext noteViewModel;
+				wardleyMapDecoratorViewModel: aNoteDecoratorContext decoratorViewModel.
+			anActionContainer addChild: aButton ]
+]
+
 { #category : #accessing }
 GtWardleyMapAction >> elementId [
 	<return: #BlElementId or: nil>
@@ -150,6 +164,11 @@ GtWardleyMapAction >> newMapButton [
 { #category : #'api - wardley map decorator model' }
 GtWardleyMapAction >> newNodeButton [
 	^ self newButton: GtWardleyMapActionNodeButton
+]
+
+{ #category : #'api - wardley map decorator model' }
+GtWardleyMapAction >> newNoteButton [
+	^ self newButton: GtWardleyMapActionNoteButton
 ]
 
 { #category : #'api - decoration' }
