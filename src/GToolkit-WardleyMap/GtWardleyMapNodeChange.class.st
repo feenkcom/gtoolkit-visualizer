@@ -105,8 +105,8 @@ GtWardleyMapNodeChange >> id [
 ]
 
 { #category : #accessing }
-GtWardleyMapNodeChange >> id: aUUID [
-	id := aUUID
+GtWardleyMapNodeChange >> id: aString [
+	id := aString
 ]
 
 { #category : #accessing }
@@ -161,7 +161,10 @@ GtWardleyMapNodeChange >> labelCoordinate: aPoint [
 
 { #category : #accessing }
 GtWardleyMapNodeChange >> node [
-	^ self subclassResponsibility
+	^ map
+		nodeWithId: (UUID gtFromString: id)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }

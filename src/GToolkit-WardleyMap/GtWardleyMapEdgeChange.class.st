@@ -2,8 +2,6 @@ Class {
 	#name : #GtWardleyMapEdgeChange,
 	#superclass : #GtWardleyMapChange,
 	#instVars : [
-		'fromNode',
-		'toNode',
 		'label',
 		'labelCoordinate',
 		'arrow',
@@ -40,8 +38,8 @@ GtWardleyMapEdgeChange >> color: aColor [
 GtWardleyMapEdgeChange >> copyForPreviewIn: previewMap using: mapping [
 	| copy |
 	copy := super copyForPreviewIn: previewMap using: mapping.
-	fromNode ifNotNil: [ copy fromNode: (mapping at: fromNode id) ].
-	toNode ifNotNil: [ copy toNode: (mapping at: toNode id) ].
+	self fromNode ifNotNil: [ :node | copy fromNode: (mapping at: node id) ].
+	self toNode ifNotNil: [ :node | copy toNode: (mapping at: node id) ].
 	^ copy
 ]
 
@@ -52,21 +50,20 @@ GtWardleyMapEdgeChange >> edge [
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> fromNode [
-	^ fromNode
-		ifNil: [ map
-				nodeWithId: fromNodeId
-				ifFound: [ :each | each ]
-				ifNone: [  ] ]
+	^ map
+		nodeWithId: (UUID gtFromString: fromNodeId)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> fromNode: aNode [
-	fromNode := aNode
+	fromNodeId := aNode id asString36
 ]
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> fromNodeId [
-	^ fromNodeId ifNil: [ fromNode ifNotNil: [ fromNode id ] ]
+	^ fromNodeId
 ]
 
 { #category : #accessing }
@@ -114,21 +111,20 @@ GtWardleyMapEdgeChange >> labelCoordinate: aPoint [
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> toNode [
-	^ toNode
-		ifNil: [ map
-				nodeWithId: toNodeId
-				ifFound: [ :each | each ]
-				ifNone: [  ] ]
+	^ map
+		nodeWithId: (UUID gtFromString: toNodeId)
+		ifFound: [ :each | each ]
+		ifNone: [  ]
 ]
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> toNode: aNode [
-	toNode := aNode
+	toNodeId := aNode id asString36
 ]
 
 { #category : #accessing }
 GtWardleyMapEdgeChange >> toNodeId [
-	^ toNodeId ifNil: [ toNode ifNotNil: [ toNode id ] ]
+	^ toNodeId
 ]
 
 { #category : #accessing }
