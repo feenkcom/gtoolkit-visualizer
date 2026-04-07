@@ -48,6 +48,11 @@ GtWardleyMapNoteElement >> initialize [
 ]
 
 { #category : #accessing }
+GtWardleyMapNoteElement >> labelContainerDo: aBlock [
+	aBlock value: self
+]
+
+{ #category : #accessing }
 GtWardleyMapNoteElement >> labelElementDo: aBlock [
 	aBlock value: labelElement
 ]

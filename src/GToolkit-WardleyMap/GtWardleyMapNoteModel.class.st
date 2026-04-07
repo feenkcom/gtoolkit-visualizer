@@ -148,7 +148,7 @@ GtWardleyMapNoteModel >> notifyWardleyMapDecoratorModelRemoved: aWardleyMapDecor
 				decoratorModel: aWardleyMapDecoratorModel)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #copying }
 GtWardleyMapNoteModel >> postCopy [
 	super postCopy.
 	announcer := nil.
@@ -166,6 +166,11 @@ GtWardleyMapNoteModel >> printOn: aStream [
 		nextPutAll: '; coordinate: ';
 		print: self coordinate;
 		nextPutAll: ' }'
+]
+
+{ #category : #removing }
+GtWardleyMapNoteModel >> removeFromMap [
+	parent ifNotNil: [ :aParent | parent removeNote: self ]
 ]
 
 { #category : #'api - coordinate' }
