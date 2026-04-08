@@ -20,10 +20,14 @@ GtWardleyMapRemoveInnerNodeChange >> executeNotifying: aBlock [
 
 { #category : #accessing }
 GtWardleyMapRemoveInnerNodeChange >> highlightModifications [
-	| highlight |
+	| highlight innerNode outerNode |
+	innerNode := self node.
+	outerNode := innerNode pipelineNode.
 	self execute.
 	highlight := self highlight.
-	self node addWardleyMapDecoratorModel: highlight
+	innerNode addWardleyMapDecoratorModel: highlight.
+	highlight := self highlight.
+	outerNode addWardleyMapDecoratorModel: highlight
 ]
 
 { #category : #accessing }
