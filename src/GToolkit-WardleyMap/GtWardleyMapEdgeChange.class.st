@@ -34,15 +34,6 @@ GtWardleyMapEdgeChange >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #copying }
-GtWardleyMapEdgeChange >> copyForPreviewIn: previewMap using: mapping [
-	| copy |
-	copy := super copyForPreviewIn: previewMap using: mapping.
-	self fromNode ifNotNil: [ :node | copy fromNode: (mapping at: node id) ].
-	self toNode ifNotNil: [ :node | copy toNode: (mapping at: node id) ].
-	^ copy
-]
-
 { #category : #accessing }
 GtWardleyMapEdgeChange >> edge [
 	self subclassResponsibility

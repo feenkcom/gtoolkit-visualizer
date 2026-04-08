@@ -53,9 +53,7 @@ GtWardleyMapNodeEvolveModel >> evolution: aNumber [
 { #category : #comparing }
 GtWardleyMapNodeEvolveModel >> hash [
 	^ self color hash
-		bitXor: (self maturity hash 
-		bitXor: (self labelModel hash 
-		bitXor: self size hash))
+		bitXor: (self evolution hash bitXor: (self labelModel hash bitXor: self size hash))
 ]
 
 { #category : #initialization }
