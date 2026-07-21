@@ -56,10 +56,10 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.9.154/src' ].
 		spec
 			baseline: 'GToolkit4Pharo' with: [
-				spec repository: 'github://feenkcom/gt4pharo:v0.7.249/src' ].
+				spec repository: 'github://feenkcom/gt4pharo:v0.7.250/src' ].
 		spec
 			baseline: 'GToolkitPresenter' with: [
-				spec repository: 'github://feenkcom/gtoolkit-presenter:v0.9.250/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-presenter:v0.9.251/src' ].
 		spec
 			baseline: 'GToolkitCoder' with: [
 				spec repository: 'github://feenkcom/gtoolkit-coder:v0.9.192/src' ].
