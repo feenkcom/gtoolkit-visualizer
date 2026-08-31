@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'barGroupStencil',
 		'barStencil',
-		'ticksAngle'
+		'ticksAngle',
+		'groupSpacing'
 	],
 	#category : #'GToolkit-Plotter-Builder - Bar Chart'
 }
@@ -261,6 +262,15 @@ GtPlotterVerticalBarChart >> createGroupBarsFor: aGtPlotterDataEntity [
 	^ aContainer
 ]
 
+{ #category : #'private - creating' }
+GtPlotterVerticalBarChart >> createVerticalSeparator [
+	^ BlElement new
+		constraintsDo: [ :c |
+			c vertical matchParent.
+			c horizontal exact: 2 ];
+		background: Color gray
+]
+
 { #category : #default }
 GtPlotterVerticalBarChart >> defaultBarHeightScale [
 	^ GtPlotterLinearScale new
@@ -292,19 +302,28 @@ GtPlotterVerticalBarChart >> gridlineOffset [
 	^ 0
 ]
 
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> groupSpacing [
+	^ groupSpacing
+]
+
+{ #category : #accessing }
+GtPlotterVerticalBarChart >> groupSpacing: aNumber [
+	groupSpacing := aNumber
+]
+
 { #category : #default }
 GtPlotterVerticalBarChart >> horizontalTicks [
 	self ticksAngle: 0
 ]
 
-{ #category : #initalization }
+{ #category : #initialization }
 GtPlotterVerticalBarChart >> initialize [
 	super initialize.
 	self horizontalTicks.
-	
+	groupSpacing := 20.
 	barGroupStencil := GtPlotterVerticalSeparateBarGroupStencilBuilder new.
 	barStencil := GtPlotterVerticalBarStencilBuilder new.
-	
 ]
 
 { #category : #accessing }

@@ -4,10 +4,12 @@ Class {
 	#category : #'GToolkit-Plotter-Builder - Bar lines'
 }
 
-{ #category : #accessing }
+{ #category : #'private - anchoring' }
 GtPlotterHorizontalLine >> newAnchor [
+	"A horizontal reference line spans the bar area, not the left label allowance."
 	^ super newAnchor
 		inverseY;
+		chartPadding: (BlInsets bottom: barChart bottomGap);
 		yourself
 ]
 
