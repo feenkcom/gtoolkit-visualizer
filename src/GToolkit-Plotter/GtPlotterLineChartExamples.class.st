@@ -28,6 +28,21 @@ GtPlotterLineChartExamples >> arbitraryObservationsWithNumericCoordinates [
 	^ chart
 ]
 
+{ #category : #'examples - axes' }
+GtPlotterLineChartExamples >> axisTickLabelsUseGlamorousLabels [
+	<gtExample>
+	| chart labels |
+	chart := self hikingProfile.
+	chart asElement.
+	labels := chart newAxisXTickLabelsElement.
+	self assert: labels children notEmpty.
+	labels children do: [ :each | self assert: (each isKindOf: BrLabel) ].
+	labels := chart newAxisYTickLabelsElement.
+	self assert: labels children notEmpty.
+	labels children do: [ :each | self assert: (each isKindOf: BrLabel) ].
+	^ chart
+]
+
 { #category : #'example - data' }
 GtPlotterLineChartExamples >> commits [
 	<gtExample>
