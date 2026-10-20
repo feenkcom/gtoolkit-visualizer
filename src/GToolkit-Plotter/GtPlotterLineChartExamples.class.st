@@ -7,6 +7,27 @@ Class {
 	#category : #'GToolkit-Plotter-Example - Builders'
 }
 
+{ #category : #'examples - axes' }
+GtPlotterLineChartExamples >> arbitraryObservationsWithNumericCoordinates [
+	<gtExample>
+	| chart observations element |
+	observations := { 1 @ 2. 2 @ 3. 3 @ 1 }.
+	chart := GtPlotterLineChart new
+		with: (GtPlotterDataGroup new values: observations);
+		valueX: #x;
+		valueY: #y;
+		highlightAllPoints;
+		labelFormatX: [ :coordinate | 'Sample ', coordinate printString ].
+	element := chart asElement.
+	element constraintsDo: [ :c | c horizontal exact: 600. c vertical exact: 350 ].
+	element forceLayout.
+	self assert: chart newPointElements size equals: observations size.
+	self assert: (chart labelFormatX value: 2) equals: 'Sample 2'.
+	self assert: (chart defaultAxisLabelFor: #milestone) asString equals: '#milestone'.
+	self assert: (chart defaultAxisLabelFor: observations first) asString equals: observations first printString.
+	^ chart
+]
+
 { #category : #'example - data' }
 GtPlotterLineChartExamples >> commits [
 	<gtExample>
@@ -2375,6 +2396,45 @@ GtPlotterLineChartExamples >> commitsPerDayOfAllUsersValues [
 	^ perDay
 ]
 
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> customPointStencilOwnsClickHandling [
+	<gtExample>
+	| chart marker spawned click clicked |
+	chart := self highlightedPointsWithTooltips.
+	marker := (chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ]) first.
+	marker when: GtPhlowObjectToSpawn do: [ :event | spawned := event tool ].
+	click := BlClickEvent new.
+	marker fireEvent: click.
+	self assert: click isConsumed not.
+	self assert: spawned isNil.
+	clicked := false.
+	chart pointStencil: [ BlElement new
+		size: 10 @ 10;
+		when: BlClickEvent do: [ :event | clicked := true. event consumed: true ] ].
+	marker := (chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ]) first.
+	click := BlClickEvent new.
+	marker fireEvent: click.
+	self assert: clicked.
+	self assert: click isConsumed.
+	^ marker
+]
+
+{ #category : #'examples - axes' }
+GtPlotterLineChartExamples >> dateAxisFormattingIsPreserved [
+	<gtExample>
+	| chart element date |
+	chart := self plot.
+	date := chart data values first key.
+	self assert: (chart labelFormatX value: date) asString
+		equals: date monthAbbreviation, ' ', date year asString.
+	element := chart asElement.
+	element constraintsDo: [ :c | c horizontal exact: 600. c vertical exact: 350 ].
+	element forceLayout.
+	^ element
+]
+
 { #category : #'example - chart' }
 GtPlotterLineChartExamples >> definedLineColor [
 	<gtExample>
@@ -2393,6 +2453,111 @@ GtPlotterLineChartExamples >> definedLineColor [
 			titleY: 'Number of commits per day'.
 
 	^ lineChart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> highlightExplicitPointsByIdentity [
+	<gtExample>
+	| chart first equal selected markers |
+	chart := self pointsPreserveOccurrences.
+	first := chart data values first.
+	equal := chart data values second.
+	self assert: first = equal.
+	self assert: (first == equal) not.
+	selected := OrderedCollection with: first with: first with: 99 -> 99.
+	self assert: (chart highlightPoints: selected) == chart.
+	selected removeAll.
+	markers := chart newPointElements.
+	self assert: markers size equals: 2.
+	markers do: [ :marker |
+		self assert: (marker userData at: #plotterPointContext) originalValue == first ].
+	self assert: (markers collect: [ :each | (each userData at: #plotterPointContext) index ]) asArray equals: #(1 3).
+	chart highlightPoints: { equal }.
+	self assert: chart newPointElements size equals: 1.
+	self assert: (chart newPointElements first userData at: #plotterPointContext) originalValue == equal.
+	^ chart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> highlightSelectionIsFluentAndReplaced [
+	<gtExample>
+	| chart |
+	chart := self pointsPreserveOccurrences.
+	self assert: (chart highlightAllPoints) == chart.
+	self assert: chart newPointElements size equals: 4.
+	self assert: (chart highlightPointsWhere: [ :each | each key = 3 ]) == chart.
+	self assert: chart newPointElements size equals: 1.
+	chart highlightPoints: #().
+	self assert: chart newPointElements isEmpty.
+	chart highlightAllPoints.
+	self assert: chart newPointElements size equals: 4.
+	chart highlightPointsWhere: nil.
+	self assert: chart newPointElements isEmpty.
+	^ chart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> highlightedPoints [
+	<gtExample>
+	| chart markers |
+	chart := self plot.
+	chart highlightPointsWhere: [ :observation | observation value > 20 ].
+	markers := chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers size equals: (chart data values select: [ :each | each value > 20 ]) size.
+	self assert: markers notEmpty.
+	markers do: [ :marker |
+		| context |
+		context := marker userData at: #plotterPointContext.
+		self assert: context originalValue == (context group values at: context index).
+		self assert: (chart normalizedPointFor: context originalValue)
+			equals: ((chart newContentLineVerticesFor: context group) at: context index) ].
+	^ chart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> highlightedPointsComposite [
+	<gtExample>
+	| composite chart |
+	chart := self highlightedPointsWithTooltips.
+	composite := GtPlotterCompositeChart new.
+	composite addPlot: chart.
+	self assert: composite asElement children notEmpty.
+	^ composite
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> highlightedPointsWithTooltips [
+	<gtExample>
+	| chart markers |
+	chart := self highlightedPoints.
+	chart pointStencil: [ :context |
+		BlElement new
+			geometry: BlSquareGeometry new;
+			size: 12 @ 12;
+			background: context group color;
+			addAptitude: (BrGlamorousWithExplicitTooltipAptitude
+				text: context originalValue printString) ].
+	markers := chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers first geometry class equals: BlSquareGeometry.
+	self assert: markers first ~~ markers second.
+	^ chart
+]
+
+{ #category : #'examples - axes' }
+GtPlotterLineChartExamples >> numericAxesWithHighlightedSingleton [
+	<gtExample>
+	| chart element |
+	chart := self pointsEmptyAndSingleton.
+	element := chart asElement.
+	element constraintsDo: [ :c | c horizontal exact: 600. c vertical exact: 350 ].
+	element forceLayout.
+	self assert: (chart labelFormatX value: 1) asString equals: '1'.
+	self assert: (chart labelFormatY value: 0.5) asString
+		equals: (0.5 printShowingDecimalPlaces: 0).
+	self assert: element children notEmpty.
+	^ element
 ]
 
 { #category : #'example - chart' }
@@ -2559,4 +2724,153 @@ GtPlotterLineChartExamples >> plotWithProjections [
 						ifFalse: [ Color veryLightGray ]) ].
 
 	^ lineChart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointStencilPreservesInspection [
+	<gtExample>
+	| chart marker original spawned click defaultStencil |
+	chart := self highlightedPoints.
+	defaultStencil := chart pointStencil.
+	chart pointStencil: [ :context |
+		(defaultStencil value: context)
+			geometry: BlSquareGeometry new;
+			yourself ].
+	marker := (chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ]) first.
+	original := (marker userData at: #plotterPointContext) originalValue.
+	marker when: GtPhlowObjectToSpawn do: [ :event | spawned := event tool ].
+	click := BlClickEvent new.
+	marker fireEvent: click.
+	self assert: click isConsumed.
+	self assert: spawned notNil.
+	self assert: spawned object == original.
+	^ marker
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointStencilWithoutContextAndReset [
+	<gtExample>
+	| chart markers |
+	chart := self highlightedPoints.
+	self assert: (chart pointStencil: [ BlElement new geometry: BlSquareGeometry new; size: 10 @ 10 ]) == chart.
+	markers := chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers first geometry class equals: BlSquareGeometry.
+	chart pointStencil: nil.
+	markers := chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers first geometry class equals: BlCircleGeometry.
+	^ chart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointsAcrossGroupsAndProjections [
+	<gtExample>
+	| chart markers content |
+	chart := self plotCommitsPerUser.
+	chart highlightAllPoints.
+	markers := chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers size equals: chart data values size.
+	markers do: [ :marker |
+		| context |
+		context := marker userData at: #plotterPointContext.
+		self assert: context originalValue == (context group values at: context index) ].
+	chart := self plotWithProjections.
+	chart highlightPointsWhere: [ :each | each value > 20 ].
+	content := chart contentStencil asElement.
+	self assert: (content children select: [ :each | each userData includesKey: #plotterPointContext ]) size equals: (chart data values select: [ :each | each value > 20 ]) size.
+	^ chart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointsClickToInspect [
+	<gtExample>
+	| chart marker original spawned click |
+	chart := self highlightedPoints.
+	marker := chart newPointElements first.
+	original := (marker userData at: #plotterPointContext) originalValue.
+	marker when: GtPhlowObjectToSpawn do: [ :event | spawned := event tool ].
+	click := BlClickEvent new.
+	marker fireEvent: click.
+	self assert: click isConsumed.
+	self assert: spawned notNil.
+	self assert: spawned object == original.
+	^ marker
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointsDisabledAndNoMatches [
+	<gtExample>
+	| chart count content |
+	chart := self plot.
+	count := chart contentStencil asElement children size.
+	self assert: chart newPointElements isEmpty.
+	chart highlightPointsWhere: [ :each | false ].
+	self assert: chart contentStencil asElement children size equals: count.
+	chart highlightAllPoints.
+	content := chart contentStencil asElement.
+	self assert: (content children select: [ :each | each userData includesKey: #plotterPointContext ]) size equals: chart data values size.
+	chart highlightPoints: #().
+	self assert: chart contentStencil asElement children size equals: count.
+	^ chart
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointsEmptyAndSingleton [
+	<gtExample>
+	| empty singleton markers |
+	empty := self plotEmptyData.
+	empty highlightAllPoints.
+	self assert: empty newPointElements isEmpty.
+	self assert: empty asElement children notEmpty.
+	singleton := GtPlotterLineChart new
+		with: (GtPlotterDataGroup new values: { 1 -> 2 });
+		minX: 0; maxX: 2; minY: 0; maxY: 4;
+		highlightAllPoints.
+	markers := singleton contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers size equals: 1.
+	self assert: (singleton normalizedPointFor: 1 -> 2) equals: 0.5 @ 0.5.
+	^ singleton
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointsFollowResize [
+	<gtExample>
+	| chart content marker |
+	chart := self pointsPreserveOccurrences.
+	content := chart newContentElement.
+	content constraintsDo: [ :c | c horizontal exact: 400. c vertical exact: 200 ].
+	content forceLayout.
+	marker := content children detect: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: marker bounds inParent center equals: 100 @ 100.
+	self assert: marker extent equals: 8 @ 8.
+	content constraintsDo: [ :c | c horizontal exact: 800. c vertical exact: 400 ].
+	content forceLayout.
+	self assert: marker bounds inParent center equals: 200 @ 200.
+	self assert: marker extent equals: 8 @ 8.
+	^ content
+]
+
+{ #category : #'examples - points' }
+GtPlotterLineChartExamples >> pointsPreserveOccurrences [
+	<gtExample>
+	| first equal chart markers |
+	first := 1 -> 2.
+	equal := 1 -> 2.
+	chart := GtPlotterLineChart new
+		with: (GtPlotterDataGroup new values: { first. equal. first. 3 -> 4 });
+		minX: 0; maxX: 4; minY: 0; maxY: 4;
+		highlightPointsWhere: [ :each | each value = 2 ].
+	markers := chart contentStencil asElement children
+		select: [ :each | each userData includesKey: #plotterPointContext ].
+	self assert: markers size equals: 3.
+	self assert: (markers first userData at: #plotterPointContext) originalValue == first.
+	self assert: (markers second userData at: #plotterPointContext) originalValue == equal.
+	self assert: (markers third userData at: #plotterPointContext) originalValue == first.
+	self assert: (markers collect: [ :each | (each userData at: #plotterPointContext) index ]) asArray equals: #(1 2 3).
+	self assert: (chart normalizedPointFor: first) equals: 0.25 @ 0.5.
+	^ chart
 ]
