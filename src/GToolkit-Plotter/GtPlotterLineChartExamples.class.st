@@ -2545,6 +2545,79 @@ GtPlotterLineChartExamples >> highlightedPointsWithTooltips [
 	^ chart
 ]
 
+{ #category : #'examples - hiking' }
+GtPlotterLineChartExamples >> hikingProfile [
+	<gtExample>
+	<return: #GtPlotterLineChart>
+	| chart stencil |
+	chart := GtPlotterLineChart new
+		with: ((GtPlotterDataGroup new values: self hikingProfileData)
+			background: (Color r: 0.2 g: 0.5 b: 0.3));
+		valueX: [ :sample | sample at: #distanceKm ];
+		valueY: [ :sample | sample at: #elevationMetres ];
+		titleX: 'Distance along an illustrative Alpine hike (km)';
+		titleY: 'Elevation (m) · synthetic route';
+		ticksX: 7;
+		ticksY: 6;
+		minY: 900;
+		maxY: 2300;
+		labelFormatX: [ :distance | (distance printShowingDecimalPlaces: 1), ' km' ];
+		labelFormatY: [ :elevation | (elevation printShowingDecimalPlaces: 0), ' m' ];
+		highlightPointsWhere: [ :sample | (sample at: #landmark) notEmpty ].
+	stencil := chart pointStencil.
+	chart pointStencil: [ :context |
+		| sample |
+		sample := context originalValue.
+		(stencil value: context)
+			size: 10 @ 10;
+			background: Color orange;
+			addAptitude: (BrGlamorousWithExplicitTooltipAptitude text:
+				(sample at: #landmark), ' · ',
+				((sample at: #distanceKm) printShowingDecimalPlaces: 1), ' km · ',
+				((sample at: #elevationMetres) printShowingDecimalPlaces: 0), ' m');
+			yourself ].
+	^ chart
+]
+
+{ #category : #'examples - hiking' }
+GtPlotterLineChartExamples >> hikingProfileData [
+	<gtExample>
+	^ #(
+		(0.0 1050 'Trailhead')
+		(0.5 1080 '')
+		(1.0 1150 '')
+		(1.5 1240 '')
+		(2.0 1320 '')
+		(2.5 1360 'Forest clearing')
+		(3.0 1410 '')
+		(3.5 1520 '')
+		(4.0 1630 '')
+		(4.5 1710 'Mountain hut')
+		(5.0 1750 '')
+		(5.5 1840 '')
+		(6.0 1960 '')
+		(6.5 2070 '')
+		(7.0 2150 'Summit')
+		(7.5 2110 '')
+		(8.0 2010 '')
+		(8.5 1920 'Mountain pass')
+		(9.0 1950 '')
+		(9.5 1890 '')
+		(10.0 1760 '')
+		(10.5 1650 '')
+		(11.0 1580 'Alpine lake')
+		(11.5 1510 '')
+		(12.0 1380 '')
+		(12.5 1250 '')
+		(13.0 1170 '')
+		(13.5 1100 'Village')) collect: [ :sample |
+		Dictionary new
+			at: #distanceKm put: sample first;
+			at: #elevationMetres put: sample second;
+			at: #landmark put: sample third;
+			yourself ]
+]
+
 { #category : #'examples - axes' }
 GtPlotterLineChartExamples >> numericAxesWithHighlightedSingleton [
 	<gtExample>
