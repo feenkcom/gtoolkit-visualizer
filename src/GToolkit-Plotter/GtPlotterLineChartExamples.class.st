@@ -2874,3 +2874,54 @@ GtPlotterLineChartExamples >> pointsPreserveOccurrences [
 	self assert: (chart normalizedPointFor: first) equals: 0.25 @ 0.5.
 	^ chart
 ]
+
+{ #category : #'examples - temperature' }
+GtPlotterLineChartExamples >> temperatureOverTwoDays [
+	<gtExample>
+	<return: #GtPlotterLineChart>
+	| source readings peaks chart stencil |
+	source := self temperatureSourceData.
+	readings := (source at: #temperatures) collectWithIndex: [ :temperature :index |
+		((source at: #start) + (index - 1) hours) -> temperature ].
+	peaks := { (readings first: 24) detectMax: #value.
+		(readings last: 24) detectMax: #value }.
+	chart := GtPlotterLineChart new
+		with: ((GtPlotterDataGroup new values: readings) background: (Color r: 0.15 g: 0.45 b: 0.7));
+		scaleX: GtPlotterTimeScale new;
+		valueX: #key;
+		valueY: #value;
+		titleX: 'Bern · 1–2 July 2024 · UTC';
+		titleY: 'Air temperature at 2 m (°C) · Open-Meteo';
+		ticksX: 8;
+		ticksY: 6;
+		minY: 12;
+		maxY: 23;
+		labelFormatX: [ :time | time dayOfMonth asString, ' Jul ', (time hour printString padLeftTo: 2 with: $0), ':00' ];
+		labelFormatY: [ :temperature | (temperature printShowingDecimalPlaces: 0), ' °C' ];
+		highlightPoints: peaks.
+	stencil := chart pointStencil.
+	chart pointStencil: [ :context |
+		(stencil value: context)
+			size: 10 @ 10;
+			background: Color red;
+			addAptitude: (BrGlamorousWithExplicitTooltipAptitude text:
+				context originalValue key printString, ' · ',
+				(context originalValue value printShowingDecimalPlaces: 1), ' °C');
+			yourself ].
+	^ chart
+]
+
+{ #category : #'examples - temperature' }
+GtPlotterLineChartExamples >> temperatureSourceData [
+	<gtExample>
+	^ Dictionary new
+		at: #source put: 'Open-Meteo Historical Weather API (gridded historical weather, not a station observation)';
+		at: #url put: 'https://archive-api.open-meteo.com/v1/archive?latitude=46.948&longitude=7.4474&start_date=2024-07-01&end_date=2024-07-02&hourly=temperature_2m&timezone=UTC';
+		at: #location put: 'Bern, Switzerland';
+		at: #latitude put: 46.924427;
+		at: #longitude put: 7.439222;
+		at: #unit put: '°C';
+		at: #start put: (DateAndTime fromString: '2024-07-01T00:00:00+00:00');
+		at: #temperatures put: #(15.0 15.7 14.2 15.4 15.3 15.2 15.6 16.0 17.0 18.0 19.2 20.3 20.2 21.0 21.2 19.2 17.4 17.5 16.7 16.2 14.7 14.5 13.5 13.7 13.3 14.6 14.6 14.5 14.1 13.7 13.8 14.3 14.8 16.1 16.8 17.7 18.9 19.1 18.5 17.5 15.8 15.5 14.9 14.4 13.9 13.7 13.6 13.4);
+		yourself
+]
