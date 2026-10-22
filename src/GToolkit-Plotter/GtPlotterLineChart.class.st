@@ -1,16 +1,25 @@
 "
 I draw line charts.
-#Examples
-##Number of Commits per Day
-{{gtExample:GtPlotterLineChartExamples>>plotCommitsOfAllUsers|codeExpanded=false|previewExpanded=true|previewHeight=400}}
-##Number of Commits per Day for Individual Users
-{{gtExample:GtPlotterLineChartExamples>>plotCommitsPerUser|codeExpanded=false|previewExpanded=true|previewHeight=400}}
-##With Projection Lines and Labels
-{{gtExample:GtPlotterLineChartExamples>>#plotWithProjections|codeExpanded=false|previewExpanded=true|previewHeight=430}}
+
+Highlight observations with highlightPointsWhere: (a condition on each original observation), highlightPoints: (a collection matched by identity), or highlightAllPoints. Each replaces the previous selection and returns the chart. By default no markers are shown. highlightPoints: snapshots collection membership, highlights every occurrence of selected objects, and ignores unknown objects. Use highlightPoints: #() to clear selection.
+
+pointStencil: accepts a block returning a fresh BlElement, optionally receiving a GtPlotterLineChartPointContext with originalValue, group, and one-based source index. Configure appearance, tooltips and interaction inside the stencil. The default stencil creates a circular marker in its group color and installs click-to-inspect. Custom stencils own their click behavior; no click handler is installed outside the stencil. To retain default interaction while customizing, capture chart pointStencil and decorate the element returned by that block. pointStencil: nil restores the default stencil.
+
+The chart installs normalized positioning and retains context in marker userData at #plotterPointContext. Configuration affects newly built content. Normal content construction initializes scales. Markers share line scales and appear above lines and X projections. Existing clipping applies; overlapping markers may obscure one another. Selection does not change domains. Singleton/constant domains follow existing scale behavior; use explicit nondegenerate bounds if needed. X labels accept dates or printString; Y retains numeric integer formatting.
+
+# Examples
+{{gtExample:GtPlotterLineChartExamples>>#highlightedPoints|codeExpanded=true|previewExpanded=true}}
+{{gtExample:GtPlotterLineChartExamples>>#highlightedPointsWithTooltips|codeExpanded=true|previewExpanded=true}}
+{{gtExample:GtPlotterLineChartExamples>>#pointStencilPreservesInspection|codeExpanded=true|previewExpanded=true}}
+{{gtExample:GtPlotterLineChartExamples>>#plotWithProjections|codeExpanded=false|previewExpanded=true}}
 "
 Class {
 	#name : #GtPlotterLineChart,
 	#superclass : #GtPlotterXYChart,
+	#instVars : [
+		'pointPredicate',
+		'pointStencil'
+	],
 	#category : #'GToolkit-Plotter-Builder - Line Chart'
 }
 
@@ -77,25 +86,60 @@ GtPlotterLineChart >> create [
 	^ aContainer
 ]
 
+{ #category : #'private - axes' }
+GtPlotterLineChart >> defaultAxisLabelFor: anObject [
+	^ ((anObject isKindOf: Date)
+		or: [ anObject isKindOf: DateAndTime ])
+		ifTrue: [ (anObject monthAbbreviation, ' ', anObject year asString)
+			asRopedText foreground: Color darkGray ]
+		ifFalse: [ anObject printString asRopedText foreground: Color darkGray ]
+]
+
+{ #category : #'private - points' }
+GtPlotterLineChart >> defaultPointStencil [
+	^ [ :aContext |
+		BlElement new
+			geometry: BlCircleGeometry new;
+			size: 8 @ 8;
+			background: aContext group color;
+			border: (BlBorder paint: Color white width: 1);
+			when: BlClickEvent do: [ :anEvent |
+				anEvent consumed: true.
+				anEvent currentTarget phlow spawnObject: aContext originalValue ] ]
+]
+
+{ #category : #'accessing - points' }
+GtPlotterLineChart >> highlightAllPoints [
+	self highlightPointsWhere: [ :each | true ]
+]
+
+{ #category : #'accessing - points' }
+GtPlotterLineChart >> highlightPoints: observations [
+	| selected |
+	selected := IdentitySet new.
+	observations do: [ :each | selected add: each ].
+	self highlightPointsWhere: [ :each | selected includes: each ]
+]
+
+{ #category : #'accessing - points' }
+GtPlotterLineChart >> highlightPointsWhere: aBlock [
+	pointPredicate := aBlock
+]
+
 { #category : #initialization }
 GtPlotterLineChart >> initialize [
 	super initialize.
-
 	isAlreadyInitialized := false.
 	scaleX := GtPlotterLinearScale new.
 	valueX := #key.
 	ticksX := 10.
-	labelFormatX := [ :eachDateAndTime | 
-		(eachDateAndTime monthAbbreviation, ' ',  eachDateAndTime year asString) 
-			asRopedText foreground: Color darkGray ].
-	projectionXLineStyle := [ :anElement :aGtPlotterScaleContext | anElement background: Color veryLightGray ].
-	
+	labelFormatX := [ :aValue | self defaultAxisLabelFor: aValue ].
+	projectionXLineStyle := [ :anElement :aContext | anElement background: Color veryLightGray ].
 	scaleY := GtPlotterLinearScale new.
 	valueY := #value.
 	ticksY := 10.
-	labelFormatY := [ :aValue | 
-		(aValue printShowingDecimalPlaces: 0) asRopedText foreground: Color darkGray ].	
-	
+	labelFormatY := [ :aValue |
+		(aValue printShowingDecimalPlaces: 0) asRopedText foreground: Color darkGray ]
 ]
 
 { #category : #initialization }
@@ -283,22 +327,17 @@ GtPlotterLineChart >> newAxisYTitleElement [
 				t rotateBy: 270 ])
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtPlotterLineChart >> newContentElement [
 	| aContainer |
 	aContainer := BrFrame new
 		matchParent;
-		addChildren: { 
-			self newAxisYLineElement.
-			self newAxisXLineElement. }.
-	
+		addChildren: { self newAxisYLineElement. self newAxisXLineElement }.
 	data groupsCollect: [ :aGroup |
 		aContainer addChild: (self newContentLineElementFor: aGroup) ].
-	
-	projectionXValues ifNotNil: [ 
-		aContainer addChild: (self newProjectionXLinesElement)
-	].
-	
+	projectionXValues ifNotNil: [
+		aContainer addChild: self newProjectionXLinesElement ].
+	pointPredicate ifNotNil: [ aContainer addChildren: self newPointElements ].
 	^ aContainer
 ]
 
@@ -313,10 +352,9 @@ GtPlotterLineChart >> newContentLineElementFor: aGroup [
 			c vertical matchParent ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtPlotterLineChart >> newContentLineVerticesFor: aGroup [
-	^ aGroup collect: [ :eachValue | 
-		(scaleX map: (valueX value: eachValue)) @ (1 - (scaleY map: (valueY value: eachValue))) ].
+	^ aGroup collect: [ :eachValue | self normalizedPointFor: eachValue ]
 ]
 
 { #category : #'instance creation' }
@@ -334,6 +372,53 @@ GtPlotterLineChart >> newNoDataElement [
 		constraintsDo: [ :c | 
 			c grid horizontal alignCenter.
 			c grid vertical alignCenter ]
+]
+
+{ #category : #'private - points' }
+GtPlotterLineChart >> newPointElementFor: aContext [
+	| element position |
+	position := self normalizedPointFor: aContext originalValue.
+	element := self pointStencil cull: aContext.
+	element userData at: #plotterPointContext put: aContext.
+	element constraintsDo: [ :c |
+		c frame horizontal alignCenterAt: position x.
+		c frame vertical alignCenterAt: position y ].
+	^ element
+]
+
+{ #category : #'private - points' }
+GtPlotterLineChart >> newPointElements [
+	| elements |
+	elements := OrderedCollection new.
+	pointPredicate ifNil: [ ^ elements ].
+	data groupsCollect: [ :aGroup |
+		| index |
+		index := 0.
+		aGroup valuesDo: [ :observation |
+			index := index + 1.
+			(pointPredicate value: observation) ifTrue: [
+				elements add: (self newPointElementFor: (GtPlotterLineChartPointContext new
+					originalValue: observation;
+					group: aGroup;
+					index: index;
+					yourself)) ] ] ].
+	^ elements
+]
+
+{ #category : #'private - points' }
+GtPlotterLineChart >> normalizedPointFor: anObservation [
+	^ (scaleX map: (valueX value: anObservation))
+		@ (1 - (scaleY map: (valueY value: anObservation)))
+]
+
+{ #category : #'accessing - points' }
+GtPlotterLineChart >> pointStencil [
+	^ pointStencil ifNil: [ self defaultPointStencil ]
+]
+
+{ #category : #'accessing - points' }
+GtPlotterLineChart >> pointStencil: aBlock [
+	pointStencil := aBlock
 ]
 
 { #category : #'api - data' }

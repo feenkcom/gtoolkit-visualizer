@@ -507,6 +507,11 @@ GtWardleyMapModel >> menuItemTitleVisibilityPicker [
 	^ GtWardleyMapTitleVisiblityMenuItem new
 ]
 
+{ #category : #accessing }
+GtWardleyMapModel >> newIdMap [
+	^ self optionAt: #newIds ifAbsent: [ Dictionary new ]
+]
+
 { #category : #private }
 GtWardleyMapModel >> nextUniqueId [
 	| aNextId |

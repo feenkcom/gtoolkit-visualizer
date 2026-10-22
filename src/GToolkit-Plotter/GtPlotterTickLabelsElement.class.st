@@ -17,11 +17,12 @@ GtPlotterTickLabelsElement >> computedTicks [
 	^ tickValues ifNil: [ scale ticks: labels ]
 ]
 
-{ #category : #initialization }
+{ #category : #defaults }
 GtPlotterTickLabelsElement >> defaultLabelElement [
 	^ [ :aGtPlotterScaleContext |
-		BlTextElement new 
-			text: (aGtPlotterScaleContext scale 
+		BrLabel new
+			aptitude: BrGlamorousLabelAptitude;
+			text: (aGtPlotterScaleContext scale
 				formattedTick: aGtPlotterScaleContext originalValue) asRopedText ]
 			asStencilBuilder: GtPlotterScaleBasedStencilBuilder
 ]
