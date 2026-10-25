@@ -4,7 +4,7 @@ Baseline for BlocGraphviz.
 Class {
 	#name : #BaselineOfGToolkitGraphviz,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfBlocGraphviz
+	#category : #BaselineOfGToolkitGraphviz
 }
 
 { #category : #'as yet unclassified' }
