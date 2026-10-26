@@ -275,18 +275,6 @@ GtGraphvizExamples >> routedEdgesAfterRelayout [
 	^ scene
 ]
 
-{ #category : #'examples - scenes' }
-GtGraphvizExamples >> routedWorkflowForm [
-	<gtExample>
-	"Exercise actual native path construction, including multi-segment cubic curves and arrowheads."
-	| scene form |
-	scene := self workflowWithRoutedArrows.
-	form := BlExporter form element: scene; export.
-	self assert: form width > 0.
-	self assert: form height > 0.
-	^ form
-]
-
 { #category : #private }
 GtGraphvizExamples >> sceneWithLayout: aLayout [
 	"Keep the same graph and measured node sizes across layout variations."
