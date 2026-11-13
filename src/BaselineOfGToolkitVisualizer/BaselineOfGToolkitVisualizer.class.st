@@ -73,6 +73,8 @@ BaselineOfGToolkitVisualizer >> baseline: spec [
 				package: 'GToolkit-Diagrammer' with: [ spec requires: #('Brick') ];
 				package: 'GToolkit-TreeMap'
 					with: [ spec requires: #('Brick' 'GToolkit-BlocGraph-Layouts') ];
+				package: 'GToolkit-HistoryFlow'
+					with: [ spec requires: #('Brick' 'GToolkitPhlow') ];
 				package: 'GToolkit-Microprint'
 					with: [ spec requires: #('Brick' 'GToolkitPhlow') ];
 				package: 'GToolkit-Plotter' with: [ spec requires: #('Brick') ];
