@@ -57,6 +57,90 @@ GtHistoryFlowExamples >> clickNavigation [
 ]
 
 { #category : #examples }
+GtHistoryFlowExamples >> compilerPipelineHistory [
+	"A larger synthetic document history with long-lived sections and localized edits."
+
+	<gtExample>
+	| intro parser lowering optimizer codegen diagnostics types profiling guards deopt metadata sections versions save flow final |
+	intro := self sectionLines: 'Overview' count: 10.
+	parser := self sectionLines: 'Parsing' count: 24.
+	lowering := self sectionLines: 'Lowering' count: 32.
+	optimizer := self sectionLines: 'Optimization' count: 44.
+	codegen := self sectionLines: 'Code generation' count: 28.
+	diagnostics := self sectionLines: 'Diagnostics' count: 14.
+	sections := {intro.
+			parser.
+			lowering.
+			optimizer.
+			codegen.
+			diagnostics} asOrderedCollection.
+	versions := OrderedCollection new.
+	save := [ :title | 
+		| lines text |
+		lines := sections flatCollect: [ :section | section ].
+		text := String
+				streamContents: [ :stream | lines do: [ :line | stream nextPutAll: line ] separatedBy: [ stream cr ] ].
+		versions add: (GtHistoryFlowVersion title: title text: text) ].
+	save value: '01 Initial compiler guide'.
+	types := self sectionLines: 'Type checking' count: 20.
+	sections add: types before: lowering.
+	save value: '02 Add type checking'.
+	1
+		to: 8
+		do: [ :index | parser at: index put: 'Revised parsing / paragraph ' , index asString ].
+	save value: '03 Revise parser introduction'.
+	profiling := self sectionLines: 'Profiling experiment' count: 24.
+	sections add: profiling before: optimizer.
+	save value: '04 Add profiling experiment'.
+	sections remove: diagnostics.
+	save value: '05 Remove obsolete diagnostics'.
+	optimizer addAll: (self sectionLines: 'New optimization rules' count: 30).
+	save value: '06 Expand optimization rules'.
+	sections
+		at: (sections indexOf: lowering)
+		put: (self sectionLines: 'SSA lowering' count: 22).
+	save value: '07 Replace lowering with SSA'.
+	guards := self sectionLines: 'Guard simplification' count: 18.
+	sections add: guards before: codegen.
+	save value: '08 Introduce guard simplification'.
+	sections remove: profiling.
+	save value: '09 Abandon profiling experiment'.
+	codegen addAll: (self sectionLines: 'Register allocation' count: 12).
+	save value: '10 Extend code generation'.
+	deopt := self sectionLines: 'Deoptimization' count: 30.
+	sections add: deopt before: codegen.
+	save value: '11 Add deoptimization'.
+	30 timesRepeat: [ optimizer removeLast ].
+	save value: '12 Prune experimental optimization rules'.
+	sections remove: guards.
+	save value: '13 Fold guard section into optimizer'.
+	sections
+		at: (sections indexOf: parser)
+		put: (self sectionLines: 'Compact parser guide' count: 16).
+	save value: '14 Rewrite parser guide'.
+	metadata := self sectionLines: 'Runtime metadata' count: 26.
+	sections add: metadata before: deopt.
+	save value: '15 Document runtime metadata'.
+	sections at: 1 put: (self sectionLines: 'Final overview' count: 8).
+	save value: '16 Finalize overview'.
+	flow := GtHistoryFlow fromVersions: versions.
+	self assert: flow versions size equals: 16.
+	self assert: flow versions first lines size equals: 152.
+	final := flow versions last.
+	self assert: final lines size equals: 206.
+	self assert: (final origins at: (final lines indexOf: codegen first)) equals: 1.
+	self assert: (final origins at: (final lines indexOf: types first)) equals: 2.
+	self
+		assert: (final origins at: (final lines indexOf: metadata first))
+		equals: 15.
+	self assert: final origins first equals: 16.
+	self assert: (final lines includes: diagnostics first) not.
+	self assert: (final lines includes: profiling first) not.
+	self assert: (final lines includes: guards first) not.
+	^ flow
+]
+
+{ #category : #examples }
 GtHistoryFlowExamples >> configurableDimensions [
 	<gtExample>
 	| flow element connection vertices viewport scripter |
@@ -282,6 +366,13 @@ GtHistoryFlowExamples >> insertDeleteAndRewrite [
 						assert: (connection targetVersion origins at: connection targetStart + offset)
 						equals: connection originIndex ] ].
 	^ flow
+]
+
+{ #category : #private }
+GtHistoryFlowExamples >> sectionLines: aName count: aCount [
+	^ ((1 to: aCount)
+		collect: [ :index | aName , ' / paragraph ' , index asString ])
+		asOrderedCollection
 ]
 
 { #category : #examples }
