@@ -1,12 +1,12 @@
 {
 	"repositories" : {
-		"github://feenkcom/gt4pharo/src" : "v0.7.351",
+		"github://feenkcom/gt4pharo/src" : "v0.7.352",
 		"github://feenkcom/gtoolkit-utility/src" : "v0.9.65",
 		"github://feenkcom/pharo-beacon/src" : "v0.5.126",
-		"github://feenkcom/gtoolkit-presenter/src" : "v0.9.352",
-		"github://feenkcom/gtoolkit-coder/src" : "v0.9.270",
-		"github://feenkcom/gtoolkit-phlow/src" : "v0.9.215",
-		"github://feenkcom/Brick/src" : "v0.9.176",
-		"github://feenkcom/gt4smacc/src" : "v0.9.252"
+		"github://feenkcom/gtoolkit-presenter/src" : "v0.9.353",
+		"github://feenkcom/gtoolkit-coder/src" : "v0.9.271",
+		"github://feenkcom/gtoolkit-phlow/src" : "v0.9.216",
+		"github://feenkcom/Brick/src" : "v0.9.177",
+		"github://feenkcom/gt4smacc/src" : "v0.9.253"
 	}
 }
