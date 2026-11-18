@@ -10,13 +10,15 @@ TGtSequenceDiagramMessage >> gtMessagesFor: aView [
 	^ aView columnedTree
 		title: 'Messages';
 		priority: 10;
-		items: [ { self } ];
+		items: [ {self} ];
 		children: #messages;
 		expandUpTo: 2;
 		column: 'Name' text: #name;
-		column: 'Sender' text: [ :aMessage | aMessage sender ifNotNil: #name ];
-		column: 'Receiver' text: [ :aMessage | aMessage receiver ifNotNil: #name ];
-		actionUpdateButton 
+		column: 'Sender'
+			text: [ :aMessage | aMessage sender ifNotNil: [ :v | v name ] ];
+		column: 'Receiver'
+			text: [ :aMessage | aMessage receiver ifNotNil: [ :v | v name ] ];
+		actionUpdateButton
 ]
 
 { #category : #accessing }

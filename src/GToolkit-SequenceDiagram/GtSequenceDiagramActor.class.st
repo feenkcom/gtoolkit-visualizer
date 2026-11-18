@@ -24,7 +24,7 @@ GtSequenceDiagramActor >> initialize [
 
 { #category : #accessing }
 GtSequenceDiagramActor >> model [
-	^ model ifNotNil: #value
+	^ model ifNotNil: [ :v | v value ]
 ]
 
 { #category : #accessing }

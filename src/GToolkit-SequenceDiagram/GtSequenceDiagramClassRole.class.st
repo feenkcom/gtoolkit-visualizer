@@ -42,7 +42,7 @@ GtSequenceDiagramClassRole >> instance: anObject [
 
 { #category : #accessing }
 GtSequenceDiagramClassRole >> model [
-	^ model ifNotNil: #value
+	^ model ifNotNil: [ :v | v value ]
 ]
 
 { #category : #accessing }

@@ -137,11 +137,12 @@ GtWardleyMapScriptImporter >> importEvolves [
 		allNodesOfType: GtWMEvolveNode
 		do: [ :anAstNode | 
 			| aSourceNodeName anEvolvedName |
-			aSourceNodeName := anAstNode name ifNotNil: #source.
-			anEvolvedName := anAstNode evolvedName ifNotNil: #source ifNil: [ aSourceNodeName ].
+			aSourceNodeName := anAstNode name ifNotNil: [ :v | v source ].
+			anEvolvedName := anAstNode evolvedName
+					ifNotNil: [ :v | v source ]
+					ifNil: [ aSourceNodeName ].
 			aSourceNodeName
-				ifNotNil: [
-					self
+				ifNotNil: [ self
 						nodeNamed: aSourceNodeName
 						ifFound: [ :aSourceNodeModel | 
 							anAstNode evolutionNumber
@@ -150,8 +151,8 @@ GtWardleyMapScriptImporter >> importEvolves [
 									aSourceNodeModel isEvolveVisible: true.
 									aSourceNodeModel evolvedColor: GtWardleyMapConstants evolveColor.
 									aSourceNodeModel evolvedLabel: anEvolvedName.
-									aSourceNodeName = anEvolvedName ifFalse: [
-										aSourceNodeModel isEvolvedLabelVisible: true ].
+									aSourceNodeName = anEvolvedName
+										ifFalse: [ aSourceNodeModel isEvolvedLabelVisible: true ].
 
 									anAstNode label
 										ifNotNil: [ :aNode | 
@@ -167,17 +168,20 @@ GtWardleyMapScriptImporter >> importEvolves [
 
 { #category : #'private - import' }
 GtWardleyMapScriptImporter >> importMap [
-	ast allNodesOfType: GtWMTitleNode do: [ :anAstNode | 
-		| aName |
-		aName := anAstNode name ifNotNil: #source.
-		aName ifNotNil: [ 
-			wardleyMap title: aName.
-			wardleyMap isTitleVisible: true ] ].
-			
-	ast allNodesOfType: GtWMEvolutionNode do: [ :anAstNode | 
-		wardleyMap evolutionSections: anAstNode sections.
-		wardleyMap isEvolutionAxisVisible: true.
-	]
+	ast
+		allNodesOfType: GtWMTitleNode
+		do: [ :anAstNode | 
+			| aName |
+			aName := anAstNode name ifNotNil: [ :v | v source ].
+			aName
+				ifNotNil: [ wardleyMap title: aName.
+					wardleyMap isTitleVisible: true ] ].
+
+	ast
+		allNodesOfType: GtWMEvolutionNode
+		do: [ :anAstNode | 
+			wardleyMap evolutionSections: anAstNode sections.
+			wardleyMap isEvolutionAxisVisible: true ]
 ]
 
 { #category : #'private - import' }

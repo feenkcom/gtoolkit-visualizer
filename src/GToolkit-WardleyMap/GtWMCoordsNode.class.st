@@ -53,7 +53,7 @@ GtWMCoordsNode >> evolution: aSmaCCToken [
 GtWMCoordsNode >> evolutionNumber [
 	<return: #Number or: nil>
 	| anXString anXNumber |
-	anXString := self evolution ifNotNil: #source.
+	anXString := self evolution ifNotNil: [ :v | v source ].
 
 	anXString ifNil: [ ^ nil ].
 
@@ -103,7 +103,7 @@ GtWMCoordsNode >> visibility: aSmaCCToken [
 GtWMCoordsNode >> visibilityNumber [
 	<return: #Point or: nil>
 	| anYString anYNumber |
-	anYString := self visibility ifNotNil: #source.
+	anYString := self visibility ifNotNil: [ :v | v source ].
 
 	anYString ifNil: [ ^ nil ].
 
