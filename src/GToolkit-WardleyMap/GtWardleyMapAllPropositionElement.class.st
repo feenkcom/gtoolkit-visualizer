@@ -184,7 +184,7 @@ GtWardleyMapAllPropositionElement >> onWardleyMapViewModelChanged [
 
 { #category : #'private - updating' }
 GtWardleyMapAllPropositionElement >> requestUpdate [
-	updater ifNotNil: #requestUpdate
+	updater ifNotNil: [ :v | v requestUpdate ]
 ]
 
 { #category : #'event handling' }

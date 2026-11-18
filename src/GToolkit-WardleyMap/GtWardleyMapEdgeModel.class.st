@@ -176,9 +176,9 @@ GtWardleyMapEdgeModel >> printOn: aStream [
 	aStream
 		nextPutAll: 'Edge {';
 		nextPutAll: ' from: ';
-		print: (self fromNode ifNotNil: #label);
+		print: (self fromNode ifNotNil: [ :v | v label ]);
 		nextPutAll: '; to: ';
-		print: (self toNode ifNotNil: #label);
+		print: (self toNode ifNotNil: [ :v | v label ]);
 		nextPutAll: '; width: ';
 		print: self width;
 		nextPutAll: '; arrow: ';
