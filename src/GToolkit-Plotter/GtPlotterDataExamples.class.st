@@ -10044,10 +10044,10 @@ GtPlotterDataExamples >> browserDataGroupSortedByBrowser [
 	aGroup := self browserDataGroup
 			sorted: [ :a :b | (a at: #browser) < (b at: #browser) ].
 
-	self assert: ((aGroup at: 1) values first at: #browser) equals: #Chrome.
+	self assert: ((aGroup at: 1) values first at: #browser) equals: 'Chrome'.
 	self
 		assert: ((aGroup at: aGroup size) values first at: #browser)
-		equals: #Safari.
+		equals: 'Safari'.
 
 	self assert: aGroup size equals: self browserData size.
 	self assert: aGroup isComposite not.
