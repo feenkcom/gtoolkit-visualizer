@@ -57,7 +57,7 @@ GtWMElementNode >> decorators: anOrderedCollection [
 
 { #category : #accessing }
 GtWMElementNode >> evolutionNumber [
-	^ self coords ifNotNil: #evolutionNumber
+	^ self coords ifNotNil: [ :v | v evolutionNumber ]
 ]
 
 { #category : #generated }
@@ -120,5 +120,5 @@ GtWMElementNode >> typeToken: aSmaCCToken [
 
 { #category : #accessing }
 GtWMElementNode >> visibilityNumber [
-	^ self coords ifNotNil: #visibilityNumber
+	^ self coords ifNotNil: [ :v | v visibilityNumber ]
 ]

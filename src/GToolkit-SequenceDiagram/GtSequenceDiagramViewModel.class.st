@@ -25,12 +25,18 @@ GtSequenceDiagramViewModel >> gtMessagesFor: aView [
 		title: 'Messages';
 		priority: 11;
 		items: [ self messageViewModels ];
-		column: 'Index' text: [ :_ :anIndex | anIndex ] width: 40;
-		column: 'Depth' text: #depth width: 40;
+		column: 'Index'
+			text: [ :_ :anIndex | anIndex ]
+			width: 40;
+		column: 'Depth'
+			text: #depth
+			width: 40;
 		column: 'Name' text: #name;
-		column: 'Sender' text: [ :aMessage | aMessage senderViewModel ifNotNil: #name ];
-		column: 'Receiver' text: [ :aMessage | aMessage receiverViewModel ifNotNil: #name ];
-		actionUpdateButton 
+		column: 'Sender'
+			text: [ :aMessage | aMessage senderViewModel ifNotNil: [ :v | v name ] ];
+		column: 'Receiver'
+			text: [ :aMessage | aMessage receiverViewModel ifNotNil: [ :v | v name ] ];
+		actionUpdateButton
 ]
 
 { #category : #'gt - extensions' }

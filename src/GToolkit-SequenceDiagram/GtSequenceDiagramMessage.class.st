@@ -11,6 +11,24 @@ Class {
 	#category : #'GToolkit-SequenceDiagram-Model'
 }
 
+{ #category : #'gt - extensions' }
+GtSequenceDiagramMessage >> gtMessagesFor: aView [
+	<gtView>
+	self messages ifNil: [ ^ aView empty ].
+	^ aView columnedTree
+		title: 'Messages';
+		priority: 10;
+		items: [ {self} ];
+		children: #messages;
+		expandUpTo: 2;
+		column: 'Name' text: #name;
+		column: 'Sender'
+			text: [ :aMessage | aMessage sender ifNotNil: [ :v | v name ] ];
+		column: 'Receiver'
+			text: [ :aMessage | aMessage receiver ifNotNil: [ :v | v name ] ];
+		actionUpdateButton
+]
+
 { #category : #testing }
 GtSequenceDiagramMessage >> hasModel [
 	^ model isNotNil
@@ -42,7 +60,7 @@ GtSequenceDiagramMessage >> messages: anObject [
 
 { #category : #accessing }
 GtSequenceDiagramMessage >> model [
-	^ model ifNotNil: #value
+	^ model ifNotNil: [ :v | v value ]
 ]
 
 { #category : #accessing }
