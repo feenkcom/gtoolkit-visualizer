@@ -118,7 +118,7 @@ GtPlotterHorizontalBarChartExamples >> chartWebsiteVisitsGroupedByZoneAndColored
 	<gtExample>
 	<return: #GtPlotterHorizontalBarChart>
 	| theData theColors |
-	theColors := {#com -> Color gray} asOrderedDictionary.
+	theColors := {'com' -> Color gray} asOrderedDictionary.
 
 	theData := GtPlotterDataGroup new values: self websiteVisits.
 	theData := theData sorted: [ :a :b | (a at: #duration) > (b at: #duration) ].
