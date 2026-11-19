@@ -704,7 +704,7 @@ GtWardleyMapModel >> storeOn: aStream [
 	aStream
 		nextPut: $(;
 		nextPutAll:
-			'GtWardleyMapFromDictionaryImporter new importWardleyMapFrom: (STONJSON fromString: ';
+			'GtWardleyMapFromDictionaryImporter importMapFromJSONString: (';
 		nextPutAll: self asJSONForExport storeString;
 		nextPutAll: '))'
 ]

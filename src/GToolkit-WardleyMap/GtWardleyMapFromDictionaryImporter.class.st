@@ -6,7 +6,9 @@ Class {
 
 { #category : #'api - import' }
 GtWardleyMapFromDictionaryImporter class >> importMapFromJSONString: aString [
-	^ self new importWardleyMapFrom: (STONJSON fromString: aString)
+	^ self new importWardleyMapFrom: ((NeoJSONReader on: aString readStream)
+		mapClass: GtStringContentDictionary;
+		next)
 ]
 
 { #category : #'api - importer' }
