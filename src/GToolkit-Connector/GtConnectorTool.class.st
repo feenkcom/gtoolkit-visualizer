@@ -27,8 +27,8 @@ GtConnectorTool >> asTabElement [
 ]
 
 { #category : #'api - converting' }
-GtConnectorTool >> icon [ 
-	^ BrGlamorousVectorIcons largebranching asElement asScalableElement size: 16@16
+GtConnectorTool >> icon [
+	^ BrGlamorousVectorIcons branching asElement
 ]
 
 { #category : #'api - accessing' }
