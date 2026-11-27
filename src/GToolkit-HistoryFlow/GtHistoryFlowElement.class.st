@@ -237,7 +237,7 @@ GtHistoryFlowElement >> updateTitlePosition [
 	hoveredVersion ifNil: [ ^ self ].
 	desired := (((self versionX: hoveredVersion) min: self width - hoverTitle width)
 			max: 0) @ 2.
-	hoverTitle position = desired ifFalse: [ hoverTitle position: desired ]
+	hoverTitle position = desired ifFalse: [ hoverTitle relocate: desired ]
 ]
 
 { #category : #accessing }
